@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>&quot;Track 1 Crash Pack: LLM Research Engineer&quot;</title>
+<style>
+/* Research-Engineer Curriculum: shared design system (dark, Hallmark discipline)
+   Source of truth. Writers INLINE this file into each volume's <head> inside <style>.
+   Font files live in fonts/ relative to the site root (each HTML is at the root,
+   so the inlined url(fonts/...) resolves correctly from file:// with no network).
+   Tokens (exact, do not improvise): pitch-black dark mode. */
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{
+  --bg:#000000; --surface:#0d0d0d; --border:#262626;
+  --text:#ececec; --muted:#a8a8a8;
+  --accent:#f0b429; --link:#6cb2ff; --code-bg:#111111;
+  --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
+p{text-align:justify;hyphens:auto;margin:.85rem 0}
+h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
+h1{font-size:2rem;font-weight:800}
+h2{font-size:1.5rem;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:1.05rem;font-weight:700}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:.2rem}
+ul,ol{margin:.7rem 0;padding-left:1.6rem}
+li{margin:.3rem 0}
+li::marker{color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;display:block;overflow-x:auto}
+thead,tbody,tr{display:table;width:100%;table-layout:fixed}
+th,td{border:1px solid var(--border);padding:.6rem .75rem;text-align:left;vertical-align:top}
+th{background:var(--surface);font-weight:700}
+code{font-family:var(--font-code);background:var(--code-bg);border:1px solid var(--border);padding:.08rem .35rem;border-radius:.3rem;font-size:.88em}
+p code,li code,td code,th code{overflow-wrap:break-word;word-break:break-word}
+pre{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:.6rem;padding:1rem 1.1rem;overflow-x:auto;font-size:.88rem;line-height:1.6;margin:1.1rem 0}
+pre code{background:none;border:none;padding:0;font-size:1em}
+pre.ascii{background:#0a0a0a;color:#d8d8d8}
+figure{margin:1.5rem 0;border:1px solid var(--border);border-radius:.7rem;padding:1rem;background:var(--surface)}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:.3rem}
+.ds-content img{max-width:100%;height:auto} /* bare <img> in <p> must never overflow */
+figcaption{font-size:.9rem;color:var(--muted);margin-top:.7rem;text-align:left}
+details{border:1px solid var(--border);border-radius:.6rem;padding:.75rem 1.05rem;margin:.9rem 0;background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--text)}
+dfn{font-style:normal;font-weight:600;border-bottom:2px dotted var(--accent);cursor:help}
+blockquote{border-left:3px solid var(--accent);margin:1.1rem 0;padding:.6rem 1rem;background:var(--surface);border-radius:0 .5rem .5rem 0}
+blockquote p{margin:.4rem 0}
+
+/* ---- layout: sidebar + content ---- */
+.ds-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60}
+.ds-menu-btn{display:none;position:fixed;top:.7rem;left:.7rem;z-index:55;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:.5rem;font-family:var(--font-ui);font-size:1.2rem;padding:.35rem .7rem;cursor:pointer}
+.ds-sidebar{position:fixed;top:0;left:0;bottom:0;width:19rem;background:var(--surface);border-right:1px solid var(--border);z-index:50;display:flex;flex-direction:column}
+.ds-side-head{padding:1.1rem 1.1rem .8rem;border-bottom:1px solid var(--border)}
+.ds-side-eyebrow{margin:0;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ds-side-title{margin:.3rem 0 .7rem;font-family:var(--font-ui);font-size:1.02rem;font-weight:700;line-height:1.35}
+.ds-side-search{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:400 .88rem/1.4 var(--font-ui);padding:.5rem .7rem}
+.ds-side-search::placeholder{color:var(--muted)}
+.ds-nav{flex:1;overflow-y:auto;padding:.7rem .6rem}
+.ds-nav ul{list-style:none;margin:0;padding:0}
+.ds-nav-group{margin-bottom:.35rem}
+.ds-nav-group>button{width:100%;text-align:left;background:none;border:none;color:var(--text);font:700 .86rem/1.4 var(--font-ui);padding:.45rem .55rem;border-radius:.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+.ds-nav-group>button:hover{background:#161616}
+.ds-nav-group>button .ds-caret{color:var(--muted);font-size:.75rem}
+.ds-nav-items{list-style:none;margin:0;padding:0 0 .3rem .4rem}
+.ds-nav-items a{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:var(--font-ui);font-size:.85rem;line-height:1.45;padding:.32rem .55rem;border-radius:.4rem;border-left:2px solid transparent}
+.ds-nav-items a:hover{color:var(--text);background:#161616}
+.ds-nav-items a.ds-active{color:var(--text);border-left-color:var(--accent);background:#161616}
+.ds-check{flex:none;width:.95rem;height:.95rem;accent-color:var(--accent);cursor:pointer}
+.ds-nav-empty{color:var(--muted);font-size:.85rem;padding:.5rem}
+.ds-side-foot{border-top:1px solid var(--border);padding:.7rem 1.1rem;font-family:var(--font-ui);font-size:.8rem;color:var(--muted)}
+.ds-scrim{display:none}
+.ds-content{margin-left:19rem;padding:0 2rem;max-width:calc(72ch + 4rem)}
+.ds-content>*{max-width:72ch}
+.ds-content table,.ds-content figure,.ds-content pre{max-width:72ch}
+.ds-chapter-nav{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--border);margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-chapter-nav a{text-decoration:none;font-weight:600}
+.ds-chapter-nav .ds-prev{text-align:left}
+.ds-chapter-nav .ds-next{text-align:right}
+.ds-kbd-hint{font-family:var(--font-ui);font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+/* ---- learning components ---- */
+.walkthrough{background:#101010;border:1px solid var(--border);border-radius:.55rem;padding:.85rem 1.05rem;margin-top:.9rem;font-size:.93rem}
+.walkthrough strong{color:var(--text)}
+.walkthrough ol{margin:.45rem 0;padding-left:1.35rem}
+.walkthrough li{margin:.32rem 0}
+.walkthrough p{text-align:left}
+.ob-board{background:#0e0c06;border:1px solid #4a3a12;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.ob-board h4{margin:.1rem 0 .5rem;font-size:1rem;color:var(--accent)}
+.ob-board ul{margin:.4rem 0;padding-left:1.3rem}
+.takeaway{background:#0b0f0b;border:1px solid #1f3a24;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.takeaway h4{margin:.1rem 0 .5rem;font-size:1rem;color:#7fd08a}
+.callout{border-left:4px solid var(--link);background:var(--surface);padding:.85rem 1.1rem;margin:1.15rem 0;border-radius:0 .55rem .55rem 0}
+.callout.warn{border-left-color:var(--accent)}
+.callout p{text-align:left;margin:.45rem 0}
+.provenance{border:1px dashed var(--border);border-radius:.6rem;padding:.8rem 1.05rem;margin:1.2rem 0;font-size:.88rem;color:var(--muted);background:#0a0a0a}
+.provenance strong{color:var(--text)}
+.provenance .uv{color:var(--accent);font-weight:700}
+.pq{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--surface)}
+.pq-q{margin:.1rem 0 .7rem;text-align:left}
+.pq-reveal{background:var(--accent);border:none;color:#000;font:700 .88rem/1 var(--font-ui);padding:.55rem 1rem;border-radius:.45rem;cursor:pointer}
+.pq-reveal:hover{filter:brightness(1.08)}
+.pq-a{margin-top:.9rem;border-top:1px solid var(--border);padding-top:.8rem}
+.pq-a ul{margin:.5rem 0}
+.pq-opt-right{color:#7fd08a}
+.pq-opt-wrong{color:#e08080}
+.ds-copy-btn{position:absolute;top:.5rem;right:.5rem;background:#1c1c1c;border:1px solid var(--border);color:var(--muted);font:600 .75rem/1 var(--font-ui);padding:.4rem .65rem;border-radius:.4rem;cursor:pointer}
+.ds-copy-btn:hover{color:var(--text);border-color:var(--accent)}
+.lab{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.2rem 0;background:#0b0b0b}
+.lab h4{margin:.1rem 0 .5rem;color:var(--accent)}
+
+/* ---- responsive: sidebar becomes drawer ---- */
+@media(max-width:56rem){
+  .ds-sidebar{transform:translateX(-105%);transition:transform .25s ease;width:17.5rem}
+  body.ds-nav-open .ds-sidebar{transform:none;z-index:56} /* above the menu button so it never overlaps the eyebrow */
+  .ds-menu-btn{display:block}
+  .ds-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:45}
+  body.ds-nav-open .ds-scrim{display:block}
+  .ds-content{margin-left:0;padding:0 1.1rem}
+}
+@media(min-width:56.01rem){.ds-scrim{display:none!important}}
+
+
+/* ---- site header: home link, volume nav, breadcrumbs, prev/next ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--border);padding:.65rem 0 .7rem;margin:0 0 1.6rem;max-width:72ch}
+.site-header-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+.site-home{font:700 1rem/1.2 var(--font-ui);color:var(--text);text-decoration:none}
+.site-home:hover{color:var(--accent)}
+.site-home .site-home-mark{color:var(--accent)}
+.site-prevnext{display:flex;gap:.6rem;font:600 .82rem/1.4 var(--font-ui)}
+.site-prevnext a{color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
+.site-prevnext a:hover{color:var(--text);border-color:var(--accent)}
+.site-prevnext .site-prevnext-disabled{color:#4a4a4a;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
+.breadcrumbs{font:400 .8rem/1.5 var(--font-ui);color:var(--muted);margin:.45rem 0 0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text)}
+.breadcrumbs .bc-sep{margin:0 .35rem;color:#4a4a4a}
+.breadcrumbs .bc-current{color:var(--text)}
+details.site-nav{margin:.55rem 0 0;border:1px solid var(--border);border-radius:.55rem;background:var(--surface)}
+details.site-nav summary{cursor:pointer;list-style:none;font:600 .85rem/1.4 var(--font-ui);color:var(--text);padding:.55rem .9rem;display:flex;align-items:center;gap:.5rem}
+details.site-nav summary::-webkit-details-marker{display:none}
+details.site-nav summary::before{content:"+";color:var(--accent);font-weight:700}
+details.site-nav[open] summary::before{content:"\2212"}
+details.site-nav summary:hover{color:var(--accent)}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem;padding:.2rem .9rem .9rem}
+.site-nav-groups h4{font:700 .75rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:.6rem 0 .35rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:.18rem 0}
+.site-nav-groups a{font:400 .83rem/1.45 var(--font-ui);color:var(--muted);text-decoration:none}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:700}
+
+/* ---- site footer: full sitemap ---- */
+.site-footer{border-top:1px solid var(--border);margin:3rem 0 0;padding:2rem 0 2.5rem;max-width:72ch}
+.site-footer .site-sitemap{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.2rem}
+.site-sitemap h4{font:700 .78rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 .4rem}
+.site-sitemap ul{list-style:none;margin:0;padding:0}
+.site-sitemap li{margin:.2rem 0}
+.site-sitemap a{font:400 .83rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none}
+.site-sitemap a:hover{color:var(--text)}
+.site-footer-note{font:400 .78rem/1.5 var(--font-ui);color:#6a6a6a;margin-top:1.6rem}
+@media(max-width:56rem){
+  .site-header-row{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between}
+  .site-header{padding-left:2.9rem} /* clear the fixed hamburger menu button */
+}
+@media print{
+  .site-header,.site-footer{display:none!important}
+}
+
+/* ---- print ---- */
+@media print{
+  .ds-sidebar,.ds-menu-btn,.ds-progress,.ds-scrim,.ds-chapter-nav,.ds-copy-btn{display:none!important}
+  .ds-content{margin:0;max-width:100%;padding:0}
+  body{background:#fff;color:#000;font-size:12pt;line-height:1.6}
+  p{text-align:left}
+  h1,h2,h3,h4,a{color:#000}
+  pre,figure,details,.lab,.ob-board,.takeaway,.callout,.walkthrough,.pq{background:#fff;border-color:#999;break-inside:avoid}
+  code{background:#f0f0f0;border-color:#999;color:#000}
+}
+
+</style>
+</head>
+<body>
+<div class="ds-progress" id="dsProgress"></div>
+<button class="ds-menu-btn" id="dsMenuBtn" aria-label="Open navigation">&#9776;</button>
+<aside class="ds-sidebar" id="dsSidebar" aria-label="Volume navigation">
+<div class="ds-side-head">
+<p class="ds-side-eyebrow">Research-Engineer Curriculum</p>
+<p class="ds-side-title">Crash Pack</p>
+<input class="ds-side-search" id="dsNavSearch" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+</div>
+<nav class="ds-nav" id="dsNav" aria-label="Sections"></nav>
+<div class="ds-side-foot"><span id="dsCompleteCount"></span></div>
+</aside>
+<div class="ds-scrim" id="dsScrim"></div>
+<main class="ds-content" id="dsContent">
+<header class="site-header"><div class="site-header-row"><a class="site-home" href="index.html"><span class="site-home-mark">■</span> LLM Knowledge Base</a><div class="site-prevnext"><a href="crash-base.html">&larr; Crash Pack: Base Curriculum</a><a href="crash-track-02.html">Crash: Post-training / Alignment &rarr;</a></div></div><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep">/</span><span>Crash packs</span><span class="bc-sep">/</span><span class="bc-current">Crash: LLM Research Engineer</span></nav><details class="site-nav"><summary>Browse all volumes and tracks</summary><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html" class="site-nav-current">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div></details></header>
+<h1 id="track-1-crash-pack-llm-research-engineer">Track 1 Crash Pack: LLM Research Engineer</h1>
+<p>This is Track 1 compressed into one high-density volume. The base volumes teach the science. This pack turns them into judgment. You get the decisions a generalist LLM research engineer makes weekly, the numbers worth memorizing, the traps that burn budgets, and 30 rapid-fire questions with worked answers. Read it after the track, or use it as the fast path and let it point you back to the chapters that matter.</p>
+<p>Work it in three passes. Pass 1 (30 minutes): the 12 decision rules and the cheat sheet. Pass 2 (60 minutes): the numbers table, the traps, the capstone. Pass 3 (60 minutes): the 30 questions, answered from memory before you reveal each answer.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
+<li>Every decision in this role is one of four kinds: compute and comparison, run health, evidence judgment, scale judgment. The 12 rules below cover all four.</li>
+<li>Two formulas run the job: training FLOPs = 6ND, and the Chinchilla tradeoff (~20 tokens per param at fixed compute).</li>
+<li>A result is real only when it is compute-matched, honestly evaluated, and outside noise. Everything else is a story.</li>
+</ul></div><h2 id="part-1-the-12-decision-rules">Part 1. The 12 decision rules</h2>
+<p>Read each rule as a contract. The IF names the situation. The THEN names the action. The reason line says why the rule exists. When two rules conflict, the one about honesty (Rules 3, 7, 8, 9) always wins.</p>
+<h3 id="a-compute-and-comparison">A. Compute and comparison</h3>
+<p><strong>Rule 1. Ablate or scale, not both.</strong></p>
+<p>IF the question is "does this change help," THEN run a compute-matched ablation, not a bigger run. IF the question is "what will the big run cost and how good will it be," THEN fit a scaling law on small runs first. Reason: ablations answer "better," scaling laws answer "how much." Spending big-run compute on a "better" question is the most expensive way to learn nothing.</p>
+<p><strong>Rule 2. Chinchilla-optimal or inference-optimal.</strong></p>
+<p>IF the compute budget is the binding constraint, THEN train near 20 tokens per param (the Chinchilla optimum). IF inference volume dominates lifetime cost, as with a deployed product, THEN train a smaller model far past the Chinchilla ratio. Overtraining trades training compute for inference efficiency: the extra training is paid once, the serving savings are paid forever. Reason: the "optimal" ratio depends on what you are optimizing, training FLOPs or serving FLOPs. Pick the wrong objective and you optimize the wrong bill.</p>
+<p><strong>Rule 3. When a benchmark delta counts.</strong></p>
+<p>IF the paired 95 percent bootstrap interval excludes zero AND the evals are clean, THEN treat the delta as real. Clean means: no contamination, identical decode settings, same prompt format, seeds reported. IF any of those fail, THEN rerun the eval before changing the recipe. Reason: a delta that cannot survive a clean rerun is noise wearing a lab coat.</p>
+<h3 id="b-run-health">B. Run health</h3>
+<p><strong>Rule 4. Kill early.</strong></p>
+<p>IF loss diverges, hits NaN, or spikes past 3x the rolling median inside the first 5 percent of steps, THEN kill the run. Debug from the last good checkpoint. Reason: a run that will fail almost always shows it early. A dead run still burns the allocation.</p>
+<p><strong>Rule 5. The MFU floor.</strong></p>
+<p>IF measured MFU is below 30 percent, THEN stop the science and fix the systems first: batch size, parallelism layout, kernel choice. IF MFU sits at 40 to 60 percent, THEN the run is healthy on the systems side and further gains come from the recipe. Reason: low MFU is burned money, and no ablation result is trustworthy on a broken baseline.</p>
+<p><strong>Rule 6. Loss went up: data or optimizer?</strong></p>
+<p>IF loss spikes and the gradient norm stays flat, THEN suspect a data artifact (a bad batch, a corrupted sequence) and inspect that batch. IF loss climbs and the gradient norm climbs with it, THEN suspect optimization instability: tighten clipping, lower the learning rate, resume from the last good checkpoint. Reason: the gradient norm is the second signal. It separates data problems from optimizer problems, and the fix is different for each.</p>
+<h3 id="c-evidence-and-papers">C. Evidence and papers</h3>
+<p><strong>Rule 7. Reproduce before adopting.</strong></p>
+<p>IF a paper has no code, no ablations, and single-seed results, THEN reproduce its core claim at proxy scale before letting it change your recipe. Reason: most exciting claims do not survive contact with your data and your scale. The reproduction is cheap. The wrong recipe change is not.</p>
+<p><strong>Rule 8. The contamination check.</strong></p>
+<p>IF an eval score jumps suspiciously after a data change, THEN check n-gram overlap between eval items and training data before celebrating. Reason: a model that has seen the test is not a better model. It is a leaked one.</p>
+<p><strong>Rule 9. Write up the negative result.</strong></p>
+<p>IF a clean, compute-matched ablation kills a plausible idea, THEN write it up and file it where the team will find it. Reason: the lab's shared memory of what does not work is what stops the next person from burning the same budget on the same idea.</p>
+<h3 id="d-scale-judgment">D. Scale judgment</h3>
+<p><strong>Rule 10. isoFLOP sweep or one big run.</strong></p>
+<p>IF you must choose between model sizes at a fixed budget, THEN run an isoFLOP sweep. Use budgets spaced about 4x apart, and four to six sizes spanning roughly 8x in params. IF the size is already decided, THEN spend the budget on one clean run with good evals. Reason: the sweep finds the minimum of the U-curve. A single run at the wrong size is the most expensive way to learn the same lesson.</p>
+<p><strong>Rule 11. The extrapolation limit.</strong></p>
+<p>IF the target compute is more than 10x past your largest fitted run, THEN report a wide band and a plan to gather an intermediate point. Do not report a point prediction. Reason: power-law fits are honest interpolators and fiction past one order of magnitude.</p>
+<p><strong>Rule 12. Batch or learning rate?</strong></p>
+<p>IF the curves are jittery at small batch (gradient noise dominates), THEN scale the batch up toward the critical batch size before touching the learning rate. IF the curves are smooth but progress is slow, THEN the recipe is the lever (LR schedule, data mix), not the batch. Reason: batch size controls noise, learning rate controls step size. Tuning the wrong knob wastes the sweep.</p>
+<p><figure class="diagram"><svg id="my-svg" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 1400px; background-color: transparent; max-height: 1400px;" viewBox="4 4 1407.3529052734375 801.828125" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#my-svg{font-family:Inter,system-ui,sans-serif;font-size:15px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#a44141;}#my-svg .error-text{fill:#ddd;stroke:#ddd;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:lightgrey;stroke:lightgrey;}#my-svg .marker.cross{stroke:lightgrey;}#my-svg svg{font-family:Inter,system-ui,sans-serif;font-size:15px;}#my-svg p{margin:0;}#my-svg .label{font-family:Inter,system-ui,sans-serif;color:#ccc;}#my-svg .cluster-label text{fill:#F9FFFE;}#my-svg .cluster-label span{color:#F9FFFE;}#my-svg .cluster-label span p{background-color:transparent;}#my-svg .label text,#my-svg span{fill:#ccc;color:#ccc;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#1f2020;stroke:#ccc;stroke-width:1px;}#my-svg .rough-node .label text,#my-svg .node .label text,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-anchor:middle;}#my-svg .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#my-svg .rough-node .label,#my-svg .node .label,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .root .anchor path{fill:lightgrey!important;stroke-width:0;stroke:lightgrey;}#my-svg .arrowheadPath{fill:lightgrey;}#my-svg .edgePaths .path{stroke:lightgrey;stroke-width:1px;}#my-svg .flowchart-link{stroke:lightgrey;fill:none;}#my-svg .edgeLabel{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .edgeLabel p{background-color:hsl(0, 0%, 34.4117647059%);}#my-svg .edgeLabel rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .labelBkg{background-color:rgba(87.75, 87.75, 87.75, 0.5);}#my-svg .cluster rect{fill:hsl(180, 1.5873015873%, 28.3529411765%);stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#my-svg .cluster text{fill:#F9FFFE;}#my-svg .cluster span{color:#F9FFFE;}#my-svg .node .collapsed-indicator{fill:rgba(255, 255, 255, 0.25);stroke:none;opacity:0.6;}#my-svg .node .collapsed-separator{stroke:rgba(255, 255, 255, 0.25);stroke-width:0.75px;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Inter,system-ui,sans-serif;font-size:12px;background:hsl(20, 1.5873015873%, 12.3529411765%);border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#my-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#my-svg rect.text{fill:none;stroke-width:0;}#my-svg .icon-shape,#my-svg .image-shape{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .icon-shape p,#my-svg .image-shape p{background-color:hsl(0, 0%, 34.4117647059%);padding:2px;}#my-svg .icon-shape .label rect,#my-svg .image-shape .label rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg .node .neo-node{stroke:#ccc;}#my-svg [data-look="neo"].node rect,#my-svg [data-look="neo"].cluster rect,#my-svg [data-look="neo"].node polygon{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].swimlane.cluster rect{filter:none;}#my-svg [data-look="neo"].node path{stroke:url(#my-svg-gradient);stroke-width:1px;}#my-svg [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#my-svg [data-look="neo"].node circle{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node circle .state-start{fill:#000000;}#my-svg [data-look="neo"].icon-shape .icon{fill:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].icon-shape .icon-neo path{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"/></marker><marker id="my-svg_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"/></marker><g class="root"><g class="clusters"/><g class="edges edgePaths"><path d="M850.57421875,58.5L850.57421875,71.42893218813452Q850.57421875,78.5 843.5031509381345,78.5L497.54893239519873,78.5Q490.47786458333326,78.5 490.47786458333326,85.57106781186548L490.47786458333326,94.5" id="my-svg-L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 386.7680969238281 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6ODUwLjU3NDIxODc1LCJ5Ijo1OC41fSx7IngiOjg1MC41NzQyMTg3NSwieSI6NzguNX0seyJ4Ijo0OTAuNDc3ODY0NTgzMzMzMjYsInkiOjc4LjV9LHsieCI6NDkwLjQ3Nzg2NDU4MzMzMzI2LCJ5Ijo5OC41fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M452.77083333333326,231.62101799994707L452.77083333333326,269.328125L452.77083333333326,282.2570571881345Q452.77083333333326,289.328125 445.6997655214678,289.328125L140.32888031186548,289.328125Q133.2578125,289.328125 133.2578125,296.3991928118655L133.2578125,429.828125" id="my-svg-L_B_K1_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 508.391845703125 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_B_K1_0" data-points="W3sieCI6NDUyLjc3MDgzMzMzMzMzMzI2LCJ5IjoyMzEuNjIxMDE3OTk5OTQ3MDd9LHsieCI6NDUyLjc3MDgzMzMzMzMzMzI2LCJ5IjoyNjkuMzI4MTI1fSx7IngiOjQ1Mi43NzA4MzMzMzMzMzMyNiwieSI6Mjg5LjMyODEyNX0seyJ4IjoxMzMuMjU3ODEyNSwieSI6Mjg5LjMyODEyNX0seyJ4IjoxMzMuMjU3ODEyNSwieSI6NDMzLjgyODEyNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M490.47786458333326,269.328125L490.47786458333326,367.828125" id="my-svg-L_B_S_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 94.5 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_B_S_0" data-points="W3sieCI6NDkwLjQ3Nzg2NDU4MzMzMzI2LCJ5IjoyNjkuMzI4MTI1fSx7IngiOjQ5MC40Nzc4NjQ1ODMzMzMyNiwieSI6MzcxLjgyODEyNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M528.1848958333333,231.62101799994707L528.1848958333333,269.328125L528.1848958333333,282.2570571881345Q528.1848958333333,289.328125 535.2559636451988,289.328125L1138.219296771468,289.328125Q1145.2903645833335,289.328125 1145.2903645833335,296.3991928118655L1145.2903645833335,450.49479166666663" id="my-svg-L_B_M_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 826.6509399414062 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_B_M_0" data-points="W3sieCI6NTI4LjE4NDg5NTgzMzMzMzMsInkiOjIzMS42MjEwMTc5OTk5NDcwN30seyJ4Ijo1MjguMTg0ODk1ODMzMzMzMywieSI6MjY5LjMyODEyNX0seyJ4Ijo1MjguMTg0ODk1ODMzMzMzMywieSI6Mjg5LjMyODEyNX0seyJ4IjoxMTQ1LjI5MDM2NDU4MzMzMzUsInkiOjI4OS4zMjgxMjV9LHsieCI6MTE0NS4yOTAzNjQ1ODMzMzM1LCJ5Ijo0NTQuNDk0NzkxNjY2NjY2NjN9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M465.3945312499999,517.244734287262L465.3945312499999,542.328125L465.3945312499999,555.2570571881345Q465.3945312499999,562.328125 458.3234634381344,562.328125L323.78330739519885,562.328125Q316.71223958333337,562.328125 316.71223958333337,569.3991928118654L316.7122395833335,640.828125" id="my-svg-L_S_K2_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 262.9373779296875 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_S_K2_0" data-points="W3sieCI6NDY1LjM5NDUzMTI0OTk5OTksInkiOjUxNy4yNDQ3MzQyODcyNjJ9LHsieCI6NDY1LjM5NDUzMTI0OTk5OTksInkiOjU0Mi4zMjgxMjV9LHsieCI6NDY1LjM5NDUzMTI0OTk5OTksInkiOjU2Mi4zMjgxMjV9LHsieCI6MzE2LjcxMjIzOTU4MzMzMzM3LCJ5Ijo1NjIuMzI4MTI1fSx7IngiOjMxNi43MTIyMzk1ODMzMzM1LCJ5Ijo2NDQuODI4MTI1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M515.5611979166666,517.244734287262L515.5611979166666,542.328125L515.5611979166666,555.2570571881345Q515.5611979166666,562.328125 522.632265728532,562.328125L657.172421771468,562.328125Q664.2434895833334,562.328125 664.2434895833334,569.3991928118655L664.2434895833334,640.828125" id="my-svg-L_S_K3_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 262.9373779296875 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_S_K3_0" data-points="W3sieCI6NTE1LjU2MTE5NzkxNjY2NjYsInkiOjUxNy4yNDQ3MzQyODcyNjJ9LHsieCI6NTE1LjU2MTE5NzkxNjY2NjYsInkiOjU0Mi4zMjgxMjV9LHsieCI6NTE1LjU2MTE5NzkxNjY2NjYsInkiOjU2Mi4zMjgxMjV9LHsieCI6NjY0LjI0MzQ4OTU4MzMzMzQsInkiOjU2Mi4zMjgxMjV9LHsieCI6NjY0LjI0MzQ4OTU4MzMzMzQsInkiOjY0NC44MjgxMjV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M1123.2903645833335,500.99479166666663L1123.2903645833335,555.2570571881345Q1123.2903645833335,562.328125 1116.219296771468,562.328125L1018.3458073951988,562.328125Q1011.2747395833334,562.328125 1011.2747395833334,569.3991928118655L1011.2747395833334,640.828125" id="my-svg-L_M_K4_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 242.52069091796875 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_M_K4_0" data-points="W3sieCI6MTEyMy4yOTAzNjQ1ODMzMzM1LCJ5Ijo1MDAuOTk0NzkxNjY2NjY2NjN9LHsieCI6MTEyMy4yOTAzNjQ1ODMzMzM1LCJ5Ijo1NjIuMzI4MTI1fSx7IngiOjEwMTEuMjc0NzM5NTgzMzMzNCwieSI6NTYyLjMyODEyNX0seyJ4IjoxMDExLjI3NDczOTU4MzMzMzQsInkiOjY0NC44MjgxMjV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M1167.2903645833335,500.99479166666663L1167.2903645833335,555.2570571881345Q1167.2903645833335,562.328125 1174.361432395199,562.328125L1272.234921771468,562.328125Q1279.3059895833335,562.328125 1279.3059895833335,569.3991928118655L1279.3059895833335,640.828125" id="my-svg-L_M_OK_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 242.52073669433594 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_M_OK_0" data-points="W3sieCI6MTE2Ny4yOTAzNjQ1ODMzMzM1LCJ5Ijo1MDAuOTk0NzkxNjY2NjY2NjN9LHsieCI6MTE2Ny4yOTAzNjQ1ODMzMzM1LCJ5Ijo1NjIuMzI4MTI1fSx7IngiOjEyNzkuMzA1OTg5NTgzMzMzNSwieSI6NTYyLjMyODEyNX0seyJ4IjoxMjc5LjMwNTk4OTU4MzMzMzUsInkiOjY0NC44MjgxMjV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M133.2578125,480.328125L133.2578125,593.578125L133.2578125,668.078125L133.2578125,724.2570571881345Q133.2578125,731.328125 140.32888031186548,731.328125L613.172421771468,731.328125Q620.2434895833334,731.328125 620.2434895833334,738.3991928118655L620.2434895833334,747.328125" id="my-svg-L_K1_R_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 744.6574096679688 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_K1_R_0" data-points="W3sieCI6MTMzLjI1NzgxMjUsInkiOjQ4MC4zMjgxMjV9LHsieCI6MTMzLjI1NzgxMjUsInkiOjU5My41NzgxMjV9LHsieCI6MTMzLjI1NzgxMjUsInkiOjY2OC4wNzgxMjV9LHsieCI6MTMzLjI1NzgxMjUsInkiOjczMS4zMjgxMjV9LHsieCI6NjIwLjI0MzQ4OTU4MzMzMzQsInkiOjczMS4zMjgxMjV9LHsieCI6NjIwLjI0MzQ4OTU4MzMzMzQsInkiOjc1MS4zMjgxMjV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M316.7122395833335,691.328125L316.7122395833335,704.2570571881345Q316.7122395833335,711.328125 323.78330739519896,711.328125L635.172421771468,711.328125Q642.2434895833334,711.328125 642.2434895833334,718.3991928118655L642.2434895833334,747.328125" id="my-svg-L_K2_R_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 372.2029724121094 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_K2_R_0" data-points="W3sieCI6MzE2LjcxMjIzOTU4MzMzMzUsInkiOjY5MS4zMjgxMjV9LHsieCI6MzE2LjcxMjIzOTU4MzMzMzUsInkiOjcxMS4zMjgxMjV9LHsieCI6NjQyLjI0MzQ4OTU4MzMzMzQsInkiOjcxMS4zMjgxMjV9LHsieCI6NjQyLjI0MzQ4OTU4MzMzMzQsInkiOjc1MS4zMjgxMjV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M664.2434895833334,691.328125L664.2434895833334,747.328125" id="my-svg-L_K3_R_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 52 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_K3_R_0" data-points="W3sieCI6NjY0LjI0MzQ4OTU4MzMzMzQsInkiOjY5MS4zMjgxMjV9LHsieCI6NjY0LjI0MzQ4OTU4MzMzMzQsInkiOjc1MS4zMjgxMjV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M1011.2747395833334,691.328125L1011.2747395833334,704.2570571881345Q1011.2747395833334,711.328125 1004.203671771468,711.328125L693.3145573951988,711.328125Q686.2434895833334,711.328125 686.2434895833334,718.3991928118655L686.2434895833334,747.328125" id="my-svg-L_K4_R_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 371.7030029296875 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_K4_R_0" data-points="W3sieCI6MTAxMS4yNzQ3Mzk1ODMzMzM0LCJ5Ijo2OTEuMzI4MTI1fSx7IngiOjEwMTEuMjc0NzM5NTgzMzMzNCwieSI6NzExLjMyODEyNX0seyJ4Ijo2ODYuMjQzNDg5NTgzMzMzNCwieSI6NzExLjMyODEyNX0seyJ4Ijo2ODYuMjQzNDg5NTgzMzMzNCwieSI6NzUxLjMyODEyNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M708.2434895833334,751.328125L708.2434895833334,738.3991928118655Q708.2434895833334,731.328125 715.3145573951988,731.328125L1396.281796771468,731.328125Q1403.3528645833335,731.328125 1403.3528645833335,724.2570571881345L1403.3528645833335,668.078125L1403.3528645833335,593.578125L1403.3528645833335,457.078125L1403.3528645833335,320.578125L1403.3528645833335,183.9140625L1403.3528645833335,85.57106781186548Q1403.3528645833335,78.5 1396.281796771468,78.5L901.6452865618655,78.5Q894.57421875,78.5 894.57421875,71.42893218813452L894.57421875,62.5" id="my-svg-L_R_A_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 1878.0596923828125 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_R_A_0" data-points="W3sieCI6NzA4LjI0MzQ4OTU4MzMzMzQsInkiOjc1MS4zMjgxMjV9LHsieCI6NzA4LjI0MzQ4OTU4MzMzMzQsInkiOjczMS4zMjgxMjV9LHsieCI6MTQwMy4zNTI4NjQ1ODMzMzM1LCJ5Ijo3MzEuMzI4MTI1fSx7IngiOjE0MDMuMzUyODY0NTgzMzMzNSwieSI6NjY4LjA3ODEyNX0seyJ4IjoxNDAzLjM1Mjg2NDU4MzMzMzUsInkiOjU5My41NzgxMjV9LHsieCI6MTQwMy4zNTI4NjQ1ODMzMzM1LCJ5Ijo0NTcuMDc4MTI1fSx7IngiOjE0MDMuMzUyODY0NTgzMzMzNSwieSI6MzIwLjU3ODEyNX0seyJ4IjoxNDAzLjM1Mjg2NDU4MzMzMzUsInkiOjE4My45MTQwNjI1fSx7IngiOjE0MDMuMzUyODY0NTgzMzMzNSwieSI6NzguNX0seyJ4Ijo4OTQuNTc0MjE4NzUsInkiOjc4LjV9LHsieCI6ODk0LjU3NDIxODc1LCJ5Ijo1OC41fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(133.1953125, 320.578125)"><g class="label" data-id="L_B_K1_0" transform="translate(-76.9375, -11.25)"><foreignObject width="153.875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Loss NaN or diverged</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(490.47005208333326, 320.578125)"><g class="label" data-id="L_B_S_0" transform="translate(-99.9921875, -11.25)"><foreignObject width="199.984375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Spike over 3x rolling median</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(1145.1341145833335, 320.578125)"><g class="label" data-id="L_B_M_0" transform="translate(-57.84375, -11.25)"><foreignObject width="115.6875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Smooth descent</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(316.62630208333337, 593.578125)"><g class="label" data-id="L_S_K2_0" transform="translate(-12.9140625, -11.25)"><foreignObject width="25.828125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Flat</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(663.8684895833334, 593.578125)"><g class="label" data-id="L_S_K3_0" transform="translate(-31.125, -11.25)"><foreignObject width="62.25" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Climbing</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(1011.2122395833334, 593.578125)"><g class="label" data-id="L_M_K4_0" transform="translate(-40.4375, -11.25)"><foreignObject width="80.875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Below 30%</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(1279.2278645833335, 593.578125)"><g class="label" data-id="L_M_OK_0" transform="translate(-37.421875, -11.25)"><foreignObject width="74.84375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>40 to 60%</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="my-svg-flowchart-A-0" data-look="neo" transform="translate(872.57421875, 35.25)"><rect class="basic label-container" style="" x="-76" y="-23.25" width="152" height="46.5"/><g class="label" style="" transform="translate(-60, -11.25)"><rect/><foreignObject width="120" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Run launched</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-B-1" data-look="neo" transform="translate(490.47786458333326, 183.9140625)"><polygon points="85.4140625,0 170.828125,-85.4140625 85.4140625,-170.828125 0,-85.4140625" class="label-container" transform="translate(-84.9140625, 85.4140625)"/><g class="label" style="" transform="translate(-60.1640625, -11.25)"><rect/><foreignObject width="120.328125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>First 5% of steps</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-K1-3" data-look="neo" transform="translate(133.2578125, 457.078125)"><rect class="basic label-container" style="" x="-121.2578125" y="-23.25" width="242.515625" height="46.5"/><g class="label" style="" transform="translate(-105.2578125, -11.25)"><rect/><foreignObject width="210.515625" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Kill. Check precision, LR, data</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-S-5" data-look="neo" transform="translate(490.47786458333326, 457.078125)"><polygon points="85.25,0 170.5,-85.25 85.25,-170.5 0,-85.25" class="label-container" transform="translate(-84.75, 85.25)"/><g class="label" style="" transform="translate(-60, -11.25)"><rect/><foreignObject width="120" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Gradient norm?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-M-7" data-look="neo" transform="translate(1145.2903645833335, 477.74479166666663)"><rect class="basic label-container" style="" x="-76" y="-23.25" width="152" height="46.5"/><g class="label" style="" transform="translate(-60, -11.25)"><rect/><foreignObject width="120" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Measure MFU</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-K2-9" data-look="neo" transform="translate(316.7122395833335, 668.078125)"><rect class="basic label-container" style="" x="-124.484375" y="-23.25" width="248.96875" height="46.5"/><g class="label" style="" transform="translate(-108.484375, -11.25)"><rect/><foreignObject width="216.96875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Inspect the batch: data artifact</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-K3-11" data-look="neo" transform="translate(664.2434895833334, 668.078125)"><rect class="basic label-container" style="" x="-183.046875" y="-23.25" width="366.09375" height="46.5"/><g class="label" style="" transform="translate(-167.046875, -11.25)"><rect/><foreignObject width="334.09375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Tighten clip, lower LR, resume from checkpoint</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-K4-13" data-look="neo" transform="translate(1011.2747395833334, 668.078125)"><rect class="basic label-container" style="" x="-123.984375" y="-23.25" width="247.96875" height="46.5"/><g class="label" style="" transform="translate(-107.984375, -11.25)"><rect/><foreignObject width="215.96875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Stop science. Fix systems first</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-OK-15" data-look="neo" transform="translate(1279.3059895833335, 668.078125)"><rect class="basic label-container" style="" x="-104.046875" y="-23.25" width="208.09375" height="46.5"/><g class="label" style="" transform="translate(-88.046875, -11.25)"><rect/><foreignObject width="176.09375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Healthy run. Watch evals</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-R-17" data-look="neo" transform="translate(664.2434895833334, 774.578125)"><rect class="basic label-container" style="" x="-76" y="-23.25" width="152" height="46.5"/><g class="label" style="" transform="translate(-60, -11.25)"><rect/><foreignObject width="120" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Fix, relaunch</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="my-svg-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><defs><filter id="my-svg-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><linearGradient id="my-svg-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"/><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"/></linearGradient></svg></figure></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li><strong>Top: the launch.</strong> Every run enters the same triage. The first 5 percent of steps is the observation window.</li>
+<li><strong>Left branch: hard failure.</strong> NaN or divergence means kill immediately. The suspects are precision, learning rate, and data, in that order.</li>
+<li><strong>Middle branch: spikes.</strong> A spike over 3x the rolling median triggers the gradient-norm question from Rule 6. Flat norm points at the batch. Climbing norm points at the optimizer.</li>
+<li><strong>Right branch: smooth curves.</strong> Smooth loss is not enough. Measure MFU. Below 30 percent is a systems problem wearing a training mask. Forty to 60 percent is healthy.</li>
+<li><strong>Bottom: the loop.</strong> Every kill ends in a fix and a relaunch, never in staring at a dying curve.</li>
+</ol></div><h2 id="part-2-must-memorize-numbers-and-formulas">Part 2. Must-memorize numbers and formulas</h2>
+<p>The table below is the track's working memory. Each row gives the value with its units, and what decision it drives. Values marked UNVERIFIED come from standard practice outside the curriculum volumes; the rest are grounded in the volumes named in the last column.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Item</th>
+<th>Value</th>
+<th>Decides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Training FLOPs</td>
+<td>C = 6ND (FLOPs)</td>
+<td>the budget every fair run is matched on</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Forward backward split</td>
+<td>2 fwd + 4 bwd (FLOPs per param per token)</td>
+<td>why the backward pass rules cost</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Chinchilla ratio</td>
+<td>~20 (tokens per param)</td>
+<td>the default fair fight at fixed compute</td>
+</tr>
+<tr>
+<td>4</td>
+<td>GPT-3 training compute</td>
+<td>3.15e23 (FLOPs)</td>
+<td>anchor example, computed below</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Chinchilla training compute</td>
+<td>5.88e23 (FLOPs)</td>
+<td>anchor: 70B on 1.4T tokens</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Gopher training compute</td>
+<td>5.04e23 (FLOPs)</td>
+<td>the budget Chinchilla nearly matched</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Kaplan compute exponent</td>
+<td>loss ~ C^-0.050</td>
+<td>order of gains from 10x compute</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Power-law form</td>
+<td>L(C) = a*C^-b + c (loss)</td>
+<td>the fit used to predict</td>
+</tr>
+<tr>
+<td>9</td>
+<td>MFU, healthy large run</td>
+<td>40-60 (percent of peak)</td>
+<td>the systems side is sound</td>
+</tr>
+<tr>
+<td>10</td>
+<td>MFU floor</td>
+<td>30 (percent of peak)</td>
+<td>below this, fix systems before science</td>
+</tr>
+<tr>
+<td>11</td>
+<td>H100 BF16 dense peak</td>
+<td>989 (TFLOPS)</td>
+<td>the input to GPU-hour math</td>
+</tr>
+<tr>
+<td>12</td>
+<td>AdamW optimizer states</td>
+<td>8 (bytes per param, 2 fp32 numbers)</td>
+<td>why a 7B model needs sharding</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Weights in bf16</td>
+<td>2 (bytes per param)</td>
+<td>memory math for model placement</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Batch at scale</td>
+<td>millions; LLaMA 4M (tokens per batch)</td>
+<td>gradient noise vs wall clock</td>
+</tr>
+<tr>
+<td>15</td>
+<td>LR warmup</td>
+<td>hundreds to low thousands (steps)</td>
+<td>avoids early instability</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Cosine decay floor</td>
+<td>~10 (percent of peak LR)</td>
+<td>the schedule's resting point</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Gradient clip</td>
+<td>1.0 (global norm)</td>
+<td>caps single-step damage</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Dead-run horizon</td>
+<td>5 (percent of steps)</td>
+<td>failure shows early; kill fast</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Spike threshold</td>
+<td>3x (rolling median)</td>
+<td>the detector default</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Bootstrap resamples</td>
+<td>2,000+ (resamples)</td>
+<td>the "is it real" test</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Significance level</td>
+<td>95 (percent CI)</td>
+<td>zero inside the interval means noise</td>
+</tr>
+<tr>
+<td>22</td>
+<td>isoFLOP grid</td>
+<td>budgets ~4x apart; 4-6 sizes over ~8x params</td>
+<td>12-18 runs to find the optimum</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Extrapolation limit</td>
+<td>10x (past fitted compute)</td>
+<td>point predictions past this are fiction</td>
+</tr>
+<tr>
+<td>24</td>
+<td>N for 6ND</td>
+<td>non-embedding params</td>
+<td>embedding tables scale differently</td>
+</tr>
+<tr>
+<td>25</td>
+<td>MoE FLOP accounting</td>
+<td>active params, not total</td>
+<td>the 6 in 6ND counts working params</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Full attention</td>
+<td>O(n^2*d) compute, O(n^2) memory</td>
+<td>why long context needs sparse attention</td>
+</tr>
+<tr>
+<td>27</td>
+<td>KV cache</td>
+<td>2<em>L</em>n*d (elements per token)</td>
+<td>the memory term that kills long context</td>
+</tr>
+<tr>
+<td>28</td>
+<td>MQA/GQA savings</td>
+<td>n_heads / n_kv_heads (factor)</td>
+<td>KV cache cut vs quality tradeoff</td>
+</tr>
+<tr>
+<td>29</td>
+<td>PPO clip</td>
+<td>eps = 0.2 (ratio bound)</td>
+<td>keeps policy updates pessimistic</td>
+</tr>
+<tr>
+<td>30</td>
+<td>SFT recipe</td>
+<td>LR ~10x below pre-training; 1-3 (epochs)</td>
+<td>stops forgetting of old skills</td>
+</tr>
+</tbody>
+</table>
+<p>A note on the table: none of the values are invented. Still, re-check exact recipe defaults (row 29) against the cited volume before quoting them in a design doc.</p>
+<p>The code below computes rows 1, 4, 5, and 6 from scratch. It finds compute-matched (N, D) pairs along the Chinchilla line. It runs the paired bootstrap from Rules 3 and 11. Run it. The outputs are real, from the run captured while writing this pack.</p>
+<p><pre><code class="language-python">import numpy as np
+
+# --- Part 1: compute matching -----------------------------------------------
+# 6*N*D: ~2 FLOPs per param per token forward, ~4 backward (dense transformer).
+# N should be non-embedding params for scaling-law comparisons.
+def flops(n_params, n_tokens):
+    # WHAT: total training FLOPs from model size and token count.
+    # WHY: this is the budget every fair comparison is matched on.
+    # WHAT BREAKS: MoE models must use ACTIVE params, not total.
+    return 6.0 * n_params * n_tokens
+
+def chinchilla_pairs(flops_budget, sizes):
+    # WHAT: for each size, the token count that spends exactly flops_budget,
+    #   plus the resulting tokens-per-param ratio.
+    # WHY: the Chinchilla-optimal comparison changes size and tokens together.
+    out = []
+    for n in sizes:
+        d = flops_budget / (6.0 * n)
+        out.append((n, d, d / n))
+    return out
+
+# Worked: GPT-3 (175B, 300B tokens) vs Chinchilla (70B, 1.4T tokens).
+gpt3 = flops(175e9, 300e9)
+chin = flops(70e9, 1.4e12)
+print(&quot;GPT-3 FLOPs:      %.3e&quot; % gpt3)
+print(&quot;Chinchilla FLOPs: %.3e&quot; % chin)
+print(&quot;ratio: %.2f&quot; % (chin / gpt3))
+print()
+print(&quot;Compute-matched pairs at the Chinchilla budget:&quot;)
+for n, d, r in chinchilla_pairs(chin, [3e9, 7e9, 13e9]):
+    print(&quot;  N=%4.0fB  D=%6.0fB tokens  ratio=%5.1f tok/param&quot; % (n/1e9, d/1e9, r))
+
+# --- Part 2: is the delta real? ----------------------------------------------
+def bootstrap_paired_ci(scores_a, scores_b, n_boot=2000, ci=0.95, seed=7):
+    # WHAT: 95% CI on the mean paired difference via resampling.
+    # WHY: pairing subtracts item difficulty (most of the variance); the CI
+    #   says whether the delta survives noise. If 0 is inside, do not claim.
+    # WHAT BREAKS: assumes per-example scores are independent. Evals with
+    #   shared passages need a cluster bootstrap (resample passages).
+    rng = np.random.default_rng(seed)
+    diffs = np.asarray(scores_b, dtype=float) - np.asarray(scores_a, dtype=float)
+    means = [rng.choice(diffs, size=len(diffs), replace=True).mean() for _ in range(n_boot)]
+    lo, hi = np.percentile(means, [(1-ci)/2*100, (1+ci)/2*100])
+    return diffs.mean(), lo, hi
+
+print()
+rng = np.random.default_rng(0)
+base = rng.normal(62.0, 9.0, size=200)
+treat = base + rng.normal(2.0, 2.5, size=200)   # truly +2 points
+d, lo, hi = bootstrap_paired_ci(base, treat)
+print(&quot;true +2.0 delta:  mean=%+.2f  95%% CI [%+.2f, %+.2f]  -&gt; %s&quot; %
+      (d, lo, hi, &quot;REAL (0 outside)&quot; if lo &gt; 0 or hi &lt; 0 else &quot;noise&quot;))
+treat2 = base + rng.normal(0.15, 2.5, size=200)  # truly +0.15 points
+d2, lo2, hi2 = bootstrap_paired_ci(base, treat2)
+print(&quot;true +0.15 delta: mean=%+.2f  95%% CI [%+.2f, %+.2f]  -&gt; %s&quot; %
+      (d2, lo2, hi2, &quot;REAL (0 outside)&quot; if lo2 &gt; 0 or hi2 &lt; 0 else &quot;noise&quot;))
+</code></pre></p>
+<p><pre><code class="language-text">GPT-3 FLOPs:      3.150e+23
+Chinchilla FLOPs: 5.880e+23
+ratio: 1.87
+
+Compute-matched pairs at the Chinchilla budget:
+  N=   3B  D= 32667B tokens  ratio=10888.9 tok/param
+  N=   7B  D= 14000B tokens  ratio=2000.0 tok/param
+  N=  13B  D= 7538B tokens  ratio=579.9 tok/param
+
+true +2.0 delta:  mean=+1.78  95% CI [+1.44, +2.13]  -&gt; REAL (0 outside)
+true +0.15 delta: mean=+0.16  95% CI [-0.18, +0.49]  -&gt; noise
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li><strong>The FLOPs block.</strong> <code>flops(175e9, 300e9)</code> returns 3.150e23. That is row 4 of the table, computed not quoted. The ratio 1.87 says Chinchilla spent under twice GPT-3's compute, not ten times.</li>
+<li><strong>The pairs block.</strong> At the Chinchilla budget, a 7B model would need 14,000B tokens (2,000 tok/param) to spend the same FLOPs. The absurd ratios show why the optimum sits near 20: extreme sizes waste the budget on the wrong side of the tradeoff.</li>
+<li><strong>The bootstrap block.</strong> The +2.0 delta gives a CI of [+1.44, +2.13]: zero is outside, so the delta is real. The +0.15 delta gives [-0.18, +0.49]: zero is inside, so it is noise even though the measured mean is positive. That is the whole lesson of Rule 3 in one printout.</li>
+</ol></div><h2 id="part-3-classic-traps">Part 3. Classic traps</h2>
+<p>Each trap below has burned real budgets. For each one: what it looks like, how to spot it, and the rule that prevents it.</p>
+<p><strong>Trap 1. The compute-mismatched ablation.</strong> The treatment trains longer, on more data, or with a bigger model than the baseline, and the "improvement" is just more compute. Spot it: the write-up reports the score delta but not N, D, and FLOPs for both runs. Prevention: Rule 1. Two runs are compute-matched when their 6ND products agree. Report all three numbers, always.</p>
+<p><strong>Trap 2. Benchmark contamination.</strong> The new data mix accidentally includes eval items (or near-copies), and scores jump. Spot it: the gain is concentrated on one benchmark family, or appears only after a data change. Run an n-gram overlap check between train and eval before any claim. Prevention: Rule 8.</p>
+<p><strong>Trap 3. Goodhart on the proxy.</strong> The reward model (or the proxy metric) goes up while the thing you actually want goes flat or down. In RL this looks like reward rising while KL from the reference explodes: the policy found a loophole. Spot it: watch KL per epoch on a fixed prompt set; inspect high-reward samples by hand. Prevention: strengthen the KL penalty, fix the reward signal, or switch to verifiable rewards.</p>
+<p><strong>Trap 4. Reading the loss curve wrong.</strong> A single spike is treated as instability and the LR is cut, when the gradient norm was flat and the cause was one bad batch. Or a slow climb is ignored because each step looks fine. Spot it: always read loss and gradient norm together. Prevention: Rule 6 and the signature gallery below.</p>
+<p><strong>Trap 5. The single-seed hero.</strong> One seed gives +1.5 points, the write-up reports that seed. Spot it: no spread reported, no seed list, "best of 5" in a footnote. Prevention: report the mean and the interval across seeds. A result that needs its favorite seed is not a result.</p>
+<p><strong>Trap 6. The strawman baseline.</strong> The proposed method beats a baseline that was undertrained, badly tuned, or trained on less data. Spot it: reconstruct 6ND for the baseline. If the baseline sat far from the Chinchilla line, the comparison proves nothing. Prevention: the baseline gets the same tuning budget and the same compute as the treatment.</p>
+<p><strong>Trap 7. Extrapolating past 10x.</strong> Three small runs, a power-law fit, and a confident prediction for a run 60x larger. Spot it: the write-up shows the fit but not the hold-out error, and the target sits far past the largest fitted point. Prevention: Rule 11. The hold-out error is a lower bound on the real error, never the whole story.</p>
+<p><strong>Trap 8. Wrong FLOP accounting.</strong> Embedding params counted in N for 6ND, MoE total params used instead of active params, or attention FLOPs ignored at long context. Each one silently breaks compute matching. Spot it: recompute the budget yourself from the architecture, with non-embedding params. Prevention: rows 24 and 25 of the numbers table.</p>
+<p>The gallery below shows the six curve shapes from Track Chapter 8. Learn to name each one on sight.</p>
+<p><pre><code class="language-ascii">loss
+ ^   HEALTHY: smooth descent, flattening        SPIKE: sudden jump, recovers
+ |    *                                          *
+ |     *                                          *
+ |      **                                         *      *
+ |        ***                                       *    *
+ |           ******                                  ******
+ +---------------&gt; steps                        +---------------&gt; steps
+
+loss
+ ^   SLOW DIVERGENCE: climbs away from min      NaN DEATH: flatlines to invalid
+ |        ****                                       ****
+ |       *                                           *
+ |      *                                             *
+ |     *                                               *
+ |   **                                                 * * * (NaN)
+ | **                                                *
+ +---------------&gt; steps                        +---------------&gt; steps
+
+loss
+ ^   PLATEAU: flat, grad norm healthy           OSCILLATION: regular sawtooth
+ |   *******************                            * * * * * *
+ |                                                   * * * * *
+ |                                                    * * * *
+ +---------------&gt; steps                        +---------------&gt; steps
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li><strong>Top left, healthy.</strong> Loss falls fast, then flattens toward a floor. This is the only shape that needs no action.</li>
+<li><strong>Top right, spike.</strong> A vertical jump that recovers. Apply Rule 6: check the gradient norm at the jump. Flat norm means a bad batch. Climbing norm means instability.</li>
+<li><strong>Middle left, slow divergence.</strong> The curve climbs away from its minimum. Each step looks fine; only the trend gives it away. Compare the late median against the best-so-far median, not against the start.</li>
+<li><strong>Middle right, NaN death.</strong> The trace goes invalid at one step and never comes back. Resume from the last good checkpoint, then fix the cause (precision, LR, bad batch) before relaunching.</li>
+<li><strong>Bottom left, plateau.</strong> Flat loss with a healthy gradient norm. The optimizer is fine; the recipe is exhausted. Check the LR schedule position and data repeats.</li>
+<li><strong>Bottom right, oscillation.</strong> Regular sawtooth with a fixed period. Real instability is not periodic. A fixed period points at the data loader (a poisoned shard, an interleaved eval), not the optimizer.</li>
+</ol></div><p>The detectors below turn the gallery into code. They use rolling statistics only, so they run online during a real run. The outputs shown are from the actual run captured while writing this pack.</p>
+<p><pre><code class="language-python">import numpy as np
+
+def detect_spike(loss, k=3.0, window=200):
+    # WHAT: flags steps where loss exceeds k x the rolling median.
+    # WHY: spikes are the earliest visible sign of instability. Catching one
+    #   at step 41,000 instead of 60,000 saves real money.
+    # WHAT BREAKS: tuned for smooth LLM curves. Small noisy runs need wider
+    #   windows and larger k, or the detector cries wolf.
+    loss = np.asarray(loss, dtype=float)
+    hits = []
+    for i in range(window, len(loss)):
+        med = np.median(loss[i-window:i])
+        if loss[i] &gt; k * med:
+            hits.append(i)
+    return hits
+
+def detect_diverged(loss, window=500, frac=0.10):
+    # WHAT: True if the last `frac` of steps sits far above the curve minimum.
+    # WHY: slow divergence looks healthy step-to-step; only the trend away
+    #   from the best-so-far value gives it away.
+    loss = np.asarray(loss, dtype=float)
+    finite = loss[np.isfinite(loss)]
+    if len(finite) &lt; window:
+        return False
+    meds = [np.median(finite[i:i+window]) for i in range(0, len(finite)-window, window)]
+    late = np.median(finite[-int(len(finite)*frac):])
+    return bool(late &gt; 1.5 * min(meds))
+
+def detect_nan(loss):
+    # WHAT: first step index where loss is NaN or infinite.
+    # WHY: the kill decision needs the exact step to roll back to.
+    bad = np.nonzero(~np.isfinite(loss))[0]
+    return int(bad[0]) if len(bad) else None
+
+# --- Signature gallery: synthetic curves for four pathologies ---------------
+def healthy(n=6000, seed=1):
+    rng = np.random.default_rng(seed)
+    t = np.arange(n)
+    return 8.0 / (1 + t/800.0)**0.35 + 1.8 + rng.normal(0, 0.02, n)
+
+def loss_spike(n=6000, seed=2):
+    rng = np.random.default_rng(seed)
+    t = np.arange(n)
+    l = 8.0 / (1 + t/800.0)**0.35 + 1.8 + rng.normal(0, 0.02, n)
+    l[4100:4112] *= 6.0                       # one bad batch blows up
+    l[4112:] = l[4112:] * 0.5 + 1.9           # recovery, then settles high
+    return l
+
+def slow_divergence(n=6000, seed=3):
+    rng = np.random.default_rng(seed)
+    t = np.arange(n)
+    base = 8.0 / (1 + t/800.0)**0.35 + 1.8 + rng.normal(0, 0.02, n)
+    return base + 0.00035 * np.maximum(0, t - 2500)**1.3   # creeping climb
+
+def nan_death(n=6000, seed=4):
+    rng = np.random.default_rng(seed)
+    t = np.arange(n)
+    l = 8.0 / (1 + t/800.0)**0.35 + 1.8 + rng.normal(0, 0.02, n)
+    l[5300:] = np.nan                              # overflow kills the run
+    return l
+
+for name, gen in [(&quot;healthy&quot;, healthy), (&quot;loss_spike&quot;, loss_spike),
+                  (&quot;slow_divergence&quot;, slow_divergence), (&quot;nan_death&quot;, nan_death)]:
+    l = gen()
+    spikes = detect_spike(l)
+    print(&quot;%-16s nan_at=%s  diverged=%s  spike_steps=%s&quot; % (
+        name, detect_nan(l), detect_diverged(l),
+        (spikes[:3] + [&quot;...&quot;] if len(spikes) &gt; 3 else spikes) or &quot;none&quot;))
+</code></pre></p>
+<p><pre><code class="language-text">healthy          nan_at=None  diverged=False  spike_steps=none
+loss_spike       nan_at=None  diverged=False  spike_steps=[4100, 4101, 4102, ...]
+slow_divergence  nan_at=None  diverged=True  spike_steps=none
+nan_death        nan_at=5300  diverged=False  spike_steps=none
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li><strong>The detectors.</strong> Each one reads only past data (rolling medians), so it can run inside the training loop and page you mid-run.</li>
+<li><strong>The gallery.</strong> Four synthetic curves stand in for the real pathologies. The healthy curve trips no detector. The spike is caught at step 4100, the exact injected step. The slow divergence is caught by the trend test. The NaN death reports step 5300, the rollback point.</li>
+<li><strong>The point.</strong> Recognition speed is the skill. Adapt these detectors into your own run monitor before your next launch.</li>
+</ol></div><p>One more planning discipline from Track Chapter 5: the ablation matrix. One factor per axis, one run per cell. Read it two ways.</p>
+<p><pre><code class="language-ascii">Factor under test: data mix (3 levels) x LR schedule (2 levels)
+
+                    cosine decay      WSD schedule
+  old mix           run A (control)   run B
+  new mix           run C             run D
+  new mix + filter  run E             run F
+
+Read down each column: the data-mix effect, holding schedule fixed.
+Read across each row: the schedule effect, holding mix fixed.
+The interaction (does the new mix need the new schedule?)
+shows up only if you run the full matrix.
+</code></pre></p>
+<p>The full matrix is expensive. The discipline is deciding which cells to drop and writing down why, before the runs start. Dropping the interaction cells is a bet that the effects add. State the bet.</p>
+<h2 id="part-4-rapid-fire-qa">Part 4. Rapid-fire Q&amp;A</h2>
+<p>Answer each from memory before revealing. The answers are worked, not hinted: they show the math, the decision, and the trap.</p>
+<h3 id="ablation-design">Ablation design</h3><div class="pq"><div class="pq-q"><p><strong>Q1.</strong> Run A is 7B params on 140B tokens. Run B is 13B params on 75B tokens. Is the comparison compute-matched? Show the check.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: yes, matched.</strong> Compute 6ND for each. A: 6 x 7e9 x 140e9 = 5.88e21 FLOPs. B: 6 x 13e9 x 75e9 = 5.85e21 FLOPs. The budgets agree within 1 percent, so the score delta is attributable to the recipe, not the compute. The discipline from Rule 1: report N, D, and FLOPs for both runs, always. A comparison that reports only the delta is incomplete.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q2.</strong> Your treatment changes the tokenizer. What breaks in a compute-matched ablation, and how do you fix it?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: the token count stops meaning the same thing.</strong> 6ND is matched in tokens, but the two tokenizers cut text into different units. So "140B tokens" is more text under one tokenizer than the other. The comparison is confounded by data quantity. Fix it by matching on characters or bytes instead of tokens, and report both counts. The deeper lesson: compute matching assumes the unit of D is comparable. A tokenizer change breaks that assumption.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q3.</strong> Why a paired bootstrap instead of a t-test on the two raw score lists?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: pairing removes item difficulty, which is most of the variance.</strong> A t-test on raw lists treats "this item was easy" as signal and assumes bell-shaped scores. The paired design takes per-item differences first (same items, both runs), then bootstraps those differences with no distributional assumptions. With 200 items, the paired CI is far tighter and more honest. That is why the +0.15 delta in Part 2 reads as noise: the raw means differ, but the paired interval contains zero.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q4.</strong> Your eval shares passages across items (multi-hop QA over the same documents). What changes in the significance test?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: resample passages, not items (cluster bootstrap).</strong> Items sharing a passage are not independent: one hard passage drags all its items down together. A plain bootstrap treats them as independent and makes the interval artificially narrow, so noise looks like signal. The fix costs nothing: group scores by passage, resample the groups, recompute the mean difference each time.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q5.</strong> Name three situations where an ablation is NOT worth running.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer.</strong> First, the idea's failure mode is already settled by published ablations; rerunning it buys nothing. Second, the eval cannot detect the claimed effect (the CI from Part 2 would swallow it); fix the measurement before spending compute. Third, the compute is better spent on the scaling-law fit that gates the big run: one good extrapolation beats five inconclusive ablations. The common thread: an ablation must be able to change a decision. If it cannot, it is curiosity spending.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q6.</strong> In the ablation matrix (data mix x LR schedule), what does the interaction cell tell you, and what bet are you making if you skip it?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: the interaction cell tells you whether the new mix needs the new schedule.</strong> Reading down a column gives the mix effect at fixed schedule. Reading across a row gives the schedule effect at fixed mix. The interaction (run F minus the sum of the parts) shows up only in the full matrix. Skipping it is a bet that the effects add. State the bet in writing before the runs start, so a surprise later is a finding, not an excuse.</p></div></div><h3 id="scaling-laws">Scaling laws</h3><div class="pq"><div class="pq-q"><p><strong>Q7.</strong> Derive 6ND on the board, in two lines.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer.</strong> Forward pass: each parameter participates in roughly one multiply-add per token, which is 2 FLOPs, so 2ND. Backward pass: gradients flow to both the activations and the weights, costing about twice the forward pass, so 4ND. Total: 6ND. The two caveats: N is non-embedding params, and for MoE it is active params, not total.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q8.</strong> A lab proposes a 1T-param model on 2T tokens. Chinchilla-optimal or not? What do you tell them?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: not optimal; it is undertrained.</strong> The ratio is 2 tokens per param against the Chinchilla optimum of ~20. At fixed compute, the scaling laws say shrink the model ~10x or grow the data ~10x (or meet in the middle). GPT-3 was the famous version of this mistake: 175B params on 300B tokens, about 1.7 tok/param, far below the optimum the field later found.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q9.</strong> You fitted L(C) = a*C^-b + c on runs at 1e20, 4e20, and 1.6e21 FLOPs. The team wants a prediction at 1e23. What do you say?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: no point prediction.</strong> 1e23 is ~60x past the largest fitted run, far beyond the 10x extrapolation limit of Rule 11. Report a wide band. Show the hold-out error as a lower bound on the true error. Propose one intermediate run (say 1.6e22) to anchor the fit before committing the big budget. Power laws are honest interpolators and fiction at that range.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q10.</strong> What is an isoFLOP profile, and what does its U-shape mean?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: fix the FLOPs, vary the model size, plot loss.</strong> The curve is U-shaped. Tiny models waste the budget on too few params; huge models waste it on too few tokens per param. The minimum is the optimal size for that budget. Repeat at several budgets (spaced ~4x apart) and join the minima. That line is the scaling trend, and its slope tells you how to split the next budget between size and data.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q11.</strong> Why did Chinchilla (70B) beat Gopher (280B) at matched compute? Give the numbers.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: Gopher spent the budget on params, Chinchilla spent it on the optimal tradeoff.</strong> Gopher: 6 x 280e9 x 300e9 = 5.04e23 FLOPs at ~1 token/param. Chinchilla: 6 x 70e9 x 1.4e12 = 5.88e23 FLOPs at 20 tokens/param. Roughly matched compute, but Chinchilla sat at the bottom of the U-curve while Gopher sat on its wall. The lesson: at fixed compute, the split between N and D matters more than N alone.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q12.</strong> Kaplan (2020) vs Chinchilla (2022) in one sentence each.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer.</strong> Kaplan: at fixed compute, spend it on parameters; the models of 2020 were undertrained. Chinchilla: at fixed compute, scale parameters and tokens in equal proportion (~20 tok/param); Kaplan's models were undertrained in data, not params. The correction changed every lab's training recipe within a year.</p></div></div><h3 id="debugging-runs">Debugging runs</h3><div class="pq"><div class="pq-q"><p><strong>Q13.</strong> Loss spikes 6x at step 41,000, recovers within 50 steps, and settles slightly higher. Data or optimizer? What do you check first?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: check the gradient norm at the spike first.</strong> Flat norm means a data artifact: one bad batch blew up the loss without disturbing the optimizer. Pull that batch and inspect it (corrupted sequence, wrong language, extreme length). Climbing norm means instability: the optimizer took a bad step. If it recovered and settled only slightly higher, it was almost certainly data. Do not cut the LR over one bad batch.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q14.</strong> Gradient norm climbs steadily for thousands of steps while loss plateaus. What does it mean, and what do you change?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: the optimizer is fighting itself.</strong> The steps are getting larger while achieving less: the learning rate is too high for this phase, or mixed-precision loss scaling is misbehaving. Lower the LR slightly and resume from the last good checkpoint. Check the loss-scale trace too: frequent underflows plus a climbing norm point at precision, not the schedule.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q15.</strong> NaN at step 53,000. Name your first three actions, in order.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer.</strong> One: roll back to the last good checkpoint, including the optimizer and loss-scaler state; never resume NaN weights. Two: find the cause class: check whether a spike preceded it (instability), whether the batch was unusual (data), and whether loss scaling overflowed (precision). Three: change one thing before relaunching: tighten gradient clipping, lower the LR slightly, or filter the offending data. Relaunching unchanged is how one NaN becomes three dead runs.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q16.</strong> MFU is 22 percent on a new 512-GPU run. What do you change first?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: nothing about the science; fix the systems first (Rule 5).</strong> Below 30 percent means something structural is wrong. Profile a single step before changing anything. The usual suspects: a batch too small (tiny kernels keep the SMs busy doing nothing), a parallelism layout that exposes communication, or a data loader starving the GPUs. No ablation result is trustworthy until MFU is back in the 40-60 percent band.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q17.</strong> Loss is flat for 20 percent of steps and the gradient norm is healthy. What is it?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: a plateau, not a failure.</strong> The optimizer is fine; the recipe is exhausted. Check three things. Where is the LR schedule? (Decayed too far too early?) Is the data repeating? (Single-epoch pre-training should not repeat.) Is the eval itself saturated? The fix is a recipe change (schedule, data mix), never a bigger batch.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q18.</strong> Your spike detector fires every 500 steps like clockwork. Bug in the detector or signal in the run?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: signal in the run; the detector is doing its job.</strong> Real instability is not periodic. A fixed period points at the data pipeline: a poisoned shard that comes around every epoch fraction, or an eval interleaved on a fixed cadence. Inspect the batches at those exact steps. The period (500) is the clue: find what else in the system has period 500.</p></div></div><h3 id="paper-reading">Paper reading</h3><div class="pq"><div class="pq-q"><p><strong>Q19.</strong> The 90-minute first pass: what are the three questions you answer before reading past page 4?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer.</strong> One: what is the claim, stated as a falsifiable sentence? Two: what is the evidence, meaning compute, ablations, and seeds, not adjectives? Three: what would change in my work if the claim were true? If you cannot answer the first, the paper has no claim to evaluate. If the third answer is "nothing," stop reading and move on.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q20.</strong> A paper reports +3 points on one benchmark, one seed, no code, no ablations. What is your triage verdict?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: high risk; reproduce at proxy scale before adopting (Rule 7).</strong> The missing ablations hurt most: without them you cannot tell whether the idea or the tuning did the work. Single seed plus no code means you cannot even check the baseline's compute. Score it accordingly, file the reproduction as a small project, and do not let it change any recipe until the proxy run confirms the direction.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q21.</strong> The paper's baseline is described as "the original model." What do you check before believing the delta?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: whether the baseline got the same budget and tuning as the method.</strong> Reconstruct 6ND for both. Check the data: was the baseline trained on the same mix? Check the tuning: did the baseline get the same LR sweep? A method that beats an undertrained or stale baseline (Trap 6, the strawman) proves nothing. The honest comparison is new method vs best-known baseline at matched compute.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q22.</strong> What do the loss curves in a paper's appendix tell you that its tables cannot?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: stability.</strong> Spikes, restarts, NaN recoveries, and cherry-picked "stable" windows are visible in curves and invisible in final numbers. A table reports the endpoint; the curve reports the journey. If the appendix curves are missing or suspiciously smooth while the method is supposedly sensitive, that is a finding, not an absence.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q23.</strong> Lay out the three-day reproduction plan.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer.</strong> Day 1: restate the claims as falsifiable statements (C1, C2, C3 style), get the data and code running at tiny scale, and confirm the pipeline produces numbers. Day 2: reproduce the core claim at proxy scale; one clean experiment that would confirm the central result. Day 3: run the ablation that would kill the claim if it were wrong, then write up the verdict honestly, including the negative result if that is what you found.</p></div></div><h3 id="post-training-judgment">Post-training judgment</h3><div class="pq"><div class="pq-q"><p><strong>Q24.</strong> In DPO, what does beta control, and what single trace do you watch during training?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: beta sets how strongly the policy must stay near the reference model.</strong> High beta means "stay close to the SFT model". Low beta lets the policy chase the preference signal harder. Watch the mean token-level KL between policy and reference on a fixed prompt set, each epoch. Small and stable is healthy. KL exploding means the policy is drifting: stop or strengthen the penalty.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q25.</strong> Reward climbs every epoch. KL from the SFT reference climbs faster. Diagnosis and fix?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: reward hacking (Trap 3).</strong> The policy found a loophole in the proxy: outputs that score high without being better. The KL explosion is the giveaway; a genuinely better policy would not need to run that far from the reference. Fix: strengthen the KL penalty, inspect high-reward samples by hand to find the exploit, and improve the reward signal (better labels, or verifiable rewards where the task allows).</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q26.</strong> State PPO's clipped objective in words. What does the min() do?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: for each token, take the pessimistic of the unclipped and clipped ratio-times-advantage.</strong> The ratio is new-policy over old-policy probability. The min() caps the upside: one lucky sample cannot push a token's probability up without bound (clipped at 1 + eps). It also stops pushing down a bad token once the policy has moved past 1 - eps. Net effect: updates stay in a trust region around the old policy, and eps = 0.2 is the standard width.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q27.</strong> What does GRPO drop from PPO, and what replaces it?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: it drops the learned value model (the critic).</strong> Instead of a critic's baseline, GRPO samples a group of completions per prompt and sets advantage = (reward - group mean) / group std. The group's own statistics become the baseline. This is cheaper (no second model to train) and works well when rewards are verifiable per completion, as in math and code tasks.</p></div></div><h3 id="capstone">Capstone</h3><div class="pq"><div class="pq-q"><p><strong>Q28.</strong> State the Chinchilla claim C3 as a falsifiable sentence, with the numbers.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: a compute-matched smaller model trained on more tokens beats a larger model trained on fewer tokens.</strong> Chinchilla: 70B params, 1.4T tokens, 5.88e23 FLOPs, 20 tok/param. Gopher-class: 280B params, 300B tokens, 5.04e23 FLOPs, ~1 tok/param. It is falsifiable: train both at matched FLOPs and compare. If the bigger model wins, C3 is wrong.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q29.</strong> Your isoFLOP sweep uses 3 budgets (1e20, 4e20, 1.6e21 FLOPs) x 4 sizes on H100s at MFU 0.45. What is the total cost?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: 12 runs, 8.4e21 FLOPs total, 5,243 GPU-hours, padded to 7,340.</strong> The math: GPU-hours = total FLOPs / (peak x MFU) / 3600, with peak 989 TFLOPS. The 40 percent padding is for MFU risk: small proxy runs often hit lower MFU than large ones. Price the sweep before launching it; that is the whole point of the capstone budget code.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q30.</strong> Your reproduction finds the isoFLOP minimum at 8 tokens per param, not 20. Did the reproduction fail?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: no; the shape reproduced, the constant moved.</strong> C2 is the heart of the paper: a clear minimum that moves with budget. A U-curve with a minimum at 8 tok/param confirms it. The exact constant (20) depends on data, architecture, and tokenizer. The paper's claim is about the tradeoff's shape and direction, not a universal magic number. The honest write-up says exactly that: shape reproduced, constant is setup-dependent.</p></div></div><h2 id="part-5-the-capstone-in-one-page">Part 5. The capstone in one page</h2>
+<p>The capstone reproduces Chinchilla (Hoffmann et al., 2022) at proxy scale. The paper is the ideal target for three reasons. Its claim changed every lab's recipe. Its method (isoFLOP profiles) is reusable on any future question. And the claim is about the shape of a tradeoff, which shows up long before frontier scale.</p>
+<p><strong>The three claims, as falsifiable statements.</strong> C1: for a fixed compute budget, loss is minimized by scaling params and tokens in roughly equal proportion (~20 tok/param). C2: an isoFLOP profile shows a clear loss minimum at the optimal size, fittable as a parabola in log space. C3: a compute-matched smaller model on more tokens beats a larger model on fewer tokens (70B/1.4T vs 280B-class).</p>
+<p><strong>The four phases.</strong> Phase 0: restate the claims (done above); each claim gets its own experiment. Phase 1: fix the data. Dedupe (MinHash or exact-substring), decontaminate (remove eval overlap), and freeze one data mix for the whole sweep; the mix is a confounder, not the variable. Phase 2: run the sweep, 3 budgets x 4-6 sizes. Phase 3: fit and predict. Fit a parabola per budget in log space, read the minima, join them into the optima line. Phase 4: price it before launching, with the code below.</p>
+<p>The sketch shows what Phase 3 should produce: one U-curve per budget, minima marching right as the budget grows.</p>
+<p><pre><code class="language-ascii">loss
+ ^        budget 3 (1.6e21)
+ |           .-.
+ |         -     -
+ |        -       -
+ |       -         -            budget 2 (4e20)
+ |      -           -              .-.
+ |     -             -           -     -
+ |    -               -        -         -
+ |   -                 -      -           -      budget 1 (1e20)
+ |  -                   -    -             -       .-.
+ | -                     --                -    -     -
+ |-                                            -       -
+ +----------------------------------------------------&gt; model size (log)
+                    *           *           *
+              optimum 1   optimum 2   optimum 3
+
+Each U is one budget, fixed FLOPs, varying size.
+The star is the fitted minimum of that budget.
+Stars marching right = bigger budgets want bigger models.
+The slope of the star-line is the scaling law you take home.
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li><strong>Axes.</strong> Horizontal is model size on a log scale, vertical is loss. Each curve holds FLOPs fixed.</li>
+<li><strong>The U-shape.</strong> Small models (left) waste the budget on too few params; large models (right) waste it on too few tokens per param. The bottom is the optimal split.</li>
+<li><strong>The stars.</strong> One fitted minimum per budget, from a parabola fit in log space (C2).</li>
+<li><strong>The march.</strong> Optima move right as the budget grows. The line through the stars is the deliverable: it tells you the optimal size for any budget on this data.</li>
+</ol></div><p>Price the sweep with the code below. Outputs are from the real run captured while writing this pack.</p>
+<p><pre><code class="language-python"># Capstone budget math: price the isoFLOP sweep before launching it.
+# WHAT: from budgets and model sizes, compute tokens per run, total
+#   FLOPs, and GPU-hours given hardware peak and MFU.
+# WHY: the sweep is 12 runs here. Without this math you either
+#   under-budget (runs die half trained) or over-budget (money burns).
+# WHAT BREAKS IF CHANGED: 6ND is dense-transformer accounting (use active
+#   params for MoE). MFU is the biggest uncertainty: pad the GPU-hour
+#   estimate by 30-50 percent, since small proxy runs often hit lower MFU.
+def plan_sweep(budgets_flops, sizes, gpu_peak_tflops, mfu):
+    # Returns per-budget rows plus totals: runs, FLOPs, GPU-hours.
+    plan = []
+    total_flops = 0.0
+    n_runs = 0
+    for budget in budgets_flops:
+        rows = []
+        for n in sizes:
+            d = budget / (6.0 * n)          # tokens that spend exactly the budget
+            rows.append((n, d))
+            total_flops += budget
+            n_runs += 1
+        plan.append({&quot;budget&quot;: budget, &quot;rows&quot;: rows})
+    # GPU-hours = total FLOPs / (peak * MFU), converted to hours.
+    gpu_hours = total_flops / (gpu_peak_tflops * 1e12 * mfu) / 3600.0
+    return plan, n_runs, total_flops, gpu_hours
+
+# Example: 3 budgets (spaced ~4x) x 4 sizes (spanning 8x params),
+# on H100 (989 TFLOPS BF16 dense), MFU 0.45.
+plan, n_runs, total_flops, gpu_hours = plan_sweep(
+    [1e20, 4e20, 1.6e21], [250e6, 500e6, 1e9, 2e9],
+    gpu_peak_tflops=989.0, mfu=0.45)
+print(&quot;runs: %d   total FLOPs: %.3e   GPU-hours: %s&quot; % (n_runs, total_flops, format(gpu_hours, &quot;,.0f&quot;)))
+print(&quot;padded (+40%% for MFU risk): %s GPU-hours&quot; % format(gpu_hours * 1.4, &quot;,.0f&quot;))
+print()
+for p in plan:
+    print(&quot;budget %.1e FLOPs:&quot; % p[&quot;budget&quot;])
+    for n, d in p[&quot;rows&quot;]:
+        print(&quot;  N=%5s  D=%7.1fB tokens  ratio=%6.1f tok/param&quot; %
+              (&quot;%.0fM&quot; % (n/1e6) if n &lt; 1e9 else &quot;%.0fB&quot; % (n/1e9), d/1e9, d/n))
+</code></pre></p>
+<p><pre><code class="language-text">runs: 12   total FLOPs: 8.400e+21   GPU-hours: 5,243
+padded (+40% for MFU risk): 7,340 GPU-hours
+budget 1.0e+20 FLOPs:
+  N= 250M  D=    66.7B tokens  ratio= 266.7 tok/param
+  N= 500M  D=    33.3B tokens  ratio=  66.7 tok/param
+  N=   1B  D=    16.7B tokens  ratio=  16.7 tok/param
+  N=   2B  D=     8.3B tokens  ratio=   4.2 tok/param
+budget 4.0e+20 FLOPs:
+  N= 250M  D=   266.7B tokens  ratio=1066.7 tok/param
+  N= 500M  D=   133.3B tokens  ratio= 266.7 tok/param
+  N=   1B  D=    66.7B tokens  ratio=  66.7 tok/param
+  N=   2B  D=    33.3B tokens  ratio=  16.7 tok/param
+budget 1.6e+21 FLOPs:
+  N= 250M  D=  1066.7B tokens  ratio=4266.7 tok/param
+  N= 500M  D=   533.3B tokens  ratio=1066.7 tok/param
+  N=   1B  D=   266.7B tokens  ratio= 266.7 tok/param
+  N=   2B  D=   133.3B tokens  ratio=  66.7 tok/param
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li><strong>The call.</strong> Three budgets, four sizes, H100 peak, MFU 0.45. The function returns everything needed to book the cluster.</li>
+<li><strong>The totals.</strong> 12 runs, 8.4e21 FLOPs, 5,243 GPU-hours, padded to 7,340 for MFU risk. This number goes into the project plan before a single run launches.</li>
+<li><strong>The rows.</strong> Each row is one run: size, tokens, and the tokens-per-param ratio. At the smallest budget the 1B model sits at 16.7 tok/param, nearest the Chinchilla line; the 2B model at 4.2 is visibly off-optimal. That is the U-curve taking shape in the plan itself.</li>
+<li><strong>The failure modes.</strong> If a budget's U-curve has no clear minimum, the size grid was too narrow: widen it. If minima do not march with budget, check the data mix for drift between runs. If the optimum lands far from 20 tok/param, see Q30: the shape is the claim, the constant is setup-dependent.</li>
+</ol></div><p><strong>What "reproduced" means.</strong> Not matching the paper's constant. Reproducing Chinchilla means three things. Your isoFLOP profiles show clear minima (C2). The minima move with budget along a clean trend (C1). A compute-matched small-on-more-tokens run beats big-on-fewer-tokens (C3). Write that verdict down, with the numbers, even when it is negative.</p>
+<h2 id="part-6-one-page-cheat-sheet">Part 6. One-page cheat sheet</h2>
+<p>The 30 that matter most. Print this page.</p>
+<ol>
+<li>Training FLOPs: C = 6ND (2 fwd + 4 bwd per param per token).</li>
+<li>N means non-embedding params; MoE means active params.</li>
+<li>Chinchilla-optimal: ~20 tokens per param at fixed compute.</li>
+<li>Inference-optimal: overtrain small models when serving dominates cost.</li>
+<li>GPT-3: 3.15e23 FLOPs. Chinchilla: 5.88e23. Gopher: 5.04e23.</li>
+<li>Kaplan: loss ~ C^-0.050. Power law: L(C) = a*C^-b + c.</li>
+<li>MFU 40-60 percent is healthy; below 30 percent, fix systems first.</li>
+<li>H100 BF16 dense peak: 989 TFLOPS. GPU-hours = FLOPs / (peak x MFU) / 3600.</li>
+<li>AdamW states: 8 bytes/param. Weights in bf16: 2 bytes/param.</li>
+<li>Batch at scale: millions of tokens (LLaMA: 4M). Batch controls noise, LR controls step size.</li>
+<li>Warmup: hundreds to low thousands of steps. Cosine decay to ~10 percent of peak.</li>
+<li>Gradient clip: 1.0 global norm.</li>
+<li>Dead runs show in the first 5 percent of steps. Kill fast.</li>
+<li>Spike = 3x rolling median. Read it with the gradient norm: flat = data, climbing = optimizer.</li>
+<li>NaN: roll back to the last good checkpoint with optimizer state; change one thing.</li>
+<li>Plateau with healthy grad norm = exhausted recipe, not broken optimizer.</li>
+<li>Periodic spikes = data pipeline, not instability. Find what shares the period.</li>
+<li>Ablate "does it help" at matched 6ND. Fit scaling laws for "how much."</li>
+<li>Report N, D, and FLOPs for every run in a comparison. Always.</li>
+<li>Tokenizer changes break token matching. Match on characters or bytes.</li>
+<li>Paired bootstrap: same items, per-item diffs, 2,000+ resamples, 95 percent CI.</li>
+<li>Zero inside the CI = noise. Shared passages = cluster bootstrap.</li>
+<li>isoFLOP grid: budgets ~4x apart, 4-6 sizes over ~8x params, 12-18 runs.</li>
+<li>Extrapolation past 10x = fiction. Report a band and gather an intermediate point.</li>
+<li>Ablation matrix: one factor per axis. Skipping interactions is a bet; state it.</li>
+<li>Contamination check before celebrating any data-driven jump.</li>
+<li>PPO: min() of unclipped and clipped ratio x advantage; eps = 0.2.</li>
+<li>DPO: beta holds the policy near reference; watch token-level KL per epoch.</li>
+<li>GRPO: advantage = (reward - group mean) / group std. No critic.</li>
+<li>Honest negative results get written up. The lab's memory is the product.</li>
+</ol><div class="provenance"><p><strong>Last verified: September 2026.</strong> The scaling numbers come from Hoffmann et al., 2022 and Kaplan et al., 2020. That means 6ND, Chinchilla 70B/1.4T vs Gopher 280B, GPT-3 3.15e23, ~20 tok/param, and the Kaplan exponents. They are covered in Volumes 5 and 12. MFU bands, AdamW memory, LLaMA 4M-token batches, warmup/cosine/clip recipe, and SFT practice are from Volumes 5-7. Ablation, bootstrap, isoFLOP, and capstone methods are from Track 1, Chapters 5-9. <strong>UNVERIFIED:</strong> exact recipe defaults that vary by lab (DPO beta ~0.1, RoPE base values) are standard-practice values, not volume-grounded. Re-check them against the cited volume before quoting them in a design doc.</p></div>
+<footer class="site-footer"><div class="site-sitemap"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html" class="site-nav-current">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div><p class="site-footer-note">LLM Knowledge Base. Every page works offline from file:// and links back here. No personal information.</p></footer>
+</main>
+<script>
+/* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
+   Builds: sidebar nav from h2/h3, scroll-spy, nav search filter, localStorage completion
+   checkmarks, reading progress bar, chapter prev/next footer, copy buttons, practice-question
+   toggles, mobile drawer, keyboard nav. No external dependencies. */
+(function(){
+"use strict";
+var content=document.getElementById('dsContent')||document.querySelector('main')||document.body;
+var sidebar=document.getElementById('dsSidebar');
+if(!sidebar||!content)return;
+
+/* ---------- collect sections: h2 = chapter groups, h3 = items ---------- */
+function slugify(t){return t.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'s';}
+var used={};
+function uniqueId(base){var id=base,n=2;while(used[id]||document.getElementById(id)){id=base+'-'+(n++);}used[id]=1;return id;}
+var chapters=[]; // {h2, id, title, items:[{id,title,el}]}
+var cur=null;
+Array.prototype.forEach.call(content.querySelectorAll('h2,h3'),function(h){
+  if(!h.id){h.id=uniqueId(slugify(h.textContent));}else{used[h.id]=1;}
+  h.setAttribute('tabindex','-1');
+  var t=h.textContent.trim();
+  if(h.tagName==='H2'){cur={id:h.id,title:t,items:[]};chapters.push(cur);}
+  else if(cur){cur.items.push({id:h.id,title:t});}
+  else{cur={id:'intro',title:'Introduction',items:[{id:h.id,title:t}]};chapters.push(cur);}
+});
+
+/* ---------- build sidebar nav ---------- */
+var nav=document.getElementById('dsNav');
+var pageKey='rec-cur-'+(document.title||location.pathname).replace(/[^a-z0-9]+/gi,'-');
+function isDone(id){try{return localStorage.getItem(pageKey+'#'+id)==='1';}catch(e){return false;}}
+function setDone(id,v){try{if(v)localStorage.setItem(pageKey+'#'+id,'1');else localStorage.removeItem(pageKey+'#'+id);}catch(e){}}
+function checkItem(id){var c=document.querySelector('.ds-check[data-sec="'+id+'"]');if(c)c.checked=isDone(id);}
+function updateCount(){
+  var boxes=nav.querySelectorAll('.ds-check'),done=0;
+  boxes.forEach(function(b){if(b.checked)done++;});
+  var el=document.getElementById('dsCompleteCount');
+  if(el)el.textContent=done+' of '+boxes.length+' sections complete';
+}
+function itemRow(sec){
+  var li=document.createElement('li');
+  var a=document.createElement('a');a.href='#'+sec.id;
+  var cb=document.createElement('input');
+  cb.type='checkbox';cb.className='ds-check';cb.checked=isDone(sec.id);
+  cb.setAttribute('data-sec',sec.id);cb.setAttribute('aria-label','Mark complete: '+sec.title);
+  cb.addEventListener('change',function(ev){ev.stopPropagation();setDone(sec.id,cb.checked);updateCount();});
+  cb.addEventListener('click',function(ev){ev.stopPropagation();});
+  var sp=document.createElement('span');sp.textContent=sec.title;
+  a.appendChild(cb);a.appendChild(sp);
+  a.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+  li.appendChild(a);return li;
+}
+chapters.forEach(function(ch,ci){
+  var g=document.createElement('div');g.className='ds-nav-group';g.dataset.title=ch.title.toLowerCase();
+  var btn=document.createElement('button');
+  btn.innerHTML='<span></span><span class="ds-caret">▾</span>';
+  btn.firstChild.textContent=ch.title;
+  btn.setAttribute('aria-expanded','true');
+  var ul=document.createElement('ul');ul.className='ds-nav-items';
+  var headLi=itemRow({id:ch.id,title:ch.title});ul.appendChild(headLi);
+  ch.items.forEach(function(it){ul.appendChild(itemRow(it));});
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!open));
+    ul.style.display=open?'none':'';
+    btn.querySelector('.ds-caret').textContent=open?'▸':'▾';
+  });
+  g.appendChild(btn);g.appendChild(ul);nav.appendChild(g);
+});
+updateCount();
+
+/* ---------- nav search filter ---------- */
+var search=document.getElementById('dsNavSearch');
+if(search){search.addEventListener('input',function(){
+  var q=search.value.trim().toLowerCase(),any=false;
+  nav.querySelectorAll('.ds-nav-group').forEach(function(g){
+    var show=g.dataset.title.indexOf(q)>-1;
+    g.querySelectorAll('.ds-nav-items li').forEach(function(li){
+      var hit=li.textContent.toLowerCase().indexOf(q)>-1;
+      li.style.display=(!q||hit||show)?'':'none';if(!q||hit)show=true;
+    });
+    g.style.display=show?'':'none';if(show)any=true;
+  });
+  var empty=nav.querySelector('.ds-nav-empty');
+  if(!any&&!empty){var d=document.createElement('div');d.className='ds-nav-empty';d.textContent='No sections match.';nav.appendChild(d);}
+  if(any&&empty)empty.remove();
+});}
+
+/* ---------- scroll-spy ---------- */
+var links=Array.prototype.slice.call(nav.querySelectorAll('.ds-nav-items a'));
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.toggle('ds-active',a.getAttribute('href')==='#'+e.target.id);});
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+chapters.forEach(function(ch){
+  var el=document.getElementById(ch.id);if(el)spy.observe(el);
+  ch.items.forEach(function(it){var el2=document.getElementById(it.id);if(el2)spy.observe(el2);});
+});
+
+/* ---------- progress bar ---------- */
+var prog=document.getElementById('dsProgress');
+function onScroll(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- mobile drawer ---------- */
+var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('dsScrim');
+if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
+if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+
+/* ---------- keyboard nav: [ ] sections, / search ---------- */
+document.addEventListener('keydown',function(e){
+  if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  var ids=[];chapters.forEach(function(ch){ids.push(ch.id);ch.items.forEach(function(it){ids.push(it.id);});});
+  function jump(dir){
+    var y=window.scrollY+10,cur=0;
+    ids.forEach(function(id,i){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+y<=y+1)cur=i;});
+    var n=Math.min(ids.length-1,Math.max(0,cur+dir)),el=document.getElementById(ids[n]);
+    if(el){el.scrollIntoView();el.focus({preventScroll:true});}
+  }
+  if(e.key==='[')jump(-1);else if(e.key===']')jump(1);
+  else if(e.key==='/'&&search){e.preventDefault();search.focus();}
+});
+var hint=document.createElement('div');hint.className='ds-kbd-hint';
+hint.textContent='Keyboard: [ and ] move between sections, / focuses section search.';
+var foot=document.querySelector('.ds-side-foot');if(foot)foot.appendChild(hint);
+
+/* ---------- chapter prev/next footers (one after each h2 section) ---------- */
+if(chapters.length>1){
+  var mk=function(ch,cls,label){var a=document.createElement('a');a.href='#'+ch.id;a.className=cls;
+    a.innerHTML='<span style="display:block;font-size:.78rem;color:var(--muted)">'+label+'</span>';a.appendChild(document.createTextNode(ch.title));return a;};
+  chapters.forEach(function(ch,i){
+    var bar=document.createElement('nav');bar.className='ds-chapter-nav';bar.setAttribute('aria-label','Chapter navigation');
+    var left=document.createElement('span'),right=document.createElement('span');
+    if(chapters[i-1])left.appendChild(mk(chapters[i-1],'ds-prev','↑ Previous'));
+    else left.innerHTML='<span style="color:var(--muted);font-size:.85rem">Start of volume</span>';
+    if(chapters[i+1])right.appendChild(mk(chapters[i+1],'ds-next','Next ↓'));
+    else right.innerHTML='<span style="color:var(--muted);font-size:.85rem">End of volume</span>';
+    bar.appendChild(left);bar.appendChild(right);
+    /* insert the bar immediately before the next chapter's heading, using that
+       heading's own parent so <section> wrappers (or any nesting) cannot break it */
+    var nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
+    if(nextH){nextH.parentNode.insertBefore(bar,nextH);}
+    else{var lastH=document.getElementById(ch.id);lastH.parentNode.appendChild(bar);}
+  });
+}
+
+/* ---------- copy buttons on code blocks ---------- */
+document.querySelectorAll('pre').forEach(function(pre){
+  if(pre.querySelector('.ds-copy-btn'))return;
+  var btn=document.createElement('button');btn.className='ds-copy-btn';btn.textContent='Copy';
+  btn.setAttribute('aria-label','Copy code to clipboard');
+  btn.addEventListener('click',function(){
+    var txt=pre.innerText;
+    function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1400);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}
+  });
+  pre.appendChild(btn);
+});
+
+/* ---------- practice-question widgets ---------- */
+document.querySelectorAll('.pq').forEach(function(pq){
+  var btn=pq.querySelector('.pq-reveal'),ans=pq.querySelector('.pq-a');
+  if(!btn||!ans)return;
+  btn.addEventListener('click',function(){
+    var open=ans.hasAttribute('hidden');
+    if(open){ans.removeAttribute('hidden');btn.setAttribute('aria-expanded','true');btn.textContent='Hide answer';}
+    else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
+  });
+});
+})();
+
+</script>
+</body>
+</html>
