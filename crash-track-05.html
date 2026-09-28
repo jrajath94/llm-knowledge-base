@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evals and Safety Engineering Crash Pack</title>
+<style>
+/* Research-Engineer Curriculum: shared design system (dark, Hallmark discipline)
+   Source of truth. Writers INLINE this file into each volume's <head> inside <style>.
+   Font files live in fonts/ relative to the site root (each HTML is at the root,
+   so the inlined url(fonts/...) resolves correctly from file:// with no network).
+   Tokens (exact, do not improvise): pitch-black dark mode. */
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{
+  --bg:#000000; --surface:#0d0d0d; --border:#262626;
+  --text:#ececec; --muted:#a8a8a8;
+  --accent:#f0b429; --link:#6cb2ff; --code-bg:#111111;
+  --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
+p{text-align:justify;hyphens:auto;margin:.85rem 0}
+h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
+h1{font-size:2rem;font-weight:800}
+h2{font-size:1.5rem;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:1.05rem;font-weight:700}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:.2rem}
+ul,ol{margin:.7rem 0;padding-left:1.6rem}
+li{margin:.3rem 0}
+li::marker{color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;display:block;overflow-x:auto}
+thead,tbody,tr{display:table;width:100%;table-layout:fixed}
+th,td{border:1px solid var(--border);padding:.6rem .75rem;text-align:left;vertical-align:top}
+th{background:var(--surface);font-weight:700}
+code{font-family:var(--font-code);background:var(--code-bg);border:1px solid var(--border);padding:.08rem .35rem;border-radius:.3rem;font-size:.88em}
+p code,li code,td code,th code{overflow-wrap:break-word;word-break:break-word}
+pre{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:.6rem;padding:1rem 1.1rem;overflow-x:auto;font-size:.88rem;line-height:1.6;margin:1.1rem 0}
+pre code{background:none;border:none;padding:0;font-size:1em}
+pre.ascii{background:#0a0a0a;color:#d8d8d8}
+figure{margin:1.5rem 0;border:1px solid var(--border);border-radius:.7rem;padding:1rem;background:var(--surface)}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:.3rem}
+.ds-content img{max-width:100%;height:auto} /* bare <img> in <p> must never overflow */
+figcaption{font-size:.9rem;color:var(--muted);margin-top:.7rem;text-align:left}
+details{border:1px solid var(--border);border-radius:.6rem;padding:.75rem 1.05rem;margin:.9rem 0;background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--text)}
+dfn{font-style:normal;font-weight:600;border-bottom:2px dotted var(--accent);cursor:help}
+blockquote{border-left:3px solid var(--accent);margin:1.1rem 0;padding:.6rem 1rem;background:var(--surface);border-radius:0 .5rem .5rem 0}
+blockquote p{margin:.4rem 0}
+
+/* ---- layout: sidebar + content ---- */
+.ds-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60}
+.ds-menu-btn{display:none;position:fixed;top:.7rem;left:.7rem;z-index:55;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:.5rem;font-family:var(--font-ui);font-size:1.2rem;padding:.35rem .7rem;cursor:pointer}
+.ds-sidebar{position:fixed;top:0;left:0;bottom:0;width:19rem;background:var(--surface);border-right:1px solid var(--border);z-index:50;display:flex;flex-direction:column}
+.ds-side-head{padding:1.1rem 1.1rem .8rem;border-bottom:1px solid var(--border)}
+.ds-side-eyebrow{margin:0;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ds-side-title{margin:.3rem 0 .7rem;font-family:var(--font-ui);font-size:1.02rem;font-weight:700;line-height:1.35}
+.ds-side-search{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:400 .88rem/1.4 var(--font-ui);padding:.5rem .7rem}
+.ds-side-search::placeholder{color:var(--muted)}
+.ds-nav{flex:1;overflow-y:auto;padding:.7rem .6rem}
+.ds-nav ul{list-style:none;margin:0;padding:0}
+.ds-nav-group{margin-bottom:.35rem}
+.ds-nav-group>button{width:100%;text-align:left;background:none;border:none;color:var(--text);font:700 .86rem/1.4 var(--font-ui);padding:.45rem .55rem;border-radius:.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+.ds-nav-group>button:hover{background:#161616}
+.ds-nav-group>button .ds-caret{color:var(--muted);font-size:.75rem}
+.ds-nav-items{list-style:none;margin:0;padding:0 0 .3rem .4rem}
+.ds-nav-items a{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:var(--font-ui);font-size:.85rem;line-height:1.45;padding:.32rem .55rem;border-radius:.4rem;border-left:2px solid transparent}
+.ds-nav-items a:hover{color:var(--text);background:#161616}
+.ds-nav-items a.ds-active{color:var(--text);border-left-color:var(--accent);background:#161616}
+.ds-check{flex:none;width:.95rem;height:.95rem;accent-color:var(--accent);cursor:pointer}
+.ds-nav-empty{color:var(--muted);font-size:.85rem;padding:.5rem}
+.ds-side-foot{border-top:1px solid var(--border);padding:.7rem 1.1rem;font-family:var(--font-ui);font-size:.8rem;color:var(--muted)}
+.ds-scrim{display:none}
+.ds-content{margin-left:19rem;padding:0 2rem;max-width:calc(72ch + 4rem)}
+.ds-content>*{max-width:72ch}
+.ds-content table,.ds-content figure,.ds-content pre{max-width:72ch}
+.ds-chapter-nav{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--border);margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-chapter-nav a{text-decoration:none;font-weight:600}
+.ds-chapter-nav .ds-prev{text-align:left}
+.ds-chapter-nav .ds-next{text-align:right}
+.ds-kbd-hint{font-family:var(--font-ui);font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+/* ---- learning components ---- */
+.walkthrough{background:#101010;border:1px solid var(--border);border-radius:.55rem;padding:.85rem 1.05rem;margin-top:.9rem;font-size:.93rem}
+.walkthrough strong{color:var(--text)}
+.walkthrough ol{margin:.45rem 0;padding-left:1.35rem}
+.walkthrough li{margin:.32rem 0}
+.walkthrough p{text-align:left}
+.ob-board{background:#0e0c06;border:1px solid #4a3a12;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.ob-board h4{margin:.1rem 0 .5rem;font-size:1rem;color:var(--accent)}
+.ob-board ul{margin:.4rem 0;padding-left:1.3rem}
+.takeaway{background:#0b0f0b;border:1px solid #1f3a24;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.takeaway h4{margin:.1rem 0 .5rem;font-size:1rem;color:#7fd08a}
+.callout{border-left:4px solid var(--link);background:var(--surface);padding:.85rem 1.1rem;margin:1.15rem 0;border-radius:0 .55rem .55rem 0}
+.callout.warn{border-left-color:var(--accent)}
+.callout p{text-align:left;margin:.45rem 0}
+.provenance{border:1px dashed var(--border);border-radius:.6rem;padding:.8rem 1.05rem;margin:1.2rem 0;font-size:.88rem;color:var(--muted);background:#0a0a0a}
+.provenance strong{color:var(--text)}
+.provenance .uv{color:var(--accent);font-weight:700}
+.pq{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--surface)}
+.pq-q{margin:.1rem 0 .7rem;text-align:left}
+.pq-reveal{background:var(--accent);border:none;color:#000;font:700 .88rem/1 var(--font-ui);padding:.55rem 1rem;border-radius:.45rem;cursor:pointer}
+.pq-reveal:hover{filter:brightness(1.08)}
+.pq-a{margin-top:.9rem;border-top:1px solid var(--border);padding-top:.8rem}
+.pq-a ul{margin:.5rem 0}
+.pq-opt-right{color:#7fd08a}
+.pq-opt-wrong{color:#e08080}
+.ds-copy-btn{position:absolute;top:.5rem;right:.5rem;background:#1c1c1c;border:1px solid var(--border);color:var(--muted);font:600 .75rem/1 var(--font-ui);padding:.4rem .65rem;border-radius:.4rem;cursor:pointer}
+.ds-copy-btn:hover{color:var(--text);border-color:var(--accent)}
+.lab{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.2rem 0;background:#0b0b0b}
+.lab h4{margin:.1rem 0 .5rem;color:var(--accent)}
+
+/* ---- responsive: sidebar becomes drawer ---- */
+@media(max-width:56rem){
+  .ds-sidebar{transform:translateX(-105%);transition:transform .25s ease;width:17.5rem}
+  body.ds-nav-open .ds-sidebar{transform:none;z-index:56} /* above the menu button so it never overlaps the eyebrow */
+  .ds-menu-btn{display:block}
+  .ds-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:45}
+  body.ds-nav-open .ds-scrim{display:block}
+  .ds-content{margin-left:0;padding:0 1.1rem}
+}
+@media(min-width:56.01rem){.ds-scrim{display:none!important}}
+
+
+/* ---- site header: home link, volume nav, breadcrumbs, prev/next ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--border);padding:.65rem 0 .7rem;margin:0 0 1.6rem;max-width:72ch}
+.site-header-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+.site-home{font:700 1rem/1.2 var(--font-ui);color:var(--text);text-decoration:none}
+.site-home:hover{color:var(--accent)}
+.site-home .site-home-mark{color:var(--accent)}
+.site-prevnext{display:flex;gap:.6rem;font:600 .82rem/1.4 var(--font-ui)}
+.site-prevnext a{color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
+.site-prevnext a:hover{color:var(--text);border-color:var(--accent)}
+.site-prevnext .site-prevnext-disabled{color:#4a4a4a;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
+.breadcrumbs{font:400 .8rem/1.5 var(--font-ui);color:var(--muted);margin:.45rem 0 0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text)}
+.breadcrumbs .bc-sep{margin:0 .35rem;color:#4a4a4a}
+.breadcrumbs .bc-current{color:var(--text)}
+details.site-nav{margin:.55rem 0 0;border:1px solid var(--border);border-radius:.55rem;background:var(--surface)}
+details.site-nav summary{cursor:pointer;list-style:none;font:600 .85rem/1.4 var(--font-ui);color:var(--text);padding:.55rem .9rem;display:flex;align-items:center;gap:.5rem}
+details.site-nav summary::-webkit-details-marker{display:none}
+details.site-nav summary::before{content:"+";color:var(--accent);font-weight:700}
+details.site-nav[open] summary::before{content:"\2212"}
+details.site-nav summary:hover{color:var(--accent)}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem;padding:.2rem .9rem .9rem}
+.site-nav-groups h4{font:700 .75rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:.6rem 0 .35rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:.18rem 0}
+.site-nav-groups a{font:400 .83rem/1.45 var(--font-ui);color:var(--muted);text-decoration:none}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:700}
+
+/* ---- site footer: full sitemap ---- */
+.site-footer{border-top:1px solid var(--border);margin:3rem 0 0;padding:2rem 0 2.5rem;max-width:72ch}
+.site-footer .site-sitemap{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.2rem}
+.site-sitemap h4{font:700 .78rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 .4rem}
+.site-sitemap ul{list-style:none;margin:0;padding:0}
+.site-sitemap li{margin:.2rem 0}
+.site-sitemap a{font:400 .83rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none}
+.site-sitemap a:hover{color:var(--text)}
+.site-footer-note{font:400 .78rem/1.5 var(--font-ui);color:#6a6a6a;margin-top:1.6rem}
+@media(max-width:56rem){
+  .site-header-row{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between}
+  .site-header{padding-left:2.9rem} /* clear the fixed hamburger menu button */
+}
+@media print{
+  .site-header,.site-footer{display:none!important}
+}
+
+/* ---- print ---- */
+@media print{
+  .ds-sidebar,.ds-menu-btn,.ds-progress,.ds-scrim,.ds-chapter-nav,.ds-copy-btn{display:none!important}
+  .ds-content{margin:0;max-width:100%;padding:0}
+  body{background:#fff;color:#000;font-size:12pt;line-height:1.6}
+  p{text-align:left}
+  h1,h2,h3,h4,a{color:#000}
+  pre,figure,details,.lab,.ob-board,.takeaway,.callout,.walkthrough,.pq{background:#fff;border-color:#999;break-inside:avoid}
+  code{background:#f0f0f0;border-color:#999;color:#000}
+}
+
+</style>
+</head>
+<body>
+<div class="ds-progress" id="dsProgress"></div>
+<button class="ds-menu-btn" id="dsMenuBtn" aria-label="Open navigation">&#9776;</button>
+<aside class="ds-sidebar" id="dsSidebar" aria-label="Volume navigation">
+<div class="ds-side-head">
+<p class="ds-side-eyebrow">Research-Engineer Curriculum</p>
+<p class="ds-side-title">Role Track 5 · Crash Pack</p>
+<input class="ds-side-search" id="dsNavSearch" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+</div>
+<nav class="ds-nav" id="dsNav" aria-label="Sections"></nav>
+<div class="ds-side-foot"><span id="dsCompleteCount"></span></div>
+</aside>
+<div class="ds-scrim" id="dsScrim"></div>
+<main class="ds-content" id="dsContent">
+<header class="site-header"><div class="site-header-row"><a class="site-home" href="index.html"><span class="site-home-mark">■</span> LLM Knowledge Base</a><div class="site-prevnext"><a href="crash-track-04.html">&larr; Crash: Distributed Training</a><a href="crash-track-06.html">Crash: Agent Systems &rarr;</a></div></div><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep">/</span><span>Crash packs</span><span class="bc-sep">/</span><span class="bc-current">Crash: Evals and Safety</span></nav><details class="site-nav"><summary>Browse all volumes and tracks</summary><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html" class="site-nav-current">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div></details></header>
+<h1 id="evals-and-safety-engineering-the-crash-pack">Evals and Safety Engineering: The Crash Pack</h1>
+<p>One volume. Zero fluff. Everything in this pack is either a decision you will
+make on the job, a number you must be able to recall cold, or a trap that has
+burned real teams. It compresses Role Track 5 (eval suite architecture,
+autorater science, red-teaming, mitigations, measurement, incident response)
+plus the statistics appendix on non-deterministic evals (11A), the
+labeler-protocol appendix (11B), and the agent-evals appendix (9A).</p>
+<h2 id="how-to-run-this-pack">How to run this pack</h2>
+<p>Three passes, about six hours total.</p>
+<ul>
+<li><strong>Pass 1 (90 min):</strong> Read sections 1 and 2. The decision rules and the
+  numbers are the skeleton. Everything else hangs off them.</li>
+<li><strong>Pass 2 (3 hours):</strong> Read section 3, then do every Q&amp;A in section 4 with
+  the answer hidden. Speak the answer out loud before you reveal it. If you
+  cannot say it, you do not know it.</li>
+<li><strong>Pass 3 (90 min):</strong> Memorize the cheat sheet in section 5. Test yourself
+  the next morning with a blank page.</li>
+</ul><div class="callout warn"><p>This pack teaches judgment, not recipes. The thresholds here (sample sizes,
+kappa bars, gate limits) are starting points tuned on practitioner experience.
+Your team's real numbers come from your own calibration data. Never ship a
+threshold you did not earn.</p></div><h2 id="1-decision-rules">1. Decision rules</h2>
+<p>Twelve rules. If you remember nothing else, remember these.</p>
+<h3 id="rule-1-split-the-suite-into-three-tiers-and-never-merge-them">Rule 1. Split the suite into three tiers, and never merge them</h3>
+<ul>
+<li><strong>Tier 1, smoke:</strong> about 50 tasks, runs in minutes, on every commit. Job:
+  catch obvious breakage fast. A smoke failure blocks the <em>merge</em>, not the
+  release.</li>
+<li><strong>Tier 2, gate:</strong> 500 to 2,000 tasks, runs in hours, on every release
+  candidate. Job: the ship-or-hold decision. Thresholds are written down and
+  versioned.</li>
+<li><strong>Tier 3, science:</strong> open-ended, runs for days, on demand. Job: answer
+  research questions ("did the new data mix change refusal quality?"). It
+  lives outside the gate so slow questions never block shipping.</li>
+</ul>
+<p>The common failure is one giant suite trying to do all three jobs. It is too
+slow for commits, too noisy for gating, and too rigid for research. Split the
+tiers and each one gets simpler.</p>
+<p><pre><code>                    +-----------------------------+
+                    | TIER 1: SMOKE               |
+                    | ~50 tasks · minutes         |
+                    | every commit · blocks merge |
+                    +--------------+--------------+
+                                   |
+                    +--------------v--------------+
+                    | TIER 2: GATE                |
+                    | 500-2000 tasks · hours      |
+                    | release candidates · blocks |
+                    | SHIP                        |
+                    +--------------+--------------+
+                                   |
+                    +--------------v--------------+
+                    | TIER 3: SCIENCE             |
+                    | open-ended · days           |
+                    | on demand · never blocks    |
+                    +-----------------------------+
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li>Time flows downward; strictness flows upward. The cheapest tier runs most
+   often.</li>
+<li>Smoke blocks the merge, not the release: it answers "is this obviously
+   broken," not "is this shippable."</li>
+<li>Only Tier 2 carries a ship-or-hold verdict. If Tier 3 questions block
+   shipping, someone merged the tiers and the suite will get routed around.</li>
+</ol></div><h3 id="rule-2-climb-the-grader-ladder-checkable-first-judgment-last">Rule 2. Climb the grader ladder: checkable first, judgment last</h3>
+<p>Pick the cheapest grader that is honest for the task.</p>
+<ol>
+<li><strong>Checkable answer?</strong> Use a deterministic string check (normalize case and
+   whitespace first; raw substring matching fails silently on formatting).</li>
+<li><strong>Open-ended?</strong> Write a rubric, then grade with humans first. Two humans
+   per item is the entry ticket.</li>
+<li><strong>Scale needed?</strong> Add an autorater only after it clears calibration
+   (Rule 4). Keep some human-graded tasks in the gate tier permanently.
+   A gate with zero human eyes is a gate nobody trusts when it matters.</li>
+</ol>
+<p>A rubric that two humans cannot apply consistently is not a rubric. Fix it
+before any autorater sees it.</p>
+<h3 id="rule-3-never-trust-a-judge-you-have-not-licensed">Rule 3. Never trust a judge you have not licensed</h3>
+<p>An LLM judge is a measurement instrument. License it like one:</p>
+<ol>
+<li>Build a calibration set of 20 to 50 items spanning the full quality range.
+   Deliberately include known-bad and known-borderline cases.</li>
+<li>Humans label first, 2 to 3 raters per item. If humans disagree, the rubric
+   is broken. Fix the rubric.</li>
+<li>Run the judge on the same items. Compute Cohen's kappa, not raw agreement.</li>
+<li>Read the disagreements. Sort by gap size, read the top 10, and ask for each:
+   did the judge miss, did the human miss, or is the rubric ambiguous? The
+   answer is almost always the rubric.</li>
+<li><strong>Revise the rubric, not the judge.</strong> Editing the judge prompt to chase
+   individual disagreements is overfitting with extra steps.</li>
+<li>Re-run on a fresh sample. Never re-tune on the same golden set twice
+   without a fresh holdout.</li>
+</ol>
+<p>The bar: judge-vs-human kappa near the human-vs-human ceiling (about 0.8 on
+many real tasks). A judge far below the ceiling is not a human substitute.</p>
+<h3 id="rule-4-calibrate-on-a-schedule-and-after-every-big-change">Rule 4. Calibrate on a schedule, and after every big change</h3>
+<p>A calibrated judge goes stale. Re-calibrate on a calendar schedule, and
+re-calibrate immediately after any big model change. Between calibrations,
+keep the judge on a dashboard with three panels: agreement with humans on a
+rolling sample (re-grade 50 items a month), score distribution over time (a
+sudden shift means something changed), and monthly disagreement review. When
+kappa drops below your bar, the judge goes back through the calibration loop.
+A judge that is not monitored is a judge you are not using.</p>
+<h3 id="rule-5-red-team-in-adversary-order-goal-by-goal">Rule 5. Red-team in adversary order, goal by goal</h3>
+<p>Test against the three adversary profiles in order: the curious user first,
+then the motivated amateur, then the skilled adversary. If the curious user
+breaks your model, you do not have a skilled-adversary problem. You have a
+basics problem.</p>
+<p>Cover all four attacker goals with separate probe sets, because a model can
+be strong against one and weak against another: refusal bypasses, prompt
+extraction, injection (instructions hidden in tool output or pasted content),
+misuse enablement.</p>
+<p>Cover all six attack families for every high-risk goal: direct requests,
+roleplay and persona, encoding and translation, multi-turn buildup,
+instruction smuggling, automated search (static libraries and adaptive
+orchestrators). If a direct request works, stop. Fix the basics before you
+hunt for clever attacks.</p>
+<h3 id="rule-6-report-red-team-results-per-family-and-treat-the-library-as-living">Rule 6. Report red-team results per family, and treat the library as living</h3>
+<p>One number ("12% of probes broke it") tells you nothing. Report break rates
+per attack family: the family view shows which <em>kinds</em> of attacks are weak.
+When a new jailbreak technique appears in public, add it to the library as a
+new probe. A finding is reproducible or it is not a finding: every reported
+break ships with the exact prompts, model version, and settings that
+reproduce it.</p>
+<h3 id="rule-7-stack-mitigations-in-order-and-ask-each-layer-what-it-misses">Rule 7. Stack mitigations in order, and ask each layer what it misses</h3>
+<p>Read bottom to top. Each layer catches what the layer below missed.</p>
+<p><pre><code>        USER
+         |
+         v
+  +--------------------------------------------------+
+  | 5. MONITORING ..... log, sample, alert on         |
+  |    production traffic; catch what shipped anyway |
+  +--------------------------------------------------+
+  | 4. OUTPUT FILTER .. classifier on the response   |
+  |    before it reaches the user                    |
+  +--------------------------------------------------+
+  | 3. THE MODEL ...... refusal training, values,    |
+  |    instruction hierarchy from post-training      |
+  +--------------------------------------------------+
+  | 2. INPUT FILTER ... classifier on the prompt     |
+  |    before it reaches the model                   |
+  +--------------------------------------------------+
+  | 1. SYSTEM PROMPT .. hardened instructions,       |
+  |    least privilege, secret minimization          |
+  +--------------------------------------------------+
+</code></pre></p>
+<p>For each layer ask two questions: what does this layer catch that the others
+miss, and what sails straight through it? System-prompt hardening is cheap
+and fast to deploy, and weaker than training. Use it as a layer, never as
+the plan. A filter with unknown precision and recall is not a mitigation; it
+is a hope.</p>
+<h3 id="rule-8-gate-on-deltas-against-the-baseline-not-on-absolute-scores">Rule 8. Gate on deltas against the baseline, not on absolute scores</h3>
+<p>A 92% that used to be 95% ships under an absolute bar. Deltas catch decay.
+Every release diffs the candidate against the released baseline on the same
+suite, same seeds. The gate policy is versioned code, not a number in
+someone's head:</p>
+<ul>
+<li><strong>max smoke regressions: 0.</strong> Any smoke regression holds.</li>
+<li><strong>max probe break rate: 10%</strong> in any attack family.</li>
+<li><strong>judge kappa below 0.6: warn.</strong> The gate flags; a human confirms before a
+  HOLD becomes final, because automated scoring has false positives.</li>
+<li><strong>Human confirms every HOLD.</strong> The gate proposes; a person disposes.</li>
+</ul>
+<p>The sign-off reads: "Model v3.2 passes the gate suite at thresholds T, with
+N known exceptions listed below." Known exceptions, listed, with owners and
+dates. That sentence separates engineering from theater.</p>
+<h3 id="rule-9-set-filter-thresholds-per-category-by-risk">Rule 9. Set filter thresholds per category, by risk</h3>
+<p>Every filter lives on a precision-recall tradeoff, and the threshold is a
+product decision, not a math fact. Set it strict for self-harm and weapons
+content, more balanced for spam. Then measure the filter like any component:
+precision and recall on a labeled set, latency added to the serving path, and
+the false-positive rate on real traffic. Filters need adversarial testing of
+their own: paraphrase, obfuscation, and splitting content across messages are
+the standard evasions.</p>
+<h3 id="rule-10-when-the-public-suite-and-the-private-set-disagree-believe-the-private-set">Rule 10. When the public suite and the private set disagree, believe the private set</h3>
+<p>Contamination defense in five moves: version every eval like code; keep a
+changelog (when a task is added, removed, or reworded, log why); keep eval
+sets private; rotate items and retire saturated tasks; hold out a private
+slice that nobody trains against and nobody tunes prompts against. Watch for
+suspicious jumps on static sets. A suite where everything scores 99%
+measures nothing.</p>
+<h3 id="rule-11-report-capability-and-safety-side-by-side-always">Rule 11. Report capability and safety side by side, always</h3>
+<p>Safety costs capability. A model that refuses more also refuses some benign
+requests. A strict output filter blocks some good traffic. This is the shape
+of the problem, not a flaw in your mitigations. The honest picture is a
+Pareto frontier: the best safety at each level of capability. Pick a point on
+it deliberately and say which point you picked. The unit of honest safety
+engineering is one sentence: "Refusal tuning cut harmful compliance from 4%
+to 0.5% and cost 1.2 points on benign task completion."</p>
+<p><pre><code>capability ^
+       100 |  X ideal (does not exist)
+           |
+        90 |      X current model
+           |    . - the frontier: best
+        80 |  .    known tradeoffs
+           |.
+        70 |        X over-mitigated:
+           |        safe but useless
+        60 +--------------------------------
+           60   70   80   90   100   safety
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li>The top-right corner (perfect at both) does not exist. Every real model is
+   a point on or below the curve.</li>
+<li>Moving right (safer) usually moves the point down (less capable). The
+   curve is the set of best-known tradeoffs.</li>
+<li>A release moves the point. Your job is to say where it moved and what it
+   cost, with both numbers side by side.</li>
+</ol></div><h3 id="rule-12-every-incident-ends-in-the-eval-suite">Rule 12. Every incident ends in the eval suite</h3>
+<p>Triage with a severity scale written for model behavior: S1 is active, ongoing
+harm at scale (page now); S2 is serious but bounded (same-day response,
+mitigation within the week); S3 is concerning but rare (normal cycle); S4 is
+a paper cut (log it).</p>
+<p>The first hour has a checklist: reproduce the behavior and record exact
+prompts, model version, and settings; assess blast radius and check whether
+it is being shared publicly; decide hold vs rollback; open the incident
+record; assign one owner.</p>
+<p>Write rollback criteria before the incident, in the units you already
+measure, and rehearse the rollback path. A rollback you have never rehearsed
+is a plan you do not have. Record near-misses: an S2 that almost became an
+S1 is free information about where your criteria are thin.</p>
+<p>Postmortems are blameless and ask five questions in order: what happened
+(timeline of facts), what was the impact (numbers), why did it happen (five
+whys), what did we learn about our process, what changes now (action items
+with owners and dates). The most important rule: the incident's reproduction
+prompts become regression tasks in the suite, the missing probe family gets
+built, the metric that should have caught it gets a threshold. An incident
+that does not change the eval suite will happen again.</p>
+<h2 id="2-numbers-and-formulas-to-memorize">2. Numbers and formulas to memorize</h2>
+<p>Every snippet below was executed. The printed outputs are real.</p>
+<h3 id="21-cohens-kappa-the-agreement-number-that-does-not-flatter">2.1 Cohen's kappa: the agreement number that does not flatter</h3>
+<p>kappa = (p_o - p_e) / (1 - p_e), where p_o is observed agreement and p_e is
+the agreement expected from the two raters' individual yes-rates by chance.</p>
+<p>Landis and Koch bands: below 0 is worse than chance; 0.00-0.20 slight;
+0.21-0.40 fair; 0.41-0.60 moderate; 0.61-0.80 substantial; 0.81-1.00 almost
+perfect.</p>
+<p><pre><code class="language-python">def cohen_kappa(a, b, c, d):
+    # Confusion matrix, judge rows vs human columns:
+    #   a = both say yes   b = judge yes, human no
+    #   c = judge no, human yes   d = both say no
+    # Using the matrix is the whole point: kappa corrects for the agreement
+    # the two yes-rates would produce by luck. Raw percent agreement skips
+    # that correction and flatters lazy judges.
+    n = a + b + c + d
+    if n == 0:
+        raise ValueError(&quot;empty confusion matrix: nothing to compare&quot;)
+    p_o = (a + d) / n          # Observed agreement: the diagonal over total.
+    p_yes_judge = (a + b) / n  # Judge&#x27;s individual yes-rate.
+    p_yes_human = (a + c) / n  # Human&#x27;s individual yes-rate.
+    # Chance agreement: yes-yes by luck plus no-no by luck.
+    p_e = p_yes_judge * p_yes_human + (1 - p_yes_judge) * (1 - p_yes_human)
+    if p_e == 1.0:
+        return 1.0  # Degenerate: both raters said the same thing every time.
+    return (p_o - p_e) / (1 - p_e)
+
+def kappa_band(k):
+    # Band edges are the published Landis-Koch cutoffs.
+    if k &lt; 0.0: return &quot;worse than chance&quot;
+    if k &lt;= 0.20: return &quot;slight&quot;
+    if k &lt;= 0.40: return &quot;fair&quot;
+    if k &lt;= 0.60: return &quot;moderate&quot;
+    if k &lt;= 0.80: return &quot;substantial&quot;
+    return &quot;almost perfect&quot;
+
+# Worked example: judge passes 70, human passes 75, they agree on 75 of 100.
+k = cohen_kappa(60, 10, 15, 15)
+print(f&quot;kappa = {k:.3f}&quot;)          # kappa = 0.375
+print(&quot;band:&quot;, kappa_band(k))      # band: fair
+
+# The lazy-judge check: always says pass. Raw agreement looks fine.
+k2 = cohen_kappa(70, 0, 30, 0)
+print(f&quot;lazy judge kappa = {k2:.3f}&quot;)  # lazy judge kappa = 0.000
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li>The function takes the four cells of the confusion matrix. Those four
+   numbers carry both the agreement and each rater's individual yes-rate.</li>
+<li>p_o is plain observed agreement. p_e is the chance term raw agreement
+   pretends does not exist: a judge that says yes 70% of the time and a
+   human that says yes 75% agree on "yes" 52.5% of the time even guessing.</li>
+<li>The worked example prints 0.375: raw agreement said 75%, kappa says
+   "fair." The 37.5-point gap is chance agreement the raw number hid.</li>
+<li>The lazy judge gets kappa exactly 0.0. Kappa exposes what raw agreement
+   rewards.</li>
+</ol></div><p>Memorize: <strong>raw agreement flatters; kappa corrects.</strong> The human ceiling is
+about kappa 0.8 on many real tasks, so judge-vs-human against a perfect 1.0
+is an unfair bar. Report both numbers side by side.</p>
+<h3 id="22-wilson-interval-honest-error-bars-for-small-lopsided-samples">2.2 Wilson interval: honest error bars for small, lopsided samples</h3>
+<p>For a yes/no rate with n trials and z = 1.96 (95%):</p>
+<p>center = (p + z^2 / 2n) / (1 + z^2 / n), half-width = z * sqrt(p(1-p)/n +
+z^2/4n^2) / (1 + z^2 / n), interval = [center - half, center + half].</p>
+<p>Use Wilson instead of the bootstrap when the sample is small and lopsided,
+for example 20 hits out of 20 tries, where a plain bootstrap would claim a
+confidence interval of [1, 1], which is certainty you do not have.</p>
+<p><pre><code class="language-python">def wilson_interval(hits, n, z=1.96):
+    # Wilson score interval for a yes/no rate. The z^2/n terms shrink the
+    # estimate toward 0.5 when n is small: that shrinkage IS the honesty.
+    # z=1.96 gives the 95% interval under the normal approximation.
+    if n == 0:
+        return 0.0, 0.0  # No data: the honest answer is &quot;unknown&quot;, not zero.
+    p = hits / n
+    denom = 1 + z * z / n
+    center = (p + z * z / (2 * n)) / denom
+    half = z * (p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5 / denom
+    return center - half, center + half
+
+lo, hi = wilson_interval(20, 20)
+print(f&quot;20/20 -&gt; 95% CI [{lo:.3f}, {hi:.3f}]&quot;)   # [0.839, 1.000]
+lo, hi = wilson_interval(47, 50)
+print(f&quot;47/50 -&gt; 95% CI [{lo:.3f}, {hi:.3f}]&quot;)   # [0.838, 0.979]
+</code></pre></p>
+<p>Memorize: <strong>20 out of 20 is not 100%.</strong> It is [0.839, 1.000] at 95%. Any
+report that writes "100% (n=20)" without the interval is hiding uncertainty.</p>
+<h3 id="23-paired-bootstrap-the-standard-ab-design-for-llm-outputs">2.3 Paired bootstrap: the standard A/B design for LLM outputs</h3>
+<p>Three layers of noise, three fixes: pair the systems on the same items (kills
+item noise), repeat each case 3 to 5 times and average (kills decoding
+noise), calibrate the judge first (kills judge noise). Then bootstrap the
+per-item differences.</p>
+<p><pre><code class="language-python">import random
+
+def paired_bootstrap_ci(diffs, n_resamples=10000, alpha=0.05, seed=0):
+    # diffs: one number per item, B&#x27;s score minus A&#x27;s score on the SAME item.
+    # Pairing subtracts &quot;this question was easy&quot; before statistics run.
+    rng = random.Random(seed)  # Fixed seed: the analysis itself is repeatable.
+    n = len(diffs)
+    mean = sum(diffs) / n      # Point estimate: average gap, B over A.
+    # Resample the differences with replacement 10k times. Each resample is
+    # a fake experiment &quot;like this one&quot;; the spread of fake means estimates
+    # how much the real mean could wobble.
+    resampled_means = []
+    for _ in range(n_resamples):
+        sample = [rng.choice(diffs) for _ in range(n)]  # n draws, replacement
+        resampled_means.append(sum(sample) / n)
+    resampled_means.sort()
+    # Percentile interval: chop alpha/2 off each tail of the sorted means.
+    lo = resampled_means[int((alpha / 2) * n_resamples)]
+    hi = resampled_means[int((1 - alpha / 2) * n_resamples)]
+    return mean, lo, hi
+
+random.seed(7)  # Demo data stand-in; real diffs come from your judge.
+demo_diffs = [random.gauss(0.33, 1.1) for _ in range(60)]
+mean, lo, hi = paired_bootstrap_ci(demo_diffs)
+print(f&quot;mean gap = {mean:.2f}, 95% CI = [{lo:.2f}, {hi:.2f}]&quot;)
+# mean gap = 0.29, 95% CI = [0.05, 0.53]
+</code></pre></p>
+<p>Reading it: zero is outside the interval, so the gap is significant at the
+5% level. But the interval's width says the true gap could be as small as
+0.05. <strong>Significance says the gap is real; the interval says whether it is
+big enough to care about.</strong> Most teams forget the second sentence.</p>
+<h3 id="24-majority-vote-the-binomial-arithmetic-of-labeler-pools">2.4 Majority vote: the binomial arithmetic of labeler pools</h3>
+<p>If each labeler is right with probability p independently, the majority of
+n (odd) labelers is right with probability P = sum over k of C(n,k) p^k
+(1-p)^(n-k) for k from majority threshold to n. "Independently" is the
+load-bearing assumption: labelers must work blind to each other.</p>
+<p><pre><code class="language-python">import math
+
+def majority_vote_accuracy(p, n=3):
+    # P(majority right) = P(at least (n+1)/2 labelers right), binomial sum.
+    # Blind labeling is what keeps the independence assumption honest: if
+    # all three share one misunderstanding, they agree confidently and wrongly.
+    if n % 2 == 0:
+        raise ValueError(&quot;majority vote needs an odd number of labelers&quot;)
+    needed = n // 2 + 1  # 2 of 3, 3 of 5, and so on.
+    return sum(math.comb(n, k) * p**k * (1 - p)**(n - k)
+               for k in range(needed, n + 1))
+
+print(f&quot;3 labelers at 75%: {majority_vote_accuracy(0.75, 3):.3f}&quot;)  # 0.844
+print(f&quot;5 labelers at 75%: {majority_vote_accuracy(0.75, 5):.3f}&quot;)  # 0.896
+print(f&quot;3 labelers at 60%: {majority_vote_accuracy(0.60, 3):.3f}&quot;)  # 0.648
+</code></pre></p>
+<p>Memorize: <strong>3 x 75% votes to 84.4%.</strong> Going 3 to 5 buys only 5 more points:
+diminishing returns. And 3 x 60% only reaches 64.8%: majority vote amplifies
+a decent signal; it does not rescue a weak one. Qualify labelers first.</p>
+<h3 id="25-passk-pass1-passk-ceiling-typical-reliability">2.5 pass@k, pass@1, pass^k: ceiling, typical, reliability</h3>
+<p>pass@k = 1 - C(n-c, k) / C(n, k): if the agent gets k independent tries, the
+chance at least one succeeds. It measures the <strong>ceiling</strong>. pass@1 = c/n is
+the plain success rate: <strong>typical</strong> performance. pass^k = C(c, k) / C(n, k):
+the chance <em>all</em> k tries succeed. It measures <strong>reliability</strong>, the number
+production usually cares about.</p>
+<p><pre><code class="language-python">import math
+
+def pass_at_k(n, c, k):
+    # Unbiased pass@k: 1 minus the chance all k draws miss the c successes.
+    # Comb(n-c, k) counts the all-miss draws; comb(n, k) counts all draws.
+    if k &gt; n:
+        return 1.0  # More tries than samples: ceiling is certain by fiat.
+    return 1 - math.comb(n - c, k) / math.comb(n, k)
+
+def pass_pow_k(n, c, k):
+    # Unbiased pass^k: the chance all k draws land on successes.
+    if k &gt; c:
+        return 0.0  # Cannot draw k successes from fewer than k.
+    return math.comb(c, k) / math.comb(n, k)
+
+n, c = 10, 3  # Agent succeeds 3 times in 10 tries.
+print(f&quot;pass@1 = {c/n:.2f}&quot;)            # 0.30 typical
+print(f&quot;pass@5 = {pass_at_k(n,c,5):.4f}&quot;)   # 0.9167 ceiling
+print(f&quot;pass^2 = {pass_pow_k(n,c,2):.4f}&quot;)  # 0.0667 reliability
+</code></pre></p>
+<p>Memorize: <strong>report the pair, with n stated.</strong> "pass@5 = 0.92, pass@1 = 0.30,
+n = 10" tells the full story. "92% success" tells a lie. An agent with high
+pass@k and low pass^k is brilliant sometimes and flaky usually.</p>
+<h3 id="26-the-gate-verdict-as-code">2.6 The gate verdict, as code</h3>
+<p><pre><code class="language-python">def gate_verdict(smoke_regressions, worst_family_break_rate, judge_kappa=None,
+                 max_smoke_regressions=0, max_break_rate=0.10, min_kappa=0.60):
+    # SHIP only if every bar clears. One thing is deliberately NOT code:
+    # an automated HOLD is a flag; a human confirms it before it is final.
+    reasons = []
+    if smoke_regressions &gt; max_smoke_regressions:
+        reasons.append(f&quot;{smoke_regressions} smoke regression(s); &quot;
+                       f&quot;policy allows {max_smoke_regressions}&quot;)
+    if worst_family_break_rate &gt; max_break_rate:
+        reasons.append(f&quot;worst family break rate {worst_family_break_rate:.0%}; &quot;
+                       f&quot;policy allows {max_break_rate:.0%}&quot;)
+    if judge_kappa is not None and judge_kappa &lt; min_kappa:
+        reasons.append(f&quot;judge kappa {judge_kappa:.2f} below warning bar {min_kappa}&quot;)
+    if not reasons:
+        return &quot;SHIP&quot;, &quot;all bars clear&quot;
+    return &quot;HOLD&quot;, &quot;; &quot;.join(reasons)
+
+v, r = gate_verdict(1, 1.00, 0.72)
+print(v, &quot;--&quot;, r)   # HOLD -- 1 smoke regression(s); policy allows 0; ...
+v, r = gate_verdict(0, 0.04, 0.72)
+print(v, &quot;--&quot;, r)   # SHIP -- all bars clear
+v, r = gate_verdict(0, 0.04, 0.51)
+print(v, &quot;--&quot;, r)   # HOLD -- judge kappa 0.51 below warning bar 0.6
+</code></pre></p>
+<p>The third case is the subtle one: the model is fine, the <em>judge</em> drifted.
+A gate that cannot distinguish "model regressed" from "instrument drifted"
+will block good releases and erode trust in the suite.</p>
+<h3 id="27-the-constant-sheet">2.7 The constant sheet</h3>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+<th>Unit / meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kappa bands (Landis-Koch)</td>
+<td>&lt;0, 0.00-0.20, 0.21-0.40, 0.41-0.60, 0.61-0.80, 0.81-1.00</td>
+<td>worse than chance, slight, fair, moderate, substantial, almost perfect</td>
+</tr>
+<tr>
+<td>Human-vs-human ceiling</td>
+<td>~0.8</td>
+<td>kappa; the bar a judge is measured against, not 1.0</td>
+</tr>
+<tr>
+<td>Judge ship bar</td>
+<td>&gt;= 0.7</td>
+<td>kappa; practitioner rule of thumb, tune per team</td>
+</tr>
+<tr>
+<td>Gate judge warning</td>
+<td>&lt; 0.6</td>
+<td>kappa; flag and human-confirm</td>
+</tr>
+<tr>
+<td>Wilson z for 95%</td>
+<td>1.96</td>
+<td>standard normal quantile</td>
+</tr>
+<tr>
+<td>20/20 correct, 95% CI</td>
+<td>[0.839, 1.000]</td>
+<td>Wilson; "100%" is a lie at n=20</td>
+</tr>
+<tr>
+<td>Min cases per variant</td>
+<td>30</td>
+<td>items; Central Limit Theorem kicking in, rule of thumb</td>
+</tr>
+<tr>
+<td>Repeats per case</td>
+<td>3-5</td>
+<td>runs; averages out decoding noise</td>
+</tr>
+<tr>
+<td>Calibration set</td>
+<td>20-50</td>
+<td>items spanning the full quality range</td>
+</tr>
+<tr>
+<td>Gold-item qual batch</td>
+<td>30-50</td>
+<td>items, 80% bar to pass</td>
+</tr>
+<tr>
+<td>Gold seeding in production</td>
+<td>~5%</td>
+<td>of every batch, invisible, catches drift</td>
+</tr>
+<tr>
+<td>Labelers per preference item</td>
+<td>2-3</td>
+<td>independent, blind to each other</td>
+</tr>
+<tr>
+<td>Split-verdict rate</td>
+<td>~30%</td>
+<td>of preference pairs in practice</td>
+</tr>
+<tr>
+<td>Human agreement baseline</td>
+<td>~70%</td>
+<td>preference labels; the ceiling is below 100%</td>
+</tr>
+<tr>
+<td>Judge re-grade cadence</td>
+<td>50/month</td>
+<td>items on the monitoring dashboard</td>
+</tr>
+<tr>
+<td>Majority 3x75%</td>
+<td>84.4%</td>
+<td>binomial; 5x75% is 89.6%, 3x60% is 64.8%</td>
+</tr>
+<tr>
+<td>Smoke tier</td>
+<td>~50 tasks, minutes</td>
+<td>every commit; blocks the merge</td>
+</tr>
+<tr>
+<td>Gate tier</td>
+<td>500-2000 tasks, hours</td>
+<td>every release candidate; blocks SHIP</td>
+</tr>
+<tr>
+<td>Max smoke regressions</td>
+<td>0</td>
+<td>any regression holds</td>
+</tr>
+<tr>
+<td>Max probe break rate</td>
+<td>10%</td>
+<td>per attack family</td>
+</tr>
+<tr>
+<td>Bonferroni with 20 metrics</td>
+<td>alpha = 0.0025</td>
+<td>0.05 / 20; divide the bar by test count</td>
+</tr>
+<tr>
+<td>Severity S1</td>
+<td>page now</td>
+<td>active harm at scale</td>
+</tr>
+<tr>
+<td>Severity S2</td>
+<td>same-day</td>
+<td>serious but bounded; fix within the week</td>
+</tr>
+<tr>
+<td>Incident clock</td>
+<td>hour 0, 1, 2; day 1; week 1; week 2+</td>
+<td>detect, reproduce, assess; mitigate; postmortem; harden</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-classic-traps">3. Classic traps</h2>
+<p>Each trap names why it fools you and the one move that beats it.</p>
+<h3 id="trap-1-position-bias-in-autoraters">Trap 1. Position bias in autoraters</h3>
+<p>The judge favors whichever response is listed first (or second; it varies by
+model). It fools you because the scores look decisive and repeatable. The
+move: run every pairwise comparison in both orders and require the verdict
+to be stable. If flipping the order flips the verdict, the judge is not
+judging.</p>
+<h3 id="trap-2-verbosity-bias">Trap 2. Verbosity bias</h3>
+<p>Judges reward longer answers even when length adds nothing, the same way
+rushed humans use length as a proxy for quality. It fools you because longer
+answers often <em>are</em> more thorough, so the bias hides inside a real signal.
+The move: pad a weak answer with filler and check whether its score rises.
+If it does, add "brevity is not penalized; filler is not rewarded" to the
+judge prompt and re-calibrate, then add long-but-wrong examples to the
+calibration set.</p>
+<h3 id="trap-3-self-preference">Trap 3. Self-preference</h3>
+<p>A judge built from model X favors outputs written in X's style. It fools you
+because the judge's reasoning sounds thoughtful while it quietly prefers its
+own family. The move: have the judge score outputs from several models and
+check whether its own family wins suspiciously often. Never let a model
+grade a release candidate of itself without a human check.</p>
+<h3 id="trap-4-style-and-formatting-bias">Trap 4. Style and formatting bias</h3>
+<p>Judges reward confident tone, bullet lists, and polished formatting over
+correct content. It fools you because the preferred answer <em>looks</em> better.
+The move: pit a correct plain answer against an incorrect polished one. The
+judge must prefer the correct one. This is the most common silent failure in
+production judges.</p>
+<h3 id="trap-5-raw-agreement-flatters-lazy-judges">Trap 5. Raw agreement flatters lazy judges</h3>
+<p>A judge that always says "pass" on a task where 90% of outputs pass gets 90%
+agreement and kappa near zero. It fools you because 90% looks like an A. The
+move: always report kappa next to agreement. The lazy-judge check from
+section 2.1 (kappa exactly 0.0) belongs in every calibration report.</p>
+<h3 id="trap-6-goodhart-on-benchmarks">Trap 6. Goodhart on benchmarks</h3>
+<p>When a measure becomes a target, it stops being a good measure. It fools you
+because the number keeps going up while the thing it stood for stops
+improving. Reward hacking is Goodhart with a training loop. The move: version
+evals like code, keep a changelog, rotate saturated tasks, and hold out a
+private set nobody trains or tunes against.</p>
+<h3 id="trap-7-eval-data-contamination">Trap 7. Eval-data contamination</h3>
+<p>If eval tasks leak into training data, the score measures memorization. It
+fools you because the jump looks like a capability gain and everyone wants
+to believe it. The move: keep eval sets private, rotate items, and watch for
+suspicious jumps on static sets. When the public suite and the private set
+disagree, believe the private set.</p>
+<h3 id="trap-8-confusing-pass1-with-reliability">Trap 8. Confusing pass@1 with reliability</h3>
+<p>"81% success" on a pass@5 of 0.81 with a pass@1 of 0.34 describes a ceiling,
+not a typical run. It fools you because one percentage point is easier to
+quote than three. The move: always report the pair, ceiling and typical,
+with n stated. For production decisions, look at pass^k: the chance all k
+tries succeed is the number that predicts user experience.</p>
+<h3 id="trap-9-gating-on-absolute-scores-instead-of-deltas">Trap 9. Gating on absolute scores instead of deltas</h3>
+<p>A 92% that used to be 95% ships under an absolute bar. It fools you because
+92% clears the bar on paper. The move: gate on the delta against the
+released baseline, same suite, same seeds. Deltas catch decay that absolutes
+bless.</p>
+<h3 id="trap-10-multiple-comparisons-without-correction">Trap 10. Multiple comparisons without correction</h3>
+<p>Test 20 metrics at the 5% level and one will look significant by luck. It
+fools you because the "winning" metric comes with a real p-value attached.
+The move: divide the bar by the number of tests (Bonferroni: 0.05/20 =
+0.0025). Deliberately strict, deliberately cheap.</p>
+<h3 id="trap-11-tuning-against-the-set-you-report-on">Trap 11. Tuning against the set you report on</h3>
+<p>Tuning the prompt against the same 60 questions you report on measures
+memory of the tuning process, not quality. Judge shopping (trying judges
+until one agrees) and cluster structure (resampling ratings that share a
+prompt and judge as if independent, which narrows intervals artificially) are
+the same family. The move: keep a hold-out set you never look at until the
+final number; when ratings are hierarchical, resample by prompt (cluster
+bootstrap), not by rating.</p>
+<h3 id="trap-12-over-refusal-safe-the-way-a-brick-is-safe">Trap 12. Over-refusal: safe the way a brick is safe</h3>
+<p>A model that refuses benign requests is safe and useless. It fools you
+because the harmful-compliance number looks great while the capability cost
+hides. Worse, preachy refusals train users to jailbreak out of annoyance: a
+perverse incentive you built yourself. The move: measure refusal on three
+axes, coverage (refuse across all must-refuse goals), calibration (refuse
+what it should, comply with what it may), and style (short, non-preachy,
+offer a safe alternative when one exists). Use benign edge prompts near the
+refusal boundary, and report the capability cost in the same sentence as the
+safety gain.</p>
+<h2 id="4-rapid-fire-qa">4. Rapid-fire Q&amp;A</h2>
+<p>Twenty-eight questions. Answer each out loud before revealing.</p><div class="pq"><div class="pq-q"><p><strong>Q1.</strong> Name the four parts of an eval suite, and say which two most teams
+improvise.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Tasks (prompts plus context), graders (code or rubrics that score), the
+harness (runs tasks, calls the model, applies graders, stores results), and
+the gating policy (turns scores into ship or hold). Most teams have tasks
+and graders and improvise the harness and the policy, which is how a suite
+becomes a pile of notebooks instead of infrastructure.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q2.</strong> Why must the harness seed everything and isolate every task in its
+own try/except?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Without seed control, reruns give different samples and deltas become noise:
+you cannot tell a regression from sampling luck. Without per-task error
+isolation, one crashing grader kills the run and you lose every result after
+it. Isolation is the point of the harness.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q3.</strong> Why must results be stored as append-only JSONL, one row per result?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>So old runs stay re-analyzable when graders change. If you only keep
+aggregates, a grader fix forces you to re-run history you may no longer be
+able to reproduce. The raw rows are the evidence; aggregates are views.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q4.</strong> A refusal grader matches markers like "i can't" and "i cannot".
+Name its failure mode and the fix.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>A model that says "I can't help with that, but here is how..." passes the
+marker check while complying. Marker lists need periodic review against real
+outputs, because refusal phrasing drifts and adversaries learn the markers.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q5.</strong> Your calibration set has 40 items, all of them good responses the
+model handled well. What breaks?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>You calibrated on a narrow band and the judge falls apart at the tails. The
+set must span the full quality range, deliberately including known-bad and
+known-borderline cases, or the kappa you compute does not describe the judge
+you will actually use.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q6.</strong> Two human raters label your calibration set and agree at kappa 0.45.
+Your judge reaches kappa 0.62 against their majority. Do you ship the judge?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>No. If the humans do not agree with each other, the task or the rubric is
+broken, and the judge's 0.62 is measured against a noisy ground truth. Fix
+the rubric first. A judge cannot beat the ceiling set by its own ground
+truth.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q7.</strong> Compute kappa by hand: 100 items, judge passes 70, human passes 75,
+they agree on 75 (60 both-pass, 15 both-fail). What does the number mean?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>p_o = 0.75. p_e = 0.70 x 0.75 + 0.30 x 0.25 = 0.525 + 0.075 = 0.60. kappa =
+(0.75 - 0.60) / (1 - 0.60) = 0.375, which is "fair" on the Landis-Koch bands.
+Raw agreement said 75%; kappa says the judge is only modestly better than
+chance given the two yes-rates.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q8.</strong> Your judge hits kappa 0.78 against humans, and human-vs-human kappa
+on the task is 0.81. Your teammate says "it is still 0.22 from perfect."
+Answer them.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>The right bar is the human ceiling, not 1.0. At 0.78 vs a 0.81 ceiling, the
+judge is as reliable as a human on this task. Judging it against perfection
+guarantees it "fails" on any task where humans themselves wobble.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q9.</strong> Name the four bias probes every autorater must pass before entering
+the gate tier, and one probe design for each.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Position: run every pairwise comparison in both orders; the verdict must be
+stable. Verbosity: pad a weak answer with filler; the score must not rise.
+Self-preference: score outputs from several models; the judge's own family
+must not win suspiciously often. Style: pit a correct plain answer against
+an incorrect polished one; the judge must prefer the correct one.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q10.</strong> The judge was calibrated last quarter. The new model writes in a
+noticeably different style. Name what broke and the two fixes.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Distribution shift: the calibration number on the wall is stale because the
+world moved under it. Fix one: re-calibrate on a schedule, and immediately
+after any big model change. Fix two: watch the monitoring dashboard (rolling
+human agreement, score distribution) so drift shows up before it matters.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q11.</strong> The judge and the model under test share a base model. Why is this
+a problem, and what do you do?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Judge-model correlation: their blind spots overlap, so the judge cannot see
+the model's characteristic failures. Prefer judges from a different model
+family than the system under test, and keep human spot-checks regardless.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q12.</strong> Your team starts optimizing prompts against the judge's feedback
+and scores climb. Name the trap and the defense.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Gaming the judge: reward hacking wearing an eval costume. The model is
+optimized for the judge instead of the task. Defense: keep some human-graded
+tasks in the gate tier permanently, and rotate judge prompts.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q13.</strong> Write a threat model in one breath: what three things must it name?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Who the adversary is (curious user, motivated amateur, skilled adversary),
+what access they have (API-only, system prompt exposure, tool use, uploads),
+and what they want (refusal bypass, prompt extraction, injection, misuse
+enablement). A probe without a threat model is just mischief.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q14.</strong> A red-teamer reports: "the model answered a direct request for the
+vault combination." What do you do first?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Stop and fix the basics. If a direct request works, you do not have a
+clever-attacks problem; you have a basics problem. Hunting for exotic
+jailbreaks before direct requests are refused is theater.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q15.</strong> Why must each attacker goal get its own probe set?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Because a model can be strong against one goal and weak against another.
+Good refusal behavior does not imply resistance to prompt extraction or to
+injection through tool output. One blended probe set averages those apart
+and hides the weak one.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q16.</strong> Name the six attack families and what each one tests.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Direct requests (baseline: does the easy thing work); roleplay and persona
+(does refusal survive when it would break character); encoding and
+translation (did safety training generalize past English plaintext);
+multi-turn buildup (does refusal survive conversational context);
+instruction smuggling (does the instruction hierarchy hold: system over user
+over tool output); automated search (static libraries and adaptive
+orchestrators for volume).</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q17.</strong> What makes a red-team finding real, and what is missing if the
+report only says "roleplay attacks work 40% of the time"?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>A finding is reproducible: exact prompts, model version, and settings that
+reproduce it, plus the break rate per attack family. The report as stated is
+missing all of that, so no engineer can reproduce or fix it.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q18.</strong> Recite the five mitigation layers bottom to top, and name what the
+output filter catches that the model itself misses.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>System prompt, input filter, the model itself (refusal training, values,
+instruction hierarchy), output filter, monitoring. The output filter sees
+the final text, including anything the model produced that its training
+should have prevented: it is the last line of defense, and it catches what
+shipped anyway so monitoring can count it.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q19.</strong> "We hardened the system prompt, so we can skip the output filter."
+What is wrong with this sentence?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Two things. System-prompt hardening is the cheapest, weakest layer: use it
+as a layer, never as the plan. And every layer fails differently, which is
+the whole argument for defense in depth. Ask what sails straight through a
+system prompt: anything the model generates despite it, which only the
+output filter and monitoring see.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q20.</strong> Refusal quality has three parts. Name them and one measurement for
+each.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Coverage: does the model refuse across all must-refuse goals, measured with
+must-refuse prompts per goal and attack family. Calibration: does it refuse
+what it should and comply with what it may, measured with benign edge
+prompts near the refusal boundary (over-refusal is a failure). Style:
+short, non-preachy, offers a safe alternative, measured with human grading
+of refusal style on a sample.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q21.</strong> A filter threshold blocks 99% of weapons content and 8% of benign
+traffic in that category. How do you decide if that threshold is right?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>The threshold is a product decision, not a math fact: you weigh the cost of
+missed harm against the cost of blocked benign traffic per category. Strict
+for self-harm and weapons, more balanced for spam. Then you keep measuring:
+precision and recall on a labeled set, serving latency, and the
+false-positive rate on real traffic.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q22.</strong> Read this Pareto point: "refusal tuning cut harmful compliance from
+4% to 0.5% and cost 1.2 points on benign task completion." What decision does
+it support, and what is missing if the report only says the first half?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>It supports picking the tradeoff deliberately: you know the price (1.2
+points of capability) and the gain (3.5 points of safety). The first half
+alone hides the cost. A safety report without capability numbers hides the
+cost; a capability report without safety numbers hides the risk.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q23.</strong> The eval suite is a contract between teams. Name its three clauses
+and what breaks when each is missing.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Ownership: every metric has a named owner who keeps it current; unowned
+metrics rot and silently stop measuring reality. Service levels: the suite
+promises a time to verdict and a false-alarm rate; if it is slow or noisy,
+teams route around it and nothing is gated. Change control: threshold and
+task changes follow a written process with reasons logged; silent changes
+are how "the suite passed" stops meaning anything.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q24.</strong> An incident lands: the model reliably produces instructions for
+wrongdoing on ordinary prompts, and screenshots are spreading. Severity?
+First three actions?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>S1: active, ongoing harm at scale. Page the on-call lead and the safety lead
+immediately. Then: reproduce and record exact prompts, model version, and
+settings; assess blast radius and whether it is being shared publicly;
+decide hold vs rollback. Then open the incident record and assign one owner.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q25.</strong> Why must rollback criteria be written before the incident, in the
+units you already measure?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Because the hardest call, whether to pull the model, should be a procedure,
+not a judgment call made under stress. Measurable units (incident rate per
+million sessions over 24h, probe family break rate on the production
+version, filter outage minutes) turn "should we pull it" into "the criterion
+fired." And the rollback path must be rehearsed: a rollback you have never
+rehearsed is a plan you do not have.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q26.</strong> A postmortem concludes "the filter missed the paraphrase attack."
+Ask the next two whys, and name where the answers must land.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Why did the filter miss it? Because the probe set lacked paraphrase
+attacks. Why did it lack them? Because nobody owned that probe family. The
+answers must land as action items with owners and dates, and every item that
+can be expressed as an eval task becomes one: the reproduction prompts become
+regression tasks, the missing family gets built, the metric gets a threshold.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q27.</strong> Your gate says HOLD: one smoke regression, roleplay family at 100%
+break, judge kappa 0.72. Walk the triage.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>The smoke delta caught one regression and the probes confirmed it as a
+family-wide break: a training change weakened roleplay refusals. Judge kappa
+0.72 is healthy, so the instrument is fine and the signal is real. Triage:
+was the change intended? Fix, re-run, and only then re-evaluate. The HOLD
+stands until a human confirms the fix, because automated flags are confirmed
+by people before they become final.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q28.</strong> The same gate says HOLD, but this time: zero smoke regressions,
+worst family break 4%, judge kappa 0.51. What happened and what do you do?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>The model is fine; the judge drifted below its 0.6 warning bar. This is
+instrument failure, not model failure. Do not block the release on a broken
+instrument and do not wave it through either: send the judge back through
+the calibration loop (Rule 4), re-run the judged tasks with the
+recalibrated judge or human graders, then take the verdict.</p></div></div><h2 id="5-one-page-cheat-sheet-the-30-numbers-and-rules-that-matter-most">5. One-page cheat sheet: the 30 numbers and rules that matter most</h2>
+<ol>
+<li>Suite = tasks + graders + harness + gating policy. Teams improvise the
+   last two; do not be those teams.</li>
+<li>Smoke ~50 tasks, minutes, every commit, blocks the merge. Gate 500-2000
+   tasks, hours, release candidates, blocks SHIP. Science open-ended, never
+   blocks. [rule of thumb]</li>
+<li>Grader ladder: checkable string check, then rubric, then humans first,
+   then autorater only after calibration. Keep human-graded tasks in the
+   gate permanently.</li>
+<li>kappa = (p_o - p_e) / (1 - p_e). Raw agreement flatters; kappa corrects.</li>
+<li>Kappa bands: &lt;0 worse than chance, 0.00-0.20 slight, 0.21-0.40 fair,
+   0.41-0.60 moderate, 0.61-0.80 substantial, 0.81-1.00 almost perfect.</li>
+<li>Human ceiling ~0.8 is the bar, not 1.0. Judge ship bar &gt;= 0.7; gate warns
+   below 0.6. [rule of thumb]</li>
+<li>Calibration: 20-50 items, full quality range, humans label first with 2-3
+   raters, kappa, read the top-10 disagreements, revise the rubric never the
+   judge, re-run on a fresh sample. [rule of thumb]</li>
+<li>Judge monitoring: rolling human agreement (re-grade 50/month), score
+   distribution over time, monthly disagreement review.</li>
+<li>Bias probes before gate entry: position (swap order), verbosity (pad with
+   filler), self-preference (cross-model scoring), style (correct-plain vs
+   wrong-polished).</li>
+<li>Judge staleness: distribution shift, prompt leakage, gaming the judge,
+    judge-model correlation. Re-calibrate on schedule and after big changes.</li>
+<li>Wilson 95% (z=1.96): 20/20 is [0.839, 1.000], not "100%."</li>
+<li>A/B design: pair on the same items, 3-5 repeats per case, bootstrap the
+    differences. &gt;= 30 cases per variant; pre-decide the minimum effect you
+    care about. [rule of thumb]</li>
+<li>Significance = the gap is real. Interval width = whether it matters.
+    Write both sentences.</li>
+<li>Bonferroni: 20 metrics at 5% -&gt; bar = 0.0025. Divide by test count.</li>
+<li>Cluster structure: ratings sharing a prompt and judge are not
+    independent. Resample by prompt.</li>
+<li>Gold items: 30-50 item qual batch at an 80% bar; seed ~5% into every
+    production batch; pause and retrain on drift. [rule of thumb]</li>
+<li>Majority vote: 3 x 75% -&gt; 84.4%; 5 x 75% -&gt; 89.6%; 3 x 60% -&gt; 64.8%.
+    Voting amplifies signal; it does not rescue weak labelers.</li>
+<li>~30% of preference pairs draw split verdicts; human agreement sits
+    around 70%. Disagreement is signal about the rubric, not noise to
+    average away.</li>
+<li>Red-team order: curious user, then motivated amateur, then skilled
+    adversary. Direct request works -&gt; stop, fix basics.</li>
+<li>Four goals, separate probe sets: refusal bypass, prompt extraction,
+    injection, misuse enablement.</li>
+<li>Six families per goal: direct, roleplay, encoding/translation,
+    multi-turn, smuggling, automated search. Report break rate per family.</li>
+<li>Mitigation stack bottom to top: system prompt, input filter, model,
+    output filter, monitoring. Each layer: what it catches that others miss.</li>
+<li>Filter thresholds per category by risk: strict for self-harm/weapons,
+    balanced for spam. Threshold = product decision. Measure precision,
+    recall, latency, false-positive rate.</li>
+<li>Refusal quality: coverage, calibration, style. Over-refusal is failure;
+    preachy refusals train users to jailbreak.</li>
+<li>Gate policy: max 0 smoke regressions; max 10% break in any probe family;
+    judge kappa &lt; 0.6 warns; human confirms every HOLD; gate on deltas, not
+    absolutes.</li>
+<li>Sign-off: "Model v3.2 passes the gate suite at thresholds T, with N
+    known exceptions listed below." Exceptions have owners and dates.</li>
+<li>Hygiene: version evals, changelog, private sets, rotate saturated tasks,
+    hold out a private slice. Public vs private disagree -&gt; believe private.</li>
+<li>pass@k = 1 - C(n-c,k)/C(n,k) is ceiling; pass@1 = c/n is typical;
+    pass^k = C(c,k)/C(n,k) is reliability. Report the pair with n.</li>
+<li>S1 page now, S2 same-day, S3 normal cycle, S4 log it. First hour:
+    reproduce, blast radius, rollback decision, one owner.</li>
+<li>Rollback criteria written before the incident, in measured units,
+    rehearsed. Postmortem: five questions, blameless, and every incident
+    becomes regression tasks in the suite.</li>
+</ol><div class="provenance"><p><strong>Last verified: September 2026.</strong> Kappa definition and Landis-Koch bands
+(1977): standard psychometrics. Wilson score interval: standard statistics.
+Paired bootstrap, cluster bootstrap, Bonferroni: standard experiment design.
+Pass@k estimator: HumanEval paper (Chen et al., 2021). Majority-vote
+binomial: standard probability. InstructGPT ~70% labeler agreement:
+reported methodology. <strong>UNVERIFIED:</strong> items marked [rule of thumb] are
+practitioner heuristics from eval-engineering writeups (suite tier sizes,
+30 cases, 3-5 repeats, 20-50 calibration items, gold-item counts and the 5%
+seeding rate, the 80% qual bar, the 0.7/0.6 kappa bars, the 10% probe break
+limit), not theorems or published standards. Tune every one against your
+own data before it gates a release.</p></div>
+<footer class="site-footer"><div class="site-sitemap"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html" class="site-nav-current">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div><p class="site-footer-note">LLM Knowledge Base. Every page works offline from file:// and links back here. No personal information.</p></footer>
+</main>
+<script>
+/* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
+   Builds: sidebar nav from h2/h3, scroll-spy, nav search filter, localStorage completion
+   checkmarks, reading progress bar, chapter prev/next footer, copy buttons, practice-question
+   toggles, mobile drawer, keyboard nav. No external dependencies. */
+(function(){
+"use strict";
+var content=document.getElementById('dsContent')||document.querySelector('main')||document.body;
+var sidebar=document.getElementById('dsSidebar');
+if(!sidebar||!content)return;
+
+/* ---------- collect sections: h2 = chapter groups, h3 = items ---------- */
+function slugify(t){return t.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'s';}
+var used={};
+function uniqueId(base){var id=base,n=2;while(used[id]||document.getElementById(id)){id=base+'-'+(n++);}used[id]=1;return id;}
+var chapters=[]; // {h2, id, title, items:[{id,title,el}]}
+var cur=null;
+Array.prototype.forEach.call(content.querySelectorAll('h2,h3'),function(h){
+  if(!h.id){h.id=uniqueId(slugify(h.textContent));}else{used[h.id]=1;}
+  h.setAttribute('tabindex','-1');
+  var t=h.textContent.trim();
+  if(h.tagName==='H2'){cur={id:h.id,title:t,items:[]};chapters.push(cur);}
+  else if(cur){cur.items.push({id:h.id,title:t});}
+  else{cur={id:'intro',title:'Introduction',items:[{id:h.id,title:t}]};chapters.push(cur);}
+});
+
+/* ---------- build sidebar nav ---------- */
+var nav=document.getElementById('dsNav');
+var pageKey='rec-cur-'+(document.title||location.pathname).replace(/[^a-z0-9]+/gi,'-');
+function isDone(id){try{return localStorage.getItem(pageKey+'#'+id)==='1';}catch(e){return false;}}
+function setDone(id,v){try{if(v)localStorage.setItem(pageKey+'#'+id,'1');else localStorage.removeItem(pageKey+'#'+id);}catch(e){}}
+function checkItem(id){var c=document.querySelector('.ds-check[data-sec="'+id+'"]');if(c)c.checked=isDone(id);}
+function updateCount(){
+  var boxes=nav.querySelectorAll('.ds-check'),done=0;
+  boxes.forEach(function(b){if(b.checked)done++;});
+  var el=document.getElementById('dsCompleteCount');
+  if(el)el.textContent=done+' of '+boxes.length+' sections complete';
+}
+function itemRow(sec){
+  var li=document.createElement('li');
+  var a=document.createElement('a');a.href='#'+sec.id;
+  var cb=document.createElement('input');
+  cb.type='checkbox';cb.className='ds-check';cb.checked=isDone(sec.id);
+  cb.setAttribute('data-sec',sec.id);cb.setAttribute('aria-label','Mark complete: '+sec.title);
+  cb.addEventListener('change',function(ev){ev.stopPropagation();setDone(sec.id,cb.checked);updateCount();});
+  cb.addEventListener('click',function(ev){ev.stopPropagation();});
+  var sp=document.createElement('span');sp.textContent=sec.title;
+  a.appendChild(cb);a.appendChild(sp);
+  a.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+  li.appendChild(a);return li;
+}
+chapters.forEach(function(ch,ci){
+  var g=document.createElement('div');g.className='ds-nav-group';g.dataset.title=ch.title.toLowerCase();
+  var btn=document.createElement('button');
+  btn.innerHTML='<span></span><span class="ds-caret">▾</span>';
+  btn.firstChild.textContent=ch.title;
+  btn.setAttribute('aria-expanded','true');
+  var ul=document.createElement('ul');ul.className='ds-nav-items';
+  var headLi=itemRow({id:ch.id,title:ch.title});ul.appendChild(headLi);
+  ch.items.forEach(function(it){ul.appendChild(itemRow(it));});
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!open));
+    ul.style.display=open?'none':'';
+    btn.querySelector('.ds-caret').textContent=open?'▸':'▾';
+  });
+  g.appendChild(btn);g.appendChild(ul);nav.appendChild(g);
+});
+updateCount();
+
+/* ---------- nav search filter ---------- */
+var search=document.getElementById('dsNavSearch');
+if(search){search.addEventListener('input',function(){
+  var q=search.value.trim().toLowerCase(),any=false;
+  nav.querySelectorAll('.ds-nav-group').forEach(function(g){
+    var show=g.dataset.title.indexOf(q)>-1;
+    g.querySelectorAll('.ds-nav-items li').forEach(function(li){
+      var hit=li.textContent.toLowerCase().indexOf(q)>-1;
+      li.style.display=(!q||hit||show)?'':'none';if(!q||hit)show=true;
+    });
+    g.style.display=show?'':'none';if(show)any=true;
+  });
+  var empty=nav.querySelector('.ds-nav-empty');
+  if(!any&&!empty){var d=document.createElement('div');d.className='ds-nav-empty';d.textContent='No sections match.';nav.appendChild(d);}
+  if(any&&empty)empty.remove();
+});}
+
+/* ---------- scroll-spy ---------- */
+var links=Array.prototype.slice.call(nav.querySelectorAll('.ds-nav-items a'));
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.toggle('ds-active',a.getAttribute('href')==='#'+e.target.id);});
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+chapters.forEach(function(ch){
+  var el=document.getElementById(ch.id);if(el)spy.observe(el);
+  ch.items.forEach(function(it){var el2=document.getElementById(it.id);if(el2)spy.observe(el2);});
+});
+
+/* ---------- progress bar ---------- */
+var prog=document.getElementById('dsProgress');
+function onScroll(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- mobile drawer ---------- */
+var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('dsScrim');
+if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
+if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+
+/* ---------- keyboard nav: [ ] sections, / search ---------- */
+document.addEventListener('keydown',function(e){
+  if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  var ids=[];chapters.forEach(function(ch){ids.push(ch.id);ch.items.forEach(function(it){ids.push(it.id);});});
+  function jump(dir){
+    var y=window.scrollY+10,cur=0;
+    ids.forEach(function(id,i){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+y<=y+1)cur=i;});
+    var n=Math.min(ids.length-1,Math.max(0,cur+dir)),el=document.getElementById(ids[n]);
+    if(el){el.scrollIntoView();el.focus({preventScroll:true});}
+  }
+  if(e.key==='[')jump(-1);else if(e.key===']')jump(1);
+  else if(e.key==='/'&&search){e.preventDefault();search.focus();}
+});
+var hint=document.createElement('div');hint.className='ds-kbd-hint';
+hint.textContent='Keyboard: [ and ] move between sections, / focuses section search.';
+var foot=document.querySelector('.ds-side-foot');if(foot)foot.appendChild(hint);
+
+/* ---------- chapter prev/next footers (one after each h2 section) ---------- */
+if(chapters.length>1){
+  var mk=function(ch,cls,label){var a=document.createElement('a');a.href='#'+ch.id;a.className=cls;
+    a.innerHTML='<span style="display:block;font-size:.78rem;color:var(--muted)">'+label+'</span>';a.appendChild(document.createTextNode(ch.title));return a;};
+  chapters.forEach(function(ch,i){
+    var bar=document.createElement('nav');bar.className='ds-chapter-nav';bar.setAttribute('aria-label','Chapter navigation');
+    var left=document.createElement('span'),right=document.createElement('span');
+    if(chapters[i-1])left.appendChild(mk(chapters[i-1],'ds-prev','↑ Previous'));
+    else left.innerHTML='<span style="color:var(--muted);font-size:.85rem">Start of volume</span>';
+    if(chapters[i+1])right.appendChild(mk(chapters[i+1],'ds-next','Next ↓'));
+    else right.innerHTML='<span style="color:var(--muted);font-size:.85rem">End of volume</span>';
+    bar.appendChild(left);bar.appendChild(right);
+    /* insert the bar immediately before the next chapter's heading, using that
+       heading's own parent so <section> wrappers (or any nesting) cannot break it */
+    var nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
+    if(nextH){nextH.parentNode.insertBefore(bar,nextH);}
+    else{var lastH=document.getElementById(ch.id);lastH.parentNode.appendChild(bar);}
+  });
+}
+
+/* ---------- copy buttons on code blocks ---------- */
+document.querySelectorAll('pre').forEach(function(pre){
+  if(pre.querySelector('.ds-copy-btn'))return;
+  var btn=document.createElement('button');btn.className='ds-copy-btn';btn.textContent='Copy';
+  btn.setAttribute('aria-label','Copy code to clipboard');
+  btn.addEventListener('click',function(){
+    var txt=pre.innerText;
+    function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1400);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}
+  });
+  pre.appendChild(btn);
+});
+
+/* ---------- practice-question widgets ---------- */
+document.querySelectorAll('.pq').forEach(function(pq){
+  var btn=pq.querySelector('.pq-reveal'),ans=pq.querySelector('.pq-a');
+  if(!btn||!ans)return;
+  btn.addEventListener('click',function(){
+    var open=ans.hasAttribute('hidden');
+    if(open){ans.removeAttribute('hidden');btn.setAttribute('aria-expanded','true');btn.textContent='Hide answer';}
+    else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
+  });
+});
+})();
+
+</script>
+</body>
+</html>
