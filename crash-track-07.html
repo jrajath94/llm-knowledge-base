@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forward Deployed Engineering Crash Pack</title>
+<style>
+/* Research-Engineer Curriculum: shared design system (dark, Hallmark discipline)
+   Source of truth. Writers INLINE this file into each volume's <head> inside <style>.
+   Font files live in fonts/ relative to the site root (each HTML is at the root,
+   so the inlined url(fonts/...) resolves correctly from file:// with no network).
+   Tokens (exact, do not improvise): pitch-black dark mode. */
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{
+  --bg:#000000; --surface:#0d0d0d; --border:#262626;
+  --text:#ececec; --muted:#a8a8a8;
+  --accent:#f0b429; --link:#6cb2ff; --code-bg:#111111;
+  --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
+p{text-align:justify;hyphens:auto;margin:.85rem 0}
+h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
+h1{font-size:2rem;font-weight:800}
+h2{font-size:1.5rem;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:1.05rem;font-weight:700}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:.2rem}
+ul,ol{margin:.7rem 0;padding-left:1.6rem}
+li{margin:.3rem 0}
+li::marker{color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;display:block;overflow-x:auto}
+thead,tbody,tr{display:table;width:100%;table-layout:fixed}
+th,td{border:1px solid var(--border);padding:.6rem .75rem;text-align:left;vertical-align:top}
+th{background:var(--surface);font-weight:700}
+code{font-family:var(--font-code);background:var(--code-bg);border:1px solid var(--border);padding:.08rem .35rem;border-radius:.3rem;font-size:.88em}
+p code,li code,td code,th code{overflow-wrap:break-word;word-break:break-word}
+pre{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:.6rem;padding:1rem 1.1rem;overflow-x:auto;font-size:.88rem;line-height:1.6;margin:1.1rem 0}
+pre code{background:none;border:none;padding:0;font-size:1em}
+pre.ascii{background:#0a0a0a;color:#d8d8d8}
+figure{margin:1.5rem 0;border:1px solid var(--border);border-radius:.7rem;padding:1rem;background:var(--surface)}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:.3rem}
+.ds-content img{max-width:100%;height:auto} /* bare <img> in <p> must never overflow */
+figcaption{font-size:.9rem;color:var(--muted);margin-top:.7rem;text-align:left}
+details{border:1px solid var(--border);border-radius:.6rem;padding:.75rem 1.05rem;margin:.9rem 0;background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--text)}
+dfn{font-style:normal;font-weight:600;border-bottom:2px dotted var(--accent);cursor:help}
+blockquote{border-left:3px solid var(--accent);margin:1.1rem 0;padding:.6rem 1rem;background:var(--surface);border-radius:0 .5rem .5rem 0}
+blockquote p{margin:.4rem 0}
+
+/* ---- layout: sidebar + content ---- */
+.ds-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60}
+.ds-menu-btn{display:none;position:fixed;top:.7rem;left:.7rem;z-index:55;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:.5rem;font-family:var(--font-ui);font-size:1.2rem;padding:.35rem .7rem;cursor:pointer}
+.ds-sidebar{position:fixed;top:0;left:0;bottom:0;width:19rem;background:var(--surface);border-right:1px solid var(--border);z-index:50;display:flex;flex-direction:column}
+.ds-side-head{padding:1.1rem 1.1rem .8rem;border-bottom:1px solid var(--border)}
+.ds-side-eyebrow{margin:0;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ds-side-title{margin:.3rem 0 .7rem;font-family:var(--font-ui);font-size:1.02rem;font-weight:700;line-height:1.35}
+.ds-side-search{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:400 .88rem/1.4 var(--font-ui);padding:.5rem .7rem}
+.ds-side-search::placeholder{color:var(--muted)}
+.ds-nav{flex:1;overflow-y:auto;padding:.7rem .6rem}
+.ds-nav ul{list-style:none;margin:0;padding:0}
+.ds-nav-group{margin-bottom:.35rem}
+.ds-nav-group>button{width:100%;text-align:left;background:none;border:none;color:var(--text);font:700 .86rem/1.4 var(--font-ui);padding:.45rem .55rem;border-radius:.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+.ds-nav-group>button:hover{background:#161616}
+.ds-nav-group>button .ds-caret{color:var(--muted);font-size:.75rem}
+.ds-nav-items{list-style:none;margin:0;padding:0 0 .3rem .4rem}
+.ds-nav-items a{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:var(--font-ui);font-size:.85rem;line-height:1.45;padding:.32rem .55rem;border-radius:.4rem;border-left:2px solid transparent}
+.ds-nav-items a:hover{color:var(--text);background:#161616}
+.ds-nav-items a.ds-active{color:var(--text);border-left-color:var(--accent);background:#161616}
+.ds-check{flex:none;width:.95rem;height:.95rem;accent-color:var(--accent);cursor:pointer}
+.ds-nav-empty{color:var(--muted);font-size:.85rem;padding:.5rem}
+.ds-side-foot{border-top:1px solid var(--border);padding:.7rem 1.1rem;font-family:var(--font-ui);font-size:.8rem;color:var(--muted)}
+.ds-scrim{display:none}
+.ds-content{margin-left:19rem;padding:0 2rem;max-width:calc(72ch + 4rem)}
+.ds-content>*{max-width:72ch}
+.ds-content table,.ds-content figure,.ds-content pre{max-width:72ch}
+.ds-chapter-nav{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--border);margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-chapter-nav a{text-decoration:none;font-weight:600}
+.ds-chapter-nav .ds-prev{text-align:left}
+.ds-chapter-nav .ds-next{text-align:right}
+.ds-kbd-hint{font-family:var(--font-ui);font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+/* ---- learning components ---- */
+.walkthrough{background:#101010;border:1px solid var(--border);border-radius:.55rem;padding:.85rem 1.05rem;margin-top:.9rem;font-size:.93rem}
+.walkthrough strong{color:var(--text)}
+.walkthrough ol{margin:.45rem 0;padding-left:1.35rem}
+.walkthrough li{margin:.32rem 0}
+.walkthrough p{text-align:left}
+.ob-board{background:#0e0c06;border:1px solid #4a3a12;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.ob-board h4{margin:.1rem 0 .5rem;font-size:1rem;color:var(--accent)}
+.ob-board ul{margin:.4rem 0;padding-left:1.3rem}
+.takeaway{background:#0b0f0b;border:1px solid #1f3a24;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.takeaway h4{margin:.1rem 0 .5rem;font-size:1rem;color:#7fd08a}
+.callout{border-left:4px solid var(--link);background:var(--surface);padding:.85rem 1.1rem;margin:1.15rem 0;border-radius:0 .55rem .55rem 0}
+.callout.warn{border-left-color:var(--accent)}
+.callout p{text-align:left;margin:.45rem 0}
+.provenance{border:1px dashed var(--border);border-radius:.6rem;padding:.8rem 1.05rem;margin:1.2rem 0;font-size:.88rem;color:var(--muted);background:#0a0a0a}
+.provenance strong{color:var(--text)}
+.provenance .uv{color:var(--accent);font-weight:700}
+.pq{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--surface)}
+.pq-q{margin:.1rem 0 .7rem;text-align:left}
+.pq-reveal{background:var(--accent);border:none;color:#000;font:700 .88rem/1 var(--font-ui);padding:.55rem 1rem;border-radius:.45rem;cursor:pointer}
+.pq-reveal:hover{filter:brightness(1.08)}
+.pq-a{margin-top:.9rem;border-top:1px solid var(--border);padding-top:.8rem}
+.pq-a ul{margin:.5rem 0}
+.pq-opt-right{color:#7fd08a}
+.pq-opt-wrong{color:#e08080}
+.ds-copy-btn{position:absolute;top:.5rem;right:.5rem;background:#1c1c1c;border:1px solid var(--border);color:var(--muted);font:600 .75rem/1 var(--font-ui);padding:.4rem .65rem;border-radius:.4rem;cursor:pointer}
+.ds-copy-btn:hover{color:var(--text);border-color:var(--accent)}
+.lab{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.2rem 0;background:#0b0b0b}
+.lab h4{margin:.1rem 0 .5rem;color:var(--accent)}
+
+/* ---- responsive: sidebar becomes drawer ---- */
+@media(max-width:56rem){
+  .ds-sidebar{transform:translateX(-105%);transition:transform .25s ease;width:17.5rem}
+  body.ds-nav-open .ds-sidebar{transform:none;z-index:56} /* above the menu button so it never overlaps the eyebrow */
+  .ds-menu-btn{display:block}
+  .ds-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:45}
+  body.ds-nav-open .ds-scrim{display:block}
+  .ds-content{margin-left:0;padding:0 1.1rem}
+}
+@media(min-width:56.01rem){.ds-scrim{display:none!important}}
+
+
+/* ---- site header: home link, volume nav, breadcrumbs, prev/next ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--border);padding:.65rem 0 .7rem;margin:0 0 1.6rem;max-width:72ch}
+.site-header-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+.site-home{font:700 1rem/1.2 var(--font-ui);color:var(--text);text-decoration:none}
+.site-home:hover{color:var(--accent)}
+.site-home .site-home-mark{color:var(--accent)}
+.site-prevnext{display:flex;gap:.6rem;font:600 .82rem/1.4 var(--font-ui)}
+.site-prevnext a{color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
+.site-prevnext a:hover{color:var(--text);border-color:var(--accent)}
+.site-prevnext .site-prevnext-disabled{color:#4a4a4a;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
+.breadcrumbs{font:400 .8rem/1.5 var(--font-ui);color:var(--muted);margin:.45rem 0 0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text)}
+.breadcrumbs .bc-sep{margin:0 .35rem;color:#4a4a4a}
+.breadcrumbs .bc-current{color:var(--text)}
+details.site-nav{margin:.55rem 0 0;border:1px solid var(--border);border-radius:.55rem;background:var(--surface)}
+details.site-nav summary{cursor:pointer;list-style:none;font:600 .85rem/1.4 var(--font-ui);color:var(--text);padding:.55rem .9rem;display:flex;align-items:center;gap:.5rem}
+details.site-nav summary::-webkit-details-marker{display:none}
+details.site-nav summary::before{content:"+";color:var(--accent);font-weight:700}
+details.site-nav[open] summary::before{content:"\2212"}
+details.site-nav summary:hover{color:var(--accent)}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem;padding:.2rem .9rem .9rem}
+.site-nav-groups h4{font:700 .75rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:.6rem 0 .35rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:.18rem 0}
+.site-nav-groups a{font:400 .83rem/1.45 var(--font-ui);color:var(--muted);text-decoration:none}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:700}
+
+/* ---- site footer: full sitemap ---- */
+.site-footer{border-top:1px solid var(--border);margin:3rem 0 0;padding:2rem 0 2.5rem;max-width:72ch}
+.site-footer .site-sitemap{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.2rem}
+.site-sitemap h4{font:700 .78rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 .4rem}
+.site-sitemap ul{list-style:none;margin:0;padding:0}
+.site-sitemap li{margin:.2rem 0}
+.site-sitemap a{font:400 .83rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none}
+.site-sitemap a:hover{color:var(--text)}
+.site-footer-note{font:400 .78rem/1.5 var(--font-ui);color:#6a6a6a;margin-top:1.6rem}
+@media(max-width:56rem){
+  .site-header-row{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between}
+  .site-header{padding-left:2.9rem} /* clear the fixed hamburger menu button */
+}
+@media print{
+  .site-header,.site-footer{display:none!important}
+}
+
+/* ---- print ---- */
+@media print{
+  .ds-sidebar,.ds-menu-btn,.ds-progress,.ds-scrim,.ds-chapter-nav,.ds-copy-btn{display:none!important}
+  .ds-content{margin:0;max-width:100%;padding:0}
+  body{background:#fff;color:#000;font-size:12pt;line-height:1.6}
+  p{text-align:left}
+  h1,h2,h3,h4,a{color:#000}
+  pre,figure,details,.lab,.ob-board,.takeaway,.callout,.walkthrough,.pq{background:#fff;border-color:#999;break-inside:avoid}
+  code{background:#f0f0f0;border-color:#999;color:#000}
+}
+
+</style>
+</head>
+<body>
+<div class="ds-progress" id="dsProgress"></div>
+<button class="ds-menu-btn" id="dsMenuBtn" aria-label="Open navigation">&#9776;</button>
+<aside class="ds-sidebar" id="dsSidebar" aria-label="Volume navigation">
+<div class="ds-side-head">
+<p class="ds-side-eyebrow">Research-Engineer Curriculum</p>
+<p class="ds-side-title">Role Track 7 · Crash Pack</p>
+<input class="ds-side-search" id="dsNavSearch" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+</div>
+<nav class="ds-nav" id="dsNav" aria-label="Sections"></nav>
+<div class="ds-side-foot"><span id="dsCompleteCount"></span></div>
+</aside>
+<div class="ds-scrim" id="dsScrim"></div>
+<main class="ds-content" id="dsContent">
+<header class="site-header"><div class="site-header-row"><a class="site-home" href="index.html"><span class="site-home-mark">■</span> LLM Knowledge Base</a><div class="site-prevnext"><a href="crash-track-06.html">&larr; Crash: Agent Systems</a><a href="crash-track-08.html">Crash: AI Engineer &rarr;</a></div></div><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep">/</span><span>Crash packs</span><span class="bc-sep">/</span><span class="bc-current">Crash: Forward Deployed Eng.</span></nav><details class="site-nav"><summary>Browse all volumes and tracks</summary><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html" class="site-nav-current">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div></details></header>
+<h1 id="crash-pack-forward-deployed-engineer-ai-consultant">Crash Pack: Forward Deployed Engineer / AI Consultant</h1>
+<p>This is the condensed field manual for the forward deployed role: the 20 percent of the track that answers 80 percent of the questions that come up on real engagements. It assumes the base vocabulary (evals, RAG, agents, serving) and compresses the seven chapters of Role Track 7 into decision rules, numbers, traps, drills, and one cheat sheet.</p>
+<p>How to use it. Read sections 2 and 3 in order: the rules tell you what to decide, the numbers tell you how to compute it. Drill section 5 until every answer is instant. Print section 6 and keep it next to you in customer meetings. The full track (scoping memos, worked Python, labs) is the reference behind every compressed rule here.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
+<li>A forward deployed engineer is measured by customer outcomes, not model quality: adoption, reliability in production, and time to value are the scorecard.</li>
+<li>Every decision on an engagement reduces to five rules: scope with kill criteria, let data classification pick the pattern, price cost per successful outcome, gate releases on the acceptance eval, and pause features when an error budget burns.</li>
+<li>The customer decides what "works" means. Your eval must convince a skeptical VP, not a reviewer.</li>
+</ul></div><h2 id="1-the-engagement-loop">1. The engagement loop</h2>
+<p>Every engagement follows the same rhythm. Learn it once and you can run any of them.</p>
+<p><figure class="diagram"><svg id="my-svg" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 1400px; background-color: transparent; max-height: 1400px;" viewBox="4 4 1430.796875 262.66668701171875" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#my-svg{font-family:Inter,system-ui,sans-serif;font-size:15px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#a44141;}#my-svg .error-text{fill:#ddd;stroke:#ddd;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:lightgrey;stroke:lightgrey;}#my-svg .marker.cross{stroke:lightgrey;}#my-svg svg{font-family:Inter,system-ui,sans-serif;font-size:15px;}#my-svg p{margin:0;}#my-svg .label{font-family:Inter,system-ui,sans-serif;color:#ccc;}#my-svg .cluster-label text{fill:#F9FFFE;}#my-svg .cluster-label span{color:#F9FFFE;}#my-svg .cluster-label span p{background-color:transparent;}#my-svg .label text,#my-svg span{fill:#ccc;color:#ccc;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#1f2020;stroke:#ccc;stroke-width:1px;}#my-svg .rough-node .label text,#my-svg .node .label text,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-anchor:middle;}#my-svg .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#my-svg .rough-node .label,#my-svg .node .label,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .root .anchor path{fill:lightgrey!important;stroke-width:0;stroke:lightgrey;}#my-svg .arrowheadPath{fill:lightgrey;}#my-svg .edgePaths .path{stroke:lightgrey;stroke-width:1px;}#my-svg .flowchart-link{stroke:lightgrey;fill:none;}#my-svg .edgeLabel{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .edgeLabel p{background-color:hsl(0, 0%, 34.4117647059%);}#my-svg .edgeLabel rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .labelBkg{background-color:rgba(87.75, 87.75, 87.75, 0.5);}#my-svg .cluster rect{fill:hsl(180, 1.5873015873%, 28.3529411765%);stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#my-svg .cluster text{fill:#F9FFFE;}#my-svg .cluster span{color:#F9FFFE;}#my-svg .node .collapsed-indicator{fill:rgba(255, 255, 255, 0.25);stroke:none;opacity:0.6;}#my-svg .node .collapsed-separator{stroke:rgba(255, 255, 255, 0.25);stroke-width:0.75px;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Inter,system-ui,sans-serif;font-size:12px;background:hsl(20, 1.5873015873%, 12.3529411765%);border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#my-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#my-svg rect.text{fill:none;stroke-width:0;}#my-svg .icon-shape,#my-svg .image-shape{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .icon-shape p,#my-svg .image-shape p{background-color:hsl(0, 0%, 34.4117647059%);padding:2px;}#my-svg .icon-shape .label rect,#my-svg .image-shape .label rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg .node .neo-node{stroke:#ccc;}#my-svg [data-look="neo"].node rect,#my-svg [data-look="neo"].cluster rect,#my-svg [data-look="neo"].node polygon{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].swimlane.cluster rect{filter:none;}#my-svg [data-look="neo"].node path{stroke:url(#my-svg-gradient);stroke-width:1px;}#my-svg [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#my-svg [data-look="neo"].node circle{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node circle .state-start{fill:#000000;}#my-svg [data-look="neo"].icon-shape .icon{fill:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].icon-shape .icon-neo path{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"/></marker><marker id="my-svg_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"/></marker><g class="root"><g class="clusters"/><g class="edges edgePaths"><path d="M164,154.83333333333334L176.92893218813452,154.83333333333334Q184,154.83333333333334 184,147.76226552146787L184,124.94606781186548Q184,117.875 191.07106781186548,117.875L200,117.875" id="my-svg-L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 63.62999725341797 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MTY0LCJ5IjoxNTQuODMzMzMzMzMzMzMzMzR9LHsieCI6MTg0LCJ5IjoxNTQuODMzMzMzMzMzMzMzMzR9LHsieCI6MTg0LCJ5IjoxMTcuODc1fSx7IngiOjIwNCwieSI6MTE3Ljg3NX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M356,117.875L392,117.875" id="my-svg-L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MzU2LCJ5IjoxMTcuODc1fSx7IngiOjM5NiwieSI6MTE3Ljg3NX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M548,105.95833333333334L560.9289321881345,105.95833333333334Q568,105.95833333333334 568,98.88726552146787L568,64.82106781186548Q568,57.75 575.0710678118655,57.75L584,57.75" id="my-svg-L_C_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 74.88006591796875 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6NTQ4LCJ5IjoxMDUuOTU4MzMzMzMzMzMzMzR9LHsieCI6NTY4LCJ5IjoxMDUuOTU4MzMzMzMzMzMzMzR9LHsieCI6NTY4LCJ5Ijo1Ny43NX0seyJ4Ijo1ODgsInkiOjU3Ljc1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M740,57.75L776,57.75" id="my-svg-L_D_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6NzQwLCJ5Ijo1Ny43NX0seyJ4Ijo3ODAsInkiOjU3Ljc1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M932,57.75L944.9289321881345,57.75Q952,57.75 952,64.82106781186548L952,141.80393218813452Q952,148.875 959.0710678118655,148.875L968,148.875" id="my-svg-L_E_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 117.79672241210938 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6OTMyLCJ5Ijo1Ny43NX0seyJ4Ijo5NTIsInkiOjU3Ljc1fSx7IngiOjk1MiwieSI6MTQ4Ljg3NX0seyJ4Ijo5NzIsInkiOjE0OC44NzV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M972,172.70833333333334L959.0710678118655,172.70833333333334Q952,172.70833333333334 952,179.77940114519882L952,241.09559885480118Q952,248.16666666666666 944.9289321881345,248.16666666666666L856,248.16666666666666L664,248.16666666666666L280,248.16666666666666L191.07106781186548,248.16666666666666Q184,248.16666666666666 184,241.09559885480118L184,185.73773447853213Q184,178.66666666666666 176.92893218813452,178.66666666666666L168,178.66666666666666" id="my-svg-L_F_A_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 934.3017578125 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_F_A_0" data-points="W3sieCI6OTcyLCJ5IjoxNzIuNzA4MzMzMzMzMzMzMzR9LHsieCI6OTUyLCJ5IjoxNzIuNzA4MzMzMzMzMzMzMzR9LHsieCI6OTUyLCJ5IjoyNDguMTY2NjY2NjY2NjY2NjZ9LHsieCI6ODU2LCJ5IjoyNDguMTY2NjY2NjY2NjY2NjZ9LHsieCI6NjY0LCJ5IjoyNDguMTY2NjY2NjY2NjY2NjZ9LHsieCI6MjgwLCJ5IjoyNDguMTY2NjY2NjY2NjY2NjZ9LHsieCI6MTg0LCJ5IjoyNDguMTY2NjY2NjY2NjY2NjZ9LHsieCI6MTg0LCJ5IjoxNzguNjY2NjY2NjY2NjY2NjZ9LHsieCI6MTY0LCJ5IjoxNzguNjY2NjY2NjY2NjY2NjZ9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M1124,160.79166666666669L1270.796875,160.79166666666669" id="my-svg-L_F_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 142.796875 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_F_G_0" data-points="W3sieCI6MTEyNCwieSI6MTYwLjc5MTY2NjY2NjY2NjY5fSx7IngiOjEyNzQuNzk2ODc1LCJ5IjoxNjAuNzkxNjY2NjY2NjY2Njl9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M548,129.79166666666666L560.9289321881345,129.79166666666666Q568,129.79166666666666 568,136.86273447853213L568,170.92893218813452Q568,178 575.0710678118655,178L776,178" id="my-svg-L_C_H_0" class="edge-thickness-normal edge-pattern-dotted edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_C_H_0" data-points="W3sieCI6NTQ4LCJ5IjoxMjkuNzkxNjY2NjY2NjY2NjZ9LHsieCI6NTY4LCJ5IjoxMjkuNzkxNjY2NjY2NjY2NjZ9LHsieCI6NTY4LCJ5IjoxNzh9LHsieCI6NzgwLCJ5IjoxNzh9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(472, 247.41666666666666)"><g class="label" data-id="L_F_A_0" transform="translate(-26.203125, -11.25)"><foreignObject width="52.40625" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>expand</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(1199.3984375, 160.04166666666669)"><g class="label" data-id="L_F_G_0" transform="translate(-35.3984375, -11.25)"><foreignObject width="70.796875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>hand over</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(664, 177.25)"><g class="label" data-id="L_C_H_0" transform="translate(-9.5703125, -11.25)"><foreignObject width="19.140625" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>kill</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="my-svg-flowchart-A-0" data-look="neo" transform="translate(88, 166.75)"><rect class="basic label-container" style="" x="-76" y="-45.75" width="152" height="91.5"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Discover<br />shadow users,<br />ask questions</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-B-1" data-look="neo" transform="translate(280, 117.875)"><rect class="basic label-container" style="" x="-76" y="-45.75" width="152" height="91.5"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Scope<br />success criteria,<br />kill criteria</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-C-3" data-look="neo" transform="translate(472, 117.875)"><rect class="basic label-container" style="" x="-76" y="-45.75" width="152" height="91.5"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Prototype<br />ugly, fast,<br />real data</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-D-5" data-look="neo" transform="translate(664, 57.75)"><rect class="basic label-container" style="" x="-76" y="-45.75" width="152" height="91.5"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Harden<br />security, evals,<br />edge cases</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-E-7" data-look="neo" transform="translate(856, 57.75)"><rect class="basic label-container" style="" x="-76" y="-45.75" width="152" height="91.5"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Deploy<br />pilot users,<br />monitor</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-F-9" data-look="neo" transform="translate(1048, 160.79166666666669)"><rect class="basic label-container" style="" x="-76" y="-45.75" width="152" height="91.5"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Measure<br />adoption,<br />outcomes</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-G-13" data-look="neo" transform="translate(1350.796875, 160.79166666666669)"><rect class="basic label-container" style="" x="-76" y="-45.75" width="152" height="91.5"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Support<br />runbooks,<br />training</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-H-15" data-look="neo" transform="translate(856, 178)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Kill early<br />cheap failure</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="my-svg-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><defs><filter id="my-svg-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><linearGradient id="my-svg-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"/><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"/></linearGradient></svg></figure></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li><strong>Discover</strong> means watching real users do the job, not reading a requirements doc. The best requirements live in people's heads.</li>
+<li><strong>Scope</strong> turns discovery into a signed plan with numbers: success criteria plus kill criteria. The kill criteria are the most important line in the plan.</li>
+<li><strong>Prototype</strong> is intentionally ugly and fast, and it runs on the customer's real data. If it fails here, the dotted arrow fires: kill it cheaply. That is a good outcome.</li>
+<li><strong>Harden</strong> is where the demo becomes a system. Most of the calendar lives here: security review, evals, edge cases, monitoring, fallbacks.</li>
+<li><strong>Deploy</strong> starts with a small pilot, not a launch. <strong>Measure</strong> checks the success criteria from the scope step. Then expand or hand over with runbooks and training.</li>
+</ol></div><p>The scorecard for the whole loop, in five measures:</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>What to track</th>
+<th>Why it decides the engagement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Customer outcomes</td>
+<td>1-3 outcome metrics from scoping, reported weekly</td>
+<td>The only score the sponsor cares about</td>
+</tr>
+<tr>
+<td>Adoption</td>
+<td>Weekly active users, share of eligible work, retention after month two</td>
+<td>A system nobody uses failed, however excellent the tech</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>Uptime, p95 latency, task success rate on real traffic, time to recover</td>
+<td>The customer experiences your error rate, not your benchmark</td>
+</tr>
+<tr>
+<td>Time to value</td>
+<td>Days to first working prototype on real data (target: 14-21)</td>
+<td>Engagements die in long silent builds; early proof buys trust</td>
+</tr>
+<tr>
+<td>Expansion / handover</td>
+<td>More teams buying in, or clean handover with runbooks</td>
+<td>The two healthy endings; everything else is a stall</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-decision-rules">2. Decision rules</h2>
+<h3 id="21-scoping-the-go-no-go-rule">2.1 Scoping: the go / no-go rule</h3>
+<p>Discovery has three moves in order: <strong>watch</strong> (shadow 2-4 users), <strong>ask</strong> (the 10-question bank), <strong>map</strong> (workflow boxes marked automate / assist / leave alone). Watching first makes your questions specific. Mapping last forces you to commit to what you learned. Never propose a technical approach before the map exists.</p>
+<p>The go / no-go diamond sits at the end of the map:</p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Go</th>
+<th>No-go (kill it, write why)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Automatable work</td>
+<td>At least one box is pattern-matching, marked automate or assist</td>
+<td>Every box needs judgment under uncertainty, or the signature is the point</td>
+</tr>
+<tr>
+<td>Success criteria</td>
+<td>Writable as numbers plus dates, measurable on customer data</td>
+<td>Only vibes available ("improve efficiency")</td>
+</tr>
+<tr>
+<td>Kill criteria</td>
+<td>Specific conditions to stop, signed by the sponsor</td>
+<td>Nobody will sign a stop condition</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>Exists, located, access path approved or approvable</td>
+<td>"In the CRM" means three CRMs and a spreadsheet with no owner</td>
+</tr>
+<tr>
+<td>Hard constraints</td>
+<td>At least one deployment pattern survives the vetoes (2.2)</td>
+<td>Residency, security, or procurement vetoes all four patterns</td>
+</tr>
+<tr>
+<td>Economics</td>
+<td>Cost per successful outcome beats the human baseline at real volume (3.1, 3.3)</td>
+<td>Fixed costs dominate at their volume and always will</td>
+</tr>
+<tr>
+<td>Sponsor</td>
+<td>A named executive owns the outcome and the decision</td>
+<td>No sponsor, or the sponsor delegates to a committee</td>
+</tr>
+</tbody>
+</table>
+<p>Kill-criteria rules. Write them before building, with a number and a date: "If the acceptance eval stays below 80 percent after 4 weeks on real data, stop." Sign them with the sponsor. Killing a bad engagement in week 2 costs a week. Killing it in month 4 costs the relationship. The most trusted engineers are the ones who killed something fast and said why.</p><div class="callout warn"><p>A scope without numbers is a wish. "The system improves support efficiency" cannot fail, which means it cannot succeed either. Every commitment you make in a demo becomes a requirement in production, so promise less than the demo shows and write down exactly what the demo did not cover.</p></div><h3 id="22-deployment-pattern-five-constraints-four-patterns">2.2 Deployment pattern: five constraints, four patterns</h3>
+<p>Read the customer's constraints before drawing any architecture. The big five, and the question each answers:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Constraint</th>
+<th>The question to ask in week one</th>
+<th>What it decides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Security review</td>
+<td>What data flows where, who can read the logs?</td>
+<td>Takes 2-6 weeks; start it in week one, not week eight</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Data residency</td>
+<td>Where is this data allowed to live?</td>
+<td>Can kill an entire architecture; decides where the model runs</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Legacy integration</td>
+<td>What systems hold the data, and what interfaces exist?</td>
+<td>Budget real time; it is always more than you think</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Identity and access</td>
+<td>What permissions does each user already have?</td>
+<td>Permission check goes before retrieval, never after</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Procurement</td>
+<td>Are we inside an existing contract or starting a new one?</td>
+<td>A pilot needing a purchase order in week two will stall</td>
+</tr>
+</tbody>
+</table>
+<p>Four patterns cover nearly every engagement. Data classification picks the pattern:</p>
+<p><figure class="diagram"><svg id="my-svg" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 1400px; background-color: transparent; max-height: 1400px;" viewBox="4 4 509.51171875 1141.890625" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#my-svg{font-family:Inter,system-ui,sans-serif;font-size:15px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#a44141;}#my-svg .error-text{fill:#ddd;stroke:#ddd;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:lightgrey;stroke:lightgrey;}#my-svg .marker.cross{stroke:lightgrey;}#my-svg svg{font-family:Inter,system-ui,sans-serif;font-size:15px;}#my-svg p{margin:0;}#my-svg .label{font-family:Inter,system-ui,sans-serif;color:#ccc;}#my-svg .cluster-label text{fill:#F9FFFE;}#my-svg .cluster-label span{color:#F9FFFE;}#my-svg .cluster-label span p{background-color:transparent;}#my-svg .label text,#my-svg span{fill:#ccc;color:#ccc;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#1f2020;stroke:#ccc;stroke-width:1px;}#my-svg .rough-node .label text,#my-svg .node .label text,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-anchor:middle;}#my-svg .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#my-svg .rough-node .label,#my-svg .node .label,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .root .anchor path{fill:lightgrey!important;stroke-width:0;stroke:lightgrey;}#my-svg .arrowheadPath{fill:lightgrey;}#my-svg .edgePaths .path{stroke:lightgrey;stroke-width:1px;}#my-svg .flowchart-link{stroke:lightgrey;fill:none;}#my-svg .edgeLabel{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .edgeLabel p{background-color:hsl(0, 0%, 34.4117647059%);}#my-svg .edgeLabel rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .labelBkg{background-color:rgba(87.75, 87.75, 87.75, 0.5);}#my-svg .cluster rect{fill:hsl(180, 1.5873015873%, 28.3529411765%);stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#my-svg .cluster text{fill:#F9FFFE;}#my-svg .cluster span{color:#F9FFFE;}#my-svg .node .collapsed-indicator{fill:rgba(255, 255, 255, 0.25);stroke:none;opacity:0.6;}#my-svg .node .collapsed-separator{stroke:rgba(255, 255, 255, 0.25);stroke-width:0.75px;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Inter,system-ui,sans-serif;font-size:12px;background:hsl(20, 1.5873015873%, 12.3529411765%);border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#my-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#my-svg rect.text{fill:none;stroke-width:0;}#my-svg .icon-shape,#my-svg .image-shape{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .icon-shape p,#my-svg .image-shape p{background-color:hsl(0, 0%, 34.4117647059%);padding:2px;}#my-svg .icon-shape .label rect,#my-svg .image-shape .label rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg .node .neo-node{stroke:#ccc;}#my-svg [data-look="neo"].node rect,#my-svg [data-look="neo"].cluster rect,#my-svg [data-look="neo"].node polygon{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].swimlane.cluster rect{filter:none;}#my-svg [data-look="neo"].node path{stroke:url(#my-svg-gradient);stroke-width:1px;}#my-svg [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#my-svg [data-look="neo"].node circle{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node circle .state-start{fill:#000000;}#my-svg [data-look="neo"].icon-shape .icon{fill:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].icon-shape .icon-neo path{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"/></marker><marker id="my-svg_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"/></marker><g class="root"><g class="clusters"/><g class="edges edgePaths"><path d="M300.5,81L300.5,117" id="my-svg-L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MzAwLjUsInkiOjgxfSx7IngiOjMwMC41LCJ5IjoxMjF9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M265.18489583333337,317.57547959685326L265.18489583333337,352.890625L265.18489583333337,365.8195571881345Q265.18489583333337,372.890625 258.1138280214679,372.890625L201.32106781186548,372.890625Q194.25,372.890625 194.25,379.9616928118655L194.25000000000003,451.390625" id="my-svg-L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 195.42178344726562 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MjY1LjE4NDg5NTgzMzMzMzM3LCJ5IjozMTcuNTc1NDc5NTk2ODUzMjZ9LHsieCI6MjY1LjE4NDg5NTgzMzMzMzM3LCJ5IjozNTIuODkwNjI1fSx7IngiOjI2NS4xODQ4OTU4MzMzMzMzNywieSI6MzcyLjg5MDYyNX0seyJ4IjoxOTQuMjUsInkiOjM3Mi44OTA2MjV9LHsieCI6MTk0LjI1MDAwMDAwMDAwMDAzLCJ5Ijo0NTUuMzkwNjI1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M335.8151041666667,317.57547959685326L335.8151041666667,352.890625L335.8151041666667,365.8195571881345Q335.8151041666667,372.890625 342.88617197853216,372.890625L399.6789321881345,372.890625Q406.75,372.890625 406.75,379.9616928118655L406.75,451.390625" id="my-svg-L_B_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 195.4217529296875 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_B_D_0" data-points="W3sieCI6MzM1LjgxNTEwNDE2NjY2NjcsInkiOjMxNy41NzU0Nzk1OTY4NTMyNn0seyJ4IjozMzUuODE1MTA0MTY2NjY2NywieSI6MzUyLjg5MDYyNX0seyJ4IjozMzUuODE1MTA0MTY2NjY2NywieSI6MzcyLjg5MDYyNX0seyJ4Ijo0MDYuNzUsInkiOjM3Mi44OTA2MjV9LHsieCI6NDA2Ljc1LCJ5Ijo0NTUuMzkwNjI1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M165.41666666666669,619.5572080612183L165.41666666666669,648.390625L165.41666666666669,661.3195571881345Q165.41666666666669,668.390625 158.3455988548012,668.390625L95.07106781186548,668.390625Q88,668.390625 88,675.4616928118655L88,746.890625" id="my-svg-L_C_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 195.42184448242188 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_C_E_0" data-points="W3sieCI6MTY1LjQxNjY2NjY2NjY2NjY5LCJ5Ijo2MTkuNTU3MjA4MDYxMjE4M30seyJ4IjoxNjUuNDE2NjY2NjY2NjY2NjksInkiOjY0OC4zOTA2MjV9LHsieCI6MTY1LjQxNjY2NjY2NjY2NjY5LCJ5Ijo2NjguMzkwNjI1fSx7IngiOjg4LCJ5Ijo2NjguMzkwNjI1fSx7IngiOjg4LCJ5Ijo3NTAuODkwNjI1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M223.08333333333334,619.5572080612183L223.08333333333334,648.390625L223.08333333333334,661.3195571881345Q223.08333333333334,668.390625 230.15440114519882,668.390625L293.4289321881345,668.390625Q300.5,668.390625 300.5,675.4616928118655L300.5,746.890625" id="my-svg-L_C_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 195.42181396484375 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_C_F_0" data-points="W3sieCI6MjIzLjA4MzMzMzMzMzMzMzM0LCJ5Ijo2MTkuNTU3MjA4MDYxMjE4M30seyJ4IjoyMjMuMDgzMzMzMzMzMzMzMzQsInkiOjY0OC4zOTA2MjV9LHsieCI6MjIzLjA4MzMzMzMzMzMzMzM0LCJ5Ijo2NjguMzkwNjI1fSx7IngiOjMwMC41LCJ5Ijo2NjguMzkwNjI1fSx7IngiOjMwMC41LCJ5Ijo3NTAuODkwNjI1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M271.66666666666663,915.0572080612183L271.66666666666663,943.890625L271.66666666666663,956.8195571881345Q271.66666666666663,963.890625 264.59559885480115,963.890625L199.25466156186548,963.890625Q192.18359375,963.890625 192.18359375,970.9616928118655L192.18359375,1042.390625" id="my-svg-L_F_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 197.48825073242188 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_F_G_0" data-points="W3sieCI6MjcxLjY2NjY2NjY2NjY2NjYzLCJ5Ijo5MTUuMDU3MjA4MDYxMjE4M30seyJ4IjoyNzEuNjY2NjY2NjY2NjY2NjMsInkiOjk0My44OTA2MjV9LHsieCI6MjcxLjY2NjY2NjY2NjY2NjYzLCJ5Ijo5NjMuODkwNjI1fSx7IngiOjE5Mi4xODM1OTM3NSwieSI6OTYzLjg5MDYyNX0seyJ4IjoxOTIuMTgzNTkzNzUsInkiOjEwNDYuMzkwNjI1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M329.3333333333333,915.0572080612183L329.3333333333333,943.890625L329.3333333333333,956.8195571881345Q329.3333333333333,963.890625 336.4044011451988,963.890625L401.7453384381345,963.890625Q408.81640625,963.890625 408.81640625,970.9616928118655L408.81640625,1042.390625" id="my-svg-L_F_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 197.4882354736328 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_F_H_0" data-points="W3sieCI6MzI5LjMzMzMzMzMzMzMzMzMsInkiOjkxNS4wNTcyMDgwNjEyMTgzfSx7IngiOjMyOS4zMzMzMzMzMzMzMzMzLCJ5Ijo5NDMuODkwNjI1fSx7IngiOjMyOS4zMzMzMzMzMzMzMzMzLCJ5Ijo5NjMuODkwNjI1fSx7IngiOjQwOC44MTY0MDYyNSwieSI6OTYzLjg5MDYyNX0seyJ4Ijo0MDguODE2NDA2MjUsInkiOjEwNDYuMzkwNjI1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(194.15625, 404.140625)"><g class="label" data-id="L_B_C_0" transform="translate(-12.40625, -11.25)"><foreignObject width="24.8125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>yes</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(406.6796875, 404.140625)"><g class="label" data-id="L_B_D_0" transform="translate(-8.9296875, -11.25)"><foreignObject width="17.859375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>no</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(87.9296875, 699.640625)"><g class="label" data-id="L_C_E_0" transform="translate(-8.9296875, -11.25)"><foreignObject width="17.859375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>no</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(300.40625, 699.640625)"><g class="label" data-id="L_C_F_0" transform="translate(-12.40625, -11.25)"><foreignObject width="24.8125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>yes</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(192.08984375, 995.140625)"><g class="label" data-id="L_F_G_0" transform="translate(-12.40625, -11.25)"><foreignObject width="24.8125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>yes</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(408.74609375, 995.140625)"><g class="label" data-id="L_F_H_0" transform="translate(-8.9296875, -11.25)"><foreignObject width="17.859375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>no</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="my-svg-flowchart-A-0" data-look="neo" transform="translate(300.5, 46.5)"><rect class="basic label-container" style="" x="-77.3828125" y="-34.5" width="154.765625" height="69"/><g class="label" style="" transform="translate(-61.3828125, -22.5)"><rect/><foreignObject width="122.765625" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Classify the data:<br />restricted or not?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-B-1" data-look="neo" transform="translate(300.5, 236.9453125)"><polygon points="115.9453125,0 231.890625,-115.9453125 115.9453125,-231.890625 0,-115.9453125" class="label-container" transform="translate(-115.4453125, 115.9453125)"/><g class="label" style="" transform="translate(-68.1953125, -33.75)"><rect/><foreignObject width="136.390625" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Restricted:<br />cannot leave<br />customer network?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-C-3" data-look="neo" transform="translate(194.25000000000003, 551.890625)"><polygon points="96.5,0 193,-96.5 96.5,-193 0,-96.5" class="label-container" transform="translate(-96, 96.5)"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Internet path<br />allowed at all?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-D-5" data-look="neo" transform="translate(406.75, 489.890625)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Vendor API<br />fastest to value</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-E-7" data-look="neo" transform="translate(88, 796.640625)"><rect class="basic label-container" style="" x="-76" y="-45.75" width="152" height="91.5"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>On-premises<br />their hardware,<br />their rules</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-F-9" data-look="neo" transform="translate(300.5, 847.390625)"><polygon points="96.5,0 193,-96.5 96.5,-193 0,-96.5" class="label-container" transform="translate(-96, 96.5)"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Steady high<br />volume?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-G-11" data-look="neo" transform="translate(192.18359375, 1092.140625)"><rect class="basic label-container" style="" x="-79.9375" y="-45.75" width="159.875" height="91.5"/><g class="label" style="" transform="translate(-63.9375, -33.75)"><rect/><foreignObject width="127.875" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Private cloud VPC<br />their account,<br />in-region GPUs</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-H-13" data-look="neo" transform="translate(408.81640625, 1092.140625)"><rect class="basic label-container" style="" x="-96.6953125" y="-45.75" width="193.390625" height="91.5"/><g class="label" style="" transform="translate(-80.6953125, -33.75)"><rect/><foreignObject width="161.390625" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Hybrid<br />sensitive steps in VPC,<br />general steps via API</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="my-svg-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><defs><filter id="my-svg-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><linearGradient id="my-svg-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"/><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"/></linearGradient></svg></figure></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li>The first question is always data classification. Everything else follows from it.</li>
+<li>"Restricted" means regulated or contractually confined: health records, financial data, defense work, data under a strict data-processing agreement.</li>
+<li>No internet path means on-premises. Accept it early; fighting it wastes months.</li>
+<li>Volume decides between VPC and hybrid: steady high volume justifies dedicated GPUs in the VPC; spiky or mixed workloads fit a hybrid split.</li>
+<li>Unrestricted data goes to the vendor API. Do not build infrastructure for a problem the API already solves.</li>
+</ol></div><p>The selection rule is <strong>veto, then score</strong>. Hard constraints are vetoes, not weights: "data cannot leave the network" eliminates the vendor API entirely, no matter how fast it is. Score only what survives, with weights you set live with the customer and can defend out loud. A scored table the customer can argue with beats a recommendation they cannot inspect.</p>
+<p>For the security review meeting, bring three artifacts: a data-flow diagram (every arrow labeled with what flows, encrypted in transit and at rest), a data inventory (what you store, where, for how long, including prompts and eval traces), and the permission model ("we check the same access list the source system uses, before retrieval" ends meetings early, in a good way).</p>
+<h3 id="23-build-vs-buy">2.3 Build vs buy</h3>
+<p>Model "buy" as one more option in the cost comparison: zero build cost, the vendor's per-task price as the model cost, and the vendor's claimed success rate discounted by your skepticism, then validated in the pilot shadow. The honest answer is usually hybrid: <strong>buy the commodity model, build the evals, the integration, and the permission layer yourself.</strong> That is where a deployed engineer adds the most value.</p>
+<table>
+<thead>
+<tr>
+<th>Build when</th>
+<th>Buy when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The workflow is the differentiator (their process, their data, their permissions)</td>
+<td>The capability is a commodity (a model API, a vector database)</td>
+</tr>
+<tr>
+<td>Evals must match the customer's definition of done (they always must)</td>
+<td>The vendor's success rate survives your pilot-shadow measurement</td>
+</tr>
+<tr>
+<td>Data cannot leave their network and no compliant vendor option exists</td>
+<td>Volume is low and fixed build cost would dominate (check 3.3)</td>
+</tr>
+<tr>
+<td>The integration surface is the product (legacy systems, SSO, audit)</td>
+<td>Time to value matters more than differentiation for this step</td>
+</tr>
+</tbody>
+</table>
+<h3 id="24-evals-as-contracts-acceptance-thresholds">2.4 Evals as contracts: acceptance thresholds</h3>
+<p>The eval is a contract both sides sign in advance: what gets measured, on what data, with what pass threshold, and what happens on pass or fail. Five parts, all agreed before building:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Threshold / rule</th>
+<th>Why it is load-bearing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Golden set</td>
+<td>100-300 real customer cases, labeled by customer experts</td>
+<td>Below 100 the confidence intervals are too wide to argue about; above 300 the experts never finish</td>
+</tr>
+<tr>
+<td>Grader</td>
+<td>Deterministic first (exact match, rubric code); model judge only if impossible, calibrated against humans first</td>
+<td>A grader the customer cannot read is a grader they will not trust</td>
+</tr>
+<tr>
+<td>Pass threshold</td>
+<td>A number plus the no-critical-failure rule</td>
+<td>One catastrophic miss fails the eval at any average; customers remember the catastrophe</td>
+</tr>
+<tr>
+<td>Failure taxonomy</td>
+<td>Every miss categorized: wrong answer, refused, wrong question, too slow, leaked data</td>
+<td>"9 formatting edge cases, 3 reasoning gaps" is a fix list; "87 percent" is a shrug</td>
+</tr>
+<tr>
+<td>Re-run rule</td>
+<td>On every model or prompt change, on a schedule, before every pilot release</td>
+<td>The eval is a gate in the pipeline, not a one-time ceremony</td>
+</tr>
+</tbody>
+</table>
+<p>Run user acceptance in three rounds: <strong>blind grading</strong> (3-5 experts grade a shuffled mix of system and human outputs, killing bias both ways), <strong>adversarial session</strong> (invite the skeptics to break it for 30 minutes; every break becomes a golden case or a documented limit), <strong>pilot shadow</strong> (two weeks drafting alongside the current process, human decides; the agreement rate is the number the sponsor will quote).</p>
+<p><figure class="diagram"><svg id="my-svg" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 1400px; background-color: transparent; max-height: 1400px;" viewBox="4 4 1267.03125 277.20831298828125" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#my-svg{font-family:Inter,system-ui,sans-serif;font-size:15px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#a44141;}#my-svg .error-text{fill:#ddd;stroke:#ddd;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:lightgrey;stroke:lightgrey;}#my-svg .marker.cross{stroke:lightgrey;}#my-svg svg{font-family:Inter,system-ui,sans-serif;font-size:15px;}#my-svg p{margin:0;}#my-svg .label{font-family:Inter,system-ui,sans-serif;color:#ccc;}#my-svg .cluster-label text{fill:#F9FFFE;}#my-svg .cluster-label span{color:#F9FFFE;}#my-svg .cluster-label span p{background-color:transparent;}#my-svg .label text,#my-svg span{fill:#ccc;color:#ccc;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#1f2020;stroke:#ccc;stroke-width:1px;}#my-svg .rough-node .label text,#my-svg .node .label text,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-anchor:middle;}#my-svg .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#my-svg .rough-node .label,#my-svg .node .label,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .root .anchor path{fill:lightgrey!important;stroke-width:0;stroke:lightgrey;}#my-svg .arrowheadPath{fill:lightgrey;}#my-svg .edgePaths .path{stroke:lightgrey;stroke-width:1px;}#my-svg .flowchart-link{stroke:lightgrey;fill:none;}#my-svg .edgeLabel{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .edgeLabel p{background-color:hsl(0, 0%, 34.4117647059%);}#my-svg .edgeLabel rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .labelBkg{background-color:rgba(87.75, 87.75, 87.75, 0.5);}#my-svg .cluster rect{fill:hsl(180, 1.5873015873%, 28.3529411765%);stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#my-svg .cluster text{fill:#F9FFFE;}#my-svg .cluster span{color:#F9FFFE;}#my-svg .node .collapsed-indicator{fill:rgba(255, 255, 255, 0.25);stroke:none;opacity:0.6;}#my-svg .node .collapsed-separator{stroke:rgba(255, 255, 255, 0.25);stroke-width:0.75px;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Inter,system-ui,sans-serif;font-size:12px;background:hsl(20, 1.5873015873%, 12.3529411765%);border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#my-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#my-svg rect.text{fill:none;stroke-width:0;}#my-svg .icon-shape,#my-svg .image-shape{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .icon-shape p,#my-svg .image-shape p{background-color:hsl(0, 0%, 34.4117647059%);padding:2px;}#my-svg .icon-shape .label rect,#my-svg .image-shape .label rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg .node .neo-node{stroke:#ccc;}#my-svg [data-look="neo"].node rect,#my-svg [data-look="neo"].cluster rect,#my-svg [data-look="neo"].node polygon{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].swimlane.cluster rect{filter:none;}#my-svg [data-look="neo"].node path{stroke:url(#my-svg-gradient);stroke-width:1px;}#my-svg [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#my-svg [data-look="neo"].node circle{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node circle .state-start{fill:#000000;}#my-svg [data-look="neo"].icon-shape .icon{fill:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].icon-shape .icon-neo path{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"/></marker><marker id="my-svg_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"/></marker><g class="root"><g class="clusters"/><g class="edges edgePaths"><path d="M170.34375,183.625L206.34375,183.625" id="my-svg-L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MTcwLjM0Mzc1LCJ5IjoxODMuNjI1fSx7IngiOjIxMC4zNDM3NSwieSI6MTgzLjYyNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M365.84375,183.625L401.84375,183.625" id="my-svg-L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MzY1Ljg0Mzc1LCJ5IjoxODMuNjI1fSx7IngiOjQwNS44NDM3NSwieSI6MTgzLjYyNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M557.84375,175.45833333333337L570.7726821881345,175.45833333333337Q577.84375,175.45833333333337 577.84375,168.3872655214679L577.84375,126.82106781186548Q577.84375,119.75 584.9148178118655,119.75L593.84375,119.75" id="my-svg-L_C_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 82.38005828857422 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6NTU3Ljg0Mzc1LCJ5IjoxNzUuNDU4MzMzMzMzMzMzMzd9LHsieCI6NTc3Ljg0Mzc1LCJ5IjoxNzUuNDU4MzMzMzMzMzMzMzd9LHsieCI6NTc3Ljg0Mzc1LCJ5IjoxMTkuNzV9LHsieCI6NTk3Ljg0Mzc1LCJ5IjoxMTkuNzV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M780.7603948116302,87.16666666666666L813.34375,87.16666666666666L826.2726821881345,87.16666666666666Q833.34375,87.16666666666666 833.34375,80.09559885480118L833.34375,66.69606781186546Q833.34375,59.624999999999986 840.4148178118655,59.624999999999986L914.15625,59.624999999999986" id="my-svg-L_D_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 151.6092529296875 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6NzgwLjc2MDM5NDgxMTYzMDIsInkiOjg3LjE2NjY2NjY2NjY2NjY2fSx7IngiOjgxMy4zNDM3NSwieSI6ODcuMTY2NjY2NjY2NjY2NjZ9LHsieCI6ODMzLjM0Mzc1LCJ5Ijo4Ny4xNjY2NjY2NjY2NjY2Nn0seyJ4Ijo4MzMuMzQzNzUsInkiOjU5LjYyNDk5OTk5OTk5OTk4Nn0seyJ4Ijo5MTguMTU2MjUsInkiOjU5LjYyNDk5OTk5OTk5OTk4Nn1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M780.7603948116302,152.33333333333331L813.34375,152.33333333333331L826.2726821881345,152.33333333333331Q833.34375,152.33333333333331 833.34375,159.4044011451988L833.34375,172.80393218813452Q833.34375,179.875 840.4148178118655,179.875L914.15625,179.875" id="my-svg-L_D_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 151.60926818847656 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_D_F_0" data-points="W3sieCI6NzgwLjc2MDM5NDgxMTYzMDIsInkiOjE1Mi4zMzMzMzMzMzMzMzMzMX0seyJ4Ijo4MTMuMzQzNzUsInkiOjE1Mi4zMzMzMzMzMzMzMzMzMX0seyJ4Ijo4MzMuMzQzNzUsInkiOjE1Mi4zMzMzMzMzMzMzMzMzMX0seyJ4Ijo4MzMuMzQzNzUsInkiOjE3OS44NzV9LHsieCI6OTE4LjE1NjI1LCJ5IjoxNzkuODc1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M1071.03125,179.875L1083.9601821881345,179.875Q1091.03125,179.875 1091.03125,186.94606781186548L1091.03125,208.4705988548012Q1091.03125,215.54166666666669 1098.1023178118655,215.54166666666669L1107.03125,215.54166666666669" id="my-svg-L_F_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 62.338356018066406 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_F_G_0" data-points="W3sieCI6MTA3MS4wMzEyNSwieSI6MTc5Ljg3NX0seyJ4IjoxMDkxLjAzMTI1LCJ5IjoxNzkuODc1fSx7IngiOjEwOTEuMDMxMjUsInkiOjIxNS41NDE2NjY2NjY2NjY2OX0seyJ4IjoxMTExLjAzMTI1LCJ5IjoyMTUuNTQxNjY2NjY2NjY2Njl9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M1111.03125,239.375L1098.1023178118655,239.375Q1091.03125,239.375 1091.03125,246.44606781186548L1091.03125,253.26226552146784Q1091.03125,260.3333333333333 1083.9601821881345,260.3333333333333L994.59375,260.3333333333333L865.75,260.3333333333333L705.59375,260.3333333333333L584.9148178118655,260.3333333333333Q577.84375,260.3333333333333 577.84375,253.26226552146784L577.84375,198.86273447853216Q577.84375,191.79166666666669 570.7726821881345,191.79166666666669L561.84375,191.79166666666669" id="my-svg-L_G_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 624.0308837890625 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_G_C_0" data-points="W3sieCI6MTExMS4wMzEyNSwieSI6MjM5LjM3NX0seyJ4IjoxMDkxLjAzMTI1LCJ5IjoyMzkuMzc1fSx7IngiOjEwOTEuMDMxMjUsInkiOjI2MC4zMzMzMzMzMzMzMzMzfSx7IngiOjk5NC41OTM3NSwieSI6MjYwLjMzMzMzMzMzMzMzMzN9LHsieCI6ODY1Ljc1LCJ5IjoyNjAuMzMzMzMzMzMzMzMzM30seyJ4Ijo3MDUuNTkzNzUsInkiOjI2MC4zMzMzMzMzMzMzMzMzfSx7IngiOjU3Ny44NDM3NSwieSI6MjYwLjMzMzMzMzMzMzMzMzN9LHsieCI6NTc3Ljg0Mzc1LCJ5IjoxOTEuNzkxNjY2NjY2NjY2Njl9LHsieCI6NTU3Ljg0Mzc1LCJ5IjoxOTEuNzkxNjY2NjY2NjY2Njl9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(865.75, 58.874999999999986)"><g class="label" data-id="L_D_E_0" transform="translate(-12.40625, -11.25)"><foreignObject width="24.8125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>yes</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(865.75, 179.125)"><g class="label" data-id="L_D_F_0" transform="translate(-8.9296875, -11.25)"><foreignObject width="17.859375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>no</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="my-svg-flowchart-A-0" data-look="neo" transform="translate(91.171875, 183.625)"><rect class="basic label-container" style="" x="-79.171875" y="-34.5" width="158.34375" height="69"/><g class="label" style="" transform="translate(-63.171875, -22.5)"><rect/><foreignObject width="126.34375" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Customer experts<br />label golden set</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-B-1" data-look="neo" transform="translate(288.09375, 183.625)"><rect class="basic label-container" style="" x="-77.75" y="-34.5" width="155.5" height="69"/><g class="label" style="" transform="translate(-61.75, -22.5)"><rect/><foreignObject width="123.5" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Grader<br />deterministic first</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-C-3" data-look="neo" transform="translate(481.84375, 183.625)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Run on<br />golden set</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-D-5" data-look="neo" transform="translate(705.59375, 119.75)"><polygon points="107.75,0 215.5,-107.75 107.75,-215.5 0,-107.75" class="label-container" transform="translate(-107.25, 107.75)"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Pass threshold<br />+ no critical<br />failures?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-E-7" data-look="neo" transform="translate(994.15625, 59.624999999999986)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Sign-off<br />pilot begins</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-F-9" data-look="neo" transform="translate(994.59375, 179.875)"><rect class="basic label-container" style="" x="-76.4375" y="-45.75" width="152.875" height="91.5"/><g class="label" style="" transform="translate(-60.4375, -33.75)"><rect/><foreignObject width="120.875" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Failure taxonomy<br />categorize<br />every miss</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-G-11" data-look="neo" transform="translate(1187.03125, 227.45833333333331)"><rect class="basic label-container" style="" x="-76" y="-45.75" width="152" height="91.5"/><g class="label" style="" transform="translate(-60, -33.75)"><rect/><foreignObject width="120" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Fix and re-run<br />the eval is<br />the gate</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="my-svg-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><defs><filter id="my-svg-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><linearGradient id="my-svg-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"/><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"/></linearGradient></svg></figure></p>
+<h3 id="25-escalation-triggers">2.5 Escalation triggers</h3>
+<p>Escalation is a rule, not a feeling. Set the lines in the scoping memo, then let the dashboard fire them.</p>
+<table>
+<thead>
+<tr>
+<th>Trigger</th>
+<th>Line</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Error budget burn rate above 2x</td>
+<td>Sustained, any of the three budgets</td>
+<td>Pause feature work; fix reliability; tell the sponsor the same day</td>
+</tr>
+<tr>
+<td>Quality below SLO on sampled traffic</td>
+<td>Page, not ticket</td>
+<td>Wake someone; the runbook must already exist</td>
+</tr>
+<tr>
+<td>Kill criterion approaching</td>
+<td>The week you see it, not the week it hits</td>
+<td>Tell the sponsor with a new date and what changed, or start the kill</td>
+</tr>
+<tr>
+<td>Acceptance eval fails the bar</td>
+<td>Any release gate</td>
+<td>Lead with the number, then the taxonomy, then the plan and the cost</td>
+</tr>
+<tr>
+<td>Security review blocked</td>
+<td>Week one, not week eight</td>
+<td>Escalate for a parallel path (on-prem option, narrower data scope)</td>
+</tr>
+<tr>
+<td>Scope creep ("can it also do invoices?")</td>
+<td>Immediately</td>
+<td>Point at the scoping memo; new workflow means a new memo and new criteria</td>
+</tr>
+</tbody>
+</table>
+<p>The incident ritual, same every time: (1) mitigate first (roll back, pause, or route to human handoff), (2) write the timeline with facts only, (3) find the cause with five whys, blameless, (4) add a fuzzer probe and usually a golden-set case at the exact break, (5) share the post-mortem with the customer within 48 hours. Customers forgive incidents; they do not forgive silence.</p>
+<p>The fallback cascade is the ordered list of what happens when an AI call fails. Design it before the pilot.</p>
+<p><figure class="diagram"><svg id="my-svg" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 1400px; background-color: transparent; max-height: 1400px;" viewBox="4 4 365.640625 857.5" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#my-svg{font-family:Inter,system-ui,sans-serif;font-size:15px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#a44141;}#my-svg .error-text{fill:#ddd;stroke:#ddd;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:lightgrey;stroke:lightgrey;}#my-svg .marker.cross{stroke:lightgrey;}#my-svg svg{font-family:Inter,system-ui,sans-serif;font-size:15px;}#my-svg p{margin:0;}#my-svg .label{font-family:Inter,system-ui,sans-serif;color:#ccc;}#my-svg .cluster-label text{fill:#F9FFFE;}#my-svg .cluster-label span{color:#F9FFFE;}#my-svg .cluster-label span p{background-color:transparent;}#my-svg .label text,#my-svg span{fill:#ccc;color:#ccc;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#1f2020;stroke:#ccc;stroke-width:1px;}#my-svg .rough-node .label text,#my-svg .node .label text,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-anchor:middle;}#my-svg .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#my-svg .rough-node .label,#my-svg .node .label,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .root .anchor path{fill:lightgrey!important;stroke-width:0;stroke:lightgrey;}#my-svg .arrowheadPath{fill:lightgrey;}#my-svg .edgePaths .path{stroke:lightgrey;stroke-width:1px;}#my-svg .flowchart-link{stroke:lightgrey;fill:none;}#my-svg .edgeLabel{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .edgeLabel p{background-color:hsl(0, 0%, 34.4117647059%);}#my-svg .edgeLabel rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .labelBkg{background-color:rgba(87.75, 87.75, 87.75, 0.5);}#my-svg .cluster rect{fill:hsl(180, 1.5873015873%, 28.3529411765%);stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#my-svg .cluster text{fill:#F9FFFE;}#my-svg .cluster span{color:#F9FFFE;}#my-svg .node .collapsed-indicator{fill:rgba(255, 255, 255, 0.25);stroke:none;opacity:0.6;}#my-svg .node .collapsed-separator{stroke:rgba(255, 255, 255, 0.25);stroke-width:0.75px;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Inter,system-ui,sans-serif;font-size:12px;background:hsl(20, 1.5873015873%, 12.3529411765%);border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#my-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#my-svg rect.text{fill:none;stroke-width:0;}#my-svg .icon-shape,#my-svg .image-shape{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .icon-shape p,#my-svg .image-shape p{background-color:hsl(0, 0%, 34.4117647059%);padding:2px;}#my-svg .icon-shape .label rect,#my-svg .image-shape .label rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg .node .neo-node{stroke:#ccc;}#my-svg [data-look="neo"].node rect,#my-svg [data-look="neo"].cluster rect,#my-svg [data-look="neo"].node polygon{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].swimlane.cluster rect{filter:none;}#my-svg [data-look="neo"].node path{stroke:url(#my-svg-gradient);stroke-width:1px;}#my-svg [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#my-svg [data-look="neo"].node circle{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node circle .state-start{fill:#000000;}#my-svg [data-look="neo"].icon-shape .icon{fill:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].icon-shape .icon-neo path{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"/></marker><marker id="my-svg_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"/></marker><g class="root"><g class="clusters"/><g class="edges edgePaths"><path d="M189.640625,58.5L189.640625,94.5" id="my-svg-L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MTg5LjY0MDYyNSwieSI6NTguNX0seyJ4IjoxODkuNjQwNjI1LCJ5Ijo5OC41fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M167.640625,167.5L167.640625,180.42893218813452Q167.640625,187.5 160.56955718813452,187.5L100.71169281186548,187.5Q93.640625,187.5 93.640625,194.57106781186548L93.640625,266" id="my-svg-L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 163.17166137695312 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MTY3LjY0MDYyNSwieSI6MTY3LjV9LHsieCI6MTY3LjY0MDYyNSwieSI6MTg3LjV9LHsieCI6OTMuNjQwNjI1LCJ5IjoxODcuNX0seyJ4Ijo5My42NDA2MjUsInkiOjI3MH1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M93.640625,339L93.640625,437.5" id="my-svg-L_C_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 94.5 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6OTMuNjQwNjI1LCJ5IjozMzl9LHsieCI6OTMuNjQwNjI1LCJ5Ijo0NDEuNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M93.640625,510.5L93.640625,609" id="my-svg-L_D_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 94.5 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6OTMuNjQwNjI1LCJ5Ijo1MTAuNX0seyJ4Ijo5My42NDA2MjUsInkiOjYxM31d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M93.640625,682L93.640625,780.5" id="my-svg-L_E_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 94.5 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6OTMuNjQwNjI1LCJ5Ijo2ODJ9LHsieCI6OTMuNjQwNjI1LCJ5Ijo3ODQuNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M211.640625,167.5L211.640625,180.42893218813452Q211.640625,187.5 218.71169281186548,187.5L278.5695571881345,187.5Q285.640625,187.5 285.640625,194.57106781186548L285.640625,266" id="my-svg-L_B_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 163.17169189453125 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_B_G_0" data-points="W3sieCI6MjExLjY0MDYyNSwieSI6MTY3LjV9LHsieCI6MjExLjY0MDYyNSwieSI6MTg3LjV9LHsieCI6Mjg1LjY0MDYyNSwieSI6MTg3LjV9LHsieCI6Mjg1LjY0MDYyNSwieSI6MjcwfV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(93.6171875, 218.75)"><g class="label" data-id="L_B_C_0" transform="translate(-55.4765625, -11.25)"><foreignObject width="110.953125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>timeout or error</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(93.484375, 390.25)"><g class="label" data-id="L_C_D_0" transform="translate(-35.84375, -11.25)"><foreignObject width="71.6875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>fails again</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(93.609375, 561.75)"><g class="label" data-id="L_D_E_0" transform="translate(-14.46875, -11.25)"><foreignObject width="28.9375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>fails</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(93.34375, 733.25)"><g class="label" data-id="L_E_F_0" transform="translate(-32.703125, -11.25)"><foreignObject width="65.40625" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>no cache</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(285.1875, 218.75)"><g class="label" data-id="L_B_G_0" transform="translate(-40.546875, -11.25)"><foreignObject width="81.09375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>critical task</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="my-svg-flowchart-A-0" data-look="neo" transform="translate(189.640625, 35.25)"><rect class="basic label-container" style="" x="-76" y="-23.25" width="152" height="46.5"/><g class="label" style="" transform="translate(-60, -11.25)"><rect/><foreignObject width="120" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Task arrives</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-B-1" data-look="neo" transform="translate(189.640625, 133)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Primary model<br />best quality</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-C-3" data-look="neo" transform="translate(93.640625, 304.5)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Retry once<br />same model</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-D-5" data-look="neo" transform="translate(93.640625, 476)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Smaller model<br />faster, dumber</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-E-7" data-look="neo" transform="translate(93.640625, 647.5)"><rect class="basic label-container" style="" x="-81.640625" y="-34.5" width="163.28125" height="69"/><g class="label" style="" transform="translate(-65.640625, -22.5)"><rect/><foreignObject width="131.28125" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Cached answer<br />if the task allows it</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-F-9" data-look="neo" transform="translate(93.640625, 819)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Human handoff<br />with full context</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-G-11" data-look="neo" transform="translate(285.640625, 304.5)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Human review<br />never auto-send</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="my-svg-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><defs><filter id="my-svg-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><linearGradient id="my-svg-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"/><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"/></linearGradient></svg></figure></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li>The cascade is ordered by cost and reliability: each step is cheaper and more reliable than the last, usually at lower quality. The trade-off is agreed in advance.</li>
+<li><strong>Retry once</strong>, never in a loop. Retry storms are how one slow model takes down the whole system.</li>
+<li>The <strong>smaller model</strong> step exists because a fast, dumber answer beats no answer for most tasks. Know which tasks tolerate it (drafting) and which do not (sending to a customer).</li>
+<li>The <strong>human handoff</strong> is the bottom of the cascade, not a failure. It carries full context: what was tried, what failed, the partial work so far.</li>
+<li><strong>Critical tasks</strong> skip sideways into mandatory human review. Decide the critical list in scoping, not at 2am.</li>
+</ol></div><h2 id="3-must-memorize-numbers-and-formulas">3. Must-memorize numbers and formulas</h2>
+<h3 id="31-cost-per-successful-outcome">3.1 Cost per successful outcome</h3>
+<p>The unit that matters is <dfn>cost per successful outcome</dfn>: the total cost of one task completed correctly, in dollars per successful task. Not cost per token. Not cost per API call. Five parts feed it:</p>
+<p><pre><code>  cost per successful outcome
+  ┌──────────────────────────────────┐
+  │ model: tokens in + out           │  $0.12
+  │ infra share: monthly / tasks     │  $0.20
+  │ build share: amortized           │  $0.25
+  │ maintenance share                │  $0.15
+  │ review labor: 92% x 1.5 min      │  $1.73
+  │ rework labor: 8% x 15 min        │  $1.50
+  ├──────────────────────────────────┤
+  │ per attempt: $3.95               │
+  │ / success rate 0.92              │
+  │ = $4.29 per successful task      │
+  └──────────────────────────────────┘
+</code></pre></p>
+<p>The formula, per task attempt:</p>
+<blockquote>
+<p>per_attempt = model + infra_share + build_share + maint_share
++ success_rate x review_cost + (1 - success_rate) x rework_cost</p>
+<p><strong>cost_per_outcome = per_attempt / success_rate</strong></p>
+</blockquote>
+<p>Dividing by the success rate is the step people skip. It converts "cost per attempt" into "cost per outcome," which is what the customer's budget experiences. Success rates must come from your acceptance eval on customer data; vendor benchmarks make every downstream number fiction. Human review minutes are the most uncertain input: measure them in the pilot shadow, do not estimate them in a meeting (people are optimistic about review speed by 2-3x).</p>
+<p><pre><code class="language-python"># cost_per_outcome.py -- the number the budget feels (executed, output below)
+#
+# WHAT: Cost per successful outcome for one design option.
+# WHY:  Token-price comparisons mislead. A cheap model at 70% success with
+#       heavy human review usually loses to a pricier model at 92% that
+#       just works. Every assumption is a named parameter the customer can
+#       challenge in the meeting.
+from dataclasses import dataclass
+
+@dataclass
+class Option:
+    name: str
+    model_cost: float      # $ model cost per task attempt (measured tokens x price)
+    success_rate: float    # from the ACCEPTANCE EVAL, not vendor benchmarks
+    review_min: float      # human minutes to review one successful task
+    rework_min: float      # human minutes to rework one failed task
+    labor_hr: float = 75.0 # fully-loaded reviewer $/hour (illustrative)
+
+def cost_per_outcome(o, infra_share, build_share, maint_share):
+    # Labor splits on the outcome: successes need review, failures need rework.
+    labor = (o.success_rate * o.review_min / 60 * o.labor_hr
+             + (1 - o.success_rate) * o.rework_min / 60 * o.labor_hr)
+    per_attempt = o.model_cost + infra_share + build_share + maint_share + labor
+    # A zero success rate means infinite cost per outcome. The assert keeps
+    # the math honest instead of smoothing a dead option into the ranking.
+    assert o.success_rate &gt; 0, &quot;zero success rate = infinite cost per outcome&quot;
+    return per_attempt / o.success_rate  # attempts -&gt; outcomes: the key division
+
+# Program: 20k tasks/mo, $4k infra, $120k build over 24 months, $3k/mo upkeep
+tasks, infra_m, build, life_m, maint_m = 20_000, 4_000.0, 120_000.0, 24, 3_000.0
+shares = (infra_m / tasks, build / life_m / tasks, maint_m / tasks)
+cheap  = Option(&quot;small model + heavy review&quot;, 0.02, 0.70, 4.0, 15.0)
+pricey = Option(&quot;large model + light review&quot;, 0.12, 0.92, 1.5, 15.0)
+for o in (cheap, pricey):
+    print(f&quot;{o.name}: ${cost_per_outcome(o, *shares):.2f}/successful task&quot;)
+</code></pre></p>
+<p>Output (verified by execution):</p>
+<p><pre><code>small model + heavy review: $13.92/successful task
+large model + light review: $4.29/successful task
+</code></pre></p>
+<p>The 6x token-price gap reverses: the pricey model wins because its higher success rate slashes rework labor. That is the token-price fallacy in one table.</p>
+<h3 id="32-error-budgets-and-burn-rates">3.2 Error budgets and burn rates</h3>
+<p>AI SLOs need three dimensions, because the system has three failure states (down, slow, wrong-looking answer):</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Example SLO (30 days)</th>
+<th>Budget (1 - SLO)</th>
+<th>What burns it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Availability</td>
+<td>99.9% of requests answered</td>
+<td>0.1% ~ 43.2 min</td>
+<td>Outages, deploy failures, quota exhaustion</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>95% of tasks under 30 s</td>
+<td>5% slow tasks</td>
+<td>Long inputs, model slowness, retry storms</td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>90% of sampled production tasks pass the grader</td>
+<td>10% bad answers</td>
+<td>Prompt drift, data drift, model version change</td>
+</tr>
+</tbody>
+</table>
+<p>Budget math: 99.9% availability over 30 days allows 0.001 x 30 x 24 x 60 = <strong>43.2 minutes</strong> of downtime. Memorize that number.</p>
+<p><dfn>Burn rate</dfn> = (observed failure fraction) / (allowed failure fraction). Units: a dimensionless multiple. 1.0 means exactly on pace to exhaust the budget at the end of the window. Above 1.0 means breaching early. Alert on burn rate, not raw counts: a quality budget burning at 2x with three weeks left in the month will breach before the month ends. The agreed line: <strong>burn above 2x pauses feature work</strong> until it drops under 1x. That rule lives in the scoping memo; the script just reads the dashboard.</p>
+<p><pre><code class="language-python"># burn_rate.py -- error-budget burn rates (executed, output below)
+#
+# WHAT: Burn rate for one budget from observed failures.
+# WHY:  &quot;The system feels flaky&quot; loses arguments. &quot;Quality is burning at
+#       2.5x; per our agreement, features pause until it is under 1x&quot; wins.
+def burn_rate(observed_fail, total, slo):
+    # observed_fail/total: measured failure fraction in the window.
+    # 1 - slo: the allowed fraction. Their ratio is the burn multiple.
+    allowed = 1.0 - slo
+    if allowed == 0:  # a 100% SLO: any failure is a breach, report infinity
+        return float(&quot;inf&quot;) if observed_fail else 0.0
+    return (observed_fail / total) / allowed
+
+# Availability: SLO 99.9%, 5 unanswered of 1000 requests in the window
+print(&quot;availability burn:&quot;, round(burn_rate(5, 1000, 0.999), 2), &quot;x&quot;)
+# Quality: SLO 90% pass, random sample of 100 production tasks, 25 failed
+qb = burn_rate(25, 100, 0.90)
+print(&quot;quality burn:     &quot;, round(qb, 2), &quot;x&quot;,
+      &quot;-&gt; PAUSE FEATURES&quot; if qb &gt; 2.0 else &quot;&quot;)
+</code></pre></p>
+<p>Output (verified by execution):</p>
+<p><pre><code>availability burn: 5.0 x
+quality burn:      2.5 x -&gt; PAUSE FEATURES
+</code></pre></p>
+<p>Note the quality sample: you cannot grade every production task, so you grade a random sample and always report n. Grading only the easy traffic makes the quality SLO a lie the dashboard tells.</p>
+<h3 id="33-breakeven-vs-the-human-baseline">3.3 Breakeven vs the human baseline</h3>
+<p>"Is it worth it for our small team?" Solve for the monthly volume where the AI option becomes cheaper than the human:</p>
+<blockquote>
+<p>n = fixed_monthly / (human_per_success - var_per_success)</p>
+<p>where fixed_monthly = infra + maintenance + build/lifetime_months,
+and var = model + success_rate x review_cost + (1 - success_rate) x rework_cost, all divided by success_rate.</p>
+</blockquote>
+<p>Units: tasks per month. Below n, fixed costs dominate and the human wins. If the denominator is zero or negative, the AI never wins on cost: say so early.</p>
+<p><pre><code class="language-python"># breakeven.py -- the honest answer to &quot;is it worth it?&quot; (executed, output below)
+#
+# WHAT: Monthly task volume where the AI option beats the human baseline.
+# WHY:  Fixed costs (infra, build, upkeep) dominate at low volume. This is
+#       the number that stops a bad engagement before it starts.
+def breakeven(model_cost, success_rate, review_min, rework_min, labor_hr,
+              fixed_monthly, human_per_task):
+    # Variable cost per attempt, converted to per SUCCESSFUL task.
+    var = (model_cost + success_rate * review_min / 60 * labor_hr
+           + (1 - success_rate) * rework_min / 60 * labor_hr)
+    denom = human_per_task - var / success_rate
+    # denom &lt;= 0: variable cost alone exceeds the human. No volume fixes that.
+    return None if denom &lt;= 0 else fixed_monthly / denom
+
+fixed = 4_000.0 + 3_000.0 + 120_000.0 / 24  # infra + upkeep + build/24mo
+n = breakeven(0.12, 0.92, 1.5, 15.0, 75.0, fixed, 12.50)
+print(&quot;large model option:&quot;, f&quot;{int(n):,} tasks/month&quot; if n else &quot;never cheaper&quot;)
+n2 = breakeven(0.02, 0.70, 4.0, 15.0, 75.0, fixed, 12.50)
+print(&quot;small model option:&quot;, f&quot;{int(n2):,} tasks/month&quot; if n2 else &quot;never cheaper&quot;)
+</code></pre></p>
+<p>Output (verified by execution):</p>
+<p><pre><code>large model option: 1,353 tasks/month
+small model option: never cheaper
+</code></pre></p>
+<p>The cheap model never beats the human: its variable cost per successful task already exceeds the human's $12.50. No volume rescues it.</p>
+<h3 id="34-latency-budgets-and-the-serving-cost-model">3.4 Latency budgets and the serving cost model</h3>
+<p>SLO latency on <strong>p95 and p99, never the mean</strong>. AI latency has a long tail: p50 looks fine while p95 is terrible because long inputs generate long outputs. The mean hides the exact requests the customer's executives tried in the demo. Always clarify whether the SLO names time-to-first-token or full generation: at 256 output tokens, decode physics sets a floor near <strong>5.4 seconds</strong> for full generation. If the customer wants sub-second, the answer is streaming tokens, shorter outputs, or a smaller model, not hope.</p>
+<p>The one-minute serving cost model (memorize it):</p>
+<blockquote>
+<p>cost per 1k requests = (GPUs x $/GPU-hr) / (req/s x 3.6)</p>
+<p>Example: 9 GPUs x $2.50/hr / (40 req/s x 3.6) = $22.50 / 144 ≈ <strong>$0.16 per 1k requests</strong></p>
+</blockquote>
+<p>Cost levers in ROI order: (1) batching, the biggest lever until the latency knee; (2) output length, which is linear in cost; (3) quantization, roughly 2x per step down the ladder with quality risk; (4) right-sizing context, because retrieved passages and agent histories are KV-cache memory; (5) caching, exact-match and semantic; (6) model routing, small model for easy queries. Latency and throughput are the same problem viewed from different ends: every throughput lever is a latency lever, and batch size is the dial that trades them.</p>
+<h3 id="35-drift-and-rollout-numbers">3.5 Drift and rollout numbers</h3>
+<p><strong>PSI (population stability index)</strong> compares a feature's serving distribution against its training distribution across bins: PSI = sum over bins of (actual% - expected%) x ln(actual% / expected%). Rule of thumb: <strong>below 0.10</strong> no significant change, <strong>0.10-0.25</strong> small change worth watching, <strong>above 0.25</strong> significant shift, investigate.</p>
+<p><pre><code class="language-python"># psi.py -- drift check with the worked numbers (executed, output below)
+#
+# WHAT: Population Stability Index between training and serving bins.
+# WHY:  Data drift is the quiet killer of quality SLOs. PSI turns &quot;the data
+#       feels different&quot; into a number with an investigate line at 0.25.
+import math
+
+def psi(expected, actual):
+    # expected/actual: bin fractions summing to 1.0 each. Bins are fixed
+    # from training; changing bins between runs makes PSI meaningless.
+    return sum((a - e) * math.log(a / e) for a, e in zip(actual, expected))
+
+print(&quot;PSI mild shift:  &quot;, round(psi([0.50, 0.30, 0.20], [0.40, 0.35, 0.25]), 3))
+print(&quot;PSI severe shift:&quot;, round(psi([0.50, 0.30, 0.20], [0.20, 0.30, 0.50]), 3))
+</code></pre></p>
+<p>Output (verified by execution):</p>
+<p><pre><code>PSI mild shift:   0.041
+PSI severe shift: 0.55
+</code></pre></p>
+<p>0.041 is no significant change. 0.55 is well past the 0.25 investigate line.</p>
+<p><strong>Canary math.</strong> Baseline error rate 1%; you want the canary to catch a regression to 2% before full rollout. Telling 1% from 2% reliably needs roughly <strong>2,000-5,000 samples</strong> (binomial noise). At a 5% canary on 10,000 requests/hour, the canary sees 500 requests/hour, so detection takes several hours, not minutes. Shrink the canary to 1% and detection takes a day or more; grow it to 20% and you detect in about an hour but expose 4x the users. The trade is always detection speed vs blast radius. Rollout ladder: <strong>shadow</strong> (observes, serves nothing) → <strong>canary</strong> (small live fraction vs control) → <strong>full</strong> (staged 25/50/100%), with a tested one-command rollback armed before the canary starts. Rollback target: previous version restorable in <strong>under 15 minutes</strong>.</p>
+<h3 id="36-calendar-and-threshold-numbers">3.6 Calendar and threshold numbers</h3>
+<p>These are the constants of the role. Memorize them as a set:</p>
+<table>
+<thead>
+<tr>
+<th>Number</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2-6 weeks</td>
+<td>Security review duration; start it in week one</td>
+</tr>
+<tr>
+<td>14-21 days</td>
+<td>Target: working prototype on real customer data (time to value)</td>
+</tr>
+<tr>
+<td>100-300</td>
+<td>Golden-set cases to start (confidence vs labeling effort)</td>
+</tr>
+<tr>
+<td>3-5</td>
+<td>Customer experts for blind grading</td>
+</tr>
+<tr>
+<td>2 weeks</td>
+<td>Pilot shadow before any go-live decision</td>
+</tr>
+<tr>
+<td>10-30 points</td>
+<td>Typical demo-to-acceptance accuracy gap; never quote the demo number after the eval exists</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Retries per model call, never a loop (retry storms take down systems)</td>
+</tr>
+<tr>
+<td>48 hours</td>
+<td>Post-mortem shared with the customer after an incident</td>
+</tr>
+<tr>
+<td>15 minutes</td>
+<td>Rollback target for the previous version</td>
+</tr>
+<tr>
+<td>90% / 95% / 99.9%</td>
+<td>Example quality / latency / availability SLOs (negotiate per engagement, then write them in the memo)</td>
+</tr>
+<tr>
+<td>## 4. Classic traps</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="trap-1-the-demo-vs-production-gap">Trap 1: The demo-vs-production gap</h3>
+<p><strong>Mechanism.</strong> The demo runs on clean sample data, one friendly user, admin permissions, one request at a time, errors on your screen. Production is dirty data, tired users at 6pm, partial permissions, spiky traffic, errors paging someone at 2am. The accuracy gap between demo cases and acceptance cases is typically <strong>10-30 points</strong>.</p>
+<p><strong>How to dodge.</strong> Promise less than the demo shows. Write down exactly what the demo did not cover. Never quote the demo number after the acceptance eval exists. Run the 12-item hardening checklist as a gate on every release: dirty-data pass, input limits, permission checks, secrets, audit logging, rate limits, fallbacks, monitoring, rollback plan, green acceptance eval, runbook, handover training.</p>
+<h3 id="trap-2-scoping-without-kill-criteria">Trap 2: Scoping without kill criteria</h3>
+<p><strong>Mechanism.</strong> The engagement starts with a vague ask and nobody writes down when to stop. Without kill criteria, every struggling engagement becomes a zombie: too much sunk cost to kill, too little progress to ship. The customer loses trust slowly, then all at once.</p>
+<p><strong>How to dodge.</strong> Write kill criteria before building, with numbers and dates, signed by the sponsor: "If the acceptance eval stays below 80 percent after 4 weeks on real data, stop and reassess." Treat triggering a kill criterion as a success: the most trusted engineers kill fast and say why.</p>
+<h3 id="trap-3-evals-that-do-not-match-the-customers-definition-of-done">Trap 3: Evals that do not match the customer's definition of done</h3>
+<p><strong>Mechanism.</strong> You report 94 percent on your eval set. The VP asks "94 percent of what?" and says "those are not our real cases." The eval measured the wrong thing: sample data instead of real cases, a grader the customer cannot read, no critical-failure rule, averages that hide the catastrophe. Nothing ships because the measurement is not trusted.</p>
+<p><strong>How to dodge.</strong> Build the golden set from real customer cases with the customer's own experts (100-300 to start). Use deterministic graders first. Agree the pass threshold plus the no-critical-failure rule in advance. Categorize every miss. Re-run on every change. The eval is a contract, and the customer co-signs it.</p>
+<h3 id="trap-4-silent-cost-blowups">Trap 4: Silent cost blowups</h3>
+<p><strong>Mechanism.</strong> The pilot is cheap: low volume, one model, nobody watching the bill. Then volume grows 10x, someone enables the large model for all traffic, retries multiply on every timeout, and the invoice arrives. Token cost was the only line anyone modeled; human review, rework, infra, and build amortization were invisible.</p>
+<p><strong>How to dodge.</strong> Price cost per successful outcome before the pilot, with all five parts. Set per-user and per-team quotas so the quarter-end flood degrades gracefully. Alert on cost per task, not just total spend. Recompute the breakeven volume whenever the model or the volume changes. Retry once, never in a loop.</p>
+<h3 id="trap-5-the-permission-check-in-the-wrong-place">Trap 5: The permission check in the wrong place</h3>
+<p><strong>Mechanism.</strong> The retrieval step runs first, the model reads everything, and the permission filter applies afterward "for display." An agent that surfaces a document the user is not allowed to see has caused a security incident, not shipped a feature. The demo ran as admin, so nobody noticed until the pilot's first hour.</p>
+<p><strong>How to dodge.</strong> Design the permission check before the retrieval step, never after: filter by the requesting user's permissions before the model sees anything. Test with a low-privilege test user. Put "we check the same access list the source system uses, before retrieval" in the data-flow diagram you bring to the week-one security review.</p>
+<h2 id="5-rapid-fire-qa">5. Rapid-fire Q&amp;A</h2>
+<p>Twenty-eight checks. Read the question, commit to an answer, then reveal. Every answer shows the working.</p>
+<h3 id="scoping">Scoping</h3><div class="pq"><div class="pq-q"><p><strong>Q1.</strong> An engagement starts with "we want AI for our support team." What are the first three moves, in order, and why that order?
+A. Prototype, scope, discover: build fast to learn what the customer wants.
+B. Watch, ask, map: shadow users, run the question bank, draw the workflow.
+C. Ask, map, watch: questions first, then verify by shadowing.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Watching first makes your questions specific (you ask about the ticket queue you saw, not "tell me about support"). Mapping last forces you to commit to what you learned: each box marked automate, assist, or leave alone. Proposing a technical approach before the map exists is the most expensive mistake on customer work: a week of good discovery saves three months of building the wrong thing.
+- <strong>A, wrong:</strong> a prototype before discovery optimizes for the wrong task; you learn fast about a solution nobody asked for.
+- <strong>C, wrong:</strong> questions without observation stay generic; the customer has never been asked precisely, so your questions need the grounding that shadowing gives.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q2.</strong> Which discovery question is the highest-value one on the bank, and why?
+A. "What does a perfect result look like?" because you need it for the golden set.
+B. "What did the last attempt at this fail on?" because it reveals the landmines.
+C. "If this works perfectly, what changes for the business?" because you need the ROI number.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Customers rarely volunteer failure history. Ask what the last attempt failed on, and ask what the vendor did wrong, not just what the technology did wrong. The answer is usually about trust, not accuracy, and it names the exact failure mode your kill criteria and evals must cover. (C matters for the economics chapter, and A feeds the golden set, but neither prevents you from stepping on the mine the last vendor found.)
+- <strong>A, wrong:</strong> valuable, but the golden example does not tell you what killed the last pilot.
+- <strong>C, wrong:</strong> the ROI number enables the cost model, but a wrong ROI assumption is survivable; repeating the last failure is not.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q3.</strong> Which of these is a well-formed success criterion?
+A. "The system improves support efficiency by the end of the quarter."
+B. "By week 8, the system drafts responses for 60 percent of tier-1 tickets; agents accept the draft unchanged at least 70 percent of the time, measured on live traffic."
+C. "The system reaches 95 percent accuracy on the demo set."</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> It has a number, a date, a data source, and it is measurable on the customer's real work. A cannot fail, which means it cannot succeed either. C measures the wrong distribution: demo cases are chosen to look good, and the demo-to-acceptance gap runs 10-30 points.
+- <strong>A, wrong:</strong> no number, no date, no measurement method. A wish, not a criterion.
+- <strong>C, wrong:</strong> the demo set is not the customer's definition of done; quote the acceptance number once the eval exists.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q4.</strong> Which of these is a valid kill criterion?
+A. "We will reassess if the project is not going well."
+B. "If after 4 weeks on real data the acceptance eval stays below 80 percent, we stop and reassess."
+C. "The sponsor may cancel at any time with two weeks notice."</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> It names a metric, a threshold, a timebox, and a data source, so it can actually trigger. Kill criteria protect both sides and must be written before building and signed by the sponsor. A never triggers because "not going well" is arguable forever. C is a contract clause, not a decision rule: it says who may stop, not when the evidence says stop.
+- <strong>A, wrong:</strong> unfalsifiable; zombie engagements live on sentences like this.
+- <strong>C, wrong:</strong> describes authority, not evidence.</p></div></div><h3 id="enterprise-architecture">Enterprise architecture</h3><div class="pq"><div class="pq-q"><p><strong>Q5.</strong> Why is data classification the first question in pattern selection?
+A. Because the security team requires the paperwork first.
+B. Because residency and restriction answers can veto entire architectures before any other design work matters.
+C. Because it determines the model choice.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> "This data cannot leave the country" kills the vendor-API pattern outright; "no internet path" forces on-premises. Everything downstream (where the model runs, what the latency looks like, what it costs) follows from classification. Asking it in week eight means redesigning. It does not pick the model (C); the same model can run in four patterns.
+- <strong>A, wrong:</strong> paperwork follows the decision; the decision is architectural, not bureaucratic.
+- <strong>C, wrong:</strong> classification constrains placement, not model selection.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q6.</strong> A bank: customer data cannot leave its network, there is an internet path, and volume is steady and high. Which pattern, and why?
+A. Vendor API: fastest to value, and speed matters most.
+B. Private cloud VPC: data stays in-region, dedicated GPUs beat per-token pricing at steady high volume.
+C. On-premises: maximum control over the hardware.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The hard constraint (data stays in network) vetoes the vendor API before scoring; that is what vetoes are for. Between VPC and on-premises, steady high volume justifies dedicated GPU capacity in the customer's cloud account, and setup is weeks rather than the months of on-prem procurement. C is viable but slower to value with no compensating need (there is an internet path to their cloud).
+- <strong>A, wrong:</strong> vetoed by the hard constraint. No weight rescues a vetoed pattern.
+- <strong>C, wrong:</strong> acceptable only if the internet path did not exist or regulation demanded air-gapping.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q7.</strong> The vendor API scores highest on your weighted table, but the customer's hard constraint is "data cannot leave the network." What do you recommend?
+A. The vendor API, because the math says it wins.
+B. Re-weight speed higher and re-run until the API wins honestly.
+C. Drop the vendor API: hard constraints are vetoes, and you score only the survivors.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> A hard constraint eliminates options entirely; scoring ranks what survives. This mirrors how security reviews actually work: "data cannot leave the network" is not a preference to trade off. Weights are opinions you change live with the customer; vetoes are facts you do not negotiate with arithmetic.
+- <strong>A, wrong:</strong> the score never got to vote; the pattern was already eliminated.
+- <strong>B, wrong:</strong> tuning weights to rescue a vetoed pattern is decorating a decision the security team will reverse in week six.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q8.</strong> Where does the permission check go relative to retrieval, and why?
+A. After retrieval, filtering what gets displayed: simpler to implement.
+B. Before retrieval: the model must never see what the user may not see.
+C. It does not matter as long as the UI hides restricted documents.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> An agent that surfaces a document the user is not allowed to see has caused a security incident, not shipped a feature. Filtering after retrieval means the model already read restricted content (it can leak through summaries, embeddings, or logs). Test with a low-privilege test user; the demo ran as admin, which is why this breaks in the pilot's first hour.
+- <strong>A, wrong:</strong> display filtering leaves the data in model context, logs, and caches.
+- <strong>C, wrong:</strong> UI hiding is not access control.</p></div></div><h3 id="evals-as-contracts">Evals as contracts</h3><div class="pq"><div class="pq-q"><p><strong>Q9.</strong> Why start the golden set at 100-300 cases?
+A. It is a round number customers find reassuring.
+B. Below 100 the confidence intervals are too wide to argue about; above 300 the customer's experts will not finish labeling.
+C. Model judges need at least 100 examples to calibrate.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The lower bound is statistics (Supplement 11A: small samples cannot support the claims you want to make). The upper bound is human: the customer's experts own the labels, and their time is the scarcest resource on the engagement. Real customer cases, not synthetic, at first.
+- <strong>A, wrong:</strong> reassurance is not a sizing method.
+- <strong>C, wrong:</strong> calibration is a grader concern, and deterministic graders come first anyway.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q10.</strong> The system scores 95 percent on the golden set but fails one critical case: it leaked a salary number into a summary. Pass or fail?
+A. Pass: 95 percent clears the 90 percent threshold.
+B. Fail: the no-critical-failure rule fails the whole eval regardless of the average.
+C. Pass with a warning: note it in the taxonomy and move on.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The no-critical-failure rule is checked as a separate boolean, never folded into the average, because customers care more about the worst case than the average. A 95 percent system that leaks one salary number is a failed system; customers remember the catastrophe, not the mean. The taxonomy (C) is for categorizing misses, not for waiving the rule.
+- <strong>A, wrong:</strong> the threshold was "90 percent AND no critical failures." Half the contract.
+- <strong>C, wrong:</strong> a warning does not un-leak the salary number.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q11.</strong> The demo scored 94 percent; the acceptance eval scores 78 percent. Which number do you report to the sponsor?
+A. 94 percent: it shows the system's potential.
+B. 78 percent: the acceptance number is the only number once the eval exists.
+C. The average, 86 percent: it balances optimism and realism.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The demo ran on cases chosen to look good; the acceptance eval runs on cases the customer's experts chose to be representative, including the ugly ones. The gap is typically 10-30 points and it is where engagements are won or lost. Quoting the demo number after the acceptance eval exists destroys trust the first time reality disagrees.
+- <strong>A, wrong:</strong> potential is not a measurement; the sponsor will anchor on it and feel betrayed.
+- <strong>C, wrong:</strong> averaging two different distributions produces a number that measures nothing.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q12.</strong> What is the purpose of the adversarial UAT session, and where does it sit in the order?
+A. First: let skeptics try it early so they feel heard.
+B. Second, after blind grading: give skeptics 30 minutes to break it on purpose; every break becomes a golden case or a documented limit.
+C. Last, after the pilot shadow: stress-test before go-live.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Order: blind grading (kills bias both ways), adversarial session, pilot shadow. Skeptics who break the system in the room become advocates when it survives, and each break hardens the system at the exact place it was weak. Running it last (C) wastes the pilot's learning; running it first (A) lets bias ("it is AI, so it is wrong") substitute for evidence.
+- <strong>A, wrong:</strong> feelings without the blind-graded baseline first.
+- <strong>C, wrong:</strong> by then the breaks cost pilot trust instead of workshop time.</p></div></div><h3 id="prototype-to-production">Prototype to production</h3><div class="pq"><div class="pq-q"><p><strong>Q13.</strong> Name the five ways demos die on real data.
+A. Dirty data, accidental adversarial users, permissions, traffic shape, unowned failures.
+B. Slow GPUs, bad prompts, small context, high temperature, wrong model.
+C. Scope creep, sponsor churn, budget cuts, vendor lock-in, team turnover.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: A.</strong> The five are specific and repeatable: scanned PDFs with coffee stains; users pasting 50 pages into a 5-page box; the demo ran as admin; Monday-morning spikes and quarter-end floods; errors with no runbook and no owner. B lists model-tuning issues, which are real but not what kills demos. C lists organizational risks, handled in the communication chapter, not the hardening checklist.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q14.</strong> Your fuzzer sends a 200,000-character paste. The system takes 6 seconds, then returns "Input too large." Clean or dirty failure?
+A. Clean: it returned the right message.
+B. Dirty: it hung for 6 seconds first; the probe demands a fast reject under 5 seconds with a clear message.
+C. Clean: 6 seconds is acceptable for an oversized input.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> A clean failure is fast and clear: reject or truncate with a message in under 5 seconds (the number comes from the latency SLO). A 6-second hang on an adversarial input is the failure mode that pages someone at 2am when a user pastes the entire archive. The fuzzer exists to find this on a Tuesday afternoon instead.
+- <strong>A, wrong:</strong> the message was right but the timing violated the contract.
+- <strong>C, wrong:</strong> "acceptable" is not a number; the SLO is.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q15.</strong> A user double-clicks submit and gets billed twice. Which property was missing?
+A. Low latency: the first response was too slow, so they clicked again.
+B. Idempotency: the system must detect the duplicate submission.
+C. Caching: the second request should have hit the cache.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The system must recognize the second identical submission as a duplicate (idempotency keys, dedup on the marker) instead of processing it as new work. Double-billing a customer because they double-clicked is the kind of bug that ends engagements. Latency (A) explains the click, not the double charge; caching (C) is a performance lever, not a correctness property.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q16.</strong> What is the rollback requirement before the pilot?
+A. Rollback is nice to have; the pilot is small.
+B. Previous version restorable in under 15 minutes, with in-flight work preserved.
+C. Rollback within the 4-hour maintenance window.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The rollback is armed and tested before the canary starts, not during the incident: an untested rollback will not work when you need it. Fifteen minutes bounds the blast radius; preserving in-flight work avoids turning a rollback into data loss. A treats the pilot as consequence-free, which it is not: pilot users are real users.
+- <strong>A, wrong:</strong> "small pilot" still pages someone when it breaks.
+- <strong>C, wrong:</strong> four hours of broken pilot is an incident, not maintenance.</p></div></div><h3 id="unit-economics">Unit economics</h3><div class="pq"><div class="pq-q"><p><strong>Q17.</strong> Work it: model cost $0.05/task, fixed shares $0.30/task, success rate 80%, review 2 min, rework 10 min, labor $75/hr. Cost per successful outcome?
+A. $4.85
+B. $6.06
+C. $5.35</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Labor = 0.80 x (2/60) x 75 + 0.20 x (10/60) x 75 = 2.00 + 2.50 = $4.50. Per attempt = 0.05 + 0.30 + 4.50 = $4.85. Divide by the success rate: 4.85 / 0.80 = <strong>$6.06</strong> per successful task.
+- <strong>A, wrong:</strong> that is cost per attempt; you skipped the division by the success rate, the step that converts attempts into outcomes.
+- <strong>C, wrong:</strong> check the arithmetic: rework labor is 0.20 x 12.50 = 2.50, not 1.80.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q18.</strong> Model A costs $2 per million tokens; Model B costs $10 per million. Which is cheaper for the customer?
+A. Model A: 5x cheaper per token.
+B. Cannot tell from token price: compare cost per successful outcome, which includes success rate and human rework.
+C. Model B: expensive models are usually more reliable, so total cost is lower.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Tokens are not outcomes. The track's worked example shows a 6x token-price gap reversing: the pricey model at 92% success costs $4.29 per successful task vs $13.92 for the cheap model at 70%, because rework labor dominates. Always compare cost per successful outcome with success rates from your acceptance eval.
+- <strong>A, wrong:</strong> the token-price fallacy, the most common pricing mistake on engagements.
+- <strong>C, wrong:</strong> "usually" is not a measurement; run the model with measured rates.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q19.</strong> Work it: fixed costs $12,000/month, human baseline $12.50/task, AI variable cost $4.29 per successful task. Breakeven volume?
+A. 960 tasks/month
+B. About 1,460 tasks/month
+C. 2,796 tasks/month</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> n = fixed / (human - var) = 12,000 / (12.50 - 4.29) = 12,000 / 8.21 ≈ <strong>1,461 tasks/month</strong>. Below that volume the fixed costs dominate and the human wins; above it the AI pulls ahead. Saying so early is how you keep trust with a small team.
+- <strong>A, wrong:</strong> that divides by the human cost alone, ignoring that the AI also has variable cost.
+- <strong>C, wrong:</strong> that adds the costs instead of taking the difference.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q20.</strong> A vendor product claims 95% success at $3 per task with zero build cost. How do you model the buy option?
+A. Take the 95% at face value: 0.95 goes straight into the comparison.
+B. Discount the claimed rate by your skepticism, validate it in the pilot shadow on customer data, then compare with zero build cost.
+C. Reject it: vendor claims are never trustworthy.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Buy is an option with zero build cost and the vendor's price as the model cost, but the success rate must be measured, not quoted: vendor benchmarks run on their distribution, not the customer's. Validate in the pilot shadow, then run the same cost-per-outcome math. The usual honest answer is hybrid: buy the commodity model, build the evals, integration, and permission layer.
+- <strong>A, wrong:</strong> a success rate from the wrong distribution makes every downstream number fiction.
+- <strong>C, wrong:</strong> reflexive rejection leaves money on the table; measure instead.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q21.</strong> In the five-part cost model, which line is usually the largest and the most forgotten?
+A. Model cost: tokens add up fast at scale.
+B. Human cost: review time, exception handling, and on-call.
+C. Infrastructure: GPUs are expensive.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> An hour of reviewer time costs more than ten thousand model calls, and teams consistently forget to model it. Measure review minutes in the pilot shadow (round 3 of UAT); people are optimistic about review speed by 2-3x when estimating in a meeting. Model cost (A) is the most visible line, which is why it gets over-weighted; infra (C) matters but amortizes over volume.</p></div></div><h3 id="slos-and-reliability">SLOs and reliability</h3><div class="pq"><div class="pq-q"><p><strong>Q22.</strong> Work it: availability SLO 99.9%, and 5 of 1,000 requests go unanswered in the window. Burn rate and action?
+A. 0.5x: healthy, no action.
+B. 5.0x: pause feature work per the scoping-memo rule.
+C. 2.0x: watch closely.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Burn = observed / allowed = (5/1,000) / 0.001 = 0.005 / 0.001 = <strong>5.0x</strong>. Above the 2x line, the rule fires: feature work pauses until the burn drops under 1x. The rule was agreed in the scoping memo; the script just reads the dashboard, which is why the conversation is about the number instead of feelings.
+- <strong>A, wrong:</strong> inverted the fraction; 5 failures per thousand is 5x the 1-per-thousand budget.
+- <strong>C, wrong:</strong> 2.0x would be (2/1,000)/0.001.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q23.</strong> Which latency statistic does the SLO use, and why?
+A. The mean: it summarizes all requests in one number.
+B. p95/p99: AI latency has a long tail, and the mean hides the requests the executives actually tried.
+C. p50: the median user experience is what matters.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Long inputs generate long outputs, so p50 looks fine while p95 is terrible. The average hides the exact requests the customer's executives tried in the demo, which are the ones they will complain about. SLO on the tail; also clarify whether the SLO names time-to-first-token or full generation (256 output tokens sets a physics floor near 5.4 s for full generation).
+- <strong>A, wrong:</strong> the mean is the statistic most easily gamed by a good median and most blind to the tail.
+- <strong>C, wrong:</strong> the median is honest but still blind to the tail where the pain lives.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q24.</strong> The quality budget is burning at 2.4x with three weeks left in the month. What does that imply?
+A. Nothing yet: the budget is not breached.
+B. It will breach before the month ends at this pace; freeze features now per the agreed rule.
+C. Recompute next week; one fast week might be noise.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Burn rate above 1.0 means breaching early; at 2.4x with three weeks left, the breach lands before the month ends. Alert on burn rate, not on breach: waiting for the breach is waiting too long. The freeze is not a negotiation; it was agreed in the scoping memo, which is what gives the dashboard teeth.
+- <strong>A, wrong:</strong> "not breached yet" is how teams sleepwalk past the point of no return.
+- <strong>C, wrong:</strong> burn rate already accounts for pace; delaying the decision spends the remaining budget.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q25.</strong> A model call times out. What is the correct fallback order?
+A. Retry in a loop until it succeeds, then page someone.
+B. Retry once, then a smaller/faster model, then a cached or template answer, then a clean human handoff with full context.
+C. Immediately hand off to a human; automation already failed.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The cascade is ordered by cost and reliability: each step is cheaper and more reliable than the last, usually at lower quality, and the trade-off is agreed in advance. Retry once, never in a loop: retry storms are how one slow model takes down the whole system. Critical tasks (sending a contract, a customer-facing message) skip the cascade sideways into mandatory human review. The handoff carries full context: what was tried, what failed, the partial work so far.
+- <strong>A, wrong:</strong> unbounded retry is the retry-storm pattern.
+- <strong>C, wrong:</strong> skipping the cheaper fallbacks burns human time on every transient blip.</p></div></div><h3 id="stakeholder-communication">Stakeholder communication</h3><div class="pq"><div class="pq-q"><p><strong>Q26.</strong> Where does the status word go in the weekly update, and what makes YELLOW a sign of competence rather than failure?
+A. At the end, after the evidence; YELLOW means the week went badly.
+B. First line, always honest; YELLOW with a mitigation plan and named owner.
+C. Only when the status changed; no news is good news.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Status word first, same format every week: GREEN / YELLOW / RED. YELLOW with a mitigation plan is competence; RED buried in paragraph four is how trust dies. Never let the customer discover a problem before you tell them: "you will hear this from me first" is a promise you make once and keep forever. Regularity builds trust faster than good news.
+- <strong>A, wrong:</strong> burying the status word trains the sponsor to skim past the bad news, then feel ambushed.
+- <strong>C, wrong:</strong> silence reads as either hiding or coasting; the cadence is the product.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q27.</strong> A customer asks to go live next week; the eval is at 78% against a 90% bar. What are the four parts of the "no"?
+A. Apologize, explain the technology, promise it will be ready soon, offer a discount.
+B. Direct answer, reason in their terms, what you can do instead, cost of the alternative.
+C. Say yes to protect the relationship, then work overtime to make it true.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> "We cannot go live next week responsibly. At 78%, roughly 1 in 5 reviews would need full rework, which adds load to your team instead of removing it. Instead: two more weeks of pilot shadow while we fix the two failing categories, reaching the 90% bar we agreed on. Cost: two weeks of timeline, no additional cost." Every no comes with an instead and a price tag. C destroys the relationship later to protect it now; A has no instead.
+- <strong>A, wrong:</strong> apology plus jargon plus a vague promise is not a plan.
+- <strong>C, wrong:</strong> saying yes to an infeasible ask is the most expensive sentence on an engagement.</p></div></div><div class="pq"><div class="pq-q"><p><strong>Q28.</strong> Which asks must you always refuse, no matter how the customer frames them?
+A. 100% accuracy, skipping the security review, go-live without a passing eval, using data the customer has no rights to.
+B. Fixed-price contracts, on-premises deployment, weekly status updates, kill criteria.
+C. Anything the sponsor's boss requested; the sponsor is your only customer.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: A.</strong> For the first three, offer the alternative in the same breath: the measured rate plus the failure taxonomy; starting the review today in parallel; the pilot shadow. The fourth (unlicensed data) is just no.
+- <strong>A, right:</strong> 100% accuracy is unachievable, a skipped security review becomes a week-eight blocker, go-live without a passing eval ships the catastrophe, and unlicensed data is a legal incident.
+- <strong>B, wrong:</strong> every item listed is legitimate; refusing them would be refusing the job.
+- <strong>C, wrong:</strong> the sponsor's boss, security, legal, and IT are all stakeholders; they get precision and lead time, not refusal.</p></div></div><h2 id="6-one-page-cheat-sheet-30-numbers-and-rules">6. One-page cheat sheet: 30 numbers and rules</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Number / rule</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Discovery is watch, ask, map. Never propose tech before the map.</td>
+<td>A week of discovery saves three months of building the wrong thing.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>"What did the last attempt fail on?" is the highest-value question.</td>
+<td>Names the landmine the last vendor found; usually about trust, not accuracy.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Success criteria need numbers plus dates, measurable on customer data.</td>
+<td>A criterion that cannot fail cannot succeed.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Kill criteria are written before building, signed, specific enough to trigger.</td>
+<td>Killing in week 2 costs a week; in month 4 it costs the relationship.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Data classification picks the deployment pattern.</td>
+<td>Residency answers can veto entire architectures.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Hard constraints are vetoes, not weights. Score only survivors.</td>
+<td>No weight rescues a pattern the security review will kill.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Security review takes 2-6 weeks; start it in week one.</td>
+<td>Bring the data-flow diagram, data inventory, and permission model.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Permission check before retrieval, never after.</td>
+<td>The model must never see what the user may not see.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Golden set: 100-300 real customer cases, labeled by customer experts.</td>
+<td>Below 100 the statistics are too weak; above 300 nobody finishes.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Graders deterministic first; model judge only if impossible, calibrated first.</td>
+<td>A grader the customer cannot read is a grader they will not trust.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>No-critical-failure rule: one catastrophic miss fails the eval.</td>
+<td>Customers remember the catastrophe, not the average.</td>
+</tr>
+<tr>
+<td>12</td>
+<td>UAT: blind grading, then adversarial session, then 2-week pilot shadow.</td>
+<td>Skeptics who break it in the room become advocates when it survives.</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Demo-to-acceptance gap is typically 10-30 points.</td>
+<td>Quote the acceptance number once the eval exists. Never the demo number.</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Cost per successful outcome = per-attempt cost / success rate ($/successful task).</td>
+<td>Five parts: model, infra share, build share, maintenance share, human labor.</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Success rates come from your acceptance eval, never vendor benchmarks.</td>
+<td>Wrong distribution in, fiction out.</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Breakeven volume = fixed_monthly / (human_per_success - var_per_success).</td>
+<td>Below it the human wins; say so early.</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Token price is not cost. Compare cost per successful outcome.</td>
+<td>A 6x token gap reversed to $4.29 vs $13.92 in the worked example.</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Human labor is usually the largest cost line.</td>
+<td>Measure review minutes in the pilot shadow; estimates run 2-3x optimistic.</td>
+</tr>
+<tr>
+<td>19</td>
+<td>SLO latency on p95/p99, never the mean.</td>
+<td>The tail is where the executives' demo requests live.</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Error budget = 1 - SLO. Burn rate = observed / allowed.</td>
+<td>1.0 is on pace; above 1.0 breaches early.</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Burn above 2x pauses feature work until under 1x.</td>
+<td>The rule lives in the scoping memo; the dashboard just reads it.</td>
+</tr>
+<tr>
+<td>22</td>
+<td>99.9% availability = 43.2 minutes downtime per 30 days.</td>
+<td>0.001 x 30 x 24 x 60. Memorize it.</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Fallback cascade: retry once, smaller model, cache, human handoff.</td>
+<td>Critical tasks skip to human review. Retry in a loop never.</td>
+</tr>
+<tr>
+<td>24</td>
+<td>PSI: below 0.10 fine, 0.10-0.25 watch, above 0.25 investigate.</td>
+<td>Drift is the quiet killer of quality SLOs.</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Canary: 2,000-5,000 samples to tell 1% from 2%.</td>
+<td>Size trades detection speed against blast radius.</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Rollout: shadow, then canary, then staged full. Rollback under 15 min, tested first.</td>
+<td>An untested rollback will not work during the incident.</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Working prototype on real data by day 14-21.</td>
+<td>Time to value buys the trust the hardening months spend.</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Weekly update: status word first, honest, bad news from you first.</td>
+<td>Regularity builds trust faster than good news.</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Every no: direct answer, reason in their terms, instead, cost of the alternative.</td>
+<td>"No, but here is what yes looks like" is the whole skill.</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Post-mortem within 48 hours; every incident becomes a fuzzer probe and a golden case.</td>
+<td>Customers forgive incidents. They do not forgive silence.</td>
+</tr>
+</tbody>
+</table>
+<hr /><div class="provenance"><p><strong>Last verified: September 2026.</strong> Decision rules, scoping method, deployment patterns, eval-as-contract anatomy, hardening checklist, unit-economics model, SLO framework, fallback cascade, and communication templates are drawn from Role Track 7 (Forward Deployed Engineer / AI Consultant). Serving cost model, canary math, PSI thresholds, and cost levers reference Volumes 10 and 13. All Python snippets were executed on this machine and their printed outputs verified. <strong>UNVERIFIED:</strong> dollar figures in worked examples are illustrative, not measured (reviewer labor $75/hr, human baseline $12.50/task, infra/build figures); vendor token prices shift frequently; security-review durations and pilot timelines vary by customer.</p></div>
+<footer class="site-footer"><div class="site-sitemap"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html" class="site-nav-current">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div><p class="site-footer-note">LLM Knowledge Base. Every page works offline from file:// and links back here. No personal information.</p></footer>
+</main>
+<script>
+/* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
+   Builds: sidebar nav from h2/h3, scroll-spy, nav search filter, localStorage completion
+   checkmarks, reading progress bar, chapter prev/next footer, copy buttons, practice-question
+   toggles, mobile drawer, keyboard nav. No external dependencies. */
+(function(){
+"use strict";
+var content=document.getElementById('dsContent')||document.querySelector('main')||document.body;
+var sidebar=document.getElementById('dsSidebar');
+if(!sidebar||!content)return;
+
+/* ---------- collect sections: h2 = chapter groups, h3 = items ---------- */
+function slugify(t){return t.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'s';}
+var used={};
+function uniqueId(base){var id=base,n=2;while(used[id]||document.getElementById(id)){id=base+'-'+(n++);}used[id]=1;return id;}
+var chapters=[]; // {h2, id, title, items:[{id,title,el}]}
+var cur=null;
+Array.prototype.forEach.call(content.querySelectorAll('h2,h3'),function(h){
+  if(!h.id){h.id=uniqueId(slugify(h.textContent));}else{used[h.id]=1;}
+  h.setAttribute('tabindex','-1');
+  var t=h.textContent.trim();
+  if(h.tagName==='H2'){cur={id:h.id,title:t,items:[]};chapters.push(cur);}
+  else if(cur){cur.items.push({id:h.id,title:t});}
+  else{cur={id:'intro',title:'Introduction',items:[{id:h.id,title:t}]};chapters.push(cur);}
+});
+
+/* ---------- build sidebar nav ---------- */
+var nav=document.getElementById('dsNav');
+var pageKey='rec-cur-'+(document.title||location.pathname).replace(/[^a-z0-9]+/gi,'-');
+function isDone(id){try{return localStorage.getItem(pageKey+'#'+id)==='1';}catch(e){return false;}}
+function setDone(id,v){try{if(v)localStorage.setItem(pageKey+'#'+id,'1');else localStorage.removeItem(pageKey+'#'+id);}catch(e){}}
+function checkItem(id){var c=document.querySelector('.ds-check[data-sec="'+id+'"]');if(c)c.checked=isDone(id);}
+function updateCount(){
+  var boxes=nav.querySelectorAll('.ds-check'),done=0;
+  boxes.forEach(function(b){if(b.checked)done++;});
+  var el=document.getElementById('dsCompleteCount');
+  if(el)el.textContent=done+' of '+boxes.length+' sections complete';
+}
+function itemRow(sec){
+  var li=document.createElement('li');
+  var a=document.createElement('a');a.href='#'+sec.id;
+  var cb=document.createElement('input');
+  cb.type='checkbox';cb.className='ds-check';cb.checked=isDone(sec.id);
+  cb.setAttribute('data-sec',sec.id);cb.setAttribute('aria-label','Mark complete: '+sec.title);
+  cb.addEventListener('change',function(ev){ev.stopPropagation();setDone(sec.id,cb.checked);updateCount();});
+  cb.addEventListener('click',function(ev){ev.stopPropagation();});
+  var sp=document.createElement('span');sp.textContent=sec.title;
+  a.appendChild(cb);a.appendChild(sp);
+  a.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+  li.appendChild(a);return li;
+}
+chapters.forEach(function(ch,ci){
+  var g=document.createElement('div');g.className='ds-nav-group';g.dataset.title=ch.title.toLowerCase();
+  var btn=document.createElement('button');
+  btn.innerHTML='<span></span><span class="ds-caret">▾</span>';
+  btn.firstChild.textContent=ch.title;
+  btn.setAttribute('aria-expanded','true');
+  var ul=document.createElement('ul');ul.className='ds-nav-items';
+  var headLi=itemRow({id:ch.id,title:ch.title});ul.appendChild(headLi);
+  ch.items.forEach(function(it){ul.appendChild(itemRow(it));});
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!open));
+    ul.style.display=open?'none':'';
+    btn.querySelector('.ds-caret').textContent=open?'▸':'▾';
+  });
+  g.appendChild(btn);g.appendChild(ul);nav.appendChild(g);
+});
+updateCount();
+
+/* ---------- nav search filter ---------- */
+var search=document.getElementById('dsNavSearch');
+if(search){search.addEventListener('input',function(){
+  var q=search.value.trim().toLowerCase(),any=false;
+  nav.querySelectorAll('.ds-nav-group').forEach(function(g){
+    var show=g.dataset.title.indexOf(q)>-1;
+    g.querySelectorAll('.ds-nav-items li').forEach(function(li){
+      var hit=li.textContent.toLowerCase().indexOf(q)>-1;
+      li.style.display=(!q||hit||show)?'':'none';if(!q||hit)show=true;
+    });
+    g.style.display=show?'':'none';if(show)any=true;
+  });
+  var empty=nav.querySelector('.ds-nav-empty');
+  if(!any&&!empty){var d=document.createElement('div');d.className='ds-nav-empty';d.textContent='No sections match.';nav.appendChild(d);}
+  if(any&&empty)empty.remove();
+});}
+
+/* ---------- scroll-spy ---------- */
+var links=Array.prototype.slice.call(nav.querySelectorAll('.ds-nav-items a'));
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.toggle('ds-active',a.getAttribute('href')==='#'+e.target.id);});
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+chapters.forEach(function(ch){
+  var el=document.getElementById(ch.id);if(el)spy.observe(el);
+  ch.items.forEach(function(it){var el2=document.getElementById(it.id);if(el2)spy.observe(el2);});
+});
+
+/* ---------- progress bar ---------- */
+var prog=document.getElementById('dsProgress');
+function onScroll(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- mobile drawer ---------- */
+var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('dsScrim');
+if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
+if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+
+/* ---------- keyboard nav: [ ] sections, / search ---------- */
+document.addEventListener('keydown',function(e){
+  if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  var ids=[];chapters.forEach(function(ch){ids.push(ch.id);ch.items.forEach(function(it){ids.push(it.id);});});
+  function jump(dir){
+    var y=window.scrollY+10,cur=0;
+    ids.forEach(function(id,i){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+y<=y+1)cur=i;});
+    var n=Math.min(ids.length-1,Math.max(0,cur+dir)),el=document.getElementById(ids[n]);
+    if(el){el.scrollIntoView();el.focus({preventScroll:true});}
+  }
+  if(e.key==='[')jump(-1);else if(e.key===']')jump(1);
+  else if(e.key==='/'&&search){e.preventDefault();search.focus();}
+});
+var hint=document.createElement('div');hint.className='ds-kbd-hint';
+hint.textContent='Keyboard: [ and ] move between sections, / focuses section search.';
+var foot=document.querySelector('.ds-side-foot');if(foot)foot.appendChild(hint);
+
+/* ---------- chapter prev/next footers (one after each h2 section) ---------- */
+if(chapters.length>1){
+  var mk=function(ch,cls,label){var a=document.createElement('a');a.href='#'+ch.id;a.className=cls;
+    a.innerHTML='<span style="display:block;font-size:.78rem;color:var(--muted)">'+label+'</span>';a.appendChild(document.createTextNode(ch.title));return a;};
+  chapters.forEach(function(ch,i){
+    var bar=document.createElement('nav');bar.className='ds-chapter-nav';bar.setAttribute('aria-label','Chapter navigation');
+    var left=document.createElement('span'),right=document.createElement('span');
+    if(chapters[i-1])left.appendChild(mk(chapters[i-1],'ds-prev','↑ Previous'));
+    else left.innerHTML='<span style="color:var(--muted);font-size:.85rem">Start of volume</span>';
+    if(chapters[i+1])right.appendChild(mk(chapters[i+1],'ds-next','Next ↓'));
+    else right.innerHTML='<span style="color:var(--muted);font-size:.85rem">End of volume</span>';
+    bar.appendChild(left);bar.appendChild(right);
+    /* insert the bar immediately before the next chapter's heading, using that
+       heading's own parent so <section> wrappers (or any nesting) cannot break it */
+    var nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
+    if(nextH){nextH.parentNode.insertBefore(bar,nextH);}
+    else{var lastH=document.getElementById(ch.id);lastH.parentNode.appendChild(bar);}
+  });
+}
+
+/* ---------- copy buttons on code blocks ---------- */
+document.querySelectorAll('pre').forEach(function(pre){
+  if(pre.querySelector('.ds-copy-btn'))return;
+  var btn=document.createElement('button');btn.className='ds-copy-btn';btn.textContent='Copy';
+  btn.setAttribute('aria-label','Copy code to clipboard');
+  btn.addEventListener('click',function(){
+    var txt=pre.innerText;
+    function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1400);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}
+  });
+  pre.appendChild(btn);
+});
+
+/* ---------- practice-question widgets ---------- */
+document.querySelectorAll('.pq').forEach(function(pq){
+  var btn=pq.querySelector('.pq-reveal'),ans=pq.querySelector('.pq-a');
+  if(!btn||!ans)return;
+  btn.addEventListener('click',function(){
+    var open=ans.hasAttribute('hidden');
+    if(open){ans.removeAttribute('hidden');btn.setAttribute('aria-expanded','true');btn.textContent='Hide answer';}
+    else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
+  });
+});
+})();
+
+</script>
+</body>
+</html>
