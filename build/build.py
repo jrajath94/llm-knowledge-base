@@ -252,6 +252,91 @@ def restore_dfn(html_text, terms):
     return html_text
 
 
+
+# ---------------------------------------------------------------- site map
+# Canonical site order for header nav, footer sitemap, breadcrumbs, prev/next.
+# (filename, nav title, section)
+SITE_MAP = [
+    ("index.html", "Home", "Start here"),
+    ("00-how-to-use.html", "How to Use This Curriculum", "Start here"),
+    ("01-math-for-ml.html", "Math for ML", "Base volumes"),
+    ("02-ml-foundations-bridge.html", "ML Foundations", "Base volumes"),
+    ("03-deep-learning-for-researchers.html", "Deep Learning for Researchers", "Base volumes"),
+    ("04-llm-internals.html", "LLM Internals", "Base volumes"),
+    ("05-pretraining.html", "Pre-training", "Base volumes"),
+    ("06-distributed-training.html", "Distributed Training", "Base volumes"),
+    ("07-post-training-rl.html", "Post-training and RL", "Base volumes"),
+    ("08-inference-serving-bridge.html", "Inference and Serving", "Base volumes"),
+    ("09-agents-rag-guide.html", "Agents and RAG", "Base volumes"),
+    ("10-productionizing-mlops.html", "Productionizing and MLOps", "Base volumes"),
+    ("11-research-methods.html", "Research Methods", "Base volumes"),
+    ("12-paper-spine.html", "Guided Paper Spine", "Base volumes"),
+    ("13-ml-system-design.html", "ML System Design", "Base volumes"),
+    ("14-communicating-research.html", "Communicating Research", "Base volumes"),
+    ("15-gpu-kernels.html", "GPU Kernels", "Base volumes"),
+    ("track-01-llm-research-engineer.html", "LLM Research Engineer", "Role tracks"),
+    ("track-02-post-training-alignment.html", "Post-training / Alignment", "Role tracks"),
+    ("track-03-inference-serving.html", "Inference and Serving", "Role tracks"),
+    ("track-04-distributed-training-systems.html", "Distributed Training Systems", "Role tracks"),
+    ("track-05-evals-safety.html", "Evals and Safety", "Role tracks"),
+    ("track-06-agent-systems.html", "Agent Systems", "Role tracks"),
+    ("track-07-forward-deployed-engineer.html", "Forward Deployed Engineer", "Role tracks"),
+    ("track-08-ai-engineer.html", "AI Engineer", "Role tracks"),
+    ("track-09-ml-engineer.html", "ML Engineer", "Role tracks"),
+    ("track-10-software-engineer.html", "SWE / Backend Systems", "Role tracks"),
+    ("dsa-track-300.html", "DSA Track: Top-300", "DSA track"),
+    ("crash-base.html", "Crash Pack: Base Curriculum", "Crash packs"),
+    ("crash-track-01.html", "Crash: LLM Research Engineer", "Crash packs"),
+    ("crash-track-02.html", "Crash: Post-training / Alignment", "Crash packs"),
+    ("crash-track-03.html", "Crash: Inference and Serving", "Crash packs"),
+    ("crash-track-04.html", "Crash: Distributed Training", "Crash packs"),
+    ("crash-track-05.html", "Crash: Evals and Safety", "Crash packs"),
+    ("crash-track-06.html", "Crash: Agent Systems", "Crash packs"),
+    ("crash-track-07.html", "Crash: Forward Deployed Eng.", "Crash packs"),
+    ("crash-track-08.html", "Crash: AI Engineer", "Crash packs"),
+    ("crash-track-09.html", "Crash: ML Engineer", "Crash packs"),
+    ("crash-track-10.html", "Crash: SWE / Backend", "Crash packs"),
+]
+SITE_SECTIONS = ["Start here", "Base volumes", "Role tracks", "DSA track", "Crash packs"]
+
+def _site_nav_groups(current):
+    parts = []
+    for sec in SITE_SECTIONS:
+        items = [(f, t) for (f, t, s) in SITE_MAP if s == sec]
+        if not items:
+            continue
+        lis = []
+        for f, t in items:
+            cls = ' class="site-nav-current"' if f == current else ""
+            lis.append('<li><a href="%s"%s>%s</a></li>' % (f, cls, htmlmod.escape(t)))
+        parts.append("<div><h4>%s</h4><ul>%s</ul></div>" % (sec, "".join(lis)))
+    return "".join(parts)
+
+def site_header_html(current, section, page_title):
+    idx = [f for (f, _, _) in SITE_MAP].index(current) if current in [f for (f, _, _) in SITE_MAP] else -1
+    if idx >= 0:
+        prev_html = ('<a href="%s">&larr; %s</a>' % (SITE_MAP[idx-1][0], htmlmod.escape(SITE_MAP[idx-1][1]))) if idx > 0 else '<span class="site-prevnext-disabled">&larr; Start</span>'
+        nxt = SITE_MAP[idx+1] if idx+1 < len(SITE_MAP) else None
+        next_html = ('<a href="%s">%s &rarr;</a>' % (nxt[0], htmlmod.escape(nxt[1]))) if nxt else '<span class="site-prevnext-disabled">End &rarr;</span>'
+        crumbs = ('<a href="index.html">Home</a><span class="bc-sep">/</span>'
+                  '<span>%s</span><span class="bc-sep">/</span>'
+                  '<span class="bc-current">%s</span>' % (htmlmod.escape(section), htmlmod.escape(page_title)))
+    else:
+        prev_html, next_html, crumbs = "", "", '<a href="index.html">Home</a>'
+    return ("""<header class="site-header">"""
+            """<div class="site-header-row">"""
+            """<a class="site-home" href="index.html"><span class="site-home-mark">\u25a0</span> LLM Knowledge Base</a>"""
+            """<div class="site-prevnext">%s%s</div></div>"""
+            """<nav class="breadcrumbs" aria-label="Breadcrumb">%s</nav>"""
+            """<details class="site-nav"><summary>Browse all volumes and tracks</summary>"""
+            """<div class="site-nav-groups">%s</div></details></header>"""
+            % (prev_html, next_html, crumbs, _site_nav_groups(current)))
+
+def site_footer_html(current):
+    return ("""<footer class="site-footer"><div class="site-sitemap">%s</div>"""
+            """<p class="site-footer-note">LLM Knowledge Base. Every page works offline from file:// and links back here. No personal information.</p></footer>"""
+            % _site_nav_groups(current))
+
 # ---------------------------------------------------------------- page build
 
 SIDEBAR_SKELETON = """<body>
@@ -268,7 +353,9 @@ SIDEBAR_SKELETON = """<body>
 </aside>
 <div class="ds-scrim" id="dsScrim"></div>
 <main class="ds-content" id="dsContent">
+{site_header}
 {content}
+{site_footer}
 </main>
 <script>
 {js}
@@ -341,8 +428,14 @@ def build_one(md_path, out_path=None):
 
     css = open(DS_CSS, encoding="utf-8").read()
     js = open(DS_JS, encoding="utf-8").read()
+    out_name = os.path.basename(out_path) if out_path else os.path.splitext(os.path.basename(md_path))[0] + ".html"
+    _sec = next((s for (f, _, s) in SITE_MAP if f == out_name), "")
+    _pt = next((t for (f, t, _) in SITE_MAP if f == out_name), title)
+    site_header = site_header_html(out_name, _sec, _pt)
+    site_footer = site_footer_html(out_name)
     body = SIDEBAR_SKELETON.format(side_title=htmlmod.escape(side_title),
-                                   content=body_html, js=js)
+                                   content=body_html, js=js,
+                                   site_header=site_header, site_footer=site_footer)
     page = PAGE.format(title=htmlmod.escape(title), css=css, body=body)
 
     if out_path is None:
