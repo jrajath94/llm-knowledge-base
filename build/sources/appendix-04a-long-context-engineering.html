@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long-Context Engineering RoPE Extension and KV Eviction</title>
+<style>
+/* Research-Engineer Curriculum: shared design system (dark, Hallmark discipline)
+   Source of truth. Writers INLINE this file into each volume's <head> inside <style>.
+   Tokens (exact, do not improvise): pitch-black dark mode. */
+:root{
+  --bg:#000000; --surface:#0d0d0d; --border:#262626;
+  --text:#ececec; --muted:#a8a8a8;
+  --accent:#f0b429; --link:#6cb2ff; --code-bg:#111111;
+  --font-body:"Atkinson Hyperlegible","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
+p{text-align:justify;hyphens:auto;margin:.85rem 0}
+h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
+h1{font-size:2rem;font-weight:800}
+h2{font-size:1.5rem;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:1.05rem;font-weight:700}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:.2rem}
+ul,ol{margin:.7rem 0;padding-left:1.6rem}
+li{margin:.3rem 0}
+li::marker{color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;display:block;overflow-x:auto}
+thead,tbody,tr{display:table;width:100%;table-layout:fixed}
+th,td{border:1px solid var(--border);padding:.6rem .75rem;text-align:left;vertical-align:top}
+th{background:var(--surface);font-weight:700}
+code{font-family:var(--font-code);background:var(--code-bg);border:1px solid var(--border);padding:.08rem .35rem;border-radius:.3rem;font-size:.88em}
+pre{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:.6rem;padding:1rem 1.1rem;overflow-x:auto;font-size:.88rem;line-height:1.6;margin:1.1rem 0}
+pre code{background:none;border:none;padding:0;font-size:1em}
+pre.ascii{background:#0a0a0a;color:#d8d8d8}
+figure{margin:1.5rem 0;border:1px solid var(--border);border-radius:.7rem;padding:1rem;background:var(--surface)}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:.3rem}
+figcaption{font-size:.9rem;color:var(--muted);margin-top:.7rem;text-align:left}
+details{border:1px solid var(--border);border-radius:.6rem;padding:.75rem 1.05rem;margin:.9rem 0;background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--text)}
+dfn{font-style:normal;font-weight:600;border-bottom:2px dotted var(--accent);cursor:help}
+blockquote{border-left:3px solid var(--accent);margin:1.1rem 0;padding:.6rem 1rem;background:var(--surface);border-radius:0 .5rem .5rem 0}
+blockquote p{margin:.4rem 0}
+
+/* ---- layout: sidebar + content ---- */
+.ds-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60}
+.ds-menu-btn{display:none;position:fixed;top:.7rem;left:.7rem;z-index:55;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:.5rem;font-size:1.2rem;padding:.35rem .7rem;cursor:pointer}
+.ds-sidebar{position:fixed;top:0;left:0;bottom:0;width:19rem;background:var(--surface);border-right:1px solid var(--border);z-index:50;display:flex;flex-direction:column}
+.ds-side-head{padding:1.1rem 1.1rem .8rem;border-bottom:1px solid var(--border)}
+.ds-side-eyebrow{margin:0;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ds-side-title{margin:.3rem 0 .7rem;font-size:1.02rem;font-weight:700;line-height:1.35}
+.ds-side-search{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:400 .88rem/1.4 var(--font-body);padding:.5rem .7rem}
+.ds-side-search::placeholder{color:var(--muted)}
+.ds-nav{flex:1;overflow-y:auto;padding:.7rem .6rem}
+.ds-nav ul{list-style:none;margin:0;padding:0}
+.ds-nav-group{margin-bottom:.35rem}
+.ds-nav-group>button{width:100%;text-align:left;background:none;border:none;color:var(--text);font:700 .86rem/1.4 var(--font-body);padding:.45rem .55rem;border-radius:.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+.ds-nav-group>button:hover{background:#161616}
+.ds-nav-group>button .ds-caret{color:var(--muted);font-size:.75rem}
+.ds-nav-items{list-style:none;margin:0;padding:0 0 .3rem .4rem}
+.ds-nav-items a{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.85rem;line-height:1.45;padding:.32rem .55rem;border-radius:.4rem;border-left:2px solid transparent}
+.ds-nav-items a:hover{color:var(--text);background:#161616}
+.ds-nav-items a.ds-active{color:var(--text);border-left-color:var(--accent);background:#161616}
+.ds-check{flex:none;width:.95rem;height:.95rem;accent-color:var(--accent);cursor:pointer}
+.ds-nav-empty{color:var(--muted);font-size:.85rem;padding:.5rem}
+.ds-side-foot{border-top:1px solid var(--border);padding:.7rem 1.1rem;font-size:.8rem;color:var(--muted)}
+.ds-scrim{display:none}
+.ds-content{margin-left:19rem;padding:0 2rem;max-width:calc(72ch + 4rem)}
+.ds-content>*{max-width:72ch}
+.ds-content table,.ds-content figure,.ds-content pre{max-width:72ch}
+.ds-chapter-nav{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--border);margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-chapter-nav a{text-decoration:none;font-weight:600}
+.ds-chapter-nav .ds-prev{text-align:left}
+.ds-chapter-nav .ds-next{text-align:right}
+.ds-kbd-hint{font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+/* ---- learning components ---- */
+.walkthrough{background:#101010;border:1px solid var(--border);border-radius:.55rem;padding:.85rem 1.05rem;margin-top:.9rem;font-size:.93rem}
+.walkthrough strong{color:var(--text)}
+.walkthrough ol{margin:.45rem 0;padding-left:1.35rem}
+.walkthrough li{margin:.32rem 0}
+.walkthrough p{text-align:left}
+.ob-board{background:#0e0c06;border:1px solid #4a3a12;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.ob-board h4{margin:.1rem 0 .5rem;font-size:1rem;color:var(--accent)}
+.ob-board ul{margin:.4rem 0;padding-left:1.3rem}
+.takeaway{background:#0b0f0b;border:1px solid #1f3a24;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.takeaway h4{margin:.1rem 0 .5rem;font-size:1rem;color:#7fd08a}
+.callout{border-left:4px solid var(--link);background:var(--surface);padding:.85rem 1.1rem;margin:1.15rem 0;border-radius:0 .55rem .55rem 0}
+.callout.warn{border-left-color:var(--accent)}
+.callout p{text-align:left;margin:.45rem 0}
+.provenance{border:1px dashed var(--border);border-radius:.6rem;padding:.8rem 1.05rem;margin:1.2rem 0;font-size:.88rem;color:var(--muted);background:#0a0a0a}
+.provenance strong{color:var(--text)}
+.provenance .uv{color:var(--accent);font-weight:700}
+.pq{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--surface)}
+.pq-q{margin:.1rem 0 .7rem;text-align:left}
+.pq-reveal{background:var(--accent);border:none;color:#000;font:700 .88rem/1 var(--font-body);padding:.55rem 1rem;border-radius:.45rem;cursor:pointer}
+.pq-reveal:hover{filter:brightness(1.08)}
+.pq-a{margin-top:.9rem;border-top:1px solid var(--border);padding-top:.8rem}
+.pq-a ul{margin:.5rem 0}
+.pq-opt-right{color:#7fd08a}
+.pq-opt-wrong{color:#e08080}
+.ds-copy-btn{position:absolute;top:.5rem;right:.5rem;background:#1c1c1c;border:1px solid var(--border);color:var(--muted);font:600 .75rem/1 var(--font-body);padding:.4rem .65rem;border-radius:.4rem;cursor:pointer}
+.ds-copy-btn:hover{color:var(--text);border-color:var(--accent)}
+.lab{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.2rem 0;background:#0b0b0b}
+.lab h4{margin:.1rem 0 .5rem;color:var(--accent)}
+
+/* ---- responsive: sidebar becomes drawer ---- */
+@media(max-width:56rem){
+  .ds-sidebar{transform:translateX(-105%);transition:transform .25s ease;width:17.5rem}
+  body.ds-nav-open .ds-sidebar{transform:none;z-index:56} /* above the menu button so it never overlaps the eyebrow */
+  .ds-menu-btn{display:block}
+  .ds-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:45}
+  body.ds-nav-open .ds-scrim{display:block}
+  .ds-content{margin-left:0;padding:0 1.1rem}
+}
+@media(min-width:56.01rem){.ds-scrim{display:none!important}}
+
+/* ---- print ---- */
+@media print{
+  .ds-sidebar,.ds-menu-btn,.ds-progress,.ds-scrim,.ds-chapter-nav,.ds-copy-btn{display:none!important}
+  .ds-content{margin:0;max-width:100%;padding:0}
+  body{background:#fff;color:#000;font-size:12pt;line-height:1.6}
+  p{text-align:left}
+  h1,h2,h3,h4,a{color:#000}
+  pre,figure,details,.lab,.ob-board,.takeaway,.callout,.walkthrough,.pq{background:#fff;border-color:#999;break-inside:avoid}
+  code{background:#f0f0f0;border-color:#999;color:#000}
+}
+
+</style>
+</head>
+<body>
+<div class="ds-progress" id="dsProgress"></div>
+<button class="ds-menu-btn" id="dsMenuBtn" aria-label="Open navigation">&#9776;</button>
+<aside class="ds-sidebar" id="dsSidebar" aria-label="Volume navigation">
+<div class="ds-side-head">
+<p class="ds-side-eyebrow">Research-Engineer Curriculum</p>
+<p class="ds-side-title">Appendix 4A</p>
+<input class="ds-side-search" id="dsNavSearch" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+</div>
+<nav class="ds-nav" id="dsNav" aria-label="Sections"></nav>
+<div class="ds-side-foot"><span id="dsCompleteCount"></span></div>
+</aside>
+<div class="ds-scrim" id="dsScrim"></div>
+<main class="ds-content" id="dsContent">
+<h1 id="long-context-engineering-rope-extension-and-kv-eviction">Long-Context Engineering: RoPE Extension and KV Eviction</h1>
+<p>Volume 4 derives RoPE from scratch and notes the boundary: a model trained on 4k context degrades beyond it. Volume 8 covers the KV cache. It does not cover the two engineering disciplines that stretch context in practice. The first is rescaling positions so the model survives longer inputs. The second is evicting cache entries so the memory bill stays payable. This appendix teaches both from zero.</p>
+<h2 id="chapter-1-stretching-rope-past-its-training-window">Chapter 1. Stretching RoPE past its training window</h2>
+<h3 id="11-why-extrapolation-breaks">1.1 Why extrapolation breaks</h3>
+<p>RoPE encodes position by rotating each pair of embedding dimensions at a fixed frequency. During training, the model only ever sees positions 0 through L, the training length. The rotation angles for those positions become familiar territory. Position L+5000 is not. The model has never seen those angles, and its attention patterns fall apart on them. Perplexity climbs, and long-range answers degrade first.</p>
+<p>The goal of every extension method: make positions beyond L look familiar again, without retraining the model from scratch.</p>
+<h3 id="12-position-interpolation-the-simple-fix">1.2 Position interpolation: the simple fix</h3>
+<p>If the model knows positions 0 to 4000 and you need 16,000, divide every position index by 4. Position 8000 becomes 2000, which the model has seen. This is position interpolation: map m to m/s, where s is the extension factor.</p>
+<p>It works, with fine-tuning, up to about 8x. Its flaw: it compresses every RoPE frequency equally. The high-frequency channels carry fine-grained local position information, which nearby tokens need to tell each other apart. Interpolation blurs them. The model recovers some of this with fine-tuning, but the blurring caps how far you can go.</p>
+<h3 id="13-ntk-aware-scaling-protect-the-high-frequencies">1.3 NTK-aware scaling: protect the high frequencies</h3>
+<p>A community researcher known as bloc97 posted a one-line improvement in June 2023. Instead of stretching positions, scale RoPE's base frequency. RoPE's per-dimension frequencies come from a base b, usually 10,000:</p>
+<p>theta_d = b^(-2d/D)</p>
+<p>NTK-aware scaling replaces b with b' = b * s^(D/(D-2)), where D is the head dimension and s is the extension factor. Low-frequency dimensions get interpolated, high-frequency dimensions stay nearly untouched. The local-resolution channels survive.</p>
+<p>The worked numbers, for a LLaMA-style head with D = 128 and b = 10,000:</p>
+<ul>
+<li>s = 2 gives b' = 20,221</li>
+<li>s = 4 gives b' = 40,890</li>
+<li>s = 8 gives b' = 82,685</li>
+<li>s = 16 gives b' = 167,199</li>
+</ul>
+<p>Two practical notes. First, this often works with no fine-tuning at all for 2x to 4x extensions, which is why inference engines adopted it quickly. Second, Code Llama shipped with NTK-aware scaling, manually setting the base to 1,000,000. If you have ever wondered why that config value looks odd, this is why.</p>
+<h3 id="14-yarn-ntk-by-parts-plus-a-temperature-fix">1.4 YaRN: NTK-by-parts plus a temperature fix</h3>
+<p>YaRN, published in late 2023, starts from the observation that NTK-aware scaling is still one blunt rule for all dimensions. Its NTK-by-parts scheme treats each dimension by how many rotations it completes inside the training window. Dimensions that rotate many times (high frequency, short wavelength) are left alone. Dimensions that rotate less than once (low frequency) are fully interpolated. Dimensions in between get a smooth ramp. For the LLaMA family the ramp runs from alpha = 1 to beta = 32 rotations.</p>
+<p>YaRN adds a second fix. Longer contexts spread attention over more tokens, which shifts the entropy of the attention distribution. YaRN compensates by dividing the pre-softmax logits by a temperature t, with 1/t = 0.1 * ln(s) + 1. For s = 16, that is 1/t = 1.277, implemented for free by scaling the rotated queries and keys by sqrt(1/t) = 1.13. No attention code changes, no runtime cost.</p>
+<p>YaRN works training-free at inference time (Dynamic-YaRN) and reaches its best quality with a short fine-tune of a few hundred steps. It composes with FlashAttention, which is why it became the default extension recipe in serious long-context fine-tuning.</p>
+<p><figure class="diagram"><svg id="my-svg" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 1400px; background-color: transparent; max-height: 1400px;" viewBox="4 4 625.25 415.5" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#my-svg{font-family:Inter,system-ui,sans-serif;font-size:15px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#a44141;}#my-svg .error-text{fill:#ddd;stroke:#ddd;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:lightgrey;stroke:lightgrey;}#my-svg .marker.cross{stroke:lightgrey;}#my-svg svg{font-family:Inter,system-ui,sans-serif;font-size:15px;}#my-svg p{margin:0;}#my-svg .label{font-family:Inter,system-ui,sans-serif;color:#ccc;}#my-svg .cluster-label text{fill:#F9FFFE;}#my-svg .cluster-label span{color:#F9FFFE;}#my-svg .cluster-label span p{background-color:transparent;}#my-svg .label text,#my-svg span{fill:#ccc;color:#ccc;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#1f2020;stroke:#ccc;stroke-width:1px;}#my-svg .rough-node .label text,#my-svg .node .label text,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-anchor:middle;}#my-svg .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#my-svg .rough-node .label,#my-svg .node .label,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .root .anchor path{fill:lightgrey!important;stroke-width:0;stroke:lightgrey;}#my-svg .arrowheadPath{fill:lightgrey;}#my-svg .edgePaths .path{stroke:lightgrey;stroke-width:1px;}#my-svg .flowchart-link{stroke:lightgrey;fill:none;}#my-svg .edgeLabel{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .edgeLabel p{background-color:hsl(0, 0%, 34.4117647059%);}#my-svg .edgeLabel rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .labelBkg{background-color:rgba(87.75, 87.75, 87.75, 0.5);}#my-svg .cluster rect{fill:hsl(180, 1.5873015873%, 28.3529411765%);stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#my-svg .cluster text{fill:#F9FFFE;}#my-svg .cluster span{color:#F9FFFE;}#my-svg .node .collapsed-indicator{fill:rgba(255, 255, 255, 0.25);stroke:none;opacity:0.6;}#my-svg .node .collapsed-separator{stroke:rgba(255, 255, 255, 0.25);stroke-width:0.75px;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Inter,system-ui,sans-serif;font-size:12px;background:hsl(20, 1.5873015873%, 12.3529411765%);border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#my-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#my-svg rect.text{fill:none;stroke-width:0;}#my-svg .icon-shape,#my-svg .image-shape{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .icon-shape p,#my-svg .image-shape p{background-color:hsl(0, 0%, 34.4117647059%);padding:2px;}#my-svg .icon-shape .label rect,#my-svg .image-shape .label rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg .node .neo-node{stroke:#ccc;}#my-svg [data-look="neo"].node rect,#my-svg [data-look="neo"].cluster rect,#my-svg [data-look="neo"].node polygon{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].swimlane.cluster rect{filter:none;}#my-svg [data-look="neo"].node path{stroke:url(#my-svg-gradient);stroke-width:1px;}#my-svg [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#my-svg [data-look="neo"].node circle{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node circle .state-start{fill:#000000;}#my-svg [data-look="neo"].icon-shape .icon{fill:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].icon-shape .icon-neo path{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"/></marker><marker id="my-svg_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"/></marker><g class="root"><g class="clusters"/><g class="edges edgePaths"><path d="M164,200.5L200,200.5" id="my-svg-L_ROPE_Q_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_ROPE_Q_0" data-points="W3sieCI6MTY0LCJ5IjoyMDAuNX0seyJ4IjoyMDQsInkiOjIwMC41fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M336.8749952316284,162.875L374.5,162.875L387.4289321881345,162.875Q394.5,162.875 394.5,155.80393218813452L394.5,64.82106781186548Q394.5,57.75 401.5710678118655,57.75L410.5,57.75" id="my-svg-L_Q_PI_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 169.42172241210938 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_Q_PI_0" data-points="W3sieCI6MzM2Ljg3NDk5NTIzMTYyODQsInkiOjE2Mi44NzV9LHsieCI6Mzc0LjUsInkiOjE2Mi44NzV9LHsieCI6Mzk0LjUsInkiOjE2Mi44NzV9LHsieCI6Mzk0LjUsInkiOjU3Ljc1fSx7IngiOjQxNC41LCJ5Ijo1Ny43NX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M374.5,200.5L410.5,200.5" id="my-svg-L_Q_NTK_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_Q_NTK_0" data-points="W3sieCI6Mzc0LjUsInkiOjIwMC41fSx7IngiOjQxNC41LCJ5IjoyMDAuNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M336.8749952316284,238.125L374.5,238.125L387.4289321881345,238.125Q394.5,238.125 394.5,245.19606781186548L394.5,347.4289321881345Q394.5,354.5 401.5710678118655,354.5L410.5,354.5" id="my-svg-L_Q_YARN_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 180.6717071533203 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_Q_YARN_0" data-points="W3sieCI6MzM2Ljg3NDk5NTIzMTYyODQsInkiOjIzOC4xMjV9LHsieCI6Mzc0LjUsInkiOjIzOC4xMjV9LHsieCI6Mzk0LjUsInkiOjIzOC4xMjV9LHsieCI6Mzk0LjUsInkiOjM1NC41fSx7IngiOjQxNC41LCJ5IjozNTQuNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/></g><g class="edgeLabels"/><g class="nodes"><g class="node default" id="my-svg-flowchart-ROPE-0" data-look="neo" transform="translate(88, 200.5)"><rect class="basic label-container" style="" x="-76" y="-34.5" width="152" height="69"/><g class="label" style="" transform="translate(-60, -22.5)"><rect/><foreignObject width="120" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>RoPE trained<br />on length L</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-Q-1" data-look="neo" transform="translate(289.25, 200.5)"><polygon points="85.25,0 170.5,-85.25 85.25,-170.5 0,-85.25" class="label-container" transform="translate(-84.75, 85.25)"/><g class="label" style="" transform="translate(-60, -11.25)"><rect/><foreignObject width="120" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Need longer?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-PI-3" data-look="neo" transform="translate(514.2734375, 57.75)"><rect class="basic label-container" style="" x="-99.7734375" y="-45.75" width="199.546875" height="91.5"/><g class="label" style="" transform="translate(-83.7734375, -33.75)"><rect/><foreignObject width="167.546875" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Position interpolation:<br />m maps to m/s<br />simple, needs fine-tune</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-NTK-5" data-look="neo" transform="translate(499.734375, 200.5)"><rect class="basic label-container" style="" x="-85.234375" y="-57" width="170.46875" height="114"/><g class="label" style="" transform="translate(-69.234375, -45)"><rect/><foreignObject width="138.46875" height="90"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>NTK-aware:<br />b' = b * s^(D/(D-2))<br />protects high freqs,<br />often no fine-tune</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-YARN-7" data-look="neo" transform="translate(517.875, 354.5)"><rect class="basic label-container" style="" x="-103.375" y="-57" width="206.75" height="114"/><g class="label" style="" transform="translate(-87.375, -45)"><rect/><foreignObject width="174.75" height="90"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>YaRN:<br />NTK-by-parts ramp<br />+ temperature 1/t<br />best with short fine-tune</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="my-svg-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><defs><filter id="my-svg-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><linearGradient id="my-svg-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"/><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"/></linearGradient></svg></figure></p>
+<p><pre><code class="language-python">import math
+
+def ntk_aware_theta(theta, scale, dim):
+    # NTK-aware base: theta&#x27; = theta * scale^(dim / (dim - 2)).
+    # Why this exponent: it spreads the interpolation pressure across
+    # dimensions so the high-frequency channels (which carry local
+    # position resolution) move the least. Change the exponent and the
+    # pressure lands on the wrong dimensions: too small and low freqs
+    # extrapolate, too large and high freqs get blurred like plain PI.
+    return theta * (scale ** (dim / (dim - 2)))
+
+
+def yarn_temperature(scale):
+    # YaRN&#x27;s entropy fix: 1/t = 0.1 * ln(s) + 1. Longer contexts spread
+    # attention mass over more tokens; dividing logits by t re-sharpens
+    # the distribution. Implemented by scaling q,k by sqrt(1/t): zero
+    # extra compute at inference.
+    return 0.1 * math.log(scale) + 1
+
+
+def precompute_freqs_ntk(dim, end, theta=10000.0, scale=4.0):
+    # RoPE frequencies with NTK-aware scaling, pure Python.
+    # freqs[d] = 1 / theta&#x27;^(2d/dim): the rotation speed of dimension d.
+    # cos/sin of (position * freq) are the rotation matrices from Vol 4.
+    theta_p = ntk_aware_theta(theta, scale, dim)
+    freqs = [1.0 / (theta_p ** (2 * d / dim)) for d in range(dim // 2)]
+    # Outer product: positions 0..end-1 against each frequency.
+    angles = [[t * f for f in freqs] for t in range(end)]
+    cos = [[math.cos(a) for a in row] for row in angles]
+    sin = [[math.sin(a) for a in row] for row in angles]
+    return cos, sin
+
+
+print(&quot;NTK-aware theta, base 10000, dim 128:&quot;)
+for s in (2, 4, 8, 16):
+    print(f&quot;  scale {s:2d}x -&gt; theta&#x27; = {ntk_aware_theta(10000, s, 128):9.1f}&quot;)
+
+print(&quot;YaRN temperature:&quot;)
+for s in (8, 16, 32):
+    t_inv = yarn_temperature(s)
+    print(f&quot;  scale {s:2d}x -&gt; 1/t = {t_inv:.4f}, q,k scale = {math.sqrt(t_inv):.4f}&quot;)
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li><code>ntk_aware_theta</code> is the one-line formula. The exponent dim/(dim-2) is slightly above 1, so the base grows a little faster than the scale factor. For dim 128 and scale 4, theta moves from 10,000 to 40,890.</li>
+<li><code>yarn_temperature</code> computes the entropy compensation. At 16x the logits are divided by 1.277, or equivalently q and k are scaled by 1.13 before the dot product.</li>
+<li><code>precompute_freqs_ntk</code> builds the actual rotation tables: frequencies from the scaled base, then cos and sin of position times frequency. This is the same table Volume 4 derives, with theta replaced by theta prime.</li>
+<li>The printed tables are the numbers you would put in a model config. If a config shows theta 40,890 on a 4k-trained model serving 16k, it is doing exactly this.</li>
+</ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
+<li>RoPE breaks past its training length because the angles are unfamiliar. Every extension method makes long positions look familiar again.</li>
+<li>Position interpolation divides positions by s. NTK-aware scaling raises the base to b * s^(D/(D-2)), protecting high frequencies. YaRN adds per-dimension ramps plus a temperature fix.</li>
+<li>NTK-aware often works with no fine-tuning at 2x to 4x. YaRN is the recipe when you plan to fine-tune.</li>
+</ul></div><h2 id="chapter-2-kv-cache-eviction-policies">Chapter 2. KV cache eviction policies</h2>
+<h3 id="21-why-you-cannot-keep-everything">2.1 Why you cannot keep everything</h3>
+<p>Every generated token appends its key and value vectors to the KV cache, and every future token attends to all of them. The cache grows linearly with sequence length, and at long context it dominates GPU memory.</p>
+<p>The worked numbers: a 32-layer model with d_model 4096 in fp16 stores 2 (K and V) * 32 * 4096 * 2 bytes = 0.5 MB per token. At 128k tokens that is 64 GB, more than most single GPUs hold, before counting the model weights at all. Something has to give: either buy more memory, or keep fewer tokens.</p>
+<p>Eviction keeps a fixed budget of tokens and discards the rest. The research question is which tokens are safe to discard.</p>
+<h3 id="22-the-attention-sink-discovery">2.2 The attention sink discovery</h3>
+<p>The surprise finding: the first few tokens of any sequence attract huge attention weights no matter what they say. They act as sinks that stabilize the attention distribution. Drop them and the model breaks. Drop middle tokens and often nothing happens.</p>
+<p>This single fact shapes every policy below. Whatever else you evict, protect the sinks.</p>
+<h3 id="23-three-policies">2.3 Three policies</h3>
+<p>Sliding window. Keep the most recent W tokens, evict everything older. Simple, fast, and wrong for anything that needs long-range recall: the answer buried 50k tokens back is gone. Good for streaming chat where only recent context matters.</p>
+<p>StreamingLLM. Keep the sink tokens (typically the first 4) plus a sliding window of recent tokens. The cache stays bounded at sink + window no matter how long the stream grows, so the model can generate coherently forever. The price: middle context is discarded entirely, so retrieval over the full history fails.</p>
+<p>H2O (Heavy-Hitter Oracle). Attention scores follow a power law: a small set of tokens, the heavy hitters, receives most of the attention mass across generation steps. H2O keeps a running sum of each token's received attention and, at a fixed budget, retains the top heavy hitters plus recent tokens. With only 20% of the full cache budget, it matches full-cache accuracy across the paper's benchmarks, and it beat StreamingLLM on perplexity in long streaming runs. The cost is bookkeeping: you must track accumulated scores per token per head.</p>
+<p>The honest comparison: sliding window is a positional rule, blind to content. StreamingLLM adds sinks to the positional rule. H2O is content-aware, which is why it keeps quality at small budgets, and heavier to implement, which is why it is not everywhere.</p>
+<p><pre><code class="language-python">def kv_cache_bytes(n_layers, d_model, seq_len, bytes_per=2):
+    # KV memory: 2 (K and V) * layers * d_model * seq_len * bytes.
+    # fp16 -&gt; 2 bytes; int8 KV quantization halves it (see Vol 8).
+    # This is per sequence: multiply by batch size for the real bill.
+    return 2 * n_layers * d_model * seq_len * bytes_per
+
+
+def h2o_evict(scores, budget, n_recent=4, n_sink=4):
+    # H2O-style eviction on one attention head, pure Python.
+    # scores: accumulated attention received per token so far (the
+    # &quot;heavy-hitter&quot; signal). budget: total tokens we may keep.
+    # Keeps: the first n_sink tokens (attention sinks, always protected),
+    # the last n_recent tokens (local context), and the top heavy hitters
+    # by accumulated score for the remaining budget.
+    # What breaks if changed: dropping the sinks destabilizes attention
+    # (the sink finding); dropping recency kills local coherence; using
+    # per-step scores instead of accumulated scores makes the ranking
+    # noisy and eviction thrashy.
+    n = len(scores)
+    if n &lt;= budget:
+        return list(range(n))  # Under budget: evict nothing.
+
+    keep = set(range(n_sink))                    # attention sinks
+    keep |= set(range(n - n_recent, n))          # recent window
+    # Heavy hitters: highest accumulated attention among the rest.
+    candidates = [i for i in range(n) if i not in keep]
+    candidates.sort(key=lambda i: scores[i], reverse=True)
+    keep |= set(candidates[:budget - len(keep)])
+    return sorted(keep)
+
+
+# The memory bill from the chapter: 32 layers, d_model 4096, fp16, 128k.
+print(f&quot;full 128k cache: {kv_cache_bytes(32, 4096, 131072) / 1024**3:.0f} GB&quot;)
+print(f&quot;H2O at 20% budget: {kv_cache_bytes(32, 4096, 131072) / 1024**3 * 0.2:.0f} GB&quot;)
+
+# Tiny eviction demo: 20 tokens, budget 8.
+import random
+random.seed(0)
+accum = [random.paretovariate(2.0) for _ in range(20)]  # power-law-ish scores
+print(&quot;kept positions:&quot;, h2o_evict(accum, budget=8))
+</code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<li><code>kv_cache_bytes</code> is the memory arithmetic. The factor of 2 for K and V is the line people forget. The per-sequence note is the line that saves you in capacity planning, because batch size multiplies everything.</li>
+<li><code>h2o_evict</code> takes accumulated attention scores, not per-step ones. Accumulation is what makes "heavy hitter" a stable property instead of a noisy one.</li>
+<li>Sinks are protected unconditionally (the first 4 indices), then the recent window, then the top scorers fill the remaining budget. The demo prints which of 20 positions survive an 8-token budget.</li>
+<li>The printed memory numbers show the payoff: 64 GB full cache versus about 13 GB at H2O's 20% budget, with matched accuracy on the paper's tasks.</li>
+</ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
+<li>The KV cache grows linearly with length: 0.5 MB per token for a 32-layer 4096-wide fp16 model, 64 GB at 128k tokens.</li>
+<li>Attention sinks (the first tokens) must always be kept. Every policy builds on this.</li>
+<li>Sliding window is blind to content; StreamingLLM adds sinks to the window; H2O keeps heavy hitters by accumulated attention and holds quality at 20% budget.</li>
+<li>Eviction is lossy. For tasks that need exact long-range recall, eviction is the wrong tool: buy memory or retrieve differently.</li>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> NTK-aware scaling (b' = b * s^(D/(D-2)), bloc97, June 2023; adopted by Code Llama with base 1,000,000): documented in the YaRN paper's treatment (arXiv:2309.00071, 2023). YaRN (NTK-by-parts ramp with alpha=1, beta=32 for LLaMA; temperature 1/t = 0.1 ln s + 1; ~400 fine-tuning steps): arXiv:2309.00071. Position interpolation (Chen et al., 2023): the baseline method YaRN compares against. StreamingLLM attention sinks (Xiao et al., 2023): the sink phenomenon and sink-plus-window policy. H2O (Zhang et al., NeurIPS 2023): power-law attention, heavy hitters plus recent tokens, 20% budget matching full-cache accuracy. <strong>UNVERIFIED:</strong> the 0.5 MB/token and 64 GB figures are computed from the stated architecture (32 layers, d_model 4096, fp16). They are not quoted from a paper. Verify against your own model's config before capacity planning.</p></div>
+</main>
+<script>
+/* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
+   Builds: sidebar nav from h2/h3, scroll-spy, nav search filter, localStorage completion
+   checkmarks, reading progress bar, chapter prev/next footer, copy buttons, practice-question
+   toggles, mobile drawer, keyboard nav. No external dependencies. */
+(function(){
+"use strict";
+var content=document.getElementById('dsContent')||document.querySelector('main')||document.body;
+var sidebar=document.getElementById('dsSidebar');
+if(!sidebar||!content)return;
+
+/* ---------- collect sections: h2 = chapter groups, h3 = items ---------- */
+function slugify(t){return t.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'s';}
+var used={};
+function uniqueId(base){var id=base,n=2;while(used[id]||document.getElementById(id)){id=base+'-'+(n++);}used[id]=1;return id;}
+var chapters=[]; // {h2, id, title, items:[{id,title,el}]}
+var cur=null;
+Array.prototype.forEach.call(content.querySelectorAll('h2,h3'),function(h){
+  if(!h.id){h.id=uniqueId(slugify(h.textContent));}else{used[h.id]=1;}
+  h.setAttribute('tabindex','-1');
+  var t=h.textContent.trim();
+  if(h.tagName==='H2'){cur={id:h.id,title:t,items:[]};chapters.push(cur);}
+  else if(cur){cur.items.push({id:h.id,title:t});}
+  else{cur={id:'intro',title:'Introduction',items:[{id:h.id,title:t}]};chapters.push(cur);}
+});
+
+/* ---------- build sidebar nav ---------- */
+var nav=document.getElementById('dsNav');
+var pageKey='rec-cur-'+(document.title||location.pathname).replace(/[^a-z0-9]+/gi,'-');
+function isDone(id){try{return localStorage.getItem(pageKey+'#'+id)==='1';}catch(e){return false;}}
+function setDone(id,v){try{if(v)localStorage.setItem(pageKey+'#'+id,'1');else localStorage.removeItem(pageKey+'#'+id);}catch(e){}}
+function checkItem(id){var c=document.querySelector('.ds-check[data-sec="'+id+'"]');if(c)c.checked=isDone(id);}
+function updateCount(){
+  var boxes=nav.querySelectorAll('.ds-check'),done=0;
+  boxes.forEach(function(b){if(b.checked)done++;});
+  var el=document.getElementById('dsCompleteCount');
+  if(el)el.textContent=done+' of '+boxes.length+' sections complete';
+}
+function itemRow(sec){
+  var li=document.createElement('li');
+  var a=document.createElement('a');a.href='#'+sec.id;
+  var cb=document.createElement('input');
+  cb.type='checkbox';cb.className='ds-check';cb.checked=isDone(sec.id);
+  cb.setAttribute('data-sec',sec.id);cb.setAttribute('aria-label','Mark complete: '+sec.title);
+  cb.addEventListener('change',function(ev){ev.stopPropagation();setDone(sec.id,cb.checked);updateCount();});
+  cb.addEventListener('click',function(ev){ev.stopPropagation();});
+  var sp=document.createElement('span');sp.textContent=sec.title;
+  a.appendChild(cb);a.appendChild(sp);
+  a.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+  li.appendChild(a);return li;
+}
+chapters.forEach(function(ch,ci){
+  var g=document.createElement('div');g.className='ds-nav-group';g.dataset.title=ch.title.toLowerCase();
+  var btn=document.createElement('button');
+  btn.innerHTML='<span></span><span class="ds-caret">▾</span>';
+  btn.firstChild.textContent=ch.title;
+  btn.setAttribute('aria-expanded','true');
+  var ul=document.createElement('ul');ul.className='ds-nav-items';
+  var headLi=itemRow({id:ch.id,title:ch.title});ul.appendChild(headLi);
+  ch.items.forEach(function(it){ul.appendChild(itemRow(it));});
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!open));
+    ul.style.display=open?'none':'';
+    btn.querySelector('.ds-caret').textContent=open?'▸':'▾';
+  });
+  g.appendChild(btn);g.appendChild(ul);nav.appendChild(g);
+});
+updateCount();
+
+/* ---------- nav search filter ---------- */
+var search=document.getElementById('dsNavSearch');
+if(search){search.addEventListener('input',function(){
+  var q=search.value.trim().toLowerCase(),any=false;
+  nav.querySelectorAll('.ds-nav-group').forEach(function(g){
+    var show=g.dataset.title.indexOf(q)>-1;
+    g.querySelectorAll('.ds-nav-items li').forEach(function(li){
+      var hit=li.textContent.toLowerCase().indexOf(q)>-1;
+      li.style.display=(!q||hit||show)?'':'none';if(!q||hit)show=true;
+    });
+    g.style.display=show?'':'none';if(show)any=true;
+  });
+  var empty=nav.querySelector('.ds-nav-empty');
+  if(!any&&!empty){var d=document.createElement('div');d.className='ds-nav-empty';d.textContent='No sections match.';nav.appendChild(d);}
+  if(any&&empty)empty.remove();
+});}
+
+/* ---------- scroll-spy ---------- */
+var links=Array.prototype.slice.call(nav.querySelectorAll('.ds-nav-items a'));
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.toggle('ds-active',a.getAttribute('href')==='#'+e.target.id);});
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+chapters.forEach(function(ch){
+  var el=document.getElementById(ch.id);if(el)spy.observe(el);
+  ch.items.forEach(function(it){var el2=document.getElementById(it.id);if(el2)spy.observe(el2);});
+});
+
+/* ---------- progress bar ---------- */
+var prog=document.getElementById('dsProgress');
+function onScroll(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- mobile drawer ---------- */
+var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('dsScrim');
+if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
+if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+
+/* ---------- keyboard nav: [ ] sections, / search ---------- */
+document.addEventListener('keydown',function(e){
+  if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  var ids=[];chapters.forEach(function(ch){ids.push(ch.id);ch.items.forEach(function(it){ids.push(it.id);});});
+  function jump(dir){
+    var y=window.scrollY+10,cur=0;
+    ids.forEach(function(id,i){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+y<=y+1)cur=i;});
+    var n=Math.min(ids.length-1,Math.max(0,cur+dir)),el=document.getElementById(ids[n]);
+    if(el){el.scrollIntoView();el.focus({preventScroll:true});}
+  }
+  if(e.key==='[')jump(-1);else if(e.key===']')jump(1);
+  else if(e.key==='/'&&search){e.preventDefault();search.focus();}
+});
+var hint=document.createElement('div');hint.className='ds-kbd-hint';
+hint.textContent='Keyboard: [ and ] move between sections, / focuses section search.';
+var foot=document.querySelector('.ds-side-foot');if(foot)foot.appendChild(hint);
+
+/* ---------- chapter prev/next footers (one after each h2 section) ---------- */
+if(chapters.length>1){
+  var mk=function(ch,cls,label){var a=document.createElement('a');a.href='#'+ch.id;a.className=cls;
+    a.innerHTML='<span style="display:block;font-size:.78rem;color:var(--muted)">'+label+'</span>';a.appendChild(document.createTextNode(ch.title));return a;};
+  chapters.forEach(function(ch,i){
+    var bar=document.createElement('nav');bar.className='ds-chapter-nav';bar.setAttribute('aria-label','Chapter navigation');
+    var left=document.createElement('span'),right=document.createElement('span');
+    if(chapters[i-1])left.appendChild(mk(chapters[i-1],'ds-prev','↑ Previous'));
+    else left.innerHTML='<span style="color:var(--muted);font-size:.85rem">Start of volume</span>';
+    if(chapters[i+1])right.appendChild(mk(chapters[i+1],'ds-next','Next ↓'));
+    else right.innerHTML='<span style="color:var(--muted);font-size:.85rem">End of volume</span>';
+    bar.appendChild(left);bar.appendChild(right);
+    /* insert the bar immediately before the next chapter's heading, using that
+       heading's own parent so <section> wrappers (or any nesting) cannot break it */
+    var nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
+    if(nextH){nextH.parentNode.insertBefore(bar,nextH);}
+    else{var lastH=document.getElementById(ch.id);lastH.parentNode.appendChild(bar);}
+  });
+}
+
+/* ---------- copy buttons on code blocks ---------- */
+document.querySelectorAll('pre').forEach(function(pre){
+  if(pre.querySelector('.ds-copy-btn'))return;
+  var btn=document.createElement('button');btn.className='ds-copy-btn';btn.textContent='Copy';
+  btn.setAttribute('aria-label','Copy code to clipboard');
+  btn.addEventListener('click',function(){
+    var txt=pre.innerText;
+    function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1400);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}
+  });
+  pre.appendChild(btn);
+});
+
+/* ---------- practice-question widgets ---------- */
+document.querySelectorAll('.pq').forEach(function(pq){
+  var btn=pq.querySelector('.pq-reveal'),ans=pq.querySelector('.pq-a');
+  if(!btn||!ans)return;
+  btn.addEventListener('click',function(){
+    var open=ans.hasAttribute('hidden');
+    if(open){ans.removeAttribute('hidden');btn.setAttribute('aria-expanded','true');btn.textContent='Hide answer';}
+    else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
+  });
+});
+})();
+
+</script>
+</body>
+</html>
