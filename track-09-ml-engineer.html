@@ -590,7 +590,8 @@ html.xp-js .xp-reveal.xp-in {
 <p>Every production model goes through the same five stages: frame the problem, build a baseline, iterate with discipline, validate honestly, and deploy something you can operate. Most failed ML projects skip stage one or two and pay for it in stage five.</p>
 <h4 id="t11-problem-framing-from-business-metric-to-ml-objective">T1.1 Problem framing: from business metric to ML objective</h4>
 <p>A business metric is not an ML objective until you write down three things: what you predict, what a mistake costs, and what threshold turns a score into an action.</p>
-<p>Take churn prediction. The business metric is revenue retained. The ML objective is "predict P(churn in next 30 days) for each customer." The cost part is asymmetric. Missing a churner (false negative) costs the lost subscription. Flagging a loyal customer (false positive) costs a discount email. If a saved customer is worth $200 and the retention offer costs $20, a false negative costs roughly ten times a false positive. That ratio belongs in the objective, because it sets the decision threshold. A model with great AUC (area under the ROC curve: the probability the model ranks a random churner above a random non-churner; 0.5 is a coin flip, 1.0 is perfect) and a threshold picked at 0.5 by habit can still lose money.</p>
+<p>Take churn prediction. The business metric is revenue retained. The ML objective is "predict P(churn in next 30 days) for each customer." The cost part is asymmetric. Missing a churner (false negative) costs the lost subscription. Flagging a loyal customer (false positive) costs a discount email.</p>
+<p>If a saved customer is worth $200 and the retention offer costs $20, a false negative costs roughly ten times a false positive. That ratio belongs in the objective, because it sets the decision threshold. A model with great AUC (area under the ROC curve: the probability the model ranks a random churner above a random non-churner; 0.5 is a coin flip, 1.0 is perfect) and a threshold picked at 0.5 by habit can still lose money.</p>
 <p>Write the framing down before touching data. One page: the decision the model informs, the cost of each error type, the action taken at each score band, and the metric that will judge success in production. If you cannot write this page, you do not have a project yet. You have a dataset looking for a purpose.</p>
 <h4 id="t12-baselines-first">T1.2 Baselines first</h4>
 <p>A baseline does three jobs. It sets the bar every later model must beat. It shakes out pipeline bugs early: if the baseline looks impossibly good, you have leakage, not genius. And it gives you something deployable on day one.</p>
@@ -615,7 +616,8 @@ html.xp-js .xp-reveal.xp-in {
 </ol></div><h4 id="t14-worked-example-from-raw-data-to-a-deployed-baseline">T1.4 Worked example: from raw data to a deployed baseline</h4>
 <p>A subscription business wants to predict churn in the next 30 days. We walk the full path: generate representative data, build the baseline ladder, pick a threshold from the cost ratio, package the artifact, and write the serving function. Every number below comes from actually running this code.</p>
 <p><strong>Step 1. Data.</strong> We simulate 20,000 customers with five fields: tenure in months, monthly bill, support calls in the last quarter, late payments, and plan tier. Churn depends on those fields plus noise. The base churn rate is 17.8 percent.</p>
-<p><strong>Step 2. Baselines.</strong> The hand rule (3+ support calls or 2+ late payments) reaches precision 0.284 and recall 0.363: it catches about a third of churners and is wrong about seven in ten flags. Logistic regression (a linear model for yes-or-no outcomes; Chapter T6.3) reaches AUC 0.7065 on the holdout set. Gradient-boosted trees reach AUC 0.6926, slightly worse. That last fact is worth pausing on. The fancier model lost. The signal here is mostly linear, and the honest move is to ship the linear model, not to tune the tree until it wins by luck. This is the baseline ladder doing its job.</p>
+<p><strong>Step 2. Baselines.</strong> The hand rule (3+ support calls or 2+ late payments) reaches precision 0.284 and recall 0.363: it catches about a third of churners and is wrong about seven in ten flags.</p>
+<p>Logistic regression (a linear model for yes-or-no outcomes; Chapter T6.3) reaches AUC 0.7065 on the holdout set. Gradient-boosted trees reach AUC 0.6926, slightly worse. That last fact is worth pausing on. The fancier model lost. The signal here is mostly linear, and the honest move is to ship the linear model, not to tune the tree until it wins by luck. This is the baseline ladder doing its job.</p>
 <p><pre><code class="language-python">import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -651,7 +653,8 @@ print(&quot;rule precision/recall:&quot;,
       round(precision_score(df[&quot;churn&quot;], rule), 3),
       round(recall_score(df[&quot;churn&quot;], rule), 3))
 
-# WHAT: encode features once, in ONE function used by training AND serving.
+# WHAT: encode features once, in ONE function used by training AND serving. The per-tier
+#   yes/no columns below are one-hot encoding: each category becomes its own 0/1 column.
 # WHY: reusing the exact transform is the cheapest skew prevention there is.
 #   A second copy of this logic in the serving path will drift (Chapter T2).
 # WHAT BREAKS: if the plan tiers change upstream, get_dummies silently
@@ -700,6 +703,11 @@ print(&quot;chosen threshold:&quot;, round(best_t, 2),
       &quot;expected cost: $&quot;, round(best_cost, 0))
 </code></pre></p>
 <p><strong>Step 4. Package and serve.</strong> The artifact is a dict: the fitted model, the threshold, the feature list, and metadata (training date, data hash, code version). The serving function loads it and applies the same <code>featurize</code>. Nothing clever, and that is the point: the serving path is the shortest possible distance from the training path.</p>
+<figure class="diagram" id="fig-t14-artifact-bundle">
+<img src="img/t14-artifact-bundle.svg" alt="The artifact bundle: training produces one dict with model, threshold, features, and metadata; serving loads it and applies the same featurize function" loading="lazy">
+<figcaption><strong>Figure T1.4.</strong> The artifact bundle. Training produces one dict with the fitted model, the threshold, the feature list, and provenance. Serving loads that same dict and applies the same <code>featurize</code>: the shortest possible distance from the training path.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Left: the tracked training run emits the artifact dict.</li><li>Middle: the four fields. The model alone is undeployable; the threshold and feature list make it actionable, the metadata makes it auditable.</li><li>Right: serving is three steps, none of which reimplement training logic. Rollback is just retagging the registry.</li></ol></details>
+</figure>
 <p><pre><code class="language-python"># WHAT: bundle everything serving needs into one versioned artifact.
 # WHY: a model file without its threshold, feature list, and provenance
 #   is undeployable. The metadata answers &quot;which data trained this?&quot; later.
@@ -733,7 +741,9 @@ def predict_churn(customer):
 <li>Climb the baseline ladder in order. A fancier model that loses to logistic regression is information, not failure.</li>
 <li>Set the threshold from the cost ratio. The 10-to-1 ratio here moves the threshold far from 0.5.</li>
 <li>The artifact carries model, threshold, features, and provenance. Serving reuses the training transform exactly.</li>
-</ul></div><h3 id="chapter-t2-feature-pipelines-and-data-quality">Chapter T2. Feature pipelines and data quality</h3>
+</ul></div><p><strong>Next: Chapter T2, feature pipelines and data quality.</strong> The lifecycle's data stage is where silent failures live. T2 builds the pipeline that feeds every later stage, without leaks, skew, or silent rot.</p>
+<h3 id="chapter-t2-feature-pipelines-and-data-quality">Chapter T2. Feature pipelines and data quality</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter T1 walked the full lifecycle: frame, baseline, iterate, validate, deploy. The lifecycle's largest source of silent failure is the data stage, and the data stage in production is the feature pipeline. This chapter builds pipelines that do not leak, skew, or silently rot.</p>
 <p>Models do not eat raw data. They eat features: cleaned, joined, aggregated, and encoded columns produced by a pipeline. In production, the feature pipeline is the largest source of silent failures.</p>
 <h4 id="t21-batch-streaming-and-the-freshness-ladder">T2.1 Batch, streaming, and the freshness ladder</h4>
 <p>Features arrive on two clocks. Batch features are computed on a schedule: nightly aggregates like "support calls in the last 90 days." Streaming features are computed on events: "seconds since the last login," updated with every click. Volume 10 covers the freshness ladder in detail. The practical rule: match the feature clock to the decision clock. A fraud model scoring live transactions cannot wait for a nightly job. A churn model scored weekly has no use for millisecond features.</p>
@@ -835,7 +845,9 @@ print(&quot;KS stat:    &quot;, round(ks_drift(train_win, serve_win)[0], 3))    
 <li>Point-in-time correctness is the key invariant: no feature may see past its label.</li>
 <li>One feature definition, two stores, and a consistency check between them.</li>
 <li>Detect skew with PSI, KS, and chi-square. Fix the cause first, share the transform code second, log serving features third.</li>
-</ul></div><h3 id="chapter-t3-experiment-tracking-and-model-registry">Chapter T3. Experiment tracking and model registry</h3>
+</ul></div><p><strong>Next: Chapter T3, experiment tracking and model registry.</strong> Features are trustworthy. Now make every experiment on them reproducible: T3 turns runs into records and records into decisions.</p>
+<h3 id="chapter-t3-experiment-tracking-and-model-registry">Chapter T3. Experiment tracking and model registry</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter T2 gave you trustworthy features. Now every experiment run on those features must be reproducible: what code, what data, what parameters, what metrics. This chapter turns runs into records, and records into registry decisions.</p>
 <p>An experiment you cannot reproduce is a rumor. Tracking turns runs into records: what code, what data, what parameters, what metrics, what artifact. The registry turns records into decisions: which artifact is in staging, which is in production, and who approved the move.</p>
 <h4 id="t31-what-to-log">T3.1 What to log</h4>
 <p>Log everything needed to rebuild the run from scratch, and nothing you cannot act on. The required fields:</p>
@@ -843,7 +855,7 @@ print(&quot;KS stat:    &quot;, round(ks_drift(train_win, serve_win)[0], 3))    
 <li><strong>Code version.</strong> The git commit of the training script. "The latest main" is not a version.</li>
 <li><strong>Data version.</strong> A hash or snapshot id of the training extract. Data changes more often than code, and silently.</li>
 <li><strong>Parameters.</strong> Hyperparameters, the random seed, and the environment (library versions). Seeds matter: an untracked seed makes the run unrepeatable.</li>
-<li><strong>Metrics.</strong> On train, validation, and the locked test set, with the exact metric definitions. Log the confusion matrix or the full score distribution, not just the headline number.</li>
+<li><strong>Metrics.</strong> On train, validation, and the locked test set, with the exact metric definitions. Log the confusion matrix (a table that counts, for each class, how many predictions were right and how many were wrong) or the full score distribution, not just the headline number.</li>
 <li><strong>Artifacts.</strong> The model file, the preprocessing object, the feature list, and the evaluation report. If it is not stored, it did not happen.</li>
 <li><strong>Lineage.</strong> The parent run this run was forked from, and the hypothesis it tested. This turns a pile of runs into a readable history.</li>
 </ul>
@@ -894,7 +906,7 @@ class RunTracker:
 </code></pre></p>
 <h4 id="t32-how-to-compare-runs">T3.2 How to compare runs</h4>
 <p>Sort by the metric, then interrogate the top rows. Three questions, in order.</p>
-<p><strong>Is the delta real?</strong> A 0.3-point AUC gain on a 5,000-row test set is usually noise. Use the paired bootstrap from Volume 11, Chapter 5 before promoting anything. The tracker stores the per-run predictions (or their hash) so the comparison is paired on the same items.</p>
+<p><strong>Is the delta real?</strong> A 0.3-point AUC gain on a 5,000-row test set is usually noise. Use the paired bootstrap from Volume 11, Chapter 5 before promoting anything. (The paired bootstrap: resample the test set with replacement a few thousand times, recompute the metric gap on each resample, and check how often the gap stays positive. If it crosses zero often, the win is noise.) The tracker stores the per-run predictions (or their hash) so the comparison is paired on the same items.</p>
 <p><strong>Is the delta stable?</strong> Rerun the winner with a different seed. If the gain survives three seeds, it is a property of the idea. If it survives one, it is a property of the seed.</p>
 <p><strong>Is the delta worth it?</strong> A 0.2-point gain that doubles serving cost or adds a fragile feature is a bad trade. The comparison table should carry cost and latency columns next to accuracy, because the promotion decision weighs all three (Chapter T7).</p>
 <p><pre><code>run_id        name                          test_auc  parent    data
@@ -936,7 +948,9 @@ only if a hypothesis explains the loss.
 <details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Staging: every candidate lands here first, with its tracked run attached.</li><li>Gates: the promotion checklist from T3.3. Fail any gate and the candidate stays.</li><li>Production: exactly one champion per model slot. The stage tag points at it.</li><li>Rollback: move the tag back to the previous artifact. Nothing is rebuilt, so it is fast.</li></ol></details>
 </figure>
 
+<p><strong>Next: Chapter T4, CI/CD for ML.</strong> Experiments are recorded. Now gate them: tests on every commit, every data refresh, and every model artifact.</p>
 <h3 id="chapter-t4-cicd-for-ml">Chapter T4. CI/CD for ML</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter T3 records experiments. Recording is not gating. This chapter adds the CI/CD that tests every commit, every data refresh, and every model artifact: because in ML, the data and the model break too.</p>
 <p>Software CI runs tests on every commit. ML CI runs tests on every commit, every data refresh, and every model artifact. The extra two triggers exist because ML has two more things that break: the data and the model. A pipeline that tests only code is testing one third of the system.</p>
 <figure class="diagram" id="fig-t42-ml-cicd">
 <pre class="ascii">CI/CD for ML: the pipeline that ships models, not just code
@@ -1071,14 +1085,16 @@ def canary_decision(canary, baseline):
 <li>CI covers code, data, and the artifact. Data tests check schema, nulls, ranges, categories, freshness, and label sanity.</li>
 <li>Model tests check preprocessing, invariants, the golden-set floor, and latency.</li>
 <li>Shadow first (no user impact, full business cycle), then canary with coded guardrail decisions: one trip holds, two trips roll back.</li>
-</ul></div><h3 id="chapter-t5-monitoring-and-drift">Chapter T5. Monitoring and drift</h3>
+</ul></div><p><strong>Next: Chapter T5, monitoring and drift.</strong> The model shipped safely. Now watch it live: the world changes under every model, and monitoring is how you catch it.</p>
+<h3 id="chapter-t5-monitoring-and-drift">Chapter T5. Monitoring and drift</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter T4 shipped the model safely. Shipping is the middle of the story, not the end. The day a model ships, the world starts changing under it. This chapter watches it live: inputs, outputs, and drift, layer by layer.</p>
 <p>Deployment is the middle of the story, not the end. The day a model ships, the world starts changing under it: customer behavior shifts, upstream pipelines change, the product launches in new markets. Monitoring is how you notice. Drift detection is how you measure what you noticed. Retraining triggers are how you act.</p>
 <h4 id="t51-what-to-monitor-four-layers">T5.1 What to monitor: four layers</h4>
 <p><strong>Layer 1: inputs.</strong> Feature distributions, null rates, and freshness, per feature. This is where most incidents start, and the detectors from Chapter T2 live here.</p>
 <p><strong>Layer 2: predictions.</strong> The distribution of model outputs. If the churn model suddenly flags twice as many customers, either the world changed or the model broke. Prediction drift needs no labels, so it is always available. It is also ambiguous: a real change in customer behavior looks identical to a broken feature. Layer 1 disambiguates.</p>
 <p><strong>Layer 3: outcomes.</strong> Ground-truth labels (what actually happened, recorded after the fact) and the business metric, as they arrive. Labels lag: churn is known 30 days after the prediction. This layer is the slowest and the most authoritative. When it disagrees with Layer 2, believe Layer 3.</p>
 <p><strong>Layer 4: system.</strong> Latency, error rate, throughput, cost. The model can be statistically perfect and still failing if p99 latency tripled.</p>
-<p>Volume 10 covers the four golden signals for ML systems in depth. The operational rule: alert on Layers 1, 2, and 4 in minutes; review Layer 3 on its natural cadence (daily or weekly). A monitoring setup that only watches accuracy is blind for the weeks that labels take to arrive.</p>
+<p>Volume 10 covers the four golden signals for ML systems in depth. (The four golden signals: latency, traffic, errors, and saturation. The minimum set that describes whether a service is healthy.) The operational rule: alert on Layers 1, 2, and 4 in minutes; review Layer 3 on its natural cadence (daily or weekly). A monitoring setup that only watches accuracy is blind for the weeks that labels take to arrive.</p>
 <h4 id="t52-drift-detection-methods">T5.2 Drift detection methods</h4>
 <p>Chapter T2 introduced PSI, KS, and chi-square for training/serving skew. The same three run in production, comparing a rolling serving window against the training baseline. Two more methods complete the toolkit.</p>
 <p><strong>Embedding drift.</strong> For models that consume embeddings (vectors of numbers that stand in for text or images; similar inputs get similar vectors) (text, images), monitor the distance between the mean embedding of the serving window and the training mean, or track the drift of a low-dimensional projection. A single number per window, trended over time, catches semantic shifts that per-feature tests miss.</p>
@@ -1096,11 +1112,19 @@ def canary_decision(canary, baseline):
 <p><strong>Threshold.</strong> Retrain when a monitor trips: PSI above the per-feature line for K consecutive windows, or Layer 3 business metric down by the agreed amount. Thresholds avoid retraining on noise, but they need the tuning discipline from Section T5.2.</p>
 <p><strong>Event-driven.</strong> Retrain on known world changes: a product launch, a new market, a pricing change, a schema migration. These are calendar events, not statistical ones. The launch checklist (Appendix A) includes "does this launch invalidate any model?" as a line item.</p>
 <p>The retrain itself is a pipeline run, not a heroic effort. The fresh extract passes the data tests (T4.1). Training runs the tracked config (T3.1). The candidate clears the promotion gates (T3.3). The rollout follows the shadow-canary ladder (T4.3, T4.4). If retraining requires a hero, the pipeline is the thing to fix.</p>
-<p>One more consideration: the cost of retraining versus the cost of staleness. Retraining costs compute and engineer review time. Staleness costs wrong predictions, priced by the error-cost math from Chapter T1. When staleness is cheap (stable domain, low error cost), retrain rarely. When staleness is expensive (fraud, fast-moving behavior), retrain often and automate the whole loop.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
+<p>One more consideration: the cost of retraining versus the cost of staleness. Retraining costs compute and engineer review time. Staleness costs wrong predictions, priced by the error-cost math from Chapter T1. When staleness is cheap (stable domain, low error cost), retrain rarely. When staleness is expensive (fraud, fast-moving behavior), retrain often and automate the whole loop.</p>
+<figure class="diagram" id="fig-t53-retrain-triggers">
+<img src="img/t53-retrain-triggers.svg" alt="Three retraining triggers (scheduled, threshold, event-driven) feeding the same pipeline: fresh extract, tracked training, promotion gates, then shadow, canary, production" loading="lazy">
+<figcaption><strong>Figure T5.3.</strong> The three retraining triggers. Scheduled, threshold, and event-driven triggers all feed the same pipeline: data tests, tracked training, promotion gates, then shadow to canary to production.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Left: the three triggers. The default is scheduled; thresholds and events respond to the world.</li><li>Middle: the pipeline is the same every time, which is what makes retraining boring and safe.</li><li>Bottom: the trade that sets cadence, plus the anti-pattern: never silently retrain on drifted data.</li></ol></details>
+</figure>
+<div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>Monitor four layers: inputs, predictions, outcomes, system. Alert on 1, 2, and 4 in minutes; review 3 on label cadence.</li>
 <li>Run PSI, KS, chi-square, embedding drift, and prediction drift. Tune thresholds per feature against your own incident history.</li>
 <li>Retrain on schedule, on threshold, or on events. The retrain is a pipeline run through the same gates as any promotion.</li>
-</ul></div><h3 id="chapter-t6-classical-ml-that-still-matters">Chapter T6. Classical ML that still matters</h3>
+</ul></div><p><strong>Next: Chapter T6, classical ML that still matters.</strong> Monitoring covers every model, but much production ML is not deep at all. T6 is the tree-based toolbox that still wins on tabular data.</p>
+<h3 id="chapter-t6-classical-ml-that-still-matters">Chapter T6. Classical ML that still matters</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapters T1 through T5 assumed modern ML workflows. But much production ML is not deep learning at all: on tabular business data, gradient-boosted trees still win most fights. This chapter is the classical toolbox, with numbers instead of nostalgia.</p>
 <p>Deep learning dominates the headlines. In production, on tabular business data, gradient-boosted decision trees still win most fights. This chapter is about knowing which tool the job needs, with numbers instead of slogans.</p>
 <h4 id="t61-why-gbdts-win-on-tabular-data">T6.1 Why GBDTs win on tabular data</h4>
 <p>Tabular data (rows of mixed numeric and categorical columns) plays to the strengths of trees and against the strengths of neural nets. Trees handle unnormalized features, missing values, and mixed types natively. They need no scaling, no embedding layers for categories, and little tuning to reach a strong result. Neural nets on the same data need careful preprocessing, architecture search, and regularization to match, and they train slower.</p>
@@ -1130,7 +1154,8 @@ t0 = time.time()
 gbt = HistGradientBoostingClassifier(random_state=5).fit(X_train, y_train)
 t_gbt = time.time() - t0
 
-# WHAT: a 2-layer MLP. Note the scaler: neural nets REQUIRE it.
+# WHAT: a 2-layer MLP (multilayer perceptron: a small neural network of stacked dense layers).
+#   Note the scaler: neural nets REQUIRE it.
 # WHY: without scaling, the MLP barely trains. That preprocessing step
 #   is a serving dependency forever (Chapter T2: shared transform code).
 # WHAT BREAKS: the MLP did not converge in 60 iterations and needed 4x
@@ -1159,7 +1184,7 @@ print(&quot;MLP: &quot;, round(accuracy_score(y_test, mlp.predict(scaler.transfo
 <h4 id="t62-when-to-reach-for-deep-learning">T6.2 When to reach for deep learning</h4>
 <p>Deep learning wins where the data is unstructured and abundant: images, audio, raw text, video. It also wins on very large tabular sets where its sample efficiency disadvantage fades, and wherever transfer learning applies (a pretrained backbone fine-tuned on your task). The decision rule is evidence-based: run both on your data, on your metric, with serving cost in the comparison table (Chapter T3, Section T3.2). Pick the winner. Revisit yearly, because data scale changes the answer.</p>
 <h4 id="t63-the-rest-of-the-classical-toolkit">T6.3 The rest of the classical toolkit</h4>
-<p>Two more tools earn their place. <strong>Linear models with good features</strong> are the fastest thing to train and the easiest to debug. They often land within a point or two of the winner. Chapter T1 showed logistic regression beating GBDT outright on mostly-linear signal. <strong>Random forests</strong> trade a little accuracy for a lot of stability: they are harder to overfit by accident and their out-of-bag error gives a free validation estimate.</p>
+<p>Two more tools earn their place. <strong>Linear models with good features</strong> are the fastest thing to train and the easiest to debug. They often land within a point or two of the winner. Chapter T1 showed logistic regression beating GBDT outright on mostly-linear signal. <strong>Random forests</strong> trade a little accuracy for a lot of stability: they are harder to overfit by accident and their out-of-bag error gives a free validation estimate. (Out-of-bag error: each tree trains on a bootstrap sample of the rows, so the trees that never saw a given row can score it. That is a validation estimate that costs no extra data.)</p>
 <table>
 <thead>
 <tr>
@@ -1194,18 +1219,24 @@ print(&quot;MLP: &quot;, round(accuracy_score(y_test, mlp.predict(scaler.transfo
 <li>On tabular data at business scale, start with GBDTs. The literature and the stopwatch agree.</li>
 <li>"Beats" means accuracy per dollar of serving cost and per hour of tuning, not accuracy alone.</li>
 <li>Reach for deep learning on unstructured data, abundant data, or transfer learning. Decide with a comparison table, not with fashion.</li>
-</ul></div><h3 id="chapter-t7-cost-aware-ml">Chapter T7. Cost-aware ML</h3>
+</ul></div><p><strong>Next: Chapter T7, cost-aware ML.</strong> You picked the right tool. Now buy accuracy at the best price: right-sizing, distillation, and routing easy cases to cheap models.</p>
+<h3 id="chapter-t7-cost-aware-ml">Chapter T7. Cost-aware ML</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter T6 picked the right tool for the job. Every tool has a serving bill. This chapter buys accuracy at the best price: right-sizing the model, distilling big models into small ones, and routing easy cases to cheap models.</p>
 <p>Every model has a serving bill. Cost-aware ML is the discipline of buying accuracy at the best price: right-sizing the model, distilling big models into small ones, and routing easy cases to cheap models. Volume 10 covers the unit economics; Appendix 8A covers inference economics for LLMs. This chapter is the implementation layer.</p>
+<p>T6 picked the tool; this chapter prices it. It opens with the unit everything else optimizes: cost per prediction.</p>
 <h4 id="t71-cost-per-prediction">T7.1 Cost per prediction</h4>
-<p>The unit to optimize is cost per prediction at the required quality, not cost per server or cost per month. The math is simple: (hourly serving cost) divided by (predictions per hour at the latency SLO (service-level objective: the promised latency and availability target)). Everything that raises throughput at fixed quality, or holds quality at lower cost, improves it.</p>
+<p>The unit to optimize is cost per prediction at the required quality, not cost per server or cost per month. The math is simple:</p>
+<div class="phase2-eq" style="text-align:center;margin:1.3rem 0;font-size:1.12em;">cost per prediction = C<sub>hr</sub> / Q<sub>hr</sub></div>
+<p style="margin:-.6rem 0 1.2rem;text-align:center;font-size:.92em;color:var(--muted,#999);">where <strong>C<sub>hr</sub></strong> = hourly serving cost, <strong>Q<sub>hr</sub></strong> = predictions per hour at the latency SLO (service-level objective: the promised latency and availability target).</p>
+<p>Everything that raises throughput at fixed quality, or holds quality at lower cost, improves it.</p>
 <p>A worked sketch with illustrative prices: a GPU instance at $3/hour serving 36,000 predictions per hour costs $0.083 per thousand predictions. A distilled model on a CPU instance at $0.40/hour serving 120,000 predictions per hour costs $0.0033 per thousand: 25x cheaper. If the distilled model loses half a point of AUC that the business cannot feel, the expensive model is burning money. Do this math before every launch, and redo it when traffic grows 10x, because the right answer changes with scale.</p>
 
 <h4 id="t72-right-sizing">T7.2 Right-sizing</h4>
 <p>The most common cost bug is a model bigger than the problem. Teams train the largest model that fits, then serve it forever. Instead: train the big model once, measure what the task actually needs, then shrink.</p>
-<p>The shrinking ladder: fewer trees or shallower depth for GBDTs; smaller width and depth for nets; shorter input sequences where the tail carries no signal; lower precision (fp16/int8) where calibration survives it. Each step is an experiment in the tracker (Chapter T3) with cost in the comparison table. Stop when the quality drop becomes one the business metric can feel.</p>
+<p>The shrinking ladder: fewer trees or shallower depth for GBDTs; smaller width and depth for nets; shorter input sequences where the tail carries no signal; lower precision (fp16: 16-bit floats, 2 bytes per number; int8: 8-bit integers, 1 byte per number) where calibration survives it. Fewer bits per number means fewer bytes to stream per prediction. Each step is an experiment in the tracker (Chapter T3) with cost in the comparison table. Stop when the quality drop becomes one the business metric can feel.</p>
 <h4 id="t73-distillation-for-production">T7.3 Distillation for production</h4>
 <p>Distillation trains a small student to mimic a large teacher. The teacher's soft probabilities carry more information than hard labels: they say which wrong answers were almost right. The student learns the teacher's ranking, not just its decisions, and a tiny student can recover most of the teacher's accuracy at a fraction of the serving cost.</p>
-<p>The mechanism: soften the teacher's outputs with a temperature T (higher T means softer, more informative targets), then train the student to match them with KL divergence (a number measuring how far one probability distribution sits from another; zero means identical). The code below does this in NumPy, distilling a gradient-boosted teacher into a single linear layer. Real numbers from the run: the KL divergence falls from 0.153 to 0.031, and the one-matrix student reaches 0.872 accuracy against the teacher's 0.950. A single linear layer, scoring in microseconds, keeps 92 percent of the teacher's accuracy.</p>
+<p>The mechanism: soften the teacher's outputs with a temperature T (higher T means softer, more informative targets), then train the student to match them with KL divergence (defined in Chapter T5). The code below does this in NumPy, distilling a gradient-boosted teacher into a single linear layer. Real numbers from the run: the KL divergence falls from 0.153 to 0.031, and the one-matrix student reaches 0.872 accuracy against the teacher's 0.950. A single linear layer, scoring in microseconds, keeps 92 percent of the teacher's accuracy.</p>
 <p><pre><code class="language-python">import numpy as np
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
@@ -1223,6 +1254,9 @@ teacher = HistGradientBoostingClassifier(random_state=9).fit(X_train, y_train)
 soft = teacher.predict_proba(X_train)   # teacher&#x27;s soft targets: richer than labels
 
 T = 4.0  # temperature (see prose above): higher T means softer targets.
+# WHAT: temperature softmax: turns raw scores (logits) into probabilities that sum to 1.
+# WHY: dividing the logits by T before the softmax spreads the probability mass. That spread
+#   is exactly what "softer targets" means.
 def softmax_t(z):
     e = np.exp((z - z.max(axis=1, keepdims=True)) / T)
     return e / e.sum(axis=1, keepdims=True)
@@ -1271,7 +1305,8 @@ print(&quot;student:&quot;, round(float(student_acc), 4),
 <li>Right-size before you re-architect: shrink depth, width, sequence, and precision first.</li>
 <li>Distill the teacher into a student with temperature-softened targets. A one-layer student kept 92 percent of accuracy here.</li>
 <li>Cascade: cheap model first, escalate on low confidence, degrade gracefully.</li>
-</ul></div><h2 id="appendix-a-production-launch-checklist">Appendix A. Production launch checklist</h2>
+</ul></div><p><strong>Next: Appendix A, the production launch checklist.</strong> Everything from T1 to T7, compressed into the gate every model passes before launch.</p>
+<h2 id="appendix-a-production-launch-checklist">Appendix A. Production launch checklist</h2>
 <p>Run this list before any model touches live traffic. Every item has an owner and a date.</p>
 <ol>
 <li><strong>Framing page written.</strong> Decision, error costs, threshold, production metric. Signed by the stakeholder who owns the metric.</li>
@@ -1307,7 +1342,11 @@ D. Add more features until the GBDT wins</p></div><button class="pq-reveal" aria
 A. Ship the teacher: accuracy is the only metric that matters
 B. Ship the student and hide the accuracy gap from the product team
 C. Price the gap: show the cost difference per million predictions and ask what the 8 percent is worth in dollars
-D. Train a bigger teacher</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> Accuracy has a price and the product team should see it (Chapter T7.1). The decision is theirs, but it must be priced: 8 percent of relative accuracy for 25x the serving cost. (A) ignores cost, which is a measured part of the role (Chapter 1.3). (B) hides information the stakeholder needs. (D) spends more to avoid the actual question.</p></div></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> All code samples were executed on this machine during writing. Every reported number comes from those runs. AUC 0.7065 vs 0.6926. PSI 0.285 vs 0.003. GBDT 0.9653 in 62.8s vs MLP 0.9827 in 264.7s. Distillation KL 0.153 down to 0.031, student accuracy 0.872 vs teacher 0.950. Volume and chapter references point at the base curriculum volumes listed in Part 2. <strong>UNVERIFIED:</strong> exact Grinsztajn et al. (2022) per-dataset win counts are summarized from memory of the paper's findings; consult the paper for precise tables. Illustrative serving prices in Chapter T7.1 are worked examples, not vendor quotes.</p></div>
+D. Train a bigger teacher</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> Accuracy has a price and the product team should see it (Chapter T7.1). The decision is theirs, but it must be priced: 8 percent of relative accuracy for 25x the serving cost. (A) ignores cost, which is a measured part of the role (Chapter 1.3). (B) hides information the stakeholder needs. (D) spends more to avoid the actual question.</p></div></div><div class="takeaway"><h4>Where to go next</h4><ul>
+<li><strong>Next page: <a href="track-10-software-engineer.html">SWE / Backend Systems</a>.</strong> This track covered the ML production lifecycle: features, experiments, CI/CD, monitoring, classical models, cost. The SWE track covers the backend systems those models run on: distributed systems, APIs, and queues.</li>
+<li><strong>Short on time?</strong> <a href="crash-track-09.html">Crash: ML Engineer</a> compresses this track into a one-day review.</li>
+</ul></div>
+<div class="provenance"><p><strong>Last verified: September 2026.</strong> All code samples were executed on this machine during writing. Every reported number comes from those runs. AUC 0.7065 vs 0.6926. PSI 0.285 vs 0.003. GBDT 0.9653 in 62.8s vs MLP 0.9827 in 264.7s. Distillation KL 0.153 down to 0.031, student accuracy 0.872 vs teacher 0.950. Volume and chapter references point at the base curriculum volumes listed in Part 2. <strong>UNVERIFIED:</strong> exact Grinsztajn et al. (2022) per-dataset win counts are summarized from memory of the paper's findings; consult the paper for precise tables. Illustrative serving prices in Chapter T7.1 are worked examples, not vendor quotes.</p></div>
 
 <section class="watch-deeper" id="watch-deeper" aria-label="Watch and go deeper">
 <p class="watch-deeper-kicker">Watch and go deeper</p>
