@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 465" role="img" aria-label="Rollback theater: a plan is a command, not a paragraph">
+<rect width="900" height="465" fill="#0d0d0d"/>
+<text x="450.0" y="20" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Rollback theater: a plan is a command, not a paragraph</text>
+<text x="450.0" y="46" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Gate 4 requires a one-command restore of the previous artifact. If restoring takes more than minutes, the gate was theater.</text>
+<text x="40.0" y="85.0" text-anchor="start" fill="#e5484d" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">THEATER</text>
+<line x1="220.0" y1="107.0" x2="860.0" y2="107.0" stroke="#8a8a8a" stroke-width="2"/>
+<circle cx="220.0" cy="107.0" r="5" fill="#e5484d"/>
+<text x="220.0" y="129.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">canary trips 2</text>
+<text x="220.0" y="144.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">guardrails</text>
+<circle cx="380.0" cy="107.0" r="5" fill="#e5484d"/>
+<text x="380.0" y="129.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">"we roll back"</text>
+<circle cx="540.0" cy="107.0" r="5" fill="#e5484d"/>
+<text x="540.0" y="129.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">3 hours, 4</text>
+<text x="540.0" y="144.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">people</text>
+<circle cx="700.0" cy="107.0" r="5" fill="#e5484d"/>
+<text x="700.0" y="129.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">restores a</text>
+<text x="700.0" y="144.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">config nobody is</text>
+<text x="700.0" y="159.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">sure about</text>
+<circle cx="860.0" cy="107.0" r="5" fill="#e5484d"/>
+<text x="860.0" y="129.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">the canary was</text>
+<text x="860.0" y="144.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">unprotected</text>
+<text x="40.0" y="195.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">a paragraph, not a command</text>
+<text x="40.0" y="235.0" text-anchor="start" fill="#2dd4bf" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">REAL</text>
+<line x1="220.0" y1="257.0" x2="860.0" y2="257.0" stroke="#8a8a8a" stroke-width="2"/>
+<circle cx="220.0" cy="257.0" r="5" fill="#2dd4bf"/>
+<text x="220.0" y="279.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">canary trips 2</text>
+<text x="220.0" y="294.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">guardrails</text>
+<circle cx="380.0" cy="257.0" r="5" fill="#2dd4bf"/>
+<text x="380.0" y="279.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">one command</text>
+<circle cx="540.0" cy="257.0" r="5" fill="#2dd4bf"/>
+<text x="540.0" y="279.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">restores the</text>
+<text x="540.0" y="294.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">previous</text>
+<text x="540.0" y="309.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">artifact</text>
+<circle cx="700.0" cy="257.0" r="5" fill="#2dd4bf"/>
+<text x="700.0" y="279.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">versioned in the</text>
+<text x="700.0" y="294.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">registry</text>
+<circle cx="860.0" cy="257.0" r="5" fill="#2dd4bf"/>
+<text x="860.0" y="279.0" text-anchor="middle" fill="#ececec" font-size="11" font-family="Charis SIL, Georgia, serif">back in minutes</text>
+<text x="40.0" y="345.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">rollback arrow points at the previous artifact</text>
+<text x="40.0" y="399.0" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">Practice the rollback before you need it. Time it. If it is slow, fix the machinery, not the</text>
+<text x="40.0" y="415.2" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">runbook. Never fix forward while users bleed: restore first, debug second.</text>
+</svg>
