@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 360" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="360" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">The data mixture is a designed recipe</text>
+<text x="24" y="58" font-size="13" fill="#8a8a8a">GPT-3 published sampling weights (Brown et al., 2020); modern recipes differ and are unpublished</text>
+<rect x="24" y="90" width="499.2" height="64" fill="#6cb2ff" stroke="#0d0d0d" stroke-width="2"/>
+<text x="273.6" y="127" font-size="14" fill="#000" text-anchor="middle" font-weight="bold">60%</text>
+<rect x="523.2" y="90" width="183.04" height="64" fill="#f0b429" stroke="#0d0d0d" stroke-width="2"/>
+<text x="614.72" y="127" font-size="14" fill="#000" text-anchor="middle" font-weight="bold">22%</text>
+<rect x="706.24" y="90" width="66.56" height="64" fill="#7fd08a" stroke="#0d0d0d" stroke-width="2"/>
+<text x="739.52" y="127" font-size="14" fill="#000" text-anchor="middle" font-weight="bold">8%</text>
+<rect x="772.8" y="90" width="66.56" height="64" fill="#e08080" stroke="#0d0d0d" stroke-width="2"/>
+<text x="806.0799999999999" y="127" font-size="14" fill="#000" text-anchor="middle" font-weight="bold">8%</text>
+<rect x="839.3599999999999" y="90" width="24.96" height="64" fill="#b48ce0" stroke="#0d0d0d" stroke-width="2"/>
+<rect x="24" y="188" width="14" height="14" fill="#6cb2ff"/>
+<text x="46" y="200" font-size="13" fill="#ececec">Common Crawl (60%)</text>
+<rect x="250" y="188" width="14" height="14" fill="#f0b429"/>
+<text x="272" y="200" font-size="13" fill="#ececec">WebText2 (22%)</text>
+<rect x="470" y="188" width="14" height="14" fill="#7fd08a"/>
+<text x="492" y="200" font-size="13" fill="#ececec">Books1 (8%)</text>
+<rect x="650" y="188" width="14" height="14" fill="#e08080"/>
+<text x="672" y="200" font-size="13" fill="#ececec">Books2 (8%)</text>
+<rect x="24" y="214" width="14" height="14" fill="#b48ce0"/>
+<text x="46" y="226" font-size="13" fill="#ececec">Wikipedia (3%)</text>
+<text x="24" y="262" font-size="13" fill="#a8a8a8" text-anchor="start">The mixture is a hyperparameter: more code shifts the model toward reasoning; more books toward dense knowledge.</text>
+<text x="24" y="288" font-size="13" fill="#a8a8a8" text-anchor="start">Change the blend and the model's strengths change. The exact recipes are among the most guarded secrets in the industry.</text>
+<text x="24" y="324" font-size="13" fill="#8a8a8a" text-anchor="start">Reading: the final corpus is not whatever survived filtering; it is blended on purpose.</text>
+</svg>
