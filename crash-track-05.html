@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Evals and Safety Engineering Crash Pack</title>
 <style>
@@ -510,7 +518,13 @@ tiers and each one gets simpler.</p>
    broken," not "is this shippable."</li>
 <li>Only Tier 2 carries a ship-or-hold verdict. If Tier 3 questions block
    shipping, someone merged the tiers and the suite will get routed around.</li>
-</ol></div><h3 id="rule-2-climb-the-grader-ladder-checkable-first-judgment-last">Rule 2. Climb the grader ladder: checkable first, judgment last</h3>
+</ol></div><figure>
+<img src="img/crash05-smoke-vs-full.svg" alt="Smoke eval versus full eval: fast tripwire on every commit, the real measurement on every release candidate" loading="lazy">
+<figcaption>The three-tier habit in one picture: the smoke eval runs 20 known attacks in minutes on every commit and catches regressions and broken harnesses, while the full eval runs the whole golden set plus fresh red-teaming and produces the number that goes in the report. Smoke is a tripwire, not a verdict.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the two boxes side by side, minutes versus hours. The arrow shows the escalation order. The one takeaway: the failure mode is running only the smoke eval and calling it a safety case.</div>
+
+<h3 id="rule-2-climb-the-grader-ladder-checkable-first-judgment-last">Rule 2. Climb the grader ladder: checkable first, judgment last</h3>
 <p>Pick the cheapest grader that is honest for the task.</p>
 <pre><code class="language-text">Grader ladder: cheapest honest grader first.
 
@@ -560,6 +574,12 @@ before any autorater sees it.</p>
 </ol>
 <p>The bar: judge-vs-human kappa near the human-vs-human ceiling (about 0.8 on
 many real tasks). A judge far below the ceiling is not a human substitute.</p>
+<figure>
+<img src="img/crash05-human-review.svg" alt="Human review placement: automated first pass, humans on the audit sample and the critical failures" loading="lazy">
+<figcaption>Automated grading scales to everything; humans adjudicate what matters. Fifty items a month get re-graded by humans as the calibration loop input, and every critical failure and near-miss gets human eyes before the report is written.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the wide automated box on top, then the two human boxes it fans out to. The one takeaway: humans do not grade 10,000 items; they grade the 50 that keep the machine honest and the handful that could end a career.</div>
+
 <h3 id="rule-4-calibrate-on-a-schedule-and-after-every-big-change">Rule 4. Calibrate on a schedule, and after every big change</h3>
 <p>A calibrated judge goes stale. Re-calibrate on a calendar schedule, and
 re-calibrate immediately after any big model change. Between calibrations,
@@ -568,6 +588,12 @@ rolling sample (re-grade 50 items a month), score distribution over time (a
 sudden shift means something changed), and monthly disagreement review. When
 kappa drops below your bar, the judge goes back through the calibration loop.
 A judge that is not monitored is a judge you are not using.</p>
+<figure>
+<img src="img/crash05-calibration-loop.svg" alt="The calibration loop: grade, sample, compare, recalibrate, monthly" loading="lazy">
+<figcaption>Model judges drift silently: new model version, new rubric, new attack family all move the boundary. The loop re-grades 50 items a month with humans, checks agreement against the 0.7 bar, and recalibrates the rubric or prompts when it slips.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the four boxes left to right, then the green arrow that closes the loop back to grading. The one takeaway: a judge you never re-check is a rumor, not a measurement.</div>
+
 <h3 id="rule-5-red-team-in-adversary-order-goal-by-goal">Rule 5. Red-team in adversary order, goal by goal</h3>
 <p>Test against the three adversary profiles in order: the curious user first,
 then the motivated amateur, then the skilled adversary. If the curious user
@@ -584,6 +610,12 @@ roleplay and persona, encoding and translation, multi-turn buildup,
 instruction smuggling, automated search (static libraries and adaptive
 orchestrators). If a direct request works, stop. Fix the basics before you
 hunt for clever attacks.</p>
+<figure>
+<img src="img/crash05-adversary-profiles.svg" alt="Three adversary profiles: curious user, motivated amateur, skilled adversary" loading="lazy">
+<figcaption>The same model faces three very different attackers. The curious user stumbles into the easy 20%; the motivated amateur tries known templates for an afternoon; the skilled adversary writes custom attacks and automates the search. Your eval is only as strong as the profile it assumes.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the three boxes left to right, escalating. The one takeaway: a defense that stops the curious user says nothing about the skilled adversary.</div>
+
 <h3 id="rule-6-report-red-team-results-per-family-and-treat-the-library-as-living">Rule 6. Report red-team results per family, and treat the library as living</h3>
 <p>One number ("12% of probes broke it") tells you nothing. Report break rates
 per attack family: the family view shows which <em>kinds</em> of attacks are weak.
@@ -591,6 +623,12 @@ When a new jailbreak technique appears in public, add it to the library as a
 new probe. A finding is reproducible or it is not a finding: every reported
 break ships with the exact prompts, model version, and settings that
 reproduce it.</p>
+<figure>
+<img src="img/crash05-attack-families.svg" alt="The six attack families: direct, roleplay, encoding, multi-turn, instruction smuggling, automated search" loading="lazy">
+<figcaption>All adversarial pressure on a model is some form of these six. Memorize the names cold: in an eval report, naming the family a break belongs to is what turns an anecdote into coverage.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the six rows top to bottom. The one takeaway: file every finding under its family the week it arrives, and the quarterly report writes itself.</div>
+
 <h3 id="rule-7-stack-mitigations-in-order-and-ask-each-layer-what-it-misses">Rule 7. Stack mitigations in order, and ask each layer what it misses</h3>
 <p>Read bottom to top. Each layer catches what the layer below missed.</p>
 <p><pre><code>        USER
@@ -613,12 +651,18 @@ reproduce it.</p>
   |    least privilege, secret minimization          |
   +--------------------------------------------------+
 </code></pre>
-<p>Two terms from the diagram. Post-training is the training phase after pre-training that teaches refusal and values. The instruction hierarchy is the rule that instructions from higher-priority sources outrank lower ones: system prompt first, then the developer, then the user, then tool output.</p></p>
+<p>Two terms from the diagram. Post-training is the training phase after pre-training that teaches refusal and values. The instruction hierarchy is the rule that instructions from higher-priority sources outrank lower ones: system prompt first, then the developer, then the user, then tool output.</p>
 <p>For each layer ask two questions: what does this layer catch that the others
 miss, and what sails straight through it? System-prompt hardening is cheap
 and fast to deploy, and weaker than training. Use it as a layer, never as
 the plan. A filter with unknown precision and recall is not a mitigation; it
 is a hope.</p>
+<figure>
+<img src="img/crash05-defense-stack.svg" alt="The mitigation stack: system prompt, input filter, model, output filter, monitoring" loading="lazy">
+<figcaption>Five layers, each catching what the last missed. The system prompt is cheapest to change and first to fall; the model itself is the layer that generalizes to novel attacks; monitoring catches what ships anyway. No single layer survives the skilled adversary; the stack might.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the five layers top to bottom in processing order, with attack pressure flowing down the red arrow on the left. The one takeaway: measure the break rate with each layer on and off, so you know which layer is actually load-bearing.</div>
+
 <h3 id="rule-8-gate-on-deltas-against-the-baseline-not-on-absolute-scores">Rule 8. Gate on deltas against the baseline, not on absolute scores</h3>
 <p>A 92% that used to be 95% ships under an absolute bar. Deltas catch decay. (A delta is the change from the released baseline.)
 Every release diffs the candidate against the released baseline on the same
@@ -676,7 +720,13 @@ to 0.5% and cost 1.2 points on benign task completion."</p>
    curve is the set of best-known tradeoffs.</li>
 <li>A release moves the point. Your job is to say where it moved and what it
    cost, with both numbers side by side.</li>
-</ol></div><h3 id="rule-12-every-incident-ends-in-the-eval-suite">Rule 12. Every incident ends in the eval suite</h3>
+</ol></div><figure>
+<img src="img/crash05-report-card.svg" alt="The eval report card: scope, golden set, results, critical failures, limitations" loading="lazy">
+<figcaption>One page that says what you tested and what broke: model and prompt versions, the golden set version and its per-bucket coverage, pass and break rates with grader kappa, every critical failure with transcript and owner, and what the eval does not cover. If it is not in the report, it did not happen.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the five rows top to bottom. The one takeaway: the report card is the product; a perfect eval with no readable report changes nothing.</div>
+
+<h3 id="rule-12-every-incident-ends-in-the-eval-suite">Rule 12. Every incident ends in the eval suite</h3>
 <p>Triage with a severity scale written for model behavior: S1 is active, ongoing
 harm at scale (page now); S2 is serious but bounded (same-day response,
 mitigation within the week); S3 is concerning but rare (normal cycle); S4 is
@@ -697,6 +747,12 @@ prompts become regression tasks in the suite, the missing probe family gets
 built, the metric that should have caught it gets a threshold. An incident
 that does not change the eval suite will happen again.</p>
 <p><strong>Next:</strong> Section 2, the numbers behind the rules: kappa, Wilson intervals, pass@k, majority-vote math, and the constant sheet.</p>
+<figure>
+<img src="img/crash05-eval-contract.svg" alt="The eval contract: golden set, deterministic grader, pass threshold, failure taxonomy, re-run rule" loading="lazy">
+<figcaption>What "we tested it" has to mean before the claim is allowed: a versioned golden set covering all four failure buckets, a grader that scores the same input the same way every run, a numeric pass threshold plus a no-critical-failure rule, and a re-run rule tied to a schedule and to every model or prompt change.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the five contract clauses top to bottom. The one takeaway: write the contract before the model exists; an eval designed after the results are in is a rationalization with a spreadsheet.</div>
+
 <h2 id="2-numbers-and-formulas-to-memorize">2. Numbers and formulas to memorize</h2>
 <p>The rules say what to build. Section 2 gives you the arithmetic to trust the build: agreement metrics, sample-size math, and the pass@k family, so you can tell a real improvement from noise.</p>
 <p>Every snippet below was executed. The printed outputs are real.</p>
@@ -709,7 +765,7 @@ that does not change the eval suite will happen again.</p>
 perfect.</p>
 <figure>
 <img src="img/crash05-kappa.svg" alt="Cohen's kappa: 2x2 confusion matrix showing agreement corrected for chance">
-<figcaption>Why kappa beats raw agreement. 75% of the items match, but both sides lean toward "yes": chance alone would agree 62% of the time. Kappa strips that out: (0.75 - 0.62) / (1 - 0.62) = 0.34, a fair rating on the Landis-Koch bands, and well below this pack's 0.8 licensing bar.</figcaption>
+<figcaption>Why kappa beats raw agreement. 75% of the items match, but both sides lean toward "yes": chance alone would agree 60% of the time. Kappa strips that out: (0.75 - 0.60) / (1 - 0.60) = 0.375, a fair rating on the Landis-Koch bands, and well below this pack's 0.8 licensing bar.</figcaption>
 </figure>
 <p><pre><code class="language-python">def cohen_kappa(a, b, c, d):
     # Confusion matrix, judge rows vs human columns:
@@ -758,6 +814,12 @@ print(f&quot;lazy judge kappa = {k2:.3f}&quot;)  # lazy judge kappa = 0.000
 <li>The lazy judge gets kappa exactly 0.0. Kappa exposes what raw agreement
    rewards.</li>
 </ol></div><p>Memorize: <strong>raw agreement flatters; kappa corrects.</strong> The human ceiling is about kappa 0.8 on many real tasks (Rule 3's bar), so judge-vs-human against a perfect 1.0 is an unfair bar. Report both numbers side by side.</p>
+<figure>
+<img src="img/crash05-kappa-scale.svg" alt="Kappa scale: below 0.6 rework the rubric, at or above 0.7 the labels ship, humans top out near 0.8" loading="lazy">
+<figcaption>Kappa turns "we agree" into a number that does not flatter. Below 0.6 the graders disagree enough that the labels are noise: fix the rubric, not the graders. At or above 0.7 the labels are trustworthy. The human ceiling sits near 0.8, so do not chase 0.95.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the three dashed thresholds and the colored zones. The one takeaway: kappa below 0.6 sends the batch back for rubric repair.</div>
+
 <h3 id="22-wilson-interval-honest-error-bars-for-small-lopsided-samples">2.2 Wilson interval: honest error bars for small, lopsided samples</h3>
 <p>For a yes/no rate with n trials and z = 1.96 (95%):</p>
 <figure class="diagram"><img src="img/v11-confidence-interval.png" alt="A measured win-rate delta of zero with its 95 percent confidence interval" loading="lazy"><figcaption><strong>The interval is the honest statement: the truth could be anywhere inside it. More eval items shrink the interval. This is the picture behind the Wilson formula in this section: small, lopsided samples get wide intervals, and wide intervals mean you do not know yet. Figure: curriculum eval-stats appendix (v11).</strong></figcaption></figure>
@@ -849,13 +911,19 @@ print(f&quot;3 labelers at 60%: {majority_vote_accuracy(0.60, 3):.3f}&quot;)  # 
 diminishing returns. And 3 x 60% only reaches 64.8%: majority vote amplifies
 a decent signal; it does not rescue a weak one. Qualify labelers first.</p>
 <p>Human labels are pooled. Now the sampling math for the agent itself: pass@k, pass@1, pass^k.</p>
+<figure>
+<img src="img/crash05-majority-vote.svg" alt="Majority vote: three judges at 75% reach 84.4%, five reach 89.6%" loading="lazy">
+<figcaption>Weak judges become a strong judge when their errors are independent: three cheap graders outvote one expensive one. But three copies of the same model making the same mistake do not vote; they echo. Diversity of judges matters more than count.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the three bars and how the majority accuracy beats any single judge. The one takeaway: use it when one flagship call per item is too expensive but three mini-model calls are cheap; never when the judges share a blind spot.</div>
+
 <h3 id="25-passk-pass1-passk-ceiling-typical-reliability">2.5 pass@k, pass@1, pass^k: ceiling, typical, reliability</h3>
 <div role="math" style="text-align:center;font-size:1.15em;margin:1.2rem 0">pass@k = 1 &#8722; C(n&#8722;c, k) / C(n, k) &nbsp;&nbsp;&nbsp; pass@1 = c / n &nbsp;&nbsp;&nbsp; pass<sup>k</sup> = C(c, k) / C(n, k)</div>
 <p><strong>Where:</strong> n is the total tries, c is the successful tries, k is the try budget. pass@k is the <strong>ceiling</strong> (at least one of k succeeds). pass@1 = c/n is the plain success rate: <strong>typical</strong> performance. pass<sup>k</sup> is the chance <em>all</em> k succeed: <strong>reliability</strong>, the number production usually cares about.</p>
 <p><strong>Worked:</strong> pass@1 = 0.30 typical; pass@5 = 0.9167 ceiling; pass<sup>2</sup> = 0.0667 reliability. The same model reads as 0.92 or 0.07 depending on the k you pick.</p>
 <figure>
 <img src="img/crash05-passatk.svg" alt="pass@k versus pass@1 versus (pass@1)^k: three bars showing why repeated sampling inflates the headline">
-<figcaption>The same model reads as 97% or 70% depending on the k you pick. pass@10 is the ceiling (at least one of ten tries succeeds); pass@1 is the typical single-try number production runs on; (pass@1)^10 is the reliability check (all ten succeed). Report all three; the third bar is what separates a reliable model from a lucky one.</figcaption>
+<figcaption>The same model reads as 100% or 70% depending on the k you pick. pass@10 is the ceiling (at least one of ten tries succeeds); pass@1 is the typical single-try number production runs on; (pass@1)^10 is the reliability check (all ten succeed). Report all three; the third bar is what separates a reliable model from a lucky one.</figcaption>
 </figure>
 <p><pre><code class="language-python">import math
 
@@ -910,6 +978,12 @@ print(v, &quot;--&quot;, r)   # HOLD -- judge kappa 0.51 below warning bar 0.6
 A gate that cannot distinguish "model regressed" from "instrument drifted"
 will block good releases and erode trust in the suite.</p>
 <p>Everything you need to quote, on one sheet.</p>
+<figure>
+<img src="img/crash05-release-gate.svg" alt="The release gate: zero smoke regressions and at most 10% break rate per family" loading="lazy">
+<figcaption>A gate is a promise with a number on it. The 20 attacks that always worked must still be caught: a single regression fails the gate. No attack family may break more than one in ten; the weakest family sets the grade. The gate runs on every release candidate, and a prompt tweak is a release.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the two gate bars, then the decision box they feed. The one takeaway: either bar fails and you fix, re-run the full eval, no exceptions.</div>
+
 <h3 id="27-the-constant-sheet">2.7 The constant sheet</h3>
 <table>
 <thead>
@@ -1043,6 +1117,12 @@ will block good releases and erode trust in the suite.</p>
 </tbody>
 </table>
 <p><strong>Next:</strong> Section 3, twelve traps with symptoms first, so you can match what you are seeing.</p>
+<figure>
+<img src="img/crash05-failure-taxonomy.svg" alt="The failure taxonomy: refusal bypasses, prompt extraction, injection, misuse enablement" loading="lazy">
+<figcaption>Every break lands in one bucket, and a taxonomy turns a pile of red-team transcripts into coverage numbers: breaks found per bucket. An empty bucket is a claim about your testing, not your safety. One transcript, one bucket; if a break fits two, the taxonomy is too coarse.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the four blue-to-purple rows, then the two green boxes on the right. The one takeaway: coverage means breaks found per bucket, and the buckets are these four.</div>
+
 <h2 id="3-classic-traps">3. Classic traps</h2>
 <p>The math is right and the eval still lies. Section 3 is the symptom-first field guide: contaminated benchmarks, prompt-format variance, lazy judges, and the pass@k ceiling.</p>
 <p>Each trap names why it fools you and the one move that beats it.</p>
@@ -1107,6 +1187,12 @@ bless.</p>
 fools you because the "winning" metric comes with a real p-value attached.
 The move: divide the bar by the number of tests (Bonferroni: 0.05/20 =
 0.0025). Deliberately strict, deliberately cheap.</p>
+<figure>
+<img src="img/crash05-bonferroni.svg" alt="Bonferroni correction: 0.05 divided by 20 tests is 0.0025 per test" loading="lazy">
+<figcaption>Twenty tests at 5% will embarrass you about once: the expected false wins are 20 times 0.05. Correct for the number of tests you actually ran, not the one you are reporting. The honest alternative is pre-registering the one primary metric before the eval runs and labeling everything else exploratory.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the red naive row versus the green corrected row. The one takeaway: every extra slice of the eval is another roll of the dice.</div>
+
 <h3 id="trap-11-tuning-against-the-set-you-report-on">Trap 11. Tuning against the set you report on</h3>
 <p>Tuning the prompt against the same 60 questions you report on measures
 memory of the tuning process, not quality. Judge shopping (trying judges
@@ -1126,6 +1212,12 @@ offer a safe alternative when one exists). Use benign edge prompts near the
 refusal boundary, and report the capability cost in the same sentence as the
 safety gain.</p>
 <p><strong>Next:</strong> Section 4, twenty-eight questions with worked answers spanning agreement, significance, sampling, and judges.</p>
+<figure>
+<img src="img/crash05-drift-watch.svg" alt="Drift watch: attack techniques, language, and model updates age the golden set" loading="lazy">
+<figcaption>The eval rots when the world moves: attack techniques evolve past the golden set, slang shifts under the classifiers, each model update moves the decision boundary. The symptom is pass rates creeping up while real-world breaks do not fall. The fix is versioning the golden set like code: retire stale items, add fresh red-team finds quarterly.</figcaption>
+</figure>
+<div class="walkthrough">What to look at first: the three drift sources, then the red symptom line, then the green fix box. The one takeaway: a golden set you never refresh becomes a museum of last year's attacks.</div>
+
 <h2 id="4-rapid-fire-qa">4. Rapid-fire Q&amp;A</h2>
 <p>Work the arithmetic before you reveal. These are the questions interviewers ask and error bars answer.</p>
 <p>Twenty-eight questions. Answer each out loud before revealing.</p><div class="pq"><div class="pq-q"><p><strong>Q1.</strong> Name the four parts of an eval suite, and say which two most teams
