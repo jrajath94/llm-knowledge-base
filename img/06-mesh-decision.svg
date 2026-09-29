@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="480" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">How practitioners choose the mesh</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">tensor first inside the node, pipeline across nodes, data with the rest</text>
+<rect x="24" y="90" width="220" height="62" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="134" y="126" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">1. tensor parallel degree</text>
+<line x1="252" y1="121" x2="276" y2="121" stroke="#6cb2ff" stroke-width="2"/>
+<polygon points="276,121 267.78219953718923,124.66984407753613 267.78219953718923,117.33015592246387" fill="#6cb2ff"/>
+<text x="288" y="126" font-size="12" fill="#a8a8a8" text-anchor="start">set t to GPUs per node (usually 8): per-layer all-reduces need NVLink. Never stretch t across nodes.</text>
+<rect x="24" y="170" width="220" height="62" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="134" y="206" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">2. pipeline degree</text>
+<line x1="252" y1="201" x2="276" y2="201" stroke="#4fd1a5" stroke-width="2"/>
+<polygon points="276,201 267.78219953718923,204.66984407753614 267.78219953718923,197.33015592246386" fill="#4fd1a5"/>
+<text x="288" y="206" font-size="12" fill="#a8a8a8" text-anchor="start">cover the layer count: enough stages that each fits, few enough that the bubble stays small (m &gt;&gt; p).</text>
+<rect x="24" y="250" width="220" height="62" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="134" y="286" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">3. data parallel with the rest</text>
+<line x1="252" y1="281" x2="276" y2="281" stroke="#f0b429" stroke-width="2"/>
+<polygon points="276,281 267.78219953718923,284.66984407753614 267.78219953718923,277.33015592246386" fill="#f0b429"/>
+<text x="288" y="286" font-size="12" fill="#a8a8a8" text-anchor="start">leftover GPUs become replicas. Check the effective batch against the critical batch size.</text>
+<rect x="24" y="330" width="220" height="62" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="134" y="366" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">4. sanity check</text>
+<line x1="252" y1="361" x2="276" y2="361" stroke="#e57ea6" stroke-width="2"/>
+<polygon points="276,361 267.78219953718923,364.66984407753614 267.78219953718923,357.33015592246386" fill="#e57ea6"/>
+<text x="288" y="366" font-size="12" fill="#a8a8a8" text-anchor="start">overshooting the critical batch means too many GPUs for this model, not too few.</text>
+<rect x="24" y="410" width="220" height="62" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="134" y="446" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">alternative: FSDP</text>
+<line x1="252" y1="441" x2="276" y2="441" stroke="#7dd87d" stroke-width="2"/>
+<polygon points="276,441 267.78219953718923,444.66984407753614 267.78219953718923,437.33015592246386" fill="#7dd87d"/>
+<text x="288" y="446" font-size="12" fill="#a8a8a8" text-anchor="start">up to ~70B on tens of GPUs, FSDP (ZeRO-3) + data parallel is simpler and often as fast.</text>
+</svg>
