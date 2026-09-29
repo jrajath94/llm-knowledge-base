@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 724 256" width="100%" style="max-width:724px" role="img" aria-label="200k tokens per second of demand divided by 107 tokens per second per GPU gives about 1870 GPUs before headroom">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="724" height="256" fill="none"/>
+<text class="t" x="24" y="30">Serving capacity arithmetic: 100 QPS of 70B</text>
+<text class="m" x="24" y="58">Capacity estimate: 70B fp16 at 100 QPS, 2k-token responses, 50 ms TPOT SLO</text>
+<rect class="box" x="24" y="72" width="200" height="96" rx="8"/>
+<text class="big g" x="40" y="100">Demand</text>
+<text class="m" x="40" y="124">100 QPS x 2k tokens</text>
+<text class="big" x="40" y="150">200k tokens/s</text>
+<path class="arr" d="M224 120 L248 120"/>
+<rect class="box" x="248" y="72" width="200" height="96" rx="8"/>
+<text class="big g" x="264" y="100">Per GPU @batch 8</text>
+<text class="m" x="264" y="124">8 tokens per ~75 ms step</text>
+<text class="big" x="264" y="150">~107 tokens/s</text>
+<path class="arr" d="M448 120 L472 120"/>
+<rect class="box" x="472" y="72" width="200" height="96" rx="8"/>
+<text class="big g" x="488" y="100">GPUs needed</text>
+<text class="m" x="488" y="124">200k / 107</text>
+<text class="big" x="488" y="150">~1,870 before headroom</text>
+<path class="arr" d="M672 120 L696 120"/>
+<text class="num" x="24" y="210">The estimate says the SLO needs serious batching or more GPUs. Assumptions named:</text>
+<text class="m" x="24" y="232">uniform load, 4k context cap (KV: 0.33 MB x 4k x batch), no prefill storms.</text>
+</svg>
