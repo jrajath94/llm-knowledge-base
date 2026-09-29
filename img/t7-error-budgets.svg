@@ -1,0 +1,15 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 920 440' width='100%' role='img'>
+<title>Error budgets for non-deterministic systems</title>
+<text x='460' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>Error budgets for non-deterministic systems</text>
+<rect x='80' y='120' width='760' height='60' rx='4' fill='#2e9e5b' fill-opacity='0.25'/>
+<rect x='80' y='120' width='190' height='60' rx='4' fill='#c0392b' fill-opacity='0.85'/>
+<text x='175' y='155' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#ececec' text-anchor='middle'>burned</text>
+<text x='610' y='155' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#ececec' text-anchor='middle'>remaining budget</text>
+<line x1='460' y1='190' x2='460' y2='212' stroke='#c0392b' stroke-width='2'/>
+<polygon points='456.3,203.8 460,212 463.7,203.8' fill='#c0392b'/>
+<text x='460' y='240' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#c0392b' text-anchor='middle'>Budget exhausted: stop shipping features, fix reliability</text>
+<rect x='130' y='280' width='660' height='110' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='460' y='306' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='16' font-weight='600' fill='#ececec' text-anchor='middle'>For AI, the budget covers wrong answers too</text>
+<text x='460' y='326' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Not just downtime: measure correctness burn,</text>
+<text x='460' y='344' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>not only the error rate.</text>
+</svg>
