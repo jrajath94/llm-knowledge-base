@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="680" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Rejection sampling and the data mixture</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Trade compute for quality inside a fixed source; the mixture decides what the model practices</text>
+<rect x="24" y="88" width="400" height="120" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="224.0" y="153.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Prompt</text>
+<rect x="24" y="238" width="400" height="120" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="224.0" y="290.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Generate k candidates</text>
+<text x="224.0" y="312.0" font-size="11" fill="#a8a8a8" text-anchor="middle">the model proposes</text>
+<rect x="24" y="388" width="400" height="120" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="224.0" y="440.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Checker / judge</text>
+<text x="224.0" y="462.0" font-size="11" fill="#a8a8a8" text-anchor="middle">keep what passes, discard the rest</text>
+<line x1="224" y1="208" x2="224" y2="232" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="224,232 220.33015592246386,223.78219953718923 227.66984407753614,223.78219953718923" fill="#8a8a8a"/>
+<line x1="224" y1="358" x2="224" y2="382" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="224,382 220.33015592246386,373.78219953718923 227.66984407753614,373.78219953718923" fill="#8a8a8a"/>
+<rect x="480" y="388" width="170" height="120" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6"/>
+<text x="565.0" y="440.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Kept</text>
+<text x="565.0" y="462.0" font-size="11" fill="#a8a8a8" text-anchor="middle">into the SFT mix</text>
+<rect x="680" y="388" width="196" height="120" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6"/>
+<text x="778.0" y="440.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Discarded</text>
+<text x="778.0" y="462.0" font-size="11" fill="#a8a8a8" text-anchor="middle">compute well spent</text>
+<line x1="424" y1="448" x2="474" y2="448" stroke="#4fd1a5" stroke-width="2"/>
+<polygon points="474,448 465.78219953718923,451.66984407753614 465.78219953718923,444.33015592246386" fill="#4fd1a5"/>
+<line x1="424" y1="478" x2="674" y2="478" stroke="#e57ea6" stroke-width="2"/>
+<polygon points="674,478 665.7821995371892,481.66984407753614 665.7821995371892,474.33015592246386" fill="#e57ea6"/>
+<rect x="480" y="88" width="396" height="270" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="678" y="118" font-size="13" font-weight="bold" fill="#b388ff" text-anchor="middle">The mixture is a sampling distribution</text>
+<text x="504" y="148" font-size="12" fill="#ececec" text-anchor="start">Code</text>
+<rect x="600" y="135" width="70.0" height="18" fill="#6cb2ff" rx="4" opacity="1"/>
+<text x="678.0" y="148" font-size="11" fill="#a8a8a8" text-anchor="start">35%</text>
+<text x="504" y="182" font-size="12" fill="#ececec" text-anchor="start">Math</text>
+<rect x="600" y="169" width="50.0" height="18" fill="#4fd1a5" rx="4" opacity="1"/>
+<text x="658.0" y="182" font-size="11" fill="#a8a8a8" text-anchor="start">25%</text>
+<text x="504" y="216" font-size="12" fill="#ececec" text-anchor="start">Chat</text>
+<rect x="600" y="203" width="60.0" height="18" fill="#b388ff" rx="4" opacity="1"/>
+<text x="668.0" y="216" font-size="11" fill="#a8a8a8" text-anchor="start">30%</text>
+<text x="504" y="250" font-size="12" fill="#ececec" text-anchor="start">Other</text>
+<rect x="600" y="237" width="20.0" height="18" fill="#8a8a8a" rx="4" opacity="1"/>
+<text x="628.0" y="250" font-size="11" fill="#a8a8a8" text-anchor="start">10%</text>
+<text x="504" y="290" font-size="10" fill="#a8a8a8" text-anchor="start">Every batch is drawn from it. Tokens are</text>
+<text x="504" y="307" font-size="10" fill="#a8a8a8" text-anchor="start">a budget: each low-quality token</text>
+<text x="504" y="324" font-size="10" fill="#a8a8a8" text-anchor="start">excludes a high-quality one.</text>
+<text x="24" y="554" font-size="11" fill="#8a8a8a" text-anchor="start">Repetition risk: a 5B-token source at 20 percent weight in a 100B-token run is seen 4 times. Past a few epochs the model</text>
+<text x="24" y="571" font-size="11" fill="#8a8a8a" text-anchor="start">memorizes the source instead of learning from it.</text>
+</svg>
