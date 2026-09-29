@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="540" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 2.4. Build vs buy: the decision matrix</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">buy the commodity, build the moat</text>
+<text x="300" y="100" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">BUILD</text>
+<text x="640" y="100" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">BUY</text>
+<rect x="24" y="130" width="400" height="80" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="156" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">build when</text>
+<text x="224.0" y="174" font-size="11" fill="#a8a8a8" text-anchor="middle">it is your differentiator</text>
+<rect x="456" y="130" width="400" height="80" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="156" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">buy when</text>
+<text x="656.0" y="174" font-size="11" fill="#a8a8a8" text-anchor="middle">it is undifferentiated heavy lifting</text>
+<rect x="24" y="224" width="400" height="80" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="250" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">build when</text>
+<text x="224.0" y="268" font-size="11" fill="#a8a8a8" text-anchor="middle">the vendor cannot meet a hard constraint</text>
+<rect x="456" y="224" width="400" height="80" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="250" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">buy when</text>
+<text x="656.0" y="268" font-size="11" fill="#a8a8a8" text-anchor="middle">the vendor meets all five constraints</text>
+<rect x="24" y="318" width="400" height="80" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="344" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">build when</text>
+<text x="224.0" y="362" font-size="11" fill="#a8a8a8" text-anchor="middle">you will iterate on it weekly</text>
+<rect x="456" y="318" width="400" height="80" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="344" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">buy when</text>
+<text x="656.0" y="362" font-size="11" fill="#a8a8a8" text-anchor="middle">it changes slowly and boringly</text>
+<rect x="24" y="430" width="832" height="70" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="456" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">THE TIEBREAK</text>
+<text x="440.0" y="474" font-size="11" fill="#a8a8a8" text-anchor="middle">total cost of ownership over 3 years, including the team that maintains it</text>
+</svg>
