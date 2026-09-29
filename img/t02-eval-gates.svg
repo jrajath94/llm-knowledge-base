@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 296" width="100%" style="max-width:760px" role="img" aria-label="Four layers in order from minutes to days; any failure blocks release; never trust a win-rate delta without an interval">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="760" height="296" fill="none"/>
+<text class="t" x="24" y="30">Eval gates: the ship rules</text>
+<rect x="24" y="56" width="166" height="124" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="1.7"/>
+<text class="big g" x="38" y="86">L1</text>
+<text class="num" x="38" y="110">Unit probes</text>
+<text class="m" x="38" y="138">minutes</text>
+<path class="arr" d="M190 118 L214 118"/>
+<rect x="214" y="56" width="166" height="124" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="1.7"/>
+<text class="big g" x="228" y="86">L2</text>
+<text class="num" x="228" y="110">Capability</text>
+<text class="num" x="228" y="130">benchmarks</text>
+<text class="m" x="228" y="158">hours</text>
+<path class="arr" d="M380 118 L404 118"/>
+<rect x="404" y="56" width="166" height="124" rx="8" fill="#141414" stroke="#f0b429" stroke-width="1.7"/>
+<text class="big g" x="418" y="86">L3</text>
+<text class="num" x="418" y="110">Preference evals</text>
+<text class="num" x="418" y="130">vs production</text>
+<text class="m" x="418" y="158">days</text>
+<path class="arr" d="M570 118 L594 118"/>
+<rect x="594" y="56" width="166" height="124" rx="8" fill="#141414" stroke="#e57373" stroke-width="1.7"/>
+<text class="big g" x="608" y="86">L4</text>
+<text class="num" x="608" y="110">Red team</text>
+<text class="num" x="608" y="130">+ safety</text>
+<text class="m" x="608" y="158">days</text>
+<text class="num" x="24" y="220">A failure at any layer blocks the release.</text>
+<text class="num" x="24" y="246">54% win rate on 200 judgments: SE near 3.5 points. That win may be noise.</text>
+<text class="m" x="24" y="272">Use the Wilson interval for binomial rates. Slice by prompt category: the aggregate hides regressions.</text>
+</svg>
