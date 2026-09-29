@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="442" viewBox="0 0 720 442" role="img" aria-label="Defense-in-depth mitigation stack">
+<rect width="720" height="442" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">Defense in depth: five layers, no single point of trust</text>
+<rect class="box" x="180" y="55" width="360" height="52" rx="8"/>
+<line x1="180" y1="55" x2="180" y2="107" stroke="#f0b429" stroke-width="4"/>
+<text x="360" y="77" text-anchor="middle" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">system prompt</text>
+<text x="360" y="96" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">the standing instructions</text>
+<path d="M360,107 L360,117" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<rect class="box" x="180" y="117" width="360" height="52" rx="8"/>
+<line x1="180" y1="117" x2="180" y2="169" stroke="#58a6ff" stroke-width="4"/>
+<text x="360" y="139" text-anchor="middle" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">input filter</text>
+<text x="360" y="158" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">catches attacks before they cost a generation</text>
+<path d="M360,169 L360,179" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<rect class="box" x="180" y="179" width="360" height="52" rx="8"/>
+<line x1="180" y1="179" x2="180" y2="231" stroke="#3fb950" stroke-width="4"/>
+<text x="360" y="201" text-anchor="middle" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">refusal training</text>
+<text x="360" y="220" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">the model itself says no</text>
+<path d="M360,231 L360,241" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<rect class="box" x="180" y="241" width="360" height="52" rx="8"/>
+<line x1="180" y1="241" x2="180" y2="293" stroke="#e5484d" stroke-width="4"/>
+<text x="360" y="263" text-anchor="middle" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">output filter</text>
+<text x="360" y="282" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">last line: sees the final text</text>
+<path d="M360,293 L360,303" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<rect class="box" x="180" y="303" width="360" height="52" rx="8"/>
+<line x1="180" y1="303" x2="180" y2="355" stroke="#8a8a8a" stroke-width="4"/>
+<text x="360" y="325" text-anchor="middle" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">monitoring</text>
+<text x="360" y="344" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">sampling, alerts, human review</text>
+<text x="360" y="395" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">every layer has a known failure mode: the next layer covers it</text>
+<text x="360" y="417" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">that is why the stack exists</text>
+</svg>
