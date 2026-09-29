@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="680" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Temperature, traced by hand</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Same logits, three temperatures: cat=2.0 dog=1.5 bird=0.5 fish=-0.5; exponentials 7.389, 4.482, 1.649, 0.607; sum 14.127</text>
+<rect x="24" y="88" width="120" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="109" font-size="12" fill="#ececec" text-anchor="start">Token</text>
+<rect x="144" y="88" width="150" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="154" y="109" font-size="12" fill="#ececec" text-anchor="start">Logit / exp</text>
+<rect x="294" y="88" width="180" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="304" y="109" font-size="12" fill="#ececec" text-anchor="start">T = 0.5 (sharp)</text>
+<rect x="474" y="88" width="180" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="484" y="109" font-size="12" fill="#ececec" text-anchor="start">T = 1.0 (raw)</text>
+<rect x="654" y="88" width="222" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="664" y="109" font-size="12" fill="#ececec" text-anchor="start">T = 2.0 (flat)</text>
+<rect x="24" y="122" width="120" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="146" font-size="11" fill="#ececec" text-anchor="start">cat</text>
+<rect x="144" y="122" width="150" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="154" y="146" font-size="11" fill="#a8a8a8" text-anchor="start">2.0 / 7.389</text>
+<rect x="294" y="122" width="180" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="304" y="146" font-size="11" fill="#a8a8a8" text-anchor="start">0.702</text>
+<rect x="474" y="122" width="180" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="484" y="146" font-size="11" fill="#a8a8a8" text-anchor="start">0.523</text>
+<rect x="654" y="122" width="222" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="664" y="146" font-size="11" fill="#a8a8a8" text-anchor="start">0.394</text>
+<rect x="24" y="186" width="120" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="210" font-size="11" fill="#ececec" text-anchor="start">dog</text>
+<rect x="144" y="186" width="150" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="154" y="210" font-size="11" fill="#a8a8a8" text-anchor="start">1.5 / 4.482</text>
+<rect x="294" y="186" width="180" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="304" y="210" font-size="11" fill="#a8a8a8" text-anchor="start">0.258</text>
+<rect x="474" y="186" width="180" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="484" y="210" font-size="11" fill="#a8a8a8" text-anchor="start">0.317</text>
+<rect x="654" y="186" width="222" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="664" y="210" font-size="11" fill="#a8a8a8" text-anchor="start">0.307</text>
+<rect x="24" y="250" width="120" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="274" font-size="11" fill="#ececec" text-anchor="start">bird</text>
+<rect x="144" y="250" width="150" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="154" y="274" font-size="11" fill="#a8a8a8" text-anchor="start">0.5 / 1.649</text>
+<rect x="294" y="250" width="180" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="304" y="274" font-size="11" fill="#a8a8a8" text-anchor="start">0.035</text>
+<rect x="474" y="250" width="180" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="484" y="274" font-size="11" fill="#a8a8a8" text-anchor="start">0.117</text>
+<rect x="654" y="250" width="222" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="664" y="274" font-size="11" fill="#a8a8a8" text-anchor="start">0.186</text>
+<rect x="24" y="314" width="120" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="338" font-size="11" fill="#ececec" text-anchor="start">fish</text>
+<rect x="144" y="314" width="150" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="154" y="338" font-size="11" fill="#a8a8a8" text-anchor="start">-0.5 / 0.607</text>
+<rect x="294" y="314" width="180" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="304" y="338" font-size="11" fill="#a8a8a8" text-anchor="start">0.005</text>
+<rect x="474" y="314" width="180" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="484" y="338" font-size="11" fill="#a8a8a8" text-anchor="start">0.043</text>
+<rect x="654" y="314" width="222" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="664" y="338" font-size="11" fill="#a8a8a8" text-anchor="start">0.113</text>
+<text x="24" y="408" font-size="12" fill="#4fd1a5" text-anchor="start">At T = 0.5 the model almost always says cat.</text>
+<text x="24" y="439" font-size="12" fill="#f0b429" text-anchor="start">At T = 2.0 even fish has an 11 percent chance.</text>
+<text x="24" y="470" font-size="12" fill="#ececec" text-anchor="start">Same model, same logits, wildly different behavior: temperature rescales confidence without retraining</text>
+<text x="24" y="487" font-size="12" fill="#ececec" text-anchor="start">anything.</text>
+</svg>
