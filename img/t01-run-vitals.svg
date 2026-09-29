@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" width="100%" style="max-width:760px" role="img" aria-label="Eight vital signs: kill window, spike definition, gradient norm reads, MFU floor, NaN recovery, plateau, periodic spikes">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="760" height="500" fill="none"/>
+<text class="t" x="24" y="30">Run-health vital signs: thresholds and what they mean</text>
+<rect x="24" y="52" width="8" height="46" rx="4" fill="#e57373"/>
+<text class="big" x="44" y="72">Kill window</text>
+<text class="num" x="300" y="72">first 5% of steps</text>
+<text class="m" x="44" y="91">divergence, NaN, or spike here: kill fast</text>
+<rect x="24" y="106" width="8" height="46" rx="4" fill="#f0b429"/>
+<text class="big" x="44" y="126">Spike</text>
+<text class="num" x="300" y="126">3x rolling median</text>
+<text class="m" x="44" y="145">the trigger; then ask the grad-norm question</text>
+<rect x="24" y="160" width="8" height="46" rx="4" fill="#6cb2ff"/>
+<text class="big" x="44" y="180">Grad norm flat + spike</text>
+<text class="num" x="300" y="180">data artifact</text>
+<text class="m" x="44" y="199">one bad batch: inspect it, do not cut LR</text>
+<rect x="24" y="214" width="8" height="46" rx="4" fill="#6cb2ff"/>
+<text class="big" x="44" y="234">Grad norm climbing + spike</text>
+<text class="num" x="300" y="234">optimizer</text>
+<text class="m" x="44" y="253">now the optimizer is a suspect</text>
+<rect x="24" y="268" width="8" height="46" rx="4" fill="#f0b429"/>
+<text class="big" x="44" y="288">MFU</text>
+<text class="num" x="300" y="288">40-60% healthy; &lt;30% fix systems</text>
+<text class="m" x="44" y="307">below 30% is a systems problem wearing a training mask</text>
+<rect x="24" y="322" width="8" height="46" rx="4" fill="#e57373"/>
+<text class="big" x="44" y="342">NaN</text>
+<text class="num" x="300" y="342">roll back WITH optimizer state</text>
+<text class="m" x="44" y="361">then change exactly one thing</text>
+<rect x="24" y="376" width="8" height="46" rx="4" fill="#a8a8a8"/>
+<text class="big" x="44" y="396">Plateau + healthy grad norm</text>
+<text class="num" x="300" y="396">exhausted recipe</text>
+<text class="m" x="44" y="415">not a broken optimizer: change the recipe</text>
+<rect x="24" y="430" width="8" height="46" rx="4" fill="#a8a8a8"/>
+<text class="big" x="44" y="450">Periodic spikes</text>
+<text class="num" x="300" y="450">data pipeline</text>
+<text class="m" x="44" y="469">find what shares the period; real instability is not periodic</text>
+</svg>
