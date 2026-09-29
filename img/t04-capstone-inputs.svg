@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="349" viewBox="0 0 720 349" role="img" aria-label="Capstone six-section run plan">
+<rect width="720" height="349" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">Capstone: the 1,000-GPU run plan, six computed sections</text>
+<rect class="box" x="30" y="60" width="215" height="96" rx="8"/>
+<line x1="30" y1="60" x2="30" y2="156" stroke="#f0b429" stroke-width="4"/>
+<text x="137" y="94" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">1. parallelism layout</text>
+<text x="137" y="118" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">DP/TP/PP degrees, memory math per GPU</text>
+<rect class="box" x="257" y="60" width="215" height="96" rx="8"/>
+<line x1="257" y1="60" x2="257" y2="156" stroke="#58a6ff" stroke-width="4"/>
+<text x="364" y="94" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">2. throughput budget</text>
+<text x="364" y="118" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">tokens/sec, MFU, bubble, exposed comm</text>
+<rect class="box" x="484" y="60" width="215" height="96" rx="8"/>
+<line x1="484" y1="60" x2="484" y2="156" stroke="#3fb950" stroke-width="4"/>
+<text x="591" y="94" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">3. checkpoint policy</text>
+<text x="591" y="118" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">size, async sharded, Daly from your MTBF</text>
+<rect class="box" x="30" y="170" width="215" height="96" rx="8"/>
+<line x1="30" y1="170" x2="30" y2="266" stroke="#e5484d" stroke-width="4"/>
+<text x="137" y="204" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">4. failure budget</text>
+<text x="137" y="228" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">expected failures, guardian policy</text>
+<rect class="box" x="257" y="170" width="215" height="96" rx="8"/>
+<line x1="257" y1="170" x2="257" y2="266" stroke="#8a8a8a" stroke-width="4"/>
+<text x="364" y="204" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">5. profiling plan</text>
+<text x="364" y="228" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">first 24 hours, week-one tuning loop</text>
+<rect class="box" x="484" y="170" width="215" height="96" rx="8"/>
+<line x1="484" y1="170" x2="484" y2="266" stroke="#c678dd" stroke-width="4"/>
+<text x="591" y="204" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">6. risks</text>
+<text x="591" y="228" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">three specific failures, each with a mitigation</text>
+<text x="360" y="300" text-anchor="middle" fill="#ececec" font-size="13" font-weight="400" font-family="Charis SIL, Georgia, serif">scenario: 70B dense, BF16, Adam, 4T tokens on 125 x 8 H100</text>
+<text x="360" y="324" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">every number computed, not guessed: the labs are your calculators</text>
+</svg>
