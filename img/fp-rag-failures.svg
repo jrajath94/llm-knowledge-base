@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" font-family="system-ui, -apple-system, sans-serif">
+  <rect x="0" y="0" width="900" height="320" fill="#0d0d0d" rx="8"/>
+  <text x="30" y="36" fill="#f0b429" font-size="15" font-weight="700">Naive RAG fails in four classic ways; each has a named fix</text>
+  <g font-size="12">
+    <!-- 1 -->
+    <rect x="20" y="55" width="205" height="150" fill="#2a1512" stroke="#c0392b" stroke-width="2" rx="6"/>
+    <text x="122" y="82" fill="#c0392b" font-weight="700" text-anchor="middle">1. Missed retrieval</text>
+    <text x="122" y="108" fill="#ececec" text-anchor="middle">the right page exists</text>
+    <text x="122" y="128" fill="#ececec" text-anchor="middle">but ranks #47</text>
+    <text x="122" y="158" fill="#a8a8a8" text-anchor="middle">fix: hybrid search,</text>
+    <text x="122" y="178" fill="#a8a8a8" text-anchor="middle">better chunking, reranker</text>
+    <!-- 2 -->
+    <rect x="245" y="55" width="205" height="150" fill="#2a1512" stroke="#c0392b" stroke-width="2" rx="6"/>
+    <text x="347" y="82" fill="#c0392b" font-weight="700" text-anchor="middle">2. Ignored context</text>
+    <text x="347" y="108" fill="#ececec" text-anchor="middle">right page retrieved,</text>
+    <text x="347" y="128" fill="#ececec" text-anchor="middle">model answers from memory</text>
+    <text x="347" y="158" fill="#a8a8a8" text-anchor="middle">fix: faithfulness evals,</text>
+    <text x="347" y="178" fill="#a8a8a8" text-anchor="middle">citation requirements</text>
+    <!-- 3 -->
+    <rect x="470" y="55" width="205" height="150" fill="#2a1512" stroke="#c0392b" stroke-width="2" rx="6"/>
+    <text x="572" y="82" fill="#c0392b" font-weight="700" text-anchor="middle">3. Split facts</text>
+    <text x="572" y="108" fill="#ececec" text-anchor="middle">the answer spans</text>
+    <text x="572" y="128" fill="#ececec" text-anchor="middle">a chunk boundary</text>
+    <text x="572" y="158" fill="#a8a8a8" text-anchor="middle">fix: overlap, semantic</text>
+    <text x="572" y="178" fill="#a8a8a8" text-anchor="middle">or parent-child chunking</text>
+    <!-- 4 -->
+    <rect x="695" y="55" width="185" height="150" fill="#2a1512" stroke="#c0392b" stroke-width="2" rx="6"/>
+    <text x="787" y="82" fill="#c0392b" font-weight="700" text-anchor="middle">4. Stale index</text>
+    <text x="787" y="108" fill="#ececec" text-anchor="middle">docs updated,</text>
+    <text x="787" y="128" fill="#ececec" text-anchor="middle">index not rebuilt</text>
+    <text x="787" y="158" fill="#a8a8a8" text-anchor="middle">fix: re-index pipeline,</text>
+    <text x="787" y="178" fill="#a8a8a8" text-anchor="middle">freshness SLO</text>
+  </g>
+  <text x="30" y="245" fill="#ececec" font-size="13">The rule underneath: retrieval quality caps answer quality. Every fix is measured by evals, not by hope.</text>
+  <text x="30" y="270" fill="#a8a8a8" font-size="12">Two more quiet killers: context stuffing (too many chunks drown the signal and multiply cost) and permission leaks</text>
+  <text x="30" y="290" fill="#a8a8a8" font-size="12">(a private chunk retrieved for the wrong user). Both are covered in the reading paths: evals (Path C), guardrails (Path D).</text>
+</svg>
