@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="660" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Async RL: stop taking turns</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Decouple generation from training; bound the staleness</text>
+<text x="24" y="94" font-size="14" font-weight="bold" fill="#e57ea6" text-anchor="start">Lockstep: trainers idle during generation, workers idle during training</text>
+<rect x="24" y="118" width="300" height="40" fill="#4fd1a5" rx="4" opacity="1"/>
+<text x="174.0" y="143" font-size="11" fill="#ececec" text-anchor="middle">generate</text>
+<rect x="324" y="118" width="120" height="40" fill="#2a2a2a" rx="4" opacity="1"/>
+<text x="384.0" y="143" font-size="11" fill="#ececec" text-anchor="middle">idle</text>
+<rect x="444" y="118" width="200" height="40" fill="#b388ff" rx="4" opacity="1"/>
+<text x="544.0" y="143" font-size="11" fill="#ececec" text-anchor="middle">train</text>
+<rect x="644" y="118" width="120" height="40" fill="#2a2a2a" rx="4" opacity="1"/>
+<text x="704.0" y="143" font-size="11" fill="#ececec" text-anchor="middle">idle</text>
+<rect x="764" y="118" width="160" height="40" fill="#4fd1a5" rx="4" opacity="1"/>
+<text x="844.0" y="143" font-size="11" fill="#ececec" text-anchor="middle">generate</text>
+<text x="24" y="184" font-size="11" fill="#8a8a8a" text-anchor="start">One straggler with a 32K-token chain-of-thought stalls the whole step.</text>
+<text x="24" y="238" font-size="14" font-weight="bold" fill="#4fd1a5" text-anchor="start">Async: both sides run continuously, meeting only at weight sync</text>
+<text x="24" y="278" font-size="12" fill="#a8a8a8" text-anchor="start">rollout workers</text>
+<rect x="190" y="262" width="686" height="30" fill="#4fd1a5" rx="4" opacity="1"/>
+<text x="533" y="282" font-size="11" font-weight="bold" fill="#0d0d0d" text-anchor="middle">generate continuously</text>
+<text x="24" y="314" font-size="12" fill="#a8a8a8" text-anchor="start">trainers</text>
+<rect x="190" y="298" width="686" height="30" fill="#b388ff" rx="4" opacity="1"/>
+<text x="533" y="318" font-size="11" font-weight="bold" fill="#0d0d0d" text-anchor="middle">update continuously</text>
+<line x1="380" y1="262" x2="380" y2="328" stroke="#f0b429" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="570" y1="262" x2="570" y2="328" stroke="#f0b429" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="760" y1="262" x2="760" y2="328" stroke="#f0b429" stroke-width="1.5" stroke-dasharray="5,4"/>
+<text x="790" y="346" font-size="11" fill="#f0b429" text-anchor="start">weight sync</text>
+<rect x="24" y="372" width="852" height="126" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="450" y="404" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">The price: staleness</text>
+<text x="48" y="434" font-size="11" fill="#a8a8a8" text-anchor="start">Rollouts come from a slightly older policy than the one being trained. Async systems bound it (a few</text>
+<text x="48" y="451" font-size="11" fill="#a8a8a8" text-anchor="start">versions behind, not fifty) and correct for it in the update. The reward: no side ever waits. Reference</text>
+<text x="48" y="468" font-size="11" fill="#a8a8a8" text-anchor="start">design: verl&#x27;s HybridFlow.</text>
+</svg>
