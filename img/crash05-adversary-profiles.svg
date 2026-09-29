@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="460" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Three adversary profiles: the threat model behind every red-team plan</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">same model, three very different attackers</text>
+<rect x="24" y="110" width="268" height="200" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="158.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">CURIOUS USER</text>
+<text x="158.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">stumbles into a jailbreak by</text>
+<text x="158.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">accident; finds the easy 20%</text>
+<text x="158" y="340" font-size="11" fill="#a8a8a8" text-anchor="middle">rarely targeted, high volume</text>
+<rect x="312" y="110" width="268" height="200" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="446.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">MOTIVATED AMATEUR</text>
+<text x="446.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">reads jailbreak forums, tries known</text>
+<text x="446.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">templates for an afternoon</text>
+<text x="446" y="340" font-size="11" fill="#a8a8a8" text-anchor="middle">defeats static filters</text>
+<rect x="600" y="110" width="268" height="200" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="734.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">SKILLED ADVERSARY</text>
+<text x="734.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">writes custom attacks, automates</text>
+<text x="734.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">search, adapts to your defenses</text>
+<text x="734" y="340" font-size="11" fill="#a8a8a8" text-anchor="middle">only layered defense holds</text>
+<text x="24" y="420" font-size="12" fill="#a8a8a8" text-anchor="start">Your eval is only as strong as the profile it assumes. A defense that stops the curious user says nothing</text>
+<text x="24" y="437" font-size="12" fill="#a8a8a8" text-anchor="start">about the skilled adversary.</text>
+</svg>
