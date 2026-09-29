@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Research-Engineer Curriculum - Master Index</title>
 <style>
@@ -621,7 +629,8 @@ html.xp-js .xp-reveal.xp-in {
 </figure>
 <p class="bridge-why"><strong>Finished the spine?</strong> Pick one track and work its volumes in the track order. The spine gave you the shared base; the track adds the specialist depth your target role interviews on.</p>
 <h2 id="role-tracks">Role tracks</h2>
-<p>Ten role-focused guides built on the spine above. Each track re-orders the base volumes into a reading path for that role, then adds specialist chapters that go deeper than the base volumes on the role's core problems. Work the spine volumes in the track's reading order first, <figure id="fig-index-track-anatomy">
+<p>Ten role-focused guides built on the spine above. Each track re-orders the base volumes into a reading path for that role, then adds specialist chapters that go deeper than the base volumes on the role's core problems. Work the spine volumes in the track's reading order first, then the specialist chapters in order.</p>
+<figure id="fig-index-track-anatomy">
 <img src="img/index-track-anatomy.svg" alt="Three boxes with arrows: the spine of 16 base volumes, re-ordered into a reading path with an example volume order, then specialist chapters that go deeper">
 <figcaption>How a role track works. One spine, ten tracks: each track re-orders the base volumes into a reading path for its role, then adds specialist chapters that go deeper.</figcaption>
 <div class="walkthrough"><strong>How to read this diagram</strong>
@@ -632,34 +641,33 @@ html.xp-js .xp-reveal.xp-in {
 </ol>
 </div>
 </figure>
-then the specialist chapters in order.</p>
 <div class="track-grid">
-<a class="track-card" href="track-01-llm-research-engineer.html"><h3><span class="track-num">Track 1</span> · LLM Research Engineer</h3><p>The generalist path: end-to-end LLM mastery, from research foundations through training and serving systems.</p><p class="track-meta">~55 deep chapters</p></a>
-<a class="track-card" href="track-02-post-training-alignment.html"><h3><span class="track-num">Track 2</span> · Post-Training and Alignment Engineer</h3><p>SFT, RLHF, DPO, and reward modeling: shaping base models into reliable assistants.</p><p class="track-meta">~15 deep chapters</p></a>
-<a class="track-card" href="track-03-inference-serving.html"><h3><span class="track-num">Track 3</span> · Inference and Serving Engineering</h3><p>Low-latency, high-throughput serving: batching, quantization, disaggregation, and rigorous benchmarking.</p><p class="track-meta">~20 deep chapters</p></a>
-<a class="track-card" href="track-04-distributed-training-systems.html"><h3><span class="track-num">Track 4</span> · Distributed Training Systems Engineer</h3><p>Multi-GPU and multi-node training: parallelism strategies, fault tolerance, and profiling.</p><p class="track-meta">~20 deep chapters</p></a>
-<a class="track-card" href="track-05-evals-safety.html"><h3><span class="track-num">Track 5</span> · Evals and Safety Engineer</h3><p>Evaluation methodology, benchmarks, red-teaming (deliberately attacking the model to find failures), and safety systems for deployed models.</p><p class="track-meta">~45 deep chapters</p></a>
-<a class="track-card" href="track-06-agent-systems.html"><h3><span class="track-num">Track 6</span> · Agent Systems Engineer</h3><p>Agentic systems end to end: tools, planning, multi-agent patterns, evals, and guardrails.</p><p class="track-meta">~65 deep chapters</p></a>
-<a class="track-card" href="track-07-forward-deployed-engineer.html"><h3><span class="track-num">Track 7</span> · Forward Deployed Engineer / AI Consultant</h3><p>Shipping AI inside real organizations: discovery, solution design, deployment, and adoption.</p><p class="track-meta">~45 deep chapters</p></a>
-<a class="track-card" href="track-08-ai-engineer.html"><h3><span class="track-num">Track 8</span> · AI Engineer</h3><p>Applied LLM product engineering: RAG, prompting, evals, and production integrations.</p><p class="track-meta">~50 deep chapters</p></a>
-<a class="track-card" href="track-09-ml-engineer.html"><h3><span class="track-num">Track 9</span> · ML Engineer</h3><p>Production ML systems: data pipelines, training infrastructure, monitoring, and reliability.</p><p class="track-meta">~15 deep chapters</p></a>
-<a class="track-card" href="track-10-software-engineer.html"><h3><span class="track-num">Track 10</span> · Software Engineer, Backend and Systems</h3><p>Backend and systems engineering for AI platforms: APIs, data systems, and distributed services.</p><p class="track-meta">~15 deep chapters</p></a>
+<a class="track-card" href="track-01-llm-research-engineer.html"><img src="img/idx-track-01.svg" alt="Badge for Track 1" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 1</span> · LLM Research Engineer</h3><p>The generalist path: end-to-end LLM mastery, from research foundations through training and serving systems.</p><p class="track-meta">~55 deep chapters</p></a>
+<a class="track-card" href="track-02-post-training-alignment.html"><img src="img/idx-track-02.svg" alt="Badge for Track 2" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 2</span> · Post-Training and Alignment Engineer</h3><p>SFT, RLHF, DPO, and reward modeling: shaping base models into reliable assistants.</p><p class="track-meta">~15 deep chapters</p></a>
+<a class="track-card" href="track-03-inference-serving.html"><img src="img/idx-track-03.svg" alt="Badge for Track 3" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 3</span> · Inference and Serving Engineering</h3><p>Low-latency, high-throughput serving: batching, quantization, disaggregation, and rigorous benchmarking.</p><p class="track-meta">~20 deep chapters</p></a>
+<a class="track-card" href="track-04-distributed-training-systems.html"><img src="img/idx-track-04.svg" alt="Badge for Track 4" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 4</span> · Distributed Training Systems Engineer</h3><p>Multi-GPU and multi-node training: parallelism strategies, fault tolerance, and profiling.</p><p class="track-meta">~20 deep chapters</p></a>
+<a class="track-card" href="track-05-evals-safety.html"><img src="img/idx-track-05.svg" alt="Badge for Track 5" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 5</span> · Evals and Safety Engineer</h3><p>Evaluation methodology, benchmarks, red-teaming (deliberately attacking the model to find failures), and safety systems for deployed models.</p><p class="track-meta">~45 deep chapters</p></a>
+<a class="track-card" href="track-06-agent-systems.html"><img src="img/idx-track-06.svg" alt="Badge for Track 6" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 6</span> · Agent Systems Engineer</h3><p>Agentic systems end to end: tools, planning, multi-agent patterns, evals, and guardrails.</p><p class="track-meta">~65 deep chapters</p></a>
+<a class="track-card" href="track-07-forward-deployed-engineer.html"><img src="img/idx-track-07.svg" alt="Badge for Track 7" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 7</span> · Forward Deployed Engineer / AI Consultant</h3><p>Shipping AI inside real organizations: discovery, solution design, deployment, and adoption.</p><p class="track-meta">~45 deep chapters</p></a>
+<a class="track-card" href="track-08-ai-engineer.html"><img src="img/idx-track-08.svg" alt="Badge for Track 8" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 8</span> · AI Engineer</h3><p>Applied LLM product engineering: RAG, prompting, evals, and production integrations.</p><p class="track-meta">~50 deep chapters</p></a>
+<a class="track-card" href="track-09-ml-engineer.html"><img src="img/idx-track-09.svg" alt="Badge for Track 9" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 9</span> · ML Engineer</h3><p>Production ML systems: data pipelines, training infrastructure, monitoring, and reliability.</p><p class="track-meta">~15 deep chapters</p></a>
+<a class="track-card" href="track-10-software-engineer.html"><img src="img/idx-track-10.svg" alt="Badge for Track 10" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3><span class="track-num">Track 10</span> · Software Engineer, Backend and Systems</h3><p>Backend and systems engineering for AI platforms: APIs, data systems, and distributed services.</p><p class="track-meta">~15 deep chapters</p></a>
 </div>
 <p class="bridge-why"><strong>Track done?</strong> The crash packs are review, not replacement: the same curriculum compressed for the week before the interview.</p>
 <h2 id="crash-packs">Crash packs</h2>
 <p>Potent single-volume reviews of the base curriculum and each role track: decision rules, must-memorize numbers, classic traps, rapid-fire questions with worked answers, and a one-page cheat sheet. Use them for fast review after reading the full volumes.</p>
 <div class="track-grid">
-<a class="track-card" href="crash-base.html"><h3>Crash Pack: Base Curriculum</h3><p>All 16 base volumes compressed: 95 rapid-fire questions, 50-item master cheat sheet.</p></a>
-<a class="track-card" href="crash-track-01.html"><h3>Crash: LLM Research Engineer</h3><p>Generalist review: scaling, debugging, ablations, paper reading.</p></a>
-<a class="track-card" href="crash-track-02.html"><h3>Crash: Post-training / Alignment</h3><p>DPO, PPO (proximal policy optimization: the classic RLHF training algorithm), GRPO, reward modeling (training a model to score answers), eval iteration.</p></a>
-<a class="track-card" href="crash-track-03.html"><h3>Crash: Inference and Serving</h3><p>Latency math, quantization, batching, disaggregation, cost.</p></a>
-<a class="track-card" href="crash-track-04.html"><h3>Crash: Distributed Training</h3><p>Parallelism, collectives (GPU-to-GPU communication primitives), checkpointing, run health.</p></a>
-<a class="track-card" href="crash-track-05.html"><h3>Crash: Evals and Safety</h3><p>Eval design, red teaming, guardrails, safety cases.</p></a>
-<a class="track-card" href="crash-track-06.html"><h3>Crash: Agent Systems</h3><p>Patterns, tool design, reliability, cost control.</p></a>
-<a class="track-card" href="crash-track-07.html"><h3>Crash: Forward Deployed Eng.</h3><p>Scoping, enterprise deploys, unit economics.</p></a>
-<a class="track-card" href="crash-track-08.html"><h3>Crash: AI Engineer</h3><p>RAG, prompting, eval harnesses, structured output.</p></a>
-<a class="track-card" href="crash-track-09.html"><h3>Crash: ML Engineer</h3><p>Lifecycle, drift, CI/CD, cost-aware modeling.</p></a>
-<a class="track-card" href="crash-track-10.html"><h3>Crash: SWE / Backend</h3><p>APIs, data systems, and backend patterns for AI platforms.</p></a>
+<a class="track-card" href="crash-base.html"><img src="img/idx-crash-base.svg" alt="Badge for the crash pack base curriculum" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash Pack: Base Curriculum</h3><p>All 16 base volumes compressed: 95 rapid-fire questions, 50-item master cheat sheet.</p></a>
+<a class="track-card" href="crash-track-01.html"><img src="img/idx-crash-01.svg" alt="Badge for crash pack 1" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: LLM Research Engineer</h3><p>Generalist review: scaling, debugging, ablations, paper reading.</p></a>
+<a class="track-card" href="crash-track-02.html"><img src="img/idx-crash-02.svg" alt="Badge for crash pack 2" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: Post-training / Alignment</h3><p>DPO, PPO (proximal policy optimization: the classic RLHF training algorithm), GRPO, reward modeling (training a model to score answers), eval iteration.</p></a>
+<a class="track-card" href="crash-track-03.html"><img src="img/idx-crash-03.svg" alt="Badge for crash pack 3" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: Inference and Serving</h3><p>Latency math, quantization, batching, disaggregation, cost.</p></a>
+<a class="track-card" href="crash-track-04.html"><img src="img/idx-crash-04.svg" alt="Badge for crash pack 4" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: Distributed Training</h3><p>Parallelism, collectives (GPU-to-GPU communication primitives), checkpointing, run health.</p></a>
+<a class="track-card" href="crash-track-05.html"><img src="img/idx-crash-05.svg" alt="Badge for crash pack 5" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: Evals and Safety</h3><p>Eval design, red teaming, guardrails, safety cases.</p></a>
+<a class="track-card" href="crash-track-06.html"><img src="img/idx-crash-06.svg" alt="Badge for crash pack 6" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: Agent Systems</h3><p>Patterns, tool design, reliability, cost control.</p></a>
+<a class="track-card" href="crash-track-07.html"><img src="img/idx-crash-07.svg" alt="Badge for crash pack 7" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: Forward Deployed Eng.</h3><p>Scoping, enterprise deploys, unit economics.</p></a>
+<a class="track-card" href="crash-track-08.html"><img src="img/idx-crash-08.svg" alt="Badge for crash pack 8" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: AI Engineer</h3><p>RAG, prompting, eval harnesses, structured output.</p></a>
+<a class="track-card" href="crash-track-09.html"><img src="img/idx-crash-09.svg" alt="Badge for crash pack 9" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: ML Engineer</h3><p>Lifecycle, drift, CI/CD, cost-aware modeling.</p></a>
+<a class="track-card" href="crash-track-10.html"><img src="img/idx-crash-10.svg" alt="Badge for crash pack 10" loading="lazy" style="float:right;width:72px;height:72px;margin:0 0 8px 12px;border-radius:14px"><h3>Crash: SWE / Backend</h3><p>APIs, data systems, and backend patterns for AI platforms.</p></a>
 </div>
 <figure id="fig-index-after-spine">
 <img src="img/index-after-spine.svg" alt="Three steps after the spine: finish the volumes, pick a role track, review with a crash pack">
@@ -674,6 +682,17 @@ then the specialist chapters in order.</p>
 <p class="bridge-why"><strong>Running under all of the above:</strong> the DSA track starts day one and runs in parallel, 1-2 hours a day, because the interview loop tests both.</p>
 <h2 id="parallel-track-dsa">Parallel track · DSA</h2>
 <p>DSA means data structures and algorithms. The <a href="dsa-track-300.html">Top-300 LeetCode Mastery Path</a> runs alongside the spine, 1-2 hours a day, pattern by pattern: learn the pattern's template first, then solve 2-3 problems with it.</p>
+<figure id="fig-index-dsa">
+<img src="img/idx-dsa.svg" alt="DSA track badge" loading="lazy" style="width:96px;height:96px">
+<figcaption>The DSA companion badge. The Top-300 track runs under every week of the spine, 1-2 hours a day, pattern by pattern.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram</strong>
+<ol>
+<li><strong>The badge marks the parallel lane.</strong> DSA never replaces spine work; it runs alongside it.</li>
+<li><strong>Pattern first, problems second.</strong> Learn the template, then solve 2-3 problems with it.</li>
+</ol>
+</div>
+</figure>
+
 <h2 id="existing-modules-referenced-not-rebuilt">Existing modules (referenced, not rebuilt)</h2>
 <ul>
 <li>RRK Agentic AI Textbook v2 + Interview QA Bank v2 - agents, RAG, evals, guardrails</li>
