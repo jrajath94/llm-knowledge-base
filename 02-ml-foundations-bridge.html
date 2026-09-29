@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Volume 2: The Researcher's Experiment Loop - Research-Engineer Curriculum</title>
 <style>
@@ -643,6 +651,18 @@ Intervention delta: +7.31 pp (mean over 8 seeds each)</pre>
 
 <p><strong>Next: Chapter 3</strong> builds the honest data the loop's measurement step requires: train, validation, and test splits done right.</p>
 
+
+<figure>
+<img src="img/02-ablation-ladder.svg" alt="Ablation ladder: full system 94.65 percent, remove squared features 87.34 percent, bare baseline 87.34 percent; below, non-overlapping score ranges for baseline and intervention">
+<figcaption>Figure 2.3. The ablation ladder. Remove one thing at a time, most expensive first; the squared features carry the whole 7.31-point win. Below: the baseline and intervention score ranges do not touch, so the effect is real.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Read the ladder top to bottom: each rung removes exactly one component.</li>
+<li>The delta on the right is the attribution: squared features are the whole story.</li>
+<li>The bottom panel shows the seed distributions: max baseline 88.60 against min intervention 93.70, no overlap, no doubt.</li>
+</ol>
+</div>
+</figure>
 <h2 id="ch3">Chapter 3: Splits Done Right</h2>
 
 <p>The loop's measurement step demands data the decisions never touched. Chapter 2 stated the requirement; this chapter builds it. Splits are how you carve the data so the measurement stays honest.</p>
@@ -1067,6 +1087,18 @@ D3 hygiene checklist:
 
 <p><strong>Next: Chapter 6</strong> answers the last question: with honest splits, honest metrics, and no leaks, is the win real? Confidence intervals and paired tests.</p>
 
+
+<figure>
+<img src="img/02-leakage-detectors.svg" alt="Three detectors: single-feature scan, duplicate audit, hygiene checklist; below, a dirty pipeline at 99.06 percent versus an honest re-run at 91.75 percent">
+<figcaption>Figure 5.3. Three detectors, built into every pipeline. Scan each feature alone, hash rows across the split, and assert split hygiene instead of assuming it. The honest re-run shows the leak was worth 7.3 points.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>D1: a feature with AUC 1.000 alone is not a feature, it is the answer key.</li>
+<li>D2: 40 of 120 duplicate groups straddling the split means the split is contaminated.</li>
+<li>D3 is a checklist, not a model: test indices disjoint from train, every transform fit on train only.</li>
+</ol>
+</div>
+</figure>
 <h2 id="ch6">Chapter 6: Is the Win Real?</h2>
 
 <p>Everything so far assumed a clean comparison: a visible gap, honest splits, no leaks. Real comparisons are noisy. A 1.2-point win can be signal or luck, and this chapter is the statistics that tells them apart.</p>
@@ -1219,7 +1251,19 @@ verdict: REAL WIN: interval excludes 0 and p &lt; 0.05</pre>
 
 
 <section class="watch-deeper" aria-labelledby="wd-h-mlfound">
-  <h2 class="watch-deeper-kicker" id="wd-h-mlfound">Watch and go deeper</h2>
+  
+<figure>
+<img src="img/02-reading-significance.svg" alt="Decision tree: if the 95 percent confidence interval on the difference covers zero, the result is not proven; if it clears zero, it is a proven win">
+<figcaption>Figure 6.3. Reading a significance result. If the 95 percent interval on the difference covers zero, the data cannot tell; if it clears zero, the win is proven. Not significant means cannot tell, never no difference.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Start at the top: the interval on the difference is the whole story.</li>
+<li>Left branch: collect more data or shrink the noise, do not claim a win.</li>
+<li>Right branch: report the interval, not just the delta.</li>
+</ol>
+</div>
+</figure>
+<h2 class="watch-deeper-kicker" id="wd-h-mlfound">Watch and go deeper</h2>
   <p class="watch-deeper-lede">Four short videos that replay the volume's core ideas with pictures. StatQuest rebuilds bias-variance, cross-validation, confusion matrices, and p-values from concrete examples.</p>
   <div class="watch-deeper-grid">
     <figure class="watch-card">
