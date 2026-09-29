@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 430" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="430" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">The bill, and the order to attack it</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">7B model: four piles, 16 bytes per parameter, and which sharding stage kills each</text>
+<rect x="60" y="94" width="70.0" height="44" fill="#6cb2ff" rx="4" opacity="1"/>
+<text x="95.0" y="122" font-size="12" font-weight="bold" fill="#0d0d0d" text-anchor="middle">2 B</text>
+<text x="95.0" y="158" font-size="11" fill="#6cb2ff" text-anchor="middle">weights</text>
+<rect x="130.0" y="94" width="70.0" height="44" fill="#4fd1a5" rx="4" opacity="1"/>
+<text x="165.0" y="122" font-size="12" font-weight="bold" fill="#0d0d0d" text-anchor="middle">2 B</text>
+<text x="165.0" y="158" font-size="11" fill="#4fd1a5" text-anchor="middle">gradients</text>
+<rect x="200.0" y="94" width="140.0" height="44" fill="#f0b429" rx="4" opacity="1"/>
+<text x="270.0" y="122" font-size="12" font-weight="bold" fill="#0d0d0d" text-anchor="middle">4 B</text>
+<text x="270.0" y="158" font-size="11" fill="#f0b429" text-anchor="middle">master weights</text>
+<rect x="340.0" y="94" width="140.0" height="44" fill="#e57ea6" rx="4" opacity="1"/>
+<text x="410.0" y="122" font-size="12" font-weight="bold" fill="#0d0d0d" text-anchor="middle">4 B</text>
+<text x="410.0" y="158" font-size="11" fill="#e57ea6" text-anchor="middle">Adam m</text>
+<rect x="480.0" y="94" width="140.0" height="44" fill="#b388ff" rx="4" opacity="1"/>
+<text x="550.0" y="122" font-size="12" font-weight="bold" fill="#0d0d0d" text-anchor="middle">4 B</text>
+<text x="550.0" y="158" font-size="11" fill="#b388ff" text-anchor="middle">Adam v</text>
+<text x="60" y="194" font-size="13" fill="#a8a8a8" text-anchor="start">7B x 16 B/param = 112 GB of model state, before activations. The optimizer piles (rose, purple, amber) are 12 of the 16 bytes.</text>
+<rect x="60" y="234" width="150" height="44" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="135" y="261" font-size="12" font-weight="bold" fill="#ececec" text-anchor="middle">1st: ZeRO-1</text>
+<text x="230" y="261" font-size="12" fill="#a8a8a8" text-anchor="start">shards optimizer states (m, v) + master weights</text>
+<text x="600" y="261" font-size="12" fill="#4fd1a5" text-anchor="start">112 -&gt; 38.5 GB, no extra comm</text>
+<rect x="60" y="292" width="150" height="44" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="135" y="319" font-size="12" font-weight="bold" fill="#ececec" text-anchor="middle">2nd: ZeRO-2</text>
+<text x="230" y="319" font-size="12" fill="#a8a8a8" text-anchor="start">also shards gradients</text>
+<text x="600" y="319" font-size="12" fill="#f0b429" text-anchor="start">-&gt; 26.3 GB, same comm as DDP</text>
+<rect x="60" y="350" width="150" height="44" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="135" y="377" font-size="12" font-weight="bold" fill="#ececec" text-anchor="middle">3rd: ZeRO-3 / FSDP</text>
+<text x="230" y="377" font-size="12" fill="#a8a8a8" text-anchor="start">also shards parameters</text>
+<text x="600" y="377" font-size="12" fill="#e57ea6" text-anchor="start">-&gt; 14 GB, ~1.5x comm</text>
+</svg>
