@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="idx-track-04">
+<rect width="120" height="120" rx="26" fill="#111111"/>
+<rect x="3" y="3" width="114" height="114" rx="23" fill="none" stroke="#b388ff" stroke-width="2.5"/>
+<line x1="60" y1="28" x2="92" y2="60" stroke="#b388ff" stroke-width="1.5" opacity="0.7"/><line x1="60" y1="28" x2="60" y2="92" stroke="#b388ff" stroke-width="1.5" opacity="0.7"/><line x1="60" y1="28" x2="28" y2="60" stroke="#b388ff" stroke-width="1.5" opacity="0.7"/><line x1="92" y1="60" x2="60" y2="92" stroke="#b388ff" stroke-width="1.5" opacity="0.7"/><line x1="92" y1="60" x2="28" y2="60" stroke="#b388ff" stroke-width="1.5" opacity="0.7"/><line x1="60" y1="92" x2="28" y2="60" stroke="#b388ff" stroke-width="1.5" opacity="0.7"/><circle cx="60" cy="28" r="7" fill="#111111" stroke="#b388ff" stroke-width="2.5"/><circle cx="92" cy="60" r="7" fill="#111111" stroke="#b388ff" stroke-width="2.5"/><circle cx="60" cy="92" r="7" fill="#111111" stroke="#b388ff" stroke-width="2.5"/><circle cx="28" cy="60" r="7" fill="#111111" stroke="#b388ff" stroke-width="2.5"/>
+</svg>
