@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" font-family="ui-sans-serif, system-ui, sans-serif" role="img" aria-label="A bad figure beside a good figure">
+  <text x="40" y="30" font-size="13" fill="#a8a8a8" font-weight="700">BEFORE: decoration</text>
+  <rect x="20" y="44" width="300" height="240" rx="8" fill="#101010" stroke="#3a3a3a"/>
+  <text x="170" y="70" font-size="13" fill="#a8a8a8" text-anchor="middle">Results</text>
+  <line x1="60" y1="100" x2="60" y2="240" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="60" y1="240" x2="300" y2="240" stroke="#3a3a3a" stroke-width="1.5"/>
+  <polyline points="70,220 120,200 170,210 220,150 270,120" fill="none" stroke="#7a7a7a" stroke-width="2"/>
+  <polyline points="70,225 120,215 170,218 220,190 270,180" fill="none" stroke="#555555" stroke-width="2"/>
+  <text x="170" y="272" font-size="11" fill="#a8a8a8" text-anchor="middle">no axis labels, no units, no message</text>
+  <text x="360" y="30" font-size="13" fill="#f0b429" font-weight="700">AFTER: an argument</text>
+  <rect x="360" y="44" width="300" height="240" rx="8" fill="#101010" stroke="#f0b429" stroke-width="1.5"/>
+  <text x="510" y="70" font-size="13" fill="#ececec" text-anchor="middle" font-weight="700">Gating helps on long contexts</text>
+  <line x1="400" y1="100" x2="400" y2="240" stroke="#a8a8a8" stroke-width="1.5"/>
+  <line x1="400" y1="240" x2="640" y2="240" stroke="#a8a8a8" stroke-width="1.5"/>
+  <text x="395" y="120" font-size="10" fill="#a8a8a8" text-anchor="end">accuracy</text>
+  <text x="520" y="260" font-size="10" fill="#a8a8a8" text-anchor="middle">context length (tokens)</text>
+  <polyline points="410,220 460,205 510,200 560,160 610,130" fill="none" stroke="#f0b429" stroke-width="2.5"/>
+  <polyline points="410,222 460,214 510,212 560,200 610,195" fill="none" stroke="#a8a8a8" stroke-width="2"/>
+  <text x="618" y="150" font-size="10" fill="#f0b429" text-anchor="end">with gating</text>
+  <text x="618" y="208" font-size="10" fill="#a8a8a8" text-anchor="end">without</text>
+  <line x1="560" y1="160" x2="600" y2="120" stroke="#ececec" stroke-width="1"/>
+  <text x="602" y="114" font-size="10" fill="#ececec">gap opens past 8k</text>
+  <rect x="20" y="306" width="640" height="74" rx="8" fill="#0d0d0d" stroke="#3a3a3a" stroke-dasharray="5 4"/>
+  <text x="36" y="334" font-size="13" fill="#a8a8a8">The 30-second test: a stranger should get the point in 30 seconds.</text>
+  <text x="36" y="356" font-size="13" fill="#a8a8a8">The title states the message. The axes carry meaning and units.</text>
+</svg>
