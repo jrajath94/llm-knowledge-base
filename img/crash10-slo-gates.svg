@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 310" width="100%" style="max-width:700px" role="img" aria-label="PSI above 0.25 means shift; canary 1 to 5 percent of traffic; rollback must be a button">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="700" height="310" fill="none"/>
+<text class="t" x="24" y="30">MLOps guardrails: drift tripwire, canary, rollback</text>
+<rect x="24" y="52" width="8" height="44" rx="4" fill="#e57373"/>
+<text class="big" x="44" y="72">PSI &gt; 0.25</text>
+<text class="m" x="44" y="90">significant distribution shift: the statistical tripwire</text>
+<rect x="24" y="104" width="8" height="44" rx="4" fill="#f0b429"/>
+<text class="big" x="44" y="124">Canary: 1-5% traffic</text>
+<text class="m" x="44" y="142">shadow mode before it; gradual after it</text>
+<rect x="24" y="156" width="8" height="44" rx="4" fill="#7fc97f"/>
+<text class="big" x="44" y="176">Rollback: a button, not a project</text>
+<text class="m" x="44" y="194">the deploy requirement that matters most</text>
+<rect x="24" y="208" width="8" height="44" rx="4" fill="#6cb2ff"/>
+<text class="big" x="44" y="228">Reproducibility ladder</text>
+<text class="m" x="44" y="246">code+data+seed -&gt; metrics -&gt; business outcome: pick the rung the decision needs</text>
+<text class="m" x="24" y="284">Retraining triggers: scheduled, performance, drift, on-demand. Each with a different price.</text>
+</svg>
