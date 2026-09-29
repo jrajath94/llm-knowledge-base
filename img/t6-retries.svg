@@ -1,0 +1,51 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 920 520' width='100%' role='img'>
+<title>Retries with judgment: classify, then decide</title>
+<text x='460' y='40' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>Retries with judgment: classify, then decide</text>
+<rect x='360' y='65' width='200' height='70' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='460' y='91' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>An error happened</text>
+<text x='460' y='111' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Something failed</text>
+<line x1='460' y1='135' x2='460' y2='197' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='456.3,188.8 460,197 463.7,188.8' fill='#8a8a8a'/>
+<rect x='110' y='165' width='250' height='72' rx='10' fill='#8a8a8a' fill-opacity='0.22' stroke='#8a8a8a' stroke-width='2'/>
+<text x='235' y='191' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>Transient</text>
+<text x='235' y='211' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>rate limit,</text>
+<text x='235' y='229' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>network blip</text>
+<rect x='560' y='165' width='250' height='72' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='685' y='191' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>Retry with backoff</text>
+<text x='685' y='211' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>plus jitter</text>
+<line x1='360' y1='201' x2='560' y2='201' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='551.8,204.7 560,201 551.8,197.3' fill='#8a8a8a'/>
+<line x1='460' y1='135' x2='460' y2='285' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='456.3,276.8 460,285 463.7,276.8' fill='#8a8a8a'/>
+<rect x='110' y='253' width='250' height='72' rx='10' fill='#8a8a8a' fill-opacity='0.22' stroke='#8a8a8a' stroke-width='2'/>
+<text x='235' y='279' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>Model mistake</text>
+<text x='235' y='299' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>bad plan,</text>
+<text x='235' y='317' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>bad args</text>
+<rect x='560' y='253' width='250' height='72' rx='10' fill='#1565c0' fill-opacity='0.22' stroke='#1565c0' stroke-width='2'/>
+<text x='685' y='279' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>Replan the step,</text>
+<text x='685' y='299' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>not the run</text>
+<line x1='360' y1='289' x2='560' y2='289' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='551.8,292.7 560,289 551.8,285.3' fill='#8a8a8a'/>
+<line x1='460' y1='135' x2='460' y2='373' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='456.3,364.8 460,373 463.7,364.8' fill='#8a8a8a'/>
+<rect x='110' y='341' width='250' height='72' rx='10' fill='#8a8a8a' fill-opacity='0.22' stroke='#8a8a8a' stroke-width='2'/>
+<text x='235' y='367' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>External failure</text>
+<text x='235' y='387' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>tool is down</text>
+<rect x='560' y='341' width='250' height='72' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='685' y='367' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>Escalate: degrade</text>
+<text x='685' y='387' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>or ask the user</text>
+<line x1='360' y1='377' x2='560' y2='377' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='551.8,380.7 560,377 551.8,373.3' fill='#8a8a8a'/>
+<line x1='460' y1='135' x2='460' y2='461' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='456.3,452.8 460,461 463.7,452.8' fill='#8a8a8a'/>
+<rect x='110' y='429' width='250' height='72' rx='10' fill='#8a8a8a' fill-opacity='0.22' stroke='#8a8a8a' stroke-width='2'/>
+<text x='235' y='455' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>Unrecoverable</text>
+<text x='235' y='475' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>bad credentials</text>
+<rect x='560' y='429' width='250' height='72' rx='10' fill='#c0392b' fill-opacity='0.22' stroke='#c0392b' stroke-width='2'/>
+<text x='685' y='455' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>Abort gracefully,</text>
+<text x='685' y='475' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>report clearly</text>
+<line x1='360' y1='465' x2='560' y2='465' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='551.8,468.7 560,465 551.8,461.3' fill='#8a8a8a'/>
+<text x='235' y='155' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#8a8a8a' text-anchor='middle'>classify</text>
+<text x='685' y='155' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#8a8a8a' text-anchor='middle'>decide</text>
+</svg>
