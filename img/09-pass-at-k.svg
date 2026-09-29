@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="640" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Pass@k, worked: n = 10 tries, c = 3 successes</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Same agent, three numbers, three stories</text>
+<rect x="24" y="94" width="852" height="110" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="48" y="126" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#4fd1a5" text-anchor="start">pass@1</text>
+<text x="200" y="126" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#ececec" text-anchor="start">c / n = 3 / 10</text>
+<text x="200" y="152" font-size="14" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#4fd1a5" text-anchor="start">= 0.30</text>
+<text x="48" y="178" font-size="11" fill="#a8a8a8" text-anchor="start">Typical run: 30 percent.</text>
+<rect x="24" y="216" width="852" height="110" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="48" y="248" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#6cb2ff" text-anchor="start">pass@5</text>
+<text x="200" y="248" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#ececec" text-anchor="start">1 - C(7,5) / C(10,5) = 1 - 21/252</text>
+<text x="200" y="274" font-size="14" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#6cb2ff" text-anchor="start">= 0.9167</text>
+<text x="48" y="300" font-size="11" fill="#a8a8a8" text-anchor="start">With 5 tries, 92 percent ceiling.</text>
+<rect x="24" y="338" width="852" height="110" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="48" y="370" font-size="15" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#e57ea6" text-anchor="start">pass^2</text>
+<text x="200" y="370" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#ececec" text-anchor="start">C(3,2) / C(10,2) = 3 / 45</text>
+<text x="200" y="396" font-size="14" font-weight="bold" font-family="DejaVu Sans Mono, monospace" fill="#e57ea6" text-anchor="start">= 0.0667</text>
+<text x="48" y="422" font-size="11" fill="#a8a8a8" text-anchor="start">Two clean runs in a row: under 7 percent.</text>
+<text x="24" y="474" font-size="12" fill="#f0b429" text-anchor="start">The ceiling is high, the typical run is weak, and consistency is poor. Ship or not? Not without fixing reliability.</text>
+</svg>
