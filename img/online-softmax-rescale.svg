@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 390" width="100%" style="max-width:700px" role="img" aria-label="Running max and sum merge a new tile by rescaling the old sum with exp of old max minus new max, then adding the new tile sum">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="700" height="390" fill="none"/>
+<text class="t" x="24" y="30">Online softmax: merge one tile without recomputing</text>
+<rect class="box" x="24" y="56" width="200" height="120" rx="8"/>
+<text class="big g" x="38" y="84">Tiles seen so far</text>
+<text class="num" x="38" y="108">m_old = running max</text>
+<text class="num" x="38" y="130">l_old = rescaled sum</text>
+<text class="m" x="38" y="152">(exps based on m_old)</text>
+<rect class="box" x="264" y="56" width="200" height="120" rx="8"/>
+<text class="big b" x="278" y="84">New tile</text>
+<text class="num" x="278" y="108">tile_max = tile.max()</text>
+<text class="num" x="278" y="130">m_new = max(m_old, tile_max)</text>
+<path class="arr" d="M224 116 L264 116"/>
+<rect class="box" x="24" y="216" width="440" height="150" rx="8"/>
+<text class="big g" x="38" y="244">Merge: rescale, do not recompute</text>
+<text class="num" x="38" y="270">l_new = l_old x exp(m_old - m_new) + sum(exp(tile - m_new))</text>
+<text class="m" x="38" y="296">Old exps were based on the OLD max. When a larger max appears,</text>
+<text class="m" x="38" y="316">old exps get re-based by exp(m_old - m_new) instead of re-reading data.</text>
+<text class="r" x="38" y="340">One pass, no full attention matrix. Skip the rescale and the rows no longer sum to 1.</text>
+</svg>
