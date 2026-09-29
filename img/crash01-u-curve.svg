@@ -1,0 +1,22 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 420' width='100%' style='max-width:860px;background-color:transparent' role='img'>
+<style>text{font-family='Inter,system-ui,-apple-system,sans-serif';fill:#ececec}.m{fill:#a8a8a8}.y{fill:#f0b429}.b{fill:#6cb2ff}.r{fill:#e57373}</style>
+<text x='20' y='30' font-size='17' font-weight='600'>The U-curve: loss at fixed compute vs batch size</text>
+<line x1='80' y1='60' x2='80' y2='340' stroke='#5a5a5a' stroke-width='1.5'/>
+<line x1='80' y1='340' x2='680' y2='340' stroke='#5a5a5a' stroke-width='1.5'/>
+<text x='380' y='372' font-size='13' text-anchor='middle' class='m'>batch size (log scale)</text>
+<text x='28' y='200' font-size='13' text-anchor='middle' class='m' transform='rotate(-90 28 200)'>loss at fixed compute</text>
+<path d='M100,120 C200,130 240,300 360,300 C480,300 520,130 660,120' fill='none' stroke='#f0b429' stroke-width='3'/>
+<line x1='360' y1='300' x2='360' y2='340' stroke='#7fc97f' stroke-width='2' stroke-dasharray='6 4'/>
+<circle cx='360' cy='300' r='7' fill='#7fc97f' stroke='#0d0d0d' stroke-width='2'/>
+<text x='360' y='392' font-size='13' text-anchor='middle' fill='#7fc97f' font-weight='700'>critical batch size</text>
+<text x='150' y='110' font-size='13' class='b'>noise regime</text>
+<text x='120' y='130' font-size='12' class='m'>small batches:</text>
+<text x='120' y='148' font-size='12' class='m'>gradient noise dominates,</text>
+<text x='120' y='166' font-size='12' class='m'>steps are jittery</text>
+<text x='520' y='110' font-size='13' class='r'>waste regime</text>
+<text x='490' y='130' font-size='12' class='m'>huge batches: the budget</text>
+<text x='490' y='148' font-size='12' class='m'>cannot feed a bigger model,</text>
+<text x='490' y='166' font-size='12' class='m'>compute is wasted</text>
+<text x='360' y='270' font-size='12' text-anchor='middle' class='m'>minimum: scale the batch</text>
+<text x='360' y='286' font-size='12' text-anchor='middle' class='m'>toward here first (Rule 12)</text>
+</svg>
