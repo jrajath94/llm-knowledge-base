@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Volume 7: Post-training and RL - Research-Engineer Curriculum</title>
 <style>
@@ -603,6 +611,19 @@ loss.backward()  # the model learns P(response | prompt), nothing else</code></p
 <li><strong>How much data?</strong> The InstructGPT recipe used on the order of 13,000 demonstration prompts, as reported. The striking follow-up came from the LIMA paper: 1,000 extremely careful examples aligned a 65B model, as reported. Both point the same way: a smaller set of excellent demonstrations beats a large set of mediocre ones.</li>
 </ul>
 
+<figure>
+<img src="img/07-sft-data-curation-funnel.svg" alt="Vertical funnel diagram: raw prompts and drafts narrow through quality filter, human verify and edit, diversity check, to final demonstrations">
+<figcaption>The SFT data funnel. Generated for this volume. Demonstrations are the product: a wide intake of prompts and drafts narrows through quality filtering, human verification, and diversity checks to a small set of excellent examples.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Top: the intake.</strong> Prompts and draft responses enter wide: 100K+ candidates, with strong models drafting and humans filtering.</li>
+<li><strong>The narrowing.</strong> Each stage removes material: correctness first, then target style, then diversity across Q and A, coding, writing, multi-turn, and edge cases.</li>
+<li><strong>The bottom: the product.</strong> InstructGPT used on the order of 13,000 demonstration prompts; LIMA aligned a 65B model with 1,000 extremely careful examples.</li>
+<li><strong>The lesson.</strong> A smaller set of excellent demonstrations beats a large set of mediocre ones.</li>
+</ol>
+</div>
 <h3>2.3 What SFT can do</h3>
 <p>SFT teaches the model the <strong>shape of the job</strong>:</p>
 <ul>
@@ -656,6 +677,19 @@ loss.backward()  # the model learns P(response | prompt), nothing else</code></p
 </div>
 
 <p>SFT can only imitate the demonstrations you write. It cannot learn which of two good answers is better, because no demo ever says that. This chapter collects the other kind of human signal, comparisons, which is the fuel for everything in Chapters 4 through 6.</p>
+<figure>
+<img src="img/07-sft-distribution-shift.svg" alt="Venn diagram of training demos and deployment prompts; the overlap is where cloning works, the non-overlapping deployment region is brittle">
+<figcaption>Where SFT's coverage ends. Generated for this volume. Behavioral cloning works in the overlap between the demonstration distribution and the deployment distribution; prompts outside it degrade fast.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Left circle: the training demos.</strong> Everything the model was shown to copy.</li>
+<li><strong>Right circle: the deployment prompts.</strong> Everything users will actually ask.</li>
+<li><strong>The overlap: where cloning works.</strong> New domains and adversarial phrasing outside it degrade fast, because cloning only works where the examples reach.</li>
+<li><strong>The reading rule.</strong> This is the superficial alignment hypothesis in one picture: SFT surfaces capabilities from pre-training; it rarely creates new ones.</li>
+</ol>
+</div>
 <h3>3.1 What it is</h3>
 <p>Preference data is a dataset of <strong>comparisons</strong>. Each item is a tuple: a prompt, two (or more) model responses, and a human judgment of which is better. Often there is also a "tie" option. That is the whole data structure. Everything in Chapters 4 through 6, reward models, PPO, DPO, GRPO, is machinery for squeezing signal out of these comparisons.</p>
 <p>Why comparisons instead of scores like "rate this answer 1 to 5"? Humans are bad at absolute scales and good at relative ones. Your "4 out of 5" and my "4 out of 5" mean different things, and both of us drift over a long labeling shift. But "A is better than B" is a judgment people make quickly and consistently. Rankings also dodge the calibration problem: the model never needs to know what a "4" means, only which of two options wins.</p>
@@ -684,6 +718,21 @@ loss.backward()  # the model learns P(response | prompt), nothing else</code></p
 <li><strong>Agreement measurement.</strong> Give the same items to multiple labelers and measure how often they agree. The InstructGPT team reported agreement around 7 in 10 on their comparisons. That number is a feature, not a bug: it tells you the ceiling. A reward model cannot be more consistent than the humans it learns from.</li>
 </ul>
 
+<figure>
+<img src="img/07-annotation-workflow.svg" alt="Five-stage pipeline: prompt sourcing, response sampling, guidelines, labelers judge, agreement check, with a disagreement-is-signal note">
+<figcaption>The preference-data collection pipeline. Generated for this volume. Prompts are sourced to match deployment, responses are sampled on-policy, a written rubric defines better, and agreement is measured because the reward model cannot exceed it.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Prompt sourcing.</strong> Real user requests, red-team probes, targeted sets for known weaknesses: match the deployment distribution.</li>
+<li><strong>Response sampling.</strong> Two to four responses per prompt from the SFT model itself, so the data stays on-policy.</li>
+<li><strong>Guidelines.</strong> A written rubric in priority order, helpfulness then honesty then harmlessness, with tie-breakers.</li>
+<li><strong>Labelers judge.</strong> Pairwise comparisons: rank, do not score.</li>
+<li><strong>Agreement check.</strong> The InstructGPT team reported about 7 in 10 agreement. That is the ceiling the reward model inherits.</li>
+<li><strong>The purple box.</strong> Disagreement marks where the rubric is silent: adjudicate, then repair the rubric.</li>
+</ol>
+</div>
 <h3>3.3 What makes a pair high quality</h3>
 <ul>
 <li><strong>Hard negatives.</strong> The most valuable pairs are close calls: two decent answers where one has a subtle flaw (a wrong fact buried in paragraph three, a slightly unhelpful framing). Easy pairs (great vs gibberish) teach almost nothing; the model already knows gibberish is bad.</li>
@@ -740,6 +789,21 @@ loss.backward()  # the model learns P(response | prompt), nothing else</code></p
 </div>
 
 <p>Comparisons are data, not a training signal: a policy cannot optimize "A beats B" directly. This chapter closes that gap in three stages: train a reward model that turns comparisons into scores, then optimize the policy against it with PPO, with a KL leash keeping the policy near the reference.</p>
+<figure>
+<img src="img/07-preference-pitfalls-matrix.svg" alt="Five-row table of preference data pitfalls: verbosity bias, sycophancy, guideline drift, demographic skew, cost pressure, each with cause, symptom, and fix">
+<figcaption>Classic preference-data pitfalls. Generated for this volume. Each row is a failure mode of the labeling operation: what causes it, how it shows up in the model, and the fix.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Rows are pitfalls; columns are cause, symptom, fix.</strong> Read any row left to right as a causal chain.</li>
+<li><strong>Verbosity bias:</strong> labelers use length as a proxy for effort; the model pads.</li>
+<li><strong>Sycophancy:</strong> labelers prefer agreement; the model validates false beliefs.</li>
+<li><strong>Guideline drift:</strong> rubric interpretation shifts over weeks; the reward model learns a blurry average.</li>
+<li><strong>Demographic skew and cost pressure:</strong> who labels, and how fast, becomes what the model values.</li>
+<li><strong>The chapter's key line:</strong> data beats algorithm.</li>
+</ol>
+</div>
 <h3>4.1 The three stages, one picture</h3>
 <p>RLHF (reinforcement learning from human feedback) runs in three stages. Stage 1 is SFT from Chapter 2. Stage 2 trains a <strong>reward model</strong>: a network that reads a prompt plus a response and outputs a single number scoring how good the response is. Stage 3 uses <strong>PPO</strong> (proximal policy optimization), an RL algorithm, to tune the language model (the <strong>policy</strong>) so its outputs score highly under the reward model.</p>
 
@@ -874,6 +938,20 @@ CASE B: bad token, advantage A = -0.5
 <p>The clip and the KL penalty are both trust regions at different scales. The <strong>clip</strong> bounds how far <em>one update step</em> can move the policy (per-batch safety). The <strong>KL penalty</strong> bounds how far the policy can drift <em>from the reference model</em> over the whole run (global safety). You need both: the clip without KL lets the policy walk steadily into reward-model blind spots; KL without the clip lets a single bad batch do damage before the penalty catches up.</p>
 </div>
 
+<figure>
+<img src="img/07-kl-penalty-drift.svg" alt="Plot of total reward versus KL drift: a shallow teal line for beta 0.1 and a steep rose line for beta 1.0, with the worked point at KL 1.5 nats marked">
+<figcaption>The KL penalty sets the exchange rate. Generated for this volume. Total reward equals the reward-model score minus beta times the KL drift from the reference; the worked example uses r_RM = 2.0 and KL = 1.5 nats.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Axes.</strong> Horizontal: KL drift from the frozen SFT reference, in nats. Vertical: the total reward the policy sees.</li>
+<li><strong>The dashed line:</strong> r_RM = 2.0 with no penalty, the ceiling.</li>
+<li><strong>Teal line, beta = 0.1.</strong> Shallow: at KL 1.5 the penalty shaves 0.15 to 1.85, so the policy keeps moving toward reward.</li>
+<li><strong>Rose line, beta = 1.0.</strong> Steep: the same drift costs 1.5, leaving 0.5, so the policy stays put.</li>
+<li><strong>The reading rule.</strong> Beta is the exchange rate between reward points and nats of drift; illustrative values run 0.05 to 0.2.</li>
+</ol>
+</div>
 <h3>4.5 Numbers that anchor the method</h3>
 <ul>
 <li>The InstructGPT paper reports the headline result: labelers preferred the 1.3B instruction-tuned model over the 175B base GPT-3. Alignment beat 100x scale.</li>
@@ -1016,6 +1094,21 @@ anchored to the reference. Small beta (0.1) means: move, but stay
 close to pi_ref. Larger beta would push harder and drift further.</pre>
 <p>Notice beta's dual role: it is the KL exchange rate from the RLHF objective <em>and</em> the step-size-like scale of the DPO update. In practice beta is tuned (illustrative range 0.1 to 0.5); too small and nothing changes, too large and the policy drifts off the reference into incoherence.</p>
 
+<figure>
+<img src="img/07-dpo-worked-trace.svg" alt="Step-by-step numeric trace: winner and loser log ratios feed an implicit reward gap of 0.8754, z of 0.08755, sigmoid 0.52187, loss 0.6503, gradient weight 0.0478">
+<figcaption>The DPO worked example, step by step. Generated for this volume. The winner's and loser's policy-to-reference ratios become an implicit reward gap, a Bradley-Terry prediction, and finally the loss 0.6503 from section 5.6.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Top two boxes: the raw material.</strong> Winner: pi_theta 0.30 vs pi_ref 0.25, ratio 1.20, log +0.1823. Loser: 0.05 vs 0.10, ratio 0.50, log -0.6931.</li>
+<li><strong>The gap:</strong> 0.1823 minus (-0.6931) = 0.8754, scaled by beta 0.1 to z = 0.08755.</li>
+<li><strong>Bradley-Terry:</strong> sigma(z) = 0.52187, the model's predicted probability that the human prefers the winner.</li>
+<li><strong>Loss = -log(0.52187) = 0.6503;</strong> gradient weight = 0.1 x (1 - 0.52187) = 0.0478.</li>
+<li><strong>The update</strong> raises the winner's probability and lowers the loser's, anchored to the reference.</li>
+<li><strong>Beta's dual role:</strong> the KL exchange rate from the RLHF objective and the step-size-like scale of the DPO update.</li>
+</ol>
+</div>
 <h3>5.7 When DPO works, and when it does not</h3>
 <p><strong>DPO shines when:</strong> the preference data is clean, the compared responses come from a model near the reference (on-policy-ish), and the task is single-turn judgment: tone, helpfulness, style, which-of-two. It is simpler, more stable, and cheaper than PPO, which is why it became the default first try.</p>
 <p><strong>DPO struggles when:</strong></p>
@@ -1062,6 +1155,19 @@ close to pi_ref. Larger beta would push harder and drift further.</pre>
 </div>
 
 <p>DPO and PPO learn from human taste, which is the right tool for tone and helpfulness. It is the wrong tool where answers are checkable: for math and code, right-or-wrong beats preferred. This chapter replaces the learned reward model with a verifier, and the critic with a group of samples.</p>
+<figure>
+<img src="img/07-dpo-when-works-fails.svg" alt="Two-column panel: conditions where DPO shines versus three failure modes with their fixes">
+<figcaption>When DPO works, and when it does not. Generated for this volume. DPO is the default first try on clean, on-policy, single-turn preference data; the three exits are noisy labels, distribution shift, and reasoning tasks.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Left column:</strong> DPO shines on clean preference data, on-policy-ish pairs, single-turn judgment of tone and helpfulness. Simpler, more stable, cheaper than PPO.</li>
+<li><strong>Noisy labels:</strong> the loss has no uncertainty model; the gradient weight is largest exactly when the model disagrees with the label, which is also when the label is most likely wrong. Fix: PPO's reward model averages noise first.</li>
+<li><strong>Distribution shift:</strong> DPO trains offline on fixed pairs; the implicit reward extrapolates badly. Fix: iterative DPO, re-sample and re-label.</li>
+<li><strong>Reasoning tasks:</strong> one preference judgment is weak next to right-or-wrong. Fix: verifiable rewards, Chapter 6.</li>
+</ol>
+</div>
 <h3>6.1 RLVR: reinforcement learning with verifiable rewards</h3>
 <p><strong>What it is.</strong> RLVR replaces the learned reward model with a <strong>checker</strong>. In domains where correctness can be verified mechanically, the reward is not a human judgment. It is a fact:</p>
 <ul>
@@ -1185,6 +1291,19 @@ variance (or add format rewards so ties are rare).</pre>
 </div>
 
 <p>Every method so far buys its signal with human labels, and labels are the bottleneck: slow, expensive, and hard to scale. This chapter asks what happens when the model does the labeling itself, guided by a written constitution instead of thousands of human judgments.</p>
+<figure>
+<img src="img/07-reasoning-models-timeline.svg" alt="Timeline with two milestones: R1-Zero pure RL with the aha moment, and production R1 with cold-start SFT, plus the three legs of sampling scale, base capability, and verifier quality">
+<figcaption>What the reasoning recipe produced. Generated for this volume. R1-Zero showed long chain-of-thought emerging from pure RL with verifiable rewards; production R1 added a cold-start SFT phase because readability is a preference.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>R1-Zero:</strong> pure RL, verifiable rewards, from the base model with no SFT on reasoning traces. Long chain-of-thought emerged; the aha moment was spontaneous self-correction.</li>
+<li><strong>Production R1:</strong> a cold-start SFT phase was added before RL, because pure-RL traces, while correct, were hard for humans to read.</li>
+<li><strong>The lesson:</strong> RL amplifies behaviors the base model already samples; it does not invent them from nothing.</li>
+<li><strong>The three legs:</strong> sampling scale, base-model capability, verifier quality. If the base model never samples a correct trace in G tries, all rewards are zero and nothing is learned.</li>
+</ol>
+</div>
 <h3>7.1 What it is</h3>
 <p>Constitutional AI (CAI, Anthropic, 2022) trains a harmless assistant with <strong>AI feedback instead of human feedback</strong>. The core idea: humans write down a <strong>constitution</strong>, a list of principles for good behavior ("do not help with wrongdoing", "do not lie", "explain refusals briefly", dozens of such rules in the paper). Then the model itself generates critiques, revisions, and preference labels <em>guided by that constitution</em>. Human judgment moves up one level: from labeling thousands of outputs to writing the rules once.</p>
 
@@ -1384,6 +1503,19 @@ variance (or add format rewards so ties are rare).</pre>
 <li><strong>Regression checks.</strong> Prompts the current model already handles well. A new checkpoint must not break them. Catastrophic forgetting (Vol 3) is a post-training failure mode too.</li>
 </ul>
 
+<figure>
+<img src="img/07-eval-suite-composition.svg" alt="Four cards: win-rate versus baseline, task benchmarks, behavioral probes, regression checks">
+<figcaption>What the eval suite contains. Generated for this volume. Four kinds of evidence make up a post-training eval suite: win-rate, task benchmarks, behavioral probes, and regression checks.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Win-rate vs baseline:</strong> new checkpoint against production, judged blind on a fixed prompt set. The headline number.</li>
+<li><strong>Task benchmarks:</strong> reasoning, coding, instruction following, multilinguality. These catch regressions the preference set misses.</li>
+<li><strong>Behavioral probes:</strong> refusal calibration, sycophancy tests, honesty probes. Small, hand-built, high-signal.</li>
+<li><strong>Regression checks:</strong> prompts the current model already handles well. A new checkpoint must not break them; forgetting is a post-training failure mode too.</li>
+</ol>
+</div>
 <h3>9.3 How practitioners read results</h3>
 <ul>
 <li><strong>Win-rate deltas need uncertainty.</strong> "52 percent vs 48 percent on 200 prompts" is noise. Report confidence intervals; require the delta to survive them before acting. A common bar: the win must be significant and replicate on a fresh sample.</li>
@@ -1432,6 +1564,19 @@ variance (or add format rewards so ties are rare).</pre>
 </div>
 
 <p>Nine chapters of methods leave one question unanswered: which one do you actually use, and in what order? This chapter turns the tour into a decision procedure, keyed to the only thing that matters: what you can show the model versus what you can only judge.</p>
+<figure>
+<img src="img/07-delta-vs-noise.svg" alt="Error-bar plot showing overlapping confidence intervals for 48 versus 52 percent win rates, plus three reward-and-KL regimes">
+<figcaption>How practitioners read results. Generated for this volume. A 52 versus 48 win-rate on 200 prompts is noise: deltas must survive confidence intervals and replicate on a fresh sample, and reward must be read jointly with KL.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>The error bars:</strong> 52 percent versus 48 percent on 200 prompts, with overlapping confidence intervals. That is noise.</li>
+<li><strong>The bar:</strong> report confidence intervals, require the delta to survive them, and require replication on a fresh sample.</li>
+<li><strong>Slice, do not just average:</strong> win-rate up 2 overall while coding drops 4 is not a win.</li>
+<li><strong>The three regimes:</strong> reward up and KL flat is healthy; reward up and KL spiking is probable hacking; reward flat and KL flat learned nothing.</li>
+</ol>
+</div>
 <h3>10.1 The one-line rule</h3>
 <p><strong>Use SFT when you can show the answer. Use RL when you can only judge it.</strong> If experts can write down ideal responses, demonstrations are the cheapest, most stable signal available. If the right answer is hard to demonstrate but easy to recognize, or checkable by a verifier, that is what preference and reward methods are for.</p>
 
@@ -1500,6 +1645,21 @@ variance (or add format rewards so ties are rare).</pre>
 <h2><span class="num"></span>Capstone lab: SFT then DPO on the tiny GPT</h2>
 <p><span class="badge">Reconstructed, not executed here</span> <span class="badge">CPU-runnable</span></p>
 
+<figure>
+<img src="img/07-playbook-timeline.svg" alt="Six-step ordered pipeline from SFT through preference training, PPO, verifiable rewards, CAI, to the eval loop">
+<figcaption>The standard playbook, in order. Generated for this volume. Start with SFT, add preference training when it plateaus, reach for PPO or verifiable rewards as needed, and let the eval loop govern every step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Step 1:</strong> SFT teaches the format and gives the reference policy for every later stage.</li>
+<li><strong>Step 2:</strong> when SFT plateaus on quality ranking, collect comparisons and try DPO first: the cheapest experiment.</li>
+<li><strong>Step 3:</strong> PPO when DPO is not enough: online exploration and complex multi-turn behavior.</li>
+<li><strong>Step 4:</strong> verifiable rewards wherever the task allows: the highest signal per dollar.</li>
+<li><strong>Step 5:</strong> CAI or RLAIF when human labels are the bottleneck but the principles are writable.</li>
+<li><strong>Step 6:</strong> never skip the eval loop. Chapter 9's loop governs them all.</li>
+</ol>
+</div>
 <h3>Goal</h3>
 <p>Take the tiny GPT you trained on a toy corpus in Volume 5. First SFT it on a small set of instruction pairs, then DPO it on preference pairs, and <strong>measure the behavior shift</strong> with three small evals. You will watch the same progression as the full pipeline, at toy scale, on your own machine.</p>
 
@@ -1674,7 +1834,7 @@ print(step_budget(
 <p><img alt="Horizontal timeline of one online RL step: a long teal segment labeled generation taking about 90 percent of the bar, and a short orange segment labeled train step taking the rest" src="img/v07-fig-13-4021787f.webp" /></p>
 <p><em>Figure A1.1. One online RL step at the worked-example settings: 128 prompts, G=8, 2,000 tokens each. Generation (teal) is ~91% of wall clock; the gradient update (orange) is the remainder. Generated for this volume.</em></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li><strong>Read the bar left to right as time.</strong> The teal segment is phase 1 (generate 2.05M tokens at 30K tok/s). The orange sliver is phase 2 (train on those tokens at 300K tok/s).</li>
-<li><strong>The ratio is the message.</strong> Teal is ~13x longer than orange because decode throughput per token is ~10x lower than train throughput per token.</li>
+<li><strong>The ratio is the message.</strong> Teal is ~10x longer than orange because decode throughput per token is ~10x lower than train throughput per token.</li>
 <li><strong>Scaling G stretches teal.</strong> Doubling completions per prompt doubles the teal segment and barely moves the orange one in relative terms; the split stays near 90/10.</li>
 <li><strong>What breaks the picture.</strong> If your rollouts are short (say 128 tokens), the teal segment shrinks and the fixed costs of the update (optimizer step, communication) start to matter. The budget code lets you check your own regime.</li>
 </ol></div><h4 id="a07a-a16-lab-pointers">A.1.6 Lab pointers</h4><div class="lab"><h4>Lab A1.1: Budget your own loop</h4><p>Copy the <code>step_budget</code> function into a file. Plug in your setting: prompts per step, group size, mean completion length, and measured tok/s for your rollout setup and trainer. Find the generation fraction. Then answer: if you doubled rollout GPUs, how much does step time fall? If you doubled trainer GPUs instead, how much? Write both numbers down; the gap is the price of optimizing the wrong phase.</p></div><div class="lab"><h4>Lab A1.2: Feel the bandwidth bound (RunPod-ready)</h4><p>On one GPU, generate 256 tokens for a single sequence with a 7B model and time it. Then generate 256 tokens for each of 32 sequences in one batch and time it. Divide tokens by seconds in both cases. The per-sequence speed barely changes with batching at small batch sizes: that flat line is the memory-bandwidth ceiling from A.1.2.</p></div><div class="takeaway"><h4>Key takeaways</h4><ul>
@@ -1682,7 +1842,20 @@ print(step_budget(
 <li>Decoding is memory-bandwidth bound, training is compute bound: the same tokens cost ~10x more to generate than to train on.</li>
 <li>One step's clock splits ~90/10 toward generation at R1-style settings (128 prompts, G=8, 2K tokens).</li>
 <li>The split is set by the throughput ratio, so the fix for a slow loop is rollout throughput: faster engines (A.2), more rollout GPUs and async overlap (A.3).</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> The decode-vs-train bottleneck analysis is standard systems knowledge (memory-bandwidth-bound autoregressive decoding vs compute-bound training). The 91% figure is illustrative, computed from the stated assumptions with the budget model above, not a measured claim about any specific system.</p></div><h3 id="a07a-a2-inference-engines-inside-the-rl-loop">A.2 Inference engines inside the RL loop</h3>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> The decode-vs-train bottleneck analysis is standard systems knowledge (memory-bandwidth-bound autoregressive decoding vs compute-bound training). The 91% figure is illustrative, computed from the stated assumptions with the budget model above, not a measured claim about any specific system.</p></div><figure>
+<img src="img/07-rollout-throughput-waterfall.svg" alt="Horizontal bars showing generate rollouts at 88 percent of step time versus scoring and the gradient update, with the 200 tokens per second arithmetic">
+<figcaption>Generation dominates the RL step. Generated for this volume. Decoding is memory-bandwidth bound, one token costing a full read of the weights, so rollout generation takes the overwhelming majority of step time.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>The teal bar:</strong> generating rollouts is 88 percent of the step. Autoregressive decoding, one token at a time.</li>
+<li><strong>The small remainder:</strong> scoring and the gradient update: parallel forward passes and compute-bound matmuls.</li>
+<li><strong>The arithmetic:</strong> 7B in bf16 is 14 GB of weights; at about 3 TB/s of bandwidth, one full weight read per token sets a ceiling near 200 tokens per second per GPU.</li>
+<li><strong>Real systems land below it,</strong> which is why the loop uses inference engines.</li>
+</ol>
+</div>
+<h3 id="a07a-a2-inference-engines-inside-the-rl-loop">A.2 Inference engines inside the RL loop</h3>
 <h4 id="a07a-a21-what-a-rollout-worker-is">A.2.1 What a rollout worker is</h4>
 <p>A <dfn>rollout worker</dfn> is an inference server that holds the policy weights and does nothing but generate. The RL trainer sends it prompts; it returns completions. In modern stacks this server is vLLM or SGLang, the same engines that serve chatbots in production. They are used here for one reason: they generate tokens several times faster per GPU than a naive generation loop.</p>
 <p>The loop looks like this: the trainer finishes a gradient step, broadcasts the new weights to the rollout workers, and the workers start generating the next batch of rollouts with the fresh policy. Generation and training alternate, and the workers exist so that generation runs at inference-engine speed instead of training-script speed.</p>
@@ -1775,7 +1948,19 @@ for name, cont in [(&quot;static    &quot;, False), (&quot;continuous&quot;, Tru
 <li>Naive generation loses to static batching, KV fragmentation, and repeated prefixes.</li>
 <li>Continuous batching refills slots every iteration; PagedAttention pages the KV cache; RadixAttention shares prefixes.</li>
 <li>Scheduling alone cut mean completion 38% in the simulation; real engines add several-fold throughput per GPU on top.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> PagedAttention/continuous batching are vLLM's documented core designs; RadixAttention is SGLang's documented prefix-caching design. verl's rollout backends (vLLM, SGLang, TensorRT-LLM) are documented in the verl project (blog v0.7, rollout-elastic design doc). The 38% figure is from the simulation above with stated inputs, illustrative, not a vendor benchmark.</p></div><h3 id="a07a-a3-async-rl-architectures-and-memory-layout-for-rollout-workers">A.3 Async RL architectures and memory layout for rollout workers</h3>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> PagedAttention/continuous batching are vLLM's documented core designs; RadixAttention is SGLang's documented prefix-caching design. verl's rollout backends (vLLM, SGLang, TensorRT-LLM) are documented in the verl project (blog v0.7, rollout-elastic design doc). The 38% figure is from the simulation above with stated inputs, illustrative, not a vendor benchmark.</p></div><figure>
+<img src="img/07-inference-engines-roles.svg" alt="Two-panel comparison of naive generation versus vLLM or SGLang, with the weight-broadcast training loop below">
+<figcaption>Why the RL loop uses inference engines. Generated for this volume. Naive generation wastes GPUs on static batching and fragmented KV caches; vLLM and SGLang fix both with continuous batching and paged memory.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Left, naive:</strong> static batching pads every sequence to the longest and waits for the slowest; one 4,000-token straggler idles most of the batch. KV cache fragmentation wastes memory.</li>
+<li><strong>Right, engines:</strong> continuous batching refills finished slots immediately; the paged KV cache removes fragmentation. Several times faster per GPU.</li>
+<li><strong>The bottom box: the loop this enables.</strong> The trainer broadcasts fresh weights; rollout workers generate the next batch with the new policy.</li>
+</ol>
+</div>
+<h3 id="a07a-a3-async-rl-architectures-and-memory-layout-for-rollout-workers">A.3 Async RL architectures and memory layout for rollout workers</h3>
 <h4 id="a07a-a31-what-async-rl-is">A.3.1 What async RL is</h4>
 <p>In the lockstep loop from A.1, generation and training take turns: the trainers sit idle while rollouts generate, then the rollout workers sit idle while gradients compute. <dfn>Async RL</dfn> breaks the turn-taking. Rollout workers generate continuously on their own GPUs. Trainers update continuously on theirs. The two sides meet only at <dfn>weight sync</dfn>, when the trainer publishes fresh weights to the fleet.</p>
 <p>The price of decoupling is <dfn>staleness</dfn>: rollouts are generated by a slightly older policy than the one being trained. Async systems bound that staleness (a few versions behind, not fifty) and correct for it in the update. The reward is utilization: no side ever waits for the other, and one straggler with a 32K-token chain-of-thought no longer stalls the whole step.</p>
@@ -1971,6 +2156,19 @@ print(rollout_worker_memory_gb(70, 2, 80, 8, 128, 8, 4096))
 <li><strong>Patch chapter (B.9): LoRA and QLoRA.</strong> Efficient fine-tuning with full GPU-memory accounting drills. Volume 7's main chapters do not cover parameter-efficient methods; this patch closes the gap.</li>
 </ul>
 <p>Prerequisites, assumed cold: SFT and the RLHF pipeline from Volume 7, basic probability from Volume 1. No prior exposure to interpretability or human-data operations is assumed.</p>
+<figure>
+<img src="img/07-async-rl.svg" alt="Lockstep timeline with idle gaps versus continuous async timelines for rollout workers and trainers meeting at weight sync">
+<figcaption>Async RL: stop taking turns. Generated for this volume. Decoupling rollout workers from trainers removes the idle gaps of the lockstep loop; the price is bounded staleness.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Top timeline, lockstep:</strong> generation and training alternate, with idle gray gaps on both sides. One 32K-token straggler stalls the whole step.</li>
+<li><strong>Bottom timelines, async:</strong> rollout workers generate continuously while trainers update continuously; they meet only at weight sync.</li>
+<li><strong>The amber box: staleness is the price.</strong> Rollouts come from a slightly older policy; async systems bound it to a few versions and correct for it.</li>
+<li><strong>Reference design:</strong> verl's HybridFlow.</li>
+</ol>
+</div>
 <h3 id="a07b-unit-1-post-training-data-pipelines">Unit 1: Post-training data pipelines</h3>
 <h3 id="a07b-b1-synthetic-data-generation-pipelines">B.1 Synthetic data generation pipelines</h3>
 <h4 id="a07b-b11-what-synthetic-data-is">B.1.1 What synthetic data is</h4>
@@ -2193,7 +2391,19 @@ print(verify_solution(bad, cases))
 <li>Sandbox untrusted code with timeouts; log every stage per rollout.</li>
 <li>Verifier executions parallelize trivially: budget them as part of generation wall clock.</li>
 <li>V-STaR adds a learned verifier trained on correct and incorrect generations for ranking candidates.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> V-STaR (Hosseini et al., COLM 2024): training a verifier on correct and incorrect generations, as described in the paper. The pipeline stages and sandboxing practices are standard production practice, reconstructed from first principles. Worked throughput numbers are illustrative, computed from stated assumptions.</p></div><h3 id="a07b-b3-sft-data-mixtures-and-rejection-sampling-recipes">B.3 SFT data mixtures and rejection-sampling recipes</h3>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> V-STaR (Hosseini et al., COLM 2024): training a verifier on correct and incorrect generations, as described in the paper. The pipeline stages and sandboxing practices are standard production practice, reconstructed from first principles. Worked throughput numbers are illustrative, computed from stated assumptions.</p></div><figure>
+<img src="img/07-verifier-pipeline.svg" alt="Six-stage pipeline from raw rollout through normalize, extract, run checks, aggregate, and log, with a reward-hacking warning box">
+<figcaption>The reward pipeline: from rollout to scalar. Generated for this volume. Normalization, answer extraction, checks, and aggregation turn a raw rollout into the number the RL update consumes; gaps in this plumbing are where reward hacking is born.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Six stages:</strong> raw rollout, normalize output, extract the answer, run the checks, aggregate to a scalar, log everything.</li>
+<li><strong>The small gray lines</strong> under each stage say what it does: strip formatting, find the boxed number, tests passed, mean or pass@k.</li>
+<li><strong>The rose box: where reward hacking is born.</strong> A verifier that counts a crashed solution as passed teaches the model to crash; the model optimizes the verifier, not the intent.</li>
+</ol>
+</div>
+<h3 id="a07b-b3-sft-data-mixtures-and-rejection-sampling-recipes">B.3 SFT data mixtures and rejection-sampling recipes</h3>
 <h4 id="a07b-b31-what-a-data-mixture-is">B.3.1 What a data mixture is</h4>
 <p>A <dfn>data mixture</dfn> is the weighted blend of sources that makes up supervised fine-tuning: X% code, Y% math, Z% chat, and so on. The mixture is not a vibe; it is a sampling distribution. Every training batch is drawn from it, so the mixture decides what the model practices, in what proportion, for the whole run.</p>
 <p><dfn>Rejection sampling</dfn> is the filter that upgrades a source: generate k candidates per prompt, keep the ones that pass a checker or judge, discard the rest. It trades compute for quality inside a fixed source.</p>
@@ -2287,7 +2497,19 @@ def rejection_sample(prompts, k, generate, judge):
 <li>Plan in tokens and epochs per source, not vibes: the epochs column reveals repetition risk.</li>
 <li>Rejection sampling: generate k, filter, cap keeps per prompt, dedupe, re-balance by difficulty.</li>
 <li>Small clean datasets beat big noisy ones; verified-correct tokens are the scarce resource.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Mixture planning math is standard SFT practice, reconstructed from first principles. The QLoRA paper's small-high-quality-dataset finding is as reported (Dettmers et al., 2023). Worked numbers are illustrative, computed from stated assumptions.</p></div><h3 id="a07b-b4-preference-data-collection-design">B.4 Preference-data collection design</h3>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Mixture planning math is standard SFT practice, reconstructed from first principles. The QLoRA paper's small-high-quality-dataset finding is as reported (Dettmers et al., 2023). Worked numbers are illustrative, computed from stated assumptions.</p></div><figure>
+<img src="img/07-rejection-sampling-loop.svg" alt="Loop diagram of prompt, generate k candidates, checker, kept versus discarded, beside mixture weight bars for code, math, chat, and other">
+<figcaption>Rejection sampling and the data mixture. Generated for this volume. Generating k candidates and keeping what passes trades compute for quality; the mixture weights decide what the model practices.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>The loop:</strong> a prompt generates k candidates; the checker keeps what passes and discards the rest. Compute traded for quality inside a fixed source.</li>
+<li><strong>The purple box: the mixture is a sampling distribution.</strong> Every batch is drawn from it, so the weights decide what the model practices.</li>
+<li><strong>The bottom line: tokens are a budget, and repetition is a risk.</strong> A 5B-token source at 20 percent weight in a 100B-token run is seen 4 times; past a few epochs the model memorizes it.</li>
+</ol>
+</div>
+<h3 id="a07b-b4-preference-data-collection-design">B.4 Preference-data collection design</h3>
 <h4 id="a07b-b41-what-preference-data-is">B.4.1 What preference data is</h4>
 <p><dfn>Preference data</dfn> is the (prompt, response A, response B, verdict) structure from Chapter 3; this chapter is about collecting it as an operations discipline. The labels are the ground truth your reward model treats as reality, so every systematic error in collection becomes a systematic error in the model's values.</p>
 <h4 id="a07b-b42-why-collection-design-matters">B.4.2 Why collection design matters</h4>
@@ -2377,7 +2599,20 @@ print(f&quot;majority-vote accuracy: {acc:.1%}&quot;)           # 96.2%
 <li>Track kappa per batch (healthy 0.6-0.8; below 0.4 stop and repair); disagreement signals rubric gaps, not bad labelers.</li>
 <li>Triple labeling's dividend: three 88% labelers vote a 96% label.</li>
 <li>AI feedback (RLAIF/CAI) scales labeling but needs the same quality control against human gold.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Agreement metrics (percent agreement, Cohen's kappa) and triple-labeling practice are standard data-operations practice, reconstructed from first principles. RLAIF/CAI labeling as described in Volume 7 Chapter 7 (Constitutional AI paper, Anthropic 2022). Worked numbers are illustrative, computed from stated assumptions; the kappa demo ran with seed 11 as shown.</p></div><h3 id="a07b-unit-2-mechanistic-interpretability-basics">Unit 2: Mechanistic interpretability basics</h3>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Agreement metrics (percent agreement, Cohen's kappa) and triple-labeling practice are standard data-operations practice, reconstructed from first principles. RLAIF/CAI labeling as described in Volume 7 Chapter 7 (Constitutional AI paper, Anthropic 2022). Worked numbers are illustrative, computed from stated assumptions; the kappa demo ran with seed 11 as shown.</p></div><figure>
+<img src="img/07-kappa-agreement-dashboard.svg" alt="Line chart of Cohen's kappa across batches with a healthy band and a stop-and-repair line, plus operation scale cards">
+<figcaption>Watching the labeling operation. Generated for this volume. Kappa tracked per 500-pair batch stays in the healthy 0.6 to 0.8 band; a slide toward 0.4 means stop, repair the rubric, and watch for spurious correlations.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>The green band:</strong> healthy kappa, 0.6 to 0.8. The red dashed line at 0.4: stop and repair.</li>
+<li><strong>The blue line:</strong> kappa per 500-pair batch. The dip is labeler drift: standards shifted over weeks.</li>
+<li><strong>The recovery:</strong> adjudication and rubric repair bring agreement back.</li>
+<li><strong>The cards:</strong> triple labeling's dividend (three 88 percent labelers vote a 96 percent label), the operation scale (10,000 pairs, 30,000 judgments), and the spurious-correlation watch (length, tone, bullet lists).</li>
+</ol>
+</div>
+<h3 id="a07b-unit-2-mechanistic-interpretability-basics">Unit 2: Mechanistic interpretability basics</h3>
 <h3 id="a07b-b5-what-interpretability-is-for">B.5 What interpretability is for</h3>
 <h4 id="a07b-b51-what-it-is">B.5.1 What it is</h4>
 <p><dfn>Mechanistic interpretability</dfn> is the project of explaining what a neural network does in terms of its internal parts: which features it represents, how those features combine into computations (circuits), and how the computations produce behavior. "Mechanistic" marks the ambition: not just describing what the model did, but how the machinery did it, at a level where you could predict what it will do next.</p>
@@ -2416,7 +2651,22 @@ print(f&quot;majority-vote accuracy: {acc:.1%}&quot;)           # 96.2%
 <li>The ladder: behavior, representation, mechanism. The standard of evidence: correlation plus intervention.</li>
 <li>Superposition (more features than dimensions) causes polysemanticity (neurons with many unrelated jobs); SAEs aim to recover the true feature directions.</li>
 <li>Attention heatmaps are not explanations; features, probes, and interventions are the modern toolkit.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Superposition/polysemanticity framing from Elhage et al., "Toy Models of Superposition" (2022). Anthropic SAE milestones: "Towards Monosemanticity" (Oct 2023), "Scaling Monosemanticity" (May 2024, Claude 3 Sonnet, ~1M/4M/34M features). Gemma Scope (DeepMind, Gemma 2) and OpenAI's 16M-feature GPT-4 SAE with scaling laws as publicly reported. Correlation-plus-intervention as the field's evidence standard, widely articulated in the literature.</p></div><h3 id="a07b-b6-sparse-autoencoders">B.6 Sparse autoencoders</h3>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Superposition/polysemanticity framing from Elhage et al., "Toy Models of Superposition" (2022). Anthropic SAE milestones: "Towards Monosemanticity" (Oct 2023), "Scaling Monosemanticity" (May 2024, Claude 3 Sonnet, ~1M/4M/34M features). Gemma Scope (DeepMind, Gemma 2) and OpenAI's 16M-feature GPT-4 SAE with scaling laws as publicly reported. Correlation-plus-intervention as the field's evidence standard, widely articulated in the literature.</p></div><figure>
+<img src="img/07-interpretability-toolkit.svg" alt="Central goal of mechanistic explanation with four method cards: probing, sparse autoencoders, circuits, steering">
+<figcaption>The interpretability toolkit. Generated for this volume. Probing, sparse autoencoders, circuits, and steering share one standard of evidence: correlation plus intervention.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Center: the goal.</strong> Mechanistic explanation: features, computations, behavior, linked causally.</li>
+<li><strong>Probing, read-only:</strong> is the information there? Cheapest, weakest: presence is not use.</li>
+<li><strong>Sparse autoencoders, read-only and finer:</strong> what are the features? Splits polysemantic activations into monosemantic directions.</li>
+<li><strong>Circuits, structure:</strong> how do features connect? Traces computations across layers and heads.</li>
+<li><strong>Steering, write:</strong> does this cause that? Intervenes and watches behavior move.</li>
+<li><strong>The green band: the standard of evidence.</strong> Correlation alone is a hypothesis; intervention is the test.</li>
+</ol>
+</div>
+<h3 id="a07b-b6-sparse-autoencoders">B.6 Sparse autoencoders</h3>
 <h4 id="a07b-b61-what-an-sae-is">B.6.1 What an SAE is</h4>
 <p>A <dfn>sparse autoencoder</dfn> (SAE) is a small neural network trained to reconstruct a model's activations through a wide, sparse bottleneck. Input: an activation vector x from some layer (say 2,048 dimensions). The encoder maps it to a much wider feature vector f(x) (say 16,384 dimensions). A sparsity penalty forces most entries of f(x) to zero on any given input. The decoder reconstructs the activation from the few surviving features: x ≈ W_dec f(x) + b.</p>
 <p>The bet: the surviving features are the monosemantic directions superposition hid. Instead of one neuron that fires for "DNA sequences, legal text, and Python comments," you get three features that each fire for one thing.</p>
@@ -2504,7 +2754,20 @@ print(f&quot;loss={loss.item():.4f}  mean active features={active:.0f}/4096&quot
 <li>Expansion 4x-64x; decoder unit-norm stops scale cheating; max-activating examples make features readable.</li>
 <li>Frontier scale: 34M features on Claude 3 Sonnet, Gemma Scope, 16M on GPT-4 with published scaling laws.</li>
 <li>Features are hypotheses: splitting, merging, uninterpretable features, and incomplete coverage are all real.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> SAE architecture/loss as in Cunningham et al., "Sparse Autoencoders Find Highly Interpretable Features in Language Models" (arXiv 2309.08600, 2023), including the IOI causal analysis and the pronoun-prediction ablation result. Anthropic milestones ("Towards Monosemanticity" Oct 2023; "Scaling Monosemanticity" May 2024) and the Golden Gate Bridge steering demo as publicly reported. Gemma Scope and OpenAI 16M-feature SAE as publicly reported.</p></div><h3 id="a07b-b7-probing-vs-steering">B.7 Probing vs steering</h3>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> SAE architecture/loss as in Cunningham et al., "Sparse Autoencoders Find Highly Interpretable Features in Language Models" (arXiv 2309.08600, 2023), including the IOI causal analysis and the pronoun-prediction ablation result. Anthropic milestones ("Towards Monosemanticity" Oct 2023; "Scaling Monosemanticity" May 2024) and the Golden Gate Bridge steering demo as publicly reported. Gemma Scope and OpenAI 16M-feature SAE as publicly reported.</p></div><figure>
+<img src="img/07-sae-diagram.svg" alt="Flow diagram: dense activation into encoder, a wide feature layer with a few lit dots, decoder, reconstruction, plus four annotation notes">
+<figcaption>The sparse autoencoder. Generated for this volume. A dense 2,048-dimensional activation passes through 16,384 candidate features, of which only a handful activate; the decoder rebuilds the activation from those few.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Left: the activation.</strong> One dense vector, 2,048 numbers, polysemantic and unreadable.</li>
+<li><strong>Middle: the feature layer.</strong> 16,384 candidates; only the teal dots are lit. The width is the capacity; the sparsity is the product.</li>
+<li><strong>Right: the reconstruction.</strong> The decoder rebuilds from the lit features; the residual is machinery the SAE did not capture.</li>
+<li><strong>The notes:</strong> the L1 sparsity penalty is the whole trick; expansion runs 4x to 64x; unit-norm decoder columns stop scale cheating; features are read by max-activating examples.</li>
+</ol>
+</div>
+<h3 id="a07b-b7-probing-vs-steering">B.7 Probing vs steering</h3>
 <h4 id="a07b-b71-what-they-are">B.7.1 What they are</h4>
 <p><dfn>Probing</dfn> is read-only: freeze the model, train a tiny classifier (usually linear) on its activations to predict some property, and check the accuracy. High accuracy means the information is present in the activations. The classic form is the <dfn>linear probe</dfn> (Alain and Bengio, 2016): a linear classifier per layer, asking what each layer knows.</p>
 <p><dfn>Steering</dfn> is write: modify activations during the forward pass to change behavior. The canonical recipe is <dfn>contrastive activation addition</dfn> (CAA, Rimsky et al., 2023). Collect contrast pairs: prompts showing the behavior vs its opposite. Take the mean difference of residual-stream activations as a steering vector v. Add alpha x v at token positions during generation. Positive alpha pushes toward the behavior, negative alpha away.</p>
@@ -2588,7 +2851,20 @@ for alpha in [0.0, 0.5, 1.0]:
 <li>The pair is correlation plus intervention: probe proposes, steering disposes.</li>
 <li>CAA: average activation differences over contrast pairs, add at post-prompt positions with ±alpha; reported to steer high-level behaviors in Llama 2 Chat with small capability cost.</li>
 <li>A high probe score alone never proves the model uses the information; run the intervention.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Linear classifier probes: Alain and Bengio, "Understanding intermediate layers using linear classifier probes" (2016). CAA: Rimsky et al., "Steering Llama 2 via Contrastive Activation Addition" (arXiv 2312.06681, 2023): mean-difference vectors, post-prompt positions, ±coefficient, Llama 2 Chat evaluations as reported. ITI: Li et al. (2023) truthfulness probes on attention heads. Demo numbers ran as shown (numpy, seed 0).</p></div><h3 id="a07b-b8-limits-and-open-questions">B.8 Limits and open questions</h3>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Linear classifier probes: Alain and Bengio, "Understanding intermediate layers using linear classifier probes" (2016). CAA: Rimsky et al., "Steering Llama 2 via Contrastive Activation Addition" (arXiv 2312.06681, 2023): mean-difference vectors, post-prompt positions, ±coefficient, Llama 2 Chat evaluations as reported. ITI: Li et al. (2023) truthfulness probes on attention heads. Demo numbers ran as shown (numpy, seed 0).</p></div><figure>
+<img src="img/07-probe-vs-steer.svg" alt="Two panels: probing with a frozen layer and classifier versus steering with a mean-difference vector added at post-prompt positions">
+<figcaption>Probing reads, steering writes. Generated for this volume. A linear probe asks whether information is present; a contrastive steering vector asks whether the direction is causal.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Left: probing.</strong> Freeze the model, train a tiny linear classifier on activations. High accuracy means the information is present, but presence is not use.</li>
+<li><strong>Right: steering.</strong> Build v from contrast pairs (honest versus sycophantic), add alpha times v at post-prompt positions. Behavior shifting means the direction is causal.</li>
+<li><strong>Sweep alpha:</strong> too small and nothing changes; too large and the model degrades.</li>
+<li><strong>The loop:</strong> probe proposes, steering disposes. ITI is literally this loop.</li>
+</ol>
+</div>
+<h3 id="a07b-b8-limits-and-open-questions">B.8 Limits and open questions</h3>
 <h4 id="a07b-b81-what-this-chapter-is">B.8.1 What this chapter is</h4>
 <p>An honest boundary map. Interpretability is a young field with real results and real limits, and the limits matter more than the results for anyone making decisions with these methods. Five limits, then the open questions.</p>
 <h4 id="a07b-b82-the-limits">B.8.2 The limits</h4>
@@ -2758,6 +3034,20 @@ total        ~42.5 GB   -&gt; fits a single 48 GB card (as reported)
 <li>7B: 84 GB full / 14.5 GB LoRA / 4 GB QLoRA (weights+optimizer; activations extra).</li>
 <li>LoRA teaches how to talk; new knowledge needs more. Rank and target modules set the boundary.</li>
 </ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> LoRA (Hu et al., 2021): W + BA formulation, zero-init, alpha/r scaling, merge-at-inference as in the paper. QLoRA (Dettmers et al., NeurIPS 2023): NF4/double quantization/paged optimizers, 65B on single 48GB GPU, &gt;780 GB for full 16-bit 65B, Guanaco 99.3% of ChatGPT on Vicuna, 24h single-GPU fine-tune, all as reported in the paper. Drill numbers computed from stated shapes, illustrative (activations excluded unless noted).</p></div><hr />
+<figure>
+<img src="img/07-lora-memory-accounting.svg" alt="Three memory bars for 7B: full fine-tuning 84 GB, LoRA 14.5 GB, QLoRA 4.0 GB, plus the 65B QLoRA result on a single 48 GB card">
+<figcaption>The fine-tuning memory drill. Generated for this volume. Full fine-tuning stores 12 bytes per parameter, most of it optimizer states; LoRA deletes the states by freezing the base, and QLoRA compresses the base itself.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Top bar: full fine-tuning, 84 GB.</strong> Weights 14, grads 14, Adam m 28, Adam v 28: the optimizer states are the hidden giant, 56 of 84 GB.</li>
+<li><strong>Middle bar: LoRA, 14.5 GB.</strong> The base is frozen, so no grads and no optimizer for 99.9 percent of params; only the adapters train.</li>
+<li><strong>Bottom bar: QLoRA, 4.0 GB.</strong> The base drops to 4-bit NF4; compute still dequantizes to bf16 on the fly.</li>
+<li><strong>The amber box:</strong> QLoRA fits 65B on one 48 GB card, as reported; full 16-bit fine-tuning of 65B needs over 780 GB.</li>
+<li><strong>The honest limit:</strong> LoRA teaches how to talk; new knowledge needs more.</li>
+</ol>
+</div>
 <h3 id="a07b-closing-how-the-appendices-connect">Closing: how the appendices connect</h3>
 <ul>
 <li><strong>A.1-A.3</strong> gave you the RL systems stack: budget the step, generate with inference engines, decouple with async, size the memory.</li>
