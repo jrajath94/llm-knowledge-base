@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="560" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 2.3. The five enterprise constraints</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">name them in week one or meet them in month six</text>
+<rect x="24" y="110" width="832" height="68" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">SECURITY REVIEW</text>
+<text x="440.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">what the reviewers will ask for, in their language</text>
+<rect x="24" y="190" width="832" height="68" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="216" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">DATA RESIDENCY</text>
+<text x="440.0" y="234" font-size="11" fill="#a8a8a8" text-anchor="middle">where the data may live and be processed</text>
+<rect x="24" y="270" width="832" height="68" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="296" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">LEGACY INTEGRATION</text>
+<text x="440.0" y="314" font-size="11" fill="#a8a8a8" text-anchor="middle">the system of record you must talk to, not replace</text>
+<rect x="24" y="350" width="832" height="68" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="376" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">IDENTITY / ACCESS</text>
+<text x="440.0" y="394" font-size="11" fill="#a8a8a8" text-anchor="middle">who the agent acts as, and how it proves it</text>
+<rect x="24" y="430" width="832" height="68" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="456" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">PROCUREMENT</text>
+<text x="440.0" y="474" font-size="11" fill="#a8a8a8" text-anchor="middle">how the thing gets bought, approved, and renewed</text>
+<text x="24" y="528" font-size="12" fill="#a8a8a8" text-anchor="start">Four deployment patterns exist because these five constraints combine differently. The pattern follows the</text>
+<text x="24" y="545" font-size="12" fill="#a8a8a8" text-anchor="start">constraints, never the reverse.</text>
+</svg>
