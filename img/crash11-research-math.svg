@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 370" width="100%" style="max-width:700px" role="img" aria-label="Triple labelers reach 96 percent majority under independence; floors: 3 seeds, kappa 0.6 to 0.8, one-component ablations">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="700" height="370" fill="none"/>
+<text class="t" x="24" y="30">Research methods: the math that makes a result believable</text>
+<text class="big g" x="24" y="58">The reliability math of human judgment</text>
+<rect class="box" x="24" y="70" width="560" height="66" rx="8"/>
+<text class="big" x="38" y="98">Triple 88% labelers -&gt; 96% majority</text>
+<text class="num" x="38" y="120">P(2 or 3 correct) = 3(0.88^2)(0.12) + 0.88^3 = 0.278 + 0.681 = 0.959</text>
+<text class="r" x="24" y="168">The load-bearing assumption: independent errors. Shared bias breaks the binomial.</text>
+<text class="big g" x="24" y="200">Floors, not wishes</text>
+<text class="num" x="24" y="214">Seeds: 3 minimum</text>
+<text class="m" x="260" y="214">the floor for any claimed delta</text>
+<text class="num" x="24" y="242">Kappa 0.6-0.8</text>
+<text class="m" x="260" y="242">healthy inter-annotator agreement</text>
+<text class="num" x="24" y="270">Ablation rule</text>
+<text class="m" x="260" y="270">one component at a time: necessary, not good</text>
+<text class="num" x="24" y="298">Controls</text>
+<text class="m" x="260" y="298">baseline, oracle, random: floor, meaning, ceiling</text>
+<text class="m" x="24" y="342">Decontamination: every mix vs every eval. Non-negotiable.</text>
+</svg>
