@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 441" role="img" aria-label="The 2-FLOP-per-token rule">
+<rect width="900" height="441" fill="#0d0d0d"/>
+<text x="450.0" y="20" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">The 2-FLOP-per-token rule</text>
+<text x="450.0" y="46" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">A dense transformer forward pass costs about 2 multiply-adds per parameter per token. Enough to size any serving job on a napkin.</text>
+<text x="40.0" y="99.0" text-anchor="start" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">7B model, 1 token</text>
+<text x="40.0" y="121.0" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">2 x 7e9 x 1</text>
+<text x="830.0" y="113.0" text-anchor="end" fill="#2dd4bf" font-size="15" font-family="Charis SIL, Georgia, serif" font-weight="bold">14 GFLOP</text>
+<line x1="40.0" y1="135.0" x2="860.0" y2="135.0" stroke="#222222" stroke-width="1.5"/>
+<text x="40.0" y="177.0" text-anchor="start" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">7B model, 1k tokens</text>
+<text x="40.0" y="199.0" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">2 x 7e9 x 1000</text>
+<text x="830.0" y="191.0" text-anchor="end" fill="#4aa8ff" font-size="15" font-family="Charis SIL, Georgia, serif" font-weight="bold">14 TFLOP</text>
+<line x1="40.0" y1="213.0" x2="860.0" y2="213.0" stroke="#222222" stroke-width="1.5"/>
+<text x="40.0" y="255.0" text-anchor="start" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">70B model, 1k tokens</text>
+<text x="40.0" y="277.0" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">2 x 70e9 x 1000</text>
+<text x="830.0" y="269.0" text-anchor="end" fill="#e5484d" font-size="15" font-family="Charis SIL, Georgia, serif" font-weight="bold">140 TFLOP</text>
+<line x1="40.0" y1="291.0" x2="860.0" y2="291.0" stroke="#222222" stroke-width="1.5"/>
+<rect x="40.0" y="319.0" width="820.0" height="84.0" rx="6" fill="#101010" stroke="#2a2a2a" stroke-width="1"/>
+<text x="60.0" y="345.0" text-anchor="start" fill="#ececec" font-size="12.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">Divide by the GPU's usable FLOPs to get a floor on time: 140 TFLOP on an 800-TFLOP card is at least ~0.2 s of pure compute.</text>
+<text x="60.0" y="369.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">Attention adds O(n^2) memory traffic on top; for long contexts the KV cache, not the FLOPs, is usually the binding constraint.</text>
+<text x="60.0" y="389.0" text-anchor="start" fill="#6f6f6f" font-size="11" font-family="Charis SIL, Georgia, serif">Dense-model rule only. MoE activates a fraction of parameters per token, so use active parameters, not total.</text>
+</svg>
