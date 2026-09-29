@@ -1,0 +1,21 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 560' width='100%' role='img'>
+<title>System prompt anatomy</title>
+<text x='480' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>System prompt anatomy: five sections, in this order</text>
+<text x='480' y='70' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Each section has one job. Order matters: identity first, context last and delimited.</text>
+<rect x='140' y='110' width='680' height='62' rx='8' fill='#1565c0' fill-opacity='0.16' stroke='#1565c0' stroke-width='2'/>
+<text x='170' y='136' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>ROLE</text>
+<text x='170' y='158' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>who the model is; concrete beats helpful assistant</text>
+<rect x='140' y='182' width='680' height='62' rx='8' fill='#f0b429' fill-opacity='0.16' stroke='#f0b429' stroke-width='2'/>
+<text x='170' y='208' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>TASK</text>
+<text x='170' y='230' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>what to do right now; verbs, not adjectives</text>
+<rect x='140' y='254' width='680' height='62' rx='8' fill='#c0392b' fill-opacity='0.16' stroke='#c0392b' stroke-width='2'/>
+<text x='170' y='280' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>RULES</text>
+<text x='170' y='302' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>constraints, in priority order; number them</text>
+<rect x='140' y='326' width='680' height='62' rx='8' fill='#2e9e5b' fill-opacity='0.16' stroke='#2e9e5b' stroke-width='2'/>
+<text x='170' y='352' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>FORMAT</text>
+<text x='170' y='374' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>exact output shape: schema, headers, template</text>
+<rect x='140' y='398' width='680' height='62' rx='8' fill='#8e24aa' fill-opacity='0.16' stroke='#8e24aa' stroke-width='2'/>
+<text x='170' y='424' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>CONTEXT</text>
+<text x='170' y='446' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>retrieved docs, user data, conversation; clearly delimited</text>
+<text x='480' y='500' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Takeaway: every role token is paid on every request. Keep the prompt as short as the job allows.</text>
+</svg>
