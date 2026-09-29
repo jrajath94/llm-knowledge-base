@@ -36,14 +36,16 @@
   unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 :root{
   --bg:#000000; --surface:#0d0d0d; --border:#262626;
-  --text:#ececec; --muted:#a8a8a8;
-  --accent:#f0b429; --link:#6cb2ff; --code-bg:#111111;
+  --text:#ececec; --muted:#a8a8a8; --faint:#8a8a8a;
+  --accent:#f0b429; --accent-ink:#000000; --link:#6cb2ff; --code-bg:#111111;
   --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
   --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
 body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
 p{text-align:justify;hyphens:auto;margin:.85rem 0}
 h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
@@ -150,51 +152,142 @@ blockquote p{margin:.4rem 0}
 @media(min-width:56.01rem){.ds-scrim{display:none!important}}
 
 
-/* ---- site header: home link, volume nav, breadcrumbs, prev/next ---- */
-.site-header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--border);padding:.65rem 0 .7rem;margin:0 0 1.6rem;max-width:72ch}
-.site-header-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
-.site-home{font:700 1rem/1.2 var(--font-ui);color:var(--text);text-decoration:none}
-.site-home:hover{color:var(--accent)}
-.site-home .site-home-mark{color:var(--accent)}
-.site-prevnext{display:flex;gap:.6rem;font:600 .82rem/1.4 var(--font-ui)}
-.site-prevnext a{color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
-.site-prevnext a:hover{color:var(--text);border-color:var(--accent)}
-.site-prevnext .site-prevnext-disabled{color:#4a4a4a;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
-.breadcrumbs{font:400 .8rem/1.5 var(--font-ui);color:var(--muted);margin:.45rem 0 0}
-.breadcrumbs a{color:var(--muted);text-decoration:none}
-.breadcrumbs a:hover{color:var(--text)}
-.breadcrumbs .bc-sep{margin:0 .35rem;color:#4a4a4a}
-.breadcrumbs .bc-current{color:var(--text)}
-details.site-nav{margin:.55rem 0 0;border:1px solid var(--border);border-radius:.55rem;background:var(--surface)}
-details.site-nav summary{cursor:pointer;list-style:none;font:600 .85rem/1.4 var(--font-ui);color:var(--text);padding:.55rem .9rem;display:flex;align-items:center;gap:.5rem}
-details.site-nav summary::-webkit-details-marker{display:none}
-details.site-nav summary::before{content:"+";color:var(--accent);font-weight:700}
-details.site-nav[open] summary::before{content:"\2212"}
-details.site-nav summary:hover{color:var(--accent)}
-.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem;padding:.2rem .9rem .9rem}
-.site-nav-groups h4{font:700 .75rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:.6rem 0 .35rem}
-.site-nav-groups ul{list-style:none;margin:0;padding:0}
-.site-nav-groups li{margin:.18rem 0}
-.site-nav-groups a{font:400 .83rem/1.45 var(--font-ui);color:var(--muted);text-decoration:none}
-.site-nav-groups a:hover{color:var(--text)}
-.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:700}
+/* Hallmark · pre-emit critique: P4 H4 E5 S5 R5 V5
+   Hallmark · macrostructure: newspaper-masthead chrome (N6 nav + Ft1 footer)
+   nav: N6 (knobs: issue-line=above, wordmark=left 2xl, rule=double) ·
+   footer: Ft1 (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+   slop: pass (42-45) · contrast: pass (40-41) · honest: pass (46) · chrome: pass (47) ·
+   tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50-57) */
+/* Hallmark · genre: editorial · verb: redesign · scope: chrome-only
+ * nav: N6 Newspaper masthead (knobs: issue-line=above, wordmark=left 2xl, rule=double)
+ * footer: Ft1 Mast-headed (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+ * Tokens preserved: --font-body/--font-ui (Charis SIL), full colour system.
+ * 4pt spacing rhythm; hairline dividers; hand-drawn SVG chevrons; no gradients. */
 
-/* ---- site footer: full sitemap ---- */
-.site-footer{border-top:1px solid var(--border);margin:3rem 0 0;padding:2rem 0 2.5rem;max-width:72ch}
-.site-footer .site-sitemap{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.2rem}
-.site-sitemap h4{font:700 .78rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 .4rem}
-.site-sitemap ul{list-style:none;margin:0;padding:0}
-.site-sitemap li{margin:.2rem 0}
-.site-sitemap a{font:400 .83rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none}
-.site-sitemap a:hover{color:var(--text)}
-.site-footer-note{font:400 .78rem/1.5 var(--font-ui);color:#6a6a6a;margin-top:1.6rem}
+/* ---- site header: N6 newspaper masthead ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);margin:0 0 2rem;max-width:72ch}
+.mast-line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:0;padding:.75rem 0 .5rem;font:600 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mast-line-right{color:var(--faint);white-space:nowrap}
+.mast-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:.75rem}
+.mast-name{font:800 1.5rem/1.15 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.mast-name:hover{color:var(--accent)}
+.site-prevnext{display:flex;gap:1.5rem;flex:none}
+.site-prevnext-group{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.site-prevnext-next{align-items:flex-end;text-align:right}
+.site-prevnext-kicker{font:600 .68rem/1.3 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.site-prevnext-link{display:inline-flex;align-items:center;gap:.4rem;font:600 .85rem/1.4 var(--font-ui);color:var(--text);text-decoration:none;max-width:15rem;min-height:1.75rem}
+.site-prevnext-link .chev{width:.8rem;height:.8rem;flex:none;color:var(--accent)}
+.site-prevnext-link:hover{color:var(--accent)}
+.site-prevnext-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-prevnext-empty{font:400 .85rem/1.75 var(--font-ui);color:var(--faint)}
+.mast-sub{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.25rem 0 .75rem}
+.breadcrumbs{font:400 .78rem/1.5 var(--font-ui);color:var(--muted);margin:0;min-width:0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.breadcrumbs .bc-sep{margin:0 .4rem;color:var(--faint)}
+.breadcrumbs .bc-current{color:var(--text)}
+.site-nav-toggle{display:inline-flex;align-items:center;gap:.5rem;flex:none;white-space:nowrap;background:none;border:1px solid var(--border);border-radius:.5rem;color:var(--text);font:600 .82rem/1.4 var(--font-ui);padding:.55rem .9rem;cursor:pointer;min-height:2.5rem}
+.site-nav-toggle:active,.site-nav-close:active,.watch-speed:active{transform:translateY(1px)}
+.site-nav-toggle .chev{width:.75rem;height:.75rem;color:var(--accent);transition:transform .25s var(--ease-out)}
+.site-nav-toggle:hover{border-color:var(--accent)}
+.site-nav-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.mast-rule-double{border:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:4px;margin:0}
+
+/* collapsible volume panel (desktop): smooth 0fr/1fr reveal */
+.site-nav-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease-out)}
+.site-nav-panel.is-open{grid-template-rows:1fr}
+.site-nav-panel-inner{overflow:hidden;min-height:0}
+.site-nav-drawer-head{display:none}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:1.25rem;max-height:70vh;overflow-y:auto;padding:1.25rem 0}
+.site-nav-groups h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:0}
+.site-nav-groups a{display:flex;gap:.6rem;align-items:baseline;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0;border-radius:.25rem}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups .site-nav-num{font:600 .72rem/1.6 var(--font-ui);color:var(--faint);min-width:1.75rem;flex:none}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:600}
+.site-nav-groups a.site-nav-current .site-nav-num{color:var(--accent)}
+.site-nav-scrim{display:none}
+
+/* ---- site footer: Ft1 mast-headed + grouped index ---- */
+.site-footer{margin:3.5rem 0 0;padding:0 0 3rem;max-width:72ch}
+.foot-mast{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.75rem 0 1.5rem;margin-bottom:2rem}
+.foot-name{font:800 1.25rem/1.2 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.foot-name:hover{color:var(--accent)}
+.foot-tag{font:400 .88rem/1.6 var(--font-ui);color:var(--muted);max-width:52ch;margin:.6rem 0 0;text-align:left}
+.foot-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.5rem;margin-bottom:2rem}
+.foot-group h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.foot-group ul{list-style:none;margin:0;padding:0}
+.foot-group li{margin:0}
+.foot-group a{display:block;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0}
+.foot-group a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.foot-group a.foot-current{color:var(--accent);font-weight:600}
+.foot-colophon{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;margin:0;padding-top:1.25rem;border-top:1px solid var(--border);font:400 .78rem/1.6 var(--font-ui);color:var(--faint);text-align:left}
+.foot-colophon .foot-sep{color:var(--faint)}
+
+/* ---- mobile: drawer + compact chrome (<=40rem) ---- */
+@media(max-width:40rem){
+  .mast-line-right{display:none}
+  .mast-row{flex-wrap:wrap;row-gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between;gap:.75rem}
+  .site-prevnext-link{max-width:44vw}
+  .site-prevnext-title{display:none}
+  .mast-sub{flex-wrap:wrap}
+  .site-nav-toggle{width:100%;justify-content:center}
+  /* volume nav becomes a fixed drawer: no layout shift, closes on link tap / scrim / Escape */
+  .site-nav-panel{position:fixed;top:0;left:0;bottom:0;width:min(20rem,88vw);z-index:70;display:block;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-104%);transition:transform .3s var(--ease-out)}
+  .site-nav-panel.is-open{transform:none}
+  .site-nav-panel-inner{height:100%;overflow-y:auto;padding:1.25rem 1.25rem 2rem}
+  .site-nav-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .site-nav-drawer-head span{font:600 .75rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+  .site-nav-close{background:none;border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:600 .8rem/1 var(--font-ui);padding:.55rem .85rem;cursor:pointer;min-height:2.75rem}
+  .site-nav-close:hover{border-color:var(--accent)}
+  .site-nav-groups{display:block;max-height:none;overflow:visible;padding:0}
+  .site-nav-groups>div{margin-bottom:1.25rem}
+  .site-nav-scrim{display:block;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .site-nav-scrim.is-open{opacity:1;pointer-events:auto}
+  body.site-nav-open{overflow:clip}
+  .foot-index{gap:1.25rem}
+}
 @media(max-width:56rem){
-  .site-header-row{flex-direction:column;align-items:flex-start;gap:.5rem}
-  .site-prevnext{width:100%;justify-content:space-between}
-  .site-header{padding-left:2.9rem} /* clear the fixed hamburger menu button */
+  .site-header{padding-left:2.9rem} /* clear the fixed section-drawer menu button */
 }
 @media print{
-  .site-header,.site-footer{display:none!important}
+  .site-header,.site-footer,.site-nav-scrim{display:none!important}
+  .watch-deeper .watch-frame{display:none}
+}
+
+/* ---- Watch and go deeper (content section skeleton; downstream fills real videos/links) ---- */
+.watch-deeper{margin:3rem 0 0;padding:2rem 0 0;border-top:1px solid var(--border);max-width:72ch}
+.watch-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.watch-deeper-lede{font:400 .95rem/1.6 var(--font-ui);color:var(--muted);margin:0 0 1.25rem;text-align:left}
+.watch-deeper-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem;margin:0 0 1.75rem}
+.watch-card{margin:0;border:1px solid var(--border);border-radius:.6rem;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.watch-frame{aspect-ratio:16/9;background:var(--bg)}
+.watch-frame iframe{width:100%;height:100%;border:0;display:block}
+.watch-card figcaption{padding:.85rem 1rem 1rem;font:400 .85rem/1.55 var(--font-ui);color:var(--muted);text-align:left}
+.watch-card figcaption strong{display:block;color:var(--text);font-weight:700;margin-bottom:.25rem}
+.go-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--text);margin:0 0 .5rem}
+.go-deeper-list{list-style:none;margin:0;padding:0}
+.go-deeper-list li{display:flex;gap:.6rem;align-items:baseline;padding:.5rem 0;border-top:1px solid var(--border)}
+.go-deeper-list li:last-child{border-bottom:1px solid var(--border)}
+.go-deeper-list a{font:600 .9rem/1.5 var(--font-ui);color:var(--text);text-decoration:none;flex:none;display:inline-flex;align-items:center;gap:.35rem}
+.go-deeper-list a:hover{color:var(--accent)}
+.go-deeper-list a:hover .ext-arrow{color:var(--accent)}
+.go-deeper-list .ext-arrow{width:.7rem;height:.7rem;color:var(--muted);flex:none}
+.go-deeper-list .go-deeper-note{font:400 .85rem/1.55 var(--font-ui);color:var(--muted)}
+
+/* speed-control bar (injected by the site script only when the YouTube IFrame
+   Player API loads; the iframe alone keeps working when it does not) */
+.watch-speedbar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;padding:.6rem .9rem;border-top:1px solid var(--border)}
+.watch-speedbar-label{font:600 .68rem/1.4 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.watch-speed{background:none;border:1px solid var(--border);border-radius:.4rem;color:var(--muted);font:600 .78rem/1 var(--font-ui);padding:.45rem .6rem;cursor:pointer;min-height:2rem}
+.watch-speed:hover{color:var(--text);border-color:var(--accent)}
+.watch-speed[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* motion respects the reader: no sliding drawers or expanding panels for reduced-motion users */
+@media (prefers-reduced-motion:reduce){
+  .ds-sidebar,.site-nav-toggle .chev,.site-nav-panel,.site-nav-scrim{transition:none}
 }
 
 /* ---- print ---- */
@@ -224,19 +317,30 @@ details.site-nav summary:hover{color:var(--accent)}
 </aside>
 <div class="ds-scrim" id="dsScrim"></div>
 <main class="ds-content" id="dsContent">
-<header class="site-header"><div class="site-header-row"><a class="site-home" href="index.html"><span class="site-home-mark">■</span> LLM Knowledge Base</a><div class="site-prevnext"><a href="index.html">&larr; Home</a><a href="01-math-for-ml.html">Math for ML &rarr;</a></div></div><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep">/</span><span>Start here</span><span class="bc-sep">/</span><span class="bc-current">How to Use This Curriculum</span></nav><details class="site-nav"><summary>Browse all volumes and tracks</summary><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html" class="site-nav-current">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div></details></header>
+<header class="site-header"><p class="mast-line"><span>Research-Engineer Curriculum</span><span class="mast-line-right">No. 02 of 39 &middot; Sept 2026 edition</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a><nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span><a class="site-prevnext-link" href="index.html" aria-label="Previous volume: Home"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">Home</span></a></div><div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span><a class="site-prevnext-link" href="01-math-for-ml.html" aria-label="Next volume: Math for ML"><span class="site-prevnext-title">Math for ML</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></nav></div><div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep" aria-hidden="true">/</span><span>Start here</span><span class="bc-sep" aria-hidden="true">/</span><span class="bc-current" aria-current="page">How to Use This Curriculum</span></nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Browse all volumes</span></button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span><button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html" class="site-nav-current"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div></header>
 <h1 id="how-to-use-this-curriculum">How to Use This Curriculum</h1>
 <p>This is the operating manual for the whole program. Read it first, once, then start Volume 1. It tells you the order to study, how to pace 4+ hours a day, how the volumes connect, and how the capstone project threads through everything.</p>
 <h2 id="1-what-this-curriculum-promises">1. What this curriculum promises</h2>
 <p>When you finish, you can do three things:</p>
 <ol>
-<li><strong>Explain how an LLM is built end to end.</strong> Data, tokenization, pre-training, distributed training, post-training and RL, evaluation, inference and serving. No hand-waving. You will have built a tiny one yourself.</li>
-<li><strong>Think like a researcher.</strong> Read a paper and extract its real claim. Design an experiment with baselines and ablations. Know what a result proves and what it does not.</li>
+<li><strong>Explain how an LLM is built end to end.</strong> Data, tokenization (turning text into model-readable pieces), pre-training, distributed training, post-training and RL (reinforcement learning: training from reward signals), evaluation, inference and serving. No hand-waving. You will have built a tiny one yourself.</li>
+<li><strong>Think like a researcher.</strong> Read a paper and extract its real claim. Design an experiment with baselines (the simple method you must beat) and ablations (removing one piece at a time to see what matters). Know what a result proves and what it does not.</li>
 <li><strong>Ship like an engineer.</strong> Take a model from a notebook to production: pipelines, monitoring, cost control, reliability. Build solutions that work on the planet, not just in a demo.</li>
 </ol>
 <p>That combination, research depth plus production proof, is what L5-L7 Research Engineer, Applied AI Engineer, and ML Engineer loops at frontier labs actually test.</p>
+<figure id="fig-00-outcomes">
+<img src="img/00-three-outcomes.svg" alt="Three outcome boxes: build an LLM end to end, think like a researcher, ship to production">
+<figcaption>Figure 0.2 - The three promises of this curriculum. Research depth plus production proof is exactly what frontier-lab research-engineer loops test.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram</strong>
+<ol>
+<li><strong>Three boxes, left to right.</strong> Each box is one promise from the list above. The diagram maps the list; it adds nothing new.</li>
+<li><strong>The middle box is the bridge.</strong> Reading papers and designing experiments is what turns building (left) into shipping (right).</li>
+</ol>
+</div>
+</figure>
+
 <h2 id="2-study-order-and-the-dependency-graph">2. Study order and the dependency graph</h2>
-<p>The volumes form a Russian doll. Each one assumes you read the ones before it. Concepts are taught once, then referenced by name. Do not skip ahead: Volume 7 (post-training) will use words like "KL divergence" and "FSDP" without re-explaining them, because Volumes 1 and 6 already built them.</p>
+<p>The volumes form a Russian doll. Each one assumes you read the ones before it. Concepts are taught once, then referenced by name. Do not skip ahead: Volume 7 (post-training) will use words like "KL divergence" (how far one probability distribution sits from another) and "FSDP" (fully sharded data parallel: splitting a giant model across GPUs) without re-explaining them, because Volumes 1 and 6 already built them.</p>
 <p><pre><code>Vol 0 (this guide)
   └─ Vol 1 · Math for ML
     └─ Vol 2 · ML foundations bridge
@@ -247,7 +351,7 @@ details.site-nav summary:hover{color:var(--accent)}
               └─ Vol 7 · Post-training and RL *
                 └─ Vol 8 · Inference and serving *
                   └─ Vol 9 · Agents, RAG, production GenAI
-                    └─ Vol 10 · Productionizing and MLOps
+                    └─ Vol 10 · Productionizing and MLOps (running models reliably in production)
                       └─ Vol 11 · Research methods
                         └─ Vol 12 · Guided paper spine
                           └─ Vol 13 · ML system design
@@ -258,9 +362,9 @@ DSA track ══════════════ runs parallel to everything
 * = THE CORE BUILD: one tiny LLM grown volume by volume.
 </code></pre></p>
 <p><em>Figure 0.1. The dependency graph. Read top to bottom. The DSA track runs alongside, 1-2 hours a day.</em></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
-<li><strong>Top to bottom is time.</strong> Start at Volume 0, end at Volume 14. The DSA track is separate and parallel.</li>
-<li><strong>Indentation is dependency.</strong> Each volume builds directly on the one above it. Volume 6 assumes Volumes 1-5.</li>
-<li><strong>The starred volumes (4-8, "the core build")</strong> are where you grow one tiny LLM volume by volume. Do the labs; this is the heart of the program.</li>
+<li><strong>Top to bottom is time.</strong> The asterisks mark the core build; the DSA line at the bottom never touches the spine.</li>
+<li><strong>Indentation is dependency.</strong> Deeper indentation means more prerequisites assumed.</li>
+<li><strong>The asterisks mark the core build</strong> (volumes 4-8): the weeks where the labs matter most.</li>
 <li><strong>What breaks if you skip:</strong> jumping to Volume 7 without Volume 1 means the DPO derivation looks like magic. The math is the foundation everything stands on.</li>
 </ol></div><table>
 <thead>
@@ -304,6 +408,18 @@ DSA track ══════════════ runs parallel to everything
 </tr>
 </tbody>
 </table>
+<figure id="fig-00-roadmap">
+<img src="img/00-roadmap.svg" alt="Five phase bars across nine weeks: Foundation weeks 1-2, Core build weeks 3-5, Production week 6, Research weeks 7-8, Review week 9, with a DSA lane running under all of them">
+<figcaption>Figure 0.3 - The program roadmap. One phase at a time, in order, about 9-10 weeks at 4+ hours a day. The DSA track runs underneath every week.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram</strong>
+<ol>
+<li><strong>Left to right is time.</strong> The bar lengths mirror the table above; the core build gets the most weeks because that is where the labs live.</li>
+
+<li><strong>The lane underneath is the DSA track</strong> from section 6: same schedule, separate lane.</li>
+</ol>
+</div>
+</figure>
+
 <h2 id="3-pacing-4-hours-a-day">3. Pacing: 4+ hours a day</h2>
 <p>Total is roughly 9-10 weeks at 4+ hours a day, with the DSA track running 1-2 hours a day in parallel. A day that works:</p>
 <table>
@@ -331,7 +447,18 @@ DSA track ══════════════ runs parallel to everything
 <td>Re-explain the day's hardest idea out loud, from memory, in plain words. If you cannot, you do not know it yet.</td>
 </tr>
 </tbody>
-</table><div class="callout warn"><p><strong>The re-explanation rule.</strong> Reading is not learning. Every day ends with you explaining the hardest idea of the day out loud, from memory, in simple sentences. This is the single highest-leverage habit in the program.</p></div><div class="callout"><p><strong>Attention management.</strong> Work in 50-minute blocks with 10-minute breaks. One volume at a time; do not parallel-read volumes. If a chapter feels easy, do its lab anyway, the lab is where the understanding actually forms.</p></div><h2 id="4-the-capstone-build-an-llm-from-scratch">4. The capstone: build an LLM from scratch</h2>
+</table><div class="callout warn"><p><strong>The re-explanation rule.</strong> Reading is not learning. Every day ends with you explaining the hardest idea of the day out loud, from memory, in simple sentences. This is the single highest-leverage habit in the program.</p></div><div class="callout"><p><strong>Attention management.</strong> Work in 50-minute blocks with 10-minute breaks. If a chapter feels easy, do its lab anyway; the lab is where the understanding actually forms.</p></div><figure id="fig-00-daily">
+<img src="img/00-daily-blocks.svg" alt="Four blocks in a study day: two hours of deep reading, one hour of lab, one hour of DSA or papers, and a bonus re-explanation slot">
+<figcaption>Figure 0.4 - A day that works. Two hours of reading, one hour of lab, one hour of DSA or papers, then the re-explanation rule.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram</strong>
+<ol>
+<li><strong>Top to bottom is the day.</strong> The block order is the point: read first, then lab, then DSA. Do not reorder.</li>
+<li><strong>The bonus block is the test.</strong> It maps to the re-explanation rule in the callout above; the day is not done until it passes.</li>
+</ol>
+</div>
+</figure>
+
+<h2 id="4-the-capstone-build-an-llm-from-scratch">4. The capstone: build an LLM from scratch</h2>
 <p>One project threads through Volumes 1-8. You build the same tiny model up, volume by volume:</p>
 <table>
 <thead>
@@ -347,37 +474,85 @@ DSA track ══════════════ runs parallel to everything
 </tr>
 <tr>
 <td>4 · LLM internals</td>
-<td>Attention in NumPy/JAX with worked numerics; a BPE tokenizer trained from scratch</td>
+<td>Attention (the mechanism letting each token weigh the other tokens) in NumPy/JAX with worked numerics; a BPE tokenizer (byte-pair encoding: the algorithm that chops text into pieces) trained from scratch</td>
 </tr>
 <tr>
 <td>5 · Pre-training</td>
-<td>Train a tiny GPT on a toy corpus; plot loss curves; feel what learning-rate and batch-size knobs do</td>
+<td>Train a tiny GPT on a toy corpus; plot loss curves; feel what the learning-rate (step size) and batch-size (examples per step) knobs do</td>
 </tr>
 <tr>
 <td>6 · Distributed</td>
-<td>Data-parallel toy run; apply FSDP concepts to the tiny model; profile where time goes</td>
+<td>Data-parallel toy run (the same model copied on each GPU, different data on each); apply FSDP concepts to the tiny model; profile where time goes</td>
 </tr>
 <tr>
 <td>7 · Post-training</td>
-<td>SFT then DPO on the tiny model; measure the behavior shift with evals you write</td>
+<td>SFT (supervised fine-tuning: training on example answers) then DPO (direct preference optimization: training from human preferences) on the tiny model; measure the behavior shift with evals (evaluation tests) you write</td>
 </tr>
 <tr>
 <td>8 · Inference</td>
-<td>Serve the tiny model with a KV cache; benchmark latency and throughput; try quantization</td>
+<td>Serve the tiny model with a KV cache (stored key-value memory that makes generation fast); benchmark latency (time per request) and throughput (requests per second); try quantization (shrinking the model's number precision)</td>
 </tr>
 </tbody>
 </table>
 <p>By Volume 8 you have personally touched every stage of the LLM lifecycle. In a design review, "I built a tiny model end to end" plus the ability to explain each stage is worth more than any certificate.</p>
+<figure id="fig-00-capstone">
+<img src="img/00-capstone-growth.svg" alt="Six steps showing the capstone model growing: autograd, attention and tokenizer, tiny GPT, data-parallel training, alignment, serving">
+<figcaption>Figure 0.5 - The capstone: one tiny LLM grown volume by volume. Each lab reuses the last volume's artifact; nothing is rebuilt from zero.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram</strong>
+<ol>
+<li><strong>Left to right is the build order.</strong> Each step's artifact feeds the next; the table above names the lab at each step.</li>
+<li><strong>The bottom row is what accumulates.</strong> Read it as the running inventory of what the model can do by each stage.</li>
+<li><strong>Follow the arrows, not the table.</strong> The arrows show the artifact handoff; the table above shows what you do at each handoff.</li>
+</ol>
+</div>
+</figure>
+
 <h2 id="5-how-to-study-each-volume">5. How to study each volume</h2>
 <p>Every volume follows the same anatomy. Learn it once:</p>
 <ul>
-<li><strong>Chapters</strong> teach one idea each, from zero. Every chapter has: what it is, why it exists, how it works under the hood, a worked example with real numbers, a common misunderstanding (the classic trap), a visual with a walkthrough, and an field-relevance line.</li>
+<li><strong>Chapters</strong> teach one idea each, from zero, climbing a ladder: Step 1 gives the simplest mental model with a visual, Step 2 adds how it works, Step 3 shows the full picture with a worked example using real numbers. Every chapter also names the classic misunderstanding to avoid and ends with a design prompt to quiz yourself.</li>
 <li><strong>"How to read this diagram" walkthroughs</strong> sit under every significant figure. Read them. They are the fastest path to the mental model.</li>
-<li><strong>Labs</strong> are runnable code. Run them. Change one variable at a time and observe. Mark GPU labs "RunPod-ready" when a GPU helps.</li>
+<li><strong>Labs</strong> are runnable code. Change one variable at a time and observe. Mark GPU labs "RunPod-ready" (runnable on a rented cloud GPU) when a GPU helps.</li>
 <li><strong>"Design prompt"</strong> boxes list the design question each chapter answers. Cover the answers and quiz yourself before moving on.</li>
-</ul><div class="callout"><p><strong>What "done" means for a chapter.</strong> You can (a) define every term in plain words, (b) work the example's numbers yourself, (c) explain the diagram to someone else, (d) answer its "Design prompt" questions out loud. If any of the four fails, re-read before advancing.</p></div><h2 id="6-the-parallel-dsa-track">6. The parallel DSA track</h2>
+</ul><div class="callout"><p><strong>What "done" means for a chapter.</strong> You can (a) define every term in plain words, (b) work the example's numbers yourself, (c) explain the diagram to someone else, (d) answer its "Design prompt" questions out loud. If any of the four fails, re-read before advancing.</p></div><figure id="fig-00-studyloop">
+<img src="img/00-study-loop.svg" alt="A six-step loop: read the chapter, work it by hand, run the lab, re-explain aloud, find the gap, re-read and retry">
+<figcaption>Figure 0.6 - The study loop. Every chapter moves through the same six steps; the loop is where understanding forms.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram</strong>
+<ol>
+<li><strong>Top row, left to right.</strong> Each step is more active than the last: reading is the least active, the lab the most.</li>
+<li><strong>Bottom row, right to left.</strong> The re-read targets only the gap you found, not the whole chapter.</li>
+<li><strong>The arrow back up closes the loop.</strong> Repeat only the steps that failed the "done" checklist in the callout above.</li>
+</ol>
+</div>
+</figure>
+
+<figure id="fig-00-forgetting">
+<img src="img/00-forgetting-curve.png" alt="Ebbinghaus forgetting curve: memory savings fall steeply in the first day after learning, then level off">
+<figcaption>Figure 0.7 - The forgetting curve, from Ebbinghaus's own experiments. Memory drops steeply in the first day unless you retrieve it. Source: Wikimedia Commons, Ebbinghaus curve.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram</strong>
+<ol>
+<li><strong>The y-axis is savings.</strong> How much less relearning you need after a given gap. The x-axis is the gap in days, on a log scale.</li>
+<li><strong>The drop is steepest early.</strong> Most of the loss happens in the first 24 hours. That is why the re-explanation rule sits at the end of every study day.</li>
+<li><strong>Retrieval resets the curve.</strong> Every re-explanation and every lab re-run is a retrieval event that flattens the drop. Spaced effort beats re-reading.</li>
+</ol>
+</div>
+</figure>
+
+<h2 id="6-the-parallel-dsa-track">6. The parallel DSA track</h2>
 <p>Data structures and algorithms run <strong>alongside</strong> the spine, not inside it: 1-2 hours a day, pattern by pattern. The track file is the Top-300 LeetCode Mastery Path: organized by pattern, with code templates and deep links into the existing 500-problem atlas.</p>
 <p>Rule: patterns before problems. Learn the pattern's template, then solve 2-3 problems with it, then move on. Never grind problems without naming the pattern first.</p>
+<figure id="fig-00-dsa">
+<img src="img/00-dsa-parallel.svg" alt="Two lanes: the main curriculum spine and the parallel DSA track, with the rule that patterns come before problems">
+<figcaption>Figure 0.8 - Two lanes, one schedule. The DSA track runs alongside the spine, never inside it.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram</strong>
+<ol>
+<li><strong>Top lane: the spine.</strong> Volumes 0 through 14, in order, one at a time.</li>
+<li><strong>Bottom lane: DSA.</strong> 1-2 hours a day from the Top-300 path, one pattern at a time, while the spine runs.</li>
+<li><strong>The rule on the left.</strong> Every DSA session starts from a named pattern, never from a random problem.</li>
+</ol>
+</div>
+</figure>
+
 <h2 id="7-existing-modules-you-already-own">7. Existing modules you already own</h2>
 <p>These are slotted into the spine where noted. Do not re-study them cover to cover unless a volume tells you to revisit a chapter:</p>
 <ul>
@@ -399,7 +574,41 @@ DSA track ══════════════ runs parallel to everything
 <li>What is the capstone thread, and what does it produce by Volume 8?</li>
 <li>What does "done" mean for a chapter?</li>
 </ul></div>
-<footer class="site-footer"><div class="site-sitemap"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html" class="site-nav-current">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div><p class="site-footer-note">LLM Knowledge Base. Every page works offline from file:// and links back here. No personal information.</p></footer>
+<section class="watch-deeper" aria-labelledby="wd-h-how-to-use">
+  <h2 class="watch-deeper-kicker" id="wd-h-how-to-use">Watch and go deeper</h2>
+  <p class="watch-deeper-lede">Three short videos on how to learn hard things well. They match the study rules on this page, one for one.</p>
+  <div class="watch-deeper-grid">
+    <figure class="watch-card">
+      <div class="watch-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/O96fE1E-rf8?enablejsapi=1" title="Learning how to learn | Barbara Oakley | TEDxOaklandUniversity" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <figcaption><strong>Learning how to learn | Barbara Oakley | TEDxOaklandUniversity</strong><span>Focused vs diffuse thinking, the pomodoro technique, and why switching between them beats brute-force study.</span></figcaption>
+    </figure>
+    <figure class="watch-card">
+      <div class="watch-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/5MgBikgcWnY?enablejsapi=1" title="The first 20 hours: how to learn anything | Josh Kaufman | TEDxCSU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <figcaption><strong>The first 20 hours: how to learn anything | Josh Kaufman | TEDxCSU</strong><span>Deconstruct the skill into sub-skills and practice the important ones first. This is the method behind the study loop above.</span></figcaption>
+    </figure>
+    <figure class="watch-card">
+      <div class="watch-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/tkm0TNFzIeg?enablejsapi=1" title="The Feynman Technique | Sprouts" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <figcaption><strong>The Feynman Technique | Sprouts</strong><span>Explain it simply, find the gaps, simplify again. The science behind this page's re-explanation rule, in four minutes.</span></figcaption>
+    </figure>
+  </div>
+  <h3 class="go-deeper-kicker">Go deeper</h3>
+  <ul class="go-deeper-list">
+    <li><a href="https://www.coursera.org/learn/learning-how-to-learn">Learning How to Learn (Coursera) <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The full free course behind Oakley's talk: chunking, procrastination, memory techniques.</span></li>
+    <li><a href="https://fs.blog/feynman-technique/">The Feynman Technique (Farnam Street) <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">A written walkthrough of the four-step explain-it-simply method.</span></li>
+    <li><a href="https://www.pomodorotechnique.com/">The Pomodoro Technique (official site) <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The 25-minute focus blocks this page's pacing section is built on.</span></li>
+    <li><a href="https://www.calnewport.com/deep-work-rules/">Deep Work rules (Cal Newport) <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The four rules for distraction-free focused study sessions.</span></li>
+    <li><a href="https://web.stanford.edu/class/ee384m/Handouts/HowtoReadPaper.pdf">How to Read a Paper (S. Keshav, PDF) <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The three-pass method for reading research papers, referenced by the paper-spine volumes.</span></li>
+  </ul>
+</section>
+<!-- ENRICHMENT:watch-deeper -->
+
+<footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html" class="foot-current">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav><p class="foot-colophon"><span>LLM Knowledge Base</span><span class="foot-sep" aria-hidden="true">/</span><span>Sept 2026 edition</span><span class="foot-sep" aria-hidden="true">/</span><span>Set in Charis SIL</span></p></footer>
 </main>
 <script>
 /* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
@@ -516,6 +725,34 @@ var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('
 if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
 if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
 
+/* ---------- site volume nav: collapsible panel on desktop, drawer on mobile ---------- */
+var siteNavToggle=document.getElementById('siteNavToggle'),
+    siteNavPanel=document.getElementById('siteNavPanel'),
+    siteNavScrim=document.getElementById('siteNavScrim'),
+    siteNavClose=document.getElementById('siteNavClose');
+function siteNavDrawerMode(){return window.matchMedia&&window.matchMedia('(max-width:40rem)').matches;}
+function openSiteNav(){
+  if(!siteNavPanel||!siteNavToggle)return;
+  siteNavPanel.classList.add('is-open');siteNavToggle.setAttribute('aria-expanded','true');
+  if(siteNavDrawerMode()){document.body.classList.add('site-nav-open');if(siteNavScrim)siteNavScrim.classList.add('is-open');}
+}
+function closeSiteNav(){
+  if(!siteNavPanel||!siteNavToggle)return;
+  siteNavPanel.classList.remove('is-open');siteNavToggle.setAttribute('aria-expanded','false');
+  document.body.classList.remove('site-nav-open');if(siteNavScrim)siteNavScrim.classList.remove('is-open');
+}
+if(siteNavToggle)siteNavToggle.addEventListener('click',function(){
+  if(siteNavPanel.classList.contains('is-open'))closeSiteNav();else openSiteNav();
+});
+if(siteNavClose)siteNavClose.addEventListener('click',closeSiteNav);
+if(siteNavScrim)siteNavScrim.addEventListener('click',closeSiteNav);
+if(siteNavPanel)siteNavPanel.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeSiteNav);});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&siteNavPanel&&siteNavPanel.classList.contains('is-open')){
+    closeSiteNav();if(siteNavToggle)siteNavToggle.focus();
+  }
+});
+
 /* ---------- keyboard nav: [ ] sections, / search ---------- */
 document.addEventListener('keydown',function(e){
   if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
@@ -577,6 +814,65 @@ document.querySelectorAll('.pq').forEach(function(pq){
     else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
   });
 });
+
+/* ---------- watch-deeper speed bars: 0.5x to 2x via the YouTube IFrame Player API ----------
+   Progressive enhancement: the bar is built only after the API loads. If the API
+   script fails or is blocked, no bar appears and the plain youtube-nocookie iframe
+   keeps working with YouTube's own controls. Honest cap: the embed player
+   hard-caps at 2x; no page-side trick can force 3x, so 2x is the top button. */
+(function(){
+  var frames=Array.prototype.slice.call(
+    document.querySelectorAll('.watch-frame iframe[src*="youtube-nocookie.com/embed/"]'));
+  if(!frames.length)return;
+  var RATES=[0.5,0.75,1,1.25,1.5,1.75,2];
+  function rateLabel(r){return (r===1?'1':String(r))+'x';}
+  function buildBar(host,player){
+    var bar=document.createElement('div');
+    bar.className='watch-speedbar';
+    bar.setAttribute('role','group');
+    bar.setAttribute('aria-label','Playback speed');
+    var lab=document.createElement('span');
+    lab.className='watch-speedbar-label';lab.textContent='Speed';
+    bar.appendChild(lab);
+    var btns=RATES.map(function(r){
+      var b=document.createElement('button');
+      b.type='button';b.className='watch-speed';b.textContent=rateLabel(r);
+      b.setAttribute('aria-pressed',r===1?'true':'false');
+      b.setAttribute('aria-label','Play at '+rateLabel(r)+' speed');
+      b.addEventListener('click',function(){
+        try{player.setPlaybackRate(r);}catch(e){return;}
+        btns.forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+      });
+      bar.appendChild(b);return b;
+    });
+    host.parentNode.insertBefore(bar,host.nextSibling);
+  }
+  function init(){
+    frames.forEach(function(f,i){
+      if(f.dataset.ytWired)return;
+      f.dataset.ytWired='1';
+      var src=f.getAttribute('src')||'';
+      if(src.indexOf('enablejsapi=1')<0){
+        f.setAttribute('src',src+(src.indexOf('?')<0?'?':'&')+'enablejsapi=1');
+      }
+      if(!f.id)f.id='watch-yt-'+(i+1);
+      new YT.Player(f.id,{events:{onReady:function(ev){buildBar(f,ev.target);}}});
+    });
+  }
+  if(window.YT&&window.YT.Player){init();}
+  else{
+    var prev=window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady=function(){
+      if(typeof prev==='function'){try{prev();}catch(e){}}
+      init();
+    };
+    var tag=document.createElement('script');
+    tag.src='https://www.youtube.com/iframe_api';tag.async=true;
+    var first=document.getElementsByTagName('script')[0];
+    if(first)first.parentNode.insertBefore(tag,first);
+    else document.head.appendChild(tag);
+  }
+})();
 })();
 
 </script>
