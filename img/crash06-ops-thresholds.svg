@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="540" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 2.5. Ops thresholds: the numbers that run the run</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">no dashboard, no production</text>
+<rect x="24" y="110" width="832" height="68" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">SUCCESS 80-95%</text>
+<text x="440.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">below 80% the agent is broken; above 95% the task is too easy to matter</text>
+<rect x="24" y="190" width="832" height="68" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="216" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">STUCK = 3+ repeats</text>
+<text x="440.0" y="234" font-size="11" fill="#a8a8a8" text-anchor="middle">the loop breaker trips here; never a fourth identical action</text>
+<rect x="24" y="270" width="832" height="68" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="296" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">1 retry, then escalate</text>
+<text x="440.0" y="314" font-size="11" fill="#a8a8a8" text-anchor="middle">transient failures get one retry with backoff, not a loop</text>
+<rect x="24" y="350" width="832" height="68" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="376" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">5% canary</text>
+<text x="440.0" y="394" font-size="11" fill="#a8a8a8" text-anchor="middle">new prompts and tools roll to 5% of traffic first</text>
+<rect x="24" y="430" width="832" height="68" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="456" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">4h review SLA</text>
+<text x="440.0" y="474" font-size="11" fill="#a8a8a8" text-anchor="middle">risky actions wait in the human queue at most 4 hours</text>
+<text x="24" y="520" font-size="12" fill="#a8a8a8" text-anchor="start">Write these into the run config, not the runbook. Thresholds in prose get negotiated; thresholds in code</text>
+<text x="24" y="537" font-size="12" fill="#a8a8a8" text-anchor="start">get enforced.</text>
+</svg>
