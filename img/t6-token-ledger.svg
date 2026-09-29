@@ -1,0 +1,25 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 500' width='100%' role='img'>
+<title>Token ledger</title>
+<text x='480' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>The token budget: a ledger in the loop</text>
+<text x='480' y='70' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Every call appends to the ledger. Before each step: ledger total + estimated cost &lt;= budget?</text>
+<rect x='150' y='120' width='660' height='36' rx='6' fill='#8a8a8a' fill-opacity='0.10' stroke='#8a8a8a' stroke-width='1'/>
+<text x='170' y='143' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='start'>model call #1</text>
+<text x='470' y='143' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='start'>$0.012</text>
+<text x='660' y='143' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='start'>running total $0.012</text>
+<rect x='150' y='164' width='660' height='36' rx='6' fill='#8a8a8a' fill-opacity='0.10' stroke='#8a8a8a' stroke-width='1'/>
+<text x='170' y='187' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='start'>tool call #1</text>
+<text x='470' y='187' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='start'>$0.003</text>
+<text x='660' y='187' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='start'>running total $0.015</text>
+<rect x='150' y='208' width='660' height='36' rx='6' fill='#8a8a8a' fill-opacity='0.10' stroke='#8a8a8a' stroke-width='1'/>
+<text x='170' y='231' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='start'>model call #2</text>
+<text x='470' y='231' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='start'>$0.011</text>
+<text x='660' y='231' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='start'>running total $0.026</text>
+<polygon points='480,258 522,300 480,342 438,300' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='480' y='305' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>gate</text>
+<text x='560' y='295' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>over budget? stop, or</text>
+<text x='560' y='317' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>degrade gracefully</text>
+<text x='560' y='350' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>under budget? run step,</text>
+<text x='560' y='372' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>append actual cost</text>
+<text x='480' y='425' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Budgets come from task value: a $0.05 task and a $5 task get different ledgers.</text>
+<text x='480' y='453' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Ten flagship steps cost ~$0.17; ten small-model steps ~$0.005. That 30x gap is what routing exploits.</text>
+</svg>
