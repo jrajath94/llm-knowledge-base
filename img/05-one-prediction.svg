@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 430" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="430" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">One next-token prediction, end to end</text>
+<text x="24" y="58" font-size="13" fill="#8a8a8a">the only task in pre-training, drawn once</text>
+<rect x="24" y="80" width="146" height="80" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="97.0" y="104" font-size="14" fill="#ececec" text-anchor="middle">raw text</text>
+<text x="97" y="132" font-size="13" fill="#a8a8a8" text-anchor="middle">the cat sat on the</text>
+<line x1="170" y1="120" x2="196" y2="120" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="196,120 187,115.5 187,124.5" fill="#8a8a8a"/>
+<rect x="196" y="80" width="280" height="80" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="336.0" y="102" font-size="14" fill="#ececec" text-anchor="middle">tokens + IDs</text>
+<rect x="204" y="114" width="48" height="40" fill="#1c1c1c" stroke="#4a3a12" rx="4"/>
+<text x="228" y="129" font-size="11" fill="#ececec" text-anchor="middle">the</text>
+<text x="228" y="145" font-size="10" fill="#a8a8a8" text-anchor="middle">1169</text>
+<rect x="256" y="114" width="48" height="40" fill="#1c1c1c" stroke="#4a3a12" rx="4"/>
+<text x="280" y="129" font-size="11" fill="#ececec" text-anchor="middle">cat</text>
+<text x="280" y="145" font-size="10" fill="#a8a8a8" text-anchor="middle">4937</text>
+<rect x="308" y="114" width="48" height="40" fill="#1c1c1c" stroke="#4a3a12" rx="4"/>
+<text x="332" y="129" font-size="11" fill="#ececec" text-anchor="middle">sat</text>
+<text x="332" y="145" font-size="10" fill="#a8a8a8" text-anchor="middle">8842</text>
+<rect x="360" y="114" width="48" height="40" fill="#1c1c1c" stroke="#4a3a12" rx="4"/>
+<text x="384" y="129" font-size="11" fill="#ececec" text-anchor="middle">on</text>
+<text x="384" y="145" font-size="10" fill="#a8a8a8" text-anchor="middle">319</text>
+<rect x="412" y="114" width="48" height="40" fill="#1c1c1c" stroke="#4a3a12" rx="4"/>
+<text x="436" y="129" font-size="11" fill="#ececec" text-anchor="middle">the</text>
+<text x="436" y="145" font-size="10" fill="#a8a8a8" text-anchor="middle">1169</text>
+<line x1="476" y1="120" x2="502" y2="120" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="502,120 493,115.5 493,124.5" fill="#8a8a8a"/>
+<rect x="502" y="80" width="146" height="80" fill="#141414" stroke="#7fd08a" stroke-width="1.5" rx="6"/>
+<text x="575.0" y="106" font-size="14" fill="#ececec" text-anchor="middle">transformer</text>
+<text x="575" y="134" font-size="13" fill="#a8a8a8" text-anchor="middle">(the model)</text>
+<line x1="648" y1="120" x2="674" y2="120" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="674,120 665,115.5 665,124.5" fill="#8a8a8a"/>
+<rect x="674" y="64" width="182" height="150" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="765.0" y="0" font-size="14" fill="#ececec" text-anchor="middle"></text>
+<text x="765" y="90" font-size="13" fill="#ececec" text-anchor="middle" font-weight="bold">P(next token)</text>
+<rect x="726" y="110" width="62" height="15" fill="#f0b429" rx="3"/>
+<text x="720" y="122" font-size="12" fill="#ececec" text-anchor="end">mat</text>
+<text x="792" y="122" font-size="11" fill="#a8a8a8">0.62</text>
+<rect x="726" y="134" width="21" height="15" fill="#3a3a3a" rx="3"/>
+<text x="720" y="146" font-size="12" fill="#ececec" text-anchor="end">floor</text>
+<text x="751" y="146" font-size="11" fill="#a8a8a8">0.21</text>
+<rect x="726" y="158" width="8" height="15" fill="#3a3a3a" rx="3"/>
+<text x="720" y="170" font-size="12" fill="#ececec" text-anchor="end">roof</text>
+<text x="738" y="170" font-size="11" fill="#a8a8a8">0.08</text>
+<rect x="726" y="182" width="2" height="15" fill="#3a3a3a" rx="3"/>
+<text x="720" y="194" font-size="12" fill="#ececec" text-anchor="end">moon</text>
+<text x="732" y="194" font-size="11" fill="#a8a8a8">0.02</text>
+<text x="765" y="206" font-size="12" fill="#7fd08a" text-anchor="middle">true next token: mat</text>
+<rect x="24" y="250" width="832" height="150" fill="#101010" stroke="#262626" rx="6"/>
+<text x="48" y="282" font-size="15" fill="#ececec" text-anchor="start">loss for this position = -log P(correct token) = -log(0.62) = 0.48 nats</text>
+<text x="48" y="310" font-size="13" fill="#a8a8a8" text-anchor="start">Confident and right: tiny loss. Confident and wrong (P = 0.01): loss 4.6.</text>
+<text x="48" y="336" font-size="13" fill="#a8a8a8" text-anchor="start">Repeat for every position of every sequence, trillions of times: that is pre-training.</text>
+<text x="48" y="368" font-size="13" fill="#8a8a8a" text-anchor="start">true token = the one that actually came next in the text (supervision is free)</text>
+</svg>
