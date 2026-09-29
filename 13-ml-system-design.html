@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Volume 13: ML System Design</title>
 <style>
@@ -785,6 +793,17 @@ Worked: 256 &#215; 21 ms = 5,376 ms &#8776; 5.4 s for full generation by physics
 <p>From the lab table: batch 24 gives 4.5 req/s per GPU at ~21 ms steps; 9 GPUs handle 40 req/s. Latency per request &#8776; queueing + prefill + 256 tokens &#215; 20.9 ms &#8776; queueing + prefill + 5.4 s? No: 256 decode steps &#215; 20.9 ms is 5.4 seconds, which blows the 2 s SLO. Catch the error: with continuous batching, the <i>per-token</i> latency is what matters for streaming, and time-to-first-token plus inter-token latency is the real SLO for chat. This is the correction a strong candidate makes mid-answer.</p>
 <p>Answer: "At 256 output tokens and 20.9 ms per step, full-generation p99 cannot be 2 s; the SLO must mean time-to-first-token plus inter-token latency for streaming, or far fewer output tokens. I would clarify the SLO, then set the batch where queueing delay keeps time-to-first-token under budget. If they insist on 2 s for full generation, the answer is: impossible at this output length, here is the math."</p>
 <div class="callout"><span class="tag">[KEY]</span>Drill 4's lesson: never accept an impossible SLO silently. Doing the math and pushing back with numbers is senior behavior. Designing a system for a 2-second full-generation at 256 tokens is junior behavior: it means you never did the decode arithmetic.</div>
+<figure class="diagram">
+<img src="img/v13-drill4-decode-math.svg" alt="Drill 4: 256 tokens at 20.9 ms per step is 5.4 seconds, so the 2-second SLO is impossible">
+<figcaption>Drill 4: the decode arithmetic. 256 output tokens at 20.9 ms per step is 5.4 seconds minimum, so a 2-second full-generation SLO is impossible. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>5.4 s is the floor: 256 steps times 20.9 ms.</li><li>The 2 s SLO cannot mean full generation.</li><li>The fix: the SLO must mean time-to-first-token plus inter-token latency. Doing the math and pushing back is senior behavior.</li>
+</ol>
+</div>
+
 <h3>Drill 5: the one-minute cost model (memorize this)</h3>
 <div class="eq" style="text-align:center;margin:1.3em 0;"><div style="font-size:1.12em;">cost per 1k requests = (GPUs &#215; $/GPU-hr) &#247; (req/s &#215; 3.6)</div><div style="font-size:.88em;margin-top:.35em;">where: <b>GPUs</b> = fleet size; <b>$/GPU-hr</b> = rental price ($2.50/hr illustrative); <b>req/s</b> = served throughput; <b>3.6</b> = 3,600 seconds per hour ÷ 1,000 requests.</div></div>
 <p>Worked: 9 &#215; $2.50 &#247; (40 &#215; 3.6) = $22.50 &#247; 144 &#8776; $0.16 per 1k requests (illustrative).</p>
@@ -823,6 +842,17 @@ Worked: 256 &#215; 21 ms = 5,376 ms &#8776; 5.4 s for full generation by physics
 <p><b>Next:</b> Chapter 7 answers what the model does not know: RAG over 100M documents.</p>
 </section>
 <section id="v13-ch4">
+<figure class="diagram">
+<img src="img/v13-cost-model-card.svg" alt="The one-minute cost model: cost per 1k requests from fleet size, GPU price, and throughput">
+<figcaption>The one-minute cost model: cost per 1k requests from fleet size, GPU price, and throughput. Worked: $0.16 per 1k requests. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>The formula: GPUs times dollars per GPU hour, divided by requests per second times 3.6.</li><li>The worked row: 9 GPUs at $2.50/hr serving 40 req/s.</li><li>The levers are in order: batching first, 20x, then the rest.</li>
+</ol>
+</div>
+
 <h2><span class="num">7.</span> RAG systems: retrieval meets generation</h2>
 <p>Chapter 6 closed the serving dynamics: queues, tails, and the cost of every request. One serving question stayed open the whole time: what happens when the model does not know the answer? Retraining for every new fact is too slow and too expensive. This chapter decouples knowledge from reasoning: retrieve the documents at query time, put them in the prompt.</p>
 <p><dfn>RAG</dfn> (retrieval-augmented generation) is the standard answer to "the model does not know my data": instead of training the knowledge in, you retrieve relevant documents at query time and put them in the prompt. Fine-tuning (further training a model on new data to change its behavior) cannot keep up with changing data, and a 100M-document corpus will never fit in context: RAG decouples knowledge (stored in the index, updated by re-ingesting) from reasoning (done by the model at query time). It also makes answers attributable: the model can cite the chunk it used, the only scalable antidote to hallucination (the model stating false things with confidence) in knowledge tasks. It is the highest-leverage architecture in applied LLM work, and its failure modes are almost all in the retrieval half, not the generation half.</p>
@@ -1072,7 +1102,7 @@ Worked: 200,000,000 &#215; 768 = 153.6 billion values; &#215; 4 bytes = 614.4 bi
 <li><b>Minutes 10-25: architecture.</b> Draw the four subsystems and their interfaces: training cluster, serving fleet, RAG index, eval harness. Show the data flows between them: eval results gate serving deploys; serving traffic samples feed the eval dataset; the RAG index re-ingests on a schedule.</li>
 <li><b>Minutes 25-35: bottlenecks.</b> What breaks at 2x traffic? (Serving fleet: add GPUs linearly; RAG index: reshard; eval: the judge cost scales with samples.) What breaks if the model doubles in size? (Serving: step time doubles; training: FLOPs double.)</li>
 <li><b>Minutes 35-40: monitoring.</b> The four signals (Ch 8): volume, latency, errors, cost. Plus drift detection on the inputs and a fallback for each path: cache, smaller model, human review.</li>
-<li><b>Minutes 35-45: cost and defense.</b> Monthly bill: serving (9 &#215; $2.50 &#215; 730 &#8776; $16k illustrative) + training + eval. Defend each number. Invite the reviewer to change a requirement and re-derive live: that is the whole game.</li>
+<li><b>Minutes 40-45: cost and defense.</b> Monthly bill: serving (9 &#215; $2.50 &#215; 730 &#8776; $16k illustrative) + training + eval. Defend each number. Invite the reviewer to change a requirement and re-derive live: that is the whole game.</li>
 </ul>
 <h4>What to observe</h4>
 <ul>
@@ -1098,6 +1128,17 @@ Worked: 200,000,000 &#215; 768 = 153.6 billion values; &#215; 4 bytes = 614.4 bi
 
 <h2 id="a13a-distributed-systems-primitives">Appendix 13A: Distributed Systems Primitives</h2>
 <p>Volume 13 designs ML systems: serving, training clusters, capacity math. But it assumes a set of primitives it never teaches. How do keys find servers? What does "delivered exactly once" really mean? What happens when a fast producer meets a slow consumer? How do tenants share one system fairly, and how do messages stay ordered? Those primitives are older than ML, and every ML system sits on top of them. This appendix teaches each one from zero, with the ML-system examples where they bite.</p>
+<figure class="diagram">
+<img src="img/v13-primitives-map.svg" alt="Roadmap of Appendix 13A: consistent hashing, delivery semantics, backpressure, fair scheduling">
+<figcaption>Appendix 13A roadmap: the four primitives every ML system sits on: consistent hashing, delivery semantics, backpressure, fair scheduling. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Older than ML, load-bearing under all of it.</li><li>Read them in order: each primitive assumes the previous ones.</li>
+</ol>
+</div>
+
 <h3 id="a13a-chapter-1-consistent-hashing">Chapter 1. Consistent hashing</h3>
 <h4 id="a13a-11-the-problem-with-hash-mod-n">1.1 The problem with hash mod N</h4>
 <p>You have 100 cache servers and a million model artifacts to store. The obvious scheme: server = hash(key) mod 100. It works beautifully until server 101 arrives. Now every key's home changes, because mod 101 gives different answers than mod 100. Nearly all one million keys move at once. The new server gets a thundering herd (every client hitting it at once), the old servers sit idle, and your "scaling event" is an outage.</p>
@@ -1196,7 +1237,18 @@ print(f&quot;keys moved: {moved} / {len(keys)} = {moved/len(keys):.1%}&quot;)
 <li><code>add_node</code> plants 200 virtual positions per server. The sort keeps the ring ordered so lookup is a binary search: O(log M) where M is the total number of virtual positions.</li>
 <li><code>get</code> finds the first position at or after the key's hash, wrapping to zero at the end. That wrap-around is the only tricky line.</li>
 <li>The demo prints the fraction of keys that moved when the 5th node joined. With 200 virtual nodes it lands near 20%, the fair share. Hash mod N would have moved roughly 80%.</li>
-</ol></div><h3 id="a13a-chapter-2-delivery-semantics-and-idempotency">Chapter 2. Delivery semantics and idempotency</h3>
+</ol></div><figure class="diagram">
+<img src="img/v13-consistent-hashing.svg" alt="Consistent hashing: keys and servers share one ring; adding a server moves only the keys it must take">
+<figcaption>Consistent hashing: keys and servers share one ring, so adding a server moves only the keys it must take. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>The ring: hash values form a clock face; the max wraps to 0.</li><li>Each key belongs to the first server clockwise from it.</li><li>Add a server and it takes only the keys between itself and its counterclockwise neighbor. Nothing else moves.</li>
+</ol>
+</div>
+
+<h3 id="a13a-chapter-2-delivery-semantics-and-idempotency">Chapter 2. Delivery semantics and idempotency</h3>
 <p>Chapter 1 answered how keys find servers. The next primitive is about what happens to messages in flight: what a broker can promise about delivery, and why "exactly once" is the wrong promise to ask for.</p>
 <h4 id="a13a-21-three-promises-and-which-one-you-can-keep">2.1 Three promises, and which one you can keep</h4>
 <p>A message broker can make three promises about each message.</p>
@@ -1415,7 +1467,7 @@ print(f&quot;accepted {accepted}, rejected {q.rejected}&quot;)
 <p>Fair scheduling divides service deliberately among the tenants that have work waiting. If C and D both have requests queued, D's next request runs within a bounded number of turns, no matter how large C's backlog grows. Weights let a bigger contract earn a bigger share without taking everything. With weights 3 and 1, C gets 75% and D gets 25%, even if C would take 96% under FIFO.</p>
 <h4 id="a13a-42-the-algorithms">4.2 The algorithms</h4>
 <p>Weighted round robin visits each active tenant in proportion to its weight. It is simple and works when requests cost about the same. When requests have very different costs, a cheap heartbeat and an expensive batch job should not count equally. Deficit round robin gives each tenant a credit allowance per round and dispatches its work while the credit covers the cost, charging bytes or estimated processing time. The expensive job burns credit faster, so cost differences stop being a loophole.</p>
-<p>Dominant Resource Fairness handles multiple resource types at once: CPU, memory, GPU, bandwidth. Each tenant's dominant resource is the one it uses the largest share of. The scheduler equalizes the dominant shares. A worked example: the cluster has 8 CPUs and 32 GB of memory. Tenant A wants 2 CPUs and 4 GB per task; tenant B wants 1 CPU and 8 GB. A's dominant resource is memory at 4/32 = 12.5%; B's dominant resource is memory at 8/32 = 25%. DRF allocates to equalize those dominant shares, so neither tenant is starved on the resource it needs most. This is the standard answer when someone asks how to share a cluster fairly across different resource types.</p>
+<p>Dominant Resource Fairness handles multiple resource types at once: CPU, memory, GPU, bandwidth. Each tenant's dominant resource is the one it uses the largest share of. The scheduler equalizes the dominant shares. A worked example: the cluster has 8 CPUs and 32 GB of memory. Tenant A wants 2 CPUs and 4 GB per task; tenant B wants 1 CPU and 8 GB. A's dominant resource is CPU at 2/8 = 25%; B's dominant resource is memory at 8/32 = 25%. DRF allocates to equalize those dominant shares, so neither tenant is starved on the resource it needs most. This is the standard answer when someone asks how to share a cluster fairly across different resource types.</p>
 <h4 id="a13a-43-ordered-messaging">4.3 Ordered messaging</h4>
 <p>Some streams must arrive in order: a user's edits to a document, the events of one training job, the log lines of one request. The standard mechanism is partitioning: the broker guarantees order within one partition, not across partitions. Kafka works this way. All messages with the same key go to the same partition, and within that partition every consumer sees them in the order they were written.</p>
 <p>The trade-off is parallelism. Order exists per partition, so throughput scales with the number of partitions. One giant ordered stream is one partition and one consumer: correct and slow. Key insight: you rarely need global order. You need per-entity order, and partitioning by entity key gives you exactly that, with parallelism across entities.</p>
@@ -1459,7 +1511,7 @@ def dominant_share(cpu_want, mem_want, cpu_total, mem_total):
         return &quot;cpu&quot;, cpu_share
     return &quot;memory&quot;, mem_share
 
-print(&quot;A:&quot;, dominant_share(2, 4, 8, 32))  # memory 12.5%
+print(&quot;A:&quot;, dominant_share(2, 4, 8, 32))  # cpu 25%
 print(&quot;B:&quot;, dominant_share(1, 8, 8, 32))  # memory 25.0%
 # DRF serves A until its dominant share catches up to B&#x27;s: fair across
 # resource types, not just across request counts.
