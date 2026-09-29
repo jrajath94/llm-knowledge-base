@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 248" width="100%" style="max-width:760px" role="img" aria-label="Phase 0 restate claims, Phase 1 fix the data, Phase 2 run the sweep, Phase 3 fit and predict, Phase 4 price it">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="760" height="248" fill="none"/>
+<text class="t" x="24" y="30">The capstone in five phases</text>
+<rect x="16" y="56" width="128" height="104" rx="8" fill="#141414" stroke="#f0b429" stroke-width="1.7"/>
+<text class="big g" x="28" y="82">P0</text>
+<text class="num" x="28" y="106">Restate claims</text>
+<text class="m" x="28" y="128">C1, C2, C3 as</text>
+<text class="m" x="28" y="146">falsifiable statements</text>
+<path class="arr" d="M144 108 L164 108"/>
+<rect x="164" y="56" width="128" height="104" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="1.7"/>
+<text class="big g" x="176" y="82">P1</text>
+<text class="num" x="176" y="106">Fix the data</text>
+<text class="m" x="176" y="128">dedupe, clean,</text>
+<text class="m" x="176" y="146">freeze one mix</text>
+<path class="arr" d="M292 108 L312 108"/>
+<rect x="312" y="56" width="128" height="104" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="1.7"/>
+<text class="big g" x="324" y="82">P2</text>
+<text class="num" x="324" y="106">Run the sweep</text>
+<text class="m" x="324" y="128">3 budgets x</text>
+<text class="m" x="324" y="146">4-6 sizes</text>
+<path class="arr" d="M440 108 L460 108"/>
+<rect x="460" y="56" width="128" height="104" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="1.7"/>
+<text class="big g" x="472" y="82">P3</text>
+<text class="num" x="472" y="106">Fit and predict</text>
+<text class="m" x="472" y="128">parabola per budget,</text>
+<text class="m" x="472" y="146">join the minima</text>
+<path class="arr" d="M588 108 L608 108"/>
+<rect x="608" y="56" width="128" height="104" rx="8" fill="#141414" stroke="#7fc97f" stroke-width="1.7"/>
+<text class="big g" x="620" y="82">P4</text>
+<text class="num" x="620" y="106">Price it</text>
+<text class="m" x="620" y="128">before launching:</text>
+<text class="m" x="620" y="146">GPU-hours + dollars</text>
+
+<text class="num" x="16" y="200">The mix is a confounder, not the variable: one frozen mix for the whole sweep.</text>
+<text class="m" x="16" y="224">Each claim gets its own experiment. Price (GPU-hours = FLOPs / (peak x MFU) / 3600) before launching.</text>
+</svg>
