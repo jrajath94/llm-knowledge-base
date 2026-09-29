@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="520" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 2.3. Context-window budget: the working set is ~3k tokens per step</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">a 128k window does not mean 128k of useful memory</text>
+<rect x="90" y="140" width="640" height="80" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="6" opacity="1"/>
+<rect x="90" y="140" width="224.0" height="80" fill="#6cb2ff" rx="6" opacity="0.8"/>
+<text x="202.0" y="185.0" font-size="12" font-weight="bold" fill="#0b0e13" text-anchor="middle">~3k working set</text>
+<text x="324.0" y="185.0" font-size="12" fill="#a8a8a8" text-anchor="start">the rest: history, tool schemas, retrieved docs</text>
+<rect x="24" y="280" width="832" height="110" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="306" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">THE DISCIPLINE</text>
+<text x="440.0" y="324" font-size="11" fill="#a8a8a8" text-anchor="middle">each step reads the working set, not the window; compaction keeps the set near 3k while the run grows past 100</text>
+<text x="440.0" y="339" font-size="11" fill="#a8a8a8" text-anchor="middle">steps</text>
+<text x="24" y="450" font-size="12" fill="#a8a8a8" text-anchor="start">Long runs die when the working set grows without bound: the model attends to everything and decides on</text>
+<text x="24" y="467" font-size="12" fill="#a8a8a8" text-anchor="start">nothing.</text>
+</svg>
