@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" width="100%" style="max-width:760px" role="img" aria-label="Cover, compute with the Section 2 formulas, reveal, check the work, log misses, return to the formula">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="760" height="260" fill="none"/>
+<text class="t" x="24" y="30">The rapid-fire loop: how to use Part 4</text>
+<rect x="13" y="56" width="114" height="96" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="1.6"/>
+<text class="big" x="25" y="90">Cover</text>
+<text class="m" x="25" y="112">the answer</text>
+<path class="arr" d="M127 104 L137 104"/>
+<rect x="137" y="56" width="114" height="96" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="1.6"/>
+<text class="big" x="149" y="90">Compute</text>
+<text class="m" x="149" y="112">with the</text>
+<text class="m" x="149" y="130">Section 2 formulas</text>
+<path class="arr" d="M251 104 L261 104"/>
+<rect x="261" y="56" width="114" height="96" rx="8" fill="#141414" stroke="#f0b429" stroke-width="1.6"/>
+<text class="big" x="273" y="90">Reveal</text>
+<text class="m" x="273" y="112">the answer</text>
+<path class="arr" d="M375 104 L385 104"/>
+<rect x="385" y="56" width="114" height="96" rx="8" fill="#141414" stroke="#f0b429" stroke-width="1.6"/>
+<text class="big" x="397" y="90">Check</text>
+<text class="m" x="397" y="112">the work,</text>
+<text class="m" x="397" y="130">not just the letter</text>
+<path class="arr" d="M499 104 L509 104"/>
+<rect x="509" y="56" width="114" height="96" rx="8" fill="#141414" stroke="#e57373" stroke-width="1.6"/>
+<text class="big" x="521" y="90">Log</text>
+<text class="m" x="521" y="112">the misses</text>
+<path class="arr" d="M623 104 L633 104"/>
+<rect x="633" y="56" width="114" height="96" rx="8" fill="#141414" stroke="#7fc97f" stroke-width="1.6"/>
+<text class="big" x="645" y="90">Return</text>
+<text class="m" x="645" y="112">to the formula</text>
+<text class="m" x="645" y="130">or rule</text>
+<path d="M 690 152 L 690 176 L 70 176 L 70 152" fill="none" stroke="#7fc97f" stroke-width="2" stroke-dasharray="6,4"/>
+<text class="gr" x="380" y="198" text-anchor="middle">the misses become the next round</text>
+<text class="num" x="16" y="236">Time to compute under pressure. Every question is arithmetic or diagnosis, answered with the Section 2 formulas.</text>
+</svg>
