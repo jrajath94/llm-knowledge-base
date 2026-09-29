@@ -36,14 +36,16 @@
   unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 :root{
   --bg:#000000; --surface:#0d0d0d; --border:#262626;
-  --text:#ececec; --muted:#a8a8a8;
-  --accent:#f0b429; --link:#6cb2ff; --code-bg:#111111;
+  --text:#ececec; --muted:#a8a8a8; --faint:#8a8a8a;
+  --accent:#f0b429; --accent-ink:#000000; --link:#6cb2ff; --code-bg:#111111;
   --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
   --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
 body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
 p{text-align:justify;hyphens:auto;margin:.85rem 0}
 h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
@@ -150,51 +152,142 @@ blockquote p{margin:.4rem 0}
 @media(min-width:56.01rem){.ds-scrim{display:none!important}}
 
 
-/* ---- site header: home link, volume nav, breadcrumbs, prev/next ---- */
-.site-header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--border);padding:.65rem 0 .7rem;margin:0 0 1.6rem;max-width:72ch}
-.site-header-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
-.site-home{font:700 1rem/1.2 var(--font-ui);color:var(--text);text-decoration:none}
-.site-home:hover{color:var(--accent)}
-.site-home .site-home-mark{color:var(--accent)}
-.site-prevnext{display:flex;gap:.6rem;font:600 .82rem/1.4 var(--font-ui)}
-.site-prevnext a{color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
-.site-prevnext a:hover{color:var(--text);border-color:var(--accent)}
-.site-prevnext .site-prevnext-disabled{color:#4a4a4a;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
-.breadcrumbs{font:400 .8rem/1.5 var(--font-ui);color:var(--muted);margin:.45rem 0 0}
-.breadcrumbs a{color:var(--muted);text-decoration:none}
-.breadcrumbs a:hover{color:var(--text)}
-.breadcrumbs .bc-sep{margin:0 .35rem;color:#4a4a4a}
-.breadcrumbs .bc-current{color:var(--text)}
-details.site-nav{margin:.55rem 0 0;border:1px solid var(--border);border-radius:.55rem;background:var(--surface)}
-details.site-nav summary{cursor:pointer;list-style:none;font:600 .85rem/1.4 var(--font-ui);color:var(--text);padding:.55rem .9rem;display:flex;align-items:center;gap:.5rem}
-details.site-nav summary::-webkit-details-marker{display:none}
-details.site-nav summary::before{content:"+";color:var(--accent);font-weight:700}
-details.site-nav[open] summary::before{content:"\2212"}
-details.site-nav summary:hover{color:var(--accent)}
-.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem;padding:.2rem .9rem .9rem}
-.site-nav-groups h4{font:700 .75rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:.6rem 0 .35rem}
-.site-nav-groups ul{list-style:none;margin:0;padding:0}
-.site-nav-groups li{margin:.18rem 0}
-.site-nav-groups a{font:400 .83rem/1.45 var(--font-ui);color:var(--muted);text-decoration:none}
-.site-nav-groups a:hover{color:var(--text)}
-.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:700}
+/* Hallmark · pre-emit critique: P4 H4 E5 S5 R5 V5
+   Hallmark · macrostructure: newspaper-masthead chrome (N6 nav + Ft1 footer)
+   nav: N6 (knobs: issue-line=above, wordmark=left 2xl, rule=double) ·
+   footer: Ft1 (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+   slop: pass (42-45) · contrast: pass (40-41) · honest: pass (46) · chrome: pass (47) ·
+   tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50-57) */
+/* Hallmark · genre: editorial · verb: redesign · scope: chrome-only
+ * nav: N6 Newspaper masthead (knobs: issue-line=above, wordmark=left 2xl, rule=double)
+ * footer: Ft1 Mast-headed (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+ * Tokens preserved: --font-body/--font-ui (Charis SIL), full colour system.
+ * 4pt spacing rhythm; hairline dividers; hand-drawn SVG chevrons; no gradients. */
 
-/* ---- site footer: full sitemap ---- */
-.site-footer{border-top:1px solid var(--border);margin:3rem 0 0;padding:2rem 0 2.5rem;max-width:72ch}
-.site-footer .site-sitemap{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.2rem}
-.site-sitemap h4{font:700 .78rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 .4rem}
-.site-sitemap ul{list-style:none;margin:0;padding:0}
-.site-sitemap li{margin:.2rem 0}
-.site-sitemap a{font:400 .83rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none}
-.site-sitemap a:hover{color:var(--text)}
-.site-footer-note{font:400 .78rem/1.5 var(--font-ui);color:#6a6a6a;margin-top:1.6rem}
+/* ---- site header: N6 newspaper masthead ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);margin:0 0 2rem;max-width:72ch}
+.mast-line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:0;padding:.75rem 0 .5rem;font:600 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mast-line-right{color:var(--faint);white-space:nowrap}
+.mast-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:.75rem}
+.mast-name{font:800 1.5rem/1.15 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.mast-name:hover{color:var(--accent)}
+.site-prevnext{display:flex;gap:1.5rem;flex:none}
+.site-prevnext-group{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.site-prevnext-next{align-items:flex-end;text-align:right}
+.site-prevnext-kicker{font:600 .68rem/1.3 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.site-prevnext-link{display:inline-flex;align-items:center;gap:.4rem;font:600 .85rem/1.4 var(--font-ui);color:var(--text);text-decoration:none;max-width:15rem;min-height:1.75rem}
+.site-prevnext-link .chev{width:.8rem;height:.8rem;flex:none;color:var(--accent)}
+.site-prevnext-link:hover{color:var(--accent)}
+.site-prevnext-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-prevnext-empty{font:400 .85rem/1.75 var(--font-ui);color:var(--faint)}
+.mast-sub{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.25rem 0 .75rem}
+.breadcrumbs{font:400 .78rem/1.5 var(--font-ui);color:var(--muted);margin:0;min-width:0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.breadcrumbs .bc-sep{margin:0 .4rem;color:var(--faint)}
+.breadcrumbs .bc-current{color:var(--text)}
+.site-nav-toggle{display:inline-flex;align-items:center;gap:.5rem;flex:none;white-space:nowrap;background:none;border:1px solid var(--border);border-radius:.5rem;color:var(--text);font:600 .82rem/1.4 var(--font-ui);padding:.55rem .9rem;cursor:pointer;min-height:2.5rem}
+.site-nav-toggle:active,.site-nav-close:active,.watch-speed:active{transform:translateY(1px)}
+.site-nav-toggle .chev{width:.75rem;height:.75rem;color:var(--accent);transition:transform .25s var(--ease-out)}
+.site-nav-toggle:hover{border-color:var(--accent)}
+.site-nav-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.mast-rule-double{border:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:4px;margin:0}
+
+/* collapsible volume panel (desktop): smooth 0fr/1fr reveal */
+.site-nav-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease-out)}
+.site-nav-panel.is-open{grid-template-rows:1fr}
+.site-nav-panel-inner{overflow:hidden;min-height:0}
+.site-nav-drawer-head{display:none}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:1.25rem;max-height:70vh;overflow-y:auto;padding:1.25rem 0}
+.site-nav-groups h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:0}
+.site-nav-groups a{display:flex;gap:.6rem;align-items:baseline;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0;border-radius:.25rem}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups .site-nav-num{font:600 .72rem/1.6 var(--font-ui);color:var(--faint);min-width:1.75rem;flex:none}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:600}
+.site-nav-groups a.site-nav-current .site-nav-num{color:var(--accent)}
+.site-nav-scrim{display:none}
+
+/* ---- site footer: Ft1 mast-headed + grouped index ---- */
+.site-footer{margin:3.5rem 0 0;padding:0 0 3rem;max-width:72ch}
+.foot-mast{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.75rem 0 1.5rem;margin-bottom:2rem}
+.foot-name{font:800 1.25rem/1.2 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.foot-name:hover{color:var(--accent)}
+.foot-tag{font:400 .88rem/1.6 var(--font-ui);color:var(--muted);max-width:52ch;margin:.6rem 0 0;text-align:left}
+.foot-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.5rem;margin-bottom:2rem}
+.foot-group h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.foot-group ul{list-style:none;margin:0;padding:0}
+.foot-group li{margin:0}
+.foot-group a{display:block;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0}
+.foot-group a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.foot-group a.foot-current{color:var(--accent);font-weight:600}
+.foot-colophon{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;margin:0;padding-top:1.25rem;border-top:1px solid var(--border);font:400 .78rem/1.6 var(--font-ui);color:var(--faint);text-align:left}
+.foot-colophon .foot-sep{color:var(--faint)}
+
+/* ---- mobile: drawer + compact chrome (<=40rem) ---- */
+@media(max-width:40rem){
+  .mast-line-right{display:none}
+  .mast-row{flex-wrap:wrap;row-gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between;gap:.75rem}
+  .site-prevnext-link{max-width:44vw}
+  .site-prevnext-title{display:none}
+  .mast-sub{flex-wrap:wrap}
+  .site-nav-toggle{width:100%;justify-content:center}
+  /* volume nav becomes a fixed drawer: no layout shift, closes on link tap / scrim / Escape */
+  .site-nav-panel{position:fixed;top:0;left:0;bottom:0;width:min(20rem,88vw);z-index:70;display:block;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-104%);transition:transform .3s var(--ease-out)}
+  .site-nav-panel.is-open{transform:none}
+  .site-nav-panel-inner{height:100%;overflow-y:auto;padding:1.25rem 1.25rem 2rem}
+  .site-nav-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .site-nav-drawer-head span{font:600 .75rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+  .site-nav-close{background:none;border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:600 .8rem/1 var(--font-ui);padding:.55rem .85rem;cursor:pointer;min-height:2.75rem}
+  .site-nav-close:hover{border-color:var(--accent)}
+  .site-nav-groups{display:block;max-height:none;overflow:visible;padding:0}
+  .site-nav-groups>div{margin-bottom:1.25rem}
+  .site-nav-scrim{display:block;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .site-nav-scrim.is-open{opacity:1;pointer-events:auto}
+  body.site-nav-open{overflow:clip}
+  .foot-index{gap:1.25rem}
+}
 @media(max-width:56rem){
-  .site-header-row{flex-direction:column;align-items:flex-start;gap:.5rem}
-  .site-prevnext{width:100%;justify-content:space-between}
-  .site-header{padding-left:2.9rem} /* clear the fixed hamburger menu button */
+  .site-header{padding-left:2.9rem} /* clear the fixed section-drawer menu button */
 }
 @media print{
-  .site-header,.site-footer{display:none!important}
+  .site-header,.site-footer,.site-nav-scrim{display:none!important}
+  .watch-deeper .watch-frame{display:none}
+}
+
+/* ---- Watch and go deeper (content section skeleton; downstream fills real videos/links) ---- */
+.watch-deeper{margin:3rem 0 0;padding:2rem 0 0;border-top:1px solid var(--border);max-width:72ch}
+.watch-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.watch-deeper-lede{font:400 .95rem/1.6 var(--font-ui);color:var(--muted);margin:0 0 1.25rem;text-align:left}
+.watch-deeper-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem;margin:0 0 1.75rem}
+.watch-card{margin:0;border:1px solid var(--border);border-radius:.6rem;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.watch-frame{aspect-ratio:16/9;background:var(--bg)}
+.watch-frame iframe{width:100%;height:100%;border:0;display:block}
+.watch-card figcaption{padding:.85rem 1rem 1rem;font:400 .85rem/1.55 var(--font-ui);color:var(--muted);text-align:left}
+.watch-card figcaption strong{display:block;color:var(--text);font-weight:700;margin-bottom:.25rem}
+.go-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--text);margin:0 0 .5rem}
+.go-deeper-list{list-style:none;margin:0;padding:0}
+.go-deeper-list li{display:flex;gap:.6rem;align-items:baseline;padding:.5rem 0;border-top:1px solid var(--border)}
+.go-deeper-list li:last-child{border-bottom:1px solid var(--border)}
+.go-deeper-list a{font:600 .9rem/1.5 var(--font-ui);color:var(--text);text-decoration:none;flex:none;display:inline-flex;align-items:center;gap:.35rem}
+.go-deeper-list a:hover{color:var(--accent)}
+.go-deeper-list a:hover .ext-arrow{color:var(--accent)}
+.go-deeper-list .ext-arrow{width:.7rem;height:.7rem;color:var(--muted);flex:none}
+.go-deeper-list .go-deeper-note{font:400 .85rem/1.55 var(--font-ui);color:var(--muted)}
+
+/* speed-control bar (injected by the site script only when the YouTube IFrame
+   Player API loads; the iframe alone keeps working when it does not) */
+.watch-speedbar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;padding:.6rem .9rem;border-top:1px solid var(--border)}
+.watch-speedbar-label{font:600 .68rem/1.4 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.watch-speed{background:none;border:1px solid var(--border);border-radius:.4rem;color:var(--muted);font:600 .78rem/1 var(--font-ui);padding:.45rem .6rem;cursor:pointer;min-height:2rem}
+.watch-speed:hover{color:var(--text);border-color:var(--accent)}
+.watch-speed[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* motion respects the reader: no sliding drawers or expanding panels for reduced-motion users */
+@media (prefers-reduced-motion:reduce){
+  .ds-sidebar,.site-nav-toggle .chev,.site-nav-panel,.site-nav-scrim{transition:none}
 }
 
 /* ---- print ---- */
@@ -224,7 +317,7 @@ details.site-nav summary:hover{color:var(--accent)}
 </aside>
 <div class="ds-scrim" id="dsScrim"></div>
 <main class="ds-content" id="dsContent">
-<header class="site-header"><div class="site-header-row"><a class="site-home" href="index.html"><span class="site-home-mark">■</span> LLM Knowledge Base</a><div class="site-prevnext"><a href="crash-track-03.html">&larr; Crash: Inference and Serving</a><a href="crash-track-05.html">Crash: Evals and Safety &rarr;</a></div></div><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep">/</span><span>Crash packs</span><span class="bc-sep">/</span><span class="bc-current">Crash: Distributed Training</span></nav><details class="site-nav"><summary>Browse all volumes and tracks</summary><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html" class="site-nav-current">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div></details></header>
+<header class="site-header"><p class="mast-line"><span>Research-Engineer Curriculum</span><span class="mast-line-right">No. 33 of 39 &middot; Sept 2026 edition</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a><nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span><a class="site-prevnext-link" href="crash-track-03.html" aria-label="Previous volume: Crash: Inference and Serving"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">Crash: Inference and Serving</span></a></div><div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span><a class="site-prevnext-link" href="crash-track-05.html" aria-label="Next volume: Crash: Evals and Safety"><span class="site-prevnext-title">Crash: Evals and Safety</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></nav></div><div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep" aria-hidden="true">/</span><span>Crash packs</span><span class="bc-sep" aria-hidden="true">/</span><span class="bc-current" aria-current="page">Crash: Distributed Training</span></nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Browse all volumes</span></button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span><button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html" class="site-nav-current"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div></header>
 <h1 id="distributed-training-systems-crash-pack">Distributed Training Systems: Crash Pack</h1>
 <p>This is a single-volume condensation of Role Track 4 (Distributed Training Systems Engineer) and the base material it stands on. It holds the parts you need at your fingertips: the decision rules, the numbers and formulas worth memorizing, the traps that waste the most time, a rapid-fire self-test, and a one-page cheat sheet.</p>
 <p><strong>How to use it.</strong> Read Section 1 once, slowly. It is the judgment layer: given a model and a cluster, what to pick and why. Use Section 2 as a reference while you work. It pairs every number with its units and its meaning, because a number without units is a rumor. Read Section 3 before you debug anything; each trap names its symptom so you can match what you see. Work Section 4 with the answers covered. Print Section 5.</p>
@@ -273,7 +366,7 @@ alone  inside     node +  across
                        smaller model
                        per stage
 </code></pre></p>
-<p><strong>How to read this diagram.</strong> Start at the top. Every diamond is a measurement, not an opinion. "Does it fit" is arithmetic on parameter bytes, optimizer bytes, and activation bytes. "Is comm under 15%" comes from the alpha-beta model in 1.2 or a profile. "TP inside the NVLink domain" is a hardware fact about your cluster. The last gate is the bubble formula from Section 2: (p-1)/(m+p-1). The final answer always comes from running the candidate layouts and reading the trace, but this ladder keeps you from trying the obviously wrong layouts first.</p>
+<p><strong>How to read this diagram.</strong> Start at the top. Every diamond is a measurement, not an opinion. "Does it fit" is arithmetic on parameter bytes, optimizer bytes, and activation bytes. "Is comm under 15%" comes from the alpha-beta model (transfer time = fixed latency per step + bytes / bandwidth; 1.2 works it fully) or a profile. "TP inside the NVLink domain" is a hardware fact about your cluster. The last gate is the bubble formula from Section 2: (p-1)/(m+p-1). The final answer always comes from running the candidate layouts and reading the trace, but this ladder keeps you from trying the obviously wrong layouts first.</p>
 <p>The six axes in one table:</p>
 <table>
 <thead>
@@ -323,16 +416,22 @@ alone  inside     node +  across
 </tr>
 </tbody>
 </table>
+<figure class="diagram"><img src="img/zero-memory-stages.png" alt="ZeRO stages: sharding optimizer states, gradients, then parameters, for a 7.5B model on 64 GPUs" loading="lazy"><figcaption><strong>Baseline: every GPU holds 120 GB (params plus grads plus optimizer states). Shard the optimizer states: 31.4 GB. Shard gradients too: 16.6 GB. Shard parameters as well: 1.9 GB. Figure: Rajbhandari et al., ZeRO (arXiv:1910.02054).</strong></figcaption></figure>
+<figure class="diagram"><svg class="gen-svg" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 340' width='100%' style='max-width:900px;background-color:transparent' role='img'><style>text{font-family='Inter,system-ui,-apple-system,sans-serif';fill:#ececec}.m{fill:#a8a8a8}.g{fill:#f0b429}.b{fill:#6cb2ff}.r{fill:#e57373}.gr{fill:#7fc97f}</style><text x='360' y='24' font-size='14' text-anchor='middle' font-weight='700'>Steady state: each GPU holds one shard</text><rect x='60' y='40' width='130' height='60' rx='6' fill='#141414' stroke='#6cb2ff' stroke-width='2'/><text x='125' y='66' font-size='13' text-anchor='middle' font-weight='700'>GPU0</text><text x='125' y='86' font-size='12' text-anchor='middle' class='m'>shard 0 only</text><rect x='220' y='40' width='130' height='60' rx='6' fill='#141414' stroke='#7fc97f' stroke-width='2'/><text x='285' y='66' font-size='13' text-anchor='middle' font-weight='700'>GPU1</text><text x='285' y='86' font-size='12' text-anchor='middle' class='m'>shard 1 only</text><rect x='380' y='40' width='130' height='60' rx='6' fill='#141414' stroke='#f0b429' stroke-width='2'/><text x='445' y='66' font-size='13' text-anchor='middle' font-weight='700'>GPU2</text><text x='445' y='86' font-size='12' text-anchor='middle' class='m'>shard 2 only</text><rect x='540' y='40' width='130' height='60' rx='6' fill='#141414' stroke='#e57373' stroke-width='2'/><text x='605' y='66' font-size='13' text-anchor='middle' font-weight='700'>GPU3</text><text x='605' y='86' font-size='12' text-anchor='middle' class='m'>shard 3 only</text><line x1='360' y1='112' x2='360' y2='146' stroke='#f0b429' stroke-width='2.5' marker-end='url(#ah3)'/><text x='372' y='134' font-size='13' class='g' font-weight='700'>all-gather</text><defs><marker id='ah3' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6' fill='none' stroke='#f0b429' stroke-width='1.5'/></marker></defs><rect x='180' y='150' width='360' height='64' rx='8' fill='#141414' stroke='#f0b429' stroke-width='2'/><text x='360' y='176' font-size='14' text-anchor='middle' font-weight='700'>Full layer materialized on every GPU</text><text x='360' y='196' font-size='12' text-anchor='middle' class='m'>forward compute runs, then full params are freed</text><line x1='360' y1='226' x2='360' y2='258' stroke='#6cb2ff' stroke-width='2.5' marker-end='url(#ah4)'/><text x='372' y='250' font-size='13' class='b' font-weight='700'>backward: all-gather again, then reduce-scatter grads</text><defs><marker id='ah4' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6' fill='none' stroke='#6cb2ff' stroke-width='1.5'/></marker></defs><rect x='60' y='262' width='130' height='44' rx='6' fill='#141414' stroke='#6cb2ff' stroke-width='2'/><text x='125' y='289' font-size='12' text-anchor='middle' class='m'>grad shard 0</text><rect x='220' y='262' width='130' height='44' rx='6' fill='#141414' stroke='#7fc97f' stroke-width='2'/><text x='285' y='289' font-size='12' text-anchor='middle' class='m'>grad shard 1</text><rect x='380' y='262' width='130' height='44' rx='6' fill='#141414' stroke='#f0b429' stroke-width='2'/><text x='445' y='289' font-size='12' text-anchor='middle' class='m'>grad shard 2</text><rect x='540' y='262' width='130' height='44' rx='6' fill='#141414' stroke='#e57373' stroke-width='2'/><text x='605' y='289' font-size='12' text-anchor='middle' class='m'>grad shard 3</text><text x='60' y='328' font-size='13' class='m'>FSDP is ZeRO-3 with on-demand materialization. Price: 1.5x the all-reduce traffic of DDP; prefetch hides it when compute per layer is large.</text></svg><figcaption><strong>FSDP is ZeRO-3 with on-demand materialization. Each GPU keeps one shard at rest; an all-gather rebuilds the full layer just for the forward pass, then frees it. Backward repeats the all-gather and reduce-scatters the gradients. The price is 1.5x the all-reduce traffic of DDP; prefetch hides it when each layer does enough compute.</strong></figcaption></figure>
+
 <p><strong>The two traps this ladder exists to prevent.</strong> TP across slow inter-node links is almost always a loss: the per-layer collectives that cost 19 ms on NVLink cost 350 ms on InfiniBand, and no overlap hides that. PP with too few microbatches can idle nearly half the step: 8 stages with 8 microbatches is a 47% bubble.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>The ladder is DDP -&gt; FSDP -&gt; TP -&gt; PP, gated by memory fit, comm fraction, NVLink domain, and bubble size.</li>
-<li>CP and EP are not on the ladder; they split sequence and experts, and they compose with the ladder's choices.</li>
 <li>Every gate is a number. If you cannot compute it, you are guessing.</li>
-</ul></div><h3 id="12-collective-algorithm-selection-ring-for-bandwidth-tree-for-latency">1.2 Collective algorithm selection: ring for bandwidth, tree for latency</h3>
-<p>Every collective is three decisions: the operation (what the math needs), the algorithm (how ranks cooperate), and the protocol (how bytes cross one link). The rule NCCL itself uses:</p>
+</ul></div><h3 id="12-collective-algorithm-selection-ring-for-bandwidth-tree-for-latency">
+<figure class="diagram"><svg class="gen-svg" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 760 400' width='100%' style='max-width:900px;background-color:transparent' role='img'><style>text{font-family='Inter,system-ui,-apple-system,sans-serif';fill:#ececec}.m{fill:#a8a8a8}.g{fill:#f0b429}.b{fill:#6cb2ff}.r{fill:#e57373}.gr{fill:#7fc97f}</style><text x='114' y='48' font-size='11' text-anchor='middle' class='m'>t1</text><text x='150' y='48' font-size='11' text-anchor='middle' class='m'>t2</text><text x='186' y='48' font-size='11' text-anchor='middle' class='m'>t3</text><text x='222' y='48' font-size='11' text-anchor='middle' class='m'>t4</text><text x='258' y='48' font-size='11' text-anchor='middle' class='m'>t5</text><text x='294' y='48' font-size='11' text-anchor='middle' class='m'>t6</text><text x='330' y='48' font-size='11' text-anchor='middle' class='m'>t7</text><text x='366' y='48' font-size='11' text-anchor='middle' class='m'>t8</text><text x='402' y='48' font-size='11' text-anchor='middle' class='m'>t9</text><text x='438' y='48' font-size='11' text-anchor='middle' class='m'>t10</text><text x='474' y='48' font-size='11' text-anchor='middle' class='m'>t11</text><text x='510' y='48' font-size='11' text-anchor='middle' class='m'>t12</text><text x='546' y='48' font-size='11' text-anchor='middle' class='m'>t13</text><text x='582' y='48' font-size='11' text-anchor='middle' class='m'>t14</text><text x='618' y='48' font-size='11' text-anchor='middle' class='m'>t15</text><text x='654' y='48' font-size='11' text-anchor='middle' class='m'>t16</text><text x='690' y='48' font-size='11' text-anchor='middle' class='m'>t17</text><text x='726' y='48' font-size='11' text-anchor='middle' class='m'>t18</text><text x='48' y='80.0' font-size='13' text-anchor='end' font-weight='700'>S1</text><rect x='98' y='62' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='114' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F1</text><rect x='134' y='62' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='150' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F2</text><rect x='170' y='62' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='186' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F3</text><rect x='206' y='62' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='222' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F4</text><rect x='242' y='62' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='258' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F5</text><rect x='278' y='62' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='294' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F6</text><rect x='314' y='62' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='350' y='62' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='386' y='62' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='422' y='62' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='458' y='62' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='494' y='62' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='530' y='62' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='546' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B6</text><rect x='566' y='62' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='582' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B5</text><rect x='602' y='62' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='618' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B4</text><rect x='638' y='62' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='654' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B3</text><rect x='674' y='62' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='690' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B2</text><rect x='710' y='62' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='726' y='80.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B1</text><text x='48' y='110.0' font-size='13' text-anchor='end' font-weight='700'>S2</text><rect x='98' y='92' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='134' y='92' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='150' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F1</text><rect x='170' y='92' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='186' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F2</text><rect x='206' y='92' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='222' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F3</text><rect x='242' y='92' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='258' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F4</text><rect x='278' y='92' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='294' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F5</text><rect x='314' y='92' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='330' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F6</text><rect x='350' y='92' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='386' y='92' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='422' y='92' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='458' y='92' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='494' y='92' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='510' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B6</text><rect x='530' y='92' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='546' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B5</text><rect x='566' y='92' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='582' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B4</text><rect x='602' y='92' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='618' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B3</text><rect x='638' y='92' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='654' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B2</text><rect x='674' y='92' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='690' y='110.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B1</text><rect x='710' y='92' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><text x='48' y='140.0' font-size='13' text-anchor='end' font-weight='700'>S3</text><rect x='98' y='122' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='134' y='122' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='170' y='122' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='186' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F1</text><rect x='206' y='122' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='222' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F2</text><rect x='242' y='122' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='258' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F3</text><rect x='278' y='122' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='294' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F4</text><rect x='314' y='122' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='330' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F5</text><rect x='350' y='122' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='366' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F6</text><rect x='386' y='122' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='422' y='122' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='458' y='122' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='474' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B6</text><rect x='494' y='122' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='510' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B5</text><rect x='530' y='122' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='546' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B4</text><rect x='566' y='122' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='582' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B3</text><rect x='602' y='122' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='618' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B2</text><rect x='638' y='122' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='654' y='140.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B1</text><rect x='674' y='122' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='710' y='122' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><text x='48' y='170.0' font-size='13' text-anchor='end' font-weight='700'>S4</text><rect x='98' y='152' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='134' y='152' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='170' y='152' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='206' y='152' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='222' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F1</text><rect x='242' y='152' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='258' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F2</text><rect x='278' y='152' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='294' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F3</text><rect x='314' y='152' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='330' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F4</text><rect x='350' y='152' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='366' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F5</text><rect x='386' y='152' width='32' height='26' rx='4' fill='#6cb2ff' opacity='0.85'/><text x='402' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>F6</text><rect x='422' y='152' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='438' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B6</text><rect x='458' y='152' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='474' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B5</text><rect x='494' y='152' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='510' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B4</text><rect x='530' y='152' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='546' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B3</text><rect x='566' y='152' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='582' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B2</text><rect x='602' y='152' width='32' height='26' rx='4' fill='#f0b429' opacity='0.85'/><text x='618' y='170.0' font-size='11' text-anchor='middle' fill='#0d0d0d' font-weight='700'>B1</text><rect x='638' y='152' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='674' y='152' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='710' y='152' width='32' height='26' rx='4' fill='none' stroke='#5a5a5a' stroke-width='1' stroke-dasharray='3 3' opacity='0.6'/><rect x='60' y='200' width='16' height='16' rx='3' fill='#6cb2ff' opacity='0.85'/><text x='84' y='214' font-size='13' class='m'>forward</text><rect x='180' y='200' width='16' height='16' rx='3' fill='#f0b429' opacity='0.85'/><text x='204' y='214' font-size='13' class='m'>backward</text><rect x='320' y='200' width='16' height='16' rx='3' fill='none' stroke='#5a5a5a' stroke-dasharray='3 3'/><text x='344' y='214' font-size='13' class='m'>bubble (idle)</text><text x='60' y='242' font-size='13' class='m'>Bubble fraction = (p-1)/(m+p-1). Here p=4, m=6: 3/9 = 33% of the step is idle. The pack's warning case: 8 stages, 8 microbatches = 47%.</text><text x='60' y='262' font-size='13' class='m'>1F1B shrinks the middle bubble by starting backward passes as soon as the last stage finishes its forward.</text></svg><figcaption><strong>A 4-stage pipeline over 6 microbatches. Forward passes warm up diagonally, backward passes drain the same way, and the dashed cells are the bubble: stages waiting with nothing to do. Bubble fraction = (p-1)/(m+p-1), here 3/9 = 33%. The pack's warning case: 8 stages with 8 microbatches idles 47% of the step. 1F1B trims the middle bubble by starting backward passes earlier.</strong></figcaption></figure>
+1.2 Collective algorithm selection: ring for bandwidth, tree for latency</h3>
+<p>Every collective is three decisions: the operation (what the math needs), the algorithm (how ranks cooperate), and the protocol (how bytes cross one link). The rule NCCL (NVIDIA's GPU collective-communications library) itself uses:</p>
+<figure class="diagram"><svg class="gen-svg" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 300' width='100%' style='max-width:900px;background-color:transparent' role='img'><style>text{font-family='Inter,system-ui,-apple-system,sans-serif';fill:#ececec}.m{fill:#a8a8a8}.g{fill:#f0b429}.b{fill:#6cb2ff}.r{fill:#e57373}.gr{fill:#7fc97f}</style><defs><marker id='ah2' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6' fill='none' stroke='#a8a8a8' stroke-width='1.5'/></marker></defs><rect x='40' y='40' width='130' height='56' rx='6' fill='#141414' stroke='#a8a8a8' stroke-width='1.5'/><text x='52' y='62' font-size='13' font-weight='700'>GPU0</text><rect x='52' y='70' width='24' height='14' rx='2' fill='#6cb2ff' opacity='0.9'/><rect x='80' y='70' width='24' height='14' rx='2' fill='#7fc97f' opacity='0.9'/><rect x='108' y='70' width='24' height='14' rx='2' fill='#f0b429' opacity='0.9'/><rect x='136' y='70' width='24' height='14' rx='2' fill='#e57373' opacity='0.9'/><line x1='170' y1='68.0' x2='190' y2='68.0' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ah2)'/><rect x='190' y='40' width='130' height='56' rx='6' fill='#141414' stroke='#a8a8a8' stroke-width='1.5'/><text x='202' y='62' font-size='13' font-weight='700'>GPU1</text><rect x='202' y='70' width='24' height='14' rx='2' fill='#6cb2ff' opacity='0.9'/><rect x='230' y='70' width='24' height='14' rx='2' fill='#7fc97f' opacity='0.9'/><rect x='258' y='70' width='24' height='14' rx='2' fill='#f0b429' opacity='0.9'/><rect x='286' y='70' width='24' height='14' rx='2' fill='#e57373' opacity='0.9'/><line x1='320' y1='68.0' x2='340' y2='68.0' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ah2)'/><rect x='340' y='40' width='130' height='56' rx='6' fill='#141414' stroke='#a8a8a8' stroke-width='1.5'/><text x='352' y='62' font-size='13' font-weight='700'>GPU2</text><rect x='352' y='70' width='24' height='14' rx='2' fill='#6cb2ff' opacity='0.9'/><rect x='380' y='70' width='24' height='14' rx='2' fill='#7fc97f' opacity='0.9'/><rect x='408' y='70' width='24' height='14' rx='2' fill='#f0b429' opacity='0.9'/><rect x='436' y='70' width='24' height='14' rx='2' fill='#e57373' opacity='0.9'/><line x1='470' y1='68.0' x2='490' y2='68.0' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ah2)'/><rect x='490' y='40' width='130' height='56' rx='6' fill='#141414' stroke='#a8a8a8' stroke-width='1.5'/><text x='502' y='62' font-size='13' font-weight='700'>GPU3</text><rect x='502' y='70' width='24' height='14' rx='2' fill='#6cb2ff' opacity='0.9'/><rect x='530' y='70' width='24' height='14' rx='2' fill='#7fc97f' opacity='0.9'/><rect x='558' y='70' width='24' height='14' rx='2' fill='#f0b429' opacity='0.9'/><rect x='586' y='70' width='24' height='14' rx='2' fill='#e57373' opacity='0.9'/><path d='M 26 68.0 C 0 68.0, 0 68.0, 26 68.0' stroke='#a8a8a8' stroke-width='2' fill='none' marker-end='url(#ah2)'/><text x='40' y='120' font-size='14' font-weight='700' class='g'>Phase 1: reduce-scatter.</text><text x='40' y='140' font-size='13' class='m'>Each GPU sums one chunk around the ring. After 3 steps every GPU holds one fully reduced chunk.</text><rect x='40' y='170' width='130' height='56' rx='6' fill='#141414' stroke='#a8a8a8' stroke-width='1.5'/><text x='52' y='192' font-size='13' font-weight='700'>GPU0</text><rect x='52' y='200' width='24' height='14' rx='2' fill='#6cb2ff' opacity='0.9'/><rect x='80' y='200' width='24' height='14' rx='2' fill='#7fc97f' opacity='0.9'/><rect x='108' y='200' width='24' height='14' rx='2' fill='#f0b429' opacity='0.9'/><rect x='136' y='200' width='24' height='14' rx='2' fill='#e57373' opacity='0.9'/><line x1='170' y1='198.0' x2='190' y2='198.0' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ah2)'/><rect x='190' y='170' width='130' height='56' rx='6' fill='#141414' stroke='#a8a8a8' stroke-width='1.5'/><text x='202' y='192' font-size='13' font-weight='700'>GPU1</text><rect x='202' y='200' width='24' height='14' rx='2' fill='#6cb2ff' opacity='0.9'/><rect x='230' y='200' width='24' height='14' rx='2' fill='#7fc97f' opacity='0.9'/><rect x='258' y='200' width='24' height='14' rx='2' fill='#f0b429' opacity='0.9'/><rect x='286' y='200' width='24' height='14' rx='2' fill='#e57373' opacity='0.9'/><line x1='320' y1='198.0' x2='340' y2='198.0' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ah2)'/><rect x='340' y='170' width='130' height='56' rx='6' fill='#141414' stroke='#a8a8a8' stroke-width='1.5'/><text x='352' y='192' font-size='13' font-weight='700'>GPU2</text><rect x='352' y='200' width='24' height='14' rx='2' fill='#6cb2ff' opacity='0.9'/><rect x='380' y='200' width='24' height='14' rx='2' fill='#7fc97f' opacity='0.9'/><rect x='408' y='200' width='24' height='14' rx='2' fill='#f0b429' opacity='0.9'/><rect x='436' y='200' width='24' height='14' rx='2' fill='#e57373' opacity='0.9'/><line x1='470' y1='198.0' x2='490' y2='198.0' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ah2)'/><rect x='490' y='170' width='130' height='56' rx='6' fill='#141414' stroke='#a8a8a8' stroke-width='1.5'/><text x='502' y='192' font-size='13' font-weight='700'>GPU3</text><rect x='502' y='200' width='24' height='14' rx='2' fill='#6cb2ff' opacity='0.9'/><rect x='530' y='200' width='24' height='14' rx='2' fill='#7fc97f' opacity='0.9'/><rect x='558' y='200' width='24' height='14' rx='2' fill='#f0b429' opacity='0.9'/><rect x='586' y='200' width='24' height='14' rx='2' fill='#e57373' opacity='0.9'/><path d='M 26 198.0 C 0 198.0, 0 198.0, 26 198.0' stroke='#a8a8a8' stroke-width='2' fill='none' marker-end='url(#ah2)'/><text x='40' y='250' font-size='14' font-weight='700' class='b'>Phase 2: all-gather.</text><text x='40' y='270' font-size='13' class='m'>Each GPU broadcasts its reduced chunk around the ring. Everyone ends with all four reduced chunks.</text><text x='40' y='292' font-size='13' class='m'>Bandwidth-optimal: each GPU sends 2*(N-1)/N * bytes. Tree wins only when latency, not bytes, dominates.</text></svg><figcaption><strong>Ring all-reduce in two phases. Phase 1 (reduce-scatter): each GPU accumulates one chunk around the ring, so every GPU ends with one fully reduced chunk. Phase 2 (all-gather): each GPU broadcasts its chunk, so everyone ends with all chunks. Bandwidth-optimal: each GPU sends 2*(N-1)/N of the bytes. The tree algorithm wins only when latency, not bytes, dominates.</strong></figcaption></figure>
+
 <ul>
 <li><strong>Small messages: tree + LL protocol.</strong> The tree finishes in 2*log2(N) phases instead of 2(N-1) steps. LL moves 8 bytes per flag with microsecond latency via CPU polling.</li>
 <li><strong>Large messages: ring + Simple protocol.</strong> The ring keeps every link busy in every step; each rank moves 2(N-1)/N * M bytes, about 2M at large N. Simple is bulk DMA at full bandwidth.</li>
-<li><strong>In-network reduction (CollNet / NVLS) only where the hardware allows.</strong> SHARP-capable InfiniBand switches, or NVSwitch inside the node. Validate with it off first: misconfigured in-network reduction is a source of silent wrongness.</li>
+<li><strong>In-network reduction (CollNet / NVLS) only where the hardware allows.</strong> SHARP-capable InfiniBand switches (SHARP: the switch itself sums the data, so ranks move less traffic), or NVSwitch inside the node. Validate with it off first: misconfigured in-network reduction is a source of silent wrongness.</li>
 </ul>
 <p>The crossover sits in the low megabytes on IB-class fabrics. On 64 ranks with 40 GB/s effective bandwidth and 5 us per step, the tree wins below about 2.3 MB and the ring wins above. The calculator in Section 2 recomputes this for your fabric.</p>
 <p><strong>When to override the tuner.</strong> Almost never, and only with a measurement. Two legitimate cases: forcing Tree/LL to work around a sick ring path on your fabric, and forcing Ring/Simple when you know the message mix better than the tuner does. If forcing the tree fixes a hang, the ring path on your fabric is suspect, and that is a hardware ticket, not a config win.</p>
@@ -448,7 +547,7 @@ for minutes in (15, 30, 60, 142, 240, 480, 960):
 <p><strong>How to read this diagram.</strong> The loop starts with heartbeats: every rank reports step completions and the guardian watches the distribution. An anomaly triggers classification because the response differs by cause. A dead node gets quarantined and the job re-queues without it. A hang gets a kill and a clean resume. A loss spike gets a rollback to before the spike began, and a human gets paged after the second rollback. The loop closes back to monitoring.</p>
 <p>Detection thresholds, concretely:</p>
 <ul>
-<li><strong>Hang:</strong> no rank completes a step for longer than 5x the p99 step time. A fixed wall-clock guess breaks when the workload changes.</li>
+<li><strong>Hang:</strong> no rank completes a step for longer than 5x the p99 step time (p99: the 99th percentile; 99% of steps are faster). A fixed wall-clock guess breaks when the workload changes.</li>
 <li><strong>Straggler:</strong> one rank's step time persistently over the fleet median. Above 1.1x investigate, above 1.3x act.</li>
 <li><strong>Loss spike:</strong> loss above 1.5x the running median for several consecutive logs. Roll back automatically.</li>
 <li><strong>Node gone:</strong> heartbeat lost. Quarantine at once; do not wait to see if it returns.</li>
@@ -462,7 +561,10 @@ for minutes in (15, 30, 60, 142, 240, 480, 960):
 <li><strong>Use FP16 only when BF16 is unavailable.</strong> Its narrower range overflows sooner. If a NaN appears right after a precision change, the change is the prime suspect. BF16 is the safer drop-in.</li>
 <li><strong>Use FP8 when the hardware and recipe both support it.</strong> H100, B200, and TPU Ironwood have FP8 matmul support. FP8 halves the bytes of BF16 (memory and bandwidth win), but it needs careful per-tensor scaling and some layers (norms, softmax, the loss) usually stay in higher precision. Transformer Engine-style libraries automate the scaling; validate the recipe before trusting it at scale.</li>
 </ol>
-<p><strong>The MFU honesty rule.</strong> MFU is achieved FLOPs divided by peak FLOPS, and the peak must match the precision you actually used. Quoting FP8-achieved FLOPs against the FP8 peak is correct; quoting BF16 math against the FP8 peak halves the MFU silently. Always state the peak: "MFU 55% against the 989 TFLOPS BF16 dense peak."</p><div class="takeaway"><h4>Key takeaways</h4><ul>
+<p><strong>The MFU honesty rule.</strong> MFU is achieved FLOPs divided by peak FLOPS, and the peak must match the precision you actually used. Quoting FP8-achieved FLOPs against the FP8 peak is correct; quoting BF16 math against the FP8 peak halves the MFU silently. Always state the peak: "MFU 55% against the 989 TFLOPS BF16 dense peak."</p><div class="takeaway"><h4
+<figure class="diagram"><img src="img/megatron-hybrid-mp-dp.png" alt="Hybrid parallelism on 512 GPUs: 64 model-parallel groups of 8 crossed by 8 data-parallel groups" loading="lazy"><figcaption><strong>Tensor parallelism stays inside the NVLink domain; data parallelism crosses nodes. This is the 3D-parallel layout the decision ladder builds toward. Figure: Shoeybi et al., Megatron-LM (arXiv:1909.08053).</strong></figcaption></figure>
+<figure class="diagram"><img src="img/megatron-mlp-tensor-parallel.png" alt="Megatron-LM tensor parallelism inside one MLP block" loading="lazy"><figcaption><strong>The first GEMM's weight A is split by columns (A1, A2); each GPU computes its half, applies GeLU, then multiplies by its row-split half of B. The f and g ops are the all-reduces that stitch the halves back together. This is why TP needs fast intra-node links: every layer pays two all-reduces. Figure: Shoeybi et al., arXiv:1909.08053.</strong></figcaption></figure>
+>Key takeaways</h4><ul>
 <li>Parallelism: DDP -&gt; FSDP -&gt; TP -&gt; PP, each gate a measurement.</li>
 <li>Collectives: tree + LL below the crossover, ring + Simple above; override the tuner only with a measurement.</li>
 <li>Checkpointing: tau<em> = sqrt(2</em>C*mu), retention K=3 plus daily.</li>
@@ -902,8 +1004,8 @@ single-writer restore: 3.3 min (do not do this)
 </tr>
 </tbody>
 </table>
-<p><strong>What transfers from the GPU world.</strong> Mesh = named process groups. PartitionSpec = sharding spec. The same collectives (all-reduce, all-gather, all-to-all) run on ICI instead of NVLink/InfiniBand. What does not transfer: the TP-inside-the-node rule (a torus has no NVLink islands; the cost model is hop count), bfloat16-first numerics with hardware-specific overflow behavior, and host-driven execution with a different profiler.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
-<li>32 numbers, each with units and an operational meaning. The ones to say from memory: 6ND, MFU 50-65%, bubble (p-1)/(m+p-1), 2(N-1)/N, Daly sqrt(2<em>C</em>mu), 700 GB for 70B+Adam, MTBF inverse with GPU count, the 18x fabric cliff.</li>
+<p><strong>What transfers from the GPU world.</strong> Mesh = named process groups. PartitionSpec = sharding spec. The same collectives (all-reduce, all-gather, all-to-all) run on ICI (the TPU's Inter-Core Interconnect) instead of NVLink/InfiniBand. What does not transfer: the TP-inside-the-node rule (a torus has no NVLink islands; the cost model is hop count), bfloat16-first numerics with hardware-specific overflow behavior, and host-driven execution with a different profiler.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
+<li>32 numbers, each with units and an operational meaning. The ones to say from memory: 6ND, MFU 50-65%, bubble (p-1)/(m+p-1), 2(N-1)/N, Daly sqrt(2<em>C</em>mu), 700 GB for 70B+Adam, MTBF inverse with GPU count, the ~18x NVLink-vs-InfiniBand per-layer collective gap from 1.1.</li>
 <li>Site-specific values (filesystem bandwidth, IB latency, cloud failure rates) are marked in the text. Measure them during bring-up and substitute.</li>
 </ul></div><hr />
 <h2 id="section-3-classic-traps">Section 3: Classic traps</h2>
@@ -1370,7 +1472,31 @@ D. Retrain from scratch</p></div><button class="pq-reveal" aria-expanded="false"
 <li>TPU specs (v6e ~918 BF16 TFLOPS, Ironwood 4,614 FP8 TFLOPS, pod sizes) from Google Cloud announcements and 2025-2026 coverage. JAX sharding API from current JAX documentation.</li>
 <li><strong>UNVERIFIED:</strong> exact per-rank filesystem bandwidths, IB link latencies, and cloud-instance failure rates vary by cluster; the labs use representative values measured or estimated for illustration. The 200-second checkpoint stall in the Daly example is a representative estimate, not a measured site number. Fail-slow duration and remediation figures come from vendor and community reports, not peer-reviewed studies. DeepSeek-V3 deployment details appear via secondary write-ups of the paper.</li>
 </ul>
-<footer class="site-footer"><div class="site-sitemap"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html" class="site-nav-current">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div><p class="site-footer-note">LLM Knowledge Base. Every page works offline from file:// and links back here. No personal information.</p></footer>
+<footer class="site-footer"><section class="watch-deeper" aria-labelledby="wd-h-crash-04">
+  <h2 class="watch-deeper-kicker" id="wd-h-crash-04">Watch and go deeper</h2>
+  <p class="watch-deeper-lede">Two videos on the two hardest parts of distributed training: sharding everything with FSDP, and scaling expert-parallel MoE training to thousands of GPUs.</p>
+  <div class="watch-deeper-grid">
+    <figure class="watch-card">
+      <div class="watch-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/yryXzLZxF1I?enablejsapi=1" title="PyTorch FSDP: Architecture and Performance Optimization Strategies (Uplatz)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <figcaption><strong>PyTorch FSDP: Architecture and Performance Optimization Strategies (Uplatz)</strong><span>Opens with the memory wall that motivates everything: 112 GB of model state against 80 GB on an A100, then the DDP-to-FSDP contrast. Transcript verified, but honest note: it stays lighter on implementation detail than its description promises. Watch it for the intuition; use the pack for the numbers.</span></figcaption>
+    </figure>
+    <figure class="watch-card">
+      <div class="watch-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/f2OxAWRCmPo?enablejsapi=1" title="Training MoEs at Scale with PyTorch (Databricks)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <figcaption><strong>Training MoEs at Scale with PyTorch (Databricks)</strong><span>Brian Chu (Mosaic/Databricks) on training MoEs past a thousand GPUs: expert parallelism, FSDP/HSDP combos, checkpointing pain, and the failure modes (hardware, S3, determinism) that only appear at scale. Transcript verified.</span></figcaption>
+    </figure>
+  </div>
+  <h3 class="go-deeper-kicker">Go deeper</h3>
+  <ul class="go-deeper-list">
+    <li><a href="https://arxiv.org/abs/1910.02054">ZeRO paper <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The three stages of optimizer-state, gradient, and parameter sharding, with the memory math behind the figure above.</span></li>
+    <li><a href="https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html">PyTorch FSDP tutorial <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The official hands-on: wrapping policies, mixed precision, and CPU offload in code.</span></li>
+    <li><a href="https://arxiv.org/abs/2304.11277">FSDP paper <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The systems paper: how FSDP shards and materializes parameters, and where the 1.5x comm cost comes from.</span></li>
+  </ul>
+</section>
+<div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html" class="foot-current">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav><p class="foot-colophon"><span>LLM Knowledge Base</span><span class="foot-sep" aria-hidden="true">/</span><span>Sept 2026 edition</span><span class="foot-sep" aria-hidden="true">/</span><span>Set in Charis SIL</span></p></footer>
 </main>
 <script>
 /* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
@@ -1487,6 +1613,34 @@ var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('
 if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
 if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
 
+/* ---------- site volume nav: collapsible panel on desktop, drawer on mobile ---------- */
+var siteNavToggle=document.getElementById('siteNavToggle'),
+    siteNavPanel=document.getElementById('siteNavPanel'),
+    siteNavScrim=document.getElementById('siteNavScrim'),
+    siteNavClose=document.getElementById('siteNavClose');
+function siteNavDrawerMode(){return window.matchMedia&&window.matchMedia('(max-width:40rem)').matches;}
+function openSiteNav(){
+  if(!siteNavPanel||!siteNavToggle)return;
+  siteNavPanel.classList.add('is-open');siteNavToggle.setAttribute('aria-expanded','true');
+  if(siteNavDrawerMode()){document.body.classList.add('site-nav-open');if(siteNavScrim)siteNavScrim.classList.add('is-open');}
+}
+function closeSiteNav(){
+  if(!siteNavPanel||!siteNavToggle)return;
+  siteNavPanel.classList.remove('is-open');siteNavToggle.setAttribute('aria-expanded','false');
+  document.body.classList.remove('site-nav-open');if(siteNavScrim)siteNavScrim.classList.remove('is-open');
+}
+if(siteNavToggle)siteNavToggle.addEventListener('click',function(){
+  if(siteNavPanel.classList.contains('is-open'))closeSiteNav();else openSiteNav();
+});
+if(siteNavClose)siteNavClose.addEventListener('click',closeSiteNav);
+if(siteNavScrim)siteNavScrim.addEventListener('click',closeSiteNav);
+if(siteNavPanel)siteNavPanel.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeSiteNav);});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&siteNavPanel&&siteNavPanel.classList.contains('is-open')){
+    closeSiteNav();if(siteNavToggle)siteNavToggle.focus();
+  }
+});
+
 /* ---------- keyboard nav: [ ] sections, / search ---------- */
 document.addEventListener('keydown',function(e){
   if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
@@ -1548,6 +1702,65 @@ document.querySelectorAll('.pq').forEach(function(pq){
     else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
   });
 });
+
+/* ---------- watch-deeper speed bars: 0.5x to 2x via the YouTube IFrame Player API ----------
+   Progressive enhancement: the bar is built only after the API loads. If the API
+   script fails or is blocked, no bar appears and the plain youtube-nocookie iframe
+   keeps working with YouTube's own controls. Honest cap: the embed player
+   hard-caps at 2x; no page-side trick can force 3x, so 2x is the top button. */
+(function(){
+  var frames=Array.prototype.slice.call(
+    document.querySelectorAll('.watch-frame iframe[src*="youtube-nocookie.com/embed/"]'));
+  if(!frames.length)return;
+  var RATES=[0.5,0.75,1,1.25,1.5,1.75,2];
+  function rateLabel(r){return (r===1?'1':String(r))+'x';}
+  function buildBar(host,player){
+    var bar=document.createElement('div');
+    bar.className='watch-speedbar';
+    bar.setAttribute('role','group');
+    bar.setAttribute('aria-label','Playback speed');
+    var lab=document.createElement('span');
+    lab.className='watch-speedbar-label';lab.textContent='Speed';
+    bar.appendChild(lab);
+    var btns=RATES.map(function(r){
+      var b=document.createElement('button');
+      b.type='button';b.className='watch-speed';b.textContent=rateLabel(r);
+      b.setAttribute('aria-pressed',r===1?'true':'false');
+      b.setAttribute('aria-label','Play at '+rateLabel(r)+' speed');
+      b.addEventListener('click',function(){
+        try{player.setPlaybackRate(r);}catch(e){return;}
+        btns.forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+      });
+      bar.appendChild(b);return b;
+    });
+    host.parentNode.insertBefore(bar,host.nextSibling);
+  }
+  function init(){
+    frames.forEach(function(f,i){
+      if(f.dataset.ytWired)return;
+      f.dataset.ytWired='1';
+      var src=f.getAttribute('src')||'';
+      if(src.indexOf('enablejsapi=1')<0){
+        f.setAttribute('src',src+(src.indexOf('?')<0?'?':'&')+'enablejsapi=1');
+      }
+      if(!f.id)f.id='watch-yt-'+(i+1);
+      new YT.Player(f.id,{events:{onReady:function(ev){buildBar(f,ev.target);}}});
+    });
+  }
+  if(window.YT&&window.YT.Player){init();}
+  else{
+    var prev=window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady=function(){
+      if(typeof prev==='function'){try{prev();}catch(e){}}
+      init();
+    };
+    var tag=document.createElement('script');
+    tag.src='https://www.youtube.com/iframe_api';tag.async=true;
+    var first=document.getElementsByTagName('script')[0];
+    if(first)first.parentNode.insertBefore(tag,first);
+    else document.head.appendChild(tag);
+  }
+})();
 })();
 
 </script>
