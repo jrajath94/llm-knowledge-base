@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="333" viewBox="0 0 720 333" role="img" aria-label="Three rules of reward data curation">
+<rect width="720" height="333" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">Three rules of reward data, each learned the expensive way</text>
+<rect class="box" x="20" y="55" width="213" height="258" rx="8"/>
+<text class="t" x="126" y="79" text-anchor="middle">Rule 1: on-policy wins</text>
+<text class="s" x="126" y="99" text-anchor="middle">reward model most accurate</text>
+<text class="s" x="126" y="116" text-anchor="middle">on its own model's outputs</text>
+<text class="s" x="126" y="133" text-anchor="middle"></text>
+<line x1="20" y1="55" x2="20" y2="313" stroke="#f0b429" stroke-width="4"/>
+<text x="126" y="150" text-anchor="middle" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">same-policy pairs</text>
+<rect x="45" y="160" width="165" height="14" fill="#222" rx="3"/>
+<rect x="45" y="160" width="145.2" height="14" fill="#f0b429" rx="3"/>
+<text x="215" y="172" text-anchor="start" fill="#ececec" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">88%</text>
+<text x="126" y="195" text-anchor="middle" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">other-model pairs</text>
+<rect x="45" y="205" width="165" height="14" fill="#222" rx="3"/>
+<rect x="45" y="205" width="105.6" height="14" fill="#e5484d" rx="3"/>
+<text x="215" y="217" text-anchor="start" fill="#ececec" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">64%</text>
+<text x="126" y="245" text-anchor="middle" fill="#8a8a8a" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">accuracy ranking its own</text>
+<text x="126" y="260" text-anchor="middle" fill="#8a8a8a" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">model's outputs</text>
+<text x="126" y="280" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">refresh data every few</text>
+<text x="126" y="295" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">RL rounds: chase the policy</text>
+<rect class="box" x="253" y="55" width="213" height="258" rx="8"/>
+<text class="t" x="360" y="79" text-anchor="middle">Rule 2: hard pairs teach</text>
+<text class="s" x="360" y="99" text-anchor="middle">easy pairs add ~zero gradient</text>
+<text class="s" x="360" y="116" text-anchor="middle">oversample the close calls</text>
+<text class="s" x="360" y="133" text-anchor="middle"></text>
+<line x1="253" y1="55" x2="253" y2="313" stroke="#58a6ff" stroke-width="4"/>
+<text x="360" y="150" text-anchor="middle" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">obvious winner pair</text>
+<rect x="278" y="160" width="165" height="14" fill="#222" rx="3"/>
+<rect x="278" y="160" width="8.2" height="14" fill="#f0b429" rx="3"/>
+<text x="448" y="172" text-anchor="start" fill="#ececec" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">~0</text>
+<text x="360" y="195" text-anchor="middle" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">subtle-difference pair</text>
+<rect x="278" y="205" width="165" height="14" fill="#222" rx="3"/>
+<rect x="278" y="205" width="140.2" height="14" fill="#58a6ff" rx="3"/>
+<text x="448" y="217" text-anchor="start" fill="#ececec" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">big</text>
+<text x="360" y="245" text-anchor="middle" fill="#8a8a8a" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">gradient weight per pair</text>
+<text x="360" y="260" text-anchor="middle" fill="#8a8a8a" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">the (1 - p) term decides</text>
+<text x="360" y="280" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">drop pairs the model is</text>
+<text x="360" y="295" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">already confident about</text>
+<rect class="box" x="487" y="55" width="213" height="258" rx="8"/>
+<text class="t" x="594" y="79" text-anchor="middle">Rule 3: diversity beats volume</text>
+<text class="s" x="594" y="99" text-anchor="middle">audit prompts by topic,</text>
+<text class="s" x="594" y="116" text-anchor="middle">difficulty, length</text>
+<text class="s" x="594" y="133" text-anchor="middle"></text>
+<line x1="487" y1="55" x2="487" y2="313" stroke="#3fb950" stroke-width="4"/>
+<text x="512" y="159" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">chitchat</text>
+<rect x="575" y="148" width="95" height="13" fill="#222" rx="3"/>
+<rect x="575" y="148" width="76.0" height="13" fill="#e5484d" rx="3"/>
+<text x="512" y="185" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">coding</text>
+<rect x="575" y="174" width="95" height="13" fill="#222" rx="3"/>
+<rect x="575" y="174" width="9.5" height="13" fill="#f0b429" rx="3"/>
+<text x="512" y="211" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">refusal</text>
+<rect x="575" y="200" width="95" height="13" fill="#222" rx="3"/>
+<rect x="575" y="200" width="3.8" height="13" fill="#58a6ff" rx="3"/>
+<text x="512" y="237" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">other</text>
+<rect x="575" y="226" width="95" height="13" fill="#222" rx="3"/>
+<rect x="575" y="226" width="5.7" height="13" fill="#8a8a8a" rx="3"/>
+<text x="593" y="268" text-anchor="middle" fill="#8a8a8a" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">a coding-heavy 10k set trains</text>
+<text x="593" y="283" text-anchor="middle" fill="#8a8a8a" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">a judge with opinions about</text>
+<text x="593" y="298" text-anchor="middle" fill="#e5484d" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">everything else</text>
+</svg>
