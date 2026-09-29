@@ -1,0 +1,53 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 400' width='100%' role='img' aria-label='Three retraining triggers feeding the standard promotion pipeline'>
+<text x='20' y='30' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec'>Retraining triggers: three ways the world tells you to rebuild</text>
+<text x='20' y='54' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8'>Every trigger feeds the same pipeline. A retrain is never a heroic effort.</text>
+
+<!-- triggers -->
+<rect x='20' y='80' width='250' height='96' rx='10' fill='#141414' stroke='#64b5f6' stroke-width='1.5'/>
+<text x='145' y='108' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#64b5f6' text-anchor='middle'>SCHEDULED</text>
+<text x='145' y='132' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#ececec' text-anchor='middle'>retrain every N days</text>
+<text x='145' y='152' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8' text-anchor='middle'>default for slow domains</text>
+
+<rect x='20' y='192' width='250' height='96' rx='10' fill='#141414' stroke='#f0b429' stroke-width='1.5'/>
+<text x='145' y='220' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#f0b429' text-anchor='middle'>THRESHOLD</text>
+<text x='145' y='244' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#ececec' text-anchor='middle'>PSI trips K windows in a row</text>
+<text x='145' y='264' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8' text-anchor='middle'>or Layer 3 metric drops</text>
+
+<rect x='20' y='304' width='250' height='70' rx='10' fill='#141414' stroke='#7bc96f' stroke-width='1.5'/>
+<text x='145' y='330' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#7bc96f' text-anchor='middle'>EVENT-DRIVEN</text>
+<text x='145' y='352' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#ececec' text-anchor='middle'>launch, new market, schema change</text>
+
+<!-- arrows into pipeline -->
+<text x='292' y='140' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='20' fill='#a8a8a8' text-anchor='middle'>&#8594;</text>
+<text x='292' y='250' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='20' fill='#a8a8a8' text-anchor='middle'>&#8594;</text>
+<text x='292' y='345' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='20' fill='#a8a8a8' text-anchor='middle'>&#8594;</text>
+
+<!-- pipeline -->
+<rect x='314' y='80' width='626' height='294' rx='10' fill='#141414' stroke='#262626' stroke-width='1.5'/>
+<text x='627' y='108' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='middle'>the same retrain pipeline, every time</text>
+
+<rect x='334' y='126' width='180' height='64' rx='8' fill='#0d0d0d' stroke='#262626'/>
+<text x='424' y='150' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' font-weight='600' fill='#ececec' text-anchor='middle'>fresh extract</text>
+<text x='424' y='170' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8' text-anchor='middle'>data tests (T4.1)</text>
+
+<text x='530' y='162' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='18' fill='#a8a8a8' text-anchor='middle'>&#8594;</text>
+
+<rect x='546' y='126' width='180' height='64' rx='8' fill='#0d0d0d' stroke='#262626'/>
+<text x='636' y='150' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' font-weight='600' fill='#ececec' text-anchor='middle'>train tracked</text>
+<text x='636' y='170' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8' text-anchor='middle'>config + seed (T3.1)</text>
+
+<text x='742' y='162' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='18' fill='#a8a8a8' text-anchor='middle'>&#8594;</text>
+
+<rect x='758' y='126' width='162' height='64' rx='8' fill='#0d0d0d' stroke='#262626'/>
+<text x='839' y='150' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' font-weight='600' fill='#ececec' text-anchor='middle'>promotion gates</text>
+<text x='839' y='170' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8' text-anchor='middle'>CI, review, canary</text>
+
+<rect x='334' y='214' width='586' height='64' rx='8' fill='#f0b429' fill-opacity='0.08' stroke='#f0b429' stroke-width='1.5'/>
+<text x='627' y='240' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' font-weight='600' fill='#f0b429' text-anchor='middle'>shadow &#8594; canary &#8594; production (T4.3, T4.4)</text>
+<text x='627' y='262' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8' text-anchor='middle'>guardrails coded; rollback is one command</text>
+
+<text x='334' y='312' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8'>retrain cost (compute + review) vs staleness cost (wrong predictions, priced in T1):</text>
+<text x='334' y='332' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8'>that comparison sets how often each trigger fires.</text>
+
+<text x='334' y='360' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#e06c60'>never: silently retrain on drifted data and hope: that launders the bug into the model.</text>
+</svg>
