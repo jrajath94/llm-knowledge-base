@@ -1,0 +1,18 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 920 430' width='100%' role='img'>
+<title>Why the customer must trust the measurement</title>
+<text x='460' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>Why the customer must trust the measurement</text>
+<rect x='60' y='100' width='360' height='180' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='240' y='126' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Excellent model</text>
+<text x='240' y='146' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>95% on your evals</text>
+<text x='240' y='164' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Clean dashboards</text>
+<rect x='500' y='100' width='360' height='180' rx='10' fill='#c0392b' fill-opacity='0.22' stroke='#c0392b' stroke-width='2'/>
+<text x='680' y='126' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Failed engagement</text>
+<text x='680' y='146' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Customer does not</text>
+<text x='680' y='164' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>believe the numbers</text>
+<line x1='420' y1='190' x2='500' y2='190' stroke='#c0392b' stroke-width='2'/>
+<polygon points='491.8,193.7 500,190 491.8,186.3' fill='#c0392b'/>
+<text x='460' y='175' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#c0392b' text-anchor='middle'>but</text>
+<rect x='210' y='320' width='500' height='64' rx='10' fill='#00897b' fill-opacity='0.22' stroke='#00897b' stroke-width='2'/>
+<text x='460' y='346' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='16' font-weight='600' fill='#ececec' text-anchor='middle'>Co-designed evals = shared truth</text>
+<text x='460' y='366' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>The customer grades what they signed</text>
+</svg>
