@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 500" role="img" aria-labelledby="t07bvb-title t07bvb-desc">
+<title id="t07bvb-title">Build versus buy: the same cost model, three options</title>
+<desc id="t07bvb-desc">Three columns compare buying a vendor product, building the system yourself, and the hybrid answer. All three are priced with the same model: cost per successful task.</desc>
+<style>
+  .t07bvb text { font-family: "Charis SIL", Georgia, serif; fill: #ececec; }
+  .t07bvb .h { font-size: 20px; font-weight: bold; text-anchor: middle; }
+  .t07bvb .sub { font-size: 13px; fill: #a8a8a8; text-anchor: middle; font-style: italic; }
+  .t07bvb .li { font-size: 13.5px; }
+  .t07bvb .note { font-size: 12.5px; fill: #a8a8a8; }
+</style>
+<g class="t07bvb">
+<rect x="0" y="0" width="920" height="500" fill="#0d0d0d"/>
+<text x="460" y="34" class="h" style="font-size:22px">Build versus buy: the same cost model, three options</text>
+
+<!-- BUY -->
+<rect x="20" y="55" width="270" height="400" rx="10" fill="#111111" stroke="#262626" stroke-width="1.5"/>
+<text x="155" y="88" class="h">BUY</text>
+<text x="155" y="110" class="sub">a vendor product or API</text>
+<text x="40" y="145" class="li">- Build cost: zero</text>
+<text x="40" y="172" class="li">- Pay the vendor's price</text>
+<text x="40" y="199" class="li">  per seat or per task</text>
+<text x="40" y="236" class="li">- Success rate: the vendor's</text>
+<text x="40" y="263" class="li">  claim, discounted by</text>
+<text x="40" y="290" class="li">  your skepticism</text>
+<text x="40" y="327" class="li">- Validate the claim in a</text>
+<text x="40" y="354" class="li">  pilot shadow before</text>
+<text x="40" y="381" class="li">  you believe it</text>
+<text x="40" y="425" class="note">Risk: their outages are</text>
+<text x="40" y="443" class="note">your outages.</text>
+
+<!-- BUILD -->
+<rect x="325" y="55" width="270" height="400" rx="10" fill="#111111" stroke="#262626" stroke-width="1.5"/>
+<text x="460" y="88" class="h">BUILD</text>
+<text x="460" y="110" class="sub">the FDE engagement + your system</text>
+<text x="345" y="145" class="li">- Pay all five cost parts:</text>
+<text x="345" y="172" class="li">  model, infra, human</text>
+<text x="345" y="199" class="li">  review, failure rework,</text>
+<text x="345" y="226" class="li">  amortized build</text>
+<text x="345" y="263" class="li">- Success rate: measured</text>
+<text x="345" y="290" class="li">  on YOUR acceptance eval,</text>
+<text x="345" y="317" class="li">  on customer data</text>
+<text x="345" y="354" class="li">- Full control, full</text>
+<text x="345" y="381" class="li">  responsibility</text>
+<text x="345" y="425" class="note">Risk: fixed costs lose at</text>
+<text x="345" y="443" class="note">small volumes.</text>
+
+<!-- HYBRID -->
+<rect x="630" y="55" width="270" height="400" rx="10" fill="#141310" stroke="#f0b429" stroke-width="2.5"/>
+<text x="765" y="88" class="h" fill="#f0b429">HYBRID</text>
+<text x="765" y="110" class="sub">the usual honest answer</text>
+<text x="650" y="145" class="li">- Buy the commodity parts:</text>
+<text x="650" y="172" class="li">  the vendor API for</text>
+<text x="650" y="199" class="li">  the model</text>
+<text x="650" y="236" class="li">- Build the differentiating</text>
+<text x="650" y="263" class="li">  workflow: your evals,</text>
+<text x="650" y="290" class="li">  your integration, your</text>
+<text x="650" y="317" class="li">  permission layer</text>
+<text x="650" y="360" class="li" font-weight="bold" fill="#f0b429">Where FDEs add the</text>
+<text x="650" y="387" class="li" font-weight="bold" fill="#f0b429">most value.</text>
+
+<text x="460" y="482" class="note" text-anchor="middle">Price all three with the same model: cost per successful task, not cost per token.</text>
+</g>
+</svg>
