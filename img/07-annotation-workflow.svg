@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="600" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">The preference-data collection pipeline</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Collection is an operations problem with a research core</text>
+<rect x="24" y="94" width="146" height="150" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="97.0" y="122" font-size="13" font-weight="bold" fill="#4fd1a5" text-anchor="middle">Prompt sourcing</text>
+<text x="97.0" y="150" font-size="11" fill="#a8a8a8" text-anchor="middle">real user requests,</text>
+<text x="97.0" y="167" font-size="11" fill="#a8a8a8" text-anchor="middle">red-team probes,</text>
+<text x="97.0" y="184" font-size="11" fill="#a8a8a8" text-anchor="middle">targeted weakness sets</text>
+<line x1="170" y1="169.0" x2="190" y2="169.0" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="190,169.0 181.78219953718923,172.66984407753614 181.78219953718923,165.33015592246386" fill="#8a8a8a"/>
+<rect x="190" y="94" width="146" height="150" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="263.0" y="122" font-size="13" font-weight="bold" fill="#4fd1a5" text-anchor="middle">Response sampling</text>
+<text x="263.0" y="150" font-size="11" fill="#a8a8a8" text-anchor="middle">2 to 4 responses</text>
+<text x="263.0" y="167" font-size="11" fill="#a8a8a8" text-anchor="middle">per prompt, from the</text>
+<text x="263.0" y="184" font-size="11" fill="#a8a8a8" text-anchor="middle">SFT model: on-policy</text>
+<line x1="336" y1="169.0" x2="356" y2="169.0" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="356,169.0 347.78219953718923,172.66984407753614 347.78219953718923,165.33015592246386" fill="#8a8a8a"/>
+<rect x="356" y="94" width="146" height="150" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="429.0" y="122" font-size="13" font-weight="bold" fill="#4fd1a5" text-anchor="middle">Guidelines</text>
+<text x="429.0" y="150" font-size="11" fill="#a8a8a8" text-anchor="middle">written rubric:</text>
+<text x="429.0" y="167" font-size="11" fill="#a8a8a8" text-anchor="middle">helpfulness, then</text>
+<text x="429.0" y="184" font-size="11" fill="#a8a8a8" text-anchor="middle">honesty, harmlessness</text>
+<line x1="502" y1="169.0" x2="522" y2="169.0" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="522,169.0 513.7821995371892,172.66984407753614 513.7821995371892,165.33015592246386" fill="#8a8a8a"/>
+<rect x="522" y="94" width="146" height="150" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="595.0" y="122" font-size="13" font-weight="bold" fill="#4fd1a5" text-anchor="middle">Labelers judge</text>
+<text x="595.0" y="150" font-size="11" fill="#a8a8a8" text-anchor="middle">pairwise</text>
+<text x="595.0" y="167" font-size="11" fill="#a8a8a8" text-anchor="middle">comparisons;</text>
+<text x="595.0" y="184" font-size="11" fill="#a8a8a8" text-anchor="middle">rank, do not score</text>
+<line x1="668" y1="169.0" x2="688" y2="169.0" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="688,169.0 679.7821995371892,172.66984407753614 679.7821995371892,165.33015592246386" fill="#8a8a8a"/>
+<rect x="688" y="94" width="146" height="150" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="761.0" y="122" font-size="13" font-weight="bold" fill="#f0b429" text-anchor="middle">Agreement check</text>
+<text x="761.0" y="150" font-size="11" fill="#a8a8a8" text-anchor="middle">~7 in 10 agree</text>
+<text x="761.0" y="167" font-size="11" fill="#a8a8a8" text-anchor="middle">(InstructGPT);</text>
+<text x="761.0" y="184" font-size="11" fill="#a8a8a8" text-anchor="middle">the RM ceiling</text>
+<rect x="24" y="304" width="852" height="116" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="450" y="336" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Disagreement is signal, not noise</text>
+<text x="48" y="366" font-size="11" fill="#a8a8a8" text-anchor="start">Labeler disagreement marks where the rubric is silent. Adjudicate, then repair the rubric with the edge</text>
+<text x="48" y="383" font-size="11" fill="#a8a8a8" text-anchor="start">case. Operations that punish disagreement get hidden disagreement.</text>
+<line x1="450" y1="252" x2="450" y2="298" stroke="#b388ff" stroke-width="2"/>
+<polygon points="450,298 446.33015592246386,289.78219953718923 453.66984407753614,289.78219953718923" fill="#b388ff"/>
+<text x="24" y="444" font-size="12" fill="#8a8a8a" text-anchor="start">A reward model cannot be more consistent than the humans it learns from: agreement is the ceiling, not a bug.</text>
+</svg>
