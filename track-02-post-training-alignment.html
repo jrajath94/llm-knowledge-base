@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Post-Training and Alignment Engineer</title>
 <style>
@@ -470,6 +478,7 @@ html.xp-js .xp-reveal.xp-in {
 
 <h3 id="12-the-day-to-day-loop">1.2 The day-to-day loop</h3>
 <p>Strip away the job titles and the week looks like this.</p>
+<figure class="diagram"><img src="img/t2-week-loop.svg" alt="Five-day loop: Monday reads the evals, Tuesday does data work, Wednesday runs the training fix, Thursday analyzes, Friday is ship review"><figcaption>Figure 1.2. The post-training week is a loop, not a list. Eval failures become data fixes and recipe changes.</figcaption></figure>
 <p><strong>Monday: read the evals.</strong> The weekend's training run finished. You open the dashboard: win rate (the fraction of head-to-head comparisons judges award to the new model) against the current production model, benchmark deltas, refusal rates, red-team flags. One chart matters most: reward model score versus human-judged quality on a held-out set (held-out: data the model never trained on, reserved for honest evaluation). If the two diverge, your reward model is lying to you. That is the week's problem.</p>
 <p><strong>Tuesday: data work.</strong> Half the job is data. You sample 200 preference pairs the labelers produced. You find the rubric is ambiguous on code answers: labelers prefer the longer explanation, the reward model learned "longer is better," and now outputs are bloated. You rewrite the rubric, add examples, and queue a re-label.</p>
 <p>You also dedupe the new SFT batch: 4 percent are near-duplicates of eval questions. They get cut, not kept, because eval leakage is a career-ending metric.</p>
@@ -499,6 +508,7 @@ html.xp-js .xp-reveal.xp-in {
 
 <h3 id="13-how-success-is-measured">1.3 How success is measured</h3>
 <p>Post-training is one of the few ML roles with crisp numbers. They fall into four buckets.</p>
+<figure class="diagram"><img src="img/t2-metric-buckets.svg" alt="Four metric buckets: preference, capability, safety, and reward-model health"><figcaption>Figure 1.3. Four buckets of numbers, in order of visibility. Bucket 4 predicts buckets 1 to 3, one training cycle ahead.</figcaption></figure>
 <p><strong>Preference metrics.</strong> <dfn>Win rate</dfn> is the headline: on a fixed prompt set, what fraction of the time do human judges prefer the new model over the baseline? A win rate above 50 percent with tight confidence intervals is a real improvement. Volume 11 Appendix A covers the statistics: with random outputs, you need hundreds of judgments to separate 52 percent from noise.</p>
 <p><strong>Capability metrics.</strong> Benchmarks the model must not regress: reasoning, coding, math, instruction following, long context. The trap is optimizing one suite while silently degrading another. Every serious team keeps a fixed "guardrail" set that blocks releases on any significant drop.</p>
 <p><strong>Safety metrics.</strong> Refusal rates on disallowed content, measured on fixed probe sets. But refusal alone is a bad metric: a model that refuses everything is safe and useless. The real metric is calibration: refuse the disallowed, answer the benign, and explain borderline cases. Track the false-refusal rate as carefully as the true-refusal rate.</p>
@@ -547,6 +557,7 @@ html.xp-js .xp-reveal.xp-in {
 <tr><td>Chapter 10</td><td>The SFT-or-RL decision guide.</td></tr>
 </tbody>
 </table>
+
 <p>Finish with the capstone lab: SFT then DPO on the tiny GPT.</p>
 <p><strong>Appendix 7A, chapters A.1 to A.3.</strong> RL at scale is a systems problem. A.1 covers rollout generation throughput: why online RL is usually bottlenecked on generation, not gradients. A.2 covers inference engines inside the RL loop. A.3 covers async architectures and memory layout for rollout workers. You need this the first time a PPO run is slow and nobody knows why.</p>
 <p><strong>Appendix 7B, chapters B.1 to B.4.</strong> The data half of post-training. B.1 is synthetic data pipelines (STaR (Self-Taught Reasoner: generate reasoning traces, keep the ones that reach the right answer, fine-tune on them), rejection sampling (generate many candidate answers, keep only the ones a checker marks right), distillation at scale (training a smaller model to imitate a larger one)). B.2 is verifier and reward pipelines: how checkable rewards are built. B.3 is SFT data mixtures and rejection-sampling recipes: the actual craft of the data mix. B.4 is preference-data collection design, the direct prerequisite for track chapter T.3.</p>
@@ -584,6 +595,7 @@ html.xp-js .xp-reveal.xp-in {
 <p><strong>Volume 3, the optimization chapters.</strong> Adam, learning rates, and loss curves. Post-training runs fail in the same ways small runs fail, just more expensively. When KL spikes, you want the optimization chapter's instincts.</p>
 <h3 id="tier-3-read-on-demand">Tier 3: read on demand</h3>
 <p><strong>Volume 5 (pre-training).</strong> Read the data chapters when you need to understand what the base model already knows, so your SFT mix does not reteach it. Read the scaling chapters when someone asks whether more post-training data will help.</p>
+<figure class="diagram"><img src="img/t2-reading-ladder.svg" alt="Three reading tiers: Tier 1 the core, Tier 2 supporting, Tier 3 on demand"><figcaption>Figure P2. The Part 2 reading path: three tiers, in order. Do not skip Tier 1.</figcaption></figure>
 <p><strong>Volume 6 (distributed training).</strong> Read when your RL run needs more than one node, or when rollout throughput (Appendix 7A) points at a communication bottleneck.</p>
 <p><strong>Volume 8 (inference serving) and Appendix 8A.</strong> Read when rollout generation is the bottleneck: batching, KV cache, and the economics of sampling millions of completions.</p>
 <p><strong>Volume 10 (productionizing and MLOps).</strong> Read when the eval suite becomes a pipeline: scheduling, versioning, and reproducibility of the whole post-training loop.</p>
@@ -605,7 +617,7 @@ html.xp-js .xp-reveal.xp-in {
 <p style="font-size:0.93em"><strong>Where:</strong> P(A beats B) = the probability the judge prefers response A; r<sub>A</sub>, r<sub>B</sub> = the reward model’s scores for the two responses; sigmoid(z) = 1 / (1 + e<sup>−z</sup>), which squashes any score difference into the 0-to-1 range.</p>
 <div class="callout">
 <p><strong>Worked example.</strong> The reward model scores A at 1.2 and B at −0.5, so the gap is 1.7. sigmoid(1.7) = 1 / (1 + e<sup>−1.7</sup>) = 1 / (1 + 0.183) = 1 / 1.183 ≈ 0.85.</p>
-<p>Result: an 85 percent chance the judge picks A. That is the red marker in Figure T2: a 1.7-point gap means 85 percent.</p>
+<p>Result: an 85 percent chance the judge picks A. That is the red marker in Figure T1.2: a 1.7-point gap means 85 percent.</p>
 </div>
 <p>Why this shape? It has three properties you want:</p>
 <ol>
@@ -615,7 +627,7 @@ html.xp-js .xp-reveal.xp-in {
 </ol>
 <p>The last property matters: reward scores are relative, never absolute. A reward of 2.1 means nothing alone. It only means "better than 0.4 on the same prompt."</p>
 <figure class="photo"><img alt="Bradley-Terry sigmoid: preference probability as a function of score difference" src="img/t2-bradley-terry-sigmoid.svg" />
-<figcaption>Figure T2. The sigmoid turns a score difference into a preference probability. Equal scores give a coin flip. Far-apart scores give near-certainty. The red marker is the worked example from the text: a 1.7-point gap means an 85 percent chance the judge picks the higher-scoring response.</figcaption></figure>
+<figcaption>Figure T1.2. The sigmoid turns a score difference into a preference probability. Equal scores give a coin flip. Far-apart scores give near-certainty. The red marker is the worked example from the text: a 1.7-point gap means an 85 percent chance the judge picks the higher-scoring response.</figcaption></figure>
 <div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li><strong>The shape.</strong> The curve is the sigmoid function applied to the score difference. It is flat near the ends and steep in the middle, so small gaps near zero matter more than small gaps far out.</li>
 <li><strong>The three properties from the text.</strong> At difference zero the curve passes through 0.5 (coin flip). At large gaps it saturates near 0 or 1 (near-certain). Shifting both scores by a constant moves nothing, because only the difference enters the curve.</li>
@@ -689,17 +701,21 @@ print(f&quot;learned weights / true weights: {w / (true_w + 1e-9)}&quot;)
 </code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li>We build 2000 pairs with a known true quality function and 15 percent label noise.</li>
 <li>The loss is negative log sigmoid of the score gap. Its gradient weights each pair by (1 - p): confident correct pairs fade out, uncertain pairs teach.</li>
-<li>After 300 steps the learned weights recover the true weights up to a scale factor. Scale is free in Bradley-Terry: only differences matter, and scaling all scores by 2 gives the same probabilities after the sigmoid saturates. That is why reward scores drift in scale during real training and you must never compare raw scores across prompts or runs.</li>
-<li>The model agrees with truth on about 85 percent of pairs. It cannot beat the noise ceiling. More data will not fix label noise; better labels will.</li>
+<li>After 300 steps the learned weights recover the true weights up to a scale factor. What is free in Bradley-Terry is translation, not scale: adding a constant to all scores changes nothing, so only differences carry signal. Reward scores still drift in scale during real training, which is why you must never compare raw scores across prompts or runs.</li>
+<li>The model agrees with truth on about 98 percent of pairs, well above the judge's own 84 percent. Random noise washes out across 2000 pairs: the model recovers the true ranking underneath the flipped labels. But the training signal is still 16 percent wrong, and where noise is systematic instead of random, no amount of data washes it out. More data will not fix label noise; better labels will.</li>
 </ol></div><p>Run it. Then flip the noise to 40 percent and watch the ceiling drop. That number is your reminder: the reward model is bounded by label quality, and label quality is Appendix 11B's whole subject.</p>
 <h4 id="t13-data-curation-what-makes-reward-data-good">Step 3. T.1.3 Data curation: what makes reward data good</h4>
 <p>The Bradley-Terry loss is only as good as its pairs. Data curation is where reward models are actually won or lost.</p>
+<figure class="diagram"><img src="img/t2-data-rules.svg" alt="Three data rules: on-policy beats off-policy, hard pairs teach, diversity beats volume"><figcaption>Figure T1.3. Three rules of reward data, each learned the expensive way.</figcaption></figure>
+<div class="walkthrough"><p><strong>How to read it.</strong></p><ol><li>Rule 1: a reward model is most accurate ranking its own model's outputs. Refresh data every few RL rounds.</li><li>Rule 2: easy pairs add almost zero gradient. Oversample the close calls, where the (1 - p) term is large.</li><li>Rule 3: audit prompts by topic, difficulty, and length. A coding-heavy set trains a judge with opinions about everything else.</li></ol></div>
 <p>Three rules, each learned the expensive way by teams before you.</p>
 <p><strong>Rule 1: on-policy data beats off-policy data.</strong> A reward model trained on responses from model M is most accurate at ranking responses from model M. Train it on human-written responses and GPT-4 responses, then use it to score your own model's outputs, and accuracy drops. The fix used in production: refresh the preference data every few RL rounds with samples from the current policy. The reward model chases the policy.</p>
 <p><strong>Rule 2: hard pairs teach, easy pairs pad.</strong> A pair where any reader sees the winner teaches the model little. A pair where two good answers differ in one subtle way teaches the ranking boundary. When collecting, oversample close calls. When filtering, drop pairs where the score gap is huge and the model is already confident. They contribute near-zero gradient, as the (1 - p) term in the code above shows.</p>
 <p><strong>Rule 3: diversity of prompts beats volume of pairs.</strong> Ten thousand pairs on coding questions train a coding reward model with opinions about everything else. The reward model generalizes across prompts only as far as its training prompts reach. Audit the prompt distribution the way you audit a dataset: by topic, difficulty, and length. A reward model that has never seen a refusal scenario will score refusals randomly.</p>
 <h4 id="t14-overoptimization-goodhart-with-a-plot">Step 4. T.1.4 Overoptimization: Goodhart with a plot</h4>
 <p>Good data is necessary but not sufficient. Even a perfect reward model gets gamed when a policy optimizes against it. That failure has a name: overoptimization.</p>
+<figure class="diagram"><img src="img/t2-overoptimization.svg" alt="Proxy reward keeps rising with KL while the gold human reward peaks and falls"><figcaption>Figure T1.4. Overoptimization: the proxy keeps rising after the truth falls. Stop at the gold peak.</figcaption></figure>
+<div class="walkthrough"><p><strong>How to read it.</strong></p><ol><li>Horizontal axis: KL from the SFT model, which grows as reward training runs longer.</li><li>The gold curve peaks and then falls: that peak is where early stopping belongs.</li><li>Past the peak, every extra step trains the policy to please the proxy, not the human.</li></ol></div>
 <p><dfn>Goodhart&#x27;s law</dfn> says: when a measure becomes a target, it stops being a good measure. The reward model is a measure of human preference. RL makes it a target. So the policy learns to score high, not to be good.</p>
 <p>The signature is a plot every post-training engineer should be able to draw from memory. Sample responses from the policy at increasing KL distances from the SFT model. Score each with the proxy reward model (the one you train on) and with a gold reward model (a bigger, held-out judge, or human labels). Early on both rise. Then the proxy keeps rising while the gold peaks and falls. You are now training the model to exploit the proxy's blind spots.</p>
 <p><pre><code>gold score
@@ -738,7 +754,7 @@ B. Bradley-Terry scores are only meaningful as differences; the sigmoid of the g
 C. The scores need to be normalized to sum to 1 first.
 D. Score 3.2 is above the valid range for reward models.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The Bradley-Terry likelihood only uses the difference r_A - r_B, passed through a sigmoid to get P(A preferred). Ratios of raw scores have no meaning, and the absolute scale drifts during training.</p></div></div><h3 id="t2-dpo-vs-ppo-vs-grpo-trade-offs-with-worked-math">T.2 DPO vs PPO vs GRPO: trade-offs with worked math</h3>
 <p>T.1 built the reward model. The next question is how to use it. T.2 compares the three optimizers that consume it: PPO, DPO, and GRPO, starting from the one objective they all share.</p>
-<p>Three algorithms, one goal: move the policy toward preferred outputs without drifting off a cliff. They differ in what they need, what they cost, and where they break. Five steps: the objective they share, the heavyweight, the shortcut, the verifier's algorithm, and the side-by-side comparison with numbers you can check.</p>
+<p>Three algorithms, one goal: move the policy toward preferred outputs without drifting off a cliff. They differ in what they need, what they cost, and where they break. Six steps: the objective they share, the heavyweight, the shortcut, the verifier's algorithm, the side-by-side comparison, and a runnable toy world with numbers you can check.</p>
 <!-- VIS:dpo-fig1 -->
 <figure class="photo">
   <img src="img/dpo-vs-rlhf-pipeline-comparison.png" alt="DPO Figure 1: RLHF fits a reward model and runs RL, while DPO goes straight from preference data to the final policy" loading="lazy">
@@ -764,6 +780,8 @@ D. Score 3.2 is above the valid range for reward models.</p></div><button class=
 <div class="callout">
 <p><strong>Worked example.</strong> ε = 0.2, advantage A = 0.5, ratio = 1.3. clip(1.3, 0.8, 1.2) = 1.2. L = min(1.3 × 0.5, 1.2 × 0.5) = min(0.65, 0.60) = 0.60.</p>
 <p>The update wanted 0.65 but the clip trimmed it to 0.60. That trim is the point: big steps get cut when the advantage is positive, which keeps training stable when the reward model is noisy.</p>
+<figure class="diagram"><img src="img/t2-ppo-clip.svg" alt="PPO clipped objective versus the probability ratio, with the worked example at ratio 1.3"><figcaption>Figure T2.2. The PPO clip: with ratio 1.3 and advantage 0.5, the min() trims 0.65 to 0.60.</figcaption></figure>
+<div class="walkthrough"><p><strong>How to read it.</strong></p><ol><li>The unclipped line trusts the ratio all the way up. The clipped line flattens at the clip boundary.</li><li>Worked example: clip(1.3, 0.8, 1.2) = 1.2, so L = min(0.65, 0.60) = 0.60.</li><li>The trim is the point: big steps get cut when the advantage is positive, which keeps training stable.</li></ol></div>
 </div>
 <p>The clip is the point: if the advantage is positive, the update can only push the ratio up to 1 + eps. Big steps get trimmed. That keeps training stable when the reward model is noisy.</p>
 <p><strong>What it needs:</strong> a trained reward model, a value network (or value head) to estimate advantages, rollout infrastructure to sample from the policy, and careful KL control. Appendix 7A exists because this infrastructure is half the work.</p>
@@ -787,6 +805,8 @@ D. Score 3.2 is above the valid range for reward models.</p></div><button class=
 </ul>
 </div>
 <p><strong>What it needs:</strong> preference pairs and a reference model. No sampling, no reward model, no value network. One training loop.</p>
+<figure class="diagram"><img src="img/t2-dpo-flow.svg" alt="DPO worked example: policy and reference log-probs flow to a margin gap of 0.9, beta 0.1, loss 0.65"><figcaption>Figure T2.3. DPO, one preference pair, all the way through: the gap is 0.9, the loss is 0.65.</figcaption></figure>
+<div class="walkthrough"><p><strong>How to read it.</strong></p><ol><li>Policy margin 0.2 minus reference margin -0.7 gives the gap: 0.9.</li><li>Times beta 0.1 gives 0.09. Sigmoid(0.09) = 0.522, loss = -log(0.522) = 0.65.</li><li>The model already prefers the chosen answer, so the loss is small. A flipped preference would give a large loss and a real update.</li></ol></div>
 <p><strong>Where it shines:</strong> simplicity and stability. It is the default first try for preference tuning.</p>
 <p><strong>Where it breaks:</strong> it is offline. It never sees its own outputs during training, so it cannot correct distribution shift: the pairs came from some other policy. It also inherits a subtle failure: the loss can be minimized by pushing down the rejected log-prob without raising the chosen one, which can degrade overall quality. Watch the chosen log-probs during training; if they fall while the loss falls, you have the failure.</p>
 <h4 id="t24-grpo-the-verifiers-algorithm">Step 4. T.2.4 GRPO, the verifier's algorithm</h4>
@@ -797,12 +817,15 @@ D. Score 3.2 is above the valid range for reward models.</p></div><button class=
 <p style="font-size:0.93em"><strong>Where:</strong> A<sub>i</sub> = the advantage of response i; r<sub>i</sub> = the verifier’s score for response i; mean(r), std(r) = the mean and standard deviation of the G scores in the group. The group is its own baseline: no value network needed.</p>
 <div class="callout">
 <p><strong>Worked example.</strong> G = 4 responses to one math prompt. Verifier scores: [1, 1, 0, 0]. Mean = 0.5, std = 0.5. Advantages: [+1, +1, -1, -1]. The two correct solutions get pushed up equally, the two wrong ones pushed down equally. Now consider [1, 0, 0, 0]: mean = 0.25, std ≈ 0.43. Advantages: [+1.73, -0.58, -0.58, -0.58]. The single correct solution gets a big push: it stood out. And [1, 1, 1, 1]: std = 0, advantages undefined, the group contributes nothing. Uniform groups teach nothing, which is why GRPO pipelines filter prompts the model always gets right or always gets wrong.</p>
+<figure class="diagram"><img src="img/t2-grpo-groups.svg" alt="Four sampled responses scored 1, 1, 0, 0 give advantages plus 1, plus 1, minus 1, minus 1"><figcaption>Figure T2.4. GRPO: the group is the baseline. Scores [1,1,0,0] become advantages [+1,+1,-1,-1].</figcaption></figure>
+<div class="walkthrough"><p><strong>How to read it.</strong></p><ol><li>The verifier scores each response in the group. Mean 0.5, standard deviation 0.5.</li><li>Advantage = (score - mean) / std. Good answers are pushed up, bad answers down. No value model needed.</li><li>A uniform group like [1,1,1,1] has std 0 and teaches nothing. Sample a wider difficulty range.</li></ol></div>
 </div>
 <p><strong>What it needs:</strong> a fast verifier and the ability to sample groups per prompt. No reward model, no value network.</p>
 <p><strong>Where it shines:</strong> reasoning. DeepSeek-R1 made GRPO famous by training reasoning with pure verifiable rewards, no human preferences at all.</p>
 <p><strong>Where it breaks:</strong> where there is no verifier. You cannot GRPO your way to better creative writing. It also needs the group size: small G gives noisy advantages, large G costs generation budget.</p>
 <h4 id="t25-the-comparison-side-by-side">Step 5. T.2.5 The comparison, side by side</h4>
 <p>Three algorithms, three sets of trade-offs. Time to put them side by side.</p>
+<figure class="diagram"><img src="img/t2-playbook.svg" alt="Decision flow: start with SFT plus DPO; upgrade to PPO or GRPO only on missed eval targets"><figcaption>Figure T2.5. The production playbook: complexity has to earn its keep, one eval gate at a time.</figcaption></figure>
 <table>
 <thead>
 <tr>
@@ -860,7 +883,7 @@ D. Score 3.2 is above the valid range for reward models.</p></div><button class=
 <p>The production playbook, in one sentence: SFT, then DPO as a cheap baseline, then PPO or GRPO only if DPO misses the eval targets. Complexity has to earn its keep.</p>
 <h4 id="t26-runnable-comparison-three-updates-one-toy-world">T.2.6 Runnable comparison: three updates, one toy world</h4>
 <p>Trade-off tables are abstractions. The runnable toy world below makes the differences concrete.</p>
-<p>The script below puts all three updates in one tiny world so you can feel the difference. A policy over 4 actions, a true reward, and a noisy learned reward. Each method gets the same budget of gradient steps.</p>
+<p>The script below puts all three updates in one tiny world so you can feel the difference. A policy over 4 actions, a true reward, and a noisy learned reward. The PPO-style and GRPO-style updates get 60 online steps each; the DPO-style update trains on 400 preference pairs. The budgets differ on purpose: watch what each signal buys.</p>
 <p><pre><code class="language-python"># PPO-style vs DPO-style vs GRPO-style updates in a 4-action toy
 # world.
 # WHAT:  one policy, three update rules, same step budget. Watch how
@@ -961,17 +984,16 @@ for name, fn in [(&quot;PPO-style &quot;, run_ppo_style),
     print(f&quot;{name}: policy={np.round(p, 3)} &quot;
           f&quot;true-reward={p @ true_r:.3f} KL={kl(p, ref):.3f}&quot;)
 </code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
-<li>Three policies start uniform. Each gets a comparable update budget.</li>
-<li>The PPO-style update samples online and trusts a noisy reward. It collects decent true reward but drifts: the noise in the reward estimate pulls it toward actions the noisy RM overrates. More beta would leash it harder at the cost of less reward.</li>
-<li>The DPO-style update never samples. It learns the ranking from pairs and stays closer to the reference. Its ceiling is the pair quality: 15 percent flipped labels cap what it can learn.</li>
-<li>The GRPO-style update uses exact verifiers on groups. It finds the correct actions fast and with low KL, because the signal is clean. This is why verifiable domains are the easy mode of RL: the reward is the truth, not a model of the truth.</li>
-<li>Change <code>noisy_r</code>'s noise from 0.25 to 0.6 and rerun. The PPO-style policy degrades while DPO and GRPO barely move. That gap is the price of a learned reward, and the reason reward-model quality (T.1) gates PPO results.</li>
+<li>Three policies start uniform over four actions. The PPO-style and GRPO-style updates run 60 online steps each; the DPO-style update trains on 400 preference pairs.</li>
+<li>The PPO-style update samples online and trusts a noisy reward. It moves least: KL 0.11, the smallest drift of the three, but also the least true reward at 0.64. Sixty noisy samples barely move the policy off uniform. This is the learned-reward bottleneck in miniature: the update is only as good as its reward estimates, and noisy estimates buy caution, not progress.</li>
+<li>The DPO-style update never samples. Four hundred pairs concentrate the policy hard on the true best action: true reward 0.95, the highest of the three, at the price of the highest KL, 0.97. It does not stay near the reference; it learns the ranking from the pairs and commits. Its ceiling is the pair quality: 15 percent flipped labels cap what the ranking can teach.</li>
+<li>The GRPO-style update uses exact verifiers on groups. The signal is clean, so it lands in the middle: true reward 0.75 with KL 0.51. No learned reward in the loop, no label noise, no value network; the group baseline does the work.</li>
+<li>Change <code>noisy_r</code>'s noise from 0.25 to 0.6 and rerun. The PPO-style policy barely changes (true reward 0.65, KL 0.15): with only 60 samples the update is too timid for the noise level to matter much. DPO and GRPO never touch the noisy reward, so they print the same numbers. The price of a learned reward shows up when an online update runs long enough to chase the noise; the beta sweep in Lab T.2 is where you watch that happen.</li>
 </ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>PPO, DPO, and GRPO optimize the same objective with different signals: learned reward, preference pairs, verifiable rewards.</li>
 <li>DPO is the cheap baseline. PPO buys power on open-ended tasks at the price of complexity. GRPO dominates where answers are checkable.</li>
-<li>The toy comparison shows the real trade: noisy rewards drift, pair labels cap, verifiers win when they exist.</li>
+<li>The toy comparison shows the real trade: the noisy online update moves cautiously and collects the least, the pair-trained update concentrates hardest on the best action but drifts farthest from the reference, and the verifier-based update lands between them on both axes.</li>
 </ul></div><div class="lab"><h4>Lab T.2: Find the beta frontier</h4><p>Sweep beta over [0.05, 0.2, 0.5, 1.0, 2.0] in run_ppo_style and plot true reward versus KL for each. You will see the frontier: low beta gets more reward and more drift, high beta stays near the reference and learns little. Pick the beta at the knee of the curve. That knee is the number you would defend in a training review.</p></div><h3 id="t3-preference-data-pipelines">T.3 Preference-data pipelines</h3>
-<p>T.1 and T.2 assumed preference pairs exist and are good. They do not appear by magic. This chapter is the pipeline that produces them and keeps them good.</p>
 <p>Preference data is the fuel. Everything in T.1 and T.2 assumes it exists and is good. This chapter is about making it exist and keeping it good: collection design, dedup, quality filters, and what to do when labelers disagree.</p>
 <h4 id="t31-collection-the-pipeline-shape">Step 1. T.3.1 Collection: the pipeline shape</h4>
 <p>A production preference pipeline has five stages. Data flows left to right; quality gates sit between every pair of stages.</p>
@@ -1050,6 +1072,8 @@ for i, j, s in find_near_dups(prompts, threshold=0.6):
 <li>The failure mode to respect: boilerplate-heavy prompts (code questions with shared setup) look similar without being duplicates. Always validate the threshold on hand-labeled pairs before running it over the full set.</li>
 </ol></div><h4 id="t33-quality-filters-the-four-gates">Step 3. T.3.3 Quality filters: the four gates</h4>
 <p>Dedup removes repeats. The four gates remove everything else that should not train.</p>
+<figure class="diagram"><img src="img/t2-four-gates.svg" alt="Four quality gates in series: agreement, spam and gaming, leakage, distribution, each with a quarantine branch"><figcaption>Figure T3.3. Four gates between raw pairs and the training set. A failed pair is quarantined, never silently dropped.</figcaption></figure>
+<div class="walkthrough"><p><strong>How to read it.</strong></p><ol><li>Gate 1 agreement: labelers below ~60% agreement means the rubric is unclear, not the data is bad.</li><li>Gate 2 spam and gaming: a length correlation near 0.9 means the reward is a length proxy. Cap length, re-run gate 1.</li><li>Gates 3 and 4 catch eval leakage and distribution drift before they poison the training set.</li></ol></div>
 <p>Every pair passes four gates before it enters the training set. A pair that fails any gate is quarantined, not silently dropped: you want to know your failure rates.</p>
 <ol>
 <li><strong>Agreement gate.</strong> Pairs labeled by multiple annotators must clear a minimum agreement bar. For pairwise preference, track the fraction of labelers choosing the majority winner. Quarantine pairs below 60 percent three-way agreement: they are either ambiguous prompts or broken rubrics, and both need human attention, not training.</li>
@@ -1058,7 +1082,6 @@ for i, j, s in find_near_dups(prompts, threshold=0.6):
 <li><strong>Distribution gate.</strong> After filtering, re-check the prompt distribution: topic mix, difficulty mix, length mix. Filters can silently skew the set (for example, the agreement gate disproportionately kills hard reasoning pairs, leaving easy chitchat). If the mix drifted, top it back up with targeted collection.</li>
 </ol>
 <h4 id="t34-disagreement-handling-what-to-do-when-labelers-split">Step 4. T.3.4 Disagreement handling: what to do when labelers split</h4>
-<p>Some pairs pass every gate and still split the labelers. Disagreement is data, but only if you handle it deliberately.</p>
 <p>Disagreement is data, not noise, but only if you handle it deliberately. Three cases:</p>
 <p><strong>Case 1: genuine ambiguity.</strong> The prompt admits two good answers (two valid interpretations, two reasonable styles). Forcing a winner trains the reward model to have opinions about taste. The fix: mark the pair as a tie and either drop it or train with a tie-aware loss that only requires the scores to be close, not ordered.</p>
 <p><strong>Case 2: rubric gap.</strong> Labelers split because the rubric does not cover the situation (for example, one response is more helpful but slightly wrong). The fix is not in the data, it is in the rubric: add the case with a worked example, recalibrate, and re-label the affected slice.</p>
@@ -1120,8 +1143,8 @@ for l in range(n_labelers):
     print(f&quot;labeler {l}: agreement with majority {rel:.3f}{flag}&quot;)
 </code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li>We simulate the realistic mix: mostly reliable labelers, one sloppy one, and genuinely ambiguous pairs.</li>
-<li>Mean pairwise agreement lands around 0.8. In production, a sudden drop in this number is the smoke alarm: something changed in the rubric, the prompt mix, or the labeler pool.</li>
-<li>Pairs with no majority get quarantined. Note they concentrate in the ambiguous slice: that is case 1 versus case 2 triage material.</li>
+<li>Mean pairwise agreement lands around 0.7. In production, a sudden drop in this number is the smoke alarm: something changed in the rubric, the prompt mix, or the labeler pool.</li>
+<li>With five labelers every pair has a majority, so the no-majority count prints zero. The real quarantine signal is the strength column: 3-2 splits (strength 0.6) are the thin majorities, and they concentrate in the ambiguous slice. Those are your case 1 versus case 2 triage material.</li>
 <li>The scoreboard names the sloppy labeler. The 0.75 bar is a starting point, not a law: set it from your calibration batches, and never auto-remove a labeler without a human looking at their disagreements first. Sometimes the outlier is the only one reading carefully.</li>
 </ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>The pipeline is prompt sourcing, response sampling, labeling, QC, versioning. Gates between every stage.</li>
@@ -1129,7 +1152,6 @@ for l in range(n_labelers):
 <li>Four QC gates: agreement, spam, leakage, distribution. Quarantine, never silently drop.</li>
 <li>Disagreement splits into ambiguity, rubric gaps, and labeler error. Each has a different fix. The agreement scoreboard tells you which one you have.</li>
 </ul></div><div class="lab"><h4>Lab T.3: Build the quarantine report</h4><p>Take the T.3.4 script and add per-pair output. For each quarantined pair, print the vote split and a guess at the cause. A unanimous-tie pattern suggests ambiguity; a 3-2 split with one chronic outlier suggests labeler error. A real pipeline's quarantine report looks like this, and a human triages it weekly.</p></div><h3 id="t4-eval-driven-rl-iteration-the-eval-suite-as-the-outer-loop">T.4 Eval-driven RL iteration: the eval suite as the outer loop</h3>
-<p>Data and algorithms are the inner loop. Something has to decide what gets trained next. This chapter is the eval suite: the outer loop of RL iteration.</p>
 <p>Training runs are the inner loop. The eval suite is the outer loop: it decides what gets trained next. Teams that treat evals as a final checkbox ship regressions. Teams that treat evals as the steering wheel ship improvements. This chapter is about building the steering wheel.</p>
 <h4 id="t41-what-the-suite-contains">Step 1. T.4.1 What the suite contains</h4>
 <p>A production eval suite has four layers. Each answers a different question.</p>
@@ -1141,11 +1163,10 @@ for l in range(n_labelers):
 <h4 id="t42-reading-results-like-a-practitioner">Step 2. T.4.2 Reading results like a practitioner</h4>
 <p>The suite has four layers. Owning them is not enough: you have to read their results like a practitioner.</p>
 <p>Three habits separate good eval readers from bad ones.</p>
-<p><strong>Habit 1: never trust a delta without a confidence interval.</strong> Appendix 11A chapter 1 gives the machinery. The intuition: with binary win/loss judgments, the standard error of a win rate p on n judgments is sqrt(p(1-p)/n). A 54 percent win rate on 200 judgments has a standard error of about 3.5 points: the 95 percent interval is roughly 47 to 61. That "win" might be noise. You need about 400 judgments to separate 54 from 50 with confidence.</p>
+<p><strong>Habit 1: never trust a delta without a confidence interval.</strong> Appendix 11A chapter 1 gives the machinery. The intuition: with binary win/loss judgments, the standard error of a win rate p on n judgments is sqrt(p(1-p)/n). A 54 percent win rate on 200 judgments has a standard error of about 3.5 points: the 95 percent interval is roughly 47 to 61. That "win" might be noise. You need about 600 judgments to separate 54 from 50 with confidence.</p>
 <p><strong>Habit 2: slice before you celebrate.</strong> Aggregate win rates hide slice regressions. Always break results by prompt category: the candidate that wins overall but loses on coding prompts has a coding problem. Keep a fixed slice taxonomy so slices are comparable across runs.</p>
 <p><strong>Habit 3: track the evals themselves.</strong> Benchmarks saturate. Autoraters drift. Human judges calibrate differently over time. Version your eval sets, re-baseline periodically, and watch for the day a benchmark stops discriminating between checkpoints. A suite nobody maintains becomes theater.</p>
 <h4 id="t43-the-iteration-loop-as-code">Step 3. T.4.3 The iteration loop, as code</h4>
-<p>Reading rules become code in the iteration loop: the miniature eval harness below.</p>
 <p>The script below is a miniature eval harness: two checkpoints compared on a prompt set with a noisy judge, win rate with a confidence interval, and slice breakdowns. It is the shape of the Layer 3 gate.</p>
 <p><pre><code class="language-python"># Miniature eval harness: candidate vs production, win rate with CI,
 # slices.
@@ -1209,7 +1230,9 @@ print(f&quot;{&#x27;OVERALL&#x27;:&lt;10} {all_n:&gt;5} {p_all:&gt;5.1%} [{lo:.1
 <li>The slices tell the real story: chat (59.3 percent) and writing (58.7 percent) show real wins, but code shows a real loss at 39.3 percent. The candidate improved the easy slices and regressed the hard one.</li>
 <li>This is habit 2 in action. The release decision is not "52 percent, ship." It is "fix code, then re-evaluate." The eval suite just steered the next training cycle: more code preference data, per T.3.</li>
 <li>Note the sample math: 150 judgments per slice is the minimum for slices this size. Smaller slices would widen the intervals past usefulness. Budget judgments where the decision lives.</li>
-</ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
+</ol></div>
+<figure class="diagram"><img src="img/t2-slices.svg" alt="Win rate by slice: overall 51.8 with a confidence interval straddling 50, chat and writing winning, code losing at 39.3"><figcaption>Figure T4.3. One number is a lie: the 51.8% overall win hides a real code regression at 39.3%.</figcaption></figure>
+<div class="walkthrough"><p><strong>How to read it.</strong></p><ol><li>The overall bar's confidence interval straddles 50%: nothing is proven at the aggregate level.</li><li>Chat and writing show real wins; code shows a real loss. The average hid the bill.</li><li>Error bars are the verdict. Always read the slices before declaring a win.</li></ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>Four eval layers: unit probes, benchmarks, preference evals, red team. Each gates a different failure.</li>
 <li>Read results with confidence intervals, slice breakdowns, and versioned eval sets.</li>
 <li>The harness above is the release gate in miniature: aggregate numbers inform, slices decide.</li>
@@ -1220,10 +1243,11 @@ print(f&quot;{&#x27;OVERALL&#x27;:&lt;10} {all_n:&gt;5} {p_all:&gt;5.1%} [{lo:.1
   <figcaption><strong>Honest numbers with error bars.</strong> Labelers preferred PPO outputs over the 175B SFT model more than half the time, and a 1.3B PPO model beat the 175B GPT-3 baseline. Note the vertical bars: 95 percent confidence intervals on every point. This is what a serious eval figure looks like: the claim, the comparison, and the uncertainty, all on one plot. <span class="fig-credit">Figure 1, Ouyang et al., "Training language models to follow instructions with human feedback," OpenAI, 2022 (arXiv:2203.02155).</span></figcaption>
 </figure>
 <h3 id="t5-safety-tuning-without-capability-collapse">T.5 Safety tuning without capability collapse</h3>
-<p>Evals steer training, but the hardest steering problem is safety: refusing the disallowed without losing capability. This chapter is the fix for the alignment tax.</p>
 <p>Safety tuning is where post-training most visibly fails. The failure has a name: the <dfn>alignment tax</dfn>, the capability you lose while making the model safer. A model that refuses everything is perfectly safe and perfectly useless. This chapter is about paying less tax: getting the safety without the collapse.</p>
 <h4 id="t51-why-capability-collapses">Step 1. T.5.1 Why capability collapses</h4>
 <p>Three mechanisms, all avoidable.</p>
+<figure class="diagram"><img src="img/t2-collapse-mechanisms.svg" alt="Three collapse mechanisms: the safety tax, the style trap, blunt refusal templates"><figcaption>Figure T5.1. Three ways safety training eats the model: the mix, the reward model, and the template.</figcaption></figure>
+<div class="walkthrough"><p><strong>How to read it.</strong></p><ol><li>The safety tax: refusal data crowds out capability in the mix, and false refusals creep up.</li><li>The style trap: the reward model learns that apologetic hedging scores well, so the policy games the judge.</li><li>Blunt templates: one refusal pattern replaces the whole spectrum from hard refusal to full answer.</li></ol></div>
 <p><strong>Mechanism 1: the safety data drowns the mix.</strong> Safety examples are easy to collect (refusals are short and templated). Capability data is hard. So the SFT mix drifts to 30 percent refusals, and the model learns that refusing is usually the right move. It starts refusing borderline-benign prompts: medical questions, chemistry homework, anything with an edge. That is false-refusal creep, and it is a data-mix bug, not a safety success.</p>
 <p><strong>Mechanism 2: the reward model learns "safe-sounding."</strong> If preference labels reward cautious, hedged, non-committal answers, the reward model learns that style beats substance. RL then optimizes style. The model gets vaguer on every topic, including the benign ones. The fix is in the labels: the rubric must reward helpfulness inside safety, not caution as a substitute for it.</p>
 <p><strong>Mechanism 3: blunt refusal training.</strong> Teaching refusal as a single template ("I can't help with that") creates a mode the model falls into too easily. Better: train refusal as a spectrum:</p>
@@ -1234,7 +1258,7 @@ print(f&quot;{&#x27;OVERALL&#x27;:&lt;10} {all_n:&gt;5} {p_all:&gt;5.1%} [{lo:.1
 </ol>
 <p>The model needs examples of each, or it collapses them into one.</p>
 <h4 id="t52-the-mixed-data-recipe">Step 2. T.5.2 The mixed-data recipe</h4>
-<p>Collapse has three mechanisms, all avoidable. The practical defense is the data mix with guardrails.</p>
+<figure class="diagram"><img src="img/t2-mixed-recipe.svg" alt="The mixed-data recipe: 5 to 15 percent safety data, paired refusal and compliance, capability data in every batch, fixed probe sets"><figcaption>Figure T5.2. The mixed-data recipe that holds both sides: four ingredients, four tracked numbers.</figcaption></figure>
 <p>The practical defense is a data mix with guardrails. Concretely:</p>
 <ul>
 <li><strong>Cap safety data at a fixed fraction.</strong> A common working range is 5 to 15 percent of the SFT mix, tuned by watching false-refusal rates. Above that, you are buying safety with capability.</li>
@@ -1251,10 +1275,9 @@ false refusals ── benign-edge probes: false-refusal rate must stay LOW
                    if any arm moves wrong → adjust the mix, not the goal
 </code></pre></p>
 <h4 id="t53-refusal-calibration-in-practice">Step 3. T.5.3 Refusal calibration in practice</h4>
-<p>The mix preserves capability. Refusal calibration keeps the refusals themselves honest: matching actual policy, not over-refusing.</p>
 <p><dfn>Refusal calibration</dfn> means the model's refusal behavior matches the actual policy. Refuse what is disallowed, answer what is benign, and handle the borderline with a safe completion or a brief explanation. The script below simulates the trade-off curve so you can see what "calibrated" looks like as numbers.</p>
 <figure class="photo"><img alt="Refusal calibration trade-off: true-refusal rate versus false-refusal rate at five strictness settings" src="img/t2-refusal-calibration.svg" />
-<figcaption>Figure T5. One curve, five strictness settings, from the script below. The top-left corner is the goal: refuse the disallowed, answer the benign. The circled point is the strictness the script prints as best (0.55). Moving along the curve is not progress; only moving the whole curve up-left is.</figcaption></figure>
+<figcaption>Figure T5.3. One curve, five strictness settings, from the script below. The top-left corner is the goal: refuse the disallowed, answer the benign. The circled point is the strictness the script prints as best (0.55). Moving along the curve is not progress; only moving the whole curve up-left is.</figcaption></figure>
 <div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li><strong>The axes.</strong> Vertical is the true-refusal rate: how often the model refuses genuinely disallowed requests. Horizontal is the false-refusal rate: how often it refuses benign edge-case questions. Both come from fixed probe sets, not vibes.</li>
 <li><strong>The curve.</strong> Each point is one strictness setting. Low strictness (0.30) refuses almost everything, safe and useless. High strictness (0.85) answers almost everything, helpful and unsafe. The knob only trades one error for the other.</li>
@@ -1300,6 +1323,8 @@ for strictness in [0.3, 0.45, 0.55, 0.65, 0.8]:
 <li>The benign-edge probe set is the asset teams underinvest in. Disallowed probes are easy to write. Benign-edge probes (legitimate questions near the boundary) are what keep the product useful. Build that set with the same care as the disallowed one.</li>
 </ol></div><h4 id="t54-constitutional-ai-as-a-capability-preserving-tool">Step 4. T.5.4 Constitutional AI as a capability-preserving tool</h4>
 <p>Calibration handles refusals case by case. Constitutional AI is the systematic tool: RLAIF with a well-written constitution that improves safety without the capability tax.</p>
+<figure class="diagram"><img src="img/t2-constitutional-loop.svg" alt="Constitutional AI loop: constitution, draft, critique, revision, then RLAIF training"><figcaption>Figure T5.4. Constitutional AI: the model critiques its own draft against the constitution and revises it.</figcaption></figure>
+<div class="walkthrough"><p><strong>How to read it.</strong></p><ol><li>The constitution is written down first, so the policy stays auditable.</li><li>Self-critique teaches the reasons behind refusals, not just the templates.</li><li>Training on the revised answers moves the why into the policy itself.</li></ol></div>
 <p>Volume 7 chapter 7 covers Constitutional AI's machinery. Its relevance here: RLAIF with a well-written constitution can improve safety behavior without the blunt-instrument effects of refusal-only SFT. The critique-and-revision step teaches the model <em>why</em> a response is problematic and how to fix it, which preserves helpfulness better than template refusals. When safety tuning starts costing capability, the move is usually more critique data and fewer refusal templates, not a bigger safety fraction.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>Capability collapse comes from three mechanisms: safety data drowning the mix, reward models learning safe-sounding style, and blunt refusal templates.</li>
 <li>The defense is a mixed-data recipe: cap the safety fraction, pair refusals with nearby compliances, never train safety alone, measure all four numbers every run.</li>
