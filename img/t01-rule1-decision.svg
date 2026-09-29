@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 276" width="100%" style="max-width:760px" role="img" aria-label="Decision diamond: a does-it-help question gets a compute-matched ablation; a cost question gets a scaling law fit">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="760" height="276" fill="none"/>
+<text class="t" x="24" y="30">Rule 1: ablate or scale, not both</text>
+<rect x="280" y="52" width="200" height="76" rx="8" fill="#141414" stroke="#f0b429" stroke-width="2"/>
+<text class="big" x="380" y="82" text-anchor="middle">What is the question?</text>
+<text class="m" x="380" y="104" text-anchor="middle">name it before spending compute</text>
+<path class="arr" d="M240 90 L120 90"/>
+<path class="arr" d="M520 90 L640 90"/>
+<text class="num" x="150" y="72" text-anchor="middle">"Does this change help?"</text>
+<text class="num" x="610" y="72" text-anchor="middle">"What will it cost? How good?"</text>
+<rect class="box" x="24" y="104" width="252" height="110" rx="8"/>
+<text class="big g" x="40" y="132">Compute-matched ablation</text>
+<text class="num" x="40" y="156">same N, same D, same 6ND</text>
+<text class="m" x="40" y="180">answers: better</text>
+<text class="m" x="40" y="198">report all three, always</text>
+<rect class="box" x="484" y="104" width="252" height="110" rx="8"/>
+<text class="big g" x="500" y="132">Fit a scaling law first</text>
+<text class="num" x="500" y="156">small runs, then extrapolate</text>
+<text class="m" x="500" y="180">answers: how much</text>
+<text class="m" x="500" y="198">respect the 10x limit (Rule 11)</text>
+<text class="num" x="24" y="252">Spending big-run compute on a "better" question is the most expensive way to learn nothing.</text>
+</svg>
