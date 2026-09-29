@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 250" width="100%" style="max-width:700px" role="img" aria-label="75 ms per token at batch 1 falls to 9.4 ms per token at batch 8; prefill is compute bound, decode is bandwidth bound">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="700" height="250" fill="none"/>
+<text class="t" x="24" y="30">The decode latency floor and batching amortization</text>
+<text class="m" x="24" y="58">Decode floor @70B fp16, batch 1: 150 GB / 2 TB/s = 75 ms/token</text>
+<rect x="24" y="70" width="450" height="30" rx="4" fill="#e57373" opacity="0.85"/>
+<text class="big" x="36" y="92">75 ms/token: the bandwidth law made concrete</text>
+<text class="m" x="24" y="130">Batch 8: same 75 ms step carries 8 tokens -&gt; 9.4 ms/token</text>
+<rect x="24" y="142" width="56" height="30" rx="4" fill="#7fc97f" opacity="0.9"/>
+<text class="big gr" x="96" y="164">9.4 ms/token: why batching is the product</text>
+<text class="num" x="24" y="202">KV cache per token (70B GQA-8): 0.33 MB -&gt; 1.3 GB at 4k, 10.5 GB at batch 8 x 4k.</text>
+<text class="m" x="24" y="226">Prefill is compute-bound (TTFT), decode is bandwidth-bound (tokens/sec): two regimes, two optimizations.</text>
+</svg>
