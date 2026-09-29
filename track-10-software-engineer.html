@@ -463,7 +463,7 @@ html.xp-js .xp-reveal.xp-in {
 <li><strong>Batch inference pipelines.</strong> Nightly jobs that run a model over millions of documents: embeddings, labels, summaries. Queues, workers, retries, dead letters.</li>
 <li><strong>Data pipelines.</strong> The pipes that move training data from raw logs to clean, versioned datasets, and the feature pipelines that feed models at request time.</li>
 <li><strong>Storage systems.</strong> Checkpoints, datasets, embeddings, model artifacts. Object stores, caches, and the occasional vector database you had to build or buy.</li>
-<li><strong>Developer platforms.</strong> The SDKs, CLIs, and internal APIs that let the research teams ship without paging you.</li>
+<li><strong>Developer platforms.</strong> The SDKs (software development kits), CLIs (command-line interfaces), and internal APIs that let the research teams ship without paging you.</li>
 </ul>
 <p>You are the reason the demo survives Monday morning traffic.</p>
 <h3 id="02-the-work-loop">0.2 The work loop</h3>
@@ -472,7 +472,7 @@ html.xp-js .xp-reveal.xp-in {
 <li><strong>Build.</strong> Design and ship a new service or pipeline. This is the visible part: a new batch inference queue, a caching layer in front of the serving tier, a schema migration.</li>
 <li><strong>Operate.</strong> On-call rotations, incident response, post-mortems. AI systems fail in ways that look nothing like a crashed web server: a slow GPU, a poisoned batch, a queue that filled over a weekend.</li>
 <li><strong>Optimize.</strong> Latency and cost work. A 50 ms cut in p99 serving latency (p99: the latency 99 percent of requests come in under), or a 20 percent cut in GPU-hours per million tokens, is a real deliverable here.</li>
-<li><strong>Partner.</strong> Design reviews with ML teams. You translate "we need lower time-to-first-token" into a caching and batching plan, and you translate "the cluster is at 90 percent" into a capacity request with numbers.</li>
+<li><strong>Partner.</strong> Design reviews with ML teams. You translate "we need lower time-to-first-token" (TTFT: the delay before the first token streams back; what users feel as responsiveness) into a caching and batching plan, and you translate "the cluster is at 90 percent" into a capacity request with numbers.</li>
 </ol>
 <h3 id="03-how-success-is-measured">0.3 How success is measured</h3>
 <p>Platforms get graded on numbers, not demos. The four that matter:</p>
@@ -553,7 +553,7 @@ html.xp-js .xp-reveal.xp-in {
 <td>10</td>
 <td>Vol 11, Research Methods + App 11A, Eval Statistics</td>
 <td>reference</td>
-<td>A/B tests and significance. Useful when you run experiments on the platform itself.</td>
+<td>A/B tests and significance (an A/B test splits traffic between two versions and checks whether the metric difference is statistically significant, meaning unlikely to be luck). Useful when you run experiments on the platform itself.</td>
 </tr>
 <tr>
 <td>11</td>
@@ -577,7 +577,7 @@ html.xp-js .xp-reveal.xp-in {
 <td>14</td>
 <td>Vol 7, Post-training and RL + Apps 7A, 7B</td>
 <td>skim</td>
-<td>Know what RLHF and DPO are in one paragraph each. Your pipelines will feed these teams.</td>
+<td>Know what RLHF (reinforcement learning from human feedback: training a model to prefer human-approved answers) and DPO (direct preference optimization: a simpler method that teaches the same preferences without a separate reward model) are in one paragraph each. Your pipelines will feed these teams.</td>
 </tr>
 <tr>
 <td>15</td>
@@ -592,7 +592,10 @@ html.xp-js .xp-reveal.xp-in {
 <p>Every AI platform is a distributed system wearing a trench coat. The serving fleet is a replicated stateless tier. The feature store is a replicated stateful tier. The checkpoint store is a distributed file system. The queue between them is a partitioned log. If you can reason about replication, consistency, and failure, you can reason about all of them.</p>
 <h4 id="11-replication-and-the-quorum-rule">1.1 Replication and the quorum rule</h4>
 <p>Replication means keeping copies of the same data on several machines. You do it for two reasons: survival (one machine dies, the data lives) and speed (reads spread across copies). The hard part is writes. If a write reaches only some copies, different readers see different values.</p>
-<p>The classic fix is a <dfn>quorum</dfn>. With N copies, require W of them to acknowledge a write and R of them to answer a read. If W + R &gt; N, every read overlaps every write on at least one copy, so the reader always sees the latest write. That overlap is the whole trick. It is called the quorum rule, and it is the reason a 3-copy store with W=2 and R=2 never shows stale data.</p>
+<p>The classic fix is a <dfn>quorum</dfn>. With N copies, require W of them to acknowledge a write and R of them to answer a read:</p>
+<div class="phase2-eq" style="text-align:center;margin:1.3rem 0;font-size:1.12em;">W + R &gt; N</div>
+<p style="margin:-.6rem 0 1.2rem;text-align:center;font-size:.92em;color:var(--muted,#999);">where <strong>N</strong> = number of copies, <strong>W</strong> = copies that must acknowledge a write, <strong>R</strong> = copies that must answer a read.</p>
+<p>When the inequality holds, every read overlaps every write on at least one copy, so the reader always sees the latest write. That overlap is the whole trick. It is called the quorum rule, and it is the reason a 3-copy store with W=2 and R=2 never shows stale data.</p>
 <p><pre><code>QUORUM OVERLAP (N=3, W=2, R=2):
 
   Write touches:   [A] [B]  .
@@ -630,7 +633,8 @@ class QuorumKV:
         # WHAT BREAKS: if fewer than W are alive, we refuse the write.
         #       Refusing is correct: accepting it would silently break
         #       the overlap guarantee. Availability is sacrificed to
-        #       keep the data right (this is the &quot;C&quot; side of CAP).
+        #       keep the data right (this is the &quot;C&quot; side of CAP: the theorem that a distributed
+#       system can guarantee at most two of Consistency, Availability, and Partition tolerance).
         self.clock += 1
         stamp = (self.clock, &quot;writer&quot;)
         acked = 0
@@ -707,6 +711,7 @@ except IOError as e:
 <figcaption><strong>Figure 1.2.</strong> Why the quorum rule works. With 5 replicas, writing to 3 and reading from 3 guarantees the two sets share at least one node, so a read always sees the latest write. Shrink W or R and you trade consistency for speed.</figcaption>
 <details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Top: the rule. N replicas, W writes, R reads. The inequality is the whole trick.</li><li>Middle: the overlap. Any 3-of-5 write set and any 3-of-5 read set share a node.</li><li>Bottom: the trade. W = R = 1 answers fast and may lie. There is no free lunch.</li></ol></details>
 </figure>
+<p>Quorums keep writes coherent. Now the reader's side: what different consistency models promise, in plain terms.</p>
 <h4 id="12-consistency-models-in-plain-terms">1.2 Consistency models, in plain terms</h4>
 <p>"Consistency" answers one question: when I write a value, when does everyone else see it? Three answers cover nearly every system you will touch:</p>
 <ul>
@@ -850,12 +855,61 @@ print(&quot;current primary:&quot;, store.data[&quot;primary&quot;])  # -&gt; ma
 <li>The replica loads the model version named by the artifact registry. Because the registry is strongly consistent, all three replicas agree on which weights are prod.</li>
 <li>The response cache is checked first. It is eventual, so a cached answer may come from the previous model version for a short window; that is an accepted trade, documented in the runbook.</li>
 <li>Config changes (rate limits, routing weights) arrive from the consensus-backed config service. Each carries a fencing token, so a replica that missed an update cannot overwrite a newer one.</li>
-</ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
+</ol></div>
+<h4 id="16-partitioning-sharding-and-consistent-hashing">1.6 Partitioning: sharding and consistent hashing</h4>
+<p>Replication (section 1.1) copies the same data everywhere. Partitioning, also called sharding, is the opposite move: split the data across machines so that no machine holds all of it. You partition when one machine cannot hold the data, cannot serve the request rate, or both. A vector index with a billion vectors does not fit in one machine's RAM; a checkpoint store serving a thousand trainers does not survive on one disk. Partitioning is how those systems scale.</p>
+<p>The naive version is <dfn>mod-N hashing</dfn>: the key for a piece of data is <code>hash(key) mod N</code>, where N is the number of machines. It is simple and it balances well. It has one fatal property: when N changes, nearly every key moves. Adding one machine to a 10-machine fleet remaps roughly 90 percent of the data, which is a migration storm at exactly the moment you wanted more capacity. The mapping depends on N, and N is the thing that changes.</p>
+<p><dfn>Consistent hashing</dfn> fixes this by removing N from the mapping. Hash both the machines and the keys onto one circle, a ring. Each key belongs to the first machine clockwise from it on the ring. Now add a machine: it lands somewhere on the ring and takes over only the keys between itself and its counterclockwise neighbor. Every other key keeps its owner. Removing a machine is symmetric: its keys fall to its clockwise neighbor. Only the keys on the affected arcs move, which is the smallest amount of movement any scheme can achieve.</p>
+<p>Two refinements make the ring practical. First, <dfn>virtual nodes</dfn>: give each physical machine many points on the ring instead of one. This smooths out the imbalance when a machine lands in an unlucky spot, and it lets a big machine hold proportionally more virtual nodes than a small one. Second, replication on the ring: each key is also copied to the next R-1 machines clockwise, which is section 1.1's replication expressed in ring terms. The quorum rule still applies: a write to W of the R replicas and a read from R replicas overlap when W + R &gt; N.</p>
+<p><pre><code class="language-python"># Demo: mod-N vs consistent hashing when a node joins. Run it.
+import bisect, hashlib
+
+def h(s):
+    return int(hashlib.md5(s.encode()).hexdigest(), 16)
+
+KEYS = [f"key-{i}" for i in range(2000)]
+
+# Naive: key mod N.
+def modn_owner(key, nodes):
+    return nodes[h(key) % len(nodes)]
+
+before = [modn_owner(k, ["n0", "n1", "n2"]) for k in KEYS]
+after = [modn_owner(k, ["n0", "n1", "n2", "n3"]) for k in KEYS]
+moved_modn = sum(1 for b, a in zip(before, after) if b != a)
+
+# Consistent hashing: ring of virtual nodes, bisect to find owner.
+VNODES = 200
+def build_ring(nodes):
+    ring = sorted((h(f"{n}#{v}"), n) for n in nodes for v in range(VNODES))
+    return [p for p, _ in ring], [n for _, n in ring]
+
+def ring_owner(key, points, owners):
+    i = bisect.bisect(points, h(key)) % len(points)
+    return owners[i]
+
+p3, o3 = build_ring(["n0", "n1", "n2"])
+p4, o4 = build_ring(["n0", "n1", "n2", "n3"])
+moved_ring = sum(1 for k in KEYS if ring_owner(k, p3, o3) != ring_owner(k, p4, o4))
+
+print(f"mod-N:        {moved_modn} of {len(KEYS)} keys moved ({100*moved_modn/len(KEYS):.0f}%)")
+print(f"consistent:   {moved_ring} of {len(KEYS)} keys moved ({100*moved_ring/len(KEYS):.0f}%)")
+# Expect: mod-N moves ~75 percent (3/4 of keys get a new owner);
+# consistent hashing moves ~25 percent (only the arcs the new node claims).
+</code></pre></p>
+<p>The demo's numbers are the whole argument. Mod-N moves three quarters of the data when the fourth node joins; the ring moves one quarter, and only onto the new node. That is why Chapter 3's sharded vector indexes (section 3.3) and Chapter 7's capacity math assume ring-style partitioning: the fleet can grow without a migration storm.</p>
+<figure class="diagram" id="fig-16-consistent-hashing">
+<img src="img/ch1-consistent-hashing.svg" alt="Consistent hashing ring before and after node E joins: keys map to the next node clockwise, and only the keys on the arc E claims change owners" loading="lazy">
+<figcaption><strong>Figure 1.6.</strong> The ring before and after node E joins. Each key belongs to the first node clockwise from it. E lands between D and A and takes only that arc's keys; k1 through k4 never move. With mod-N hashing, nearly every key would move.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Left ring: four nodes, five keys. Follow each key clockwise to its owner.</li><li>Arrow: node E joins the ring at one position.</li><li>Right ring: only k5, the key on E's arc, changes owners. Everything else is untouched.</li></ol></details>
+</figure>
+<div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>Replicate for survival and speed; use quorums (W + R &gt; N) when readers must see the latest write.</li>
 <li>Match the consistency model to the damage stale data can do: strong for model identity and config, eventual for caches.</li>
 <li>Fence your leaders. A deposed leader that keeps writing is the most common source of silent corruption.</li>
 <li>Rent consensus (etcd or equivalent). Build replication yourself only where a library does not already do it.</li>
-</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your feature store runs 5 replicas with W=3, R=3. Two replicas go down during a deploy. Do reads and writes still work? What changes if you drop to W=2, R=2, and what new risk do you accept?</p></div><h3 id="chapter-2-apis-and-queues-for-ml-workloads">Chapter 2. APIs and queues for ML workloads</h3>
+</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your feature store runs 5 replicas with W=3, R=3. Two replicas go down during a deploy. Do reads and writes still work? What changes if you drop to W=2, R=2, and what new risk do you accept?</p></div><p><strong>Next: Chapter 2, APIs and queues for ML workloads.</strong> The platform is replicated. Now serve a model behind it: an API in front, and usually a queue behind.</p>
+<h3 id="chapter-2-apis-and-queues-for-ml-workloads">Chapter 2. APIs and queues for ML workloads</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter 1 built the distributed-systems foundation: replication, consistency, failure. Now the serving path: this chapter puts a model behind an API, and a queue behind the API, because models do not serve themselves.</p>
 <p>Models do not serve themselves. Something has to take a request, decide whether it needs an answer now or can wait, run the model, and return the result. That something is an API in front and usually a queue behind. This chapter is about building both so they survive real traffic.</p>
 <h4 id="21-designing-a-model-serving-api">2.1 Designing a model-serving API</h4>
 <p>A model-serving API looks like a normal web API with three twists.</p>
@@ -880,6 +934,7 @@ request = {
 </code></pre></p>
 <p><strong>Twist 3: versioning is a safety device.</strong> <code>POST /v1/generate</code> stays stable while <code>/v2/generate</code> changes the schema. Old clients keep working during a migration. For models specifically, version the <em>model</em> separately from the <em>API</em>: the API version changes the wire format, the model version changes the behavior. Confusing the two is how a routine model update breaks a hundred clients at once.</p>
 <p>REST versus gRPC is a smaller decision than it looks. REST with JSON is easier to debug and works everywhere; gRPC is faster and gives you streaming and typed contracts for free. A common split: REST for the public API, gRPC between internal services where both ends are yours. Pick one per boundary and move on.</p>
+<p>The API is designed. Now the load problem: why batch inference needs a queue in front of it.</p>
 <h4 id="22-why-batch-inference-needs-a-queue">2.2 Why batch inference needs a queue</h4>
 <p>Some model work does not need an answer now. Embedding a million documents overnight, labeling last week's tickets, scoring a lead list: nobody is waiting on a single response. This is <dfn>batch inference</dfn>, and it belongs behind a queue, not behind a synchronous API.</p>
 <p>The queue buys three things. <strong>Smoothing:</strong> a million jobs arriving at once become a steady stream the GPU fleet can actually digest. <strong>Retry:</strong> a failed job goes back on the queue instead of vanishing. <strong>Visibility:</strong> queue depth is a number you can alert on, graph, and capacity-plan against (Chapter 7).</p>
@@ -888,7 +943,10 @@ request = {
 <h4 id="23-backpressure-the-queue-pushes-back">2.3 Backpressure: the queue pushes back</h4>
 <p>A queue with no limit is a memory leak with extra steps. If producers outrun workers for hours, an unbounded queue eats all RAM and the whole service dies, taking the retry state with it. <dfn>Backpressure</dfn> is the mechanism that stops this: when the queue is full, the producer slows down.</p>
 <p>The simplest correct design is a bounded queue with blocking producers. <code>queue.Queue(maxsize=N)</code> in Python blocks <code>put()</code> when full. The producer thread waits, which propagates the slowdown upstream: the HTTP handler takes longer, the client sees latency, the client backs off. Pressure flows backward through the system instead of exploding inside it. The alternative, dropping jobs silently when full, is only acceptable if the producer can regenerate them.</p>
-<p>How big should N be? Big enough to absorb a burst, small enough that the oldest job in a full queue is still worth running. A concrete rule: N = (workers) x (jobs per worker per minute) x (minutes of burst you want to absorb). With 8 workers doing 30 jobs a minute and a 5-minute burst budget, N = 8 x 30 x 5 = 1200. Beyond that, push back.</p>
+<p>How big should N be? Big enough to absorb a burst, small enough that the oldest job in a full queue is still worth running. A concrete rule:</p>
+<div class="phase2-eq" style="text-align:center;margin:1.3rem 0;font-size:1.12em;">N = workers &#215; jobs per worker per minute &#215; burst minutes</div>
+<p style="margin:-.6rem 0 1.2rem;text-align:center;font-size:.92em;color:var(--muted,#999);">where <strong>N</strong> = queue capacity in jobs, <strong>burst minutes</strong> = how long a burst you want to absorb.</p>
+<p>Worked: with 8 workers doing 30 jobs a minute and a 5-minute burst budget, N = 8 &#215; 30 &#215; 5 = 1,200. Beyond that, push back.</p>
 <figure class="diagram" id="fig-22-backpressure">
 <pre class="ascii">Backpressure: the queue pushes back instead of exploding
 
@@ -907,10 +965,15 @@ request = {
 <p>Networks fail mid-request. The client does not know whether the job ran, so it retries. Without <dfn>idempotency</dfn>, the retry runs the job twice: the customer is charged twice, the document is embedded (turned into a vector; section 3.3 shows how) twice, the email is sent twice.</p>
 <p>The fix is an idempotency key: a client-generated unique token sent with the request. The server keeps a table of key to result. If a key arrives twice, the server returns the stored result instead of running the job again. Three details matter:</p>
 <ol>
-<li>The key must come from the client (a UUID it generates before the first attempt), not from the server, because the server may never have seen the first attempt.</li>
+<li>The key must come from the client (a UUID, a universally unique identifier, it generates before the first attempt), not from the server, because the server may never have seen the first attempt.</li>
 <li>The result must be stored before it is returned, in the same atomic step if possible. Store-then-return has a crash window; accept it and document it, or use a transaction.</li>
 <li>Keys expire. Keep them for 24 to 72 hours: long enough to cover every realistic retry, short enough that the table does not grow forever.</li>
 </ol>
+<figure class="diagram" id="fig-24-idempotency">
+<img src="img/ch2-idempotency.svg" alt="Idempotency flow: the client generates a key, the server checks a table, returns the stored result on retry instead of running the job twice" loading="lazy">
+<figcaption><strong>Figure 2.4.</strong> Idempotency as a flow. The client generates the key because the server may never have seen the first attempt. A retry with the same key returns the stored result: the job runs once even when the request arrives twice.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Top: the decision. Key seen before means return, not rerun.</li><li>Middle: the timeline. t1 is the dangerous moment: the job ran, but the client cannot tell. t2 fixes it with the same key.</li><li>Bottom: the retention rule. 24 to 72 hours covers every realistic retry window.</li></ol></details>
+</figure>
 <h4 id="25-retries-dead-letters-and-poison">2.5 Retries, dead letters, and poison</h4>
 <p>Retries need discipline, or they become a self-inflicted DDoS. The rules:</p>
 <ul>
@@ -919,7 +982,7 @@ request = {
 <li><strong>Cap the attempts.</strong> Three to five retries is the usual range. After that, the job goes to the dead-letter queue.</li>
 <li><strong>A dead-letter queue is a work queue for humans.</strong> Every entry needs the payload, the failure history, and a way to requeue after a fix. A DLQ nobody reads is a trash can, and trash cans do not page anyone.</li>
 </ul>
-<p>A <dfn>poison message</dfn> is a job that crashes every worker that touches it: malformed input, a pathological prompt that OOMs the GPU. The retry cap plus the DLQ is the defense. Without it, one bad job can take down the whole fleet one worker at a time.</p>
+<p>A <dfn>poison message</dfn> is a job that crashes every worker that touches it: malformed input, a pathological prompt that OOMs the GPU (OOM: out of memory; the process dies when it asks for more memory than exists). The retry cap plus the DLQ is the defense. Without it, one bad job can take down the whole fleet one worker at a time.</p>
 <p>The simulation below ties the chapter together: a bounded batch-inference queue with blocking producers (backpressure), idempotency keys, jittered retries, and a dead-letter queue. It uses threads the way a real worker fleet uses processes.</p>
 <p><pre><code class="language-python"># WHAT: a batch-inference job queue with backpressure, idempotency,
 #       jittered retries, and a dead-letter queue.
@@ -1047,10 +1110,12 @@ print(&quot;results:&quot;, len(iq.results), &quot;| dlq:&quot;, iq.dlq)
 <li>Put batch work behind a bounded queue. Blocking producers are the simplest correct backpressure.</li>
 <li>Make every mutating request idempotent with client-generated keys, or retries will double-execute.</li>
 <li>Retry transient failures with jittered backoff, cap attempts, and give poison jobs a dead-letter queue with a human reader.</li>
-</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your batch queue's DLQ grows by 200 jobs a night, all with "retries exhausted" on timeouts. The model team says the GPUs are healthy. List three platform-side causes you would check before blaming the model, and the metric that would confirm each.</p></div><h3 id="chapter-3-storage-for-ai">Chapter 3. Storage for AI</h3>
+</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your batch queue's DLQ grows by 200 jobs a night, all with "retries exhausted" on timeouts. The model team says the GPUs are healthy. List three platform-side causes you would check before blaming the model, and the metric that would confirm each.</p></div><p><strong>Next: Chapter 3, storage for AI.</strong> Requests are served. Now store what they need: datasets to train on, checkpoints to resume from, features to serve, vectors to search.</p>
+<h3 id="chapter-3-storage-for-ai">Chapter 3. Storage for AI</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter 2 served requests. Requests need data, and AI systems are hungry for storage in four distinct ways. This chapter maps each hunger, datasets, checkpoints, features, vectors, to the right store.</p>
 <p>AI systems are hungry for storage in four distinct ways: datasets to train on, checkpoints to resume from, features to serve, and vectors to search. Each wants a different store. This chapter maps the four to their storage and builds the most interesting one, a vector index, from scratch.</p>
 <h4 id="31-object-stores-the-default">3.1 Object stores: the default</h4>
-<p>An <dfn>object store</dfn> (S3 and its clones) holds named blobs: <code>checkpoints/model-v14/shard-003.safetensors</code>. A shard is one chunk of a large file split for parallel upload and download. Four properties make it the default for AI artifacts:</p>
+<p>An <dfn>object store</dfn> (S3 and its clones) holds named blobs, for example <code>checkpoints/model-v14/shard-003.safetensors</code> (safetensors is a standard file format for storing model weights). A shard is one chunk of a large file split for parallel upload and download. Four properties make it the default for AI artifacts:</p>
 <ul>
 <li><strong>Immutable writes.</strong> You do not edit a blob; you write a new one. This kills a whole class of corruption: a half-written checkpoint is simply a blob nobody points at.</li>
 <li><strong>Atomic publish.</strong> There is no rename in most object stores, but there is "write new blob, then update one small pointer blob." Readers who fetch the pointer first always see a complete version.</li>
@@ -1059,7 +1124,7 @@ print(&quot;results:&quot;, len(iq.results), &quot;| dlq:&quot;, iq.dlq)
 </ul>
 <p>Checksums close the loop: hash the blob at write time, store the hash beside it, verify on read. A flipped bit in a 400 GB checkpoint produces a model that trains "almost fine" and wastes a week of GPUs. The hash costs nothing next to that.</p>
 <h4 id="32-posix-versus-object-for-datasets">3.2 POSIX versus object for datasets</h4>
-<p>Training reads data in a very specific pattern: sequential, high-throughput, repeated for many epochs, often shuffled. Two filesystem families serve it:</p>
+<p>Training reads data in a very specific pattern: sequential, high-throughput, repeated for many epochs (an epoch is one full pass over the dataset), often shuffled. Two filesystem families serve it:</p>
 <ul>
 <li><strong>POSIX filesystems</strong> (local disk, NFS, Lustre) give you files, directories, seeks, and renames. Fast for random access, familiar to every tool. Expensive at petabyte scale and a pain to share across regions.</li>
 <li><strong>Object stores</strong> give you blobs and listing. Cheaper, effectively infinite, global. But listing a million small files is slow, and random reads pay per-request latency.</li>
@@ -1078,7 +1143,7 @@ print(&quot;results:&quot;, len(iq.results), &quot;| dlq:&quot;, iq.dlq)
     TRAIN --&gt; CKPT
     CKPT --&gt; REG
 </code></pre></p>
-<p><em>Figure 3.1. The storage tiers of a training platform. Each tier has one job and one consistency story. Raw data is append-only, shards are immutable, the cache is allowed to be wrong (it refills), and only the registry pointer needs strong consistency.</em></p>
+<p><em>Figure 3.1. The storage tiers of a training platform. Each tier has one job and one consistency story. Raw data is append-only, shards are immutable, the cache is allowed to be wrong (it refills), and only the registry pointer needs strong consistency. NVMe is the fast local solid-state drive on each trainer; LRU (least-recently-used) is the eviction rule: when the cache fills, the entry untouched the longest is dropped first.</em></p>
 <h4 id="33-vector-search-from-first-principles">3.3 Vector search from first principles</h4>
 <p>A retrieval system turns text into vectors (lists of a few hundred to a few thousand numbers) and then, given a query vector, finds the stored vectors closest to it. The naive way compares the query against every stored vector. With a million 768-dimensional vectors, one query costs 768 million multiply-adds. That is about a millisecond on a GPU. But you wanted a thousand queries a second on a CPU box, and you have ten million vectors. Exact search does not scale. You need an index.</p>
 <p><dfn>HNSW</dfn> (Hierarchical Navigable Small World) is the index most vector databases use under the hood. The idea is a stack of graphs:</p>
@@ -1252,7 +1317,8 @@ class HNSW:
 
 
 # Demo: 600 points in 6-D, grouped in 4 clusters. Build the index, then
-# measure recall@5 of HNSW vs brute force over 40 random queries.
+# measure recall@5 (fraction of the true top-5 neighbors the index returns)
+# of HNSW vs brute force over 40 random queries.
 rng = random.Random(42)
 DIM = 6
 centers = [[rng.gauss(0, 8) for _ in range(DIM)] for _ in range(4)]
@@ -1302,7 +1368,9 @@ print(f&quot;recall@5: {hits/total:.2%}&quot;)
 <li>Keep datasets as large immutable shards in object storage with a hot cache on the trainers; tune shard size by measuring.</li>
 <li>HNSW turns vector search from O(N) into O(log N) with a layered neighbor graph; tune M and ef against recall, not vibes.</li>
 <li>Split feature storage into offline (training) and online (serving), and demand point-in-time correctness or accept training-serving skew.</li>
-</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your RAG service's answer quality drops every Monday. The vector index is rebuilt weekly on Sunday night from the document store. Name two storage-level mechanisms that could cause a Monday-only regression, and how you would prove each one.</p></div><h3 id="chapter-4-observability-metrics-traces-and-what-to-alert-on">Chapter 4. Observability: metrics, traces, and what to alert on</h3>
+</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your RAG service's answer quality drops every Monday. The vector index is rebuilt weekly on Sunday night from the document store. Name two storage-level mechanisms that could cause a Monday-only regression, and how you would prove each one.</p></div><p><strong>Next: Chapter 4, observability: metrics, traces, and what to alert on.</strong> Everything is stored. Now see it break: model services fail in ways that do not look like ordinary outages, and this chapter is the metrics that catch them.</p>
+<h3 id="chapter-4-observability-metrics-traces-and-what-to-alert-on">Chapter 4. Observability: metrics, traces, and what to alert on</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter 3 stored everything. Now see it: you cannot fix what you cannot see, and model services fail in ways that do not look like ordinary outages. This chapter is the metrics, traces, and alerts that catch them.</p>
 <p>You cannot fix what you cannot see, and model services fail in ways that do not look like ordinary outages. A GPU with a dying memory chip does not crash; it answers slowly. A poisoned cache does not error; it serves stale results with 200 OK. Observability for AI platforms means instrumenting for these quiet failures, not just the loud ones.</p>
 <h4 id="41-what-to-instrument-on-a-model-service">4.1 What to instrument on a model service</h4>
 <p>Three signal types, each with a job:</p>
@@ -1313,10 +1381,10 @@ print(f&quot;recall@5: {hits/total:.2%}&quot;)
 </ul>
 <p>For a model endpoint specifically, add four metrics most web services do not have:</p>
 <ol>
-<li><strong>Time to first token (TTFT).</strong> Users feel this as "the app is thinking." It measures queueing plus the prefill phase.</li>
+<li><strong>Time to first token (TTFT).</strong> Defined in the introduction: the delay before the first token streams back. Users feel it as "the app is thinking." It measures queueing plus the prefill phase.</li>
 <li><strong>Tokens per second per request.</strong> The streaming speed. A drop here means the decode phase is starved, often a batching problem.</li>
 <li><strong>Queue wait time.</strong> Time a request spent waiting for a GPU slot before any work started. When this climbs, you have a capacity problem, not a model problem.</li>
-<li><strong>Cache hit rate</strong> (prompt cache, response cache). A sudden drop means the cache was poisoned or the traffic mix changed.</li>
+<li><strong>Cache hit rate</strong> (prompt cache, response cache). A prompt cache stores the prefill computation for repeated prompt prefixes so identical beginnings are not recomputed. A sudden drop means the cache was poisoned or the traffic mix changed.</li>
 </ol>
 <p><pre><code>A TRACE, DRAWN AS A WATERFALL (one slow request, 1,240 ms total):
 
@@ -1333,8 +1401,8 @@ The model itself was fine. Without the trace you would blame the model.
 </code></pre></p>
 
 <h4 id="42-the-red-method">4.2 The RED method</h4>
-<p>For every serving endpoint, track <strong>R</strong>ate, <strong>E</strong>rrors, <strong>D</strong>uration. Rate is requests per second. Errors is the fraction failing (5xx, timeouts, and model-level failures like empty completions). Duration is the latency distribution, summarized as p50 and p99, never as an average. Averages hide the slow requests; the p99 is the one users remember.</p>
-<p>Percentiles need a histogram, not a running average. The sketch below keeps every sample in a window (fine for learning; production uses HDRHistogram or Prometheus summaries) and shows why p99 beats the mean.</p>
+<p>For every serving endpoint, track <strong>R</strong>ate, <strong>E</strong>rrors, <strong>D</strong>uration. Rate is requests per second. Errors is the fraction failing (5xx: HTTP server-error status codes; timeouts; and model-level failures like empty completions). Duration is the latency distribution, summarized as p50 and p99, never as an average. Averages hide the slow requests; the p99 is the one users remember.</p>
+<p>Percentiles need a histogram, not a running average. The sketch below keeps every sample in a window (fine for learning; production uses HDRHistogram (a compact structure for recording latency distributions without keeping every sample) or Prometheus summaries) and shows why p99 beats the mean.</p>
 <h4 id="43-alerting-burn-rate-not-thresholds">4.3 Alerting: burn rate, not thresholds</h4>
 <p>"Alert me when latency exceeds 2 seconds" is a bad alert. One slow request at 3am pages you; a real degradation that keeps 30 percent of requests at 1.9 seconds never does. Alert on <dfn>burn rate</dfn> instead: how fast you are consuming your error budget.</p>
 <p>If the SLO allows 0.1 percent errors (99.9 percent), the budget burns at 1x when errors run at exactly 0.1 percent. An alert at 10x burn over 5 minutes means "at this rate the monthly budget is gone in 3 days." That pages. An alert at 2x burn over an hour means "slow leak, look today." That tickets. Two alerts, two urgencies, zero 3am pages for single blips.</p>
@@ -1426,10 +1494,10 @@ for minute in range(60):
 </ol></div><h4 id="44-the-ai-platform-alert-checklist">4.4 The AI-platform alert checklist</h4>
 <p>Beyond RED and burn rate, these are the alerts that catch the quiet failures:</p>
 <ul>
-<li><strong>GPU health:</strong> ECC error counts, Xid errors, thermal throttling flags (from DCGM or nvidia-smi). A GPU that throttles looks like "the model got slow." Exclude it from the fleet automatically.</li>
+<li><strong>GPU health:</strong> ECC error counts (ECC: error-correcting memory), Xid errors (NVIDIA's GPU hardware error codes), thermal throttling flags (from DCGM, NVIDIA's GPU monitoring toolkit, or nvidia-smi). A GPU that throttles looks like "the model got slow." Exclude it from the fleet automatically.</li>
 <li><strong>Queue depth growth rate:</strong> not the depth, the derivative. A queue at 10k and draining is fine; a queue at 2k and growing 100 per minute is an incident in progress.</li>
 <li><strong>Token throughput per GPU:</strong> a drop with steady request rate means the fleet lost effective capacity: throttling, a bad deploy, or a traffic-mix shift toward long contexts.</li>
-<li><strong>Prompt-cache hit rate:</strong> a cliff here after a deploy means the new version changed tokenization or cache keys. Roll back the cache key change, not the model.</li>
+<li><strong>Prompt-cache hit rate:</strong> a cliff here after a deploy means the new version changed tokenization (the step that splits text into tokens) or cache keys. Roll back the cache key change, not the model.</li>
 <li><strong>Data freshness:</strong> for feature pipelines, alert on "minutes since last successful write" per table. Stale features do not error; they silently rot model quality.</li>
 </ul>
 <p>Page on burn rate and fleet health. Ticket everything else. The on-call's sleep is a resource; spend it on budget fires, not on graphs that look interesting.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
@@ -1437,7 +1505,9 @@ for minute in range(60):
 <li>Read traces as waterfalls: they separate "the model is slow" from "the request waited for a GPU."</li>
 <li>Alert on error-budget burn rate, not on raw thresholds. Fast burn pages, slow burn tickets.</li>
 <li>Watch the quiet signals: GPU health, queue growth rate, throughput per GPU, cache hit rate, data freshness.</li>
-</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your p99 latency alert fires every day at 9am for ten minutes, then clears. Error budget burn stays under 1x. Is this a real problem? What single trace-derived metric would tell you whether to fix the platform or tell the users it is expected?</p></div><h3 id="chapter-5-data-pipelines-at-scale">Chapter 5. Data pipelines at scale</h3>
+</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your p99 latency alert fires every day at 9am for ten minutes, then clears. Error budget burn stays under 1x. Is this a real problem? What single trace-derived metric would tell you whether to fix the platform or tell the users it is expected?</p></div><p><strong>Next: Chapter 5, data pipelines at scale.</strong> The system is observable. Now feed it: training pipelines that turn raw logs into datasets, and serving pipelines that turn requests into tomorrow's training data.</p>
+<h3 id="chapter-5-data-pipelines-at-scale">Chapter 5. Data pipelines at scale</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter 4 watched the system live. Now feed it: training pipelines turn raw logs into datasets, and serving pipelines turn requests into features, labels, and logs that become tomorrow's training data.</p>
 <p>Models eat data and produce data. Training pipelines turn raw logs into datasets. Serving pipelines turn requests into features, labels, and logs that become tomorrow's training data. This chapter covers the patterns that keep those pipes correct at scale, especially the one everyone gets wrong: exactly-once processing.</p>
 <h4 id="51-batch-streaming-and-the-middle-ground">5.1 Batch, streaming, and the middle ground</h4>
 <ul>
@@ -1564,14 +1634,17 @@ print(&quot;effective applies:&quot;, sink.applied, &quot;| sink size:&quot;, le
 <li>Exactly-once effect = at-least-once delivery + idempotent sink + offsets checkpointed with output. There is no other recipe.</li>
 <li>Evolve schemas by adding optional fields only; version schemas in a registry; log the schema version with the data.</li>
 <li>Write data contracts between producers and consumers, and track lineage from raw events to trained models.</li>
-</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your training pipeline reads from the streaming feature store instead of the offline store. The reason given is "fresher data." Name two correctness problems this causes, and the one-line check in the training job that would catch each.</p></div><h3 id="chapter-6-ml-literacy-for-systems-engineers">Chapter 6. ML literacy for systems engineers</h3>
+</ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your training pipeline reads from the streaming feature store instead of the offline store. The reason given is "fresher data." Name two correctness problems this causes, and the one-line check in the training job that would catch each.</p></div><p><strong>Next: Chapter 6, ML literacy for systems engineers.</strong> Data moves at scale. Now understand what moves through it: the ML literacy to answer "how many GPUs for 500 requests a second?" and "why did latency spike when prompts got longer?"</p>
+<h3 id="chapter-6-ml-literacy-for-systems-engineers">Chapter 6. ML literacy for systems engineers</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter 5 moved data at scale. Now the other side of the table: you do not need to train models, but you do need to answer practical questions, how many GPUs, why latency spiked, what quantization breaks. This chapter is that literacy.</p>
 <p>You do not need to train models. You do need to answer practical questions. How many GPUs serve 500 requests a second? Why did latency spike when prompts got longer? What breaks if we quantize to 4-bit? This chapter gives you the four numbers that answer all three: forward-pass cost, batching behavior, quantization effects, and KV-cache memory.</p>
 <h4 id="61-what-a-forward-pass-costs">6.1 What a forward pass costs</h4>
 <p>A <dfn>forward pass</dfn> is one trip through the model: tokens in, probabilities out. For a transformer, the cost is about <strong>2 floating-point operations per parameter per token</strong>: one multiply and one add for each weight. (The backward pass used in training costs about 4x more, which is why training is hungrier than serving, but serving is your world.)</p>
-<p>Worked example: an 8-billion-parameter model. One token costs 2 x 8e9 = 16 GFLOP. Generating 100 tokens costs 1.6 TFLOP. An H100 (NVIDIA's datacenter GPU, the workhorse of LLM serving) does roughly 1,000 TFLOP/s in dense FP16, so the arithmetic alone would allow 600,000 tokens a second. Real serving gets a few thousand. The gap is memory bandwidth: each forward pass must stream all 16 GB of weights from GPU memory, and memory moves far slower than the arithmetic units compute. <strong>Serving is memory-bound, not compute-bound.</strong> That single sentence explains most inference performance behavior: batching helps because one weight-stream serves many tokens at once.</p>
+<p>Worked example: an 8-billion-parameter model. One token costs 2 x 8e9 = 16 GFLOP. Generating 100 tokens costs 1.6 TFLOP. An H100 (NVIDIA's datacenter GPU, the workhorse of LLM serving) does roughly 1,000 TFLOP/s in dense FP16, so the arithmetic alone would allow 600,000 tokens a second. Real serving gets a few thousand.</p>
+<p>The gap is memory bandwidth: each forward pass must stream all 16 GB of weights from GPU memory, and memory moves far slower than the arithmetic units compute. <strong>Serving is memory-bound, not compute-bound.</strong> That single sentence explains most inference performance behavior: batching helps because one weight-stream serves many tokens at once.</p>
 <h4 id="62-what-batching-does">6.2 What batching does</h4>
 <p><dfn>Batching</dfn> runs several requests through the model in one forward pass, sharing the single weight-stream from 6.1 across N requests. Throughput climbs almost linearly with batch size at first, then flattens when the arithmetic units saturate. The price is latency: a request waits for its batchmates, and every request in the batch runs at the speed of the slowest.</p>
-<p><dfn>Continuous batching</dfn> (the trick in vLLM and friends) removes most of the waiting: instead of fixed batches, the scheduler adds new requests to the running batch the moment a slot frees. The GPU stays full without the "wait for the batch to fill" delay. For your purposes: continuous batching is why modern serving gets high throughput <em>and</em> decent latency, and its absence is why a naive implementation forces you to choose.</p>
+<p><dfn>Continuous batching</dfn> (the trick in vLLM, a popular open-source LLM serving engine, and friends) removes most of the waiting: instead of fixed batches, the scheduler adds new requests to the running batch the moment a slot frees. The GPU stays full without the "wait for the batch to fill" delay. For your purposes: continuous batching is why modern serving gets high throughput <em>and</em> decent latency, and its absence is why a naive implementation forces you to choose.</p>
 <p>The simulation makes the trade concrete with a simple memory-bound model: each step costs a fixed overhead plus a per-request term, so throughput rises and then saturates while per-request latency keeps climbing.</p>
 <p><pre><code class="language-python"># WHAT: throughput/latency trade of batching under a memory-bound model.
 # WHY:  this curve is the entire economic argument for batching: big
@@ -1653,11 +1726,12 @@ batching_table()
 </tbody>
 </table>
 <p>Since serving is memory-bound, halving the weight size roughly doubles the token throughput (fewer bytes to stream per step) and halves the GPUs needed to hold the model. A 70B model needs 2 H100s in FP16 (140 GB &gt; 80 GB per card) but fits on 1 in INT8.</p>
-<p>What breaks: accuracy, unevenly. Most layers tolerate 8-bit with no visible change. At 4-bit, some layers (usually the attention projections and the final layers) degrade first, and the damage shows up on hard tasks before easy ones. The platform consequences are yours to manage. Quantized models need dequantization-friendly kernels to realize the speedup. And a quantization change is a <em>model</em> change, so it goes through the same versioned rollout as any new weights (Chapter 2, section 2.1).</p>
+<p>What breaks: accuracy, unevenly. Most layers tolerate 8-bit with no visible change. At 4-bit, some layers degrade first, usually the attention projections (attention is the mechanism by which each token weighs the other tokens when building its representation) and the final layers, and the damage shows up on hard tasks before easy ones. The platform consequences are yours to manage. Quantized models need dequantization-friendly kernels to realize the speedup. And a quantization change is a <em>model</em> change, so it goes through the same versioned rollout as any new weights (Chapter 2, section 2.1).</p>
 <h4 id="64-kv-cache-memory-the-hidden-capacity-eater">6.4 KV-cache memory: the hidden capacity eater</h4>
 <p>During generation, the model caches the keys and values of every previous token so it does not recompute them. This <dfn>KV cache</dfn> grows with context length and batch size. It lives in GPU memory next to the weights:</p>
 <p><pre><code>bytes per token = 2 (K and V) x layers x hidden_dim x bytes_per_value
 </code></pre></p>
+<p style="margin:-.6rem 0 1.2rem;text-align:center;font-size:.92em;color:var(--muted,#999);">where <strong>K and V</strong> = the two cached tensors per token, <strong>layers</strong> = transformer layers, <strong>hidden_dim</strong> = model width, <strong>bytes_per_value</strong> = 2 for FP16, 1 for INT8.</p>
 <p>For the 8B model (32 layers, hidden 4096, FP16): 2 x 32 x 4096 x 2 = 524,288 bytes, about <strong>0.5 MB per token</strong>. An 8k-token context needs 4 GB of cache. A batch of 32 such requests needs 128 GB, more than an 80 GB H100 holds, before counting the 16 GB of weights. <strong>Long contexts, not model size, are usually what OOMs a serving fleet.</strong> When someone asks "why did we run out of GPU memory after enabling 32k context," this formula is the answer.</p>
 <p>The capacity sketch below bundles all four numbers into functions you will reuse in Chapter 7.</p>
 <p><pre><code class="language-python"># WHAT: the four formulas of ML literacy as reusable functions.
@@ -1696,21 +1770,34 @@ print(f&quot;weights + KV cache: {gb:.1f} GB&quot;)
 # Expect ~50.4 GB: 16 GB weights + 34.4 GB cache. Fits one 80 GB H100,
 # but doubling the batch or the context no longer does. That is the
 # number you bring to the capacity review, not a guess.
-</code></pre></p><div class="takeaway"><h4>Key takeaways</h4><ul>
+</code></pre></p>
+<figure class="diagram" id="fig-64-kvcache-memory">
+<img src="img/ch6-kvcache-memory.svg" alt="GPU memory budget bars: at 4k context weights plus KV cache use 50.4 of 80 GB; at 8k context the total reaches 84.8 GB and overflows the card" loading="lazy">
+<figcaption><strong>Figure 6.4.</strong> The 80 GB budget, drawn to scale. Doubling the context doubles the KV cache while the weights stay fixed, and the total crosses the card limit. This is the picture behind the worked example above.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Each bar is one serving configuration; the axis is GPU memory in gigabytes.</li><li>Blue is fixed (weights). Amber is the KV cache at 4k context: it fits. Red is the KV cache at 8k: the bar crosses the dashed 80 GB line, which is what an OOM looks like before it happens.</li><li>Bottom: the read. Size the fleet for the cache, not the weights; fix in the cheapest order listed.</li></ol></details>
+</figure>
+<div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>A forward pass costs about 2 FLOP per parameter per token; serving is memory-bound, so batching amortizes the weight streaming.</li>
 <li>Batching buys throughput at the price of latency; size batches near the knee of the curve, and prefer continuous batching.</li>
 <li>Quantization halves memory per step down the bit ladder and roughly doubles throughput, at the cost of accuracy cliffs you must version and test.</li>
 <li>KV cache is 2 x layers x hidden x bytes per token: long contexts OOM fleets that were sized for weights alone.</li>
-</ul></div><div class="ob-board"><h4>Design prompt</h4><p>A team wants to serve a 70B model (80 layers, hidden 8192) at batch 8 with 16k context on FP16. Use the functions above: does it fit on one 80 GB GPU? What is the single cheapest change that makes it fit, and what does that change cost?</p></div><h3 id="chapter-7-capacity-planning-littles-law-queues-and-gpu-math">Chapter 7. Capacity planning: Little's Law, queues, and GPU math</h3>
+</ul></div><div class="ob-board"><h4>Design prompt</h4><p>A team wants to serve a 70B model (80 layers, hidden 8192) at batch 8 with 16k context on FP16. Use the functions above: does it fit on one 80 GB GPU? What is the single cheapest change that makes it fit, and what does that change cost?</p></div><p><strong>Next: Chapter 7, capacity planning: Little's Law, queues, and GPU math.</strong> You understand the ML. Now plan the machines: one law, one queueing model, and one GPU formula, all of which fit in Python and all of which beat guessing.</p>
+<h3 id="chapter-7-capacity-planning-littles-law-queues-and-gpu-math">Chapter 7. Capacity planning: Little's Law, queues, and GPU math</h3>
+<p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter 6 explained the ML. Now plan it: capacity planning answers "how many machines" before the traffic arrives, resting on one law, one queueing model, and one GPU formula. This is where the measurements from every earlier chapter turn into a fleet.</p>
 <p>Capacity planning answers "how many machines" before the traffic arrives. It rests on one law, one queueing model, and one GPU formula. All three fit in Python, and all three beat guessing.</p>
 <h4 id="71-littles-law">7.1 Little's Law</h4>
-<p><dfn>Little&#x27;s Law</dfn> says: the average number of items in a system equals the arrival rate times the average time each item spends in it. L = λW.</p>
+<p>Little&#x27;s Law says: the average number of items in a system equals the arrival rate times the average time each item spends in it:</p>
+<div class="phase2-eq" style="text-align:center;margin:1.3rem 0;font-size:1.12em;">L = &#955;W</div>
+<p style="margin:-.6rem 0 1.2rem;text-align:center;font-size:.92em;color:var(--muted,#999);">where <strong>&#955; (lambda)</strong> = arrival rate, items per second; <strong>W</strong> = average time each item spends in the system, in seconds.</p>
 <ul>
 <li>L: average jobs in the system (in queue + in service)</li>
 <li>λ (lambda): arrival rate, jobs per second</li>
 <li>W: average time a job spends in the system, in seconds</li>
 </ul>
-<p>Example: requests arrive at 50 per second and each takes 200 ms. L = 50 x 0.2 = 10. You need 10 concurrent slots on average: 10 GPU batch slots, 10 worker threads, 10 connections. If you have 8, the queue grows without bound. The law is exact for any system in steady state, no matter how bursty the arrivals or how weird the service times. It is the first number in every capacity review.</p>
+<p>Worked example: requests arrive at 50 per second and each takes 200 ms:</p>
+<div class="phase2-eq" style="text-align:center;margin:1.3rem 0;font-size:1.12em;">L = 50 &#215; 0.2 = 10</div>
+<p style="margin:-.6rem 0 1.2rem;text-align:center;font-size:.92em;color:var(--muted,#999);">You need 10 concurrent slots on average: 10 GPU batch slots, 10 worker threads, 10 connections.</p>
+<p>If you have 8, the queue grows without bound. The law is exact for any system in steady state, no matter how bursty the arrivals or how weird the service times. It is the first number in every capacity review.</p>
 <p><pre><code class="language-python"># WHAT: Little&#x27;s Law as a one-line capacity check.
 # WHY:  it converts the two numbers you can measure (arrival rate,
 #       service time) into the one number you must provision (slots).
@@ -1744,7 +1831,8 @@ print(&quot;slots needed:&quot;, concurrent_slots_needed(120, 1.5))
 <details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>lambda: the arrival rate, requests per second.</li><li>W: the average time each request spends in the system.</li><li>L: the average number present. If L is 10x your math, find the liar.</li></ol></details>
 </figure>
 <h4 id="72-why-utilization-above-80-percent-explodes">7.2 Why utilization above 80 percent explodes</h4>
-<p>A queue with random arrivals behaves nothing like a queue with even arrivals. The M/M/1 model (random arrivals, random service times, one server) gives the shape: as <dfn>utilization</dfn> ρ (lambda/mu, the fraction of time the server is busy) approaches 1, the average wait grows as ρ/(1-ρ). At ρ=0.5 the wait is 1x the service time. At ρ=0.8 it is 4x. At ρ=0.9 it is 9x. At ρ=0.95 it is 19x. <strong>The last 10 percent of utilization costs you 10x the latency.</strong> Section 7.4 turns this curve into the operating rule.</p>
+<p>A queue with random arrivals behaves nothing like a queue with even arrivals. The M/M/1 model (random arrivals, random service times, one server) gives the shape: as <dfn>utilization</dfn> ρ (lambda/mu, the fraction of time the server is busy) approaches 1, the average wait grows as ρ/(1-ρ).</p>
+<p>At ρ=0.5 the wait is 1x the service time. At ρ=0.8 it is 4x. At ρ=0.9 it is 9x. At ρ=0.95 it is 19x. <strong>The last 10 percent of utilization costs you 10x the latency.</strong> Section 7.4 turns this curve into the operating rule.</p>
 <p>The simulation runs the actual queue: random arrivals, random service, and measures the wait at three utilizations.</p>
 <p><pre><code class="language-python"># WHAT: discrete-event simulation of an M/M/1 queue at three loads.
 # WHY:  to see the nonlinear blowup instead of trusting the formula.
@@ -1769,7 +1857,7 @@ def mm1(arrival_rate, service_rate, sim_time=20000, seed=0):
     rng = random.Random(seed)
     events = [(rng.expovariate(arrival_rate), &quot;arr&quot;)]
     heapq.heapify(events)
-    q = []  # arrival times of waiting jobs (FIFO)
+    q = []  # arrival times of waiting jobs (FIFO: first-in, first-out)
     busy_until = 0.0
     waits, maxq = [], 0  # waits covers EVERY job: 0.0 if never queued
     while events:
@@ -1821,10 +1909,11 @@ for rho in (0.5, 0.8, 0.9):
 <ul>
 <li>Demand: Q requests/s, each generating T_out tokens on average, with prompts of T_in tokens.</li>
 <li>Supply: one GPU sustains S tokens/s at the target batch size (measure it; Chapter 6's table shows how batching sets it).</li>
-<li>Policy: target utilization ρ (0.7), plus one spare replica per failure domain.</li>
+<li>Policy: target utilization ρ (0.7), plus one spare replica per failure domain (a group of machines that can fail together, like a rack or a zone).</li>
 </ul>
 <p><pre><code>GPUs = ceil( (Q x (T_in + T_out)) / (S x ρ) ) + spares
 </code></pre></p>
+<p style="margin:-.6rem 0 1.2rem;text-align:center;font-size:.92em;color:var(--muted,#999);">where <strong>Q</strong> = request rate (requests/s), <strong>T_in</strong> and <strong>T_out</strong> = tokens per request, <strong>S</strong> = tokens/s per GPU at the allowed batch size, <strong>&#961; (rho)</strong> = target utilization, <strong>spares</strong> = extra GPUs for failure.</p>
 <p>Worked: Q = 40 req/s, T_in = 800, T_out = 400 (1,200 tokens per request), S = 1,500 tok/s per GPU at batch 16, ρ = 0.7. Demand = 48,000 tok/s. Usable supply per GPU = 1,050 tok/s. GPUs = ceil(48,000 / 1,050) = 46, plus 2 spares = 48. If the model team doubles the max context, T_in rises and you rerun the formula; if quantization doubles S (Chapter 6), you halve the fleet. Every capacity argument in this role is this arithmetic with measured inputs.</p>
 <p><pre><code class="language-python"># WHAT: fleet sizing from demand, measured throughput, and policy.
 # WHY:  turns &quot;we need more GPUs&quot; into a number with named inputs, so
@@ -1865,7 +1954,13 @@ print(&quot;GPUs:&quot;, gpus_needed(qps=40, tokens_per_request=1200,
 <li>Queue wait grows as ρ/(1-ρ): plan fleets for ~70 percent utilization and treat 85 as an incident.</li>
 <li>GPU math is one formula: ceil(Q x tokens / (S x ρ)) + spares, with S measured at the SLO-allowed batch size.</li>
 <li>Size for p95 demand, keep warm headroom for autoscaling lag, and remember headroom doubles as failure budget.</li>
-</ul></div><div class="lab"><h4>Lab T.1: Size a document-embedding service</h4><p>A product team wants an embedding API: 200 requests/s, each request carries 2,000 input tokens and returns a 768-float vector. You measured one GPU sustaining 6,000 tokens/s at the batch size your p99 SLO allows. (a) Use <code>gpus_needed</code> to size the fleet at 70 percent utilization with 2 spares. (b) The team then enables 8k-token documents. Recompute. What breaks first: GPU count or memory? Note that embeddings have no KV cache, but prefill memory still grows with context, so check the attention memory at 8k. (c) Write the burn-rate alert from Chapter 4 that pages when the 99.9 percent SLO burns 10x over 5 minutes, plus the ticket-level alert for 2x over an hour. Deliverable: the numbers, the two alert definitions, and one paragraph on which input you would re-measure first in production.</p></div><h3 id="practice-questions">Practice questions</h3><div class="pq"><div class="pq-q"><p><strong>Q1.</strong> A 3-replica store uses W=2, R=1. A write succeeds, then a read returns the old value. The quorum rule says overlap is guaranteed when W + R &gt; N. Here 2 + 1 = 3, which is not greater than 3. What is the smallest change that fixes stale reads, and what does it cost?
+</ul></div><div class="lab"><h4>Lab T.1: Size a document-embedding service</h4><p>A product team wants an embedding API: 200 requests/s, each request carries 2,000 input tokens and returns a 768-float vector. You measured one GPU sustaining 6,000 tokens/s at the batch size your p99 SLO allows.</p>
+<ol style="list-style-type:lower-alpha;">
+<li>Use <code>gpus_needed</code> to size the fleet at 70 percent utilization with 2 spares.</li>
+<li>The team then enables 8k-token documents. Recompute. What breaks first: GPU count or memory? Note that embeddings have no KV cache, but prefill memory still grows with context, so check the attention memory at 8k.</li>
+<li>Write the burn-rate alert from Chapter 4 that pages when the 99.9 percent SLO burns 10x over 5 minutes, plus the ticket-level alert for 2x over an hour.</li>
+</ol>
+<p>Deliverable: the numbers, the two alert definitions, and one paragraph on which input you would re-measure first in production.</p></div><h3 id="practice-questions">Practice questions</h3><div class="pq"><div class="pq-q"><p><strong>Q1.</strong> A 3-replica store uses W=2, R=1. A write succeeds, then a read returns the old value. The quorum rule says overlap is guaranteed when W + R &gt; N. Here 2 + 1 = 3, which is not greater than 3. What is the smallest change that fixes stale reads, and what does it cost?
 A. Raise W to 3; writes get slower and fail if any replica is down.
 B. Raise R to 2; reads get slower but writes are unchanged.
 C. Add a fourth replica; nothing else changes.
@@ -1908,7 +2003,11 @@ D. Concept drift; retrain more often.</p></div><button class="pq-reveal" aria-ex
 - <strong>A, right:</strong> one feature definition, point-in-time correct, serving both training and inference.
 - <strong>B, wrong:</strong> overfitting shows up as a train/eval gap, not as a weekly live degradation with a fine loss curve.
 - <strong>C, wrong:</strong> flushing the cache does not fix divergent feature definitions; fresh wrong values are still wrong.
-- <strong>D, wrong:</strong> retraining on skewed features bakes the skew deeper; frequency is not the problem.</p></div></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> All code samples are self-contained Python 3 (standard library only) and were executed during writing; expected outputs are noted in comments. Quorum math (W + R &gt; N), Raft's odd-node rule, HNSW's published structure (M, ef, layered greedy search), Little's Law, and the M/M/1 wait formula are textbook results. GPU figures (H100 80 GB, FP16 throughput order of magnitude) are representative 2026 hardware values, not vendor guarantees: re-measure on your fleet before sizing. <strong>UNVERIFIED:</strong> exact per-model KV-cache constants vary by architecture (GQA/MQA change the formula); the 2x-layers-x-hidden form holds for standard multi-head attention.</p></div>
+- <strong>D, wrong:</strong> retraining on skewed features bakes the skew deeper; frequency is not the problem.</p></div></div><div class="takeaway"><h4>Where to go next</h4><ul>
+<li><strong>Curriculum complete.</strong> This is the last role track. <a href="index.html">Back to the curriculum index</a> to revisit any track, or walk the base volumes in order.</li>
+<li><strong>Short on time?</strong> <a href="crash-track-10.html">Crash: SWE / Backend Systems</a> compresses this track into a one-day review.</li>
+</ul></div>
+<div class="provenance"><p><strong>Last verified: September 2026.</strong> All code samples are self-contained Python 3 (standard library only) and were executed during writing; expected outputs are noted in comments. Quorum math (W + R &gt; N), Raft's odd-node rule, HNSW's published structure (M, ef, layered greedy search), Little's Law, and the M/M/1 wait formula are textbook results. GPU figures (H100 80 GB, FP16 throughput order of magnitude) are representative 2026 hardware values, not vendor guarantees: re-measure on your fleet before sizing. <strong>UNVERIFIED:</strong> exact per-model KV-cache constants vary by architecture (GQA, grouped-query attention, and MQA, multi-query attention, change the formula by sharing key/value heads across query heads); the 2x-layers-x-hidden form holds for standard multi-head attention.</p></div>
 
 <section class="watch-deeper" id="watch-deeper" aria-label="Watch and go deeper">
 <p class="watch-deeper-kicker">Watch and go deeper</p>
