@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 559" role="img" aria-label="Anti-metrics: what looks like success and is not">
+<rect width="900" height="559" fill="#0d0d0d"/>
+<text x="450.0" y="20" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Anti-metrics: what looks like success and is not</text>
+<text x="450.0" y="46" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Every anti-metric on this list has shipped a bad decision at a real lab. Memorize all five.</text>
+<rect x="40.0" y="77.0" width="820.0" height="64.0" rx="6" fill="#141414" stroke="#e5484d" stroke-width="1.2"/>
+<text x="60.0" y="103.0" text-anchor="start" fill="#e5484d" font-size="13.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">X  Leaderboard chasing</text>
+<text x="60.0" y="125.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">Optimizes the eval, not the model. The gain does not transfer.</text>
+<rect x="40.0" y="151.0" width="820.0" height="64.0" rx="6" fill="#141414" stroke="#e5484d" stroke-width="1.2"/>
+<text x="60.0" y="177.0" text-anchor="start" fill="#e5484d" font-size="13.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">X  Cherry-picked seeds</text>
+<text x="60.0" y="199.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">One lucky seed is noise wearing a costume.</text>
+<rect x="40.0" y="225.0" width="820.0" height="64.0" rx="6" fill="#141414" stroke="#e5484d" stroke-width="1.2"/>
+<text x="60.0" y="251.0" text-anchor="start" fill="#e5484d" font-size="13.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">X  Improvements inside noise</text>
+<text x="60.0" y="273.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">The CI includes zero. There is no improvement.</text>
+<rect x="40.0" y="299.0" width="820.0" height="64.0" rx="6" fill="#141414" stroke="#e5484d" stroke-width="1.2"/>
+<text x="60.0" y="325.0" text-anchor="start" fill="#e5484d" font-size="13.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">X  Baseline trained badly</text>
+<text x="60.0" y="347.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">Beating a weak baseline proves nothing about the idea.</text>
+<rect x="40.0" y="373.0" width="820.0" height="64.0" rx="6" fill="#141414" stroke="#e5484d" stroke-width="1.2"/>
+<text x="60.0" y="399.0" text-anchor="start" fill="#e5484d" font-size="13.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">X  Private eval tuning</text>
+<text x="60.0" y="421.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">Prompt-tune on the eval and you have measured your tuning, not the model.</text>
+<rect x="40.0" y="457.0" width="820.0" height="64.0" rx="6" fill="#101010" stroke="#2dd4bf" stroke-width="1"/>
+<text x="60.0" y="483.0" text-anchor="start" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">The defense, always the same:</text>
+<text x="60.0" y="505.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">pre-register the eval, fix the harness before the runs finish, report every seed you ran, not just the good ones.</text>
+</svg>
