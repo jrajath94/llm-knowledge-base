@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="100%" style="max-width:760px" role="img" aria-label="MoE expert parallelism: tokens dispatch to experts over all-to-all, hot expert sets the latency">
+<style>
+ text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+ .m{fill:#a8a8a8;font-size:12px}
+ .t{font-size:13px;font-weight:700}
+ .g{fill:#f0b429}
+ .e{fill:#141414;stroke:#3a3a3a;stroke-width:1.5;rx:8}
+ .hot{fill:#141414;stroke:#e57373;stroke-width:2.5;rx:8}
+ .tok{fill:#6cb2ff}
+ .arr{stroke:#8a8a8a;stroke-width:1.5;fill:none}
+ .lbl{font-size:12px;fill:#a8a8a8}
+</style>
+<rect x="0" y="0" width="760" height="400" fill="none"/>
+<text class="t" x="30" y="30">Tokens enter the MoE layer</text>
+<text class="m" x="30" y="50">671B total, but only ~37B active per token (8 routed + 1 shared)</text>
+<!-- tokens -->
+<g>
+ <rect class="tok" x="30" y="70" width="26" height="26" rx="4" opacity="0.9"/><rect class="tok" x="60" y="70" width="26" height="26" rx="4" opacity="0.9"/><rect class="tok" x="90" y="70" width="26" height="26" rx="4" opacity="0.9"/><rect class="tok" x="120" y="70" width="26" height="26" rx="4" opacity="0.9"/><rect class="tok" x="150" y="70" width="26" height="26" rx="4" opacity="0.9"/><rect class="tok" x="180" y="70" width="26" height="26" rx="4" opacity="0.9"/><rect class="tok" x="210" y="70" width="26" height="26" rx="4" opacity="0.9"/><rect class="tok" x="240" y="70" width="26" height="26" rx="4" opacity="0.9"/>
+ <text class="m" x="280" y="88">each token picks its k=8 best experts</text>
+</g>
+<!-- router -->
+<rect class="e" x="30" y="118" width="180" height="44"/>
+<text class="t" x="46" y="145">Router (top-k)</text>
+<path class="arr" d="M210 140 H250"/>
+<text class="lbl" x="252" y="132">all-to-all dispatch</text>
+<text class="lbl" x="252" y="150">every GPU sends tokens directly</text>
+<text class="lbl" x="252" y="168">to the GPUs holding their experts</text>
+<!-- experts on ranks -->
+<g>
+ <rect class="e" x="450" y="60" width="130" height="46"/><text class="t" x="462" y="88">Expert 0</text><text class="m" x="462" y="104">rank 0</text>
+ <rect class="e" x="590" y="60" width="130" height="46"/><text class="t" x="602" y="88">Expert 1</text><text class="m" x="602" y="104">rank 1</text>
+ <rect class="e" x="450" y="116" width="130" height="46"/><text class="t" x="462" y="144">Expert 2</text><text class="m" x="462" y="160">rank 2</text>
+ <rect class="hot" x="590" y="116" width="130" height="46"/><text class="t" x="602" y="140" fill="#e57373">Expert 3 HOT</text><text class="m" x="602" y="158">40% of tokens</text>
+ <rect class="e" x="450" y="172" width="130" height="46"/><text class="t" x="462" y="200">Expert 4</text><text class="m" x="462" y="216">rank 4</text>
+ <rect class="e" x="590" y="172" width="130" height="46"/><text class="t" x="602" y="200">Expert 5</text><text class="m" x="602" y="216">rank 5</text>
+ <rect class="e" x="450" y="228" width="130" height="46"/><text class="t" x="462" y="256">Expert 6</text><text class="m" x="462" y="272">rank 6</text>
+ <rect class="e" x="590" y="228" width="130" height="46"/><text class="t" x="602" y="256">Expert 7</text><text class="m" x="602" y="272">rank 7</text>
+</g>
+<path class="arr" d="M360 140 C400 140 400 139 450 139"/>
+<path class="arr" d="M360 140 C400 140 400 160 590 150"/>
+<text class="g" x="30" y="300" font-size="14" font-weight="700">The hottest rank sets the layer's latency.</text>
+<text class="lbl" x="30" y="322">Routing is never uniform. Here one rank does ~3.5x the average work,</text>
+<text class="lbl" x="30" y="342">so the whole layer waits on it. Alert: one expert above 40% of tokens.</text>
+<text class="lbl" x="30" y="362">Fixes: EPLB (redundant copies of hot experts), Waterfill, LPLB.</text>
+<text class="lbl" x="30" y="382">MoE cost is not compute (37B active regardless of 671B total).</text>
+<text class="lbl" x="30" y="398" font-weight="700" fill="#ececec">It is memory (all experts live on GPUs) + network (dispatch/combine) + load-balance tax.</text>
+</svg>
