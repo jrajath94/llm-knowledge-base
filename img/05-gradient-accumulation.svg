@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="400" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Gradient accumulation: small memory, big batch</text>
+<text x="24" y="58" font-size="13" fill="#8a8a8a">the optimizer cannot tell K micro-batches from one giant batch</text>
+<rect x="24" y="90" width="140" height="90" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="94.0" y="116" font-size="14" fill="#ececec" text-anchor="middle">micro-batch 1</text>
+<text x="94" y="142" font-size="12" fill="#a8a8a8" text-anchor="middle">fits on GPU</text>
+<line x1="94" y1="180" x2="94" y2="225" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="94,225 85,220.5 85,229.5" fill="#8a8a8a"/>
+<text x="94" y="212" font-size="11" fill="#8a8a8a" text-anchor="middle">gradients</text>
+<rect x="184" y="90" width="140" height="90" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="254.0" y="116" font-size="14" fill="#ececec" text-anchor="middle">micro-batch 2</text>
+<text x="254" y="142" font-size="12" fill="#a8a8a8" text-anchor="middle">fits on GPU</text>
+<line x1="254" y1="180" x2="254" y2="225" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="254,225 245,220.5 245,229.5" fill="#8a8a8a"/>
+<text x="254" y="212" font-size="11" fill="#8a8a8a" text-anchor="middle">gradients</text>
+<rect x="344" y="90" width="140" height="90" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="414.0" y="116" font-size="14" fill="#ececec" text-anchor="middle">micro-batch 3</text>
+<text x="414" y="142" font-size="12" fill="#a8a8a8" text-anchor="middle">fits on GPU</text>
+<line x1="414" y1="180" x2="414" y2="225" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="414,225 405,220.5 405,229.5" fill="#8a8a8a"/>
+<text x="414" y="212" font-size="11" fill="#8a8a8a" text-anchor="middle">gradients</text>
+<rect x="504" y="90" width="140" height="90" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="574.0" y="116" font-size="14" fill="#ececec" text-anchor="middle">micro-batch 4</text>
+<text x="574" y="142" font-size="12" fill="#a8a8a8" text-anchor="middle">fits on GPU</text>
+<line x1="574" y1="180" x2="574" y2="225" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="574,225 565,220.5 565,229.5" fill="#8a8a8a"/>
+<text x="574" y="212" font-size="11" fill="#8a8a8a" text-anchor="middle">gradients</text>
+<rect x="300" y="240" width="280" height="80" fill="#101010" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="440.0" y="272" font-size="14" fill="#ececec" text-anchor="middle">sum the gradients</text>
+<text x="440" y="298" font-size="12" fill="#a8a8a8" text-anchor="middle">accumulator (no optimizer step yet)</text>
+<line x1="580" y1="280" x2="660" y2="280" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="660,280 651,275.5 651,284.5" fill="#8a8a8a"/>
+<rect x="660" y="240" width="196" height="80" fill="#141414" stroke="#7fd08a" stroke-width="1.5" rx="6"/>
+<text x="758.0" y="272" font-size="14" fill="#ececec" text-anchor="middle">one optimizer step</text>
+<text x="758" y="298" font-size="12" fill="#a8a8a8" text-anchor="middle">updates all weights</text>
+<text x="24" y="360" font-size="13" fill="#a8a8a8" text-anchor="start">Effective batch = 4 micro-batches. Memory holds one micro-batch; the step sees the full batch.</text>
+</svg>
