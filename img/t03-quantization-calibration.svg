@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img" aria-label="Calibration flow: sample prompts, learn scales, ship model">
+  <style>
+    .box { fill:#0d0d0d; stroke:#3a3a3a; stroke-width:1.5; rx:8; }
+    .t { font:600 15px -apple-system,"Segoe UI",Roboto,sans-serif; fill:#ececec; }
+    .s { font:400 12.5px -apple-system,"Segoe UI",Roboto,sans-serif; fill:#a8a8a8; }
+    .arr { stroke:#f0b429; stroke-width:2; fill:none; marker-end:url(#ah); }
+    .bad { stroke:#c96a5a; stroke-width:2; fill:none; marker-end:url(#ah2); }
+    .warn { font:600 12.5px -apple-system,"Segoe UI",Roboto,sans-serif; fill:#c96a5a; }
+  </style>
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/>
+    </marker>
+    <marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8" fill="none" stroke="#c96a5a" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <rect class="box" x="20" y="60" width="180" height="90" rx="8"/>
+  <text class="t" x="110" y="95" text-anchor="middle">sample of real prompts</text>
+  <text class="s" x="110" y="118" text-anchor="middle">a few hundred is typical</text>
+
+  <path class="arr" d="M205,105 L255,105"/>
+
+  <rect class="box" x="260" y="60" width="180" height="90" rx="8"/>
+  <text class="t" x="350" y="95" text-anchor="middle">learn</text>
+  <text class="s" x="350" y="118" text-anchor="middle">scales (the multipliers)</text>
+
+  <path class="arr" d="M445,105 L495,105"/>
+
+  <rect class="box" x="500" y="60" width="200" height="90" rx="8"/>
+  <text class="t" x="600" y="95" text-anchor="middle">model ships with</text>
+  <text class="t" x="600" y="115" text-anchor="middle">scales baked in</text>
+
+  <text class="t" x="20" y="30">Calibration, the simple version</text>
+
+  <path class="bad" d="M110,155 L110,210 L600,210 L600,155"/>
+  <text class="warn" x="20" y="245">wrong sample</text>
+  <text class="s" x="20" y="263">calibrated on web text, deployed on code</text>
+  <text class="warn" x="270" y="245">wrong scales</text>
+  <text class="warn" x="480" y="245">silent accuracy loss</text>
+  <text class="s" x="480" y="263">perplexity looks fine; tasks degrade</text>
+</svg>
