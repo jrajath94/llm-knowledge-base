@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="440" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">TPU and XLA numbers worth keeping</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">same collectives, different cost model: the torus prices hops, not NVLink islands</text>
+<rect x="24" y="100" width="410" height="150" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="229.0" y="126" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">TPU v6e (Trillium)</text>
+<text x="229.0" y="144" font-size="11" fill="#a8a8a8" text-anchor="middle">~918 BF16 TFLOPS, 32 GB HBM3 per chip; 256-chip 2D</text>
+<text x="229.0" y="159" font-size="11" fill="#a8a8a8" text-anchor="middle">torus pod = 8 TB HBM in one pod</text>
+<rect x="446" y="100" width="410" height="150" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="651.0" y="126" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">TPU v7 (Ironwood)</text>
+<text x="651.0" y="144" font-size="11" fill="#a8a8a8" text-anchor="middle">4,614 FP8 TFLOPS, 192 GB HBM3e per chip; 9,216-chip 3D</text>
+<text x="651.0" y="159" font-size="11" fill="#a8a8a8" text-anchor="middle">torus pod = 42.5 FP8 exaflops; first TPU with native</text>
+<text x="651.0" y="174" font-size="11" fill="#a8a8a8" text-anchor="middle">FP8</text>
+<rect x="24" y="270" width="832" height="90" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="296" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">pod-scale sync lesson</text>
+<text x="440.0" y="314" font-size="11" fill="#a8a8a8" text-anchor="middle">671B FP8: ~6.7 s per full all-reduce at ~200 GB/s ICI. At pod scale you never sync full parameters every step;</text>
+<text x="440.0" y="329" font-size="11" fill="#a8a8a8" text-anchor="middle">you shard them.</text>
+<text x="24" y="392" font-size="12" fill="#a8a8a8" text-anchor="start">What transfers: mesh = named process groups, PartitionSpec = sharding spec. What does not: the</text>
+<text x="24" y="409" font-size="12" fill="#a8a8a8" text-anchor="start">TP-inside-the-node rule, bfloat16-first numerics, host-driven execution and its profiler.</text>
+</svg>
