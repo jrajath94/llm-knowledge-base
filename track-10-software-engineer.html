@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Software Engineer, Backend and Systems (AI-Adjacent)</title>
 <style>
@@ -457,17 +465,29 @@ html.xp-js .xp-reveal.xp-in {
 </ol></div><h2 id="part-0-the-target-role-in-plain-terms">Part 0. The target role, in plain terms</h2>
 <h3 id="01-what-this-engineer-builds">0.1 What this engineer builds</h3>
 <p>A frontier AI company has two kinds of engineers around every model. One kind improves the model. The other kind makes the model usable at scale. This track is for the second kind.</p>
+<figure class="diagram" id="fig-01-platform-stack">
+<img src="img/t10-platform-stack.svg" alt="The AI platform stack: serving, batch inference, data pipelines, evals, cost controls" loading="lazy">
+<figcaption><strong>Figure 0.1.</strong> The AI platform stack this engineer builds. The model is the guest; the platform is the host.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Five layers top to bottom: serving, batch inference, data pipelines, evals and monitoring, cost and capacity controls.</li><li>Each layer is a system with an SLO.</li><li>Two kinds of engineers: one improves the model, one makes it usable at scale. This track is the second kind.</li></ol></details>
+</figure>
+
 <p>Concrete systems this role owns:</p>
 <ul>
 <li><strong>Model-serving platforms.</strong> The HTTP or gRPC service that takes a prompt and returns tokens (a token is a chunk of text, roughly three-quarters of a word; the model's unit of reading and writing), with batching, caching, routing, and autoscaling. One team trains the model; your team keeps it answering.</li>
 <li><strong>Batch inference pipelines.</strong> Nightly jobs that run a model over millions of documents: embeddings, labels, summaries. Queues, workers, retries, dead letters.</li>
 <li><strong>Data pipelines.</strong> The pipes that move training data from raw logs to clean, versioned datasets, and the feature pipelines that feed models at request time.</li>
-<li><strong>Storage systems.</strong> Checkpoints, datasets, embeddings, model artifacts. Object stores, caches, and the occasional vector database you had to build or buy.</li>
+<li><strong>Storage systems.</strong> Checkpoints, datasets, embeddings, model artifacts. Object stores (S3-style blob storage: named, immutable files), caches, and the occasional vector database you had to build or buy.</li>
 <li><strong>Developer platforms.</strong> The SDKs (software development kits), CLIs (command-line interfaces), and internal APIs that let the research teams ship without paging you.</li>
 </ul>
 <p>You are the reason the demo survives Monday morning traffic.</p>
 <h3 id="02-the-work-loop">0.2 The work loop</h3>
 <p>A typical week mixes four kinds of work, and the mix is the job:</p>
+<figure class="diagram" id="fig-02-work-loop">
+<img src="img/t10-work-loop.svg" alt="The work loop: build, operate, optimize, learn" loading="lazy">
+<figcaption><strong>Figure 0.2.</strong> The work loop: build, operate, optimize, learn. The mix is the job.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Build ships the visible systems; operate runs on-call and post-mortems.</li><li>Optimize cuts latency and cost; learn turns the failure log into checklists.</li><li>Operating is not a tax on building: the incidents teach the optimizations.</li></ol></details>
+</figure>
+
 <ol>
 <li><strong>Build.</strong> Design and ship a new service or pipeline. This is the visible part: a new batch inference queue, a caching layer in front of the serving tier, a schema migration.</li>
 <li><strong>Operate.</strong> On-call rotations, incident response, post-mortems. AI systems fail in ways that look nothing like a crashed web server: a slow GPU, a poisoned batch, a queue that filled over a weekend.</li>
@@ -476,15 +496,27 @@ html.xp-js .xp-reveal.xp-in {
 </ol>
 <h3 id="03-how-success-is-measured">0.3 How success is measured</h3>
 <p>Platforms get graded on numbers, not demos. The four that matter:</p>
+<figure class="diagram" id="fig-03-slo-panel">
+<img src="img/t10-slo-panel.svg" alt="The four platform numbers: reliability, latency, throughput and cost, utilization" loading="lazy">
+<figcaption><strong>Figure 0.3.</strong> The four numbers that grade a platform: reliability, latency, throughput and cost, utilization.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Reliability in nines; 99.9 percent monthly allows 43 minutes of downtime.</li><li>Latency as p50 and p99; users feel the p99, not the average.</li><li>GPUs are the scarcest resource: idle silicon is waste with a bill.</li></ol></details>
+</figure>
+
 <ul>
 <li><strong>Reliability.</strong> Measured in nines against a service-level objective. A 99.9 percent monthly SLO allows 43 minutes of downtime a month. Every minute past that is an error-budget deficit you explain in writing.</li>
 <li><strong>Latency.</strong> Usually p50 and p99, sometimes broken into time-to-first-token and tokens-per-second for streaming model APIs. Users feel the p99, not the average.</li>
 <li><strong>Throughput and cost.</strong> Tokens per second per GPU, dollars per million tokens. GPUs are the scarcest resource in the building; waste shows up on a bill someone reads.</li>
-<li><strong>Developer velocity of the teams you serve.</strong> How fast can a research team go from idea to production experiment on your platform? If your platform is the bottleneck, no model improvement ships.</li>
+<li><strong>Utilization.</strong> The fraction of capacity actually busy. GPUs are the scarcest resource in the building; idle silicon is waste with a bill.</li>
 </ul>
 <p>The chapters ahead teach each of these as an engineering discipline, not as trivia.</p>
 <h2 id="part-1-ordered-reading-path-through-the-base-volumes">Part 1. Ordered reading path through the base volumes</h2>
 <p>Read in this order. The priority column tells you how hard to push: <strong>core</strong> means read every chapter, <strong>select</strong> means read the listed chapters and skim the rest, <strong>reference</strong> means open it when a later chapter points at it.</p>
+<figure class="diagram" id="fig-p11-reading-path">
+<img src="img/t10-reading-path.svg" alt="The ordered reading path through the base volumes" loading="lazy">
+<figcaption><strong>Figure P1.1.</strong> The ordered reading path. The reading order is the build order: foundations before serving, serving before scale.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Five base volumes in dependency order, then this track's deep chapters.</li><li>The deep chapters: distributed systems, APIs and queues, storage, observability, pipelines, ML literacy, capacity.</li><li>Read in order; the path is the map of the platform you will build.</li></ol></details>
+</figure>
+
 <table>
 <thead>
 <tr>
@@ -547,7 +579,7 @@ html.xp-js .xp-reveal.xp-in {
 <td>9</td>
 <td>Vol 4, LLM Internals + App 4A, Long Context</td>
 <td>select</td>
-<td>Attention and KV cache chapters only. You need the memory math for capacity planning, not the full theory.</td>
+<td>Attention and KV cache chapters only (KV cache: the per-token memory the model holds while generating). You need the memory math for capacity planning, not the full theory.</td>
 </tr>
 <tr>
 <td>10</td>
@@ -589,7 +621,7 @@ html.xp-js .xp-reveal.xp-in {
 </table>
 <p>Two notes on this order. First, it is deliberately systems-heavy. If a chapter in Vol 13 references a concept from Vol 4 (say, KV cache), jump there, read the one section, and come back. Second, the deep chapters in Part 2 assume you have read items 1 through 4 above. They do not assume the math volumes.</p><div class="callout"><p>Chapters 1 through 7 below are new material written for this track. They assume a working backend engineer who has never built ML infrastructure. Every ML concept is defined on first use. Every formula is worked with real numbers. Every mechanism ships with Python you can run.</p></div><h2 id="part-2-deep-chapters">Part 2. Deep chapters</h2>
 <h3 id="chapter-1-distributed-systems-for-the-ai-platform">Chapter 1. Distributed systems for the AI platform</h3>
-<p>Every AI platform is a distributed system wearing a trench coat. The serving fleet is a replicated stateless tier. The feature store is a replicated stateful tier. The checkpoint store is a distributed file system. The queue between them is a partitioned log. If you can reason about replication, consistency, and failure, you can reason about all of them.</p>
+<p>Every AI platform is a distributed system wearing a trench coat. The serving fleet is a replicated stateless tier. The feature store (the store that serves a model's input numbers, like user embeddings, at request time) is a replicated stateful tier. The checkpoint store is a distributed file system. The queue between them is a partitioned log. If you can reason about replication, consistency, and failure, you can reason about all of them.</p>
 <h4 id="11-replication-and-the-quorum-rule">1.1 Replication and the quorum rule</h4>
 <p>Replication means keeping copies of the same data on several machines. You do it for two reasons: survival (one machine dies, the data lives) and speed (reads spread across copies). The hard part is writes. If a write reaches only some copies, different readers see different values.</p>
 <p>The classic fix is a <dfn>quorum</dfn>. With N copies, require W of them to acknowledge a write and R of them to answer a read:</p>
@@ -1095,8 +1127,8 @@ jobs.append(Job(&quot;flaky-1&quot;, &quot;flaky&quot;))    # fails twice, then 
 jobs.append(Job(&quot;poison-1&quot;, &quot;poison&quot;))  # never succeeds -&gt; DLQ
 for j in jobs:
     iq.submit(j)
+iq.drain()  # drain first: the duplicate submit below must hit a stored result
 print(iq.submit(Job(&quot;doc-3&quot;, &quot;text-3&quot;)))  # duplicate key: no re-run
-iq.drain()
 print(&quot;results:&quot;, len(iq.results), &quot;| dlq:&quot;, iq.dlq)
 # Expect: 11 results (10 docs + flaky-1), 1 DLQ entry (poison-1),
 # and the duplicate submit returned the stored result.
@@ -1113,6 +1145,12 @@ print(&quot;results:&quot;, len(iq.results), &quot;| dlq:&quot;, iq.dlq)
 </ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your batch queue's DLQ grows by 200 jobs a night, all with "retries exhausted" on timeouts. The model team says the GPUs are healthy. List three platform-side causes you would check before blaming the model, and the metric that would confirm each.</p></div><p><strong>Next: Chapter 3, storage for AI.</strong> Requests are served. Now store what they need: datasets to train on, checkpoints to resume from, features to serve, vectors to search.</p>
 <h3 id="chapter-3-storage-for-ai">Chapter 3. Storage for AI</h3>
 <p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter 2 served requests. Requests need data, and AI systems are hungry for storage in four distinct ways. This chapter maps each hunger, datasets, checkpoints, features, vectors, to the right store.</p>
+<figure class="diagram" id="fig-31-storage-map">
+<img src="img/t10-storage-map.svg" alt="Four hungers, four stores: datasets, checkpoints, features, vectors" loading="lazy">
+<figcaption><strong>Figure 3.1.</strong> Four hungers, four stores: datasets, checkpoints, features, and vectors each want a different store.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Datasets and checkpoints live on object stores; features need a low-latency online store.</li><li>Vectors get their own index, built from scratch in this chapter.</li><li>Match the access pattern, not the data type.</li></ol></details>
+</figure>
+
 <p>AI systems are hungry for storage in four distinct ways: datasets to train on, checkpoints to resume from, features to serve, and vectors to search. Each wants a different store. This chapter maps the four to their storage and builds the most interesting one, a vector index, from scratch.</p>
 <h4 id="31-object-stores-the-default">3.1 Object stores: the default</h4>
 <p>An <dfn>object store</dfn> (S3 and its clones) holds named blobs, for example <code>checkpoints/model-v14/shard-003.safetensors</code> (safetensors is a standard file format for storing model weights). A shard is one chunk of a large file split for parallel upload and download. Four properties make it the default for AI artifacts:</p>
@@ -1371,6 +1409,12 @@ print(f&quot;recall@5: {hits/total:.2%}&quot;)
 </ul></div><div class="ob-board"><h4>Design prompt</h4><p>Your RAG service's answer quality drops every Monday. The vector index is rebuilt weekly on Sunday night from the document store. Name two storage-level mechanisms that could cause a Monday-only regression, and how you would prove each one.</p></div><p><strong>Next: Chapter 4, observability: metrics, traces, and what to alert on.</strong> Everything is stored. Now see it break: model services fail in ways that do not look like ordinary outages, and this chapter is the metrics that catch them.</p>
 <h3 id="chapter-4-observability-metrics-traces-and-what-to-alert-on">Chapter 4. Observability: metrics, traces, and what to alert on</h3>
 <p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter 3 stored everything. Now see it: you cannot fix what you cannot see, and model services fail in ways that do not look like ordinary outages. This chapter is the metrics, traces, and alerts that catch them.</p>
+<figure class="diagram" id="fig-41-observability">
+<img src="img/t10-observability.svg" alt="The observability triangle: metrics, logs, traces" loading="lazy">
+<figcaption><strong>Figure 4.1.</strong> The observability triangle: metrics, logs, traces. Instrument for the failures that do not error.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Metrics: numbers over time, p99 latency, error rate, GPU temperature, queue depth.</li><li>Logs: events, the poisoned batch, the slow chip.</li><li>Traces: one request end to end, showing where the 800 ms went.</li></ol></details>
+</figure>
+
 <p>You cannot fix what you cannot see, and model services fail in ways that do not look like ordinary outages. A GPU with a dying memory chip does not crash; it answers slowly. A poisoned cache does not error; it serves stale results with 200 OK. Observability for AI platforms means instrumenting for these quiet failures, not just the loud ones.</p>
 <h4 id="41-what-to-instrument-on-a-model-service">4.1 What to instrument on a model service</h4>
 <p>Three signal types, each with a job:</p>
@@ -1464,9 +1508,6 @@ rng = random.Random(3)
 mon = ServingMonitor(slo_error_rate=0.001)
 for minute in range(60):
     bad = 40 &lt;= minute &lt; 50  # the regression window
-    lat = [rng.gauss(400, 60) if not bad or rng.random() &gt; 0.02
-           else rng.gauss(400, 60)  # placeholder, replaced below
-           for _ in range(200)]
     errs = 0
     lats = []
     for _ in range(200):
@@ -1669,7 +1710,7 @@ def batching_table(max_batch=64):
 
 
 batching_table()
-# Expect: tok/s climbs ~10x from batch 1 to 32, then flattens; ms per
+# Expect: tok/s climbs ~6x from batch 1 to 32, then flattens; ms per
 # request-step climbs the whole way. The knee near batch 16-32 is where
 # a serving tier wants to live: left of it wastes GPUs, right burns SLO.
 </code></pre></p>
@@ -1784,6 +1825,12 @@ print(f&quot;weights + KV cache: {gb:.1f} GB&quot;)
 </ul></div><div class="ob-board"><h4>Design prompt</h4><p>A team wants to serve a 70B model (80 layers, hidden 8192) at batch 8 with 16k context on FP16. Use the functions above: does it fit on one 80 GB GPU? What is the single cheapest change that makes it fit, and what does that change cost?</p></div><p><strong>Next: Chapter 7, capacity planning: Little's Law, queues, and GPU math.</strong> You understand the ML. Now plan the machines: one law, one queueing model, and one GPU formula, all of which fit in Python and all of which beat guessing.</p>
 <h3 id="chapter-7-capacity-planning-littles-law-queues-and-gpu-math">Chapter 7. Capacity planning: Little's Law, queues, and GPU math</h3>
 <p class="phase2-bridge" style="border-left:3px solid #2f6f3e;padding:.55rem .9rem;background:#0c120c;border-radius:0 .5rem .5rem 0;"><strong>Why this chapter comes next.</strong> Chapter 6 explained the ML. Now plan it: capacity planning answers "how many machines" before the traffic arrives, resting on one law, one queueing model, and one GPU formula. This is where the measurements from every earlier chapter turn into a fleet.</p>
+<figure class="diagram" id="fig-72-queueing-knee">
+<img src="img/t10-queueing-knee.svg" alt="The queueing knee: latency explodes near 80 percent utilization" loading="lazy">
+<figcaption><strong>Figure 7.2.</strong> The queueing knee. Latency stays flat, then explodes near the knee around 80 percent utilization.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Horizontal axis: fraction of capacity. Vertical axis: latency. The curve is the 1 over 1 minus u queueing model.</li><li>The dashed line marks the knee: provision before it, not after the incident.</li><li>Capacity planning answers how many machines before the traffic arrives.</li></ol></details>
+</figure>
+
 <p>Capacity planning answers "how many machines" before the traffic arrives. It rests on one law, one queueing model, and one GPU formula. All three fit in Python, and all three beat guessing.</p>
 <h4 id="71-littles-law">7.1 Little's Law</h4>
 <p>Little&#x27;s Law says: the average number of items in a system equals the arrival rate times the average time each item spends in it:</p>
@@ -1847,7 +1894,7 @@ import heapq
 import random
 
 
-def mm1(arrival_rate, service_rate, sim_time=20000, seed=0):
+def mm1(arrival_rate, service_rate, sim_time=100000, seed=0):
     # WHAT: simulate; return mean wait in queue and max queue length.
     # WHY:  events (arrival, departure) processed in time order via a
     #       heap is the standard technique: exact and O(log n) per event.
@@ -2023,7 +2070,7 @@ D. Concept drift; retrain more often.</p></div><button class="pq-reveal" aria-ex
 </figure>
 <figure class="watch-card">
 <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/1FV-qJGhNOA?enablejsapi=1" title="Consistent Hashing - Explained" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-<figcaption><strong>Consistent Hashing - Explained</strong>How consistent hashing spreads keys across nodes and survives node changes. Pairs with 1.1 and 2.1. Transcript check was blocked on Sept 28, 2026: YouTube rate-limited automated access, so this pick rests on the verified title and channel, not a full transcript read. Worth your time. Skip freely if the first five minutes feel slow.</figcaption>
+<figcaption><strong>Consistent Hashing - Explained</strong>How consistent hashing spreads keys across nodes and survives node changes. Pairs with 1.6. Transcript check was blocked on Sept 28, 2026: YouTube rate-limited automated access, so this pick rests on the verified title and channel, not a full transcript read. Worth your time. Skip freely if the first five minutes feel slow.</figcaption>
 </figure>
 </div>
 <p class="go-deeper-kicker">Go deeper</p>
