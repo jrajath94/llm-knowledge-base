@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="342" viewBox="0 0 720 342" role="img" aria-label="Checkpoint byte composition for 70B with Adam">
+<rect width="720" height="342" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">A 70B checkpoint is 700 GB, and Adam owns it</text>
+<text x="120" y="90" text-anchor="start" fill="#ececec" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">parameters (BF16)</text>
+<text x="600" y="90" text-anchor="start" fill="#ececec" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">Adam state</text>
+<rect x="60" y="100" width="120" height="48" fill="#58a6ff" rx="4"/>
+<rect x="180" y="100" width="480" height="48" fill="#f0b429" rx="4"/>
+<text x="120" y="126" text-anchor="middle" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">140 GB</text>
+<text x="420" y="126" text-anchor="middle" fill="#0d0d0d" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">560 GB</text>
+<text x="360" y="175" text-anchor="middle" fill="#ececec" font-size="14" font-weight="700" font-family="Charis SIL, Georgia, serif">total: 700 GB per checkpoint</text>
+<rect x="150" y="200" width="420" height="64" rx="8" fill="#1a0f0f" stroke="#e5484d" stroke-width="1"/>
+<text x="360" y="226" text-anchor="middle" fill="#e5484d" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">gradients are NOT stored in checkpoints</text>
+<text x="360" y="246" text-anchor="middle" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">only parameters plus optimizer state survive a restart</text>
+<text x="360" y="295" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">at 8 GB/s aggregate the background write takes about 1.5 minutes</text>
+<text x="360" y="317" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">that 90-second save cost is what sets the Daly interval</text>
+</svg>
