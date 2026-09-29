@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="520" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 3.5. The serving cost model: (9 x $2.50/hr) / (40 req/s x 3.6) = $0.16 per 1k</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">GPUs per hour over requests per hour</text>
+<text x="440" y="140" font-size="13.5" font-weight="bold" fill="#ececec" text-anchor="middle">(9 GPUs x $2.50/hr) / (40 req/s x 3600 s/hr) = $0.16 / 1k requests</text>
+<line x1="90" y1="180" x2="790" y2="180" stroke="#8a8a8a" stroke-width="1.5"/>
+<rect x="90" y="220" width="320" height="90" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="250.0" y="246" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">NUMERATOR: $22.50/hr</text>
+<text x="250.0" y="264" font-size="11" fill="#a8a8a8" text-anchor="middle">9 GPUs x $2.50/hr: what the fleet costs</text>
+<text x="440" y="265" font-size="28" font-weight="bold" fill="#ececec" text-anchor="middle">/</text>
+<rect x="470" y="220" width="320" height="90" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="630.0" y="246" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">DENOMINATOR: 144k req/hr</text>
+<text x="630.0" y="264" font-size="11" fill="#a8a8a8" text-anchor="middle">40 req/s x 3600 s/hr: what the fleet serves</text>
+<line x1="440" y1="310" x2="440" y2="350" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="440,350 436.33015592246386,341.78219953718923 443.66984407753614,341.78219953718923" fill="#8a8a8a"/>
+<text x="440" y="380" font-size="16" font-weight="bold" fill="#f0b429" text-anchor="middle">= $0.16 per 1k requests</text>
+<text x="24" y="430" font-size="12" fill="#a8a8a8" text-anchor="start">Utilization is the whole game: the same 9 GPUs at 10 req/s cost 4x per request. Autoscale to the demand curve.</text>
+</svg>
