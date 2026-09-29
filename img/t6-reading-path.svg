@@ -1,0 +1,36 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 460' width='100%' role='img'>
+<title>Minimum path</title>
+<text x='480' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>The minimum path, in order</text>
+<text x='480' y='70' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Six volumes and three supplements; the order is the dependency map, flattened.</text>
+<rect x='24' y='130' width='136' height='130' rx='10' fill='#1565c0' fill-opacity='0.22' stroke='#1565c0' stroke-width='2'/>
+<text x='92' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Vol 9</text>
+<text x='92' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Agents + RAG</text>
+<line x1='160' y1='195' x2='180' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='171.8,198.7 180,195 171.8,191.3' fill='#8a8a8a'/>
+<rect x='180' y='130' width='136' height='130' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='248' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Supp 9A</text>
+<text x='248' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Agent evals</text>
+<line x1='316' y1='195' x2='336' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='327.8,198.7 336,195 327.8,191.3' fill='#8a8a8a'/>
+<rect x='336' y='130' width='136' height='130' rx='10' fill='#c0392b' fill-opacity='0.22' stroke='#c0392b' stroke-width='2'/>
+<text x='404' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Supp 9B</text>
+<text x='404' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Agent security</text>
+<line x1='472' y1='195' x2='492' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='483.8,198.7 492,195 483.8,191.3' fill='#8a8a8a'/>
+<rect x='492' y='130' width='136' height='130' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='560' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Vol 8</text>
+<text x='560' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Inference serving</text>
+<line x1='628' y1='195' x2='648' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='639.8,198.7 648,195 639.8,191.3' fill='#8a8a8a'/>
+<rect x='648' y='130' width='136' height='130' rx='10' fill='#8e24aa' fill-opacity='0.22' stroke='#8e24aa' stroke-width='2'/>
+<text x='716' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Vol 10</text>
+<text x='716' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Productionizing</text>
+<line x1='784' y1='195' x2='804' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='795.8,198.7 804,195 795.8,191.3' fill='#8a8a8a'/>
+<rect x='804' y='130' width='136' height='130' rx='10' fill='#00897b' fill-opacity='0.22' stroke='#00897b' stroke-width='2'/>
+<text x='872' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Vol 11</text>
+<text x='872' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Research methods</text>
+<text x='480' y='320' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>9A before your first scaffold. 9B before your first real tool. The supplements are gates, not extras.</text>
+<text x='480' y='360' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Full path adds depth: distributed training, post-training, evals and safety, then the reading room.</text>
+<text x='480' y='408' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>The one takeaway: the path order is the dependency order. Skipping ahead borrows confusion.</text>
+</svg>
