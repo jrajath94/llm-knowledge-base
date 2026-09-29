@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 335" role="img" aria-label="The 90-minute first pass">
+<rect width="900" height="335" fill="#0d0d0d"/>
+<text x="450.0" y="20" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">The 90-minute first pass</text>
+<text x="450.0" y="46" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Ninety minutes is enough to decide whether a paper deserves three days. Read in this order.</text>
+<rect x="40.0" y="79.0" width="154.4" height="150.0" rx="6" fill="#111111" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="117.2" y="107.0" text-anchor="middle" fill="#2dd4bf" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">0-15 min</text>
+<text x="117.2" y="131.0" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">The claim</text>
+<text x="50.0" y="151.0" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">One sentence. If you</text>
+<text x="50.0" y="165.2" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">cannot state it, the</text>
+<text x="50.0" y="179.3" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">paper has not earned</text>
+<text x="50.0" y="193.5" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">more time.</text>
+<rect x="206.4" y="79.0" width="154.4" height="150.0" rx="6" fill="#111111" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="283.6" y="107.0" text-anchor="middle" fill="#2dd4bf" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">15-35 min</text>
+<text x="283.6" y="131.0" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">The method sketch</text>
+<text x="216.4" y="151.0" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">Data, model, recipe,</text>
+<text x="216.4" y="165.2" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">evals. One paragraph.</text>
+<rect x="372.8" y="79.0" width="154.4" height="150.0" rx="6" fill="#111111" stroke="#4aa8ff" stroke-width="1.5"/>
+<text x="450.0" y="107.0" text-anchor="middle" fill="#4aa8ff" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">35-55 min</text>
+<text x="450.0" y="131.0" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">The ablations</text>
+<text x="382.8" y="151.0" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">Which ingredients were</text>
+<text x="382.8" y="165.2" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">removed, and what</text>
+<text x="382.8" y="179.3" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">happened? No ablations:</text>
+<text x="382.8" y="193.5" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">no causal claims.</text>
+<rect x="539.2" y="79.0" width="154.4" height="150.0" rx="6" fill="#111111" stroke="#4aa8ff" stroke-width="1.5"/>
+<text x="616.4" y="107.0" text-anchor="middle" fill="#4aa8ff" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">55-75 min</text>
+<text x="616.4" y="131.0" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">The evals</text>
+<text x="549.2" y="151.0" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">Which benchmarks, how</text>
+<text x="549.2" y="165.2" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">many seeds, error bars?</text>
+<text x="549.2" y="179.3" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">Evals must match the</text>
+<text x="549.2" y="193.5" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">claim.</text>
+<rect x="705.6" y="79.0" width="154.4" height="150.0" rx="6" fill="#111111" stroke="#b388ff" stroke-width="1.5"/>
+<text x="782.8" y="107.0" text-anchor="middle" fill="#b388ff" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">75-90 min</text>
+<text x="782.8" y="131.0" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">The baselines</text>
+<text x="715.6" y="151.0" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">Strongest known</text>
+<text x="715.6" y="165.2" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">alternative, or a weak</text>
+<text x="715.6" y="179.3" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">version? An undertuned</text>
+<text x="715.6" y="193.5" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">baseline is a hollow</text>
+<text x="715.6" y="207.7" text-anchor="start" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">victory.</text>
+<rect x="40.0" y="241.0" width="820.0" height="56.0" rx="6" fill="#101010" stroke="#2dd4bf" stroke-width="1"/>
+<text x="60.0" y="275.0" text-anchor="start" fill="#ececec" font-size="12.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">Graduates only if: the claim is interesting, the ablations support it, and the evals are clean.</text>
+</svg>
