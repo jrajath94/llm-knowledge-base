@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="230" viewBox="0 0 720 230" role="img" aria-label="XLA compilation pipeline">
+<rect width="720" height="230" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">XLA: the compiler both stacks share</text>
+<rect class="box" x="20" y="70" width="128" height="70" rx="8"/>
+<line x1="20" y1="70" x2="20" y2="140" stroke="#f0b429" stroke-width="4"/>
+<text x="84" y="100" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">JAX program</text>
+<text x="84" y="120" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">jit / pjit</text>
+<path d="M148,105 L158,105" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<rect class="box" x="158" y="70" width="128" height="70" rx="8"/>
+<line x1="158" y1="70" x2="158" y2="140" stroke="#58a6ff" stroke-width="4"/>
+<text x="222" y="100" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">computation graph</text>
+<text x="222" y="120" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">captured</text>
+<path d="M286,105 L296,105" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<rect class="box" x="296" y="70" width="128" height="70" rx="8"/>
+<line x1="296" y1="70" x2="296" y2="140" stroke="#3fb950" stroke-width="4"/>
+<text x="360" y="100" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">fusion</text>
+<text x="360" y="120" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">one kernel, many ops</text>
+<path d="M424,105 L434,105" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<rect class="box" x="434" y="70" width="128" height="70" rx="8"/>
+<line x1="434" y1="70" x2="434" y2="140" stroke="#8a8a8a" stroke-width="4"/>
+<text x="498" y="100" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">layout</text>
+<text x="498" y="120" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">memory placement</text>
+<path d="M562,105 L572,105" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<rect class="box" x="572" y="70" width="128" height="70" rx="8"/>
+<line x1="572" y1="70" x2="572" y2="140" stroke="#e5484d" stroke-width="4"/>
+<text x="636" y="100" text-anchor="middle" fill="#ececec" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">codegen</text>
+<text x="636" y="120" text-anchor="middle" fill="#a8a8a8" font-size="10" font-weight="400" font-family="Charis SIL, Georgia, serif">GPU or TPU code</text>
+<text x="360" y="180" text-anchor="middle" fill="#ececec" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">collectives are placed by the compiler, not hand-written per rank</text>
+<text x="360" y="204" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">learn the sharding model and the GPU intuition sharpens too</text>
+</svg>
