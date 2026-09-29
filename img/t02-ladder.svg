@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 464" width="100%" style="max-width:760px" role="img" aria-label="Four rungs: base model, SFT, preferences via DPO PPO or GRPO, behaves; one shared leash">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="760" height="464" fill="none"/>
+<text class="t" x="24" y="30">The post-training ladder: base model to behaving model</text>
+<rect x="24" y="56" width="712" height="64" rx="8" fill="#141414" stroke="#8a8a8a" stroke-width="1.8"/>
+<text class="big" x="44" y="84">Base model</text>
+<text class="m" x="44" y="106">predicts text</text>
+<path class="arr" d="M380 120 L380 144"/>
+<rect x="24" y="144" width="712" height="64" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="1.8"/>
+<text class="big" x="44" y="172">SFT</text>
+<text class="m" x="44" y="194">demonstrations in, good responses out; installs format; produces the reference model</text>
+<path class="arr" d="M380 208 L380 232"/>
+<rect x="24" y="232" width="712" height="64" rx="8" fill="#141414" stroke="#f0b429" stroke-width="1.8"/>
+<text class="big" x="44" y="260">Preferences</text>
+<text class="m" x="44" y="282">DPO: one loss on fixed pairs. PPO: online RL with a learned reward. GRPO: online RL with a verifier.</text>
+<path class="arr" d="M380 296 L380 320"/>
+<rect x="24" y="320" width="712" height="64" rx="8" fill="#141414" stroke="#7fc97f" stroke-width="1.8"/>
+<text class="big" x="44" y="348">Behaves</text>
+<text class="m" x="44" y="370">a model that behaves</text>
+<text class="num" x="24" y="416">One leash at every stage: J(p) = E[r] - b x KL(p || p_ref). Beta prices drift.</text>
+<text class="m" x="24" y="440">SFT produces the reference: a frozen copy of the trained policy that every later stage is measured against.</text>
+</svg>
