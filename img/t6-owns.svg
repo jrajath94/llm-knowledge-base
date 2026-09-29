@@ -1,0 +1,29 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 470' width='100%' role='img'>
+<title>What an agent systems engineer owns</title>
+<text x='480' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>What an agent systems engineer owns</text>
+<text x='480' y='70' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>The model is one component. The owned surface is the harness and everything it touches.</text>
+<rect x='30' y='110' width='280' height='140' rx='10' fill='#1565c0' fill-opacity='0.22' stroke='#1565c0' stroke-width='2'/>
+<text x='170' y='136' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Control loop</text>
+<text x='170' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>ReAct, plan-and-execute,</text>
+<text x='170' y='174' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>multi-agent patterns</text>
+<rect x='340' y='110' width='280' height='140' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='480' y='136' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Tool use</text>
+<text x='480' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>narrow schemas, clear errors,</text>
+<text x='480' y='174' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>idempotent side effects</text>
+<rect x='650' y='110' width='280' height='140' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='790' y='136' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Memory</text>
+<text x='790' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>compaction, episodic,</text>
+<text x='790' y='174' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>semantic stores</text>
+<rect x='30' y='275' width='280' height='140' rx='10' fill='#c0392b' fill-opacity='0.22' stroke='#c0392b' stroke-width='2'/>
+<text x='170' y='301' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Reliability</text>
+<text x='170' y='321' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>checkpoints, retries with</text>
+<text x='170' y='339' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>judgment, human review</text>
+<rect x='340' y='275' width='280' height='140' rx='10' fill='#8e24aa' fill-opacity='0.22' stroke='#8e24aa' stroke-width='2'/>
+<text x='480' y='301' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Cost</text>
+<text x='480' y='321' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>token ledger, routing,</text>
+<text x='480' y='339' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>budget from task value</text>
+<rect x='650' y='275' width='280' height='140' rx='10' fill='#00897b' fill-opacity='0.22' stroke='#00897b' stroke-width='2'/>
+<text x='790' y='301' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Evals</text>
+<text x='790' y='321' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>acceptance harnesses,</text>
+<text x='790' y='339' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>graded task success</text>
+</svg>
