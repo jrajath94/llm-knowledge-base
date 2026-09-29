@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Engineer Track: Applied LLM Systems</title>
 <style>
@@ -535,6 +543,8 @@ Background: know it exists                (Vol 5, Vol 6, Vol 1, Vol 15)
 </code></pre></p>
 <p><em>How to read this diagram.</em> Phases A through C are the working core: you need them to ship anything. Phase D is the thinking layer: system design, papers, and post-training behavior. Phase E is the communication layer. Background volumes matter, but they support rather than drive this role.</p>
 <h2 id="phase-a-how-the-machine-thinks">Phase A: how the machine thinks</h2>
+<figure><img src="img/t8-phase-map.svg" alt="The five phases: thinks, measured, served, reasoned about, explained" /><figcaption>How to read this diagram: the five phases left to right. Understand the machine, measure it, serve it cheaply, then reason about it and explain it. Never serve what you cannot measure.</figcaption></figure>
+
 <table>
 <thead>
 <tr>
@@ -697,6 +707,8 @@ Background: know it exists                (Vol 5, Vol 6, Vol 1, Vol 15)
 <figure><img src="img/t08-retrieval-loop.svg" alt="Two lanes: build time chunks documents, embeds them into vectors, and stores them in an index; query time embeds the question, searches the index for nearest neighbors, packs the top chunks into the prompt, and generates the answer" /><figcaption>How to read this diagram: the top lane runs once. It turns your documents into a searchable index of meaning-vectors. The bottom lane runs on every request. The dashed arrow is the point: the index built at build time is what query time searches. Retrieve, pack, generate.</figcaption></figure>
 <h2 id="11-chunking-strategies-compared-with-numbers">1.1 Chunking strategies, compared with numbers</h2>
 <p>A <dfn>chunk</dfn> is one piece of a document that gets embedded and retrieved as a unit. Chunking is the first decision and the hardest to change later, because every chunk boundary is baked into your index. Get it wrong and the retriever returns half-sentences.</p>
+<figure><img src="img/t8-chunking-compare.svg" alt="Three chunking strategies compared on the same 10,000-token corpus" /><figcaption>How to read this diagram: three strategies on the same worked corpus of 10,000 tokens of product docs. Hierarchical won the measured eval with 0.917 recall at 5 against 0.817 for fixed-size. Chunking is baked into the index, so measure before you commit.</figcaption></figure>
+
 <p>The worked corpus (corpus: the document collection you index) for every number in this section: 10,000 tokens of product documentation, average sentence 20 tokens.</p>
 <p><strong>Fixed-size chunking.</strong> Cut every N tokens, with an overlap of O tokens so sentences split at a boundary still appear whole in a neighboring chunk. The step between chunk starts is N minus O.</p>
 <table>
@@ -770,6 +782,8 @@ BM25 top-50   ──┘
 <p>Now look at the dashed arrow across the top: end-to-end backprop (backprop: training updates flowing backward through the network). The retriever is not frozen. When the generator is wrong, the error signal flows back and teaches the retriever to fetch better documents next time.</p>
 <h2 id="13-reranking-the-picky-second-opinion">1.3 Reranking: the picky second opinion</h2>
 <p>A <dfn>reranker</dfn> scores query-chunk pairs directly, usually with a cross-encoder model that reads the query and the chunk together. It is slower than embedding search: tens of milliseconds per pair instead of microseconds. But it is far more accurate at the top of the list, because it sees the actual text, not just two vectors.</p>
+<figure><img src="img/t8-rerank-funnel.svg" alt="The reranking funnel: 20 candidates in, top 5 reordered out" /><figcaption>How to read this diagram: the funnel runs top to bottom. Twenty cheap candidates enter from embedding search; the cross-encoder scores each pair at about 15 ms; the top five come out reordered. The latency math decides when you can afford one.</figcaption></figure>
+
 <p>The cost math decides when to use one. Reranking 20 pairs at 15 ms each adds 300 ms to the query path. If your p95 latency budget is 8 seconds, that is fine. If it is 1 second, it is not.</p>
 <p>The quality math: on question-answering evals, adding a reranker typically moves top-5 precision (the share of the top 5 results that are actually useful) up by 5 to 15 points over RRF alone. Measure on your data. The decision is always local.</p>
 <p>One caution: the reranker and the generator can disagree about what "relevant" means. The reranker optimizes textual match. The generator needs answer-bearing text. A chunk that mentions the query terms ten times but never states the answer will fool the reranker and starve the generator. Your golden set should grade the final answer, not the retrieval ranking, so this mismatch shows up where it hurts.</p>
@@ -1056,6 +1070,8 @@ D. Ask the user to rephrase three times</p></div><button class="pq-reveal" aria-
 <p>Prompt engineering has a reputation as alchemy: try phrases until the model behaves. At production scale it is closer to API design. Your system prompt is a specification that runs thousands of times a day. Your few-shot examples are test fixtures (fixed examples that verify behavior). Your context budget is capacity planning. Treat them with the same rigor and they behave.</p>
 <h2 id="21-system-prompt-anatomy">2.1 System prompt anatomy</h2>
 <p>A production system prompt has five sections, in this order. Each has one job.</p>
+<figure><img src="img/t8-prompt-anatomy.svg" alt="System prompt anatomy: role, task, rules, format, context" /><figcaption>How to read this diagram: the five sections in order, top to bottom. Role, task, rules, format, context. Every role token is paid on every request, so keep the prompt as short as the job allows.</figcaption></figure>
+
 <p><pre><code># ROLE            Who the model is. One or two sentences, concrete.
 # TASK            What to do right now. Verbs, not adjectives.
 # RULES           Constraints, in priority order. Number them.
@@ -1255,10 +1271,12 @@ D. Reserves improve accuracy directly</p></div><button class="pq-reveal" aria-ex
 <p><strong>When judges fail.</strong> Judges are weakest exactly where you need them most: novel failure modes, subtle factual errors in long answers, and anything requiring tools or computation to verify. Keep a human-graded slice of every suite run. If the judge and the human slice disagree, trust the humans and recalibrate.</p>
 <h2 id="34-ab-testing-with-users-the-final-grader">3.4 A/B testing with users: the final grader</h2>
 <p>Offline evals predict; users decide. For changes that pass the suite, run an A/B test on live traffic. Control gets the old behavior. Treatment gets the new one. You compare user-outcome metrics: task success, thumbs-down rate, escalation rate.</p>
+<figure><img src="img/t8-ab-test.svg" alt="A/B test: control and candidate arms compared on the same outcome metric" /><figcaption>How to read this diagram: eligible users split into control and candidate arms; both are graded on the same outcome metric from Chapter 3. Offline evals predict; the A/B test is the final grader.</figcaption></figure>
+
 <p>Two disciplines from Vol 11 apply directly. <strong>Randomize properly</strong>: assign by user or session, not by request, so one user does not flip between behaviors mid-conversation. <strong>Guardrail metrics</strong>: watch safety and latency in both arms, because a treatment that raises task success by gaming the guardrails is a failure wearing a success costume.</p>
 <p>Sample size honesty: at a 5 percent baseline thumbs-down rate, detecting a 1-point move needs tens of thousands of sessions per arm. Most teams cannot run that long for every change. The practical stack is: golden suite for direction, A/B for confirmation on the changes that matter, and user metrics as the standing scoreboard from Part 1.</p>
 <h2 id="35-common-misunderstanding">3.5 Common misunderstanding</h2>
-<p>"Our eval score went from 82 to 85, so the new prompt is better." A 3-point move on a 200-item set is inside the noise interval from section 3.1. It might be better. It might be luck. Report the interval, not just the point: "85 percent, 95 percent CI [79.6, 89.2], n = 200, golden v14." The interval is what separates engineering from storytelling.</p>
+<p>"Our eval score went from 82 to 85, so the new prompt is better." A 3-point move on a 200-item set is inside the noise interval from section 3.1. It might be better. It might be luck. Report the interval, not just the point: "85 percent, 95 percent CI [79.4, 89.3], n = 200, golden v14." The interval is what separates engineering from storytelling.</p>
 <h2 id="lab-31-mini-eval-harness">Lab 3.1: mini eval harness</h2>
 <p>A complete harness in one file. A golden dataset with versioning. A runner that grades candidate outputs. A judge stub with calibration (Cohen's kappa against human labels). And a report with the Wilson interval. Swap the stubs for your real grader and judge; the structure stays.</p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li><code>GoldenItem</code> and <code>GoldenSet</code> hold tasks, references, and a version string. Every report prints the version.</li>
@@ -1427,6 +1445,8 @@ D. Cannot tell without more data</p></div><button class="pq-reveal" aria-expande
 <p>This chapter covers two related mechanisms: asking the model to emit a schema-shaped response (structured output), and asking it to request tool calls in a loop (function calling). Both live or die on the same discipline: strict schemas, validation on your side, and planned failure handling.</p>
 <h2 id="41-schema-design-write-schemas-the-model-can-follow">4.1 Schema design: write schemas the model can follow</h2>
 <p>A <dfn>schema</dfn> is a contract: field names, types, which fields are required, and what values are allowed. The model reads the schema as part of the prompt, so schema design is prompt design. Rules that survive production:</p>
+<figure><img src="img/t8-schema-loop.svg" alt="Schema to validation loop: schema, model output, validate plus repair" /><figcaption>How to read this diagram: the schema is the contract, the model writes to it, and validation plus repair closes the loop. Strict types, enums over strings, two nesting levels max. Validation without repair is a dead end.</figcaption></figure>
+
 <p><strong>1. Strict types, no cleverness.</strong> Use string, number, integer, boolean, enum, and flat objects. Avoid deep nesting (two levels max), avoid oneOf/anyOf unions, avoid free-form maps. Every exotic construct is a parse error waiting for traffic.</p>
 <p><strong>2. Enums over strings.</strong> If a field has five valid values, list them as an enum. "status: one of [open, pending, resolved]" beats "status: a string describing the state." Enums turn a generation problem into a selection problem, which models do far better.</p>
 <p><strong>3. Required fields are required.</strong> Mark every field the downstream code needs as required. Give the model a legal value for edge cases: "If unknown, use null, never omit the field." Omitted fields crash parsers; explicit nulls are handled.</p>
@@ -1667,6 +1687,8 @@ D. Clear the history and restart</p></div><button class="pq-reveal" aria-expande
 <p>Every model call has a price tag and a stopwatch. This chapter is the arithmetic of keeping both under control: the per-request math, the four cost levers (caching, routing, budgets, and model choice), and the latency work that makes products feel instant. The role-ask data names cost-per-successful-outcome as the recurring economic phrase in production AI teams. This chapter teaches you to compute it and move it.</p>
 <h2 id="51-the-1k-requests-math">5.1 The $/1K requests math</h2>
 <p>Start with the unit economics. Define the average request: input tokens in, output tokens out. Then:</p>
+<figure><img src="img/t8-cost-per-1k.svg" alt="Cost per 1K requests worked: $5.00 input plus $5.00 output" /><figcaption>How to read this diagram: the worked example for a support copilot. Input tokens run 4 to 1 over output tokens (2,000 in vs 500 out), but input pricing is a quarter of output pricing, so the two costs tie: $5.00 plus $5.00 per 1K requests, one cent per request. Write this math before the architecture.</figcaption></figure>
+
 <div class="phase2-eq" style="text-align:center;margin:1.3rem 0;font-size:1.12em;">cost per request = (T<sub>in</sub> / 10<sup>6</sup> &#215; P<sub>in</sub>) + (T<sub>out</sub> / 10<sup>6</sup> &#215; P<sub>out</sub>)</div>
 <p style="margin:-.6rem 0 1.2rem;text-align:center;font-size:.92em;color:var(--muted,#999);">where <strong>T<sub>in</sub>, T<sub>out</sub></strong> = input and output tokens per request, <strong>P<sub>in</sub>, P<sub>out</sub></strong> = price per million input and output tokens.</p>
 <p><strong>Worked example.</strong> A support copilot averages 2,000 input tokens (system prompt + chunks + history) and 500 output tokens. Premium-tier pricing: $2.50 per million input, $10.00 per million output.</p>
@@ -1764,7 +1786,7 @@ if __name__ == &quot;__main__&quot;:
     print(&quot;Then raise escalate_frac to 0.6 (bad router) and watch the&quot;)
     print(&quot;cascade advantage shrink: routing quality IS cost control.&quot;)
 </code></pre></p>
-<p>Sample output at defaults: all_premium $10.00/1K ($30,000/month), cascade $5.79/1K, cascade+cache $4.05/1K. The naive cascade pays for both calls on escalations, which is why the saving is 42 percent, not the 66 percent of the optimistic math in section 5.2. Honest accounting beats optimistic accounting.</p></div><div class="pq"><div class="pq-q"><p><strong>Q1.</strong> Premium tier costs $10/1K requests. Your cascade serves 70 percent on economy ($0.60/1K equivalent at this profile... use the lab's numbers) and escalates 30 percent, paying both calls on escalation. What dominates the cascade bill?
+<p>Sample output at defaults: all_premium $10.00/1K ($30,000/month), cascade $3.60/1K ($10,800/month), cascade+cache $2.52/1K ($7,560/month). The naive cascade pays for both calls on escalations, which is why the saving is 64 percent: honest math includes the double payment, not just the cheap tier's price. of the optimistic math in section 5.2. Honest accounting beats optimistic accounting.</p></div><div class="pq"><div class="pq-q"><p><strong>Q1.</strong> Premium tier costs $10/1K requests. Your cascade serves 70 percent on economy ($0.60/1K equivalent at this profile... use the lab's numbers) and escalates 30 percent, paying both calls on escalation. What dominates the cascade bill?
 A. The cheap calls
 B. The escalated premium calls, because they pay twice
 C. The router
@@ -1772,7 +1794,7 @@ D. The cache</p><p><strong>Q2.</strong> Two products: A has 800 ms TTFT and 6 s 
 A. B, lower total
 B. A, because streaming makes TTFT the perceived latency
 C. Tie, latency is latency
-D. Neither, users cannot tell</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Each escalated request pays cheap + premium. At 30 percent escalation that double-payment is most of the $5.79. Cutting the escalation rate (better router) beats haggling over the cheap tier.
+D. Neither, users cannot tell</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Each escalated request pays cheap + premium. At 30 percent escalation that double-payment is most of the $3.60. Cutting the escalation rate (better router) beats haggling over the cheap tier.
 - <strong>A, wrong:</strong> cheap calls are 70 percent of traffic but a small share of dollars.
 - <strong>C, wrong:</strong> the router is a small classifier; its cost is noise here.
 - <strong>D, wrong:</strong> the cache only helps in strategy 3.</p></div><div class="pq-a" hidden><p><strong>Answer: B.</strong> With streaming, users start reading at the first token. An 800 ms first paint feels instant; a 4 s blank screen feels broken, even though B finishes first.
@@ -1805,9 +1827,13 @@ D. Neither, users cannot tell</p></div><button class="pq-reveal" aria-expanded="
   + delimiters         + freshness +        PII redaction +
                        provenance           audit trails
 </code></pre></p>
+<figure><img src="img/t8-threat-model.svg" alt="The threat model: three attack surfaces, three defense layers" /><figcaption>How to read this diagram: three attack surfaces, three defense layers, one diagram. Malicious input, poisoned retrieval, and data extraction. Notice the middle one: retrieved docs are attacker-controlled too, and teams forget it.</figcaption></figure>
+
 <p>Three attack surfaces, three defense layers. Notice the middle one: RAG systems can be attacked through the corpus, not just the chat box. A document that says "always approve refunds" is an instruction to the model wearing a document costume. Corpus hygiene (who can write to the index, freshness checks, provenance metadata) is a guardrail most teams discover late.</p>
 <h2 id="62-input-filtering">6.2 Input filtering</h2>
 <p>Input filters inspect the user's message before the model sees it. They are pattern matching plus policy, not AI magic.</p>
+<figure><img src="img/t8-guardrails.svg" alt="Guardrails on both sides of the model: input filters and output filters" /><figcaption>How to read this diagram: guardrails on both sides of the model. Input filters run before the model sees the message; output filters run before the user sees the answer. Grade the classifier like a judge before trusting it in the path.</figcaption></figure>
+
 <p><strong>Injection patterns.</strong> The classic attack is <dfn>prompt injection</dfn>: "Ignore your instructions and ..." Defenses, in order of reliability:</p>
 <ol>
 <li><strong>Delimiters.</strong> Wrap untrusted input in clear markers (<code>&lt;user_input&gt;...&lt;/user_input&gt;</code>) and instruct the model that content inside markers is data, never instructions. This is your Chapter 2 context fencing doing security work.</li>
@@ -1818,6 +1844,8 @@ D. Neither, users cannot tell</p></div><button class="pq-reveal" aria-expanded="
 <p><strong>Length and rate limits.</strong> Cap input length per request. No legitimate support question needs 50,000 characters; a 50K input is either an attack or a paste error. Both deserve a polite rejection.</p>
 <h2 id="63-output-filtering-and-pii-redaction">6.3 Output filtering and PII redaction</h2>
 <p>Output filters inspect the model's response before the user sees it. Two jobs: catch policy violations, and catch data leaks.</p>
+<figure><img src="img/t8-output-filters.svg" alt="Output pipeline: PII redactor then policy classifier, deliver or rewrite" /><figcaption>How to read this diagram: output filters inspect the model's response before the user sees it. The PII redactor scrubs names, emails, and keys; the policy classifier catches harmful or off-topic content. Pass delivers; fail rewrites or refuses.</figcaption></figure>
+
 <p><strong>Policy checks.</strong> A lightweight classifier (or a second small model with a strict rubric) scores the output for disallowed content. Run it on every response in sensitive domains; sample it elsewhere. The classifier is graded on its own golden set of violating and clean outputs, with the same kappa discipline as Chapter 3 judges. A filter with unknown accuracy is a liability: it either blocks good answers (user harm) or passes bad ones (trust harm).</p>
 <p><strong>PII redaction.</strong> Personally identifying information appears in three places: user messages ("my SSN is..."), retrieved documents, and model outputs. The rule: detect at the boundary, redact everywhere downstream.</p>
 <p>Detection is pattern matching plus a classifier for the ambiguous cases. The lab below implements the pattern layer: emails, phone numbers, SSNs (US Social Security numbers), credit card numbers. The classifier layer (a small NER, named entity recognition, model) catches names and addresses that patterns miss. Redact in traces and logs too (Chapter 7): a PII leak into your logging pipeline is a breach with a paper trail.</p>
@@ -1957,7 +1985,7 @@ span: prompt_build
 span: model_call
   model: premium-tier, temperature 0.2
   ttft_ms: 812, total_ms: 3400
-  output_tokens: 312, cost_usd: 0.0081
+  output_tokens: 312, cost_usd: 0.0077
 span: validation
   schema: TicketSummary, result: pass
 span: guardrails_out
@@ -2133,7 +2161,7 @@ if __name__ == &quot;__main__&quot;:
         tracer.add_span(tr, &quot;model_call&quot;, duration_ms=random.randint(
             2500, 4200), inputs={&quot;input_tokens&quot;: 1843},
             outputs={&quot;ttft_ms&quot;: random.randint(600, 1000),
-                     &quot;output_tokens&quot;: 312}, cost_usd=0.0081)
+                     &quot;output_tokens&quot;: 312}, cost_usd=0.0077)
         tracer.add_span(tr, &quot;guardrails_out&quot;, duration_ms=40, inputs={},
                         outputs={&quot;pii_findings&quot;: []})
         down_p = 0.25 if bad else 0.08  # drift: down-rate triples
