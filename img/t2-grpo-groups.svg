@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="450" viewBox="0 0 720 450" role="img" aria-label="GRPO group advantages with uniform-group warning">
+<rect width="720" height="450" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">GRPO: the group is the baseline</text>
+<rect class="box" x="30" y="60" width="155" height="80" rx="8"/>
+<text class="t" x="108" y="84" text-anchor="middle">response A</text>
+<text class="s" x="108" y="104" text-anchor="middle">one sampled answer</text>
+<line x1="30" y1="60" x2="30" y2="140" stroke="#f0b429" stroke-width="4"/>
+<rect class="box" x="198" y="60" width="155" height="80" rx="8"/>
+<text class="t" x="276" y="84" text-anchor="middle">response B</text>
+<text class="s" x="276" y="104" text-anchor="middle">one sampled answer</text>
+<line x1="198" y1="60" x2="198" y2="140" stroke="#f0b429" stroke-width="4"/>
+<rect class="box" x="366" y="60" width="155" height="80" rx="8"/>
+<text class="t" x="444" y="84" text-anchor="middle">response C</text>
+<text class="s" x="444" y="104" text-anchor="middle">one sampled answer</text>
+<line x1="366" y1="60" x2="366" y2="140" stroke="#e5484d" stroke-width="4"/>
+<rect class="box" x="534" y="60" width="155" height="80" rx="8"/>
+<text class="t" x="612" y="84" text-anchor="middle">response D</text>
+<text class="s" x="612" y="104" text-anchor="middle">one sampled answer</text>
+<line x1="534" y1="60" x2="534" y2="140" stroke="#e5484d" stroke-width="4"/>
+<text x="360" y="170" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">verifier scores</text>
+<path d="M360,178 L360,200" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<text x="107" y="222" text-anchor="middle" fill="#f0b429" font-size="15" font-weight="700" font-family="Charis SIL, Georgia, serif">A: 1</text>
+<text x="275" y="222" text-anchor="middle" fill="#f0b429" font-size="15" font-weight="700" font-family="Charis SIL, Georgia, serif">B: 1</text>
+<text x="443" y="222" text-anchor="middle" fill="#e5484d" font-size="15" font-weight="700" font-family="Charis SIL, Georgia, serif">C: 0</text>
+<text x="611" y="222" text-anchor="middle" fill="#e5484d" font-size="15" font-weight="700" font-family="Charis SIL, Georgia, serif">D: 0</text>
+<text x="360" y="248" text-anchor="middle" fill="#ececec" font-size="13" font-weight="400" font-family="Charis SIL, Georgia, serif">mean 0.5,  std 0.5  ->  advantage = (score - mean) / std</text>
+<rect class="box" x="30" y="262" width="155" height="52" rx="8"/>
+<text x="107" y="295" text-anchor="middle" fill="#f0b429" font-size="20" font-weight="700" font-family="Charis SIL, Georgia, serif">+1</text>
+<rect class="box" x="198" y="262" width="155" height="52" rx="8"/>
+<text x="275" y="295" text-anchor="middle" fill="#f0b429" font-size="20" font-weight="700" font-family="Charis SIL, Georgia, serif">+1</text>
+<rect class="box" x="366" y="262" width="155" height="52" rx="8"/>
+<text x="443" y="295" text-anchor="middle" fill="#e5484d" font-size="20" font-weight="700" font-family="Charis SIL, Georgia, serif">-1</text>
+<rect class="box" x="534" y="262" width="155" height="52" rx="8"/>
+<text x="611" y="295" text-anchor="middle" fill="#e5484d" font-size="20" font-weight="700" font-family="Charis SIL, Georgia, serif">-1</text>
+<text x="360" y="342" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">good answers pushed up, bad answers pushed down, no value model needed</text>
+<rect x="130" y="360" width="460" height="70" rx="8" fill="#1a1206" stroke="#f0b429" stroke-width="1"/>
+<text x="360" y="386" text-anchor="middle" fill="#a8a8a8" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">uniform group [1,1,1,1]: std = 0, advantage undefined,</text>
+<text x="360" y="404" text-anchor="middle" fill="#a8a8a8" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">the group teaches nothing. Sample a wider difficulty range.</text>
+</svg>
