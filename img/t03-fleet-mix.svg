@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 426" width="100%" style="max-width:760px" role="img" aria-label="Spot discount and 10th-percentile sizing; shadow week cost and breakeven; promotion gates and ramp">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="760" height="426" fill="none"/>
+<text class="t" x="24" y="30">Fleet mix: spot discount, sizing rule, shadow economics</text>
+<text class="big" x="24" y="88">Spot discount: 50-70% off on-demand. Effective discount after realistic retry costs: ~60%+.</text>
+<text class="num" x="24" y="114">Size reserved for the 10th-percentile load, not the mean. Peaks go on spot.</text>
+<rect x="24" y="140" width="712" height="88" rx="8" fill="#141414" stroke="#f0b429" stroke-width="1.6"/>
+<text class="num" x="44" y="170">shadow week: 350k mirrored requests x $0.014 = $4,900</text>
+<text class="big" x="44" y="194">promotion saves $2,100/week forever; breakeven ~2.3 weeks</text>
+<text class="big" x="24" y="262">Promotion gates, written before the shadow starts:</text>
+<text class="m" x="44" y="288">- quality within 0.5 points of baseline</text>
+<text class="m" x="44" y="314">- p99 latency within 110% of baseline</text>
+<text class="m" x="44" y="340">- cost per request at or below baseline</text>
+<text class="m" x="44" y="366">- error-rate bump under 0.5 points</text>
+<text class="num" x="24" y="402">Ramp 1%, 10%, 50%, 100% with automatic rollback triggers. The rollback path is tested before the ramp starts.</text>
+</svg>
