@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470" font-family="ui-sans-serif, system-ui, sans-serif" role="img" aria-label="The hourglass structure of a research paper">
+  <polygon points="140,60 540,60 420,190 260,190" fill="#101010" stroke="#3a3a3a"/>
+  <text x="340" y="100" font-size="13" fill="#f0b429" font-weight="700" letter-spacing="2" text-anchor="middle">BROAD</text>
+  <text x="340" y="124" font-size="14" fill="#ececec" text-anchor="middle">the problem, and why it matters</text>
+  <text x="340" y="150" font-size="13" fill="#a8a8a8" text-anchor="middle">Abstract, Introduction</text>
+  <text x="340" y="170" font-size="12" fill="#a8a8a8" text-anchor="middle">answers: what problem, what claim</text>
+  <polygon points="260,190 420,190 400,300 280,300" fill="#101010" stroke="#f0b429" stroke-width="1.5"/>
+  <text x="340" y="232" font-size="13" fill="#f0b429" font-weight="700" letter-spacing="2" text-anchor="middle">NARROW</text>
+  <text x="340" y="256" font-size="14" fill="#ececec" text-anchor="middle">your exact claim and evidence</text>
+  <text x="340" y="282" font-size="13" fill="#a8a8a8" text-anchor="middle">Methods, Results</text>
+  <polygon points="280,300 400,300 540,430 140,430" fill="#101010" stroke="#3a3a3a"/>
+  <text x="340" y="344" font-size="13" fill="#f0b429" font-weight="700" letter-spacing="2" text-anchor="middle">BROAD</text>
+  <text x="340" y="368" font-size="14" fill="#ececec" text-anchor="middle">what it means, what could be wrong</text>
+  <text x="340" y="394" font-size="13" fill="#a8a8a8" text-anchor="middle">Discussion, limitations, future work</text>
+  <text x="340" y="414" font-size="12" fill="#a8a8a8" text-anchor="middle">answers: so what, and what next</text>
+</svg>
