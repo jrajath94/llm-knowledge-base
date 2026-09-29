@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="660" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Why the RL loop uses inference engines</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Naive generation wastes the GPUs that rollouts are supposed to feed</text>
+<rect x="24" y="84" width="420" height="300" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="234" y="118" font-size="15" font-weight="bold" fill="#e57ea6" text-anchor="middle">Naive generation</text>
+<text x="48" y="156" font-size="11" fill="#a8a8a8" text-anchor="start">Static batching: every sequence padded</text>
+<text x="48" y="175" font-size="11" fill="#a8a8a8" text-anchor="start">to the longest; the batch waits for</text>
+<text x="48" y="194" font-size="11" fill="#a8a8a8" text-anchor="start">the slowest. One 4,000-token</text>
+<text x="48" y="213" font-size="11" fill="#a8a8a8" text-anchor="start">straggler idles seven-eighths</text>
+<text x="48" y="232" font-size="11" fill="#a8a8a8" text-anchor="start">of the batch&#x27;s GPU slots.</text>
+<text x="48" y="251" font-size="11" fill="#a8a8a8" text-anchor="start"></text>
+<text x="48" y="270" font-size="11" fill="#a8a8a8" text-anchor="start">KV cache fragmentation: each sequence</text>
+<text x="48" y="289" font-size="11" fill="#a8a8a8" text-anchor="start">reserves one long contiguous block.</text>
+<rect x="456" y="84" width="420" height="300" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="666" y="118" font-size="15" font-weight="bold" fill="#4fd1a5" text-anchor="middle">vLLM / SGLang</text>
+<text x="480" y="156" font-size="11" fill="#a8a8a8" text-anchor="start">Continuous batching: finished slots</text>
+<text x="480" y="175" font-size="11" fill="#a8a8a8" text-anchor="start">refill immediately; no one waits</text>
+<text x="480" y="194" font-size="11" fill="#a8a8a8" text-anchor="start">for the straggler.</text>
+<text x="480" y="213" font-size="11" fill="#a8a8a8" text-anchor="start"></text>
+<text x="480" y="232" font-size="11" fill="#a8a8a8" text-anchor="start">Paged KV cache: non-contiguous</text>
+<text x="480" y="251" font-size="11" fill="#a8a8a8" text-anchor="start">blocks, no fragmentation.</text>
+<text x="480" y="270" font-size="11" fill="#a8a8a8" text-anchor="start"></text>
+<text x="480" y="289" font-size="11" fill="#a8a8a8" text-anchor="start">Several times faster per GPU</text>
+<text x="480" y="308" font-size="11" fill="#a8a8a8" text-anchor="start">than a naive generate loop.</text>
+<rect x="24" y="424" width="852" height="126" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="450" y="456" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">The loop this enables</text>
+<text x="48" y="486" font-size="11" fill="#a8a8a8" text-anchor="start">Trainer finishes a gradient step, broadcasts the new weights to the rollout workers, workers generate</text>
+<text x="48" y="503" font-size="11" fill="#a8a8a8" text-anchor="start">the next batch with the fresh policy. Generation and training alternate at engine speed.</text>
+<text x="24" y="564" font-size="11" fill="#8a8a8a" text-anchor="start">Rollout workers are inference servers that hold the policy weights and do nothing but generate.</text>
+</svg>
