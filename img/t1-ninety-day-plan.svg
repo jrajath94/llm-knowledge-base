@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 581" role="img" aria-label="The first 90 days: the track as a working routine">
+<rect width="900" height="581" fill="#0d0d0d"/>
+<text x="450.0" y="20" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">The first 90 days: the track as a working routine</text>
+<text x="450.0" y="46" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Chapter 9 was the dress rehearsal; this is the schedule. Keep the order; adjust the pace to your hours.</text>
+<rect x="40.0" y="79.0" width="820.0" height="120.0" rx="6" fill="#111111" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="60.0" y="107.0" text-anchor="start" fill="#2dd4bf" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">Days 1-30</text>
+<text x="180.0" y="107.0" text-anchor="start" fill="#ececec" font-size="13.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">FOUNDATIONS + FIRST RUNS</text>
+<text x="60.0" y="131.0" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Vol 0, 1, 2, 3; start Vol 4. Project: tiny GPT from the Vol 5 capstone. Watch its loss curve daily.</text>
+<text x="60.0" y="145.8" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Drill the Chapter 8 signatures until recognition is instant.</text>
+<text x="60.0" y="183.0" text-anchor="start" fill="#2dd4bf" font-size="11.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">Deliverable: a running model.</text>
+<rect x="40.0" y="209.0" width="820.0" height="120.0" rx="6" fill="#111111" stroke="#4aa8ff" stroke-width="1.5"/>
+<text x="60.0" y="237.0" text-anchor="start" fill="#4aa8ff" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">Days 31-60</text>
+<text x="180.0" y="237.0" text-anchor="start" fill="#ececec" font-size="13.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">TRAINING + JUDGMENT</text>
+<text x="60.0" y="261.0" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Vol 4 + App 4A, Vol 5 + App 5A, Vol 7 + Apps, Vol 11 + Apps, then Vol 12. Project: first real</text>
+<text x="60.0" y="275.9" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">ablation, compute-matched, with CIs.</text>
+<text x="60.0" y="313.0" text-anchor="start" fill="#4aa8ff" font-size="11.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">Deliverable: one-page write-up, including one negative result.</text>
+<rect x="40.0" y="339.0" width="820.0" height="120.0" rx="6" fill="#111111" stroke="#b388ff" stroke-width="1.5"/>
+<text x="60.0" y="367.0" text-anchor="start" fill="#b388ff" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">Days 61-90</text>
+<text x="180.0" y="367.0" text-anchor="start" fill="#ececec" font-size="13.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">SCALE + CAPSTONE</text>
+<text x="60.0" y="391.0" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Vol 6 + Apps, Vol 15, Vol 8 + App 8A. Start the Chinchilla capstone (Ch 9 phases 0-2). Vol 9, 10,</text>
+<text x="60.0" y="405.9" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">13, 14 as reading.</text>
+<text x="60.0" y="443.0" text-anchor="start" fill="#b388ff" font-size="11.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">Deliverable: capstone project plan (Lab 9.1), red-teamed.</text>
+<rect x="40.0" y="479.0" width="820.0" height="64.0" rx="6" fill="#101010" stroke="#2dd4bf" stroke-width="1"/>
+<text x="60.0" y="505.0" text-anchor="start" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">Three habits from day one, from Chapter 1:</text>
+<text x="60.0" y="527.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">kill bad runs early, write the post-mortem, file every negative result where the team will find it.</text>
+</svg>
