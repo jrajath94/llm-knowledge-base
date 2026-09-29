@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 240" width="100%" style="max-width:700px" role="img" aria-label="Funnel: 4096 blocks, 32768 warps, 1056 resident at a time across 132 SMs, about 4 waves">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="700" height="240" fill="none"/>
+<text class="t" x="24" y="30">Worked example: mapping a vector add onto an H100</text>
+<text class="m" x="24" y="58">1,048,576 elements, 1 thread each, 256 threads/block</text>
+<rect class="box" x="24" y="70" width="150" height="56" rx="8"/>
+<text class="big g" x="36" y="94">4,096</text>
+<text class="m" x="36" y="112">blocks</text>
+<path class="arr" d="M186 98 L226 98"/>
+<rect class="box" x="226" y="70" width="150" height="56" rx="8"/>
+<text class="big g" x="238" y="94">32,768</text>
+<text class="m" x="238" y="112">warps (8/block)</text>
+<path class="arr" d="M388 98 L428 98"/>
+<rect class="box" x="428" y="70" width="200" height="56" rx="8"/>
+<text class="big g" x="440" y="94">1,056</text>
+<text class="m" x="440" y="112">blocks resident (132 SM x 8)</text>
+<text class="num" x="24" y="160">4,096 blocks arrive in waves of 1,056: 3.88 -&gt; about 4 waves. Every SM stays fed until the last wave drains.</text>
+<text class="r" x="24" y="196">Block size 32 (1 warp): cap is 32 blocks/SM -&gt; only 32 warps/SM instead of 64.</text>
+<text class="r" x="24" y="216">Block size is a real performance knob, not a style choice.</text>
+</svg>
