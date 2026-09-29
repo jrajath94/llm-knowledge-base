@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="100%" style="max-width:720px" role="img" aria-label="Kernel A vector add far left of the ridge, memory bound at 8 percent of the roof; kernel B FP8 GEMM right of the ridge, compute bound at 60 percent">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="720" height="400" fill="none"/>
+<text class="t" x="24" y="30">Two kernels, two verdicts on one roofline</text>
+<line x1="100" y1="320" x2="680" y2="320" stroke="#5a5a5a" stroke-width="1.5"/>
+<line x1="100" y1="320" x2="100" y2="50" stroke="#5a5a5a" stroke-width="1.5"/>
+<text class="m" x="360.0" y="352" text-anchor="middle">arithmetic intensity (FLOPs/byte, log)</text>
+<text class="m" x="52" y="185" text-anchor="middle" transform="rotate(-90 52 185)">achieved GFLOPS (log)</text>
+<line x1="100.0" y1="294.2250731091003" x2="495.3601055587325" y2="59.98350586583871" stroke="#6cb2ff" stroke-width="2.5"/>
+<line x1="495.3601055587325" y1="59.98350586583871" x2="680" y2="59.98350586583871" stroke="#6cb2ff" stroke-width="2.5"/>
+<text class="b" x="600" y="47.98350586583871">compute roof</text>
+<text class="b" x="139.53290396248633" y="296.8027569683169">memory roof</text>
+<line x1="495.3601055587325" y1="320" x2="495.3601055587325" y2="59.98350586583871" stroke="#8a8a8a" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text class="m" x="495.3601055587325" y="338" text-anchor="middle">ridge 591</text>
+<circle cx="176" cy="249" r="9" fill="#e57373" stroke="#0d0d0d" stroke-width="2"/>
+<text class="r" x="194.15218479687468" y="243.03397547565976">A: vector add, 0.083 FLOP/B</text>
+<text class="m" x="194.15218479687468" y="263.03397547565976">8% of memory roof -&gt; check access pattern</text>
+<circle cx="550" cy="71" r="9" fill="#f0b429" stroke="#0d0d0d" stroke-width="2"/>
+<text class="g" x="532.4380837258636" y="46.890601069501884" text-anchor="end">B: FP8 GEMM, 2,731 FLOP/B</text>
+<text class="m" x="532.4380837258636" y="66.89060106950188" text-anchor="end">compute-bound, 60% of roof</text>
+</svg>
