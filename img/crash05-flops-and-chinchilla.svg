@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 320" width="100%" style="max-width:700px" role="img" aria-label="6ND FLOPs for GPT-3 and Chinchilla; tokens per parameter: Gopher 1.07 undertrained versus the Chinchilla rule of 20">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="700" height="320" fill="none"/>
+<text class="t" x="24" y="30">Training FLOPs and the Chinchilla data rule</text>
+<text class="m" x="24" y="58">Training FLOPs: 6 x params x tokens (2N forward + 4N backward per token)</text>
+<text class="num" x="24" y="90">GPT-3: 6 x 175B x 300B</text>
+<rect x="250" y="72" width="177" height="26" rx="4" fill="#8a8a8a" opacity="0.9"/>
+<text class="num" x="438.7857142857143" y="91">3.15e23 FLOPs</text>
+<text class="num" x="24" y="130">Chinchilla: 6 x 70B x 1.4T</text>
+<rect x="250" y="112" width="330" height="26" rx="4" fill="#f0b429" opacity="0.9"/>
+<text class="num" x="592.0" y="131">5.88e23 FLOPs</text>
+<text class="big g" x="24" y="176">Tokens per parameter: the Chinchilla rule</text>
+<text class="num" x="24" y="210">Gopher (undertrained)</text>
+<rect x="250" y="192" width="18" height="26" rx="4" fill="#e57373" opacity="0.9"/>
+<text class="num" x="279.655" y="211">1.07 tok/param</text>
+<text class="num" x="24" y="250">Chinchilla rule of thumb</text>
+<rect x="250" y="232" width="330" height="26" rx="4" fill="#7fc97f" opacity="0.9"/>
+<text class="num" x="592.0" y="251">20 tok/param</text>
+<text class="m" x="24" y="296">70B -&gt; 1.4T tokens; 7B -&gt; 140B tokens. Bigger budget, smaller model, more data.</text>
+</svg>
