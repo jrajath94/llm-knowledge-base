@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Volume 12: The Guided Paper Spine (Research-Engineer Curriculum)</title>
 <style>
@@ -589,7 +597,18 @@ html.xp-js .xp-reveal.xp-in {
   <p>In 2017, sequence models were recurrent neural networks (RNNs), mostly LSTMs (Long Short-Term Memory, the strongest RNN variant of the era). An RNN reads a sentence one <dfn>token</dfn> at a time (a token is a chunk of text the model reads as one unit, roughly a word piece), left to right, updating a hidden state. That design had two pains. First, training could not be parallelized across the sequence: token 50 cannot be processed until tokens 1 through 49 are done. Second, long-range dependencies were hard: to connect the word "it" in sentence 5 to its referent in sentence 1, the signal had to survive many sequential steps through a fixed-size hidden vector, and it usually degraded.</p>
   <p>Attention already existed (Bahdanau et al., 2014), but it was glued onto an RNN: the RNN still did the sequential reading, and attention just helped the decoder look back at encoder states. The paper asked a radical question: what if we delete the recurrence completely and build the whole model out of attention?</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p01-problem.svg" alt="The problem Attention Is All You Need solved: RNNs could not parallelize">
+<figcaption>Paper 1: the problem it solved. Sequence models were RNNs that could not parallelize and forgot long-range links. The question: what if we delete recurrence entirely and build the model from attention alone? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>RNNs read token 50 only after tokens 1 through 49: training could not parallelize.</li><li>Long-range links decayed through a fixed-size hidden vector.</li><li>The question deletes the recurrence instead of patching it.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/transformer-encoder-decoder-stack.png" alt="The transformer: a stack of 6 encoders on the left and 6 decoders on the right">
   <figcaption>Figure by Jay Alammar, from 'The Illustrated Transformer' (jalammar.github.io), after Vaswani et al. (2017). Saved locally for offline study.</figcaption>
@@ -680,7 +699,18 @@ html.xp-js .xp-reveal.xp-in {
   </table>
   <p>BLEU is a score for machine translation quality; higher is better. The point was not just the score. It was the score <em>plus</em> the training speed. Parallelization across the sequence meant 8 GPUs for 12 hours could do what used to take far longer. That combination is what made training on billions of tokens economically imaginable, which is the precondition for everything in Papers 2 through 5.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p01-impact.svg" alt="Why the transformer mattered: 28.4 and 41.8 BLEU, 12 hours on 8 GPUs">
+<figcaption>Why the transformer mattered: state-of-the-art BLEU (28.4 EN-DE, 41.8 EN-FR) plus training the base model in 12 hours on 8 GPUs. The score and the speed together are the precondition for everything after. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>The scores: new state of the art on both test sets.</li><li>The speed: parallelization made billions of tokens affordable.</li><li>Papers 2 through 5 all assume this combination.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
 <figure class="diagram">
   <img src="img/enr-transformer-trio.png" alt="Three transformer flavors: encoder-only, decoder-only, and encoder-decoder">
   <figcaption>The map behind Paper 1's 'what came next'. Reconstructed sketch drawn for this volume, not a paper figure.</figcaption>
@@ -732,7 +762,18 @@ html.xp-js .xp-reveal.xp-in {
   </section>
 
 <section class="chapter" id="rope-2021">
-  <h2>Paper 2: RoFormer, <dfn>Rotary Position Embedding</dfn> (2021)</h2>
+  <figure class="diagram">
+<img src="img/v12-p01-lineage.svg" alt="After the transformer: GPT, BERT, RoPE, FlashAttention, LLaMA, DeepSeek-V3">
+<figcaption>After the transformer: GPT (decoder-only), BERT (encoder-only), then RoPE and FlashAttention fixing its costliest parts, LLaMA as the open standard, DeepSeek-V3 continuing the lineage. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2018: the transformer splits into GPT (right half) and BERT (left half).</li><li>2021-2022: RoPE and FlashAttention fix position and attention memory.</li><li>2023-2024: LLaMA standardizes the open stack; DeepSeek-V3 pushes it further.</li>
+</ol>
+</div>
+
+<h2>Paper 2: RoFormer, <dfn>Rotary Position Embedding</dfn> (2021)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Su et al., "RoFormer: Enhanced <dfn>Transformer</dfn> with Rotary Position Embedding", 2021. <a href="https://arxiv.org/abs/2104.09864">arXiv:2104.09864</a>. (Jianlin Su and colleagues.)<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 3 (the rotary formulation) and the properties discussion. The long-text classification experiments are pass-3 material.
@@ -743,7 +784,18 @@ html.xp-js .xp-reveal.xp-in {
   <h3>The problem it solved</h3>
   <p>Attention is permutation invariant: shuffle the <dfn>tokens</dfn> and the attention scores do not change. So position must be injected somehow. The 2017 paper added sinusoidal vectors to the embeddings. Later work tried learned absolute embeddings (BERT, GPT-2) and relative biases added to the scores (T5, ALiBi – Attention with Linear Biases). Each had a flaw. Absolute encodings do not generalize to sequences longer than training: position 5000 has no learned vector if you trained on 2048. Additive relative biases fix that but entangle position with content in ad hoc ways. The paper asked: is there a position encoding that is <em>relative by construction</em>, costs no parameters, and generalizes to longer sequences?</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p02-problem.svg" alt="The problem RoPE solved: position encoding was ad hoc, parameterized, or failed on longer sequences">
+<figcaption>Paper 2: the problem it solved. Position had to be injected into attention, and every scheme was ad hoc, parameterized, or failed on longer sequences. The question: is there a position encoding that is relative by construction and costs no parameters? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Sinusoidal vectors, learned absolutes, additive biases: each had a flaw.</li><li>Learned absolutes have no vector for position 5000 if trained on 2048.</li><li>The question asks for relativity from geometry, not from parameters.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
   <p><strong>Rotate, do not add.</strong> Take each pair of dimensions in the query and key vectors and treat the pair as a 2D point. Rotate the point by an angle proportional to the token's position: position m rotates by m times theta. Different dimension pairs use different frequencies theta_i, spread geometrically like the original sinusoids.</p>
   <p><strong>Why rotation gives relative position for free.</strong> The attention score is a dot product of the rotated query and rotated key. A dot product of two rotated vectors depends only on the <em>difference</em> of their rotation angles, which is proportional to the <em>difference</em> of their positions. Absolute positions go in; only relative distance comes out. That is the whole trick, and it falls out of the geometry with no learned parameters and no extra terms in the attention equation.</p>
   <p><strong>Two bonus properties.</strong> Long-term decay: as relative distance grows, the expected dot product shrinks, so distant tokens naturally matter less, which matches how language works. Linear attention compatibility: because position is folded into q and k themselves, the formulation works with efficient attention variants that never materialize the n x n matrix.</p>
@@ -791,10 +843,32 @@ Long-term decay: for random q, k, E[(R_m q).(R_n k)] shrinks as
 |m - n| grows, because the high-frequency pairs decorrelate.
 Distant tokens get downweighted automatically.</pre>
 
-  <h3>Why it mattered</h3>
+  <figure class="diagram">
+<img src="img/v12-p02-math.svg" alt="The RoPE math: rotating each 2-D pair by an angle set by its position">
+<figcaption>The RoPE math: each 2-D pair of the query/key vector rotates by an angle set by its position. The dot product of rotated vectors depends only on the relative distance, so relativity falls out of the geometry. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>x-prime = R(a) x, a = m * theta: position m rotates each pair.</li><li>theta_i = 10000^(-2i/d): high dims rotate slowly, low dims fast.</li><li>The payoff: the score between positions m and n depends only on (m - n).</li>
+</ol>
+</div>
+
+<h3>Why it mattered</h3>
   <p>RoPE became the default position encoding for nearly every open model: LLaMA, Mistral, Qwen, Gemma, DeepSeek. It costs zero parameters, generalizes better to long sequences than learned absolute embeddings, and composes with FlashAttention (Paper 3) because it never touches the attention matrix. The long-context extension methods (position interpolation, NTK-aware scaling (NTK: Neural Tangent Kernel), YaRN) are all just ways of adjusting RoPE's theta schedule to extrapolate further, which tells you how central the formulation became: the entire long-context literature is RoPE tuning.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p02-impact.svg" alt="Why RoPE mattered: zero parameters, the default for LLaMA, Mistral, Qwen, Gemma, DeepSeek">
+<figcaption>Why RoPE mattered: zero parameters, composes with FlashAttention, better extrapolation, and it became the default for LLaMA, Mistral, Qwen, Gemma, and DeepSeek. The entire long-context literature is RoPE tuning. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Default everywhere: the position encoding of the open ecosystem.</li><li>Zero parameters and it never touches the attention matrix.</li><li>Position interpolation, NTK-aware scaling, YaRN: all RoPE adjustments.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>ALiBi (2021) offered a simpler alternative (linear bias on scores) with even better extrapolation but worse fit at training length; the field mostly chose RoPE. LLaMA (Paper 11) standardized RoPE for open models. Every long-context paper since is, at bottom, a paper about RoPE frequencies.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "RoPE encodes relative position." Precisely: RoPE encodes <em>absolute</em> position by rotation, and the <em>attention score</em> ends up depending only on relative distance. The distinction matters because RoPE still struggles with sequences much longer than training: the rotation angles go out of distribution, which is why length extrapolation needs theta rescaling. The second trap: "RoPE has no hyperparameters." The base frequency (10000) and any scaling factor are real hyperparameters that control the extrapolation behavior.</div>
@@ -815,7 +889,18 @@ Distant tokens get downweighted automatically.</pre>
   </section>
 
 <section class="chapter" id="flash-2022">
-  <h2>Paper 3: FlashAttention, Fast and Memory-Efficient Exact Attention with IO-Awareness (2022)</h2>
+  <figure class="diagram">
+<img src="img/v12-p02-lineage.svg" alt="After RoPE: ALiBi, position interpolation, NTK-aware scaling, YaRN, 128k-context models">
+<figcaption>After RoPE: ALiBi as the rival, position interpolation, NTK-aware scaling, YaRN, and 128k-context models on RoPE bases. The entire long-context literature is RoPE tuning. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>ALiBi: the slope-biased rival, simpler, better extrapolation.</li><li>2023: the interpolation wars: stretch, fix the high frequencies, add temperature.</li><li>2024: 128k context is table stakes, all RoPE descendants.</li>
+</ol>
+</div>
+
+<h2>Paper 3: FlashAttention, Fast and Memory-Efficient Exact Attention with IO-Awareness (2022)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Dao et al., "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness", NeurIPS 2022. <a href="https://arxiv.org/abs/2205.14135">arXiv:2205.14135</a>. (Tri Dao, Dan Fu, Stefano Ermon, Atri Rudra, Christopher Re.) FlashAttention-2: <a href="https://arxiv.org/abs/2307.08691">arXiv:2307.08691</a> (2023).<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 3 (the tiling algorithm) and the IO-complexity analysis. The CUDA kernel details are pass-3 material.
@@ -826,7 +911,18 @@ Distant tokens get downweighted automatically.</pre>
   <h3>The problem it solved</h3>
   <p>Standard attention materializes the n x n score matrix S = QK^T in GPU HBM (high-bandwidth memory). For n = 8192 and 32 heads, that matrix is 8192 x 8192 x 32 x 2 bytes = 4 GB <em>per layer, per sequence</em>. It does not fit, and even when it fits, reading and writing it dominates runtime: attention was memory-bound, not compute-bound. The approximations of 2020-2021 (sparse, low-rank, kernelized attention) dodged the matrix by changing the math, and all of them cost quality. The paper asked: can we compute <em>exact</em> attention without ever materializing the matrix, by being smarter about the memory hierarchy?</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p03-problem.svg" alt="The problem FlashAttention solved: the 4 GB score matrix dominated runtime">
+<figcaption>Paper 3: the problem it solved. Standard attention materializes a 4 GB score matrix per layer at n = 8192, and the approximations all cost quality. The question: can we compute exact attention without ever materializing the matrix? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>4 GB per layer per sequence: the matrix dominates runtime because it is memory-bound.</li><li>The 2020-2021 approximations dodged the matrix but paid in quality.</li><li>The question is about the memory hierarchy, not the math.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/enr-flashattention-io.png" alt="FlashAttention: same math, far less traffic between slow HBM and fast SRAM">
   <figcaption>The IO-awareness idea from Dao et al. (2022). Reconstructed sketch drawn for this volume, not a paper figure.</figcaption>
@@ -881,10 +977,32 @@ After the last block, the result is bit-identical to full softmax.</pre>
 <p>Backward pass: standard attention saves S (4.3 GB) for the backward; FlashAttention recomputes S tile by tile from Q, K, V and the statistics. Extra FLOPs ~ one extra forward matmul; HBM traffic stays linear in n.</p>
   <p>FlashAttention-2 (2023) refinements: better work partitioning across thread blocks, reduced non-matmul FLOPs, support for longer sequences. Same exactness, another ~2x speedup.</p>
 
-  <h3>Why it mattered</h3>
+  <figure class="diagram">
+<img src="img/v12-p03-math.svg" alt="The FlashAttention math: 4.3 GB of score matrix versus 2 MB of per-row statistics">
+<figcaption>The FlashAttention math: 4.3 GB of score matrix vs 2 MB of per-row statistics. Both are O(n^2) in theory; the constant is much smaller because blocks stay in SRAM. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>The standard pass writes and reads the full n x n matrix: 4.3 GB at n = 8192.</li><li>FlashAttention keeps per-row max and sum: 2 MB, about 2000x less traffic.</li><li>The backward pass recomputes tiles instead of storing them.</li>
+</ol>
+</div>
+
+<h3>Why it mattered</h3>
   <p>FlashAttention ended the "efficient attention approximation" subfield in one stroke: exactness plus speed removed the reason to accept quality loss. It made long-context training practical (8k, 32k, 128k) by making the memory cost linear instead of quadratic, and it is the reason inference with a long KV cache is feasible at all. For the research engineer, it is the canonical example of <em>IO-aware algorithm design</em>: the same FLOPs, reorganized around the memory hierarchy, run 3x faster.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p03-impact.svg" alt="Why FlashAttention mattered: exactness plus speed ended the approximation subfield">
+<figcaption>Why FlashAttention mattered: exactness plus speed ended the approximation subfield, made long context practical, and made long-KV-cache inference feasible. Same FLOPs, 3x faster, reorganized around the memory hierarchy. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Ended a subfield: no more quality loss to dodge the matrix.</li><li>Memory cost linear instead of quadratic: 8k, 32k, 128k training.</li><li>The lesson: IO-aware design beats FLOP counting.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>FlashAttention-2 and -3 (2023-2024) kept optimizing the kernel. PagedAttention (vLLM, 2023) applied the same IO-awareness to KV-cache <em>management</em> at serving time. The lesson generalized: on modern accelerators, the algorithm that wins is the one that minimizes bytes moved, not FLOPs executed.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "FlashAttention is an approximation like sparse attention." It is <em>exact</em>: outputs are bit-identical to standard attention (up to floating-point associativity). The second trap: "it reduces FLOPs." It does not; it reduces <em>memory traffic</em>. On a compute-bound workload it would not help. Attention is memory-bound, which is exactly why the win is so large.</div>
@@ -905,7 +1023,18 @@ After the last block, the result is bit-identical to full softmax.</pre>
   </section>
 
 <section class="chapter" id="gpt2-2019">
-  <h2>Paper 4: GPT-2, Language Models are Unsupervised Multitask Learners (2019)</h2>
+  <figure class="diagram">
+<img src="img/v12-p03-lineage.svg" alt="After FlashAttention: FA-2, FA-3, FlashDecoding, FlexAttention, RingAttention">
+<figcaption>After FlashAttention: FlashAttention-2 and 3, FlashDecoding for inference, FlexAttention, RingAttention for million-token context. IO-aware attention became a design discipline. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>FA-2: 2-4x faster through better parallelism.</li><li>FA-3: asynchrony and low precision on Hopper.</li><li>The idea escapes training: decoding, programmability, cross-device.</li>
+</ol>
+</div>
+
+<h2>Paper 4: GPT-2, Language Models are Unsupervised Multitask Learners (2019)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Radford et al., "Language Models are Unsupervised Multitask Learners", OpenAI, 2019. <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">PDF at cdn.openai.com</a> (never published on arXiv). Blog: <a href="https://openai.com/blog/betterlanguagemodels/">Better Language Models and Their Implications</a>.<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 2 (approach: WebText and task conditioning) and Section 3 (zero-shot results). The paper is short; read it whole on pass 3.
@@ -916,7 +1045,18 @@ After the last block, the result is bit-identical to full softmax.</pre>
   <h3>The problem it solved</h3>
   <p>Before GPT-2, NLP worked like this: pretrain a model on text, then fine-tune a separate copy per task (one for translation, one for summarization, one for question answering), each with its own labeled dataset and often its own output layer. That meant every new task needed labeled data and a training run. The paper asked: if a language model is trained on enough diverse text, does it start to <em>do</em> the tasks implicitly, with no <dfn>fine-tuning</dfn> at all? If the training data contains translation pairs, summaries, and Q and A sessions written out in plain text, then predicting the next <dfn>token</dfn> is already practicing those tasks.</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p04-problem.svg" alt="The problem GPT-2 solved: every task needed its own fine-tuned copy and labeled data">
+<figcaption>Paper 4: the problem it solved. Every task needed its own fine-tuned copy and labeled data. The question: does a model trained on enough diverse text start doing tasks implicitly, with no fine-tuning? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>One model per task, each with its own output layer and dataset.</li><li>The question bets that the task can live in the prompt instead of the weights.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/gpt2-input-embedding-positional.png" alt="GPT-2 input: token embeddings plus positional embeddings into a masked decoder stack">
   <figcaption>Figure by Jay Alammar, from 'The Illustrated GPT-2' (jalammar.github.io), after Radford et al. (2019). Saved locally for offline study.</figcaption>
@@ -953,7 +1093,18 @@ After the last block, the result is bit-identical to full softmax.</pre>
   <p><b>Worked shape.</b> Context = 1024 tokens, batch = 512 sequences. Tokens per step = 1024 &times; 512 = 524,288 (~0.5M). The paper trained for enough steps to see ~10B tokens total. WebText is 40 GB ~ 10B tokens, so the model saw the data roughly once.</p>
   <p>Conclusion the authors drew: the model was UNDERFIT. Loss was still falling at the end. A bigger model or more data would keep improving. (This observation is the seed of the scaling laws, Paper 6.)</p>
 
-  <h3>Why it mattered: the numbers</h3>
+  <figure class="diagram">
+<img src="img/v12-p04-math.svg" alt="The GPT-2 math: no new equation; 524,288 tokens per step, 10B total, one epoch, still underfit">
+<figcaption>The GPT-2 math: there is no new equation, and that is the point. 524,288 tokens per step, 10B total, about one epoch, loss still falling. The model was underfit: bigger or more data would keep improving. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>0.5M tokens per step: 1024 context times 512 batch.</li><li>10B total on 40 GB of WebText: seen roughly once.</li><li>Underfit at the end: the seed of the scaling laws.</li>
+</ol>
+</div>
+
+<h3>Why it mattered: the numbers</h3>
   <table class="data">
     <tr><th>Benchmark (zero-shot, no fine-tuning)</th><th>GPT-2 result</th></tr>
     <tr><td>Language modeling, 7 of 8 test sets</td><td>New state of the art without any task-specific training</td></tr>
@@ -964,7 +1115,18 @@ After the last block, the result is bit-identical to full softmax.</pre>
   </table>
   <p>Two things mattered more than any single score. First, the <em>method</em>: zero-shot task conditioning became the default way to use language models, and "the task is in the prompt" is now so normal that people forget it was invented here. Second, the <em>release strategy</em>: OpenAI initially withheld the 1.5B model, citing misuse concerns, and released it in stages. The staged release made "frontier model governance" a public conversation for the first time.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p04-impact.svg" alt="Why GPT-2 mattered: 63.24% on LAMBADA, 55 F1 on CoQA, all zero-shot">
+<figcaption>Why GPT-2 mattered: the method, not any single score. 63.24% on LAMBADA (from 19%), 55 F1 on CoQA against supervised baselines, 7 of 8 language-modeling test sets, all zero-shot. "The task is in the prompt" was invented here. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>The numbers: zero-shot, no fine-tuning, near supervised performance.</li><li>The method: conditioning instead of fine-tuning.</li><li>People forget this was invented. That is how fundamental it became.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>GPT-3 (Paper 5) kept the formulation and scaled it 100x, discovering that a few examples in the prompt (few-shot) beat zero-shot by a lot. The "Better Language Models" blog post became the template for capability announcements. Byte-level BPE became the standard tokenizer design.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "GPT-2 was withheld because it was too dangerous." The paper itself says the model was underfit and the results were a starting point. The staged release was about the <em>trajectory</em> (what the next scale step would enable), not about GPT-2 itself being uniquely hazardous. Reviewers use this to test whether you separate the technical claim from the policy theater.</div>
@@ -985,7 +1147,18 @@ After the last block, the result is bit-identical to full softmax.</pre>
   </section>
 
 <section class="chapter" id="gpt3-2020">
-  <h2>Paper 5: GPT-3, Language Models are Few-Shot Learners (2020)</h2>
+  <figure class="diagram">
+<img src="img/v12-p04-lineage.svg" alt="After GPT-2: T5, GPT-3, the scaling laws, Chinchilla, LLaMA, the GPT-4 class">
+<figcaption>After GPT-2: T5, GPT-3, the scaling laws, Chinchilla, LLaMA, the GPT-4 class. The "spicy autocomplete" era ends. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2019-2020: T5 unifies tasks as text-to-text; GPT-3 makes few-shot real.</li><li>2020-2022: the laws describe scaling; Chinchilla corrects the prescription.</li><li>2023+: open GPT-class models; the era ends.</li>
+</ol>
+</div>
+
+<h2>Paper 5: GPT-3, Language Models are Few-Shot Learners (2020)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Brown et al., "Language Models are Few-Shot Learners", NeurIPS 2020. <a href="https://arxiv.org/abs/2005.14165">arXiv:2005.14165</a>. OpenAI, 31 authors.<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 2 (approach: the three settings), Section 3 (results), and Figure 1.2. The appendix on data contamination is worth a pass-3 read: it is a masterclass in honest evaluation.
@@ -996,7 +1169,18 @@ After the last block, the result is bit-identical to full softmax.</pre>
   <h3>The problem it solved</h3>
   <p>GPT-2's zero-shot results were promising but weak on hard tasks: describing a task in words was often not enough. The field's default was still <dfn>fine-tuning</dfn>, which needs labeled data for every task and a training run per task. The paper asked: at much larger scale, can the model learn a task <em>from examples placed in the prompt</em>, with its weights frozen? That would remove fine-tuning from the loop entirely: adapting to a new task becomes writing a prompt, not running gradient descent.</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p05-problem.svg" alt="The problem GPT-3 solved: GPT-2 zero-shot was promising but weak; fine-tuning was still the default">
+<figcaption>Paper 5: the problem it solved. GPT-2 zero-shot was promising but weak; fine-tuning was still the default. The question: at much larger scale, can the model learn a task from examples in the prompt, weights frozen? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Describing a task in words was often not enough at GPT-2 scale.</li><li>The question keeps the weights frozen and puts the learning in the context.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/enr-gpt-lineage.png" alt="The GPT lineage: 117M to 1.5B to 175B parameters in two years">
   <figcaption>Log-scale bars from the published parameter counts. Reconstructed sketch drawn for this volume, not a paper figure.</figcaption>
@@ -1052,7 +1236,18 @@ English: wine    => French:         <- model completes: vin</pre>
 <p>This was the moment training runs became capital projects.</p>
 <p><b>Worked example.</b> Few-shot context arithmetic: 100 examples &times; ~20 tokens = 2000 tokens, which is why the 2048 context window was not a luxury. Few-shot at scale REQUIRES long context; the two scale together.</p>
 
-  <h3>Why it mattered: the numbers</h3>
+  <figure class="diagram">
+<img src="img/v12-p05-math.svg" alt="The GPT-3 math: the scale jump; 1.5B to 175B parameters, and few-shot needs long context">
+<figcaption>The GPT-3 math: no new equation. The math that matters is the scale jump: 1.5B to 175B parameters, 10B to 300B tokens, about 3.14e23 FLOPs. And 100 examples at ~20 tokens need 2000 tokens of context: few-shot requires long context. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Parameters up about 117x, tokens up about 30x.</li><li>The cost row is illustrative 2020 cloud pricing.</li><li>The last row is the subtle one: few-shot prompting is a long-context application.</li>
+</ol>
+</div>
+
+<h3>Why it mattered: the numbers</h3>
   <table class="data">
     <tr><th>Benchmark</th><th>GPT-3 few-shot result</th></tr>
     <tr><td>LAMBADA</td><td>86.4%, up from GPT-2's 63.24%</td></tr>
@@ -1099,7 +1294,18 @@ English: wine    => French:         <- model completes: vin</pre>
   </section>
 
 <section class="chapter" id="kaplan-2020">
-  <h2>Paper 6: <dfn>Scaling Laws</dfn> for Neural Language Models, Kaplan et al. (2020)</h2>
+  <figure class="diagram">
+<img src="img/v12-p05-lineage.svg" alt="After GPT-3: prompting, chain-of-thought, InstructGPT, RLHF at scale, instruction tuning, agents">
+<figcaption>After GPT-3: prompting works, chain-of-thought, InstructGPT, RLHF at product scale, instruction tuning, agents. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2020: few-shot in-context learning.</li><li>2022: reasoning elicited by "think step by step"; RLHF makes models helpful.</li><li>2023-2024: instruction tuning, then agents: prompts that use tools.</li>
+</ol>
+</div>
+
+<h2>Paper 6: <dfn>Scaling Laws</dfn> for Neural Language Models, Kaplan et al. (2020)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Kaplan et al., "Scaling Laws for Neural Language Models", OpenAI, 2020. <a href="https://arxiv.org/abs/2001.08361">arXiv:2001.08361</a>. (Jared Kaplan, Sam McCandlish, Tom Henighan, Tom Brown, and others.)<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 2 (empirical results) and Section 3 (the optimal allocation analysis). The theoretical discussion in Section 5 is pass-3 material.
@@ -1110,7 +1316,18 @@ English: wine    => French:         <- model completes: vin</pre>
   <h3>The problem it solved</h3>
   <p>By 2020, labs were spending millions on training runs with no principled way to decide: for a fixed compute budget, should you train a bigger model on less data, or a smaller model on more data? Decisions were made by gut and by copying the last successful run. The paper ran a large controlled sweep of model sizes, dataset sizes, and compute budgets and asked whether loss follows a predictable functional form. If it does, you can <em>extrapolate</em>: predict the loss of a run you cannot afford before you pay for it.</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p06-problem.svg" alt="The problem the Kaplan scaling laws solved: millions per run with no principled budget">
+<figcaption>Paper 6: the problem it solved. Millions per training run with no principled way to budget: bigger model or more data? The question: does loss follow a predictable form we can extrapolate before paying? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Decisions were made by gut and by copying the last successful run.</li><li>The question turns scaling from alchemy into engineering.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/scaling-laws.png" alt="Scaling laws sketch: test loss falls as a power law in training compute">
   <figcaption>Reconstructed sketch of the power-law form from Kaplan et al. (2020). The curves illustrate the form; they are not paper data points.</figcaption>
@@ -1185,7 +1402,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>Why it mattered</h3>
   <p>This paper turned scaling from alchemy into engineering. Every major lab's training plan from 2020 to 2022 cited these exponents. The "bigger models are more sample efficient" finding justified training huge models even when data seemed scarce. And the specific 0.73/0.27 prescription is exactly what made the Chinchilla correction so shocking: the field had been following this recipe for two years, and it was wrong about the data term.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p06-impact.svg" alt="Why the Kaplan laws mattered: budgeting by formula; the 0.73/0.27 split">
+<figcaption>Why the Kaplan laws mattered: they turned scaling from alchemy into engineering. Every major lab training plan from 2020 to 2022 cited these exponents, and the 0.73/0.27 split is exactly what made the Chinchilla correction shocking. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Budget by formula: pick a loss target, read off the compute.</li><li>Bigger models are more sample efficient: the justification for huge models on scarce data.</li><li>The field followed it for two years, until a better experiment reversed the data term.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>Chinchilla (Paper 7) reran the analysis with a better experimental design and reversed the prescription. The debate between the two papers is the single most important technical argument in LLM training history, and you must be able to recount both sides.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "scaling laws say bigger is always better." They say loss improves <em>predictably</em> with scale, which is not the same as <em>worth it</em>: each unit of loss costs exponentially more. The second trap: "the exponents are laws of nature." They are fits to a specific regime (2020-era architectures, web text, no data repetition). Change the regime and the constants move. Chinchilla moved them.</div>
@@ -1206,7 +1434,18 @@ Fitted exponents (the paper's headline numbers):
   </section>
 
 <section class="chapter" id="chinchilla-2022">
-  <h2>Paper 7: Chinchilla, Training Compute-Optimal Large Language Models (2022)</h2>
+  <figure class="diagram">
+<img src="img/v12-p06-lineage.svg" alt="After Kaplan: Chinchilla, LLaMA, the over-training era, data-constrained scaling, inference scaling">
+<figcaption>After Kaplan: Chinchilla, LLaMA, the over-training era, data-constrained scaling, inference scaling. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2022: Chinchilla corrects the 0.73/0.27 split.</li><li>2023: LLaMA 13B on 1T tokens beats 175B GPT-3; small models trained long.</li><li>2024+: inference scaling becomes a new axis.</li>
+</ol>
+</div>
+
+<h2>Paper 7: Chinchilla, Training Compute-Optimal Large Language Models (2022)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Hoffmann et al., "Training Compute-Optimal Large Language Models", DeepMind, 2022. <a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a>. (70B model named Chinchilla.)<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 2 (the three approaches to finding the frontier) and Figure 3 (the isoFLOP curves). Section 4 (the Chinchilla model results) is the payoff.
@@ -1217,7 +1456,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>The problem it solved</h3>
   <p>Kaplan's analysis said: for more compute, grow the model much faster than the data. Labs obeyed. GPT-3 was 175B parameters on 300B <dfn>tokens</dfn> (under 2 tokens per parameter). Gopher was 280B on 300B tokens (about 1 token per parameter). Models kept getting bigger while training tokens barely grew. DeepMind suspected the analysis had a flaw: Kaplan's team had mostly varied compute by varying model size <em>at fixed data budgets</em>, which biases the fit toward big models. The question: if you fix the <em>model size</em> and vary the training tokens instead, does the optimal point move?</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p07-problem.svg" alt="The problem Chinchilla solved: models ballooned while tokens barely grew">
+<figcaption>Paper 7: the problem it solved. Kaplan said grow the model much faster than the data, so models ballooned while tokens barely grew. The question: fix the model size and vary the tokens instead. Does the optimum move? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>GPT-3: 175B parameters on 300B tokens, under 2 tokens per parameter.</li><li>The question re-runs the experiment with the other variable fixed.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/chinchilla-scaling-law-overlaid-predictions.png" alt="Chinchilla Figure 1: overlaid predictions say large models should be smaller and trained longer">
   <figcaption>Figure 1 from Hoffmann et al., 'Training Compute-Optimal Large Language Models' (2022). Saved locally for offline study.</figcaption>
@@ -1288,7 +1538,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>Why it mattered</h3>
   <p>Every serious training run since 2022 targets roughly 20 tokens per parameter (LLaMA-1 used even more). The paper also reframed what "large" means: a model's quality is set by compute spent <em>well</em>, not by parameter count. The 70B-beats-280B result is the single most cited empirical fact in LLM training, and it is the reason inference got cheaper even as models got better.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p07-impact.svg" alt="Why Chinchilla mattered: 70B beats 280B at equal compute; 20 tokens per parameter">
+<figcaption>Why Chinchilla mattered: a 70B model beat a 280B model at equal compute. 20 tokens per parameter became the target every serious run uses. Parameters are not quality; compute spent well is quality. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>70B beats 280B Gopher: the headline result.</li><li>1.4T training tokens vs 300B: tokens were the missing ingredient.</li><li>Inference got cheaper even as models got better.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>LLaMA (Paper 11) pushed past 20 tokens per parameter deliberately, trading training compute for inference efficiency ("overtraining" small models). The data wall debate (are we running out of tokens?) is a direct child of this paper: if optimal training needs 20 tokens per parameter, a 1T-parameter model needs 20T tokens, which may exceed quality text on the internet.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "Chinchilla proved Kaplan wrong." More precise: Chinchilla corrected the <em>allocation prescription</em> with a better experimental design. Kaplan's power-law form and the C = 6ND accounting still stand. The second trap: "20 tokens per parameter is a law." It is the optimum for <em>training compute</em>; if you care about inference cost, training longer than optimal (overtraining) is rational, which is exactly what LLaMA did.</div>
@@ -1309,7 +1570,18 @@ Fitted exponents (the paper's headline numbers):
   </section>
 
 <section class="chapter" id="instructgpt-2022">
-  <h2>Paper 8: InstructGPT, Training Language Models to Follow Instructions with Human Feedback (2022)</h2>
+  <figure class="diagram">
+<img src="img/v12-p07-lineage.svg" alt="After Chinchilla: LLaMA 1/2, the small-model frontier, Phi, over-training, DeepSeek-V3">
+<figcaption>After Chinchilla: LLaMA 1/2, the small-model frontier, Phi on textbook data, over-training, DeepSeek-V3. Efficiency as strategy. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2023: smaller models, enormous token budgets.</li><li>Phi: data quality over quantity.</li><li>2024: 671B trained for $5.58M.</li>
+</ol>
+</div>
+
+<h2>Paper 8: InstructGPT, Training Language Models to Follow Instructions with Human Feedback (2022)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Ouyang et al., "Training Language Models to Follow Instructions with Human Feedback", NeurIPS 2022. <a href="https://arxiv.org/abs/2203.02155">arXiv:2203.02155</a>. OpenAI. (The method is <dfn>RLHF</dfn>: reinforcement learning from human feedback.)<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 3 (method: the three steps) and Section 4 (results: human preference win rates). The labeler details in Section 3.1 are pass-3 material.
@@ -1320,7 +1592,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>The problem it solved</h3>
   <p>GPT-3 could do tasks, but it was a text-completion engine, not an assistant. Prompt it with a question and it might continue with more questions, or answer and then ramble, or produce something plausible but unhelpful. The base model's objective (predict the next <dfn>token</dfn>) does not encode "be helpful, follow the instruction, don't make things up." Worse, making the model bigger did not fix this: a bigger completion engine is still a completion engine. The paper asked: can human judgments about <em>which response is better</em> be turned into a training signal that reshapes the model's behavior?</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p08-problem.svg" alt="The problem InstructGPT solved: GPT-3 completed text; it did not follow instructions">
+<figcaption>Paper 8: the problem it solved. GPT-3 completed text; it did not follow instructions, and bigger did not fix it. The question: can human judgments about which response is better become a training signal? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Next-token prediction does not encode "be helpful."</li><li>A bigger completion engine is still a completion engine.</li><li>The question turns preference judgments into gradients.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/rlhf-instructgpt-pipeline.png" alt="The three-step InstructGPT method: supervised policy, reward model, PPO">
   <figcaption>Diagram from OpenAI's InstructGPT illustration of the three-step method (Ouyang et al., 2022). Saved locally for offline study.</figcaption>
@@ -1375,7 +1658,18 @@ Fitted exponents (the paper's headline numbers):
 </table>
 <p>The dataset, not the algorithm, is most of the work.</p>
 
-  <h3>Why it mattered</h3>
+  <figure class="diagram">
+<img src="img/v12-p08-math.svg" alt="The Bradley-Terry reward loss with worked numbers: the loss cares about order, not absolute scores">
+<figcaption>The Bradley-Terry reward loss with worked numbers: loss = -log(sigma(r(chosen) - r(rejected))). The loss only cares about the order, never the absolute scores. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Worked: scores 2.1 vs 0.4 give loss 0.167; reversed gives 1.87, ten times larger.</li><li>The sigmoid turns the score gap into a probability.</li><li>The PPO row: maximize reward minus beta times KL drift, beta about 0.02.</li>
+</ol>
+</div>
+
+<h3>Why it mattered</h3>
 <figure class="diagram">
   <img src="img/instructgpt-win-rate-vs-sft-175b.png" alt="Human win rates against the 175B SFT model: PPO-ptx on top">
   <figcaption>Human-evaluation figure from Ouyang et al., 'Training language models to follow instructions' (2022). Saved locally for offline study.</figcaption>
@@ -1410,7 +1704,18 @@ Fitted exponents (the paper's headline numbers):
   </section>
 
 <section class="chapter" id="cai-2022">
-  <h2>Paper 9: Constitutional AI, Harmlessness from AI Feedback (2022)</h2>
+  <figure class="diagram">
+<img src="img/v12-p08-lineage.svg" alt="After InstructGPT: ChatGPT, Constitutional AI, DPO, RLAIF, DeepSeek-R1, reasoning models">
+<figcaption>After InstructGPT: ChatGPT, Constitutional AI, DPO, RLAIF, DeepSeek-R1, the reasoning models. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2022: RLHF at product scale; principles instead of labels.</li><li>2023: one loss replaces reward model plus PPO; AI feedback generalizes.</li><li>2025: verifiable rewards; the new paradigm.</li>
+</ol>
+</div>
+
+<h2>Paper 9: Constitutional AI, Harmlessness from AI Feedback (2022)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Bai et al., "Constitutional AI: Harmlessness from AI Feedback", Anthropic, 2022. <a href="https://arxiv.org/abs/2212.08073">arXiv:2212.08073</a>. (Yuntao Bai, Saurav Kadavath, Sandipan Kundu, Amanda Askell, and many others.)<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 2 (the two phases) and Figure 2 (the pipeline). The constitution itself is in the appendix: read a few principles on pass 3 to feel the texture.
@@ -1421,7 +1726,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>The problem it solved</h3>
   <p>RLHF has a scaling problem at its core: every unit of harmlessness training needs a human to read something awful and rank responses. That is expensive, slow, psychologically costly for labelers, and hard to steer: if you want the model to follow a <em>specific</em> set of principles, you must convey those principles through thousands of individual labeling decisions and hope the <dfn>reward model</dfn> infers them. The paper asked: can the human input be reduced to writing down the principles once, in plain language, and letting the model do the rest?</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p09-problem.svg" alt="The problem Constitutional AI solved: a human had to read something awful for every unit of harmlessness">
+<figcaption>Paper 9: the problem it solved. RLHF needs a human to read something awful for every unit of harmlessness: expensive, slow, and costly for labelers. The question: can the human input be just the principles, written once, with the model doing the rest? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Harmlessness labels are the most expensive labels in RLHF.</li><li>The question replaces thousands of labels with one written constitution.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/enr-constitutional-ai-loop.png" alt="Constitutional AI: the model critiques itself against a written constitution, then learns from the revision">
   <figcaption>The self-critique loop from Bai et al. (2022). Reconstructed sketch drawn for this volume, not a paper figure.</figcaption>
@@ -1467,10 +1783,32 @@ Fitted exponents (the paper's headline numbers):
 <p>The reasoning trace is doing the work, not the choice.</p>
 <p><b>Cost arithmetic</b> (the economic argument): a human harmlessness label is expensive, slow, and psychologically costly; an AI label is one forward pass of a model you already trained. The paper replaced human harm labels with a constitution of 16 principles plus AI labor.</p>
 
-  <h3>Why it mattered</h3>
+  <figure class="diagram">
+<img src="img/v12-p09-math.svg" alt="Constitutional AI: the judge needs chain-of-thought; agreement jumps past 90%">
+<figcaption>Constitutional AI: the judge needs chain-of-thought, and the economics. Without CoT the model picks directly and agreement with humans is poor; with CoT it articulates the principle first and agreement jumps past 90%. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Without CoT: the choice happens before any principle is stated.</li><li>With CoT: "let us think step by step which response is more harmless."</li><li>The reasoning trace does the work, not the choice.</li>
+</ol>
+</div>
+
+<h3>Why it mattered</h3>
   <p>This paper is the reason "RLAIF" exists as a term and as a practice. It showed that a written specification of values can steer training as effectively as thousands of individual human judgments, which made alignment <em>legible</em>: you can read the constitution and argue about it, instead of trying to infer values from a reward model's weights. It became the basis for Claude's training, and the "model critiques itself against principles" pattern now appears in self-correction research everywhere.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p09-impact.svg" alt="Why Constitutional AI mattered: "RLAIF" exists as a term and a practice because of it">
+<figcaption>Why Constitutional AI mattered: it is why "RLAIF" exists as a term and a practice. A written specification steers training as well as thousands of judgments, and you can read the constitution and argue with it instead of inferring values from weights. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Legible values: the constitution is readable and debatable.</li><li>The pattern spread: model-critiques-itself appears in self-correction research everywhere.</li><li>The training lineage runs through this paper to Claude.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>RLAIF (2023) generalized the method beyond harmlessness. Self-rewarding language models (2024) closed the loop further by having the model generate its own preference data iteratively. The debate the paper opened, whether AI feedback amplifies the model's existing biases instead of correcting them, is still live: the judge and the judged share the same <dfn>pretraining</dfn>.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "Constitutional AI needs no human feedback." It needs humans for the constitution, the red-team prompts, and all helpfulness labels. The honest claim is narrower and stronger: <em>harmlessness</em> labels can be AI-generated without losing quality. The second trap: "the constitution guarantees good behavior." It guarantees the model was <em>trained against</em> those principles; jailbreaks still work because training is not a proof.</div>
@@ -1491,7 +1829,18 @@ Fitted exponents (the paper's headline numbers):
   </section>
 
 <section class="chapter" id="dpo-2023">
-  <h2>Paper 10: Direct Preference Optimization (2023)</h2>
+  <figure class="diagram">
+<img src="img/v12-p09-lineage.svg" alt="After Constitutional AI: Claude, collective CAI, deliberative alignment, interpretability">
+<figcaption>After Constitutional AI: Claude ships the lineage, collective CAI, deliberative alignment, the open debate on whose constitution, interpretability. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2023: the constitution lineage ships; 1,000 Americans help write one.</li><li>2024: reason about the charter, not memorize rules.</li><li>2025+: read the values out of the weights.</li>
+</ol>
+</div>
+
+<h2>Paper 10: Direct Preference Optimization (2023)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Rafailov et al., "Direct Preference Optimization: Your Language Model is Secretly a <dfn>Reward Model</dfn>", NeurIPS 2023. <a href="https://arxiv.org/abs/2305.18290">arXiv:2305.18290</a>. (Rafael Rafailov, Archit Sharma, Eric Mitchell, Stefano Ermon, Christopher Manning, Chelsea Finn.)<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 4 (deriving the <dfn>DPO</dfn> loss) and Section 5 (experiments vs <dfn>PPO</dfn>). The theory in Section 3 is pass-3 material.
@@ -1502,7 +1851,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>The problem it solved</h3>
   <p>RLHF works but is painful to run: train an SFT model, collect rankings, train a reward model, then run PPO, which is finicky (KL tuning, value networks, distributed sampling, reward hacking). Each stage can fail independently, and the reward model is a moving part that must be kept calibrated. The paper asked: the RL step is just optimizing a KL-constrained reward objective; that objective has a <em>closed-form optimal policy</em>. Can we skip the reward model and the RL entirely and optimize the policy directly on the preference data?</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p10-problem.svg" alt="The problem DPO solved: RLHF worked but was painful: reward model, finicky PPO, each stage failing alone">
+<figcaption>Paper 10: the problem it solved. RLHF worked but was painful: SFT, rankings, reward model, finicky PPO, each stage failing independently. The question: the KL-constrained objective has a closed form. Can we optimize the policy directly on preferences? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Four stages, each a failure point; the reward model must stay calibrated.</li><li>The question deletes the reward model and the RL in one move.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/dpo-vs-rlhf-pipeline-comparison.png" alt="DPO Figure 1: direct preference optimization skips the reward model and the RL">
   <figcaption>Figure 1 from Rafailov et al., 'Direct Preference Optimization' (2023). Saved locally for offline study.</figcaption>
@@ -1551,10 +1911,32 @@ Fitted exponents (the paper's headline numbers):
 <p><b>Worked tiny example.</b> &beta; = 0.1. &pi;(y<sub>w</sub>)/&pi;<sub>ref</sub>(y<sub>w</sub>) = 1.5 (policy likes chosen 1.5x more than ref); &pi;(y<sub>l</sub>)/&pi;<sub>ref</sub>(y<sub>l</sub>) = 0.7 (policy likes rejected less than ref). margin = 0.1 &middot; (log 1.5 &minus; log 0.7) = 0.1 &middot; (0.405 + 0.357) = 0.076. &sigma;(0.076) = 0.519, loss = &minus;log(0.519) = 0.656. Gradient pushes &pi;(y<sub>w</sub>) up and &pi;(y<sub>l</sub>) down until confident.</p>
 <p>The role of beta: small beta = strong KL constraint (stay near pi_ref, weak preference signal); large beta = weak constraint (fit preferences aggressively, risk drifting off-distribution). Typical: 0.1 to 0.5.</p>
 
-  <h3>Why it mattered</h3>
+  <figure class="diagram">
+<img src="img/v12-p10-math.svg" alt="The DPO derivation in three steps: closed form, invert, plug into Bradley-Terry">
+<figcaption>The DPO derivation in three steps: the KL-constrained objective has a closed form; invert it to solve for the reward; plug into Bradley-Terry and the partition terms cancel. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Closed form: the optimal policy is the reference times exp(r/beta), normalized.</li><li>Invert: the reward is beta times the log policy ratio, plus a term that cancels.</li><li>Worked: beta = 0.1, margin 0.076, loss 0.656; gradients push chosen up, rejected down.</li>
+</ol>
+</div>
+
+<h3>Why it mattered</h3>
   <p>DPO collapsed the RLHF stack from three stages to two (SFT, then DPO) and moved preference training onto ordinary supervised infrastructure. The open-source ecosystem adopted it almost overnight: <dfn>fine-tuning</dfn> libraries added one loss function and suddenly everyone could do preference optimization on a single GPU. It also reframed the theory: the "reward model" was never a separate object, just a reparameterization of the policy.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p10-impact.svg" alt="Why DPO mattered: the stack collapsed from three stages to two; simpler won">
+<figcaption>Why DPO mattered: the stack collapsed from three stages to two and the theory got cleaner. One loss function, addable to any fine-tuning library, and suddenly everyone could do preference optimization on a single GPU. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Three stages to two: SFT, then DPO. The reward model and PPO are gone.</li><li>The reframe: the reward model was never a separate object, just a reparameterization of the policy.</li><li>Simpler won.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>The DPO family exploded: IPO (fixes over-optimization), KTO (works without paired preferences), ORPO (merges SFT and DPO), and many variants. A known failure mode emerged: DPO can <em>decrease</em> the absolute probability of the chosen response while increasing the margin (it only optimizes the difference), which the follow-ups address. For reasoning models, the field partly moved back toward RL with verifiable rewards (Paper 14).</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "DPO is RLHF without the RL, so it must be strictly better." DPO optimizes the <em>margin</em> between chosen and rejected, not the absolute quality of the chosen response; it can push both probabilities down as long as the gap grows. It also cannot explore: PPO samples new responses and gets them scored, while DPO only learns from the fixed preference dataset. When the dataset is thin, RLHF's exploration still wins.</div>
@@ -1575,7 +1957,18 @@ Fitted exponents (the paper's headline numbers):
   </section>
 
 <section class="chapter" id="llama-2023">
-  <h2>Paper 11: LLaMA, Open and Efficient Foundation Language Models (2023)</h2>
+  <figure class="diagram">
+<img src="img/v12-p10-lineage.svg" alt="After DPO: IPO, KTO, ORPO, online DPO, DeepSeek-R1, RLVR, reward-hacking studies">
+<figcaption>After DPO: IPO, KTO, ORPO, online DPO, DeepSeek-R1, RLVR, reward-hacking studies. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2023-24: variants for different divergences and data regimes.</li><li>2024: iterative generate-judge-update.</li><li>2025: verifiable rewards become the default for math and code.</li>
+</ol>
+</div>
+
+<h2>Paper 11: LLaMA, Open and Efficient Foundation Language Models (2023)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Touvron et al., "LLaMA: Open and Efficient Foundation Language Models", Meta AI, 2023. <a href="https://arxiv.org/abs/2302.13971">arXiv:2302.13971</a>. (The 7B to 65B family; "LLaMA-1".)<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 2 (architecture changes) and Section 3 (training data and results). The tokenizer details are pass-3 material.
@@ -1586,7 +1979,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>The problem it solved</h3>
   <p>By early 2023, the best models were closed: GPT-3, Chinchilla, PaLM. Open models lagged badly, and the few good ones required data centers to run. Research outside the big labs was starving. Meta asked: can a smaller model, trained on far more tokens than Chinchilla prescribes, match or beat the giants? If yes, frontier-quality research becomes possible on a single GPU, and the open ecosystem gets a real foundation.</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p11-problem.svg" alt="The problem LLaMA solved: the best models were closed and the open ones needed data centers">
+<figcaption>Paper 11: the problem it solved. The best models were closed and the open ones needed data centers. The question: can a smaller model, trained on far more tokens than Chinchilla prescribes, match the giants? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Closed weights starved research outside the big labs.</li><li>The question bets on tokens over parameters.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
   <p><strong>Overtrain small models.</strong> Chinchilla says 20 tokens per parameter minimizes <em>training</em> compute. But training compute is a one-time cost; <em>inference</em> compute is paid forever, on every token served. A smaller model trained on more tokens than optimal costs extra once and saves on every future inference. LLaMA-13B was trained on 1T tokens (77 per parameter); LLaMA-65B on 1.4T. The paper showed LLaMA-13B beating GPT-3 (175B) on most benchmarks: 13x smaller, better, and runnable on one good GPU.</p>
   <p><strong>Architecture modernization.</strong> The paper changed the 2017 block in four ways that became the standard "LLaMA block":</p>
   <ul>
@@ -1658,7 +2062,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>Why it mattered</h3>
   <p>LLaMA-1 democratized LLM research: within weeks of the weights leaking, the open ecosystem (Alpaca, Vicuna, and LoRA <dfn>fine-tuning</dfn>; LoRA, or Low-Rank Adaptation, trains small added matrices instead of all weights) exploded, because a 7B model fit on consumer hardware. It established the modern default architecture (every open model since is a LLaMA block with variations), proved data quality beats data quantity, and made "overtrain small models" standard practice for anything that will be served at scale.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p11-impact.svg" alt="Why LLaMA mattered: a 7B model on one GPU; Alpaca, Vicuna, LoRA exploded">
+<figcaption>Why LLaMA mattered: it democratized LLM research within weeks of the weights leaking. A 7B model fit on one GPU, Alpaca and Vicuna exploded, LoRA fine-tuning followed, and every open model since is a LLaMA block with variations. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Consumer hardware: the 7B model on one GPU changed who could do research.</li><li>Data quality over quantity: the other lesson.</li><li>Overtrain small models: standard practice for anything served at scale.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>LLaMA-2 (2023) added grouped-query attention and a commercial license; the open ecosystem standardized on it. Mistral 7B (2023) refined the recipe. The <dfn>MoE</dfn> models of Paper 12 and the reasoning models of Paper 14 all start from LLaMA-style blocks.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "LLaMA beat GPT-3 because of a better architecture." The architecture helped, but the paper's ablations point at data quality and the massive token budget. The second trap: "overtraining contradicts Chinchilla." It does not: Chinchilla optimizes training compute, LLaMA optimizes training-plus-inference compute. Different objective, different optimum. Know which one you are optimizing.</div>
@@ -1679,7 +2094,18 @@ Fitted exponents (the paper's headline numbers):
   </section>
 
 <section class="chapter" id="moe-mixtral">
-  <h2>Paper 12: Mixtral of Experts, Sparse <dfn>Mixture of Experts</dfn> (2024)</h2>
+  <figure class="diagram">
+<img src="img/v12-p11-lineage.svg" alt="After LLaMA: Alpaca, Vicuna, LoRA/QLoRA, LLaMA 2, Mistral and Mixtral, LLaMA 3, open DeepSeek">
+<figcaption>After LLaMA: Alpaca, Vicuna, LoRA/QLoRA, LLaMA 2, Mistral and Mixtral, LLaMA 3, open DeepSeek. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2023: instruction tuning on leaked weights; fine-tune 65B on one GPU.</li><li>LLaMA 2's commercial license: the ecosystem explodes.</li><li>2024-25: frontier weights, open.</li>
+</ol>
+</div>
+
+<h2>Paper 12: Mixtral of Experts, Sparse <dfn>Mixture of Experts</dfn> (2024)</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Jiang et al., "Mixtral of Experts", Mistral AI, 2024. <a href="https://arxiv.org/abs/2401.04088">arXiv:2401.04088</a>. (The SMoE idea goes back to Shazeer et al., 2017, "Outrageously Large Neural Networks".)<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 2 (the SMoE layer) and the benchmark tables. The routing analysis in Section 3 is pass-3 material.
@@ -1690,7 +2116,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>The problem it solved</h3>
   <p>Chinchilla taught us that quality comes from compute, and parameters are the vessel. But dense models activate <em>every</em> parameter for <em>every</em> <dfn>token</dfn>: a 100B model costs 100B worth of FLOPs per token. What if most parameters could sit idle most of the time, waking only for the tokens that need them? Then you could have the capacity of a huge model at the inference cost of a small one. The 2017 sparse-MoE work showed the idea; training instability and routing complexity kept it niche. Mixtral made it boring and reliable.</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p12-problem.svg" alt="The problem Mixtral solved: dense models activate every parameter for every token">
+<figcaption>Paper 12: the problem it solved. Dense models activate every parameter for every token: a 100B model costs 100B FLOPs per token. The question: what if most parameters sit idle, waking only for the tokens that need them? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Sparse MoE existed since 2017 but was unstable and niche.</li><li>The question is capacity decoupled from per-token cost.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
 <figure class="diagram">
   <img src="img/enr-moe-routing.png" alt="Mixture of Experts: a router sends each token to 2 of 8 experts">
   <figcaption>The sparse routing from Jiang et al., 'Mixtral of Experts' (2024). Reconstructed sketch drawn for this volume, not a paper figure.</figcaption>
@@ -1738,10 +2175,32 @@ Fitted exponents (the paper's headline numbers):
 <p><b>Where:</b> <i>f<sub>i</sub></i> = fraction of tokens routed to expert i (hard assignment); <i>P<sub>i</sub></i> = mean router probability for expert i (soft assignment). Minimized when each expert gets 1/8 of tokens with 1/8 of probability. Typical &alpha; ~ 0.01: strong enough to prevent collapse, weak enough not to override the main objective.</p>
 <p><b>Capacity factor</b> (the serving detail): each expert has a fixed buffer of tokens per batch. Overflow tokens are dropped (passed through the residual). At inference with batch size 1 this rarely binds; in training it is a real hyperparameter.</p>
 
-  <h3>Why it mattered</h3>
+  <figure class="diagram">
+<img src="img/v12-p12-math.svg" alt="The MoE FLOP accounting: 46.7B total, 12.9B active per token">
+<figcaption>The MoE FLOP accounting: per token, only the top-2 of 8 experts activate. Mixtral carries 46.7B parameters but spends about 12.9B per token: 47B-class capacity at 13B-class cost. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>y = sum over top-2 of g_i * Expert_i(x): the router picks, the experts compute.</li><li>Total 46.7B, active 12.9B: most parameters idle per token.</li><li>Inference cost of a 13B dense model; quality of a 70B one.</li>
+</ol>
+</div>
+
+<h3>Why it mattered</h3>
   <p>Mixtral proved sparse MoE works as a drop-in replacement for dense MLPs at open-model scale, and the efficiency argument is unanswerable for serving: matching a 70B dense model at 13B inference cost changed the economics of deployment. Every frontier lab now trains MoE variants (GPT-4 is widely reported to be MoE; DeepSeek-V3 pushes the idea to 256 experts). It also validated the Chinchilla-era lesson in a new form: parameters are cheap, activated FLOPs are expensive.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p12-impact.svg" alt="Why Mixtral mattered: 13B-class serving cost, 70B-class quality">
+<figcaption>Why Mixtral mattered: 46.7B total parameters, 12.9B active per token, inference cost of a 13B dense model, quality of a 70B one. The efficiency argument is unanswerable for serving. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Top-2 of 8 experts: only the needed parameters wake.</li><li>Parameters are cheap. Activated FLOPs are expensive.</li><li>Dense-equivalent quality at a fraction of the serving cost.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>Fine-grained MoE (DeepSeek-V2/V3: many small experts, top-8 of 256), shared experts plus routed experts, and expert-choice routing (experts pick tokens instead of tokens picking experts) to fix load balancing structurally. The MoE idea also meets reasoning in Paper 14's GRPO-trained models, which are MoE under the hood.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "MoE is 8 models in a trench coat." The experts share attention, <dfn>embeddings</dfn>, and the router; only the MLPs are replicated, and each token sees a <em>blend</em> of two experts, not one model's output. The second trap: "MoE is always cheaper." Total memory must hold all 47B parameters, so MoE needs more VRAM than a 13B dense model even though the FLOPs match; the saving is compute and latency, not memory.</div>
@@ -1762,7 +2221,18 @@ Fitted exponents (the paper's headline numbers):
   </section>
 
 <section class="chapter" id="rag-react">
-  <h2>Paper 13: <dfn>RAG</dfn> (2020) and ReAct (2022), Grounding and Agency</h2>
+  <figure class="diagram">
+<img src="img/v12-p12-lineage.svg" alt="After Mixtral: Switch Transformer, DeepSeekMoE, DeepSeek-V3, Qwen MoE, sparse hardware">
+<figcaption>After Mixtral: Switch Transformer, DeepSeekMoE, DeepSeek-V3, Qwen MoE, sparse hardware. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2021: top-1 routing at trillion scale.</li><li>2023-24: open 8x7B; fine-grained plus shared experts; 671B total, 37B active.</li><li>2025+: chips designed for sparse activation.</li>
+</ol>
+</div>
+
+<h2>Paper 13: <dfn>RAG</dfn> (2020) and ReAct (2022), Grounding and Agency</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> Lewis et al., "<dfn>Retrieval-Augmented Generation</dfn> for Knowledge-Intensive NLP Tasks", NeurIPS 2020. <a href="https://arxiv.org/abs/2005.11401">arXiv:2005.11401</a>. Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models", 2022. <a href="https://arxiv.org/abs/2210.03629">arXiv:2210.03629</a>.<br>
     <span class="lbl">Read on pass 2.</span> For RAG: Section 2 (the two formulations, RAG-Sequence and RAG-<dfn>Token</dfn>) and the Natural Questions results. For ReAct: Section 2 (the Thought/Action/Observation loop) and the HotpotQA results. Both papers are short and readable.
@@ -1773,7 +2243,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>The problem it solved</h3>
   <p>Two related failures of the pure parametric model. First, <strong>knowledge</strong>: a model's facts are frozen at training time and stored inscrutably in weights; it cannot cite sources, cannot know anything new, and hallucinates confidently when asked about the unfamiliar. Updating knowledge means retraining. Second, <strong>agency</strong>: <dfn>chain-of-thought</dfn> lets a model reason, and acting (searching, calling tools) lets it gather facts, but the two were separate: reasoners could not act, actors could not reason. RAG attacked knowledge; ReAct attacked the reasoning-acting split.</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p13-problem.svg" alt="The problem RAG and ReAct solved: frozen knowledge with no citations; reasoners that could not act">
+<figcaption>Paper 13: the problem it solved. Parametric knowledge froze at training time with no citations, and reasoners could not act while actors could not reason. The question: can retrieval ground knowledge, and can one loop interleave reasoning with acting? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Knowledge updates meant retraining; hallucinations had no citations.</li><li>The question gives the model a library card and a tool belt.</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
   <p><strong>RAG: retrieve, then generate.</strong> A dense retriever (DPR: dual BERT encoders, one for the query, one for passages) searches a Wikipedia index for the top-k passages relevant to the input. The generator (BART-large in the paper; BART is an encoder-decoder transformer pretrained by repairing corrupted text) conditions on the input <em>plus</em> the retrieved passages. Two variants: RAG-Sequence (one passage set per output, marginalize over documents) and RAG-Token (different passages can inform different tokens). The retriever and generator train jointly: the generator's loss backpropagates into the query encoder, so retrieval improves at serving generation.</p>
   <div class="callout"><span class="tag">[FIELD NOTE]</span><b>What "marginalize over documents" means.</b> The final answer probability is an average over every retrieved passage, weighted by how likely each passage is: the passages are the variable being summed out. Full treatment: Vol 1, &sect;3.2 (joint/marginal distributions). <a href="01-math-for-ml.html">01-math-for-ml.html</a></div>
   <p><strong>ReAct: interleave Thought, Action, Observation.</strong> The model generates a reasoning trace (Thought), then emits an action in a fixed syntax like <code>Search[Marie Curie]</code>, receives the tool's Observation, and continues. The loop repeats until the model emits a final answer. On HotpotQA (multi-hop questions needing several Wikipedia lookups), ReAct beat pure chain-of-thought because the model could <em>check facts mid-reasoning</em> instead of hallucinating the intermediate steps.</p>
@@ -1812,13 +2293,35 @@ Fitted exponents (the paper's headline numbers):
   <p>RAG-Sequence (marginalizing over documents):</p>
 <div style="text-align:center;margin:1.1rem 0;font-size:1.1rem;">P(y|x) = &#931;<sub>z &isin; top-k</sub> P<sub>ret</sub>(z|x) &middot; P<sub>gen</sub>(y|x,z)</div>
 <p><b>Where:</b> <i>P<sub>ret</sub>(z|x) = softmax(q(x)&middot;d(z))</i> over retrieved passages; <i>q</i>, <i>d</i> = query and document encoders (BERT-base, 768-dim vectors); <i>P<sub>gen</sub></i> = the generator (BART-large) conditioned on the input plus the passage.</p>
-<p><b>Worked example.</b> 5 passages retrieved with scores [3.1, 2.0, 1.2, 0.5, 0.1]: softmax &rarr; [0.55, 0.18, 0.08, 0.04, 0.02] (approx; the rest to others). The generator runs 5 times (once per passage); the final token distribution is the score-weighted mixture. A passage that scores high but generates poorly still contributes little, because the generator's likelihood multiplies the retrieval weight.</p>
+<p><b>Worked example.</b> 5 passages retrieved with scores [3.1, 2.0, 1.2, 0.5, 0.1]: softmax &rarr; [0.62, 0.21, 0.09, 0.05, 0.03] (rounded to two decimals; they sum to 1.00). The generator runs 5 times (once per passage); the final token distribution is the score-weighted mixture. A passage that scores high but generates poorly still contributes little, because the generator's likelihood multiplies the retrieval weight.</p>
 <p>ReAct has no new equation: it is a prompting and control-flow pattern. The formal view: the LM is a policy over an action space that includes both "emit reasoning tokens" and "emit tool calls", and the environment returns observations. Training ReAct-style agents (later work) is imitation learning on (thought, action, observation) trajectories.</p>
 
-  <h3>Why it mattered</h3>
+  <figure class="diagram">
+<img src="img/v12-p13-math.svg" alt="The RAG math: the final distribution is the score-weighted mixture of per-passage runs">
+<figcaption>The RAG math: P(y|x) = sum over top-k of P_ret(z|x) * P_gen(y|x,z). The final token distribution is the score-weighted mixture of the per-passage runs. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>P_ret: softmax of query-passage dot products; BERT-base 768-dim encoders.</li><li>P_gen: BART-large conditioned on input plus passage, once per passage.</li><li>A passage that scores high but generates poorly still contributes little: likelihood multiplies weight.</li>
+</ol>
+</div>
+
+<h3>Why it mattered</h3>
   <p>RAG became the default enterprise LLM architecture: every "chat with your documents" product is RAG with a better retriever and a bigger generator. It solved the knowledge-cutoff problem structurally (update the index, not the weights) and gave models citations, which made their outputs auditable. ReAct became the default agent pattern: every agent harness (LangChain, AutoGPT, and their successors) is a ReAct loop with more tools and better control flow. Together they moved the field from "bigger parametric memory" to "models that use external resources."</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p13-impact.svg" alt="Why RAG and ReAct mattered: from bigger parametric memory to models that use external resources">
+<figcaption>Why RAG and ReAct mattered: they moved the field from bigger parametric memory to models that use external resources. RAG is the default enterprise architecture; ReAct is the default agent pattern. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>RAG: update the index, not the weights; citations make outputs auditable.</li><li>ReAct: every agent harness is a ReAct loop with more tools.</li><li>Knowledge cutoff and agency, both solved structurally.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>For RAG: better retrievers (ColBERT late interaction, hybrid dense+sparse), self-RAG (the model decides when to retrieve), and agentic RAG (ReAct loops over the retriever). For ReAct: Reflexion (self-critique in the loop), tree search over action trajectories, and RL training of agent policies. The failure both papers share, retrieval quality bounding everything, is still the first thing to check when an agent underperforms.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "RAG fixes hallucinations." RAG fixes <em>knowledge</em> hallucinations (wrong facts); the model can still misread the retrieved passages, combine them wrongly, or hallucinate when retrieval fails. The second trap: "ReAct is just chain-of-thought with search." The structural difference is the <em>observation</em> step: external feedback enters the reasoning loop, which changes the error dynamics completely. A reasoning trace that can be corrected mid-flight is a different object from one that cannot.</div>
@@ -1839,7 +2342,18 @@ Fitted exponents (the paper's headline numbers):
   </section>
 
 <section class="chapter" id="r1-grpo">
-  <h2>Paper 14: DeepSeek-R1 (2025), Reasoning from Verifiable Rewards</h2>
+  <figure class="diagram">
+<img src="img/v12-p13-lineage.svg" alt="After RAG and ReAct: vector DBs, tool use, agents, long context, agentic RAG">
+<figcaption>After RAG and ReAct: vector DBs, tool use, agents, long context, the RAG-vs-long-context debate, agentic RAG. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>2023: the RAG infrastructure industry; function calling.</li><li>2024: agents grow up; million-token windows compete with retrieval.</li><li>2025+: the loop decides what to retrieve, when.</li>
+</ol>
+</div>
+
+<h2>Paper 14: DeepSeek-R1 (2025), Reasoning from Verifiable Rewards</h2>
   <div class="papermeta">
     <span class="lbl">Citation.</span> DeepSeek-AI, "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning", 2025. <a href="https://arxiv.org/abs/2501.12948">arXiv:2501.12948</a>.<br>
     <span class="lbl">Read on pass 2.</span> Focus on Section 2 (R1-Zero: pure RL) and Section 3 (the four-stage pipeline to R1). The GRPO derivation is in the DeepSeekMath paper; the R1 paper states what you need.
@@ -1850,7 +2364,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>The problem it solved</h3>
   <p><dfn>Chain-of-thought</dfn> prompting elicits reasoning, but the model was never <em>trained</em> to reason: it imitates reasoning-shaped text. <dfn>RLHF</dfn> rewards responses humans like, which is not the same as responses that are <em>correct</em>. On math and code, correctness is checkable by a program: a proof is right or wrong, code passes tests or does not. The paper asked: what happens if you skip human preferences entirely and run RL directly against verifiable rewards? Can reasoning <em>emerge</em> from the optimization instead of being imitated from demonstrations?</p>
 
-  <h3>The key idea, from zero</h3>
+  <figure class="diagram">
+<img src="img/v12-p14-problem.svg" alt="The problem DeepSeek-R1 solved: chain-of-thought imitated reasoning; RLHF rewarded being liked">
+<figcaption>Paper 14: the problem it solved. Chain-of-thought imitated reasoning; RLHF rewarded being liked. The question: skip human preferences, run RL against verifiable rewards. Can reasoning emerge? Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>On math and code, correctness is checkable by a program.</li><li>The question replaces "responses humans like" with "answers that verify."</li>
+</ol>
+</div>
+
+<h3>The key idea, from zero</h3>
   <p><strong>R1-Zero: pure RL, no SFT.</strong> Start from the base model (DeepSeek-V3-Base). For each math problem, sample a group of responses, score each with a rule-based reward (correct answer format and correct final answer: 1 or 0, checkable by script), and update the policy with GRPO. No supervised <dfn>fine-tuning</dfn>, no human preferences, no chain-of-thought demonstrations. The model had never been shown a reasoning trace.</p>
   <p><strong>Reasoning emerged anyway.</strong> During training, the model's responses grew longer, and behaviors appeared that nobody programmed: self-verification ("let me check this"), backtracking ("that approach failed, try another"), and the now-famous "aha moment" where the model explicitly rethinks mid-response. Test-time compute (longer chains) became a capability axis, just as training compute had been.</p>
   <p><strong>GRPO: the algorithm.</strong> Group Relative Policy Optimization (from DeepSeekMath, 2024). For each question, sample G responses, compute their rewards, and normalize: advantage = (reward minus group mean) / group std. Update the policy toward above-average responses and away from below-average ones, with a KL penalty against the reference. No value network (unlike PPO): the group's mean is the baseline. Simpler, cheaper, and well-suited to verifiable 0/1 rewards.</p>
@@ -1894,7 +2419,18 @@ Fitted exponents (the paper's headline numbers):
   <h3>Why it mattered</h3>
   <p>R1-Zero is the cleanest existence proof that reasoning can emerge from RL without imitation: no SFT, no CoT demos, and the model still learned to verify and backtrack. It shifted the field's reward paradigm from <em>human preference</em> (RLHF/DPO) to <em>verifiable correctness</em> for reasoning tasks, and it made test-time compute (longer chains) a first-class scaling axis alongside training compute. Practically, it showed a path to frontier reasoning without frontier human-label budgets: the reward is a script.</p>
 
-  <h3>What came next</h3>
+  <figure class="diagram">
+<img src="img/v12-p14-impact.svg" alt="Why DeepSeek-R1 mattered: R1-Zero proved reasoning emerges from RL without imitation">
+<figcaption>Why DeepSeek-R1 mattered: R1-Zero is the cleanest proof that reasoning emerges from RL without imitation. No SFT, no demos; the model learned to verify and backtrack. Test-time compute became a scaling axis beside training compute. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>No demos: the reasoning was learned, not imitated.</li><li>Reward paradigm shift: from human preference to verifiable correctness.</li><li>A path to frontier reasoning where the reward is a script.</li>
+</ol>
+</div>
+
+<h3>What came next</h3>
   <p>The R1 recipe (verifiable-reward RL plus cold start plus rejection sampling) became the template for open reasoning models throughout 2025. Open questions: rewards beyond math/code that are still verifiable, preventing length explosion (models gaming the reward by writing longer without thinking better), and combining verifiable rewards with preference rewards in one training run.</p>
 
   <div class="callout warn"><span class="tag">COMMON MISUNDERSTANDING</span><br>The trap: "R1 learned reasoning from the cold-start SFT data." R1-Zero, the headline result, had <em>no</em> SFT: reasoning emerged from pure RL against verifiable rewards. The cold start in full R1 is for readability, not capability. The second trap: "verifiable rewards solve alignment." They solve it for domains with checkers (math, code); for open-ended helpfulness and harmlessness there is no script, and you are back to preferences.</div>
@@ -2042,7 +2578,18 @@ Fitted exponents (the paper's headline numbers):
     </ol>
   </div>
 
-  <h3>The story in four acts</h3>
+  <figure class="diagram">
+<img src="img/v12-four-acts.svg" alt="The spine in one diagram: four acts plus a bottom row">
+<figcaption>The spine in one diagram: four acts plus a bottom row. Act 1 the foundation (Papers 1-5), Act 2 the science of scale (6-7), Act 3 alignment (8-10), Act 4 the modern open stack (11-12), and the bottom row: grounding and reasoning (13-14). Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Each act answers the open question of the previous one.</li><li>The bottom row spans 2020-2025: it is the frontier, not a fifth act.</li><li>Redraw this from memory: if you can, you hold the spine.</li>
+</ol>
+</div>
+
+<h3>The story in four acts</h3>
   <p><strong>Act 1: the foundation.</strong> The transformer (Paper 1) gives us a parallel, scalable sequence model; <dfn>RoPE</dfn> (Paper 2) and FlashAttention (Paper 3) fix its two costliest parts, position encoding and attention memory. GPT-2 (Paper 4) shows unsupervised <dfn>pretraining</dfn> transfers to tasks via conditioning. GPT-3 (Paper 5) shows that at 175B, conditioning becomes <em>programming</em>: few-shot learning emerges and <dfn>fine-tuning</dfn> becomes optional. The open question at the end of Act 1: we know scale works, but we cannot budget it.</p>
   <p><strong>Act 2: the science of scale (2020-2022).</strong> Kaplan (Paper 6) gives us power laws and a budgeting rule; Chinchilla (Paper 7) corrects the rule with a better experiment and proves tokens were the missing ingredient. By the end of Act 2, training is engineering: pick a loss target, read off the compute, split it into parameters and tokens. The open question: the model can predict text, but can it be an assistant?</p>
   <p><strong>Act 3: alignment (2022-2023).</strong> InstructGPT (Paper 8) turns human preferences into a <dfn>reward model</dfn> and optimizes it with <dfn>PPO</dfn>; 1.3B aligned beats 175B unaligned. Constitutional AI (Paper 9) replaces human harmlessness labels with AI self-critique against a written constitution. DPO (Paper 10) collapses the whole stack to one supervised loss. By the end of Act 3, post-training is a solved <em>engineering</em> problem with open <em>science</em> problems (reward hacking, whose preferences). The open question: can we make all of this cheap enough to serve?</p>
@@ -2058,7 +2605,18 @@ Fitted exponents (the paper's headline numbers):
     <li><strong>Evaluation is the hidden hard problem.</strong> GPT-3's contamination appendix, InstructGPT's human win rates, R1's verifiable rewards: each paper had to invent how to measure what it claimed. Distrust any result whose metric you cannot explain.</li>
   </ul>
 
-  <h3>The concise version</h3>
+  <figure class="diagram">
+<img src="img/v12-five-threads.svg" alt="Five threads through all fourteen papers">
+<figcaption>Five threads through all fourteen papers: scale is the dominant variable, data beats architecture, the objective function is the product, efficiency compounds, evaluation is the hidden hard problem. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Scale sets the level; architecture matters at the margin.</li><li>Each leap was a data leap first.</li><li>Choose the reward, choose the model. Distrust results whose metric you cannot explain.</li>
+</ol>
+</div>
+
+<h3>The concise version</h3>
   <p>If you have sixty seconds: "The transformer made sequence modeling parallel. GPT showed pretraining transfers; GPT-3 showed scale makes prompts a programming interface. Kaplan and Chinchilla turned scaling into budgeting, with 20 tokens per parameter as the rule of thumb. InstructGPT aligned models with human feedback, Constitutional AI replaced the human labels for harmlessness, DPO simplified it to one loss. RoPE and FlashAttention fixed position and attention efficiency; LLaMA assembled the modern open stack by overtraining small models; MoE decoupled capacity from serving cost. RAG and ReAct grounded models in retrieval and tools; DeepSeek-R1 showed reasoning emerges from RL on verifiable rewards." Then stop, and let them ask which paper to go deeper on.</p>
 
   <p class="bridge-fwd"><b>Next:</b> <a href="#read-next">What to Read Next</a>, which points you deeper, thread by thread.</p>
@@ -2069,7 +2627,18 @@ Fitted exponents (the paper's headline numbers):
   <p class="bridge">The spine ends; the literature does not. Where to go deeper, thread by thread.</p>
   <p>You have read fourteen papers with dependency notes. The field does not stop here. Below are the next papers, grouped by which spine paper they extend, in the order to read them. Every link was verified live on 2026-09-28.</p>
 
-  <h3>Extending the <dfn>transformer</dfn> and attention</h3>
+  <figure class="diagram">
+<img src="img/v12-read-next-map.svg" alt="Where to go next: follow-on papers grouped by which spine paper they extend">
+<figcaption>Where to go next: follow-on papers grouped by which spine paper they extend: attention, scaling, alignment, reasoning, agents, efficiency. Read each with its spine paper in hand. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Six groups, each extending specific spine papers.</li><li>The reading protocol: first write down what you expect from the spine paper, then read.</li><li>Every link was verified live on 2026-09-28.</li>
+</ol>
+</div>
+
+<h3>Extending the <dfn>transformer</dfn> and attention</h3>
   <ul>
     <li><strong>ALiBi</strong> (Press et al., 2021): the main alternative to <dfn>RoPE</dfn>; simpler, better extrapolation, worse fit at training length. <a href="https://arxiv.org/abs/2108.12409">arXiv:2108.12409</a>.</li>
     <li><strong>FlashAttention-2</strong> (Dao, 2023): better parallelism and work partitioning over Paper 3. <a href="https://arxiv.org/abs/2307.08691">arXiv:2307.08691</a>.</li>
@@ -2118,13 +2687,24 @@ Fitted exponents (the paper's headline numbers):
   <p class="bridge">Reading is not doing. Replicate a scaling law at tiny scale and feel the exponents yourself.</p>
   <div class="lab"><span class="tag">CAPSTONE</span><h4>Capstone lab</h4> Everything in Act 2 was measured, not theorized. This lab has you repeat the measurement at a scale that fits on a laptop, so the power law stops being a slogan and becomes something your hands have felt. <strong>Honesty marker:</strong> this lab is a <em>reconstruction sketched for this volume</em>, not a paper reproduction. It was designed from the papers' methods, not executed end to end here; the numbers below are illustrative targets, not recorded results. Your run will produce your own numbers, and that is the point.</div>
 
-  <h3>Goal</h3>
+  <figure class="diagram">
+<img src="img/v12-capstone-lab.svg" alt="Capstone: replicate a scaling law at tiny scale in four steps">
+<figcaption>Capstone: replicate a scaling law at tiny scale. Train four tiny GPTs, fit log(loss) vs log(FLOPs), predict a 2x larger run, verify within 20%. Feel the exponent yourself. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Four sizes: 0.5M to 4M parameters, same data, same budget rule.</li><li>Fit the line; read off your exponent. Kaplan's was about 0.05 at large scale; yours will differ, and the difference is instructive.</li><li>Within 20% counts as a successful replication of the method.</li>
+</ol>
+</div>
+
+<h3>Goal</h3>
   <p>Fit your own loss-versus-compute power law on a character-level tiny GPT (Volume 5's model), then use it to predict a larger run before you train it. If the prediction lands within 20%, you have replicated the core Kaplan result: loss is predictable from scale.</p>
 
   <h3>Setup</h3>
   <ul>
     <li>The Volume 5 tiny GPT (character-level, a few million parameters at most), training on Tiny Shakespeare or equivalent (~1MB of text).</li>
-    <li>Four model sizes spanning about 16x in parameters: e.g. 0.5M, 1M, 2M, 4M (vary depth/width; keep everything else fixed).</li>
+    <li>Four model sizes spanning about 8x in parameters: e.g. 0.5M, 1M, 2M, 4M (vary depth/width; keep everything else fixed).</li>
     <li>Fixed training <dfn>tokens</dfn> per run (one epoch each, same data order), so compute scales with model size.</li>
     <li>Log final validation loss and total training FLOPs per run (FLOPs ~ 6 * N * D).</li>
   </ul>
