@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 419" role="img" aria-label="Burn-rate alerting: fast and slow windows">
+<rect width="900" height="419" fill="#0d0d0d"/>
+<text x="450.0" y="20" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Burn-rate alerting: fast and slow windows</text>
+<text x="450.0" y="46" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">A short window catches spikes; a long window catches slow leaks. One without the other pages you wrong.</text>
+<rect x="120.0" y="79.0" width="600.0" height="200.0" rx="6" fill="#101010" stroke="#2a2a2a" stroke-width="1"/>
+<line x1="120.0" y1="119.0" x2="720.0" y2="119.0" stroke="#e5484d" stroke-width="2" stroke-dasharray="6,4"/>
+<text x="728.0" y="123.0" text-anchor="start" fill="#e5484d" font-size="11" font-family="Charis SIL, Georgia, serif">budget exhausted</text>
+<path d="M140.0,139.0 L147.1,139.4 L154.2,139.8 L161.3,140.1 L168.4,140.5 L175.4,140.9 L182.5,141.3 L189.6,141.7 L196.7,142.0 L203.8,142.4 L210.9,142.8 L218.0,143.2 L225.1,143.6 L232.2,143.9 L239.2,144.3 L246.3,144.7 L253.4,145.1 L260.5,145.5 L267.6,145.8 L274.7,146.2 L281.8,146.6 L288.9,147.0 L295.9,147.4 L303.0,147.7 L310.1,148.1 L317.2,148.5 L324.3,148.9 L331.4,149.3 L338.5,149.6 L345.6,150.0 L352.7,150.4 L359.7,150.8 L366.8,151.2 L373.9,151.5 L381.0,151.9 L388.1,152.3 L395.2,152.7 L402.3,153.1 L409.4,153.4 L416.5,153.8 L423.5,154.2 L430.6,154.6 L437.7,154.9 L444.8,155.3 L451.9,155.7 L459.0,156.1 L466.1,156.5 L473.2,156.8 L480.3,157.2 L487.3,157.6 L494.4,158.0 L501.5,158.4 L508.6,158.7 L515.7,159.1 L522.8,159.5 L529.9,159.9 L537.0,160.3 L544.1,160.7 L551.1,162.5 L558.2,165.2 L565.3,168.6 L572.4,172.5 L579.5,176.8 L586.6,181.6 L593.7,186.7 L600.8,192.2 L607.8,198.0 L614.9,204.1 L622.0,210.5 L629.1,217.1 L636.2,224.1 L643.3,231.2 L650.4,238.7 L657.5,246.4 L664.6,254.3 L671.6,262.4 L678.7,270.7 L685.8,279.3 L692.9,288.1 L700.0,297.0" fill="none" stroke="#ececec" stroke-width="2.5"/>
+<rect x="554.4" y="85.0" width="90.0" height="188.0" rx="6" fill="#e5484d" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="599.4" y="227.0" text-anchor="middle" fill="#e5484d" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">fast window</text>
+<text x="599.4" y="243.0" text-anchor="middle" fill="#e5484d" font-size="11" font-family="Charis SIL, Georgia, serif">pages now</text>
+<rect x="150.0" y="245.0" width="300.0" height="26.0" rx="6" fill="#f0b429" stroke="none" stroke-width="1" opacity="0.14"/>
+<text x="300.0" y="263.0" text-anchor="middle" fill="#f0b429" font-size="11" font-family="Charis SIL, Georgia, serif">slow window: tickets, not pages</text>
+<text x="420.0" y="303.0" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">time</text>
+<text x="108.0" y="109.0" text-anchor="end" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">error budget</text>
+<rect x="40.0" y="315.0" width="820.0" height="66.0" rx="6" fill="#101010" stroke="#2a2a2a" stroke-width="1"/>
+<text x="60.0" y="340.0" text-anchor="start" fill="#ececec" font-size="12.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">Burn rate = how fast the budget disappears. Fast window: 1h at 14x burn pages. Slow window: 6h at 2x burn tickets.</text>
+<text x="60.0" y="362.0" text-anchor="start" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">Both windows watch the same budget. The fast one catches the cliff; the slow one catches the leak.</text>
+</svg>
