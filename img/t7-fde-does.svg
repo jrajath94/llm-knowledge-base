@@ -1,0 +1,30 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 430' width='100%' role='img'>
+<title>What an FDE does</title>
+<text x='480' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>The engagement: vague ask to running system</text>
+<text x='480' y='70' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>The FDE sits between the AI lab and the customer, and makes the two meet.</text>
+<rect x='20' y='130' width='172' height='130' rx='10' fill='#1565c0' fill-opacity='0.22' stroke='#1565c0' stroke-width='2'/>
+<text x='106' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Vague ask</text>
+<text x='106' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>the customer has</text>
+<line x1='192' y1='195' x2='208' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='199.8,198.7 208,195 199.8,191.3' fill='#8a8a8a'/>
+<rect x='208' y='130' width='172' height='130' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='294' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Scoping</text>
+<text x='294' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>a business problem</text>
+<line x1='380' y1='195' x2='396' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='387.8,198.7 396,195 387.8,191.3' fill='#8a8a8a'/>
+<rect x='396' y='130' width='172' height='130' rx='10' fill='#8e24aa' fill-opacity='0.22' stroke='#8e24aa' stroke-width='2'/>
+<text x='482' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Prototype</text>
+<text x='482' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>on customer data</text>
+<line x1='568' y1='195' x2='584' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='575.8,198.7 584,195 575.8,191.3' fill='#8a8a8a'/>
+<rect x='584' y='130' width='172' height='130' rx='10' fill='#c0392b' fill-opacity='0.22' stroke='#c0392b' stroke-width='2'/>
+<text x='670' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Hardening</text>
+<text x='670' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>for production</text>
+<line x1='756' y1='195' x2='772' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='763.8,198.7 772,195 763.8,191.3' fill='#8a8a8a'/>
+<rect x='772' y='130' width='172' height='130' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='858' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Handover</text>
+<text x='858' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>customer team runs it</text>
+<text x='480' y='310' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Each stage answers a customer question: what hurts, what good looks like, what it costs, what can go wrong.</text>
+<text x='480' y='344' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Takeaway: the prototype proves the idea; hardening and handover are where engagements survive.</text>
+</svg>
