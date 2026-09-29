@@ -1,0 +1,24 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 560' width='100%' role='img'>
+<title>Weekly update anatomy</title>
+<text x='480' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>The weekly status update: same day, same format</text>
+<text x='480' y='70' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Regularity builds trust faster than good news.</text>
+<rect x='120' y='110' width='720' height='56' rx='8' fill='#1565c0' fill-opacity='0.16' stroke='#1565c0' stroke-width='2'/>
+<text x='150' y='134' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>STATUS</text>
+<text x='150' y='154' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>GREEN / YELLOW / RED, one word, first line</text>
+<rect x='120' y='176' width='720' height='56' rx='8' fill='#2e9e5b' fill-opacity='0.16' stroke='#2e9e5b' stroke-width='2'/>
+<text x='150' y='200' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>DONE THIS WEEK</text>
+<text x='150' y='220' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>3 bullets max; outcomes not activity</text>
+<rect x='120' y='242' width='720' height='56' rx='8' fill='#f0b429' fill-opacity='0.16' stroke='#f0b429' stroke-width='2'/>
+<text x='150' y='266' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>PLAN FOR NEXT WEEK</text>
+<text x='150' y='286' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>3 bullets max</text>
+<rect x='120' y='308' width='720' height='56' rx='8' fill='#8e24aa' fill-opacity='0.16' stroke='#8e24aa' stroke-width='2'/>
+<text x='150' y='332' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>NEEDS FROM YOU</text>
+<text x='150' y='352' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>named owner + date for each</text>
+<rect x='120' y='374' width='720' height='56' rx='8' fill='#c0392b' fill-opacity='0.16' stroke='#c0392b' stroke-width='2'/>
+<text x='150' y='398' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>RISKS</text>
+<text x='150' y='418' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>each with owner and mitigation</text>
+<rect x='120' y='440' width='720' height='56' rx='8' fill='#00897b' fill-opacity='0.16' stroke='#00897b' stroke-width='2'/>
+<text x='150' y='464' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>NUMBERS</text>
+<text x='150' y='484' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='start'>the same metrics every week</text>
+<text x='480' y='528' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Takeaway: shipped or learned, not worked on. The format is the promise.</text>
+</svg>
