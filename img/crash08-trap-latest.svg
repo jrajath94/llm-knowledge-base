@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="520" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 3.5. Trap 10: &quot;latest&quot; prompt in production</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">unversioned prompts are undebuggable incidents</text>
+<rect x="24" y="110" width="400" height="140" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">THE FAILURE</text>
+<text x="224.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">someone edits the prompt in the console; metrics move;</text>
+<text x="224.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">nobody knows what changed or how to undo it</text>
+<rect x="456" y="110" width="400" height="140" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">THE FIX</text>
+<text x="656.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">Figure 2.7: pin sys.v14, hash the rendered prompt into</text>
+<text x="656.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">the trace, promote versions</text>
+<text x="24" y="330" font-size="12" fill="#a8a8a8" text-anchor="start">If you cannot name the prompt version behind an incident, you do not have prompt engineering: you have prompt</text>
+<text x="24" y="348" font-size="12" fill="#a8a8a8" text-anchor="start">folklore.</text>
+</svg>
