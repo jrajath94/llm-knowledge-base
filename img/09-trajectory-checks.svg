@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="660" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Trajectory checks: assert necessary steps, never exact sequences</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">The money-transfer check: balance verified before money moves</text>
+<rect x="24" y="98" width="150" height="56" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="99" y="132" font-size="10" font-family="DejaVu Sans Mono, monospace" fill="#4fd1a5" text-anchor="middle">check_balance</text>
+<line x1="174" y1="126" x2="192" y2="126" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="192,126 183.78219953718923,129.66984407753614 183.78219953718923,122.33015592246387" fill="#8a8a8a"/>
+<rect x="192" y="98" width="150" height="56" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="267" y="132" font-size="10" font-family="DejaVu Sans Mono, monospace" fill="#8a8a8a" text-anchor="middle">search_docs</text>
+<line x1="342" y1="126" x2="360" y2="126" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="360,126 351.78219953718923,129.66984407753614 351.78219953718923,122.33015592246387" fill="#8a8a8a"/>
+<rect x="360" y="98" width="150" height="56" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="435" y="132" font-size="10" font-family="DejaVu Sans Mono, monospace" fill="#8a8a8a" text-anchor="middle">draft_email</text>
+<line x1="510" y1="126" x2="528" y2="126" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="528,126 519.7821995371892,129.66984407753614 519.7821995371892,122.33015592246387" fill="#8a8a8a"/>
+<rect x="528" y="98" width="150" height="56" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="603" y="132" font-size="10" font-family="DejaVu Sans Mono, monospace" fill="#4fd1a5" text-anchor="middle">check_balance</text>
+<line x1="678" y1="126" x2="696" y2="126" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="696,126 687.7821995371892,129.66984407753614 687.7821995371892,122.33015592246387" fill="#8a8a8a"/>
+<rect x="696" y="98" width="150" height="56" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="771" y="132" font-size="10" font-family="DejaVu Sans Mono, monospace" fill="#e57ea6" text-anchor="middle">transfer_money</text>
+<text x="450" y="194" font-size="11" fill="#a8a8a8" text-anchor="middle">scan for ordering, not adjacency: other steps may sit between</text>
+<rect x="24" y="228" width="852" height="150" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="450.0" y="260" font-size="14" font-weight="bold" fill="#4fd1a5" text-anchor="middle">The design rule</text>
+<text x="48" y="284" font-size="11" fill="#a8a8a8" text-anchor="start">Assert necessary steps, never exact sequences. Requiring adjacency fails agents that do extra</text>
+<text x="48" y="301" font-size="11" fill="#a8a8a8" text-anchor="start">verification: it punishes the careful ones. That is the brittleness trap; ordering-with-gaps is the fix.</text>
+<rect x="24" y="396" width="852" height="150" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="450.0" y="428" font-size="14" font-weight="bold" fill="#e57ea6" text-anchor="middle">Vacuous pass is a smell</text>
+<text x="48" y="452" font-size="11" fill="#a8a8a8" text-anchor="start">If no transfer happened, the task probably failed upstream. Report it so the grader can distinguish safe</text>
+<text x="48" y="469" font-size="11" fill="#a8a8a8" text-anchor="start">from did nothing. Silent vacuous passes hide broken tasks.</text>
+</svg>
