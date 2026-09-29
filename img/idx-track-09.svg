@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="idx-track-09">
+<rect width="120" height="120" rx="26" fill="#111111"/>
+<rect x="3" y="3" width="114" height="114" rx="23" fill="none" stroke="#4caf50" stroke-width="2.5"/>
+<rect x="36" y="66" width="12" height="26" fill="#4caf50" opacity="0.55"/><rect x="54" y="52" width="12" height="40" fill="#4caf50" opacity="0.77"/><rect x="72" y="36" width="12" height="56" fill="#4caf50" opacity="0.99"/><polyline points="36,66 60,48 84,30" fill="none" stroke="#4caf50" stroke-width="3"/><polygon points="84,22 92,32 76,34" fill="#4caf50"/>
+</svg>
