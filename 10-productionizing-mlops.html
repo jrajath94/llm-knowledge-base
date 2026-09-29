@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Volume 10: Productionizing and MLOps</title>
 <style>
@@ -539,6 +547,17 @@ that feed it and the freshness bugs that starve it.</p>
 
 
 <div class="chapnum">Chapter 2</div>
+<figure class="diagram">
+<img src="img/v10-cells-to-functions.svg" alt="Two panels comparing notebook cells with reviewable functions">
+<figcaption>Notebook cells are not reviewable units. At the service boundary, cells become functions: named, tested, versioned. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Left panel: cells run in whatever order you clicked, with hidden state between them.</li><li>Right panel: the same logic as functions, each with a name, a test, and a version.</li><li>The boundary is the rule: everything that serves traffic crosses it.</li>
+</ol>
+</div>
+
 <h2 id="data-pipelines">Data pipelines and feature freshness</h2>
 
 <p><b>Why this next.</b> Chapter 1 left a model serving traffic, but it quietly assumed fresh data arrives on time. Pipelines are how data arrives. Freshness bugs are the first way production goes wrong without anyone noticing.</p>
@@ -568,6 +587,28 @@ engineering. The design question is always which rung a feature needs.
 
 <!-- ENRICHMENT:ascii-freshness -->
 
+<figure class="diagram">
+<img src="img/v10-freshness-ladder.svg" alt="The four-level freshness ladder from daily batch to streaming">
+<figcaption>The freshness ladder: pick the lowest rung that satisfies the use case, because each rung up costs more to build and run. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read bottom to top: daily batch, hourly batch, micro-batch, streaming.</li><li>The rule at the bottom: start at daily batch and climb only when the use case demands it.</li><li>Most features never need the top rung.</li>
+</ol>
+</div>
+
+<figure class="diagram">
+<img src="img/v10-batch-vs-streaming.svg" alt="Table comparing batch and streaming on schedule, latency, cost, and failure mode">
+<figcaption>Batch vs streaming, side by side: schedule, latency, cost, and failure mode. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Batch runs on a schedule; streaming processes each event as it arrives.</li><li>The latency row is the point: hours to a day versus seconds to minutes.</li><li>The failure mode row links back to the stale-feature story: up to 39 hours of staleness.</li>
+</ol>
+</div>
+
 <h3>Worked example: the stale feature (illustrative)</h3>
 <p>A recommendation model uses "purchases in the last 7 days," computed by a daily batch job at
 midnight. At 3pm the feature is 15 hours stale. Then a flash sale starts at noon: by 3pm the
@@ -576,6 +617,17 @@ things they already bought. The staleness window is up to 39 hours (event just a
 to next-next midnight plus serving lag). The fix is a freshness <dfn>SLA</dfn> (service-level agreement)
 per feature: this feature gets an hourly pipeline, or the model gets a second real-time
 feature ("purchases since midnight") alongside the batch one.</p>
+<figure class="diagram">
+<img src="img/v10-stale-feature-timeline.svg" alt="Timeline showing a feature going 39 hours stale over a weekend">
+<figcaption>How a feature goes 39 hours stale: the batch job fails Friday night, nobody notices until Monday. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Follow the timeline left to right: last good run, silent failure, weekend gap.</li><li>The gap is the lesson: batch pipelines fail silently, so the alert must watch freshness, not just job success.</li><li>39 hours is the number to remember when someone asks why freshness is a design decision.</li>
+</ol>
+</div>
+
 <h3>Training/serving skew: the three classic shapes</h3>
 <p>(1) <b>Logic skew:</b> training used a SQL query with a bug or a different definition than
 serving (e.g. "7 days" meant calendar days in training, rolling 168 hours in serving).
@@ -610,6 +662,17 @@ models, because data breaks suddenly and models degrade gradually.</p></div><div
 
 
 <div class="chapnum">Chapter 3</div>
+<figure class="diagram">
+<img src="img/v10-prediction-log-join.svg" alt="The prediction log schema and how predictions join to outcomes">
+<figcaption>The prediction log: every prediction joins the request features and the eventual outcome, so skew can be measured instead of guessed. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>The log row: timestamp, request id, features, model version, prediction, outcome.</li><li>The join: match prediction to outcome on the request id, after the outcome arrives.</li><li>Without the log, skew is a suspicion. With it, skew is a number.</li>
+</ol>
+</div>
+
 <h2 id="monitoring">Monitoring: metrics and <dfn>alerting</dfn></h2>
 
 <p><b>Why this next.</b> Pipelines feed the model; now the model serves users. Chapter 2's freshness bugs surface as silent quality decay, which nobody sees without measurement. Monitoring is how you notice before the users do, and alerting is how you notice without burning out the humans.</p>
@@ -622,6 +685,17 @@ distribution</b> (feature drift, label drift), <b>cost per request</b> (tokens, 
 and <b>guardrail catch rates</b> (Volume 9, Path D: a spike in blocked outputs is a signal,
 not just a defense). Log every prediction with its features, the model version, and the
 eventual outcome where observable: without that join, drift is undetectable.</p>
+<figure class="diagram">
+<img src="img/v10-four-signals.svg" alt="Four cards for the golden signals: quality, drift, cost, guardrails">
+<figcaption>The four golden signals, ML edition: quality, drift, cost, and guardrails. Alert on the user-facing one first. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Each card is one signal the monitoring wall watches.</li><li>Quality is the only chart that measures what users experience; the other three are leading indicators.</li><li>If you can only alert on one, alert on quality.</li>
+</ol>
+</div>
+
 <h3>Alerting that respects humans</h3>
 <p>Rules: <b>page</b> (wake someone) only on user-facing symptoms with a known runbook (a written step-by-step response plan)
 (<dfn>error budget</dfn> burning, i.e. the allowed failure quota is being spent, quality below the <dfn>SLO</dfn>, the service-level objective you promised); <b>ticket</b> everything else (drift warnings,
@@ -675,6 +749,17 @@ symptom; drift names the most common cause.</p>
 drift signal is a retraining decision in disguise: is the world different enough to teach the model
 again? That decision needs a number, not a feeling. The number is PSI.</p>
 
+<figure class="diagram">
+<img src="img/v10-drift-shapes.svg" alt="The three drift shapes: sudden cliff, gradual slope, seasonal wave">
+<figcaption>The three drift shapes: sudden, gradual, and seasonal. Each needs a different response. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Sudden: a cliff, usually a broken upstream. Roll back first, investigate second.</li><li>Gradual: a slow slope, the world changing under you. Retrain on a schedule.</li><li>Seasonal: a repeating wave. Do not mistake it for a trend; compare year over year.</li>
+</ol>
+</div>
+
 <h3>Drift detection: <dfn>PSI</dfn> with worked numbers</h3>
 <p><b>PSI</b> (<dfn>population stability index</dfn>) compares a feature's serving distribution against its
 training distribution across bins. The common rule of thumb: below 0.1 no significant change, 0.1-0.25
@@ -691,7 +776,7 @@ small change worth watching, above 0.25 significant shift, investigate.</p>
 <li>Bin 2: (0.35 &minus; 0.30) &middot; ln(0.35/0.30) = (0.05) &middot; (0.154) = 0.0077.</li>
 <li>Bin 3: (0.25 &minus; 0.20) &middot; ln(0.25/0.20) = (0.05) &middot; (0.223) = 0.0112.</li>
 <li>Total: PSI = 0.0223 + 0.0077 + 0.0112 = <b>0.041</b>. Below 0.1: no significant change.</li>
-<li>Contrast: if serving had shifted to 20%, 30%, 50%, the PSI would be about <b>0.42</b>. Above 0.25: investigate immediately.</li>
+<li>Contrast: if serving had shifted to 20%, 30%, 50%, the PSI would be about <b>0.55</b>. Above 0.25: investigate immediately.</li>
 </ol>
 <pre class="ascii">PSI worked example from this chapter: feature "account age in days".
 
@@ -701,7 +786,7 @@ small change worth watching, above 0.25 significant shift, investigate.</p>
   [90d+)   #### 20%       [90d+)   #### 25%        [90d+)   ######## 50%
 
   This week: PSI = 0.041  -> no significant change.
-  Shifted:   PSI = 0.42   -> investigate immediately.
+  Shifted:   PSI = 0.55   -> investigate immediately.
 
   PSI rule of thumb:  below 0.1 fine | 0.1-0.25 watch | above 0.25 investigate</pre>
 
@@ -788,11 +873,33 @@ finding old weights on someone's laptop.</p>
 <p><b>Forward link.</b> Versions make change safe to attempt. Chapter 6 is how you change them safely: CI/CD for ML, with eval gates and staged rollouts.</p>
 
 <div class="chapnum">Chapter 6</div>
+<figure class="diagram">
+<img src="img/v10-prompt-is-code.svg" alt="Checklist of the prompt-as-code rules: versioned, reviewed, tested">
+<figcaption>A prompt is code: it is versioned, reviewed, and tested like any other config change. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Versioned: the prompt text lives in the repo with a version number.</li><li>Reviewed: changes go through the same review as code.</li><li>Tested: the eval suite runs against the new prompt before it ships.</li>
+</ol>
+</div>
+
 <h2 id="cicd">CI/CD for ML: testing models and safe rollout</h2>
 
 <p><b>Why this next.</b> Versions make change possible; they do not make it safe. This chapter wires the software discipline of tested, reviewed, staged releases to things that are not code: weights, prompts, configs, and data.</p>
 
 <p><b>CI/CD</b> (continuous integration / continuous delivery) for ML applies the software discipline of tested, reviewed, staged releases to things that are not code: model weights, prompts, configs, and data pipelines. In software the unit of change is code and tests catch regressions; in ML the units of change are weights, prompts, and data, and "tests" must be evals, because a model change can be correct on every unit test and still be worse for users. Without ML-flavored CI/CD, every deploy is a hope. The rollout ladder has three rungs: <b>shadow deploy</b> runs the new version on live traffic without serving its answers (observing only); <b>canary deploy</b> serves the new version to a small fraction of traffic and compares; then staged full rollout.</p>
+<figure class="diagram">
+<img src="img/v10-ml-cicd-gate.svg" alt="The ML CI/CD gate: data tests, training tests, and eval gates before rollout">
+<figcaption>The ML CI/CD gate: every model change passes data tests, training tests, and eval gates before it can roll out. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read left to right: the change enters, the gates decide, the rollout happens or it does not.</li><li>Data tests catch schema drift; eval gates catch quality regressions.</li><li>A model that fails a gate never reaches users. That is the whole point.</li>
+</ol>
+</div>
+
 <h3>Testing models: evals are the unit tests</h3>
 <p>The CI gate for a model change is the eval harness from Volume 9, Path C: the golden set (a fixed set of representative prompts with known-good answers)
 runs on every candidate, the LLM judge (a model that scores outputs) scores, and regressions block the deploy. Prompt and
@@ -801,6 +908,17 @@ like code. Data pipeline changes get schema tests and distribution checks (Chapt
 they touch training or serving.</p>
 <h3>Shadow, then canary, then full: the safe rollout ladder</h3>
 <p><b>Shadow</b> catches crashes, latency blowups, and format breaks with zero user impact, because users still get the old model's answers. <b>Canary</b> (1-5% of traffic) compares error rates, latency, and eval scores against the control on real users. <b>Full</b> rolls out in stages (25%, 50%, 100%) with the one-command rollback from Chapter 1 armed at every stage.</p>
+<figure class="diagram">
+<img src="img/v10-rollout-ladder.svg" alt="The safe rollout ladder: shadow, canary, full, with rollback armed">
+<figcaption>The safe rollout ladder: shadow, canary, then full, with rollback armed at every rung. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Shadow: the new model sees live traffic but its answers go nowhere. Observe only.</li><li>Canary: a small fraction of users get the new model. Watch the quality chart.</li><li>Full: staged to everyone, with the one-command rollback from the registry ready.</li>
+</ol>
+</div>
+
 <h3>Worked example: canary math (illustrative)</h3>
 <p>Baseline error rate 1%. You want the canary to catch a regression to 2% before full rollout. Telling 1% from 2% reliably needs roughly 2,000-5,000 samples (binomial noise: the low end catches a big jump, the high end is a properly powered comparison).</p>
 
@@ -857,6 +975,17 @@ no CD, just faster hoping.</p></div><div class="takeaway"><h4>Key takeaways</h4>
 <p><b>Why this next.</b> Even gated deploys fail. This chapter is what you do in the first hour when the dashboard turns red: a practiced sequence, told as one worked incident from detection to review.</p>
 
 <p><b>Incident response</b> for ML systems is the practiced sequence of detect, triage, mitigate, fix, verify, and review when the system misbehaves in production. ML incidents are weirder than software incidents: nothing crashes, no error spikes, the system just gets quietly worse or confidently wrong. Without a practiced response, teams argue about causes while users absorb the damage.</p>
+<figure class="diagram">
+<img src="img/v10-incident-sequence.svg" alt="The six-step incident response sequence: detect, triage, mitigate, fix, verify, review">
+<figcaption>ML incidents are silent quality drops, not crashes. Detect, triage, mitigate first, then fix, verify, and review. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the six steps in order: detect, triage, mitigate, fix, verify, review.</li><li>Mitigate comes before fix: stop the bleeding with a rollback before diagnosing.</li><li>Review is last and blameless: the postmortem produces owned action items.</li>
+</ol>
+</div>
+
 <h3>A worked incident narrative (illustrative, assembled from common patterns)</h3>
 <p><b>14:02.</b> The quality dashboard (Chapter 3) shows the RAG assistant's judge score
 dropping from 0.81 to 0.62 over two hours. RAG (retrieval-augmented generation) means the model answers from retrieved documents, so the judge is grading answer quality end to end. No deploy in the window, no error spike. On-call
@@ -932,8 +1061,20 @@ afterward, not just the clever debugging.</p></div><div class="takeaway"><h4>Key
 <p><b>Forward link.</b> Incidents cost money, and so does every token. Chapter 8 prices the
 whole system.</p>
 
+<figure class="diagram">
+<img src="img/v10-blameless-postmortem.svg" alt="Two panels comparing blaming the person with fixing the system">
+<figcaption>The blameless rule: fix the system, not the person. People report what the system lets them hide. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Left: blame the person and the next incident goes unreported.</li><li>Right: fix the system and every incident teaches.</li><li>Blameless is load-bearing because the postmortem only works if people tell the truth.</li>
+</ol>
+</div>
+
 
 <div class="chapnum">Chapter 8</div>
+
 <h2 id="cost">Cost engineering: <dfn>unit economics</dfn> of inference</h2>
 
 <p><b>Why this next.</b> Incidents cost money, and so does every token the system generates. A design you cannot afford is a design that does not ship. This chapter prices the whole system and moves the number with architecture, not hope.</p>
@@ -979,10 +1120,32 @@ whole system.</p>
 <li>Workflow: 2 steps &middot; 2,000 tokens = 4,000 tokens. At $1.00/1M: 4,000 &middot; 1.00 / 1,000,000 = <b>$0.00400 per task</b>.</li>
 <li>The "expensive" model wins per task. Optimize the task, not the token.</li>
 </ol>
+<figure class="diagram">
+<img src="img/v10-inference-dollar.svg" alt="Bar chart of where the inference dollar goes: compute, memory, network, overhead">
+<figcaption>Where the inference dollar goes: compute is the largest segment, then memory, network, and overhead. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>The bars are shares of one inference dollar.</li><li>Compute dominates: that is why batching and quantization are the first levers.</li><li>Cut the biggest bar first.</li>
+</ol>
+</div>
+
+<figure class="diagram">
+<img src="img/v10-cost-per-task.svg" alt="The cost-per-task formula with a worked example and the levers in ROI order">
+<figcaption>Cost per task: the one equation that turns a fleet bill into a per-request number. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Start with the formula: GPUs times dollars per GPU hour, divided by requests per second times 3.6.</li><li>The worked row: 9 GPUs at $2.50/hr serving 40 req/s costs $0.16 per 1k requests.</li><li>The levers row is in ROI order: batching first, then the rest.</li>
+</ol>
+</div>
+
 <h3>The levers, in ROI order</h3>
 <p>(1) <b>Batching:</b> free throughput until the latency knee (Volume 8, Chapter 2).
-(2) <b>Quantization:</b> halves memory cost per step down the ladder (Volume 8, Chapter 4).
-(3) <b>Speculative decoding:</b> fewer target passes per token (Volume 8, Chapter 5).
+(2) <b>Quantization:</b> halves memory cost per step down the ladder (Volume 8, Chapter 5).
+(3) <b>Speculative decoding:</b> fewer target passes per token (Volume 8, Chapter 6).
 (4) <b>Right-sizing context:</b> retrieved passages and agent histories are KV memory; every
 unnecessary thousand tokens is batch capacity burned. (5) <b>Caching:</b> exact-match and
 semantic caches (keyed by meaning, not exact text) for repeated queries; the cheapest token is the one you never generate.
@@ -1020,6 +1183,17 @@ contracts.</p>
 <p><b>Why this next.</b> Cost, quality, and uptime are promises, and promises belong in writing. This chapter turns the whole volume (pipelines, CI/CD, monitoring, incidents, cost) into one enforceable system of contracts.</p>
 
 <p>A <b>reliability contract</b> for an AI system is written, measurable promises about quality, latency, and cost, each with a <b>budget</b> (how much failure is allowed), <b>verification</b> (how you prove it), <b>traces</b> (the evidence per request), and <b>replay</b> (reproduce any past decision). "The model is good" is not a contract: when the model, the data, the users, and the business all change independently, only written promises with measurements survive. Contracts turn the whole volume (pipelines, CI/CD, monitoring, incidents, cost) into one enforceable system.</p>
+<figure class="diagram">
+<img src="img/v10-contracts-map.svg" alt="The reliability contract as a shield holding budget, verification, trace, and replay">
+<figcaption>The reliability contract: budget, verification, trace, and replay inside one shield. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Four panels, one contract: budget says what is promised, verification checks it, trace records what happened, replay proves it can be reproduced.</li><li>The point: reliability is not a feeling; it is four mechanisms.</li>
+</ol>
+</div>
+
 <h3>Budgets: SLOs and error budgets for AI</h3>
 <p>Classical SLO (service-level objective): 99.9% of requests succeed. That promise converts directly into a downtime budget:</p>
 
@@ -1049,12 +1223,34 @@ contracts.</p>
   A contract without verification is a wish.</pre>
 <!-- ENRICHMENT:ascii-contract -->
 
+<figure class="diagram">
+<img src="img/v10-error-budget.svg" alt="The error budget as the gap between the SLO promise and perfect">
+<figcaption>The error budget: the gap between the SLO and perfect is what you are allowed to spend on change. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>The SLO is the promise, say 99.9%. The budget is the rest.</li><li>Spend it on launches and experiments. When it is gone, changes stop until the budget recovers.</li><li>An error budget turns reliability arguments into arithmetic.</li>
+</ol>
+</div>
+
 <h3>Verification: evals as contracts</h3>
 <p>Every promise gets a verification method, and for AI that method is the eval harness
 (Volume 9, Path C): the golden set runs on every change, the judge scores, the dashboard
 tracks the SLO. A contract without verification is a wish. The canary (Chapter 6) is the
 contract enforced at deploy time; the monitor (Chapter 3) is the contract enforced at
 runtime.</p>
+<figure class="diagram">
+<img src="img/v10-contract-enforcement.svg" alt="Checklist mapping each contract promise to an eval that enforces it">
+<figcaption>Evals as contracts: every reliability promise gets a check that runs continuously. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Each promise in the contract maps to an eval that verifies it.</li><li>The evals run on a schedule, not just at launch.</li><li>A contract without enforcement is a wish.</li>
+</ol>
+</div>
+
 <h3>Traces and replay</h3>
 <p>A <b>trace</b> is the complete record of one request: the prompt, retrieved passages, tool
 calls, model version, sampler settings, guardrail decisions, tokens, cost, and latency. When
@@ -1176,6 +1372,17 @@ them.</p>
 
 
 <div class="chapnum">Hands-on</div>
+<figure class="diagram">
+<img src="img/v10-lab-architecture.svg" alt="The lab architecture: client, monitored endpoint, prediction log, and cost ledger in one loop">
+<figcaption>The lab architecture: client, monitored endpoint, prediction log, and cost ledger in one loop. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Follow the arrows: the client hits the endpoint, the endpoint logs every prediction, the log feeds the dashboards and the cost ledger.</li><li>Labs 1 to 3 each instrument one more part of this loop.</li>
+</ol>
+</div>
+
 <h2 id="labs-23">Labs 2 and 3: load test and cost math</h2>
 
 <p><b>Continuing the same script.</b> Lab 2 hammers the endpoint and reads the tail latency; Lab 3 prices what Lab 2 measured. Measure first, price second: the Chapter 8 order of operations.</p>
