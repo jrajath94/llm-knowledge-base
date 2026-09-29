@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="100%" style="max-width:760px" role="img" aria-label="Quantization method selection ladder">
+<style>
+ text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+ .m{fill:#a8a8a8;font-size:12px}
+ .t{font-size:14px;font-weight:700}
+ .g{fill:#f0b429}
+ .lbl{font-size:12.5px}
+ .box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5;rx:8}
+ .pick{fill:#141414;stroke:#f0b429;stroke-width:2;rx:8}
+ .yn{fill:#6cb2ff;font-size:12px;font-weight:700}
+ .arr{stroke:#8a8a8a;stroke-width:1.5;fill:none}
+</style>
+<rect x="0" y="0" width="760" height="430" fill="none"/>
+<!-- Q1 -->
+<rect class="box" x="30" y="20" width="320" height="64"/>
+<text class="t" x="46" y="46">GPU is Hopper/Ada or newer?</text>
+<text class="m" x="46" y="68">compute capability 8.9+</text>
+<!-- Q1 yes branch -->
+<path class="arr" d="M350 52 H392"/><text class="yn" x="360" y="44">yes</text>
+<rect class="box" x="392" y="20" width="338" height="64"/>
+<text class="t" x="408" y="46">Decode is the bottleneck?</text>
+<text class="m" x="408" y="68">bytes per decode step, not compute</text>
+<path class="arr" d="M561 84 V112"/><text class="yn" x="571" y="104">yes</text>
+<rect class="pick" x="436" y="112" width="250" height="66"/>
+<text class="t g" x="452" y="139">FP8 W8A8</text>
+<text class="m" x="452" y="161">the default: native, near-zero accuracy cost</text>
+<!-- Q1 no branch -->
+<path class="arr" d="M190 84 V118"/><text class="yn" x="200" y="106">no</text>
+<rect class="box" x="60" y="118" width="260" height="64"/>
+<text class="t" x="76" y="144">Max memory saving needed?</text>
+<text class="m" x="76" y="166">pre-Hopper GPUs</text>
+<path class="arr" d="M190 182 V210"/><text class="yn" x="200" y="202">yes</text>
+<rect class="pick" x="75" y="210" width="230" height="66"/>
+<text class="t g" x="91" y="237">GPTQ / AWQ 4-bit</text>
+<text class="m" x="91" y="259">pick by engine kernel support</text>
+<text class="yn" x="330" y="152">no</text>
+<path class="arr" d="M320 144 H352"/>
+<rect class="pick" x="352" y="118" width="240" height="66"/>
+<text class="t g" x="368" y="145">INT8 W8A8</text>
+<text class="m" x="368" y="167">SmoothQuant-style, older-GPU fast path</text>
+<!-- capacity branch -->
+<rect class="box" x="30" y="300" width="340" height="64"/>
+<text class="t" x="46" y="326">Capacity the bottleneck?</text>
+<text class="m" x="46" y="348">long context or large batches</text>
+<path class="arr" d="M370 332 H402"/><text class="yn" x="380" y="324">yes</text>
+<rect class="pick" x="402" y="300" width="328" height="64"/>
+<text class="t g" x="418" y="327">KV-cache quantization</text>
+<text class="m" x="418" y="349">int8 ~lossless, int4 for headroom; keys per-channel, values per-token</text>
+<!-- edge branch -->
+<text class="lbl" x="30" y="397">CPU, laptop, or edge?</text>
+<path class="arr" d="M205 391 H232"/>
+<rect class="pick" x="232" y="372" width="498" height="40"/>
+<text class="t g" x="248" y="397">GGUF k-quants</text>
+<text class="m" x="392" y="397">mixed 2-6 bit, no calibration; not a datacenter-GPU choice</text>
+</svg>
