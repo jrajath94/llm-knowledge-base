@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="460" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Ridge points: one number tells you the regime</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">A100 ridge ~153 FLOP/byte, H100 ridge ~296 FLOP/byte</text>
+<rect x="70" y="90" width="560" height="220" fill="#141414" stroke="#4a4a4a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="62" y="310" font-size="12" fill="#8a8a8a" text-anchor="end">FLOP/s</text>
+<text x="630" y="330" font-size="12" fill="#8a8a8a" text-anchor="end">arithmetic intensity, FLOP/byte (log)</text>
+<line x1="84" y1="280" x2="336.0" y2="120" stroke="#4fd1a5" stroke-width="2"/>
+<line x1="336.0" y1="120" x2="616" y2="120" stroke="#4fd1a5" stroke-width="2"/>
+<circle cx="336.0" cy="120" r="5" fill="#4fd1a5"/>
+<text x="330.0" y="108" font-size="11" fill="#4fd1a5" text-anchor="end">A100 ridge ~153</text>
+<circle cx="464.8" cy="120" r="5" fill="#b388ff"/>
+<text x="472.8" y="108" font-size="11" fill="#b388ff" text-anchor="start">H100 ridge ~296</text>
+<circle cx="498.96000000000004" cy="137.6" r="6" fill="#6cb2ff"/>
+<text x="510.96000000000004" y="141.6" font-size="12" fill="#6cb2ff" text-anchor="start">big matmul</text>
+<circle cx="217.0" cy="234.4" r="6" fill="#f0b429"/>
+<text x="229.0" y="238.4" font-size="12" fill="#f0b429" text-anchor="start">attention, no flash</text>
+<circle cx="115.92" cy="274.88" r="6" fill="#e57ea6"/>
+<text x="127.92" y="278.88" font-size="12" fill="#e57ea6" text-anchor="start">all-reduce</text>
+<text x="24" y="346" font-size="13" fill="#a8a8a8" text-anchor="start">A training step is a mix: matmuls want compute, attention wants bandwidth, collectives want network. The profiler shows the mix.</text>
+<text x="24" y="370" font-size="13" fill="#f0b429" text-anchor="start">nvidia-smi at 100% is SM activity, not useful work. MFU is the headline metric.</text>
+</svg>
