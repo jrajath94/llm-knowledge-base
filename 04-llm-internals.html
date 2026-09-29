@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Volume 4: LLM Internals - Research-Engineer Curriculum</title>
 <style>
@@ -531,6 +539,18 @@ html.xp-js .xp-reveal.xp-in {
 <p>What breaks if a step fails: if pair counting ignored word frequencies, rare words would dominate the merges and the vocabulary would memorize noise. If merges applied out of order at encode time, two identical strings could tokenize differently, and the model would see inconsistent IDs for the same text.</p>
 </div>
 
+
+<figure>
+<img src="img/04-token-to-id.svg" alt="Hello to character tokens to UTF-8 IDs 72 101 108 108 111 to learned vectors">
+<figcaption><strong>Figure 1.2.</strong> Text becomes numbers in two hops. Characters become tokens, tokens become integer IDs, and each ID looks up a learned vector. The table is learned, not fixed: training moves each vector where it needs to be.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Left to right: text, tokens, IDs, vectors.</li>
+<li>The IDs shown are the UTF-8 byte values for “Hello”.</li>
+<li>BPE generalizes this: the tokens are learned pairs, not single characters.</li>
+</ol>
+</div>
+</figure>
 <h3>Step 4: ten merges, hand-computed</h3>
 <p>The lab at the end of this volume trains BPE on this exact corpus. Here are the first ten merges the code actually produced (verified by running it):</p>
 <pre class="ascii">corpus:  "low" x5, "lower" x2, "newest" x6, "widest" x3   (split into letters)
@@ -550,6 +570,18 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
                  "lower" is ("low","e","r"), "widest" is ("wi","d","est&lt;/w&gt;")</pre>
 <p>Read the pattern: the most frequent words get absorbed into single tokens first ("newest" after 8 merges, "low" after 9). The rare word "widest" stays fragmented. That is the compression tradeoff in action, and it is exactly what happens at scale: frequent strings earn short codes.</p>
 
+
+<figure>
+<img src="img/04-token-choice-tradeoffs.svg" alt="Three cards: char-level tiny vocab long sequences, word-level huge vocab unknown words, BPE the middle path">
+<figcaption><strong>Figure 1.3.</strong> Every tokenization is a tradeoff. Char-level keeps the table tiny but sequences very long; word-level keeps sequences short but the table huge and full of unknown words. BPE is the middle path that won.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Each card lists vocab size, table cost, sequence length, and the unknown-word problem.</li>
+<li>No choice wins on all four axes.</li>
+<li>BPE keeps the table small AND the sequences short.</li>
+</ol>
+</div>
+</figure>
 <h3>Step 5: what this costs in production</h3>
 <p>Real vocabularies: GPT-2 has 50,257 tokens, LLaMA models use 32,000, GPT-4's <code>cl100k_base</code> has about 100,000. A larger vocabulary means fewer tokens per sentence, but a bigger embedding table and a bigger final softmax. The tradeoff between vocabulary size and sequence length is picked up in Chapter 2 and Volume 5.</p>
 <p><strong>Fertility</strong> means the average number of tokens produced per word. It measures how wasteful a tokenizer is on a given language. Illustrative numbers: English text runs about 1.2 to 1.4 tokens per word on modern tokenizers. Code runs higher (indentation and symbols fragment). Many non-English languages run much higher, sometimes several tokens per word, because the tokenizer's merge statistics were learned mostly on English.</p>
@@ -565,7 +597,7 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
   rule of thumb: 1 token ~ 0.75 English words; ~100 tokens ~ 75 words.
   common words merge early in BPE and survive as single tokens;
   rare words shatter into many pieces.</pre>
-<figcaption><strong>Figure 1.2.</strong> Fertility: how many tokens each word becomes. Rare or long words cost more tokens, which is why the same sentence can be longer (and pricier) in some languages. Own render.</figcaption>
+<figcaption><strong>Figure 1.4.</strong> Fertility: how many tokens each word becomes. Rare or long words cost more tokens, which is why the same sentence can be longer (and pricier) in some languages. Own render.</figcaption>
 </figure>
 
 <div class="callout warn"><strong>Why fertility matters in practice:</strong> context windows and API prices are counted in <em>tokens</em>, not words. A 4,096-token window holds roughly 3,000 English words but far fewer words of a high-fertility language. Two users with the same word count can pay very different prices and hit the context limit at very different points. When someone says "the model supports 128k context," always ask: 128k tokens of <em>what</em>?</div>
@@ -594,6 +626,18 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
 
 
 
+
+<figure>
+<img src="img/04-bpe-timeline.svg" alt="Merge timeline from 0 to 32000 with gates at 5k, 10k, 15k, 20k and top-merge counts">
+<figcaption><strong>Figure 1.5.</strong> BPE seen as a merge timeline. Letters combine first, then subwords emerge, whole words win, suffixes appear. The counts are the top merge’s corpus frequency at each checkpoint: reproduce these gates in the lab.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>The x-axis is merge count, 0 to 32k.</li>
+<li>Each gate is a qualitative phase change in what merges.</li>
+<li>The teal ticks mark the checkpoints whose counts are printed at the top.</li>
+</ol>
+</div>
+</figure>
 <h2>2. Embeddings: points in a learned space</h2>
 <p class="ch-sub">What a token ID becomes before the model can think with it.</p>
 <p class="bridge" style="color:var(--muted);font-style:italic">Chapter 1 turned text into integers and left a question hanging: what can a model actually do with bare integers? This chapter answers it. Every token gets a point in a learned space, and geometry does the rest.</p>
@@ -626,7 +670,7 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
   nearby:  king/queen, man/woman, boy/girl cluster by meaning
   far:     dog, car, river live in unrelated regions
   lookup:  token id -> row of the embedding matrix -> vector</pre>
-<figcaption><strong>Figure 2.2.</strong> Embeddings as points in space: nearby points mean similar meaning, and analogy directions (king - man + woman) stay parallel across pairs. Toy 2D sketch, not real vectors. Own render.</figcaption>
+<figcaption><strong>Figure 2.1.</strong> Embeddings as points in space: nearby points mean similar meaning, and analogy directions (king - man + woman) stay parallel across pairs. Toy 2D sketch, not real vectors. Own render.</figcaption>
 </figure>
 
 <h3>Step 2: why vectors, and why learned ones</h3>
@@ -640,12 +684,24 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
 </table>
 <p>Fixed one-hot embeddings fail for the same reason integer IDs fail: every token is equally far from every other token, so there is no similarity to exploit, and the vectors are vocabulary-sized (50,257 dimensions for GPT-2), which is enormous and mostly zeros. Learned dense embeddings fix both: compact (a few thousand dimensions) and geometrically meaningful. If you froze a modern model's embeddings at their random starting values, training would still work, but the model would have to encode all token identity information in later layers, wasting capacity that could have held semantics.</p>
 
+
+<figure>
+<img src="img/04-id-vs-vector.svg" alt="One-hot IDs with no similarity versus learned vectors where king minus man plus woman equals queen">
+<figcaption><strong>Figure 2.2.</strong> An ID is a label; a vector is an address with coordinates. One-hot IDs make cat as close to dog as to car. Learned vectors turn similarity into geometry: king - man + woman lands on queen.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Left: one-hot vectors are orthogonal, so no similarity survives.</li>
+<li>Right: directions in the space carry meaning like gender and tense.</li>
+<li>The embedding table converts labels into this geometry.</li>
+</ol>
+</div>
+</figure>
 <h3>Step 3: the full picture: size, geometry, and limits</h3>
 <p>The embedding table is often the single largest matrix in a small model. LLaMA-style 7B: vocabulary 32,000 x model width 4,096 = 131,072,000 parameters, about 2% of the model. GPT-3 scale: 50,257 x 12,288 = 617 million parameters. There is also an <strong>output</strong> embedding (the final layer that maps hidden states back to vocabulary scores, covered in Volume 5). Some models <strong>tie</strong> the input and output embeddings, reusing one matrix for both directions, which saves parameters and is a favorite field detail.</p>
 
 <figure>
 <img src="img/internals-2-analogy.jpg" alt="Vector analogy diagram: arrows from king to queen and from man to woman are parallel, showing the 'royal' direction in embedding space.">
-<figcaption><strong>Figure 2.1.</strong> The classic embedding analogy: the direction from "man" to "woman" is nearly parallel to the direction from "king" to "queen". Relationships become directions in the space. <span class="src">Source: dev.to, "From Words to Vectors" (mshojaei77), via image search.</span></figcaption>
+<figcaption><strong>Figure 2.3.</strong> The classic embedding analogy: the direction from "man" to "woman" is nearly parallel to the direction from "king" to "queen". Relationships become directions in the space. <span class="src">Source: dev.to, "From Words to Vectors" (mshojaei77), via image search.</span></figcaption>
 </figure>
 <div class="walkthrough">
 <h4>How to read this diagram</h4>
@@ -723,6 +779,18 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
 <p>What breaks if a step fails: skip the mask and the model cheats during training (it sees the future), then fails at generation time when the future is genuinely absent. Skip the sqrt(d<sub>k</sub>) scaling and the softmax saturates (next section).</p>
 </div>
 
+
+<figure>
+<img src="img/04-retrieval-picture.svg" alt="A query scoring five memory vectors, the best match selected for the output">
+<figcaption><strong>Figure 3.2.</strong> Attention is retrieval, not magic. The query scores every memory, the scores become weights, and the best match flows to the output. The blend of memories is the response ingredient.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>The query asks: what is being looked for.</li>
+<li>Each bar is a similarity score against one memory; 0.9 wins.</li>
+<li>The output is the score-weighted blend, not a single pick.</li>
+</ol>
+</div>
+</figure>
 <h3>Interlude: the two equations, written out</h3>
 <p>The five steps above are compact algebra. Here are the two equations behind steps 2 and 4, with every symbol named.</p>
 <div style="text-align:center;margin:1.4rem 0">
@@ -772,8 +840,8 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
 </details>
 
 <figure>
-<img src="img/internals-3-attention-heatmap-worked.png" alt="The exact attention weights from the fully worked example. Row "cat" splits its ">
-<figcaption><strong>Figure 3.2.</strong> The exact attention weights from the fully worked example. Row "cat" splits its weight 0.500/0.500 between "the" and itself; row "sat" attends mostly to "the" (0.576), a little to "cat" (0.140), and to itself (0.284). The lower triangle is causal: a token never sees the future. Own render of the chapter numbers.</figcaption>
+<img src="img/internals-3-attention-heatmap-worked.png" alt="The exact attention weights from the fully worked example: row cat splits 0.5/0.5 between the and itself; row sat attends 0.576 to the, 0.140 to cat, 0.284 to itself">
+<figcaption><strong>Figure 3.3.</strong> The exact attention weights from the fully worked example. Row "cat" splits its weight 0.500/0.500 between "the" and itself; row "sat" attends mostly to "the" (0.576), a little to "cat" (0.140), and to itself (0.284). The lower triangle is causal: a token never sees the future. Own render of the chapter numbers.</figcaption>
 </figure>
 
 <figure>
@@ -790,6 +858,18 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
 <p>What breaks without it: during training the model could peek at future tokens, then fail at generation time when the future is genuinely absent. The mask is what makes training match generation.</p>
 </div>
 
+
+<figure>
+<img src="img/04-softmax-pipeline.svg" alt="Scores 2.0, 1.0, 0.1 through exp to 7.39, 2.72, 1.11, normalized to 0.66, 0.24, 0.10">
+<figcaption><strong>Figure 3.5.</strong> Softmax: scores in, weights out. Exponentiation turns [2.0, 1.0, 0.1] into [7.39, 2.72, 1.11]; dividing by the sum 11.22 gives the weights [0.66, 0.24, 0.10]. Small raw gaps become big weight gaps.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Column one: the raw scores from the attention dot products.</li>
+<li>Column two: exp amplifies the differences.</li>
+<li>Column three: dividing by the sum makes them proper weights that add to 1.</li>
+</ol>
+</div>
+</figure>
 <h3>Step 4: what the heads actually learn</h3>
 <p>Map the five steps onto a search engine:</p>
 <table>
@@ -802,10 +882,22 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
 <p>"Differentiable" is the load-bearing word. A database lookup is discrete: you get document #7 or you do not, and you cannot take a gradient through that choice. Attention replaces the hard choice with a weighted blend, so the retrieval behavior itself can be learned end to end. The head learns <em>what to ask for</em> (W<sub>Q</sub>), <em>how to label content</em> (W<sub>K</sub>), and <em>what content to store</em> (W<sub>V</sub>) all at once.</p>
 
 <figure>
-<img src="img/internet-4-alammar-attention-it-animal.png" alt="Attention resolving "it" in "The animal did not cross the street because it was ">
-<figcaption><strong>Figure 3.3.</strong> Attention resolving "it" in "The animal did not cross the street because it was too tired". The highlighted token "it_" draws strongly on "The_" and "animal_", so its output vector carries the animal, not the street. This is the exact intuition from the chapter text. Figure by Jay Alammar, jalammar.github.io/illustrated-transformer (CC BY-NC-SA 4.0).</figcaption>
+<img src="img/internet-4-alammar-attention-it-animal.png" alt="Attention resolving the pronoun it in The animal did not cross the street because it was too tired: it draws strongly on The and animal">
+<figcaption><strong>Figure 3.6.</strong> Attention resolving "it" in "The animal did not cross the street because it was too tired". The highlighted token "it_" draws strongly on "The_" and "animal_", so its output vector carries the animal, not the street. This is the exact intuition from the chapter text. Figure by Jay Alammar, jalammar.github.io/illustrated-transformer (CC BY-NC-SA 4.0).</figcaption>
 </figure>
 
+
+<figure>
+<img src="img/04-contextual-bank.svg" alt="The word bank splitting into river bank and bank account with different vectors">
+<figcaption><strong>Figure 3.7.</strong> One word, two meanings: context bends the vector. The static vector for bank is rewritten by its neighbors into a river-bank vector or a bank-account vector. That rewriting is contextualization.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Top: the same static vector enters both contexts.</li>
+<li>Left and right: neighbors bend it toward water or toward money.</li>
+<li>Self-attention is this rewriting, applied to every token.</li>
+</ol>
+</div>
+</figure>
 <h3>Step 5: the quadratic bill</h3>
 <p>The score matrix is n x n for a sequence of n tokens. Time and memory both scale as O(n<sup>2</sup> x d). Concrete: n = 4,096, one head, float32. The score matrix holds 4,096<sup>2</sup> = 16.8 million numbers = 67 MB. With 32 heads, that is 2.1 GB <em>per layer</em> just for scores, before values, gradients, or optimizer state. Double the context to 8,192 and the bill quadruples. This single fact drives half of LLM systems research: FlashAttention (Volume 6) recomputes instead of storing, and the KV cache (Chapter 8) exists because re-paying this bill on every generated token would be ruinous.</p>
 
@@ -831,6 +923,18 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
 <section class="chapter" id="ch5-positions">
 
 
+
+<figure>
+<img src="img/04-quadratic-bill.svg" alt="Memory bars: 67 MB per head at n=4096, 268 MB at n=8192, 2.1 GB per layer across 32 heads">
+<figcaption><strong>Figure 3.8.</strong> The quadratic bill. FP32 attention scores cost 67 MB per head at n = 4096 and 268 MB at n = 8192; across 32 heads that is 2.1 GB per layer. Double the sequence, quadruple the memory.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>The three bars are the same layer at growing scale.</li>
+<li>Doubling n quadruples the score matrix: that is the n-squared.</li>
+<li>This is why long context is expensive, and why the next chapters exist.</li>
+</ol>
+</div>
+</figure>
 <h2>4. Positional encodings: sinusoids, then RoPE derived deeply</h2>
 <p class="ch-sub">Attention cannot see order. This chapter gives it eyes.</p>
 <p class="bridge" style="color:var(--muted);font-style:italic">Chapter 3 ended with one unsolved gap: attention ignores word order, so 'dog bites man' and 'man bites dog' look identical to it. This chapter adds the position signal, from simple sinusoids to RoPE derived from scratch.</p>
@@ -849,6 +953,18 @@ after 10 merges: "newest" is ONE token, "low" is ONE token,
 <p>Look at the attention formula from Chapter 3: it is a set operation. If you permute the input tokens, the outputs permute identically. Attention has no notion of order at all: "dog bites man" and "man bites dog" produce the same bag of contextualized vectors, just reordered. A <dfn>positional encoding</dfn> injects order information so the model can distinguish them.</p>
 <p>Without any position signal, the model is a bag-of-words model with extra steps. It can learn which tokens co-occur but not sequences, grammar, or arithmetic. Every position scheme answers one question: how do we tell the model <em>where</em> each token sits, in a way that generalizes to sequences longer than those seen in training?</p>
 
+
+<figure>
+<img src="img/04-permutation-blindness.svg" alt="The cat sat shuffled to sat cat The with an identical bag representation">
+<figcaption><strong>Figure 4.1.</strong> Without positions, shuffling changes nothing. Self-attention sees all tokens at once, so The cat sat and sat cat The have the identical bag representation. Positional encodings exist to cure exactly this blindness.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Top row: the original order. Bottom row: shuffled.</li>
+<li>The box on the right is what attention sees without positions: identical.</li>
+<li>Every positional encoding scheme is an answer to this diagram.</li>
+</ol>
+</div>
+</figure>
 <h3>Step 2: sinusoids, the original answer</h3>
 <p>The 2017 Transformer paper added a fixed (not learned) vector to each token embedding. For position <code>pos</code> and dimension pair <code>2i, 2i+1</code> of a d-dimensional encoding:</p>
 <pre><code>PE(pos, 2i)   = sin(pos / 10000^(2i/d))
@@ -857,7 +973,7 @@ PE(pos, 2i+1) = cos(pos / 10000^(2i/d))</code></pre>
 
 <figure>
 <img src="img/internals-4-sinusoids.jpg" alt="Plot of sinusoidal positional encoding waves: four dimensions shown as sine and cosine waves of increasing wavelength across 100 positions.">
-<figcaption><strong>Figure 4.1.</strong> Sinusoidal encodings, dimensions 0-3 across 100 positions. Low dimensions are fast waves (sensitive to exact position); high dimensions are slow waves (sensitive to coarse region). Own render.</figcaption>
+<figcaption><strong>Figure 4.2.</strong> Sinusoidal encodings, dimensions 0-3 across 100 positions. Low dimensions are fast waves (sensitive to exact position); high dimensions are slow waves (sensitive to coarse region). Own render.</figcaption>
 </figure>
 <div class="walkthrough">
 <h4>How to read this diagram</h4>
@@ -871,7 +987,7 @@ PE(pos, 2i+1) = cos(pos / 10000^(2i/d))</code></pre>
 
 <figure>
 <img src="img/internet-4-alammar-pos-encoding-add.png" alt="Sinusoidal positional encoding: the fixed time signal t_i is added to each token">
-<figcaption><strong>Figure 4.5.</strong> Sinusoidal positional encoding: the fixed time signal t_i is added to each token embedding x_i, so the input x_i + t_i carries both meaning and position. The original transformer used this addition; RoPE later replaced it with rotations inside attention itself. Figure by Jay Alammar, jalammar.github.io/illustrated-transformer (CC BY-NC-SA 4.0).</figcaption>
+<figcaption><strong>Figure 4.3.</strong> Sinusoidal positional encoding: the fixed time signal t_i is added to each token embedding x_i, so the input x_i + t_i carries both meaning and position. The original transformer used this addition; RoPE later replaced it with rotations inside attention itself. Figure by Jay Alammar, jalammar.github.io/illustrated-transformer (CC BY-NC-SA 4.0).</figcaption>
 </figure>
 
 <h3>Step 3: RoPE, derived deeply</h3>
@@ -888,7 +1004,7 @@ PE(pos, 2i+1) = cos(pos / 10000^(2i/d))</code></pre>
 
 <figure>
 <img src="img/internals-4-rope-theta-schedule.svg" alt="RoPE theta schedule: log10 wavelength grows linearly with dimension pair index, from about 6 tokens at pair 0 to about 54 thousand tokens at pair 63">
-<figcaption><strong>Figure 4.2.</strong> The RoPE theta schedule for a 128-wide head: theta<sub>i</sub> = 10000<sup>(-2i/d)</sup>, drawn as wavelength per dimension pair. A straight line on the log axis means the schedule is geometric: pair 0 spins once every ~6 tokens (fine local resolution), pair 63 once every ~54k tokens (coarse long-range distance). Own render.</figcaption>
+<figcaption><strong>Figure 4.4.</strong> The RoPE theta schedule for a 128-wide head: theta<sub>i</sub> = 10000<sup>(-2i/d)</sup>, drawn as wavelength per dimension pair. A straight line on the log axis means the schedule is geometric: pair 0 spins once every ~6 tokens (fine local resolution), pair 63 once every ~54k tokens (coarse long-range distance). Own render.</figcaption>
 </figure>
 <div class="walkthrough">
 <h4>How to read this diagram</h4>
@@ -904,7 +1020,7 @@ PE(pos, 2i+1) = cos(pos / 10000^(2i/d))</code></pre>
 
 <figure>
 <img src="img/internals-4-rope-rotate.jpg" alt="RoPE diagram: a 2D vector (x1, x2) rotated by angle m*theta_1, and the same rotation applied to query and key vectors at positions 1 through 6.">
-<figcaption><strong>Figure 4.3.</strong> RoPE rotates each 2D slice of Q and K by an angle proportional to its position. The attention score then depends only on relative distance. <span class="src">Source: x-transformers repository (lucidrains), rotary embedding illustration, via image search.</span></figcaption>
+<figcaption><strong>Figure 4.5.</strong> RoPE rotates each 2D slice of Q and K by an angle proportional to its position. The attention score then depends only on relative distance. <span class="src">Source: x-transformers repository (lucidrains), rotary embedding illustration, via image search.</span></figcaption>
 </figure>
 <div class="walkthrough">
 <h4>How to read this diagram</h4>
@@ -933,8 +1049,8 @@ score via RELATIVE distance only: q . R((n-m)*theta) k
 vanished. Only (n - m) = 3 mattered.</pre>
 
 <figure>
-<img src="img/internals-5-rope-rotation-2d.png" alt="The chapter's worked 2D example: q=(3,4) at position m=2 rotates by m*theta=1.0 ">
-<figcaption><strong>Figure 4.4.</strong> The chapter's worked 2D example: q=(3,4) at position m=2 rotates by m*theta=1.0 rad to q'=(-1.7451,4.6857). The norm stays 5.0: rotation preserves length, so the dot product with a rotated key depends only on the relative distance n-m, never on absolute positions. Own render of the chapter numbers.</figcaption>
+<img src="img/internals-5-rope-rotation-2d.png" alt="The chapter's worked 2D example: q=(3,4) at position m=2 rotates by m*theta=1.0 rad to q-prime, with the norm preserved at 5.0">
+<figcaption><strong>Figure 4.6.</strong> The chapter's worked 2D example: q=(3,4) at position m=2 rotates by m*theta=1.0 rad to q'=(-1.7451,4.6857). The norm stays 5.0: rotation preserves length, so the dot product with a rotated key depends only on the relative distance n-m, never on absolute positions. Own render of the chapter numbers.</figcaption>
 </figure>
 
 <div class="callout warn"><strong>Common misunderstanding: "RoPE adds position information to the embeddings."</strong> It does not add anything. It rotates Q and K inside the attention computation. The token embeddings and the residual stream never contain an explicit position vector. This matters when people try to "read" positions out of hidden states, or when they apply RoPE twice (once at embedding, once in attention), which double-rotates and silently corrupts distances.</div>
@@ -974,6 +1090,18 @@ vanished. Only (n - m) = 3 mattered.</pre>
 <h3>Step 1: why the MLP needs a nonlinearity</h3>
 <p>A transformer block (the repeating unit you will assemble in Chapter 6) has two sublayers. Attention mixes information <em>across</em> positions. The second sublayer is a small feed-forward network, the <dfn>MLP</dfn>, which transforms each position <em>independently</em>: expand the width (512 to 2048), apply a nonlinearity, project back (2048 to 512). The nonlinearity is the only thing stopping the whole block from collapsing into a single linear map (Volume 1: compositions of linear maps are linear). The choice of nonlinearity affects trainability and, slightly, quality. Two dominate modern LLMs.</p>
 
+
+<figure>
+<img src="img/04-mlp-linear-collapse.svg" alt="MLP without activation collapsing to one matrix, versus GELU between the layers">
+<figcaption><strong>Figure 5.1.</strong> Without the kink, the MLP is one matrix. W2(W1 x) collapses to (W2 W1) x, so the 2048-wide middle buys nothing; the GELU bend is what lets it carve space instead of stretching it.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Left: two matrices with no kink multiply into one.</li>
+<li>The equation under it is the proof: the middle dimension disappears.</li>
+<li>Right: the kink between the layers makes the width real.</li>
+</ol>
+</div>
+</figure>
 <h3>Step 2: GELU and SwiGLU, precisely</h3>
 <p><dfn>GELU (Gaussian error linear unit)</dfn>, used in GPT-2 and BERT: <code>GELU(x) = x x Phi(x)</code>, where Phi is the standard normal CDF (cumulative distribution function: the S-shaped curve mapping any input to a probability between 0 and 1). In code it is the approximation <code>0.5 x (1 + tanh(sqrt(2/pi) (x + 0.044715 x^3)))</code>.</p>
 <p>Intuition: ReLU (rectified linear unit, the older default: x if x is positive, else 0) multiplies x by a hard gate (1 if x &gt; 0 else 0). GELU multiplies x by the <em>probability</em> that x is positive under a Gaussian assumption, a smooth gate. Small negative values pass a little instead of being killed outright, which keeps gradients alive in a region where ReLU is exactly dead.</p>
@@ -981,7 +1109,7 @@ vanished. Only (n - m) = 3 mattered.</pre>
 
 <figure>
 <img src="img/internals-5-swiglu-mlp.svg" alt="SwiGLU MLP dataflow: input splits into a gate projection through Swish and a content projection, multiplied elementwise, then projected back down">
-<figcaption><strong>Figure 5.1.</strong> The SwiGLU MLP dataflow: x splits into a gate branch (xW through Swish) and a content branch (xV); the gate multiplies the content element by element; the result projects back down. Three learned matrices, and the effective activation shape adapts during training. Own render.</figcaption>
+<figcaption><strong>Figure 5.2.</strong> The SwiGLU MLP dataflow: x splits into a gate branch (xW through Swish) and a content branch (xV); the gate multiplies the content element by element; the result projects back down. Three learned matrices, and the effective activation shape adapts during training. Own render.</figcaption>
 </figure>
 <div class="walkthrough">
 <h4>How to read this diagram</h4>
@@ -997,7 +1125,7 @@ vanished. Only (n - m) = 3 mattered.</pre>
 
 <figure>
 <img src="img/internals-5-activations.jpg" alt="Two plots: ReLU vs GELU vs SiLU curves, and the SwiGLU gated curve against a GELU reference.">
-<figcaption><strong>Figure 5.2.</strong> Left: ReLU kills negatives outright; GELU and SiLU (Swish) let small negatives through smoothly. Right: SwiGLU's gated shape. Own render.</figcaption>
+<figcaption><strong>Figure 5.3.</strong> Left: ReLU kills negatives outright; GELU and SiLU (Swish) let small negatives through smoothly. Right: SwiGLU's gated shape. Own render.</figcaption>
 </figure>
 <div class="walkthrough">
 <h4>How to read this diagram</h4>
@@ -1013,7 +1141,7 @@ vanished. Only (n - m) = 3 mattered.</pre>
 
 <figure>
 <img src="img/internals-5-prenorm.jpg" alt="Two vertical stacks comparing post-norm (attention, add, then norm) with pre-norm (norm first, then attention, then add), each with a residual arrow.">
-<figcaption><strong>Figure 5.3.</strong> Post-norm (2017 original) normalizes after the residual add. Pre-norm (modern default) normalizes before the sublayer, leaving the residual path unnormalized. Generated diagram.</figcaption>
+<figcaption><strong>Figure 5.4.</strong> Post-norm (2017 original) normalizes after the residual add. Pre-norm (modern default) normalizes before the sublayer, leaving the residual path unnormalized. Generated diagram.</figcaption>
 </figure>
 <div class="walkthrough">
 <h4>How to read this diagram</h4>
@@ -1035,7 +1163,7 @@ vanished. Only (n - m) = 3 mattered.</pre>
 
   gradient must pass through            gradient has a direct identity path
   the norm to reach early layers        around every sublayer -> stable at depth</pre>
-<figcaption><strong>Figure 5.4.</strong> Pre-norm versus post-norm: where the layer norm sits. Pre-norm (norm before each sub-layer, clean residual path) is what modern LLMs use; it keeps gradients flowing through the identity branch even in 100-layer stacks. Own render.</figcaption>
+<figcaption><strong>Figure 5.5.</strong> Pre-norm versus post-norm: where the layer norm sits. Pre-norm (norm before each sub-layer, clean residual path) is what modern LLMs use; it keeps gradients flowing through the identity branch even in 100-layer stacks. Own render.</figcaption>
 </figure>
 
 <div class="callout warn"><strong>Common misunderstanding: "normalization placement is a minor style choice."</strong> It changes the training dynamics of deep models qualitatively. Post-norm was a real obstacle to training very deep transformers and motivated a line of research (DeepNorm, Admin) before the field converged on pre-norm. In design reviews, "pre-norm trains deeper stacks stably because gradients bypass the norms on the residual path" is the expected sentence.</div>
@@ -1061,8 +1189,8 @@ vanished. Only (n - m) = 3 mattered.</pre>
 <p class="bridge" style="color:var(--muted);font-style:italic">Chapter 3 worked one attention head; Chapter 5 added the glue of activations and normalization. This chapter assembles the full transformer block: many heads running in parallel, the residual stream carrying everything forward, and the exact order it all runs in.</p>
 
 <figure>
-<img src="img/internet-4-alammar-encoder-decoder-stack.png" alt="The original 2017 transformer: six encoders stacked on the left, six decoders on">
-<figcaption><strong>Figure 6.3.</strong> The original 2017 transformer: six encoders stacked on the left, six decoders on the right, with encoder outputs feeding every decoder. Modern LLMs keep only the right half: a decoder-only stack where each block has masked self-attention plus an MLP. The stacking idea and the residual path survive unchanged. Figure by Jay Alammar, jalammar.github.io/illustrated-transformer (CC BY-NC-SA 4.0).</figcaption>
+<img src="img/internet-4-alammar-encoder-decoder-stack.png" alt="The original 2017 transformer: six encoders stacked on the left, six decoders on the right">
+<figcaption><strong>Figure 6.1.</strong> The original 2017 transformer: six encoders stacked on the left, six decoders on the right, with encoder outputs feeding every decoder. Modern LLMs keep only the right half: a decoder-only stack where each block has masked self-attention plus an MLP. The stacking idea and the residual path survive unchanged. Figure by Jay Alammar, jalammar.github.io/illustrated-transformer (CC BY-NC-SA 4.0).</figcaption>
 </figure>
 
 <div class="ob-board">
@@ -1081,7 +1209,7 @@ vanished. Only (n - m) = 3 mattered.</pre>
 <p>Empirically, trained heads do specialize this way: some attend mostly to the previous token, some to syntactic parents, some spread broadly. The expressive gain comes from the multiple independent distributions, not the parameter count.</p>
 
 <figure>
-<img src="img/internet-4-alammar-multihead-recap.png" alt="Multi-head attention in five steps: embed each token, split into 8 heads with se">
+<img src="img/internet-4-alammar-multihead-recap.png" alt="Multi-head attention in five steps: embed each token, split into 8 heads with separate Q, K, V projections, run attention per head, concatenate, project">
 <figcaption><strong>Figure 6.2.</strong> Multi-head attention in five steps: embed each token, split into 8 heads with separate W_Q, W_K, W_V per head, run attention inside each head, then concatenate the head outputs and project with W_O. Each head learns a different notion of "relevance". Figure by Jay Alammar, jalammar.github.io/illustrated-transformer (CC BY-NC-SA 4.0).</figcaption>
 </figure>
 
@@ -1090,7 +1218,7 @@ vanished. Only (n - m) = 3 mattered.</pre>
 
 <figure>
 <img src="img/internals-6-block.jpg" alt="Vertical diagram of one transformer block: input, RMSNorm, attention with residual skip, RMSNorm, MLP with residual skip, output.">
-<figcaption><strong>Figure 6.1.</strong> One pre-norm transformer block. Each sublayer is wrapped as: normalize, transform, add back the input (the curved residual arrows). Generated diagram.</figcaption>
+<figcaption><strong>Figure 6.3.</strong> One pre-norm transformer block. Each sublayer is wrapped as: normalize, transform, add back the input (the curved residual arrows). Generated diagram.</figcaption>
 </figure>
 <div class="walkthrough">
 <h4>How to read this diagram</h4>
@@ -1160,6 +1288,18 @@ after the last block: RMSNorm -&gt; linear to vocab -&gt; logits [2, 128, 32000]
 <section class="chapter" id="ch6-attention-variants">
 
 
+
+<figure>
+<img src="img/04-shape-flow.svg" alt="Shape chain from input [2,128,512] through scores [2,8,128,128] to logits [2,128,32000], with per-block param counts">
+<figcaption><strong>Figure 6.4.</strong> One transformer block, every shape accounted for. Follow the tensors from input to logits at B = 2, S = 128, d = 512; the score matrix holds 131,072 numbers, and per block the MLP carries about 3.15M parameters against attention’s 1.05M.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Read top to bottom: each row is one stage’s tensor shape.</li>
+<li>The amber row is the score matrix, the n-squared term.</li>
+<li>The bottom line is the param budget: the MLP is about 3x the attention.</li>
+</ol>
+</div>
+</figure>
 <h2>7. MHA vs MQA vs GQA: the memory tradeoff</h2>
 <p class="ch-sub">Same queries, fewer key-value heads: buying serving memory at a small quality cost.</p>
 <p class="bridge" style="color:var(--muted);font-style:italic">Chapter 6's full block is expensive at serving time, and the memory bill grows with every attention head. This chapter asks what can be slimmed down: MHA versus MQA versus GQA, the memory tradeoff stated plainly.</p>
@@ -1185,8 +1325,8 @@ after the last block: RMSNorm -&gt; linear to vocab -&gt; logits [2, 128, 32000]
 <p>Nothing about the query side changes: every variant keeps all h query heads and their independent attention distributions. Only the keys and values are shared. The Q, K, V projections just get narrower on the K/V side.</p>
 
 <figure>
-<img src="img/internet-4-gqa-paper-heads.png" alt="One figure, three memory layouts. Multi-head attention gives every query head it">
-<figcaption><strong>Figure 7.2.</strong> One figure, three memory layouts. Multi-head attention gives every query head its own key and value heads (8 and 8). Grouped-query attention shares one KV head per group of query heads (here 4 KV heads for 8 queries). Multi-query attention shares a single KV head across all queries. Fewer KV heads means a smaller KV cache at serving time. Figure from Ainslie et al., "GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints", arXiv 2305.13245.</figcaption>
+<img src="img/internet-4-gqa-paper-heads.png" alt="One figure, three memory layouts: multi-head attention gives every query head its own key and value heads; GQA shares per group; MQA shares one">
+<figcaption><strong>Figure 7.1.</strong> One figure, three memory layouts. Multi-head attention gives every query head its own key and value heads (8 and 8). Grouped-query attention shares one KV head per group of query heads (here 4 KV heads for 8 queries). Multi-query attention shares a single KV head across all queries. Fewer KV heads means a smaller KV cache at serving time. Figure from Ainslie et al., "GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints", arXiv 2305.13245.</figcaption>
 </figure>
 
 <h3>Step 2: why: the KV cache bill</h3>
@@ -1196,7 +1336,7 @@ after the last block: RMSNorm -&gt; linear to vocab -&gt; logits [2, 128, 32000]
 
 <figure>
 <img src="img/internals-7-wirings.jpg" alt="Three panels comparing attention variants: MHA with one KV head per query head, GQA with KV heads shared across pairs, MQA with all queries sharing one KV head.">
-<figcaption><strong>Figure 7.1.</strong> The three wirings. Blue squares are query heads (always one per head); teal squares are shared key-value heads. Generated diagram.</figcaption>
+<figcaption><strong>Figure 7.2.</strong> The three wirings. Blue squares are query heads (always one per head); teal squares are shared key-value heads. Generated diagram.</figcaption>
 </figure>
 <div class="walkthrough">
 <h4>How to read this diagram</h4>
@@ -1239,6 +1379,18 @@ after the last block: RMSNorm -&gt; linear to vocab -&gt; logits [2, 128, 32000]
 <section class="chapter" id="ch8-kv-cache">
 
 
+
+<figure>
+<img src="img/04-kv-cache-bars.svg" alt="KV cache per token: 0.50 MB LLaMA-2 7B, 0.31 MB LLaMA-2 70B GQA, 2.50 MB 70B-if-MHA, 4.50 MB GPT-3 175B">
+<figcaption><strong>Figure 7.3.</strong> KV cache: the price of remembering, per token. At 100k tokens the bill is 50 GB, 31 GB, 250 GB, 450 GB. Grouped-query attention is the discount lever: the 70B model caches less per token than the 8B.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Each bar is the per-token cache cost for one model.</li>
+<li>Multiply by context length for the real bill, printed below.</li>
+<li>GQA shares key-value heads, so the bigger model can cost less per token.</li>
+</ol>
+</div>
+</figure>
 <h2>8. KV cache mechanics: the memory math of serving</h2>
 <p class="ch-sub">What gets cached during generation, what it costs, and why serving lives or dies by it.</p>
 <p class="bridge" style="color:var(--muted);font-style:italic">Chapters 6 and 7 describe what to compute. But generation would recompute it on every single token unless we store it. This chapter is the storage answer: the KV cache, and the memory math that decides whether serving lives or dies.</p>
@@ -1293,7 +1445,7 @@ step 3:  new token 4098 reads K1..K4097, appends [K4098 V4098] ...
 what breaks: without the cache, each decode step would recompute
 all 4096+ key/value vectors. With it, decode costs O(1) new work
 but the cache itself grows linearly with sequence length.</pre>
-<figcaption><strong>Figure 8.3.</strong> The KV cache during one decode step. One token's K and V are appended per layer; all earlier entries are reused without recompute. Q is never stored. Own render.</figcaption>
+<figcaption><strong>Figure 8.2.</strong> The KV cache during one decode step. One token's K and V are appended per layer; all earlier entries are reused without recompute. Q is never stored. Own render.</figcaption>
 </figure>
 
 <h3>Step 3: the memory math, worked</h3>
@@ -1317,8 +1469,8 @@ LLaMA-2 70B (GQA-8), fp16, seq 4096, batch 1:
 <p>Two consequences practitioners live with. First, the cache caps <strong>batch size</strong>: every concurrent sequence holds its own cache, so long contexts directly reduce how many users one GPU serves. Second, the cache is why <strong>context length is a serving cost</strong>, not just a model capability: doubling max context doubles worst-case cache per sequence.</p>
 
 <figure>
-<img src="img/internals-8-kvcache-memory-bars.png" alt="The exact memory numbers from the chapter: 0.5 MiB per token for LLaMA-2 7B (fp1">
-<figcaption><strong>Figure 8.2.</strong> The exact memory numbers from the chapter: 0.5 MiB per token for LLaMA-2 7B (fp16), 2.0 GiB at 4096 tokens, 64 GiB at batch 32 (more than most single GPUs), and LLaMA-2 70B with GQA-8 at 1.25 GiB versus 10 GiB with plain multi-head. Own render of the chapter numbers.</figcaption>
+<img src="img/internals-8-kvcache-memory-bars.png" alt="The exact memory numbers from the chapter: 0.5 MiB per token for LLaMA-2 7B (fp16), 2.0 GiB at 4096 tokens, 64 GiB at batch 32">
+<figcaption><strong>Figure 8.3.</strong> The exact memory numbers from the chapter: 0.5 MiB per token for LLaMA-2 7B (fp16), 2.0 GiB at 4096 tokens, 64 GiB at batch 32 (more than most single GPUs), and LLaMA-2 70B with GQA-8 at 1.25 GiB versus 10 GiB with plain multi-head. Own render of the chapter numbers.</figcaption>
 </figure>
 
 <div class="callout warn"><strong>Common misunderstanding: "the KV cache is pure win, free speedup."</strong> It trades compute for memory, and memory is the binding constraint in serving. Engineers new to inference routinely size a deployment by parameter count ("70B needs ~140 GB in fp16") and forget the cache, then watch the server OOM at batch size 8 with 4k contexts. Always budget: weights + KV cache x batch x max length + activations headroom.</div>
@@ -1341,6 +1493,18 @@ LLaMA-2 70B (GQA-8), fp16, seq 4096, batch 1:
 <section class="chapter lab" id="capstone">
 
 
+
+<figure>
+<img src="img/04-why-kv.svg" alt="Q asked fresh every step versus K and V describing the unchanging past">
+<figcaption><strong>Figure 8.4.</strong> Why the cache holds K and V, never Q. The new token asks a fresh question each step, so Q is recomputed; K and V describe the past, which does not change, so they are stored once and reused. Questions expire, answers persist.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Left: Q is the current question, new every step.</li>
+<li>Right: K and V are the past’s answers, fixed once written.</li>
+<li>Caching the answers is what makes generation affordable.</li>
+</ol>
+</div>
+</figure>
 <h2>Capstone lab: attention in NumPy, BPE from scratch</h2>
 
 <figure>
@@ -1352,7 +1516,7 @@ LLaMA-2 70B (GQA-8), fp16, seq 4096, batch 1:
   | check: weights sum to 1.0     |           | check: same input -> same ids   |
   +-------------------------------+           +-------------------------------+
          chapter 3 in code                            chapter 1 in code</pre>
-<figcaption><strong>Figure 9.2.</strong> Capstone roadmap: two labs that re-derive the volume from code. Lab A makes attention concrete; Lab B makes tokenization concrete. Both are verified by running them. Own render.</figcaption>
+<figcaption><strong>Figure 9.1.</strong> Capstone roadmap: two labs that re-derive the volume from code. Lab A makes attention concrete; Lab B makes tokenization concrete. Both are verified by running them. Own render.</figcaption>
 </figure>
 
 <p class="ch-sub">Two runnable labs. The first reproduces every number in Chapter 3. The second reproduces the merges in Chapter 1.</p>
@@ -1379,7 +1543,7 @@ LLaMA-2 70B (GQA-8), fp16, seq 4096, batch 1:
   +----------+----------+             +----------+----------+
              v                                   v
   assert == chapter numbers        assert merges == chapter list</pre>
-<figcaption><strong>Figure 9.1.</strong> The two capstone labs. Both follow the same discipline: implement from the chapter's recipe, then assert against the hand-computed numbers. ASCII figure.</figcaption>
+<figcaption><strong>Figure 9.2.</strong> The two capstone labs. Both follow the same discipline: implement from the chapter's recipe, then assert against the hand-computed numbers. ASCII figure.</figcaption>
 </figure>
 
 
@@ -1694,9 +1858,21 @@ for s in (8, 16, 32):
     heavy hitters:  keep high-attention tokens <- keeps sinks, needs tracking
     attention sinks (StreamingLLM): always keep the first few tokens,
        then a sliding window on top          <- the practical answer</pre>
-<figcaption><strong>Figure 4A.1.</strong> Attention sinks: early tokens keep attracting attention mass even when they carry no meaning. Eviction policies must never drop them, or quality collapses. Own render. Own render.</figcaption>
+<figcaption><strong>Figure 4A.1.</strong> Attention sinks: early tokens keep attracting attention mass even when they carry no meaning. Eviction policies must never drop them, or quality collapses. Own render.</figcaption>
 </figure>
 
+
+<figure>
+<img src="img/04-long-context-disciplines.svg" alt="Train long versus train short with retrieval at inference">
+<figcaption><strong>Figure 4A.2.</strong> Two disciplines for long context. Train long pays at inference; train short with retrieval pays in plumbing and bets on retrieval quality. Pick by where you can afford to pay.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Left: extend the window during training, serve the long context directly.</li>
+<li>Right: fine-tune short, fetch context at inference time.</li>
+<li>The choice is a budget decision, not a correctness one.</li>
+</ol>
+</div>
+</figure>
 <h3 id="a04a-chapter-2-kv-cache-eviction-policies">Chapter 2. KV cache eviction policies</h3>
 <h4 id="a04a-21-why-you-cannot-keep-everything">2.1 Why you cannot keep everything</h4>
 <p>Every generated token appends its key and value vectors to the KV cache, and every future token attends to all of them. The cache grows linearly with sequence length, and at long context it dominates GPU memory.</p>
@@ -1765,7 +1941,19 @@ print(&quot;kept positions:&quot;, h2o_evict(accum, budget=8))
 <div class="callout"><strong>Where to go next.</strong> You now know what a transformer <em>is</em>, matrix by matrix. The next question is how one gets <em>trained</em>: <a href="05-pretraining.html">Volume 5: Pre-training</a> puts this architecture through next-token prediction on trillions of tokens, from the data pipeline to the loss curve to the scaling laws that plan billion-dollar runs.</div>
 
 <section class="watch-deeper" aria-labelledby="wd-h-llm-internals">
-  <h2 class="watch-deeper-kicker" id="wd-h-llm-internals">Watch and go deeper</h2>
+  
+<figure>
+<img src="img/04-eviction-policies.svg" alt="Three eviction policies: sliding window keeps last N, StreamingLLM adds attention sinks, H2O keeps a 20 percent budget of recent plus heavy hitters">
+<figcaption><strong>Figure 4A.3.</strong> When memory runs out: three eviction policies. Every policy keeps the recent past; they differ in what else survives: nothing, the first tokens as attention sinks, or the most-attended tokens under a 20% budget. Eviction is lossy by design.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>The dark bar is the full context; the colored part is what survives.</li>
+<li>Sinks are the first tokens, kept because attention leans on them.</li>
+<li>H2O keeps the tokens the model actually attended to most.</li>
+</ol>
+</div>
+</figure>
+<h2 class="watch-deeper-kicker" id="wd-h-llm-internals">Watch and go deeper</h2>
   <p class="watch-deeper-lede">See attention and tokenization in motion. Two of the clearest visual explainers ever made, plus Karpathy building both systems from scratch in code.</p>
   <div class="watch-deeper-grid">
     <figure class="watch-card">
