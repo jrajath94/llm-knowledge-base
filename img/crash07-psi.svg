@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="480" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 3.6. PSI: &lt; 0.10 none, 0.10-0.25 watch, &gt; 0.25 investigate</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">population stability tells you the world moved</text>
+<rect x="90" y="130" width="640" height="90" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="6" opacity="1"/>
+<rect x="90" y="130" width="256.0" height="90" fill="#7dd87d" rx="4" opacity="0.7"/>
+<rect x="346.0" y="130" width="384.0" height="90" fill="#f0b429" rx="4" opacity="0.55"/>
+<text x="218.0" y="180.0" font-size="12" font-weight="bold" fill="#0b0e13" text-anchor="middle">&lt; 0.10 none</text>
+<text x="538.0" y="180.0" font-size="12" font-weight="bold" fill="#0b0e13" text-anchor="middle">0.10 - 0.25 watch</text>
+<text x="740" y="180.0" font-size="12" font-weight="bold" fill="#e57ea6" text-anchor="start">&gt; 0.25 investigate</text>
+<text x="24" y="300" font-size="12" fill="#a8a8a8" text-anchor="start">PSI compares the live feature distribution to the training distribution. Above 0.25 the model is scoring a</text>
+<text x="24" y="318" font-size="12" fill="#a8a8a8" text-anchor="start">world it never met: investigate before the metrics do.</text>
+<text x="24" y="370" font-size="12" fill="#a8a8a8" text-anchor="start">Run PSI on a schedule, not after an incident. Drift detected early is a retrain; detected late is an outage.</text>
+</svg>
