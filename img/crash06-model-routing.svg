@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="540" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 1.7. Model routing: the right model for the step</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">flagship everywhere is a budget fire</text>
+<rect x="24" y="110" width="560" height="80" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="304.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">SMALL</text>
+<text x="304.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">parse, format, summarize, classify; the janitor work</text>
+<text x="640" y="156" font-size="12" fill="#a8a8a8" text-anchor="start">most steps</text>
+<rect x="24" y="204" width="560" height="80" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="304.0" y="230" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">MID</text>
+<text x="304.0" y="248" font-size="11" fill="#a8a8a8" text-anchor="middle">ReAct loops, tool calls, routine reasoning</text>
+<text x="640" y="250" font-size="12" fill="#a8a8a8" text-anchor="start">the default</text>
+<rect x="24" y="298" width="560" height="80" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="304.0" y="324" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">FLAGSHIP</text>
+<text x="304.0" y="342" font-size="11" fill="#a8a8a8" text-anchor="middle">planning, replanning, critic, hard reasoning</text>
+<text x="640" y="344" font-size="12" fill="#a8a8a8" text-anchor="start">a few steps</text>
+<rect x="24" y="410" width="832" height="80" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="436" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">ESCALATION RULE</text>
+<text x="440.0" y="454" font-size="11" fill="#a8a8a8" text-anchor="middle">after 2 failures at a tier, the next try goes one tier up; the router learns the boundary from the failure log</text>
+</svg>
