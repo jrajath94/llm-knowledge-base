@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="540" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Where SFT coverage ends</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Behavioral cloning works where the demonstrations reach</text>
+<circle cx="300" cy="300" r="170" fill="#1a2b33" stroke="#4fd1a5" stroke-width="1.5"/>
+<circle cx="600" cy="300" r="170" fill="#1a2438" stroke="#6cb2ff" stroke-width="1.5"/>
+<text x="300" y="120" font-size="15" font-weight="bold" fill="#4fd1a5" text-anchor="middle">Training demos</text>
+<text x="600" y="120" font-size="15" font-weight="bold" fill="#6cb2ff" text-anchor="middle">Deployment prompts</text>
+<text x="450" y="300" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">overlap</text>
+<text x="450" y="322" font-size="12" fill="#a8a8a8" text-anchor="middle">cloning works here</text>
+<text x="180" y="300" font-size="12" fill="#a8a8a8" text-anchor="middle">wasted</text>
+<text x="180" y="320" font-size="12" fill="#a8a8a8" text-anchor="middle">coverage</text>
+<text x="720" y="280" font-size="13" font-weight="bold" fill="#e57ea6" text-anchor="middle">brittle off-distribution</text>
+<text x="620" y="306" font-size="11" fill="#a8a8a8" text-anchor="middle">new domains and</text>
+<text x="620" y="323" font-size="11" fill="#a8a8a8" text-anchor="middle">adversarial phrasing</text>
+<text x="620" y="340" font-size="11" fill="#a8a8a8" text-anchor="middle">degrade fast</text>
+<text x="24" y="500" font-size="12" fill="#8a8a8a" text-anchor="start">The superficial alignment hypothesis: SFT surfaces capabilities from pre-training; it rarely creates new ones. It shows good,</text>
+<text x="24" y="517" font-size="12" fill="#8a8a8a" text-anchor="start">never contrasts bad.</text>
+</svg>
