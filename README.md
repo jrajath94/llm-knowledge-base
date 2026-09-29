@@ -4,7 +4,7 @@ A research-engineer-first knowledge base on large language models: the math and 
 
 ## How to use it
 
-Open `index.html` in any browser and read the volumes in order. Every page is self-contained: styles, scripts, and images are inlined, so the files work from `file://` with no network connection and no build step. No personal information is included anywhere.
+Open `index.html` in any browser and read the volumes in order. Every page is self-contained: styles, scripts, and images are inlined, so the files work from `file://` with no network connection and no build step.
 
 ## Contents
 
@@ -54,5 +54,4 @@ Role-focused guides built on the spine. Each track re-orders the base volumes in
 
 ## Notes
 
-- All content is generic learning material. Nothing here references any person, employer, or application process.
 - The `build/` directory holds the Markdown-first build pipeline (sources, canonical stylesheet and script, QA gates). Built HTML at the repo root is the published artifact.
