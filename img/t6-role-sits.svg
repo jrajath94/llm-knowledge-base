@@ -1,0 +1,20 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 920 430' width='100%' role='img'>
+<title>Where the role sits</title>
+<text x='460' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>Where the role sits</text>
+<rect x='40' y='90' width='260' height='250' rx='10' fill='#1565c0' fill-opacity='0.22' stroke='#1565c0' stroke-width='2'/>
+<text x='170' y='116' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Research engineer</text>
+<text x='170' y='136' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Trains models.</text>
+<text x='170' y='154' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Better weights,</text>
+<text x='170' y='172' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>better loss.</text>
+<rect x='340' y='90' width='260' height='250' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='470' y='116' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Agent systems engineer</text>
+<text x='470' y='136' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Ships systems where models</text>
+<text x='470' y='154' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>are one component.</text>
+<text x='470' y='172' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Owns the harness.</text>
+<rect x='640' y='90' width='260' height='250' rx='10' fill='#00897b' fill-opacity='0.22' stroke='#00897b' stroke-width='2'/>
+<text x='770' y='116' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Platform engineer</text>
+<text x='770' y='136' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Owns infra.</text>
+<text x='770' y='154' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Clusters, queues,</text>
+<text x='770' y='172' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>deploy pipelines.</text>
+<text x='460' y='385' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Same models. Different owned surface: the loop, the tools, the memory, the ledger.</text>
+</svg>
