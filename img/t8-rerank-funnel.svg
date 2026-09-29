@@ -1,0 +1,15 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 450' width='100%' role='img'>
+<title>Reranking funnel</title>
+<text x='480' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>Reranking: the picky second opinion</text>
+<text x='480' y='70' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>A cross-encoder scores query-chunk pairs directly: slower, far more accurate at the top.</text>
+<polygon points='280,120 680,120 540,330 420,330' fill='#f0b429' fill-opacity='0.18' stroke='#f0b429' stroke-width='2'/>
+<text x='480' y='175' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='middle'>20 candidates from</text>
+<text x='480' y='199' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>embedding search (microseconds)</text>
+<text x='480' y='265' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='middle'>reranker scores each pair:</text>
+<text x='480' y='289' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>~15 ms per pair, 300 ms total</text>
+<line x1='480' y1='335' x2='480' y2='360' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='476.3,351.8 480,360 483.7,351.8' fill='#8a8a8a'/>
+<rect x='330' y='370' width='300' height='60' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='480' y='406' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>top 5, reordered</text>
+<text x='480' y='446' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'></text>
+</svg>
