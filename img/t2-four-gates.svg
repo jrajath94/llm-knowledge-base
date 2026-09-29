@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="490" viewBox="0 0 720 490" role="img" aria-label="Four data-quality gates with quarantine branches">
+<rect width="720" height="490" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">Four gates between raw pairs and the training set</text>
+<rect class="box" x="180" y="60" width="360" height="80" rx="8"/>
+<text class="t" x="360" y="84" text-anchor="middle">Gate 1: agreement</text>
+<text class="s" x="360" y="104" text-anchor="middle">agreement below ~60%:</text>
+<text class="s" x="360" y="121" text-anchor="middle">quarantine, rewrite the rubric</text>
+<line x1="180" y1="60" x2="180" y2="140" stroke="#f0b429" stroke-width="4"/>
+<path d="M360,140 L360,152" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<text x="560" y="90" text-anchor="start" fill="#f0b429" font-size="11" font-weight="700" font-family="Charis SIL, Georgia, serif">quarantine</text>
+<text x="560" y="108" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">do not train</text>
+<text x="560" y="124" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">on suspicion</text>
+<rect class="box" x="180" y="152" width="360" height="80" rx="8"/>
+<text class="t" x="360" y="176" text-anchor="middle">Gate 2: spam and gaming</text>
+<text class="s" x="360" y="196" text-anchor="middle">length correlation ~0.9:</text>
+<text class="s" x="360" y="213" text-anchor="middle">cap length, re-run gate 1</text>
+<line x1="180" y1="152" x2="180" y2="232" stroke="#58a6ff" stroke-width="4"/>
+<path d="M360,232 L360,244" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<text x="560" y="182" text-anchor="start" fill="#58a6ff" font-size="11" font-weight="700" font-family="Charis SIL, Georgia, serif">quarantine</text>
+<text x="560" y="200" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">do not train</text>
+<text x="560" y="216" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">on suspicion</text>
+<rect class="box" x="180" y="244" width="360" height="80" rx="8"/>
+<text class="t" x="360" y="268" text-anchor="middle">Gate 3: leakage</text>
+<text class="s" x="360" y="288" text-anchor="middle">eval-hash overlap:</text>
+<text class="s" x="360" y="305" text-anchor="middle">drop the pair, fix the split</text>
+<line x1="180" y1="244" x2="180" y2="324" stroke="#3fb950" stroke-width="4"/>
+<path d="M360,324 L360,336" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+<text x="560" y="274" text-anchor="start" fill="#3fb950" font-size="11" font-weight="700" font-family="Charis SIL, Georgia, serif">quarantine</text>
+<text x="560" y="292" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">do not train</text>
+<text x="560" y="308" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">on suspicion</text>
+<rect class="box" x="180" y="336" width="360" height="80" rx="8"/>
+<text class="t" x="360" y="360" text-anchor="middle">Gate 4: distribution</text>
+<text class="s" x="360" y="380" text-anchor="middle">topic mix drifts:</text>
+<text class="s" x="360" y="397" text-anchor="middle">re-sample, hold the ratios</text>
+<line x1="180" y1="336" x2="180" y2="416" stroke="#e5484d" stroke-width="4"/>
+
+<text x="560" y="366" text-anchor="start" fill="#e5484d" font-size="11" font-weight="700" font-family="Charis SIL, Georgia, serif">quarantine</text>
+<text x="560" y="384" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">do not train</text>
+<text x="560" y="400" text-anchor="start" fill="#8a8a8a" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">on suspicion</text>
+<text x="360" y="445" text-anchor="middle" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">a pair that fails any gate never enters the training set</text>
+<text x="360" y="467" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">suspicious data is quarantined and re-audited, never silently dropped</text>
+</svg>
