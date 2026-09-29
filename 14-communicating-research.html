@@ -446,24 +446,32 @@ html.xp-js .xp-reveal.xp-in {
 <div class="banner">
 <span class="voltag">VOLUME 14</span>
 <h1>Communicating Research</h1>
-<p>Tell the story of your work: narratives, failure stories, and the practice reps that make them land in design reviews.</p>
+<p>Start from the audience, then climb: structure your paper and your talk, draw figures that explain, write clearly, and tell the stories that land in design reviews.</p>
 </div>
 
-<div class="provenance"><strong>Last verified: September 2026.</strong> This volume asserts no model names, library API signatures, hardware specs, paper results, benchmark numbers, or prices, so there was nothing technical to live-verify. Its frameworks (STAR, SCAR) are standard communication conventions used in design reviews and engineering ladders, and every technique here is communication craft, not a factual claim. <span class="uv">UNVERIFIED:</span> none asserted as fact.</div>
+<div class="provenance"><strong>Last verified: September 2026.</strong> This volume asserts no model names, library API signatures, hardware specs, paper results, benchmark numbers, or prices, so there was nothing technical to live-verify. Its frameworks (STAR, SCAR, IMRaD, the hourglass paper shape) are standard communication conventions used in design reviews and engineering ladders, and every technique here is communication craft, not a factual claim. <span class="uv">UNVERIFIED:</span> none asserted as fact.</div>
 
 <div class="toc"><h4>Contents</h4>
 <ol>
-<li><a href="#v14-ch1">The research communication: what it actually measures</a></li>
-<li><a href="#v14-ch2">Your research narrative: the two-minute pitch</a></li>
-<li><a href="#v14-ch3">Failure stories: honesty as a signal</a></li>
-<li><a href="#v14-ch4">Conflict stories: disagreement without damage</a></li>
-<li><a href="#v14-ch5">Reps: how practice actually works</a></li>
-<li><a href="#v14-ch6">Calibration: contrast and the senior bar</a></li>
+<li><a href="#v14-ch1">Who is the audience and what do they need</a></li>
+<li><a href="#v14-ch2">Structure of a paper</a></li>
+<li><a href="#v14-ch3">Structure of a talk</a></li>
+<li><a href="#v14-ch4">Figures that explain</a></li>
+<li><a href="#v14-ch5">Writing clearly</a></li>
+<li><a href="#v14-ch6">The research communication: what it actually measures</a></li>
+<li><a href="#v14-ch7">Your research narrative: the two-minute pitch</a></li>
+<li><a href="#v14-ch8">Failure stories: honesty as a signal</a></li>
+<li><a href="#v14-ch9">Conflict stories: disagreement without damage</a></li>
+<li><a href="#v14-ch10">Reps: how practice actually works</a></li>
+<li><a href="#v14-ch11">Calibration: contrast and the senior bar</a></li>
 </ol>
 </div>
 
 <div class="ob-board"><h4>Design prompt</h4>
 <ol>
+<li>Who is the audience for this paper, and what decision will they make with it?</li>
+<li>State your talk's one message in a sentence. Which three slides serve it?</li>
+<li>Rewrite this figure title so it states the message, not the topic.</li>
 <li>Explain your research thread. (Two minutes, research narrative, ends with what you want to work on next.)</li>
 <li>Tell me about a time you failed.</li>
 <li>Tell me about a disagreement with a colleague.</li>
@@ -473,11 +481,253 @@ html.xp-js .xp-reveal.xp-in {
 </ol>
 </div>
 
+
 <section id="v14-ch1">
-<h2><span class="num">1.</span> The research communication: what it actually measures</h2>
+<h2><span class="num">1.</span> Who is the audience and what do they need</h2>
+<p>Communication starts with the reader, not with you. An <dfn>audience</dfn> is the set of people who will read or hear your work, and every audience walks in with a different question they need answered. The researcher who writes one explanation for all of them reaches none of them. The first move of communicating research is therefore not writing; it is naming the audience and what they need.</p>
+<p><b>What it is.</b> The reader-centric principle: write for the reader's expectations, not your own convenience. Before you write a word, answer three questions:</p>
+<ol>
+<li>Who reads this?</li>
+<li>What decision will they make with it?</li>
+<li>What must they believe after reading?</li>
+</ol>
+<table>
+<thead><tr><th>Audience</th><th>Their decision</th><th>What they need</th></tr></thead>
+<tbody>
+<tr><td>Peer reviewer</td><td>Whether your claim is true and new</td><td>Exact claims, evidence, and limitations</td></tr>
+<tr><td>Talk audience</td><td>Whether to keep listening</td><td>One message carried by a story arc</td></tr>
+<tr><td>Interview panel</td><td>Whether you think like a researcher</td><td>Judgment, ownership, and honesty under drill</td></tr>
+<tr><td>Collaborator</td><td>What to build next</td><td>The mechanism and the open threads</td></tr>
+<tr><td>Non-expert</td><td>Whether to care</td><td>Intuition and why it matters</td></tr>
+</tbody>
+</table>
+<p><b>Why it exists.</b> Because the failure mode of smart people is writing the explanation they would want to receive. You know the full context, the dead ends, the clever trick in the middle. Your reader knows none of it. This gap has a name: the <dfn>curse of knowledge</dfn>, the inability to imagine not knowing what you know. It is why experts write dense paragraphs that say nothing to a newcomer and why your first draft always assumes too much. Naming the audience is the antidote: it forces you to write from their side of the gap.</p>
+<p><b>How it works under the hood.</b> The practical method is the three-question header. At the top of every draft, write: "Reader: [who]. Decision: [what they will decide]. Belief: [what they must believe after]." Then write, and cut everything that does not serve the belief. The second method is the <dfn>stranger test</dfn>: hand the draft to someone outside your area (for a paper, outside your subfield; for a pitch, outside your team). Where they stumble, you were writing for yourself. Their confusion is data, not an insult; fix the draft, not the reader.</p>
+<p>A concrete example. You are writing up a chunking ablation. For peer reviewers, the belief is "the gain comes from chunk size, not from tuning": lead with the parameter-matched controls and the confidence intervals. For your team's design review, the belief is "we should ship small chunks": lead with the latency cost and the rollout plan. Same experiment, two documents, because the decisions differ. The researcher who sends the reviewer version to the team gets blank stares; the one who sends the team version to reviewers gets rejected.</p>
+<p><b>Common misunderstanding.</b> "Good writing is good writing, audience-independent." Clarity is audience-independent; content is not. The same result needs different evidence, different depth, and a different first paragraph for a reviewer, a teammate, and a stranger. One size fits none.</p>
+<div class="fig"><img src="img/v14-audience-needs.svg" alt="Table of five audience types and what each needs: reviewers need claims and evidence, talk audiences need one message, interview panels need judgment, collaborators need mechanism, non-experts need intuition"><br><span class="src">Figure 1.1. Five audiences, five needs. Match the document to the decision.</span></div>
+<div class="walkthrough"><p><strong>How to read this diagram</strong></p>
+<ol>
+<li><b>Left column:</b> the five audiences you will actually write for. You will meet all five in a research career, often in the same week.</li>
+<li><b>Right column:</b> what each one needs, phrased as the decision they are making. The reviewer judges truth; the talk audience rations attention; the panel judges judgment; the collaborator plans work; the non-expert decides whether to care.</li>
+<li><b>How to use it:</b> before any draft, pick your row. If you are writing for two audiences, you are writing two documents. The three-question header (reader, decision, belief) is the one-line version of this table.</li>
+</ol>
+</div>
+<div class="takeaway"><h4>Key takeaways</h4>
+<ul>
+<li>Communication starts with the reader: name the audience, the decision they will make, and the belief they must leave with, before you write.</li>
+<li>The curse of knowledge makes every first draft assume too much. The stranger test finds where.</li>
+<li>Same experiment, different documents for different audiences. One size fits none.</li>
+</ul>
+</div>
+<div class="ob-board"><h4>Design prompt</h4>
+<ul>
+<li>"Who is the audience for this paper, and what decision will they make?" (If you cannot name the decision, you are not ready to write.)</li>
+<li>"Rewrite this paragraph for a non-expert." (Same facts, intuition first, jargon last or never.)</li>
+</ul>
+</div>
+<div class="lab"><h4>Practice pointer</h4>
+<ul>
+<li>Take something you built recently. Write the three-question header for three different audiences (reviewer, teammate, non-expert). Notice how the belief line changes.</li>
+<li>Hand one paragraph to someone outside your area. Mark every place they stumble. That marked-up paragraph is your curse-of-knowledge map.</li>
+</ul>
+</div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch2">Chapter 2, Structure of a paper</a>, which gives the paper its expected shape: what goes where.</p>
+</section>
+
+<section id="v14-ch2">
+<h2><span class="num">2.</span> Structure of a paper</h2>
+<p class="bridge">Chapter 1 named the audience. The unsolved problem: a paper has one fixed shape reviewers expect. What goes where?</p>
+<p>A research paper is an argument that your claim is true and new, dressed as a report. Readers do not read it front to back; they read the abstract, skim the figures, and decide whether to trust you. The structure that survives this reality is <dfn>IMRaD</dfn>: Introduction, Methods, Results, and Discussion. It is the standard skeleton of a scientific paper, and every section answers exactly one question.</p>
+<p><b>What it is.</b> The hourglass shape. Start <b>broad</b>: the problem and why it matters (Abstract, Introduction). Narrow to <b>your exact claim</b>: what you did and what happened (Methods, Results). End <b>broad</b> again: what it means, what could be wrong, what comes next (Discussion). The Introduction answers "what problem, and what is your claim?" The Methods answers "what exactly did you do?" The Results answers "what happened?" The Discussion answers "so what, and what next?" A <dfn>related-work</dfn> section (prior art: what others did before you) belongs wherever it helps the reader judge novelty, usually after the Introduction or folded into the Discussion.</p>
+<p><b>Why it exists.</b> Because the reader's attention is a budget and the structure spends it wisely. The broad opening earns the reading: nobody cares about your method until they care about the problem. The narrow middle is the evidence a reviewer checks. The broad close is what the skimmer remembers. Papers that open with method details lose everyone except the already-convinced; papers with no discussion leave the reader asking "so what?"</p>
+<p><b>How it works under the hood.</b> Write the paper out of order: figures first, then Results, then Methods, then Discussion, then Introduction, and the <dfn>abstract</dfn> (the 150-word summary) last, because you cannot summarize an argument you have not finished making. The claim-driven rule: the Introduction states the claim in one paragraph, and every figure in Results is evidence for that claim or it gets cut. The Discussion does the honest work reviewers reward: name the limitations before they do, state what would change your mind, and separate what the data says from what you think it means.</p>
+<p>A concrete example. A paper on chunking for RAG (retrieval-augmented generation: answering from retrieved documents). Introduction: "Retrieval quality limits RAG faithfulness; we claim chunk size is the dominant factor." Methods: three chunk sizes, same embedder, 200 labeled queries, recall at 5. Results: small overlapping chunks win by 11 points, with confidence intervals. Discussion: the effect shrinks on short documents (limitation); the mechanism is likely boilerplate dilution (interpretation, labeled as such); next step is testing on multilingual queries. A reviewer can check every claim against a figure, and the limitations section disarms the obvious objections.</p>
+<p><b>Common misunderstanding.</b> "The paper should tell the story of how I did the work." No: it should tell the argument that the work supports. The three dead ends you explored are not in the paper (they are in your lab notebook). The reader needs the shortest path from problem to evidence, not your autobiography.</p>
+<div class="fig"><img src="img/v14-paper-hourglass.svg" alt="Hourglass diagram: broad opening with abstract and introduction, narrow middle with methods and results, broad close with discussion and limitations"><br><span class="src">Figure 2.1. The hourglass: broad, narrow, broad. Each section answers one question.</span></div>
+<div class="walkthrough"><p><strong>How to read this diagram</strong></p>
+<ol>
+<li><b>Top (BROAD):</b> the problem and why it matters. Abstract and Introduction. Answers: what problem, what claim. This is the only part most readers finish.</li>
+<li><b>Middle (NARROW):</b> your exact claim and the evidence. Methods and Results. Answers: what did you do, what happened. Every figure here is evidence for the claim.</li>
+<li><b>Bottom (BROAD):</b> what it means. Discussion, limitations, future work. Answers: so what, what could be wrong, what next. Honesty here is what reviewers remember.</li>
+</ol>
+</div>
+<div class="takeaway"><h4>Key takeaways</h4>
+<ul>
+<li>A paper is an argument shaped like an hourglass: broad problem, narrow evidence, broad meaning. IMRaD is the skeleton: Introduction, Methods, Results, and Discussion.</li>
+<li>Each section answers one question. Write out of order: figures first, abstract last.</li>
+<li>The Discussion does the honest work: limitations, what would change your mind, data separated from interpretation.</li>
+</ul>
+</div>
+<div class="ob-board"><h4>Design prompt</h4>
+<ul>
+<li>"State your paper's claim in one paragraph." (If it takes three, the Introduction is not ready.)</li>
+<li>"Which figure is evidence for which sentence of the claim?" (Every claim needs a figure; every figure needs a claim.)</li>
+</ul>
+</div>
+<div class="lab"><h4>Practice pointer</h4>
+<ul>
+<li>Take a paper you admire. Reverse-outline it: one line per section stating which of the four questions it answers. Notice where the related work sits and why.</li>
+<li>Draft the Discussion for your own work first: limitations, what would change your mind, next steps. It is easier to be honest before you are selling.</li>
+</ul>
+</div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch3">Chapter 3, Structure of a talk</a>, which rebuilds the same material as a talk.</p>
+</section>
+
+<section id="v14-ch3">
+<h2><span class="num">3.</span> Structure of a talk</h2>
+<p class="bridge">Chapter 2 gave you the paper's shape. The unsolved problem: a talk is not a paper read aloud. It needs its own structure.</p>
+<p>A talk is not a paper read aloud. The audience cannot rewind you, cannot skip ahead, and will remember exactly one thing the next day. The structure that respects this is the arc: a <dfn>hook</dfn> that earns attention, a journey through what you tried (including what failed), the result, and a takeaway that repeats the one message. The <dfn>one-message rule</dfn>: a 20-minute talk can land one idea. Everything else serves it or gets cut.</p>
+<p><b>What it is.</b> Four beats:</p>
+<table>
+<thead><tr><th>Beat</th><th>Time</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td><b>Hook</b></td><td>2 minutes</td><td>The problem, made concrete. A real example, a number, a failure the audience recognizes. No background section, no agenda slide.</td></tr>
+<tr><td><b>Journey</b></td><td>10 minutes</td><td>What you tried, in order, with the complication. The failed experiment is not a detour; it is the story, because the audience learns how you think from how you handled being wrong.</td></tr>
+<tr><td><b>Result</b></td><td>5 minutes</td><td>What happened, with the one figure that carries the claim.</td></tr>
+<tr><td><b>Takeaway</b></td><td>1 minute</td><td>The one message, stated plainly, then repeated.</td></tr>
+</tbody>
+</table>
+<p>The move from the specific to the general runs underneath: start with the concrete example, then generalize to the lesson.</p>
+<p><b>Why it exists.</b> Because attention is linear and memory is lossy. A talk that covers everything the paper covers lands nothing; the audience drowns in detail and keeps none of it. The arc exists to match how people actually learn from a speaker: they follow a story, they remember a message, and they reconstruct the details later from the paper if the message earned it.</p>
+<p><b>How it works under the hood.</b> Slide discipline: one idea per slide, slides as evidence, not teleprompter. If you are reading your slides, the audience is ahead of you and bored; the slide should show the figure while you tell the story. The 2-minute test: explain the talk's message in two minutes to a colleague. If you cannot, you have two talks, not one. <dfn>Backup slides</dfn> (extra slides after the last one, for anticipated questions) are the professional's trick: they let you answer "did you try X?" with evidence instead of defensiveness, without bloating the main arc.</p>
+<p>A concrete example. A 20-minute talk on the chunking work. Hook: "Our support chatbot invented order numbers, and tickets tripled." Journey: "Bigger chunks made it worse; the relevant sentence drowned. So we tested three chunk sizes." Result: the one figure, small chunks win by 11 points. Takeaway: "Split every RAG eval into retrieval recall vs generation faithfulness before touching the generator." One message, one figure, one story. The audience remembers the takeaway; the paper has the rest.</p>
+<p><b>Common misunderstanding.</b> "The talk should cover the whole paper." The talk should make the audience want to read the paper. Coverage is the paper's job. The talk's job is the message, and every slide that does not serve it is a tax on attention.</p>
+<div class="fig"><img src="img/v14-talk-arc.svg" alt="Talk arc diagram: hook, journey with the complication, result, and takeaway, all serving one message"><br><span class="src">Figure 3.1. The talk arc: hook, journey, result, takeaway. One message throughout.</span></div>
+<div class="walkthrough"><p><strong>How to read this diagram</strong></p>
+<ol>
+<li><b>The dashed banner:</b> the one message, decided before any slide exists. If a slide does not serve it, the slide goes.</li>
+<li><b>The three circles:</b> hook (the problem, concrete), journey (what you tried, complication included), result (what happened, with numbers). The arrows are the story moving forward; never go backward to "one more background slide."</li>
+<li><b>The takeaway bar:</b> the last thing you say and the thing they remember. State the message, then stop. The strongest talks end early.</li>
+</ol>
+</div>
+<div class="takeaway"><h4>Key takeaways</h4>
+<ul>
+<li>A talk is an arc, not a paper: hook, journey (complication included), result, takeaway. One message per talk.</li>
+<li>Slides are evidence, not a teleprompter: one idea per slide, the figure on screen while you tell the story.</li>
+<li>Backup slides answer the anticipated questions without bloating the arc. The 2-minute test finds whether you have one talk or two.</li>
+</ul>
+</div>
+<div class="ob-board"><h4>Design prompt</h4>
+<ul>
+<li>"State your talk's one message in a sentence." (Then: which three slides serve it? Cut the rest.)</li>
+<li>"What is the complication in your story?" (No complication, no journey. Find the failed experiment and put it back in.)</li>
+</ul>
+</div>
+<div class="lab"><h4>Practice pointer</h4>
+<ul>
+<li>Take a talk you have given or plan to give. Write the four beats on one page: hook, journey, result, takeaway. Time the takeaway: it should be under a minute.</li>
+<li>Build five backup slides for the questions you fear most. Rehearse answering with them, not from memory.</li>
+</ul>
+</div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch4">Chapter 4, Figures that explain</a>, which makes your figures explain instead of decorate.</p>
+</section>
+
+<section id="v14-ch4">
+<h2><span class="num">4.</span> Figures that explain</h2>
+<p class="bridge">Chapters 2 and 3 told you what to say. The unsolved problem: figures that explain instead of decorate.</p>
+<p>Most readers will look at your figures before they read your text, and many will look at nothing else. A figure is therefore not decoration; it is an argument in visual form. A figure that explains passes the <dfn>30-second test</dfn>: a stranger gets its point in 30 seconds, without reading the paper.</p>
+<p><b>What it is.</b> Five rules:</p>
+<ol>
+<li><b>The title states the message.</b> "Gating helps on long contexts," not "Results." The reader should learn the conclusion from the title alone.</li>
+<li><b>Axes carry meaning and units.</b> "Context length (tokens)," not "x." An unlabeled axis is a figure that cannot be checked.</li>
+<li><b>One message per figure.</b> Show the comparison, not the raw numbers: the delta, the two lines, the before and after.</li>
+<li><b>Annotate the point.</b> An arrow and six words ("gap opens past 8k") tell the reader where to look.</li>
+<li><b>Show uncertainty.</b> Error bars or intervals on every measured number, or the figure is a claim without evidence.</li>
+</ol>
+<p>The <dfn>caption</dfn> (the text under the figure) then does the job text cannot: it states what the figure shows, what to notice, and what it means, in two or three sentences.</p>
+<p><b>Why it exists.</b> Because the figure is the most-read, most-remembered, and most-screenshotted part of your work. A clear figure carries your result into other people's talks and papers; a confusing one buries it. Figures are also where dishonesty is easiest to spot and hardest to hide: truncated axes, missing baselines, and absent error bars are visible in 30 seconds to anyone trained to look.</p>
+<p><b>How it works under the hood.</b> Design the figure before you write the paragraph about it. Sketch it on paper: what is the one comparison, what are the axes, where does the annotation go? Then apply the stranger test from Chapter 1: show the sketch to someone outside your area for 30 seconds, then ask what the point was. Whatever they missed, the figure did not say. Iterate on the sketch, not on the final render; it is cheaper. The common failure is the "data dump" figure: every condition, every baseline, six subplots, 8-point font. The fix is always subtraction: one figure, one message, the rest to the appendix.</p>
+<p>A concrete example. The chunking result, drawn twice. Before: a plot titled "Results," axes unlabeled, two gray lines, no legend, no message. After: titled "Small chunks win on long documents," x-axis "context length (tokens)," y-axis "recall at 5," two labeled lines, an annotation arrow at "gap opens past 8k," error bars on each point. Same data. The first figure decorates; the second argues.</p>
+<p><b>Common misunderstanding.</b> "A figure should show all the data." A figure should show the argument. The appendix holds all the data. If the reader needs a magnifying glass, you have not drawn a figure; you have published a spreadsheet.</p>
+<div class="fig"><img src="img/v14-figure-before-after.svg" alt="Two charts side by side: a bad figure with no title message or axis labels, and a good figure with a message title, labeled axes, and an annotation"><br><span class="src">Figure 4.1. The same data, drawn twice. The title states the message; the axes carry meaning.</span></div>
+<div class="walkthrough"><p><strong>How to read this diagram</strong></p>
+<ol>
+<li><b>Left (BEFORE):</b> the decoration. Title "Results" says nothing; the axes have no labels or units; the two gray lines cannot be told apart. A stranger learns nothing in 30 seconds.</li>
+<li><b>Right (AFTER):</b> the argument. The title is the conclusion; the axes say what is measured and in what units; the lines are labeled; the annotation arrow points at the finding.</li>
+<li><b>Bottom (THE TEST):</b> the 30-second test, the only review that matters. Sketch on paper, test on a stranger, iterate before rendering.</li>
+</ol>
+</div>
+<div class="takeaway"><h4>Key takeaways</h4>
+<ul>
+<li>A figure is an argument: title states the message, axes carry meaning and units, one message per figure, annotate the point, show uncertainty.</li>
+<li>The 30-second test: a stranger gets the point in 30 seconds or the figure is not done.</li>
+<li>Design on paper first, subtract ruthlessly. One figure, one message; the rest goes to the appendix.</li>
+</ul>
+</div>
+<div class="ob-board"><h4>Design prompt</h4>
+<ul>
+<li>"Rewrite this figure title so it states the message." ("Results" is never the answer.)</li>
+<li>"What would the stranger miss in 30 seconds?" (Whatever they miss, the figure did not say. Add the annotation.)</li>
+</ul>
+</div>
+<div class="lab"><h4>Practice pointer</h4>
+<ul>
+<li>Take a figure from your own work. Rewrite its title as the message, label every axis with meaning and units, and add one annotation arrow. Show both versions to a stranger for 30 seconds each.</li>
+<li>Find a figure in a paper you admire that passes the 30-second test. List the five rules it follows. Keep it as your reference.</li>
+</ul>
+</div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch5">Chapter 5, Writing clearly</a>, which sharpens the sentences themselves.</p>
+</section>
+
+<section id="v14-ch5">
+<h2><span class="num">5.</span> Writing clearly</h2>
+<p class="bridge">Chapter 4 made figures carry their message. The unsolved problem: the sentences themselves.</p>
+<p>Clear writing is thinking made visible. Readers do not grade your prose; they use it to decide whether you are worth trusting. The good news is that clarity is a set of mechanical rules, not a talent. The core rule comes from the science of reading: a <dfn>topic sentence</dfn> first. Readers expect the point of a paragraph in its first sentence, and they get lost when it arrives in the third. Put the point up front, then the evidence.</p>
+<p><b>What it is.</b> Six rules:</p>
+<ol>
+<li><b>Topic sentence first.</b> Every paragraph opens with its point, in one sentence. The rest of the paragraph is evidence for that sentence.</li>
+<li><b>Short sentences.</b> One idea per sentence; if a sentence has three commas, it is two sentences.</li>
+<li><b>Active voice.</b> Name the actor: "Removing the gate degraded performance," not "a degradation was effectuated." Readers track who did what; passive voice hides it.</li>
+<li><b>Verbs carry the action.</b> Prefer strong verbs to noun phrases: "we measured," not "a measurement was performed."</li>
+<li><b>Define terms at first use, cut the rest of the jargon.</b> Every unexplained term is a small tax on trust; jargon that does no work gets cut.</li>
+<li><b>Revise in passes.</b> Structure pass (does the argument flow?), sentence pass (shorten, activate), cut pass (remove every word that does no work). Never revise sentences before the structure is right.</li>
+</ol>
+<p><b>Why it exists.</b> Because the reader's working memory is small and your paper is long. Every long sentence, every passive construction, every undefined term spends a little of that memory on decoding instead of understanding. Spend enough of it and the reader stops, not because your work is weak but because reading it hurts. Clarity is respect for the reader's budget.</p>
+<p><b>How it works under the hood.</b> The method is mechanical. First draft: write fast, ignore the rules, get the argument down. Then the structure pass: reverse-outline (one line per paragraph stating its point) and check the arc from Chapter 2. Then the sentence pass: halve the average sentence length, flip passive to active, replace noun phrases with verbs. Then the cut pass: delete every sentence that does not serve the paragraph's topic sentence, and every word that does not serve the sentence. Then the stranger test from Chapter 1: where they stumble, a rule was broken. The most common stumble is the missing topic sentence: the paragraph that makes sense only after you have read it twice.</p>
+<p>A concrete example. Before: "It was observed by us that a degradation in performance was effectuated by the removal of the gating mechanism." (31 words, passive, the actor hides, "effectuated" does no work.) After: "Removing the gating mechanism degraded performance." (12 words, active, actor first.) Same fact. The first version makes the reader work; the second spends nothing.</p>
+<p><b>Common misunderstanding.</b> "Complex ideas need complex sentences." Complex ideas need clear sentences. The hardest papers to read are usually the ones whose authors were unsure; the fog is in the thinking, and it shows in the prose. If a sentence is hard to write simply, that is data: you may not understand the point yet.</p>
+<div class="fig"><img src="img/v14-clear-writing.svg" alt="Paragraph anatomy with the topic sentence highlighted, and a sentence revised from passive and wordy to active and short"><br><span class="src">Figure 5.1. Paragraph anatomy and one revision: topic sentence first, actor first, cut the rest.</span></div>
+<div class="walkthrough"><p><strong>How to read this diagram</strong></p>
+<ol>
+<li><b>Top (PARAGRAPH ANATOMY):</b> the highlighted first sentence is the topic sentence: the point, up front. The supporting sentences are evidence. The closing sentence hands the reader to the next paragraph.</li>
+<li><b>Middle (BEFORE):</b> 31 words, passive, actor hidden, jargon doing no work. Count the cost: the reader decodes who did what before learning anything.</li>
+<li><b>Bottom (AFTER):</b> 12 words, active, actor first. Same fact, no decoding tax. This is the sentence pass, applied once.</li>
+</ol>
+</div>
+<div class="takeaway"><h4>Key takeaways</h4>
+<ul>
+<li>Clarity is mechanical: topic sentence first, short sentences, active voice, verbs over noun phrases, defined terms, revise in passes.</li>
+<li>Revise structure before sentences, sentences before cuts. Never polish prose on a broken argument.</li>
+<li>The stranger test finds every broken rule. Where they stumble, you were unclear, and a hard-to-simplify sentence means the thinking needs work.</li>
+</ul>
+</div>
+<div class="ob-board"><h4>Design prompt</h4>
+<ul>
+<li>"What is the topic sentence of this paragraph?" (If you cannot point to it, write it.)</li>
+<li>"Halve this sentence." (Same fact, half the words. Then check: did anything load-bearing get cut?)</li>
+</ul>
+</div>
+<div class="lab"><h4>Practice pointer</h4>
+<ul>
+<li>Take a page of your own writing. Reverse-outline it: one line per paragraph stating its point. Any paragraph whose point takes two lines needs a rewrite.</li>
+<li>Do one sentence pass on the same page: flip every passive construction to active, halve the longest three sentences. Read it aloud; where you run out of breath, cut.</li>
+</ul>
+</div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch6">Chapter 6, The research communication: what it actually measures</a>, which turns to interviews: what they actually measure.</p>
+</section>
+
+<section id="v14-ch6">
+<h2><span class="num">6.</span> The research communication: what it actually measures</h2>
+<p class="bridge">Chapters 1–5 taught written communication. The unsolved problem: interviews measure something different. What are they actually testing?</p>
 <p>A <dfn>research communication</dfn> is any setting where you explain your past work instead of your derivations: your projects, your failures, your conflicts, your decisions. Design reviews, paper presentations, promotion packets, and team intros all run on this skill. It feels softer than going deep on a technical topic, which is exactly why it differentiates. Your papers prove you can do the work; how you talk about the work proves you can do it <i>with other people, repeatedly, when things go wrong</i>. That is what the rubric measures, whether the reviewer articulates it or not.</p>
 <p>The standard answer format is <dfn>STAR</dfn> (Situation, Task, Action, Result). The sharper variant for research roles is <dfn>SCAR</dfn>: it adds a Complication, and the complication is where research stories live. The climb below takes you from the basic format to surviving the follow-up drill.</p>
-<div class="fig"><svg viewBox="0 0 740 330" role="img" aria-label="STAR and SCAR frameworks side by side: Situation, Task/Complication, Action, Result, with timing guidance" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><text x="179" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">STAR: ownership stories</text><text x="561" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">SCAR: research stories</text><rect x="8" y="45" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="20" y="64" font-size="12.5" font-weight="700" fill="var(--text)">S · Situation · ~20 s</text><text x="20" y="81" font-size="11" fill="var(--muted)">context: where, what, why it mattered</text><rect x="374" y="45" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="386" y="64" font-size="12.5" font-weight="700" fill="var(--text)">S · Situation · ~20 s</text><text x="386" y="81" font-size="11" fill="var(--muted)">context: where, what, why it mattered</text><rect x="8" y="97" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="20" y="116" font-size="12.5" font-weight="700" fill="var(--text)">T · Task · ~15 s</text><text x="20" y="133" font-size="11" fill="var(--muted)">YOUR responsibility: the ownership line</text><rect x="374" y="97" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="386" y="116" font-size="12.5" font-weight="700" fill="var(--text)">T · Task · ~15 s</text><text x="386" y="133" font-size="11" fill="var(--muted)">YOUR hypothesis, stated falsifiably</text><rect x="8" y="149" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--accent)"/><text x="20" y="168" font-size="12.5" font-weight="700" fill="var(--text)">C · Complication · ~20 s</text><text x="20" y="185" font-size="11" fill="var(--muted)">(STAR has no C)</text><rect x="374" y="149" width="358" height="46" rx="6" fill="var(--accent)" stroke="var(--accent)"/><text x="386" y="168" font-size="12.5" font-weight="700" fill="var(--accent-ink)">C · Complication · ~20 s</text><text x="386" y="185" font-size="11" fill="var(--accent-ink)">what made it hard: the failed experiment</text><rect x="8" y="201" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="20" y="220" font-size="12.5" font-weight="700" fill="var(--text)">A · Action · ~60 s</text><text x="20" y="237" font-size="11" fill="var(--muted)">what you did, step by step, with reasons</text><rect x="374" y="201" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="386" y="220" font-size="12.5" font-weight="700" fill="var(--text)">A · Action · ~60 s</text><text x="386" y="237" font-size="11" fill="var(--muted)">the experiments, with controls</text><rect x="8" y="253" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="20" y="272" font-size="12.5" font-weight="700" fill="var(--text)">R · Result · ~30 s</text><text x="20" y="289" font-size="11" fill="var(--muted)">what happened, with numbers + lesson</text><rect x="374" y="253" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="386" y="272" font-size="12.5" font-weight="700" fill="var(--text)">R · Result · ~30 s</text><text x="386" y="289" font-size="11" fill="var(--muted)">verdict + diagnosis + next step</text><text x="370" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">the complication is the point: research stories live or die on it</text></svg><br><span class="src">Figure 1.1. STAR for ownership stories, SCAR for research stories. The complication is the point.</span></div>
+<div class="fig"><svg viewBox="0 0 740 330" role="img" aria-label="STAR and SCAR frameworks side by side: Situation, Task/Complication, Action, Result, with timing guidance" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><text x="179" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">STAR: ownership stories</text><text x="561" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">SCAR: research stories</text><rect x="8" y="45" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="20" y="64" font-size="12.5" font-weight="700" fill="var(--text)">S · Situation · ~20 s</text><text x="20" y="81" font-size="11" fill="var(--muted)">context: where, what, why it mattered</text><rect x="374" y="45" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="386" y="64" font-size="12.5" font-weight="700" fill="var(--text)">S · Situation · ~20 s</text><text x="386" y="81" font-size="11" fill="var(--muted)">context: where, what, why it mattered</text><rect x="8" y="97" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="20" y="116" font-size="12.5" font-weight="700" fill="var(--text)">T · Task · ~15 s</text><text x="20" y="133" font-size="11" fill="var(--muted)">YOUR responsibility: the ownership line</text><rect x="374" y="97" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="386" y="116" font-size="12.5" font-weight="700" fill="var(--text)">T · Task · ~15 s</text><text x="386" y="133" font-size="11" fill="var(--muted)">YOUR hypothesis, stated falsifiably</text><rect x="8" y="149" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--accent)"/><text x="20" y="168" font-size="12.5" font-weight="700" fill="var(--text)">C · Complication · ~20 s</text><text x="20" y="185" font-size="11" fill="var(--muted)">(STAR has no C)</text><rect x="374" y="149" width="358" height="46" rx="6" fill="var(--accent)" stroke="var(--accent)"/><text x="386" y="168" font-size="12.5" font-weight="700" fill="var(--accent-ink)">C · Complication · ~20 s</text><text x="386" y="185" font-size="11" fill="var(--accent-ink)">what made it hard: the failed experiment</text><rect x="8" y="201" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="20" y="220" font-size="12.5" font-weight="700" fill="var(--text)">A · Action · ~60 s</text><text x="20" y="237" font-size="11" fill="var(--muted)">what you did, step by step, with reasons</text><rect x="374" y="201" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="386" y="220" font-size="12.5" font-weight="700" fill="var(--text)">A · Action · ~60 s</text><text x="386" y="237" font-size="11" fill="var(--muted)">the experiments, with controls</text><rect x="8" y="253" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="20" y="272" font-size="12.5" font-weight="700" fill="var(--text)">R · Result · ~30 s</text><text x="20" y="289" font-size="11" fill="var(--muted)">what happened, with numbers + lesson</text><rect x="374" y="253" width="358" height="46" rx="6" fill="var(--surface)" stroke="var(--border)"/><text x="386" y="272" font-size="12.5" font-weight="700" fill="var(--text)">R · Result · ~30 s</text><text x="386" y="289" font-size="11" fill="var(--muted)">verdict + diagnosis + next step</text><text x="370" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">the complication is the point: research stories live or die on it</text></svg><br><span class="src">Figure 6.1. STAR for ownership stories, SCAR for research stories. The complication is the point.</span></div>
 <div class="walkthrough"><p><strong>How to read this diagram: the climb</strong></p>
 <ol>
 <li><b>Step 1, STAR: the ownership story.</b> <b>S</b> (~20 s): one or two sentences of context: where you were, what the project was, why it mattered. No backstory novels. <b>T</b> (~15 s): what <i>you</i> were responsible for: the ownership line, specific and personal. <b>A</b> (~60 s): the longest section: what you did, step by step, with the reasoning. This is where the reviewer learns how you think. <b>R</b> (~30 s): what happened, with numbers, plus what you learned. End on the lesson: it signals growth, which is on the rubric.</li>
@@ -492,7 +742,20 @@ T - Task:       YOUR hypothesis, stated falsifiably (15 s)
 C - Complication: the experiment that failed, the baseline that lied (20 s)
 A - Action:     the experiments, with controls (45 s)
 R - Result:     the verdict + diagnosis + next step (40 s)</pre>
-<p><b>A concrete example.</b> Prompt: "Tell me about a challenging project." Weak answer: "We built a RAG system. It was hard because the data was messy. I cleaned the data and it worked. The team was happy." (No ownership, no complication, no numbers, no lesson.) Strong answer: "S: Our support chatbot was hallucinating order numbers, and support tickets about it had tripled. T: I owned the retrieval half of the RAG pipeline (RAG: retrieval-augmented generation, answering from retrieved documents). C: My first fix, bigger chunks, made recall <i>worse</i>: the relevant sentence drowned in boilerplate. A: I ran a chunking ablation (removing or varying one component to measure its contribution): three chunk sizes, recall@5 (whether the right answer appears in the top 5 retrieved chunks) on 200 labeled queries, same embedder (the model converting text to vectors). Small overlapping chunks won by 11 points. Then I found the embedder was the next bottleneck and fine-tuned it on our tickets. R: Hallucination tickets dropped 60% in a month. Lesson: I now split every RAG eval into retrieval recall vs generation faithfulness before touching the generator." Same project, different review.</p>
+<p><b>A concrete example.</b> Prompt: "Tell me about a challenging project."</p>
+<p><b>Weak answer:</b> "We built a RAG system. It was hard because the data was messy. I cleaned the data and it worked. The team was happy." (No ownership, no complication, no numbers, no lesson.)</p>
+<p><b>Strong answer,</b> in STAR form:</p>
+<table>
+<thead><tr><th>Beat</th><th>The story</th></tr></thead>
+<tbody>
+<tr><td>S (Situation)</td><td>Our support chatbot was hallucinating order numbers, and support tickets about it had tripled.</td></tr>
+<tr><td>T (Task)</td><td>I owned the retrieval half of the RAG pipeline (RAG: retrieval-augmented generation, answering from retrieved documents).</td></tr>
+<tr><td>C (Complication)</td><td>My first fix, bigger chunks, made recall <i>worse</i>: the relevant sentence drowned in boilerplate.</td></tr>
+<tr><td>A (Action)</td><td>I ran a chunking ablation (removing or varying one component to measure its contribution): three chunk sizes, recall@5 (whether the right answer appears in the top 5 retrieved chunks) on 200 labeled queries, same embedder (the model converting text to vectors). Small overlapping chunks won by 11 points. Then I found the embedder was the next bottleneck and fine-tuned it on our tickets.</td></tr>
+<tr><td>R (Result)</td><td>Hallucination tickets dropped 60% in a month. Lesson: I now split every RAG eval into retrieval recall vs generation faithfulness before touching the generator.</td></tr>
+</tbody>
+</table>
+<p>Same project, different review.</p>
 <p><b>Common misunderstanding.</b> "Research communication is about being likable." Likability helps, but the rubric scores evidence: specific actions, real numbers, honest lessons. A speaker who is warm but vague loses to one who is reserved but precise. Prepare evidence, not charm.</p>
 <div class="callout"><span class="tag">[FIELD NOTE]</span>The sentence reviewers listen for: none. Communication rounds have no magic sentence; they have a <i>pattern</i>: specific situation, personal ownership, real complication, thoughtful action, numbered result, honest lesson. Hit all six and the rubric fills itself in.</div>
 <div class="ob-board"><h4>Design prompt</h4>
@@ -507,11 +770,14 @@ R - Result:     the verdict + diagnosis + next step (40 s)</pre>
 <li>For each story, write the three follow-ups you fear most, and answer them in writing.</li>
 </ul>
 </div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch7">Chapter 7, Your research narrative: the two-minute pitch</a>, which compresses your work into a two-minute pitch.</p>
 </section>
-<section id="v14-ch2">
-<h2><span class="num">2.</span> Your research narrative: the two-minute pitch</h2>
+<section id="v14-ch7">
+<h2><span class="num">7.</span> Your research narrative: the two-minute pitch</h2>
+<p class="bridge">Chapter 6 named what interviews measure. The unsolved problem: compressing your work into two minutes.</p>
 <p>A <dfn>research narrative</dfn> is the story of your work as a coherent arc, not a list of projects. It answers the three questions every reviewer is silently asking: what do you work on, why does it matter, and what is the thread that connects it all? The two-minute pitch is the compressed form: the answer to "walk me through your research."</p>
-<div class="fig"><svg viewBox="0 0 740 235" role="img" aria-label="The four beats of the two-minute pitch: problem space, thread, proof, direction" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><path d="M 88 60 Q 370 -10 652 60" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="6,4"/><rect x="8" y="70" width="160" height="112" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="88.0" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">PROBLEM SPACE · 20 s</text><text x="88.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--muted)">area + why it matters</text><text x="88.0" y="134" text-anchor="middle" font-size="11.5" fill="var(--muted)">plain language</text><rect x="198" y="70" width="160" height="112" rx="8" fill="var(--accent)" stroke="var(--accent)" stroke-width="1.5"/><text x="278.0" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-ink)">THREAD · 30 s</text><text x="278.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--accent-ink)">one sentence</text><text x="278.0" y="134" text-anchor="middle" font-size="11.5" fill="var(--accent-ink)">connects the projects</text><rect x="388" y="70" width="160" height="112" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="468.0" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">PROOF · 60 s</text><text x="468.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--muted)">2-3 results, one line each</text><text x="468.0" y="134" text-anchor="middle" font-size="11.5" fill="var(--muted)">numbers on every result</text><rect x="578" y="70" width="160" height="112" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="658.0" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DIRECTION · 30 s</text><text x="658.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--muted)">what is next</text><text x="658.0" y="134" text-anchor="middle" font-size="11.5" fill="var(--muted)">why here</text><line x1="168" y1="126" x2="198" y2="126" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="358" y1="126" x2="388" y2="126" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="548" y1="126" x2="578" y2="126" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><text x="370" y="215" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">the thread does the heavy lifting: without it you are a list of projects</text></svg><br><span class="src">Figure 2.1. The pitch arc: context, thread, proof, direction. The thread does the heavy lifting.</span></div>
+<div class="fig"><svg viewBox="0 0 740 235" role="img" aria-label="The four beats of the two-minute pitch: problem space, thread, proof, direction" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><path d="M 88 60 Q 370 -10 652 60" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="6,4"/><rect x="8" y="70" width="160" height="112" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="88.0" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">PROBLEM SPACE · 20 s</text><text x="88.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--muted)">area + why it matters</text><text x="88.0" y="134" text-anchor="middle" font-size="11.5" fill="var(--muted)">plain language</text><rect x="198" y="70" width="160" height="112" rx="8" fill="var(--accent)" stroke="var(--accent)" stroke-width="1.5"/><text x="278.0" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-ink)">THREAD · 30 s</text><text x="278.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--accent-ink)">one sentence</text><text x="278.0" y="134" text-anchor="middle" font-size="11.5" fill="var(--accent-ink)">connects the projects</text><rect x="388" y="70" width="160" height="112" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="468.0" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">PROOF · 60 s</text><text x="468.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--muted)">2-3 results, one line each</text><text x="468.0" y="134" text-anchor="middle" font-size="11.5" fill="var(--muted)">numbers on every result</text><rect x="578" y="70" width="160" height="112" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="658.0" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DIRECTION · 30 s</text><text x="658.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--muted)">what is next</text><text x="658.0" y="134" text-anchor="middle" font-size="11.5" fill="var(--muted)">why here</text><line x1="168" y1="126" x2="198" y2="126" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="358" y1="126" x2="388" y2="126" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="548" y1="126" x2="578" y2="126" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><text x="370" y="215" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">the thread does the heavy lifting: without it you are a list of projects</text></svg><br><span class="src">Figure 7.1. The pitch arc: context, thread, proof, direction. The thread does the heavy lifting.</span></div>
 <div class="walkthrough"><p><strong>How to read this diagram: the climb</strong></p>
 <ol>
 <li><b>Step 1, PROBLEM SPACE (~20 s): the area, in plain language.</b> What the area is and why it matters, so a smart engineer outside your field can follow it. This is the hook: reviewers remember narratives, and the pitch opens the review and sets the frame for everything after.</li>
@@ -527,7 +793,7 @@ R - Result:     the verdict + diagnosis + next step (40 s)</pre>
 <p class="pq-q">You might be wondering: I come from industry engineering, not academia. Is that a disadvantage?</p>
 <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
 <div class="pq-a" hidden>
-<p>No: it is a different thread, not a weaker one. Your narrative is "I ship systems that survive production": the proof is reliability, cost, and scale, not citations. Research labs <i>want</i> that thread, because most of their ideas die between the paper and the cluster. Frame your industry work as the complication in your SCAR stories (Chapter 1): constraints are what make engineering stories interesting. The only real disadvantage is if you apologize for it: own the thread.</p>
+<p>No: it is a different thread, not a weaker one. Your narrative is "I ship systems that survive production": the proof is reliability, cost, and scale, not citations. Research labs <i>want</i> that thread, because most of their ideas die between the paper and the cluster. Frame your industry work as the complication in your SCAR stories (Chapter 6): constraints are what make engineering stories interesting. The only real disadvantage is if you apologize for it: own the thread.</p>
 </div>
 </div>
 <div class="ob-board"><h4>Design prompt</h4>
@@ -542,11 +808,14 @@ R - Result:     the verdict + diagnosis + next step (40 s)</pre>
 <li>Deliver it to a friend outside your field. If they cannot repeat your thread back to you, the thread is not clear enough.</li>
 </ul>
 </div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch8">Chapter 8, Failure stories: honesty as a signal</a>, which prepares the failure stories interviews are designed to extract.</p>
 </section>
-<section id="v14-ch3">
-<h2><span class="num">3.</span> Failure stories: honesty as a signal</h2>
+<section id="v14-ch8">
+<h2><span class="num">8.</span> Failure stories: honesty as a signal</h2>
+<p class="bridge">Chapter 7 gave you the pitch. The unsolved problem: the questions designed to break the pitch. Failure stories.</p>
 <p>A <dfn>failure story</dfn> is your answer to "tell me about a time you failed," and it is the highest-signal 3 minutes in a postmortem, a design review, or a promotion review. Everyone claims they learn from failure; almost nobody can tell a failure story with a real mistake, real consequences, and a real changed behavior. The ones who can are instantly credible, because honesty about failure is the hardest thing to fake. Research is failure-dense: most experiments do not work, and an engineer who cannot name a real failure is either inexperienced or hiding something.</p>
-<div class="fig"><svg viewBox="0 0 780 190" role="img" aria-label="The failure story arc: mistake stated plainly, consequence, diagnosis, changed behavior with proof" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><rect x="8" y="20" width="176" height="118" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="96.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">MISTAKE</text><text x="96.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">front-loaded, first 20 s</text><text x="96.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">no euphemism, no spin</text><rect x="204" y="20" width="176" height="118" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="292.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">CONSEQUENCE</text><text x="292.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">what it cost</text><text x="292.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">numbers or it did not happen</text><rect x="400" y="20" width="176" height="118" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="488.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DIAGNOSIS</text><text x="488.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">mechanism of the mistake</text><text x="488.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">not a character flaw</text><rect x="596" y="20" width="176" height="118" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="684.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">CHANGED BEHAVIOR</text><text x="684.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">what you do now</text><text x="684.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">+ receipt: proof it stuck</text><line x1="184" y1="79" x2="204" y2="79" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="380" y1="79" x2="400" y2="79" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="576" y1="79" x2="596" y2="79" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><text x="390" y="170" text-anchor="middle" font-size="12.5" fill="var(--muted)">a confession without the fourth part is just a confession; the receipt is what makes it a growth story</text></svg><br><span class="src">Figure 3.1. The anatomy of a failure story that builds trust instead of costing it.</span></div>
+<div class="fig"><svg viewBox="0 0 780 190" role="img" aria-label="The failure story arc: mistake stated plainly, consequence, diagnosis, changed behavior with proof" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><rect x="8" y="20" width="176" height="118" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="96.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">MISTAKE</text><text x="96.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">front-loaded, first 20 s</text><text x="96.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">no euphemism, no spin</text><rect x="204" y="20" width="176" height="118" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="292.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">CONSEQUENCE</text><text x="292.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">what it cost</text><text x="292.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">numbers or it did not happen</text><rect x="400" y="20" width="176" height="118" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="488.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DIAGNOSIS</text><text x="488.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">mechanism of the mistake</text><text x="488.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">not a character flaw</text><rect x="596" y="20" width="176" height="118" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="684.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">CHANGED BEHAVIOR</text><text x="684.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">what you do now</text><text x="684.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">+ receipt: proof it stuck</text><line x1="184" y1="79" x2="204" y2="79" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="380" y1="79" x2="400" y2="79" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="576" y1="79" x2="596" y2="79" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><text x="390" y="170" text-anchor="middle" font-size="12.5" fill="var(--muted)">a confession without the fourth part is just a confession; the receipt is what makes it a growth story</text></svg><br><span class="src">Figure 8.1. The anatomy of a failure story that builds trust instead of costing it.</span></div>
 <div class="walkthrough"><p><strong>How to read this diagram: the climb</strong></p>
 <ol>
 <li><b>Step 1, MISTAKE: front-load it.</b> "I made a bad call," in the first 20 seconds. No euphemism, no "we faced challenges." The bluntness is the signal: it proves you are not going to spin, and it frees the rest of the story for the interesting part.</li>
@@ -577,12 +846,15 @@ R - Result:     the verdict + diagnosis + next step (40 s)</pre>
 <li>Read it to a friend and ask: "does this sound like a real mistake or a humblebrag?" Believe their answer.</li>
 </ul>
 </div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch9">Chapter 9, Conflict stories: disagreement without damage</a>, which covers disagreement without damage.</p>
 </section>
-<section id="v14-ch4">
-<h2><span class="num">4.</span> Conflict stories: disagreement without damage</h2>
+<section id="v14-ch9">
+<h2><span class="num">9.</span> Conflict stories: disagreement without damage</h2>
+<p class="bridge">Chapter 8 covered failure. The unsolved problem: disagreement. Showing you can fight well.</p>
 <p>"Tell me about a disagreement with a colleague" is the prompt engineers fear most and prepare for worst. The fear is misplaced: the reviewer is not looking for drama, they are looking for evidence that you can hold a technical position, listen to opposition, and converge without burning the relationship. The story that does this well is rarer, and more impressive, than any success story.</p>
 <p>Research teams run on disagreement: about directions, about methods, about what the data means. An engineer who avoids conflict lets bad ideas through; one who creates conflict poisons the team. The reviewer is trying to place you on that spectrum from one story. What they want to hear is <i>disagree and commit</i> done right: strong views, loosely held, resolved by evidence rather than authority or volume.</p>
-<div class="fig"><svg viewBox="0 0 640 360" role="img" aria-label="Resolving disagreement by evidence: positions, fair test, data, decision, relationship intact" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><rect x="110" y="15" width="420" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="320.0" y="41" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">POSITIONS</text><text x="320.0" y="61" text-anchor="middle" font-size="11.5" fill="var(--muted)">your view and theirs, both stated fairly</text><text x="320.0" y="79" text-anchor="middle" font-size="11.5" fill="var(--muted)">steelman test: would they agree?</text><rect x="110" y="105" width="420" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="320.0" y="131" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">FAIR TEST</text><text x="320.0" y="151" text-anchor="middle" font-size="11.5" fill="var(--muted)">the experiment both sides accept in advance</text><text x="320.0" y="169" text-anchor="middle" font-size="11.5" fill="var(--muted)">proposing one you could lose = credibility</text><rect x="110" y="195" width="420" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="320.0" y="221" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DATA</text><text x="320.0" y="241" text-anchor="middle" font-size="11.5" fill="var(--muted)">the result</text><text x="320.0" y="259" text-anchor="middle" font-size="11.5" fill="var(--muted)">works whether you won or lost</text><rect x="110" y="285" width="420" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="320.0" y="311" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DECISION + RELATIONSHIP</text><text x="320.0" y="331" text-anchor="middle" font-size="11.5" fill="var(--muted)">what was decided</text><text x="320.0" y="349" text-anchor="middle" font-size="11.5" fill="var(--muted)">still collaborating after: that is the point</text><line x1="320" y1="89" x2="320" y2="105" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="320" y1="179" x2="320" y2="195" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="320" y1="269" x2="320" y2="285" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/></svg><br><span class="src">Figure 4.1. The evidence ladder: positions become tests, tests become data, data becomes decisions.</span></div>
+<div class="fig"><svg viewBox="0 0 640 360" role="img" aria-label="Resolving disagreement by evidence: positions, fair test, data, decision, relationship intact" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><rect x="110" y="15" width="420" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="320.0" y="41" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">POSITIONS</text><text x="320.0" y="61" text-anchor="middle" font-size="11.5" fill="var(--muted)">your view and theirs, both stated fairly</text><text x="320.0" y="79" text-anchor="middle" font-size="11.5" fill="var(--muted)">steelman test: would they agree?</text><rect x="110" y="105" width="420" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="320.0" y="131" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">FAIR TEST</text><text x="320.0" y="151" text-anchor="middle" font-size="11.5" fill="var(--muted)">the experiment both sides accept in advance</text><text x="320.0" y="169" text-anchor="middle" font-size="11.5" fill="var(--muted)">proposing one you could lose = credibility</text><rect x="110" y="195" width="420" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="320.0" y="221" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DATA</text><text x="320.0" y="241" text-anchor="middle" font-size="11.5" fill="var(--muted)">the result</text><text x="320.0" y="259" text-anchor="middle" font-size="11.5" fill="var(--muted)">works whether you won or lost</text><rect x="110" y="285" width="420" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="320.0" y="311" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DECISION + RELATIONSHIP</text><text x="320.0" y="331" text-anchor="middle" font-size="11.5" fill="var(--muted)">what was decided</text><text x="320.0" y="349" text-anchor="middle" font-size="11.5" fill="var(--muted)">still collaborating after: that is the point</text><line x1="320" y1="89" x2="320" y2="105" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="320" y1="179" x2="320" y2="195" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="320" y1="269" x2="320" y2="285" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/></svg><br><span class="src">Figure 9.1. The evidence ladder: positions become tests, tests become data, data becomes decisions.</span></div>
 <div class="walkthrough"><p><strong>How to read this diagram: the climb</strong></p>
 <ol>
 <li><b>Step 1, POSITIONS: state both sides fairly.</b> Your view and theirs, both with their best reasons. The steelman test (steelman: the strongest version of the other side's argument): would they agree with your summary? Candidates who caricature their opponent ("he just didn't get it") fail instantly, because the reviewer is imagining being your colleague in the next disagreement.</li>
@@ -592,7 +864,17 @@ R - Result:     the verdict + diagnosis + next step (40 s)</pre>
 </ol>
 </div>
 <div class="callout"><span class="who">Strong frame, 30 seconds:</span> "My colleague believed [their position] because [their best reason]. I believed [mine] because [my best reason]. Rather than debate it, I proposed [fair test]: if [outcome A], we go their way; if [outcome B], mine. The data showed [result], so we [decision]. What I learned was [something about how I handle disagreement]."</div>
-<p><b>A concrete example.</b> "S: We disagreed on whether to quantize our serving model to INT8 (8-bit integer precision: half the memory of FP16, roughly 2x throughput, with quality risk). My colleague argued the quality risk was unacceptable for our use case; I argued the 2x throughput would halve our GPU bill. T: I owned the serving cost; she owned quality. C: We were talking past each other: cost vs quality with no common metric. A: I proposed a fair test: quantize, run our full eval harness plus a blind human comparison on 500 samples, with a pre-agreed bar (no more than 1 point of quality loss). If it failed the bar, we would drop it and I would stop pushing. R: It passed at 0.4 points of loss. We shipped INT8, saved ~40% on serving, and she now runs the quantization evals for every model change. I learned to convert cost-vs-quality arguments into a pre-agreed test instead of debating principles."</p>
+<p><b>A concrete example,</b> in STAR form:</p>
+<table>
+<thead><tr><th>Beat</th><th>The story</th></tr></thead>
+<tbody>
+<tr><td>S (Situation)</td><td>We disagreed on whether to quantize our serving model to INT8 (8-bit integer precision: half the memory of FP16, roughly 2x throughput, with quality risk). My colleague argued the quality risk was unacceptable for our use case; I argued the 2x throughput would halve our GPU bill.</td></tr>
+<tr><td>T (Task)</td><td>I owned the serving cost; she owned quality.</td></tr>
+<tr><td>C (Complication)</td><td>We were talking past each other: cost vs quality with no common metric.</td></tr>
+<tr><td>A (Action)</td><td>I proposed a fair test: quantize, run our full eval harness plus a blind human comparison on 500 samples, with a pre-agreed bar (no more than 1 point of quality loss). If it failed the bar, we would drop it and I would stop pushing.</td></tr>
+<tr><td>R (Result)</td><td>It passed at 0.4 points of loss. We shipped INT8, saved ~40% on serving, and she now runs the quantization evals for every model change. I learned to convert cost-vs-quality arguments into a pre-agreed test instead of debating principles.</td></tr>
+</tbody>
+</table>
 <p><b>Common misunderstanding.</b> "I should pick a disagreement I won." A story where you lost gracefully and committed to the other direction is <i>stronger</i>: it proves you update on evidence, which is the actual skill being tested. The only losing story is one where nobody learned anything or the relationship broke.</p>
 <div class="ob-board"><h4>Design prompt</h4>
 <ul>
@@ -606,11 +888,14 @@ R - Result:     the verdict + diagnosis + next step (40 s)</pre>
 <li>Write the "I lost" version too: a disagreement where the other person was right. Practice telling it with genuine respect, not martyrdom.</li>
 </ul>
 </div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch10">Chapter 10, Reps: how practice actually works</a>, which turns stories into reps.</p>
 </section>
-<section id="v14-ch5">
-<h2><span class="num">5.</span> Reps: how practice actually works</h2>
+<section id="v14-ch10">
+<h2><span class="num">10.</span> Reps: how practice actually works</h2>
+<p class="bridge">Chapters 6–9 gave you the stories. The unsolved problem: stories only work rehearsed. How practice actually works.</p>
 <p>Knowing the STAR framework and <i>performing</i> it under pressure are different skills, separated by about twenty reps. This chapter is the training plan: how to practice research stories so they survive nerves, follow-up drills, and the reviewer who interrupts.</p>
-<div class="fig"><svg viewBox="0 0 800 215" role="img" aria-label="The practice progression: written, timed, recorded, drilled, cold, with the failure mode each step fixes" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><rect x="8" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="80.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">WRITTEN</text><text x="80.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">anatomy check on paper</text><text x="80.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: structural failure</text><rect x="168" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="240.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">TIMED</text><text x="240.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">2 min, aloud, alone</text><text x="240.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: the 6-min ramble</text><rect x="328" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="400.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">RECORDED</text><text x="400.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">watch yourself</text><text x="400.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: filler, vagueness</text><rect x="488" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="560.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DRILLED</text><text x="560.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">partner follow-ups</text><text x="560.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: fragile scripts</text><rect x="648" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="720.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">COLD</text><text x="720.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">random prompt, 30 s</text><text x="720.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: freezing</text><line x1="152" y1="85" x2="168" y2="85" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="312" y1="85" x2="328" y2="85" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="472" y1="85" x2="488" y2="85" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="632" y1="85" x2="648" y2="85" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><text x="400" y="185" text-anchor="middle" font-size="12.5" fill="var(--muted)">skipping a step leaves that failure mode live, and the review will find it</text></svg><br><span class="src">Figure 5.1. The five-step progression. Each step kills one failure mode.</span></div>
+<div class="fig"><svg viewBox="0 0 800 215" role="img" aria-label="The practice progression: written, timed, recorded, drilled, cold, with the failure mode each step fixes" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><rect x="8" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="80.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">WRITTEN</text><text x="80.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">anatomy check on paper</text><text x="80.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: structural failure</text><rect x="168" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="240.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">TIMED</text><text x="240.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">2 min, aloud, alone</text><text x="240.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: the 6-min ramble</text><rect x="328" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="400.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">RECORDED</text><text x="400.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">watch yourself</text><text x="400.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: filler, vagueness</text><rect x="488" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="560.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">DRILLED</text><text x="560.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">partner follow-ups</text><text x="560.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: fragile scripts</text><rect x="648" y="20" width="144" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="720.0" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">COLD</text><text x="720.0" y="66" text-anchor="middle" font-size="11.5" fill="var(--muted)">random prompt, 30 s</text><text x="720.0" y="84" text-anchor="middle" font-size="11.5" fill="var(--muted)">fixes: freezing</text><line x1="152" y1="85" x2="168" y2="85" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="312" y1="85" x2="328" y2="85" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="472" y1="85" x2="488" y2="85" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><line x1="632" y1="85" x2="648" y2="85" stroke="var(--text)" stroke-width="1.6" marker-end="url(#ah)"/><text x="400" y="185" text-anchor="middle" font-size="12.5" fill="var(--muted)">skipping a step leaves that failure mode live, and the review will find it</text></svg><br><span class="src">Figure 10.1. The five-step progression. Each step kills one failure mode.</span></div>
 <div class="walkthrough"><p><strong>How to read this diagram: the climb</strong></p>
 <ol>
 <li><b>Step 1, WRITTEN: the anatomy check.</b> Every story on paper in SCAR before it is ever spoken. Fixes structural failure: without this, the rest is improv on a shaky frame.</li>
@@ -642,11 +927,14 @@ R - Result:     the verdict + diagnosis + next step (40 s)</pre>
 <li>Build the story bank: 6 stories minimum, each tagged with 3 prompts it answers. Find the prompt with no story: that gap is your next writing session.</li>
 </ul>
 </div>
+
+<p class="bridge-fwd"><b>Next:</b> <a href="#v14-ch11">Chapter 11, Calibration: contrast and the senior bar</a>, which calibrates you against the senior bar.</p>
 </section>
-<section id="v14-ch6">
-<h2><span class="num">6.</span> Calibration: contrast and the senior bar</h2>
+<section id="v14-ch11">
+<h2><span class="num">11.</span> Calibration: contrast and the senior bar</h2>
+<p class="bridge">Chapter 10 built the reps. The unsolved problem: knowing what "good" looks like. Calibrating against the senior bar.</p>
 <p><dfn>Calibration</dfn> is knowing where the bar is and where you stand relative to it. Most engineers walk into high-stakes reviews with no model of what "good" looks like: they have never seen a strong answer and a weak answer side by side, so they cannot tell which one they are giving. The miscalibration runs both ways: weak communicators think they did well (no contrast), strong ones think they did badly (impostor contrast against imagined perfection). This chapter is the contrast training: paired examples that tune your judgment, plus an honest method for finding your own level.</p>
-<div class="fig"><svg viewBox="0 0 780 290" role="img" aria-label="Contrast pair: weak vs strong answer to the same prompt, with the deltas labeled" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><rect x="8" y="15" width="300" height="220" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="158" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">WEAK</text><text x="158" y="75" text-anchor="middle" font-size="12" fill="var(--muted)">"We built a RAG system</text><text x="158" y="93" text-anchor="middle" font-size="12" fill="var(--muted)">and it went well.</text><text x="158" y="111" text-anchor="middle" font-size="12" fill="var(--muted)">I learned a lot."</text><text x="158" y="150" text-anchor="middle" font-size="12" fill="var(--muted)">vague · team-credited</text><text x="158" y="168" text-anchor="middle" font-size="12" fill="var(--muted)">lesson-free</text><rect x="472" y="15" width="300" height="220" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="622" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">STRONG</text><text x="622" y="75" text-anchor="middle" font-size="12" fill="var(--muted)">chunking ablation: +11 recall,</text><text x="622" y="93" text-anchor="middle" font-size="12" fill="var(--muted)">hallucination tickets down 60%,</text><text x="622" y="111" text-anchor="middle" font-size="12" fill="var(--muted)">genuine lesson on splitting evals</text><text x="622" y="150" text-anchor="middle" font-size="12" fill="var(--muted)">specific · ownership-clear</text><text x="622" y="168" text-anchor="middle" font-size="12" fill="var(--muted)">numbered result · real lesson</text><text x="390" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">specificity</text><text x="390" y="116" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">ownership</text><text x="390" y="142" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">complication</text><text x="390" y="168" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">lesson</text><text x="390" y="265" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">every weak-to-strong upgrade you will ever make is one of these four</text></svg><br><span class="src">Figure 6.1. The contrast pair: same prompt, different evidence. Learn to hear the deltas.</span></div>
+<div class="fig"><svg viewBox="0 0 780 290" role="img" aria-label="Contrast pair: weak vs strong answer to the same prompt, with the deltas labeled" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:inherit"><defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="var(--text)"/></marker></defs><rect x="8" y="15" width="300" height="220" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><text x="158" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">WEAK</text><text x="158" y="75" text-anchor="middle" font-size="12" fill="var(--muted)">"We built a RAG system</text><text x="158" y="93" text-anchor="middle" font-size="12" fill="var(--muted)">and it went well.</text><text x="158" y="111" text-anchor="middle" font-size="12" fill="var(--muted)">I learned a lot."</text><text x="158" y="150" text-anchor="middle" font-size="12" fill="var(--muted)">vague · team-credited</text><text x="158" y="168" text-anchor="middle" font-size="12" fill="var(--muted)">lesson-free</text><rect x="472" y="15" width="300" height="220" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="622" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">STRONG</text><text x="622" y="75" text-anchor="middle" font-size="12" fill="var(--muted)">chunking ablation: +11 recall,</text><text x="622" y="93" text-anchor="middle" font-size="12" fill="var(--muted)">hallucination tickets down 60%,</text><text x="622" y="111" text-anchor="middle" font-size="12" fill="var(--muted)">genuine lesson on splitting evals</text><text x="622" y="150" text-anchor="middle" font-size="12" fill="var(--muted)">specific · ownership-clear</text><text x="622" y="168" text-anchor="middle" font-size="12" fill="var(--muted)">numbered result · real lesson</text><text x="390" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">specificity</text><text x="390" y="116" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">ownership</text><text x="390" y="142" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">complication</text><text x="390" y="168" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">lesson</text><text x="390" y="265" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">every weak-to-strong upgrade you will ever make is one of these four</text></svg><br><span class="src">Figure 11.1. The contrast pair: same prompt, different evidence. Learn to hear the deltas.</span></div>
 <div class="walkthrough"><p><strong>How to read this diagram: the climb</strong></p>
 <ol>
 <li><b>Step 1, study the contrast pair.</b> The same prompt answered weakly and strongly, side by side. The weak answer is vague, team-credited, lesson-free ("We built a RAG system and it went well"); the strong answer is specific, ownership-clear, and ends on a genuine lesson (the chunking ablation, the 11-point recall win, the 60% ticket drop). Same project, different evidence.</li>
@@ -673,33 +961,35 @@ R - Result:     the verdict + diagnosis + next step (40 s)</pre>
 
 <div class="footer"><span>&larr; <a href="13-ml-system-design.html">Volume 13: ML System Design</a></span><span><a href="dsa-track-300.html">DSA Track: 300 Problems</a> &rarr;</span></div>
 
+<div class="callout"><span class="tag">[WHERE TO GO NEXT]</span><b>Volume 15: GPU Kernels.</b> Communication is half the job; the other half is the machine. Volume 15 goes down to the metal: how GPUs actually execute your code. <a href="15-gpu-kernels.html">15-gpu-kernels.html</a></div>
+
 <section class="watch-deeper" aria-label="Watch and go deeper">
 <p class="watch-deeper-kicker">Watch and go deeper</p>
 <p class="watch-deeper-lede">Four talks from teachers famous for clarity, plus the texts and tools to read next. Videos play right here, and a speed control appears on each player.</p>
 <div class="watch-deeper-grid">
 <figure class="watch-card">
 <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/VK51E3gHENc?enablejsapi=1" title="How to Write a Great Research Paper" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-<figcaption><strong>How to Write a Great Research Paper</strong>Simon Peyton Jones's classic talk on research writing: state the problem up front, mountains versus molehills, seven concrete suggestions. Transcript read: the complete lecture.</figcaption>
+<figcaption><strong>How to Write a Great Research Paper</strong>Simon Peyton Jones's classic talk on research writing: state the problem up front, mountains versus molehills, seven concrete suggestions. Transcript read: the complete lecture. Companion to chapter 2.</figcaption>
 </figure>
 <figure class="watch-card">
 <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/sT_-owjKIbA?enablejsapi=1" title="How to Give a Great Research Talk" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-<figcaption><strong>How to Give a Great Research Talk</strong>The companion SPJ talk on research talks: move from the specific to the general, the way audiences actually learn. Transcript read: the complete lecture.</figcaption>
+<figcaption><strong>How to Give a Great Research Talk</strong>The companion SPJ talk on research talks: move from the specific to the general, the way audiences actually learn. Transcript read: the complete lecture. Companion to chapter 3.</figcaption>
 </figure>
 <figure class="watch-card">
 <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/Unzc731iCUY?enablejsapi=1" title="How to Speak" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-<figcaption><strong>How to Speak</strong>Patrick Winston's 40-year MIT tradition on speaking in critical situations: heuristic rules for starting, tools, informing, persuading. Transcript read: the full lecture.</figcaption>
+<figcaption><strong>How to Speak</strong>Patrick Winston's 40-year MIT tradition on speaking in critical situations: heuristic rules for starting, tools, informing, persuading. Transcript read: the full lecture. Companion to chapter 3.</figcaption>
 </figure>
 <figure class="watch-card">
 <div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/vtIzMaLkCaM?enablejsapi=1" title="LEADERSHIP LAB: The Craft of Writing Effectively" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-<figcaption><strong>LEADERSHIP LAB: The Craft of Writing Effectively</strong>Larry McEnerney, director of UChicago's writing program, on rules and resources for effective academic writing. Transcript read: the full session.</figcaption>
+<figcaption><strong>LEADERSHIP LAB: The Craft of Writing Effectively</strong>Larry McEnerney, director of UChicago's writing program, on rules and resources for effective academic writing. Transcript read: the full session. Companion to chapter 5.</figcaption>
 </figure>
 </div>
 <p class="go-deeper-kicker">Go deeper</p>
 <ul class="go-deeper-list">
-<li><a href="https://research.microsoft.com/en-us/um/people/simonpj/papers/giving-a-talk/">Simon Peyton Jones: How to give a great research talk <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The slides and the paper behind both SPJ talks. Reuse the rules for your next presentation.</span></li>
-<li><a href="http://www.cs.cmu.edu/~mihaib/presentation-rules.html">Matt Might: presentation advice <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">Short, opinionated rules for academic talks.</span></li>
-<li><a href="https://ocw.mit.edu/courses/res-tll-005-how-to-speak-january-iap-2018/">MIT OCW: How to Speak course page <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The course page for Winston's talk, with background and materials.</span></li>
-<li><a href="http://mathcs.pugetsound.edu/~alchambers/papers/science_of_scientific_writing.pdf">Gopen and Swan: The Science of Scientific Writing <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The classic paper on writing for the reader's expectations. University-hosted PDF.</span></li>
+<li><a href="https://research.microsoft.com/en-us/um/people/simonpj/papers/giving-a-talk/">Simon Peyton Jones: How to give a great research talk <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The slides and the paper behind both SPJ talks. Reuse the rules for your next presentation. Companion to chapters 2 and 3.</span></li>
+<li><a href="http://www.cs.cmu.edu/~mihaib/presentation-rules.html">Matt Might: presentation advice <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">Short, opinionated rules for academic talks. Companion to chapter 3.</span></li>
+<li><a href="https://ocw.mit.edu/courses/res-tll-005-how-to-speak-january-iap-2018/">MIT OCW: How to Speak course page <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The course page for Winston's talk, with background and materials. Companion to chapter 3.</span></li>
+<li><a href="http://mathcs.pugetsound.edu/~alchambers/papers/science_of_scientific_writing.pdf">Gopen and Swan: The Science of Scientific Writing <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The classic paper on writing for the reader's expectations. University-hosted PDF. Companion to chapters 1 and 5.</span></li>
 </ul>
 </section>
 
