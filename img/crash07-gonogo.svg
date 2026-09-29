@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 712" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="712" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 2.2. The go / no-go checklist</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">seven boxes ticked, or it is a no-go</text>
+<rect x="60" y="110" width="26" height="26" fill="#1c1c1c" stroke="#6cb2ff" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="73" y="129" font-size="15" font-weight="bold" fill="#6cb2ff" text-anchor="middle">x</text>
+<rect x="100" y="110" width="756" height="64" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="478.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">AUTOMATABLE WORK</text>
+<text x="478.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">the task is worth automating and can be automated</text>
+<rect x="60" y="186" width="26" height="26" fill="#1c1c1c" stroke="#4fd1a5" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="73" y="205" font-size="15" font-weight="bold" fill="#4fd1a5" text-anchor="middle">x</text>
+<rect x="100" y="186" width="756" height="64" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="478.0" y="212" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">NUMERIC + DATED SUCCESS CRITERIA</text>
+<text x="478.0" y="230" font-size="11" fill="#a8a8a8" text-anchor="middle">a number, a date, and who measures it</text>
+<rect x="60" y="262" width="26" height="26" fill="#1c1c1c" stroke="#e57ea6" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="73" y="281" font-size="15" font-weight="bold" fill="#e57ea6" text-anchor="middle">x</text>
+<rect x="100" y="262" width="756" height="64" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="478.0" y="288" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">SIGNED KILL CRITERIA</text>
+<text x="478.0" y="306" font-size="11" fill="#a8a8a8" text-anchor="middle">what failure looks like, agreed before the pilot starts</text>
+<rect x="60" y="338" width="26" height="26" fill="#1c1c1c" stroke="#f0b429" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="73" y="357" font-size="15" font-weight="bold" fill="#f0b429" text-anchor="middle">x</text>
+<rect x="100" y="338" width="756" height="64" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="478.0" y="364" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">DATA LOCATED</text>
+<text x="478.0" y="382" font-size="11" fill="#a8a8a8" text-anchor="middle">the data exists, is reachable, and is legal to use</text>
+<rect x="60" y="414" width="26" height="26" fill="#1c1c1c" stroke="#b388ff" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="73" y="433" font-size="15" font-weight="bold" fill="#b388ff" text-anchor="middle">x</text>
+<rect x="100" y="414" width="756" height="64" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="478.0" y="440" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">HARD CONSTRAINTS NAMED</text>
+<text x="478.0" y="458" font-size="11" fill="#a8a8a8" text-anchor="middle">security, residency, identity: section 2.2, in writing</text>
+<rect x="60" y="490" width="26" height="26" fill="#1c1c1c" stroke="#ff8a65" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="73" y="509" font-size="15" font-weight="bold" fill="#ff8a65" text-anchor="middle">x</text>
+<rect x="100" y="490" width="756" height="64" fill="#141414" stroke="#ff8a65" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="478.0" y="516" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">ECONOMICS BEAT THE HUMAN BASELINE</text>
+<text x="478.0" y="534" font-size="11" fill="#a8a8a8" text-anchor="middle">cost per successful outcome beats the human, at real volume</text>
+<rect x="60" y="566" width="26" height="26" fill="#1c1c1c" stroke="#7fd08a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="73" y="585" font-size="15" font-weight="bold" fill="#7fd08a" text-anchor="middle">x</text>
+<rect x="100" y="566" width="756" height="64" fill="#141414" stroke="#7fd08a" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="478.0" y="592" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">SPONSOR NAMED</text>
+<text x="478.0" y="610" font-size="11" fill="#a8a8a8" text-anchor="middle">a named executive owns the outcome and the decision</text>
+<text x="24" y="680" font-size="12" fill="#a8a8a8" text-anchor="start">The kill criteria are the kindest part: they let a failing pilot die on schedule instead of on politics.</text>
+</svg>
