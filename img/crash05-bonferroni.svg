@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="460" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Bonferroni: twenty tests at 5% will embarrass you once</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">0.05 / 20 = 0.0025 per test, or the &quot;win&quot; is noise</text>
+<rect x="90" y="120" width="600" height="160" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="102" y="150" font-size="13" fill="#e57ea6" text-anchor="start">naive: alpha = 0.05 per test</text>
+<text x="102" y="178" font-size="13" fill="#e57ea6" text-anchor="start">expected false wins: 20 x 0.05 = 1.0</text>
+<text x="102" y="224" font-size="13" fill="#7dd87d" text-anchor="start">corrected: alpha = 0.05 / 20 = 0.0025</text>
+<text x="102" y="252" font-size="13" fill="#7dd87d" text-anchor="start">expected false wins: 20 x 0.0025 = 0.05</text>
+<text x="24" y="330" font-size="12" fill="#a8a8a8" text-anchor="start">Every extra slice of the eval (per family, per language, per severity) is another roll of the dice. Correct</text>
+<text x="24" y="348" font-size="12" fill="#a8a8a8" text-anchor="start">for the number of tests you actually ran, not the one you are reporting.</text>
+<text x="24" y="390" font-size="12" fill="#a8a8a8" text-anchor="start">The honest alternative: pre-register the one primary metric before the eval runs, and label everything else</text>
+<text x="24" y="407" font-size="12" fill="#a8a8a8" text-anchor="start">exploratory.</text>
+</svg>
