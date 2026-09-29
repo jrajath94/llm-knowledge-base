@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="700" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">The DPO worked example, step by step</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">beta = 0.1, one preference pair: the numbers from section 5.6</text>
+<rect x="60" y="84" width="370" height="120" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="245" y="114" font-size="15" font-weight="bold" fill="#4fd1a5" text-anchor="middle">Winner</text>
+<text x="245" y="146" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#a8a8a8" text-anchor="middle">pi_theta = 0.30, pi_ref = 0.25</text>
+<text x="245" y="168" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#a8a8a8" text-anchor="middle">ratio 1.20, log = +0.1823</text>
+<rect x="470" y="84" width="370" height="120" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="655" y="114" font-size="15" font-weight="bold" fill="#e57ea6" text-anchor="middle">Loser</text>
+<text x="655" y="146" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#a8a8a8" text-anchor="middle">pi_theta = 0.05, pi_ref = 0.10</text>
+<text x="655" y="168" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#a8a8a8" text-anchor="middle">ratio 0.50, log = -0.6931</text>
+<rect x="150" y="244" width="600" height="64" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="268.0" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">Implicit reward gap</text>
+<text x="450.0" y="290.0" font-size="12" fill="#a8a8a8" text-anchor="middle">0.1823 - (-0.6931) = 0.8754</text>
+<rect x="150" y="322" width="600" height="64" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="346.0" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">Scale by beta</text>
+<text x="450.0" y="368.0" font-size="12" fill="#a8a8a8" text-anchor="middle">z = 0.1 x 0.8754 = 0.08755</text>
+<rect x="150" y="400" width="600" height="64" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="424.0" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">Bradley-Terry prediction</text>
+<text x="450.0" y="446.0" font-size="12" fill="#a8a8a8" text-anchor="middle">sigma(z) = 0.52187: model says 52% the human prefers the winner</text>
+<rect x="150" y="478" width="600" height="64" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="502.0" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">Loss</text>
+<text x="450.0" y="524.0" font-size="12" fill="#a8a8a8" text-anchor="middle">-log(0.52187) = 0.6503</text>
+<rect x="150" y="556" width="600" height="64" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="580.0" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">Gradient weight</text>
+<text x="450.0" y="602.0" font-size="12" fill="#a8a8a8" text-anchor="middle">0.1 x (1 - 0.52187) = 0.0478</text>
+<rect x="150" y="634" width="600" height="64" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="658.0" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">The update</text>
+<text x="450.0" y="680.0" font-size="12" fill="#a8a8a8" text-anchor="middle">winner probability up, loser down, anchored to pi_ref</text>
+<line x1="245" y1="204" x2="245" y2="238" stroke="#4fd1a5" stroke-width="2"/>
+<polygon points="245,238 241.33015592246386,229.78219953718923 248.66984407753614,229.78219953718923" fill="#4fd1a5"/>
+<line x1="655" y1="204" x2="655" y2="238" stroke="#e57ea6" stroke-width="2"/>
+<polygon points="655,238 651.3301559224639,229.78219953718923 658.6698440775361,229.78219953718923" fill="#e57ea6"/>
+</svg>
