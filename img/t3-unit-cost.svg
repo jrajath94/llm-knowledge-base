@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="455" viewBox="0 0 720 455" role="img" aria-label="Unit cost equation with worked numbers and three owners">
+<rect width="720" height="455" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">Unit cost: the equation and its three owners</text>
+<rect class="box" x="60" y="60" width="600" height="110" rx="8"/>
+<text x="360" y="92" text-anchor="middle" fill="#ececec" font-size="16" font-weight="700" font-family="Charis SIL, Georgia, serif">$/1M tokens  =  GPU-hour cost  /  useful tokens per hour</text>
+<text x="360" y="122" text-anchor="middle" fill="#f0b429" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">worked: $3.20/GPU-hr  ->  2.88M tokens/hr  =  $1.11 per 1M tokens</text>
+<text x="360" y="148" text-anchor="middle" fill="#e5484d" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">at 60% of peak throughput: $1.11 / 0.60 = $1.85 per 1M tokens</text>
+<rect class="box" x="110" y="200" width="500" height="58" rx="8"/>
+<line x1="110" y1="200" x2="110" y2="258" stroke="#f0b429" stroke-width="4"/>
+<text x="136" y="224" text-anchor="start" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">1. buy or rent the GPU-hours cheaper</text>
+<text x="136" y="244" text-anchor="start" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">infra: contracts, regions, spot</text>
+<rect class="box" x="110" y="268" width="500" height="58" rx="8"/>
+<line x1="110" y1="268" x2="110" y2="326" stroke="#58a6ff" stroke-width="4"/>
+<text x="136" y="292" text-anchor="start" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">2. raise tokens per GPU-hour</text>
+<text x="136" y="312" text-anchor="start" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">you: kernels, batching, scheduling</text>
+<rect class="box" x="110" y="336" width="500" height="58" rx="8"/>
+<line x1="110" y1="336" x2="110" y2="394" stroke="#3fb950" stroke-width="4"/>
+<text x="136" y="360" text-anchor="start" fill="#ececec" font-size="13" font-weight="700" font-family="Charis SIL, Georgia, serif">3. stop throwing tokens away</text>
+<text x="136" y="380" text-anchor="start" fill="#a8a8a8" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">you: retries, cache, admission control</text>
+<text x="360" y="430" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">the denominator is the one you control from inside the serving stack</text>
+</svg>
