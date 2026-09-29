@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="440" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Data parallelism (DDP): same model, different data</text>
+<text x="24" y="58" font-size="13" fill="#8a8a8a">every GPU holds a full copy; gradients are averaged each step</text>
+<rect x="24" y="80" width="240" height="70" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="144.0" y="108" font-size="14" fill="#ececec" text-anchor="middle">GPU 0: full model copy</text>
+<text x="144" y="134" font-size="12" fill="#a8a8a8" text-anchor="middle">data shard 0</text>
+<line x1="144" y1="150" x2="144" y2="190" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="144,190 135,185.5 135,194.5" fill="#8a8a8a"/>
+<rect x="64" y="195" width="160" height="60" fill="#1c1c1c" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="144.0" y="222" font-size="14" fill="#ececec" text-anchor="middle">gradients 0</text>
+<text x="144" y="248" font-size="11" fill="#8a8a8a" text-anchor="middle">from shard 0</text>
+<rect x="304" y="80" width="240" height="70" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="424.0" y="108" font-size="14" fill="#ececec" text-anchor="middle">GPU 1: full model copy</text>
+<text x="424" y="134" font-size="12" fill="#a8a8a8" text-anchor="middle">data shard 1</text>
+<line x1="424" y1="150" x2="424" y2="190" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="424,190 415,185.5 415,194.5" fill="#8a8a8a"/>
+<rect x="344" y="195" width="160" height="60" fill="#1c1c1c" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="424.0" y="222" font-size="14" fill="#ececec" text-anchor="middle">gradients 1</text>
+<text x="424" y="248" font-size="11" fill="#8a8a8a" text-anchor="middle">from shard 1</text>
+<rect x="584" y="80" width="240" height="70" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="704.0" y="108" font-size="14" fill="#ececec" text-anchor="middle">GPU 2: full model copy</text>
+<text x="704" y="134" font-size="12" fill="#a8a8a8" text-anchor="middle">data shard 2</text>
+<line x1="704" y1="150" x2="704" y2="190" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="704,190 695,185.5 695,194.5" fill="#8a8a8a"/>
+<rect x="624" y="195" width="160" height="60" fill="#1c1c1c" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="704.0" y="222" font-size="14" fill="#ececec" text-anchor="middle">gradients 2</text>
+<text x="704" y="248" font-size="11" fill="#8a8a8a" text-anchor="middle">from shard 2</text>
+<rect x="24" y="285" width="832" height="60" fill="#101010" stroke="#f0b429" rx="6"/>
+<text x="440" y="310" font-size="14" fill="#ececec" text-anchor="middle">all-reduce: every GPU sends its gradients, every GPU receives the average</text>
+<text x="440" y="332" font-size="12" fill="#8a8a8a" text-anchor="middle">(ring algorithm: each GPU moves ~2x the gradient bytes, independent of GPU count)</text>
+<line x1="144" y1="255" x2="144" y2="282" stroke="#f0b429" stroke-width="2"/>
+<polygon points="144,282 135,277.5 135,286.5" fill="#f0b429"/>
+<line x1="144" y1="348" x2="144" y2="359" stroke="#7fd08a" stroke-width="2"/>
+<polygon points="144,359 135,354.5 135,363.5" fill="#7fd08a"/>
+<rect x="64" y="362" width="160" height="52" fill="#141414" stroke="#7fd08a" stroke-width="1.5" rx="6"/>
+<text x="144.0" y="384" font-size="14" fill="#ececec" text-anchor="middle">identical models</text>
+<text x="144" y="404" font-size="11" fill="#8a8a8a" text-anchor="middle">all copies stay in sync</text>
+<line x1="424" y1="255" x2="424" y2="282" stroke="#f0b429" stroke-width="2"/>
+<polygon points="424,282 415,277.5 415,286.5" fill="#f0b429"/>
+<line x1="424" y1="348" x2="424" y2="359" stroke="#7fd08a" stroke-width="2"/>
+<polygon points="424,359 415,354.5 415,363.5" fill="#7fd08a"/>
+<rect x="344" y="362" width="160" height="52" fill="#141414" stroke="#7fd08a" stroke-width="1.5" rx="6"/>
+<text x="424.0" y="384" font-size="14" fill="#ececec" text-anchor="middle">identical models</text>
+<text x="424" y="404" font-size="11" fill="#8a8a8a" text-anchor="middle">all copies stay in sync</text>
+<line x1="704" y1="255" x2="704" y2="282" stroke="#f0b429" stroke-width="2"/>
+<polygon points="704,282 695,277.5 695,286.5" fill="#f0b429"/>
+<line x1="704" y1="348" x2="704" y2="359" stroke="#7fd08a" stroke-width="2"/>
+<polygon points="704,359 695,354.5 695,363.5" fill="#7fd08a"/>
+<rect x="624" y="362" width="160" height="52" fill="#141414" stroke="#7fd08a" stroke-width="1.5" rx="6"/>
+<text x="704.0" y="384" font-size="14" fill="#ececec" text-anchor="middle">identical models</text>
+<text x="704" y="404" font-size="11" fill="#8a8a8a" text-anchor="middle">all copies stay in sync</text>
+</svg>
