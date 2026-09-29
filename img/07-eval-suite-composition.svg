@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="640" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">What the eval suite contains</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Four kinds of evidence; the suite is versioned and fixed across loops</text>
+<rect x="24" y="88" width="414" height="214" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="231" y="122" font-size="15" font-weight="bold" fill="#4fd1a5" text-anchor="middle">Win-rate vs baseline</text>
+<text x="231" y="160" font-size="12" fill="#a8a8a8" text-anchor="middle">new checkpoint vs production,</text>
+<text x="231" y="182" font-size="12" fill="#a8a8a8" text-anchor="middle">judged blind on a fixed prompt set.</text>
+<text x="231" y="216" font-size="12" fill="#4fd1a5" text-anchor="middle">The headline number.</text>
+<rect x="462" y="88" width="414" height="214" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="669" y="122" font-size="15" font-weight="bold" fill="#6cb2ff" text-anchor="middle">Task benchmarks</text>
+<text x="669" y="160" font-size="12" fill="#a8a8a8" text-anchor="middle">reasoning, coding, instruction</text>
+<text x="669" y="182" font-size="12" fill="#a8a8a8" text-anchor="middle">following, multilinguality.</text>
+<text x="669" y="216" font-size="12" fill="#6cb2ff" text-anchor="middle">Catch regressions the preference set misses.</text>
+<rect x="24" y="328" width="414" height="214" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="231" y="362" font-size="15" font-weight="bold" fill="#b388ff" text-anchor="middle">Behavioral probes</text>
+<text x="231" y="400" font-size="12" fill="#a8a8a8" text-anchor="middle">refusal calibration, sycophancy</text>
+<text x="231" y="422" font-size="12" fill="#a8a8a8" text-anchor="middle">tests, honesty probes.</text>
+<text x="231" y="456" font-size="12" fill="#b388ff" text-anchor="middle">Small, hand-built, high-signal.</text>
+<rect x="462" y="328" width="414" height="214" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="669" y="362" font-size="15" font-weight="bold" fill="#f0b429" text-anchor="middle">Regression checks</text>
+<text x="669" y="400" font-size="12" fill="#a8a8a8" text-anchor="middle">prompts the current model already</text>
+<text x="669" y="422" font-size="12" fill="#a8a8a8" text-anchor="middle">handles well. Must not break.</text>
+<text x="669" y="456" font-size="12" fill="#f0b429" text-anchor="middle">Forgetting is a post-training failure mode</text>
+<text x="669" y="473" font-size="12" fill="#f0b429" text-anchor="middle">too.</text>
+</svg>
