@@ -1,0 +1,31 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 920 430' width='100%' role='img'>
+<title>Output filtering and PII redaction</title>
+<text x='460' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>Output filtering and PII redaction</text>
+<rect x='40' y='150' width='170' height='90' rx='10' fill='#1565c0' fill-opacity='0.22' stroke='#1565c0' stroke-width='2'/>
+<text x='125' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Model</text>
+<text x='125' y='196' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>response</text>
+<line x1='210' y1='195' x2='250' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='241.8,198.7 250,195 241.8,191.3' fill='#8a8a8a'/>
+<rect x='250' y='150' width='180' height='90' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='340' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>PII redactor</text>
+<text x='340' y='196' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Names, emails,</text>
+<text x='340' y='214' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>keys out</text>
+<line x1='430' y1='195' x2='470' y2='195' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='461.8,198.7 470,195 461.8,191.3' fill='#8a8a8a'/>
+<rect x='470' y='150' width='180' height='90' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='560' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Policy</text>
+<text x='560' y='196' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>classifier: harmful,</text>
+<text x='560' y='214' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>off-topic out</text>
+<line x1='650' y1='175' x2='700' y2='140' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='695.4,147.7 700,140 691.2,141.7' fill='#8a8a8a'/>
+<text x='678' y='158' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#2e9e5b' text-anchor='middle'>pass</text>
+<rect x='700' y='105' width='180' height='70' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='790' y='146' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Deliver</text>
+<line x1='650' y1='215' x2='700' y2='250' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='691.2,248.3 700,250 695.4,242.3' fill='#8a8a8a'/>
+<text x='678' y='232' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#c0392b' text-anchor='middle'>fail</text>
+<rect x='700' y='215' width='180' height='70' rx='10' fill='#c0392b' fill-opacity='0.22' stroke='#c0392b' stroke-width='2'/>
+<text x='790' y='241' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Rewrite</text>
+<text x='790' y='261' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>or refuse</text>
+<text x='460' y='350' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Two jobs: catch policy violations, scrub secrets. Grade the filter before trusting it.</text>
+</svg>
