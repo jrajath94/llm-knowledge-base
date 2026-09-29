@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="100%" style="max-width:760px" role="img" aria-label="Adapter formula worked; naive 100 copies versus shared base plus adapters; 90x savings">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="760" height="360" fill="none"/>
+<text class="t" x="24" y="30">Multi-tenant LoRA: 16 MB per tenant against a 14 GB base</text>
+<text class="big" x="24" y="88">adapter bytes = 2 x layers x matrices x dim x rank x bytes-per-value</text>
+<rect x="24" y="106" width="712" height="60" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="1.6"/>
+<text class="num" x="44" y="134">worked: 2 x 32 x 2 x 4,096 x 16 x 2 = ~16 MB per tenant, against 14 GB for the base model</text>
+<text class="m" x="44" y="156">layers is 32 for the 7B model; the 2 counts the A and B low-rank matrices</text>
+<rect x="24" y="208" width="344" height="96" rx="8" fill="#2b1a1a" stroke="#e57373" stroke-width="1.6"/>
+<text class="big" x="44" y="238">naive: 100 full copies</text>
+<text class="num" x="44" y="262">1,400 GB</text>
+<text class="m" x="44" y="284">eighteen 80 GB GPUs before KV cache</text>
+<rect x="392" y="208" width="344" height="96" rx="8" fill="#1a2b1a" stroke="#7fc97f" stroke-width="1.6"/>
+<text class="big" x="412" y="238">shared base + 100 adapters</text>
+<text class="num" x="412" y="262">~15.6 GB</text>
+<text class="m" x="412" y="284">one GPU with room to spare</text>
+<text class="big" x="24" y="336">Savings factor ~90x. The win is architectural, not a kernel optimization.</text>
+</svg>
