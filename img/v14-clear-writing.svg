@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" font-family="ui-sans-serif, system-ui, sans-serif" role="img" aria-label="Paragraph anatomy and a sentence revision">
+  <defs>
+    <marker id="arr8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#f0b429"/>
+    </marker>
+  </defs>
+  <rect x="20" y="16" width="640" height="120" rx="10" fill="#101010" stroke="#3a3a3a"/>
+  <rect x="36" y="30" width="608" height="34" rx="6" fill="#f0b429" opacity="0.16"/>
+  <text x="48" y="53" font-size="13" fill="#ececec">Topic sentence: the paragraph's point, stated up front.</text>
+  <text x="48" y="88" font-size="13" fill="#a8a8a8">Supporting sentences: evidence, detail, the one exception.</text>
+  <text x="48" y="112" font-size="13" fill="#a8a8a8">Closing sentence: what the reader should carry to the next paragraph.</text>
+  <text x="36" y="162" font-size="12" fill="#f0b429" font-weight="700" letter-spacing="1.5">REVISION: ONE PASS, THREE CUTS</text>
+  <rect x="20" y="176" width="640" height="86" rx="10" fill="#101010" stroke="#3a3a3a"/>
+  <text x="36" y="202" font-size="12" fill="#a8a8a8">BEFORE (passive, 31 words, jargon first)</text>
+  <text x="36" y="226" font-size="13" fill="#ececec">It was observed by us that a degradation in performance</text>
+  <text x="36" y="248" font-size="13" fill="#ececec">was effectuated by the removal of the gating mechanism.</text>
+  <line x1="340" y1="276" x2="340" y2="300" stroke="#f0b429" stroke-width="2" marker-end="url(#arr8)"/>
+  <rect x="20" y="304" width="640" height="80" rx="10" fill="#101010" stroke="#f0b429" stroke-width="1.5"/>
+  <text x="36" y="330" font-size="12" fill="#f0b429">AFTER (active, 12 words, actor first)</text>
+  <text x="36" y="356" font-size="14" fill="#ececec">Removing the gating mechanism degraded performance.</text>
+</svg>
