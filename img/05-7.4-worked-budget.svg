@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 430" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="430" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Worked budget: 1e24 FLOPs</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Chinchilla ratio plus 6ND turns a budget into a model, a dataset, and a calendar</text>
+<rect x="24" y="94" width="196" height="110" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="122.0" y="154.0" font-size="12" font-weight="bold" fill="#ececec" text-anchor="middle">C = 6ND and D = 20N</text>
+<text x="122.0" y="184" font-size="11" font-weight="bold" fill="#6cb2ff" text-anchor="middle">C = 6 x N x 20N = 120 N^2</text>
+<line x1="220" y1="149.0" x2="234" y2="149.0" stroke="#6cb2ff" stroke-width="2"/>
+<polygon points="234,149.0 225.78219953718923,152.66984407753614 225.78219953718923,145.33015592246386" fill="#6cb2ff"/>
+<rect x="234" y="94" width="196" height="110" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6"/>
+<text x="332.0" y="154.0" font-size="12" font-weight="bold" fill="#ececec" text-anchor="middle">N = sqrt(C / 120)</text>
+<text x="332.0" y="184" font-size="11" font-weight="bold" fill="#4fd1a5" text-anchor="middle">sqrt(1e24 / 120) ~ 91B params</text>
+<line x1="430" y1="149.0" x2="444" y2="149.0" stroke="#4fd1a5" stroke-width="2"/>
+<polygon points="444,149.0 435.78219953718923,152.66984407753614 435.78219953718923,145.33015592246386" fill="#4fd1a5"/>
+<rect x="444" y="94" width="196" height="110" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="542.0" y="154.0" font-size="12" font-weight="bold" fill="#ececec" text-anchor="middle">D = 20 x N</text>
+<text x="542.0" y="184" font-size="11" font-weight="bold" fill="#f0b429" text-anchor="middle">~1.8T tokens</text>
+<line x1="640" y1="149.0" x2="654" y2="149.0" stroke="#f0b429" stroke-width="2"/>
+<polygon points="654,149.0 645.7821995371892,152.66984407753614 645.7821995371892,145.33015592246386" fill="#f0b429"/>
+<rect x="654" y="94" width="196" height="110" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="6"/>
+<text x="752.0" y="154.0" font-size="12" font-weight="bold" fill="#ececec" text-anchor="middle">1,024 A100s at 45% MFU</text>
+<text x="752.0" y="184" font-size="11" font-weight="bold" fill="#7dd87d" text-anchor="middle">1.44e17 FLOP/s -&gt; ~80 days</text>
+<text x="24" y="240" font-size="13" font-family="DejaVu Sans Mono, monospace" fill="#a8a8a8" text-anchor="start">Check: 6 x 91e9 x 1.8e12 = 9.8e23 ~ 1e24. Consistent.</text>
+<text x="24" y="264" font-size="13" fill="#f0b429" text-anchor="start">This is frontier planning: one equation for the split, one division for the calendar.</text>
+</svg>
