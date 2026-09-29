@@ -451,7 +451,7 @@ html.xp-js .xp-reveal.xp-in {
 </header>
 
 <div class="provenance" id="provenance">
-<strong>Last verified: September 2026.</strong> Every model name, API signature, hardware spec, paper result, and price in this volume was checked against live sources before publication. Verified: H100 SXM (80 GB HBM3, 3,350 GB/s, 989.5 BF16 TFLOPS) and A100 80 GB (2,039 GB/s, 312 BF16 TFLOPS) specs; all PyTorch APIs shown (<code>fully_shard</code>, <code>MixedPrecisionPolicy</code>, <code>init_device_mesh</code>, <code>transformer_auto_wrap_policy</code>, FSDP1 <code>sync_module_states</code>, <code>torch.profiler.schedule</code>, <code>dcp.save</code>, <code>StateDictOptions</code>) against the installed torch 2.14.0 signatures; ZeRO stage reductions and the 1.5x ZeRO-3 communication rule (DeepSpeed); GPipe bubble <code>(p-1)/(m+p-1)</code> and the 1F1B schedule's identical bubble with O(p) activation memory (derived step by step in Chapter 6 and cross-checked); Megatron-LM tensor parallelism at 4 all-reduces per layer and DeepSpeed-Ulysses at 2 all-to-alls per attention in forward; ring all-reduce traffic <code>2(N-1)/N</code>; LLaMA-7B dims (32 layers, 4096 hidden, 32 heads, 11008 ffn); PaLM-540B at 46.2% MFU on 6,144 TPU v4 (Chowdhery et al., 2022); ZeRO-Offload training 13B parameters on one V100, 10x over PyTorch (Ren et al., 2021); DDP's 25 MB default bucket; 7 of 8 image-source pages returning HTTP 200 (the Intel oneAPI page bot-blocks automated fetches, but the roofline image itself was downloaded and inspected). The lab outputs quoted are from real runs executed for this volume. <strong>UNVERIFIED / illustrative:</strong> cloud GPU prices in Lab 3 are marked illustrative and must be re-checked at run time; the 100 GB/s link in the ring all-reduce worked example is a stated teaching assumption, not a hardware claim.
+<strong>Last verified: September 2026.</strong> Every model name, API signature, hardware spec, paper result, and price in this volume was checked against live sources before publication. Verified: H100 SXM (80 GB HBM3, 3,350 GB/s, 989.5 BF16 TFLOPS) and A100 80 GB (2,039 GB/s, 312 BF16 TFLOPS) specs; all PyTorch APIs shown (<code>fully_shard</code>, <code>MixedPrecisionPolicy</code>, <code>init_device_mesh</code>, <code>transformer_auto_wrap_policy</code>, FSDP1 <code>sync_module_states</code>, <code>torch.profiler.schedule</code>, <code>dcp.save</code>, <code>StateDictOptions</code>) against the installed torch 2.14.0 signatures; ZeRO stage reductions and the 1.5x ZeRO-3 communication rule (DeepSpeed); GPipe bubble <code>(p-1)/(m+p-1)</code> and the 1F1B schedule's identical bubble with O(p) activation memory (derived step by step in Chapter 6 and cross-checked); Megatron-LM tensor parallelism at 4 all-reduces per layer and DeepSpeed-Ulysses at 2 all-to-alls per attention in forward; ring all-reduce traffic <code>2(N-1)/N</code>; LLaMA-7B dims (32 layers, 4096 hidden, 32 heads, 11008 ffn); PaLM-540B at 46.2% MFU (model FLOPs utilization: the fraction of the hardware's rated throughput the run actually achieved) on 6,144 TPU v4 (Chowdhery et al., 2022); ZeRO-Offload training 13B parameters on one V100, 10x over PyTorch (Ren et al., 2021); DDP's 25 MB default bucket; 7 of 8 image-source pages returning HTTP 200 (the Intel oneAPI page bot-blocks automated fetches, but the roofline image itself was downloaded and inspected). The lab outputs quoted are from real runs executed for this volume. <strong>UNVERIFIED / illustrative:</strong> cloud GPU prices in Lab 3 are marked illustrative and must be re-checked at run time; the 100 GB/s link in the ring all-reduce worked example is a stated teaching assumption, not a hardware claim.
 </div>
 
 <nav class="toc" aria-label="Table of contents">
@@ -495,6 +495,15 @@ html.xp-js .xp-reveal.xp-in {
 <tr><td><strong>Total</strong></td><td><strong>16</strong></td><td>The famous "16 bytes per parameter" rule</td></tr>
 </table>
 <p>Activations sit on top and depend on your batch, not just your model. A rough per-layer, per-token estimate with flash attention (which recomputes the attention matrix instead of storing it) is about <code>20 * hidden_size</code> elements at 2 bytes each. Multiply by sequence length, batch size, and layer count. <dfn>Gradient checkpointing</dfn> (Volume 3) cuts this pile to roughly <code>1 / sqrt(layers)</code>, at the cost of recomputing the forward pass during backward.</p>
+<div style="text-align:center;margin:1.4rem 0">
+<div style="font-size:1.15rem">M = 16 &middot; P bytes</div>
+<div style="font-size:.92rem;color:var(--muted);margin:.5rem auto 0;max-width:38rem;text-align:left"><strong>where:</strong> M is model-state memory (everything except activations); P is the parameter count; 16 = 2 (weights) + 2 (gradients) + 4 (master weights) + 4 (Adam m) + 4 (Adam v) bytes per parameter, from the table above. Worked: 16 x 7 x 10<sup>9</sup> = 112 x 10<sup>9</sup> bytes = 112 GB, the model-states subtotal in the bill below.</div>
+</div>
+<div style="text-align:center;margin:1.4rem 0">
+<div style="font-size:1.15rem">A = 20 &middot; h &middot; 2 &middot; s &middot; B &middot; L bytes</div>
+<div style="font-size:.92rem;color:var(--muted);margin:.5rem auto 0;max-width:38rem;text-align:left"><strong>where:</strong> A is activation memory; h is the hidden size; 20 is the rough element count per token per layer with flash attention; 2 is bytes per element (bf16); s is the sequence length; B is the batch size; L is the layer count.</div>
+</div>
+<div class="callout"><strong>Worked example: the 7B&apos;s activations.</strong> h = 4096, s = 2048, B = 4, L = 32. A = 20 x 4096 x 2 x 2048 x 4 x 32 = 42,949,672,960 bytes, about 42.9 GB. That is exactly the "no checkpoint" line in the bill below.</div>
 
 <h3>Worked example: the 7B bill</h3>
 <pre class="ascii">7B parameters, BF16, Adam, batch 4, seq 2048, 32 layers, hidden 4096
@@ -558,17 +567,38 @@ html.xp-js .xp-reveal.xp-in {
 
 
 <h2 id="ch2-ddp">2. Data parallelism and DDP</h2>
+<p class="bridge" style="color:var(--muted);font-style:italic">Chapter 1 showed the memory bill is too big for one GPU, and itemized the four piles: weights, gradients, optimizer states, activations. This chapter attacks the bill the obvious way first: copy the whole model onto every GPU, split only the data, and sync the gradients.</p>
 
 <h3>What it is</h3>
 <p><strong><dfn>Data parallelism</dfn></strong> means every GPU holds a full copy of the model, but each GPU trains on a different slice of the data. After every step, the GPUs average their gradients so all copies stay identical. <strong>DDP</strong> (Distributed Data Parallel) is PyTorch's implementation of this idea: you wrap your model, and gradient averaging happens automatically during the backward pass.</p>
 <p>An <strong>all-reduce</strong> is the <dfn>collective</dfn> communication operation that does the averaging: every GPU contributes its gradient chunk, and every GPU receives the summed (then averaged) result. <strong>NCCL</strong> (NVIDIA Collective Communications Library) is the library that runs these collectives fast on NVIDIA GPUs, using NVLink inside a node and InfiniBand or Ethernet across nodes.</p>
 
 <h3>Why it exists</h3>
-<p>It is the simplest way to use more GPUs: no model surgery, nearly the same code as single-GPU training. It also raises your effective batch size (batch per GPU times number of GPUs), which the scaling laws in Volume 5 say you want, up to the critical batch size. Its hard limit is memory: every GPU still holds the full 112 GB of 7B training state, so data parallelism alone cannot train a model that does not fit on one card.</p>
+<p>It is the simplest way to use more GPUs: no model surgery, nearly the same code as single-GPU training. It also raises your effective batch size (batch per GPU times number of GPUs), which the scaling laws in Volume 5 say you want, up to the <dfn>critical batch size</dfn>: the point past which doubling the batch barely speeds up training, because the extra examples cost compute without adding much new information. Its hard limit is memory: every GPU still holds the full 112 GB of 7B training state, so data parallelism alone cannot train a model that does not fit on one card.</p>
 
 <h3>How it works under the hood</h3>
-<p>The naive all-reduce (every GPU sends its full gradient to every other GPU) moves <code>N * M</code> bytes for N GPUs and M bytes of gradients. The <strong><dfn>ring all-reduce</dfn></strong> is the bandwidth-optimal replacement. Each GPU splits its gradients into N chunks arranged in a ring. In the <strong>scatter-reduce</strong> phase (N-1 steps), each GPU sends one chunk to its right neighbor and receives a different chunk from its left, adding the received chunk into its own. After N-1 steps, each GPU holds one fully-summed chunk. In the <strong>all-gather</strong> phase (another N-1 steps), the summed chunks travel around the ring so every GPU ends up with all of them. Each GPU sends and receives <code>2 * (N-1) / N * M</code> bytes total, which approaches <code>2M</code> no matter how many GPUs join. That is the point: the per-GPU communication cost stops growing with N.</p>
+<p>The naive all-reduce (every GPU sends its full gradient to every other GPU) moves <code>N * M</code> bytes for N GPUs and M bytes of gradients. The <strong><dfn>ring all-reduce</dfn></strong> is the bandwidth-optimal replacement. Each GPU splits its gradients into N chunks arranged in a ring.</p>
+<p>In the <strong>scatter-reduce</strong> phase (N-1 steps), each GPU sends one chunk to its right neighbor and receives a different chunk from its left, adding the received chunk into its own. After N-1 steps, each GPU holds one fully-summed chunk. In the <strong>all-gather</strong> phase (another N-1 steps), the summed chunks travel around the ring so every GPU ends up with all of them.</p>
+<div style="text-align:center;margin:1.4rem 0">
+<div style="font-size:1.15rem">bytes per GPU = 2 &middot; (N - 1) / N &middot; M</div>
+<div style="font-size:.92rem;color:var(--muted);margin:.5rem auto 0;max-width:38rem;text-align:left"><strong>where:</strong> N is the GPU count; M is the gradient bytes per GPU; the 2 counts the two phases (scatter-reduce, then all-gather). As N grows, (N-1)/N approaches 1, so each GPU moves about 2M bytes total, no matter how many GPUs join. That is the point: the per-GPU communication cost stops growing with N.</div>
+</div>
+<div class="callout"><strong>Worked example: 8 GPUs.</strong> 2 x 7/8 x M = 1.75M bytes per GPU. This is the 1.75M figure quoted in the ZeRO chapter's communication table: at 8 GPUs the ring already sits about 12 percent under the 2M limit.</div>
 <p>DDP adds one engineering trick: <strong>bucketing</strong>. Gradients are grouped into <dfn>buckets</dfn> (default 25 MB) and each bucket is all-reduced as soon as its backward computation finishes, overlapping communication with the still-running backward pass. The first bucket to finish is the last layer's, because backward runs back to front.</p>
+
+<figure>
+<img src="img/06-ddp-overview.svg" alt="DDP overview: N GPUs hold identical model copies, each computes gradients on its own data shard, all-reduce averages the gradients, and every GPU applies the same update">
+<figcaption><strong>Figure 2.1.</strong> DDP in one picture. Identical model copies, different data shards, one all-reduce that averages the gradients, and the same update applied everywhere. Own render.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li><strong>Top:</strong> four GPUs hold identical copies of the model. Same parameters everywhere: that is the invariant DDP maintains.</li>
+<li><strong>Middle:</strong> each GPU runs forward and backward on its own data shard, producing its own gradients.</li>
+<li><strong>The banner:</strong> all-reduce averages the four gradient sets. Every GPU receives the identical average.</li>
+<li><strong>Bottom:</strong> each GPU applies the same averaged update to its copy. The copies stay identical, step after step.</li>
+</ol>
+</div>
 
 <h3>Worked example: ring all-reduce with 4 GPUs</h3>
 <pre class="ascii">4 GPUs, each holds gradient vector G split into 4 chunks: [a, b, c, d]
@@ -636,6 +666,7 @@ if bucketing overlaps it well.</pre>
 
 
 <h2 id="ch3-zero">3. ZeRO: sharding the optimizer, gradients, and weights</h2>
+<p class="bridge" style="color:var(--muted);font-style:italic">Chapter 2's data parallelism duplicates the full optimizer state, gradients, and weights on every GPU. That is pure redundancy. This chapter removes it: ZeRO shards those piles across the data-parallel ranks, so per-GPU memory shrinks as you add GPUs.</p>
 
 <h3>What it is</h3>
 <p><strong><dfn>ZeRO</dfn></strong> (Zero Redundancy Optimizer) is a family of techniques that removes the duplication data parallelism creates. In DDP every GPU stores the full optimizer state, the full gradients, and the full weights. ZeRO <strong>shards</strong> (splits into pieces, one piece per GPU) these tensors across the data-parallel ranks, so per-GPU memory shrinks as you add GPUs. There are three stages, each sharding one more pile:</p>
@@ -643,7 +674,7 @@ if bucketing overlaps it well.</pre>
 <tr><th>Stage</th><th>What gets sharded</th><th>Per-GPU memory (7B, 8 GPUs)</th><th>Extra communication vs DDP</th></tr>
 <tr><td>0 (plain DDP)</td><td>Nothing</td><td>112 GB</td><td>None (baseline)</td></tr>
 <tr><td>1</td><td>Optimizer states (m, v) + master weights</td><td>28 + 84/8 = 38.5 GB</td><td>None: each GPU still all-reduces grads, then updates only its shard</td></tr>
-<tr><td>2</td><td>Stage 1 + gradients</td><td>14 + 98/8 = 26.25 GB</td><td>About the same: reduce-scatter replaces all-reduce, then each GPU all-gathers only its updated shard</td></tr>
+<tr><td>2</td><td>Stage 1 + gradients</td><td>14 + 98/8 = 26.25 GB</td><td>About the same: reduce-scatter replaces all-reduce, then each GPU all-gathers only its updated shard (all-gather: every GPU collects the full set of shards)</td></tr>
 <tr><td>3</td><td>Stage 2 + parameters</td><td>112/8 = 14 GB (+ one live layer)</td><td>About 1.5x: each layer's weights are all-gathered before forward and backward, then freed</td></tr>
 </table>
 
@@ -669,6 +700,11 @@ if bucketing overlaps it well.</pre>
 </ol>
 </div>
 </figure>
+
+<div style="text-align:center;margin:1.4rem 0">
+<div style="font-size:1.15rem">M<sub>gpu</sub> = (2 + 2 + 12/N) &middot; P &nbsp;&nbsp; (ZeRO-1)<br>M<sub>gpu</sub> = (2 + 14/N) &middot; P &nbsp;&nbsp; (ZeRO-2)<br>M<sub>gpu</sub> = (16/N) &middot; P &nbsp;&nbsp; (ZeRO-3)</div>
+<div style="font-size:.92rem;color:var(--muted);margin:.5rem auto 0;max-width:38rem;text-align:left"><strong>where:</strong> M<sub>gpu</sub> is per-GPU model-state memory in bytes; P is the parameter count; N is the GPU count; the unsharded terms are weights (2) and gradients (2); the sharded terms are the optimizer pile, 12 = 4 (master weights) + 4 (Adam m) + 4 (Adam v), plus gradients (2) once ZeRO-2 shards them. Worked below: N = 8 turns 112 GB per GPU (DDP) into 38.5, 26.3, and 14.0 GB.</div>
+</div>
 
 <h3>Worked numbers: 7B on 8 GPUs</h3>
 <pre class="ascii">Baseline DDP:        16 bytes/param x 7B  = 112.0 GB per GPU   (OOM on 80 GB)
@@ -720,6 +756,7 @@ Communication per step (M = gradient bytes):
 
 
 <h2 id="ch4-fsdp">4. FSDP in practice</h2>
+<p class="bridge" style="color:var(--muted);font-style:italic">Chapter 3 derived ZeRO's sharding idea. This chapter is the implementation you will actually run: FSDP, PyTorch's native ZeRO-3-style training, in practice.</p>
 
 <h3>What it is</h3>
 <p><strong><dfn>FSDP</dfn></strong> (Fully Sharded Data Parallel) is PyTorch's native implementation of ZeRO-3-style training. You wrap model submodules in FSDP units; each unit's parameters are flattened into one vector, sharded across ranks, all-gathered just before the unit runs, and freed right after. <strong>FSDP2</strong> is the rewrite on top of PyTorch's DTensor (its distributed-tensor abstraction): per-parameter sharding instead of flattening, which composes with <code>torch.compile</code> and uses less bookkeeping memory.</p>
@@ -803,6 +840,7 @@ dcp_save(state_dict, checkpoint_id="ckpt/step-1000")  # one file per rank</code>
 
 
 <h2 id="ch5-tensor">5. Tensor parallelism: splitting individual layers</h2>
+<p class="bridge" style="color:var(--muted);font-style:italic">ZeRO and FSDP shard the optimizer piles, but each GPU still holds full layers during compute. When a single layer will not fit, sharding data is not enough. This chapter splits individual layers across GPUs: tensor parallelism.</p>
 
 <h3>What it is</h3>
 <p><strong><dfn>Tensor parallelism</dfn></strong> splits individual weight matrices across GPUs, so multiple GPUs cooperate on a single layer. The classic design (from the Megatron-LM work) splits the MLP and the attention block of each transformer layer. Each GPU computes a partial result on its slice of the weights, and the partial results are combined with an <strong>all-reduce</strong> (Chapter 2) before moving on.</p>
@@ -889,6 +927,7 @@ All-reduce size per MLP forward: b * s * 4096 elements (e.g. b=4, s=2048:
 
 
 <h2 id="ch6-pipeline">6. Pipeline parallelism: GPipe vs 1F1B</h2>
+<p class="bridge" style="color:var(--muted);font-style:italic">Tensor parallelism splits layers but pays all-reduce communication on every layer. This chapter cuts the model the other way, by layers into stages, and pipelines microbatches through them like an assembly line: GPipe versus 1F1B.</p>
 
 <h3>What it is</h3>
 <p><strong>Pipeline parallelism</strong> cuts the model by layers into <strong>stages</strong>, one stage per GPU (or per group of GPUs). A batch is split into <strong><dfn>microbatches</dfn></strong>; microbatch 0 runs forward through stage 0, then stage 1, and so on, while microbatch 1 starts right behind it, like an assembly line. <strong>GPipe</strong> is the original schedule: run all microbatches forward, then all backward. <strong><dfn>1F1B</dfn></strong> (one forward, one backward) is the improved schedule: each stage alternates one forward and one backward once the pipeline is full.</p>
@@ -972,6 +1011,7 @@ Makespan 10 slots = 2*(m+p-1) vs ideal 8 -> bubble 2/10 = 20%
 
 
 <h2 id="ch7-sequence">7. Sequence and context parallelism</h2>
+<p class="bridge" style="color:var(--muted);font-style:italic">Chapters 2 through 6 all attacked the model-state piles from Chapter 1. One pile went untouched: activations, which explode when contexts get long. This chapter shards the sequence dimension itself.</p>
 
 <h3>What it is</h3>
 <p><strong><dfn>Sequence parallelism</dfn></strong> (also called <strong>context parallelism</strong>) shards the <em>sequence dimension</em> of the activations across GPUs. With 8-way sequence parallelism and a 128k-token document, each GPU holds 16k tokens' worth of activations. It attacks the activation pile from Chapter 1, which is the pile that explodes when context gets long.</p>
@@ -1045,6 +1085,7 @@ removes the s^2 term. You stack all three.</pre>
 
 
 <h2 id="ch8-3d">8. Combining strategies: the 3D parallelism recipe</h2>
+<p class="bridge" style="color:var(--muted);font-style:italic">Chapters 2 through 7 each solved one dimension of the problem. Real frontier runs use all of them at once. This chapter is the recipe for combining them: the 3D parallelism mesh.</p>
 
 <h3>What it is</h3>
 <p><strong><dfn>3D parallelism</dfn></strong> uses data, tensor, and pipeline parallelism at once on the same run. The GPU fleet is factored into a mesh: with N GPUs, you pick degrees <strong>d</strong> (data), <strong>t</strong> (tensor), <strong>p</strong> (pipeline) with <code>d * t * p = N</code>. Each GPU's role is then a coordinate, e.g. "data rank 2, tensor rank 5, pipeline stage 1." Sequence parallelism can be added as a fourth dimension inside the data-parallel group.</p>
@@ -1119,6 +1160,7 @@ design.</pre>
 
 
 <h2 id="ch9-checkpoint">9. Checkpointing and fault tolerance</h2>
+<p class="bridge" style="color:var(--muted);font-style:italic">Chapters 2 through 8 quietly assumed the hardware works. At thousand-GPU scale, for months at a time, it does not. This chapter is the survival plan: checkpointing and fault tolerance.</p>
 
 <h3>What it is</h3>
 <p>A <strong>checkpoint</strong> is a complete snapshot of training state written to durable storage, so a crashed run can resume instead of restarting. <strong>Fault tolerance</strong> is everything around it: how often you save, how fast saving is, how you detect failure, and how you resume bit-identically. <strong>Asynchronous checkpointing</strong> saves without pausing training: a fast copy to host RAM first, then a slow background write to disk while training continues.</p>
@@ -1195,6 +1237,7 @@ but only with the SIGTERM handler and the drill done.</pre>
 
 
 <h2 id="ch10-profile">10. Profiling: where time goes in a training step</h2>
+<p class="bridge" style="color:var(--muted);font-style:italic">Everything so far was the plan. This chapter is the measurement: profiling, or where time actually goes in a training step, so you can tell whether the plan worked.</p>
 
 <h3>What it is</h3>
 <p><strong>Profiling</strong> is measuring where time actually goes, instead of guessing. Two tools: the <strong><dfn>roofline</dfn> model</strong>, which tells you whether a kernel is limited by memory bandwidth or by compute, and the <strong>profiler timeline</strong> (PyTorch profiler, Nsight Systems), which shows every kernel, every NCCL call, and every gap on a shared clock.</p>
@@ -2616,7 +2659,7 @@ for s in (&quot;dp&quot;, &quot;tp&quot;, &quot;cp&quot;, &quot;ep&quot;):
 <h4 id="a06b-why-it-exists-4">Why it exists</h4>
 <p>The GPU world builds clusters from nodes: 8 GPUs joined by NVLink inside a box, boxes joined by InfiniBand. The TPU world has no boxes. Every chip in a pod connects directly to its neighbors in a torus mesh, with no switches and no host boundaries for collectives. That changes which parallel strategies are cheap. Anything that maps to neighbor communication thrives. Anything that assumes a fast 8-device island with slow uplinks does not.</p>
 <h4 id="a06b-how-it-works-under-the-hood-4">How it works under the hood</h4>
-<p><strong>Torus mesh.</strong> Each chip links to its neighbors in ±x and ±y (plus ±z on 3D generations), with the edges wrapping around. A v6e pod is a 2D torus: 16×16 = 256 chips, each chip one hop from 4 neighbors. Ironwood pods restore the 3D torus at 9216 chips. No switch means no oversubscription inside the pod. Bisection bandwidth grows with the mesh, and collectives like all-reduce run as dimension-ordered rings with predictable per-hop cost.</p>
+<p><strong>Torus mesh.</strong> Each chip links to its neighbors in ±x and ±y (plus ±z on 3D generations), with the edges wrapping around. A v6e pod is a 2D torus: 16×16 = 256 chips, each chip one hop from 4 neighbors. Ironwood pods restore the 3D torus at 9216 chips. No switch means no oversubscription inside the pod. <dfn>Bisection bandwidth</dfn> (the total bandwidth across the cut that splits the network into two equal halves: the ceiling on any all-to-all traffic pattern) grows with the mesh, and collectives like all-reduce run as dimension-ordered rings with predictable per-hop cost.</p>
 <p><strong>Slices.</strong> You rarely rent a full pod. A slice is a sub-mesh: a v6e slice of 8 chips on one host uses a 2×4 topology and needs no multi-host coordination. Larger slices span hosts and coordinate through a leader/worker setup. Multislice (the Pathways system) stitches many pods together over Google's Jupiter datacenter network for 10k+ chip jobs.</p>
 <p><strong>Generations.</strong> The ladder that matters for training work:</p>
 <table>
