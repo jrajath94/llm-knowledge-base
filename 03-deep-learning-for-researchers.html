@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Volume 3: Deep Learning for Researchers - Research-Engineer Curriculum</title>
 <style>
@@ -500,6 +508,18 @@ html.xp-js .xp-reveal.xp-in {
 <p>"The weighted sum is arithmetic. The nonlinearity is the learning."</p>
 </blockquote>
 
+
+<figure>
+<img src="img/03-nonlinearity-collapse.svg" alt="Two linear layers collapsing into one matrix, contrasted with ReLU between layers preserving depth">
+<figcaption>Figure 1.2. Depth without nonlinearity is decoration. Two linear layers multiply into one matrix, so a hundred linear layers have the expressive power of one; the ReLU kink between them breaks the collapse.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Left: y = W2(W1 x) is just (W2 W1) x, a single matrix.</li>
+<li>Right: the kink makes the composition genuinely deeper.</li>
+<li>Negatives become zero, positives pass through: that bend is all of deep learning’s extra power.</li>
+</ol>
+</div>
+</figure>
 <h3 id="s-n1-3">1.3 What the weights store</h3>
 <p>Everything a trained network "knows" lives in its weights and biases. There is no other memory. A large language model is a few hundred billion of these numbers, arranged in layers, each one tuned by training. Training is the project of choosing them. Every chapter after this one is about choosing them well: measuring how wrong they are (Chapter 3), computing how to fix them (Chapter 4), stepping them downhill (Chapter 6), and keeping them well-behaved at scale (Chapters 7 through 10).</p>
 
@@ -523,6 +543,18 @@ html.xp-js .xp-reveal.xp-in {
 
 <p><strong>Next: Chapter 2</strong> stacks neurons into layers and runs the full forward pass, end to end with numbers.</p>
 
+
+<figure>
+<img src="img/03-where-knowledge-lives.svg" alt="A neuron with its weights highlighted, mapped to the chapters that measure, fix, step, and keep weights well-behaved">
+<figcaption>Figure 1.3. Everything the network knows lives in its weights. Chapter 3 measures how wrong they are, Chapter 4 assigns the blame, Chapter 6 steps downhill, Chapters 7 to 10 keep them well-behaved at scale.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>The circle is one neuron; the numbers on its edges are the knowledge.</li>
+<li>Each card is a chapter that does one job on those numbers.</li>
+<li>An LLM is a few hundred billion of these, arranged in layers.</li>
+</ol>
+</div>
+</figure>
 <h2 id="ch-forward">Chapter 2: Layers and the Forward Pass</h2>
 
 <p>Chapter 1 built the smallest learnable unit. One neuron draws one boundary, and real problems need more than one. This chapter stacks neurons into layers and runs the first full forward pass.</p>
@@ -562,6 +594,18 @@ html.xp-js .xp-reveal.xp-in {
 </ol>
 </div>
 
+
+<figure>
+<img src="img/03-layer-matrix.svg" alt="Three neurons in parallel becoming one weight matrix W, with z = Wx + b and ReLU applied elementwise">
+<figcaption>Figure 2.2. A layer is many neurons in parallel. Stack three neurons and their weight rows form one matrix W; the layer computes z = Wx + b with ReLU applied elementwise, all at once.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Left: three neurons, each reading the same input x.</li>
+<li>Middle: their weights are the rows of W, one row per neuron.</li>
+<li>Right: the whole layer is one matrix operation, which is why GPUs love it.</li>
+</ol>
+</div>
+</figure>
 <h3 id="s-n2-3">2.3 Why it is all matrix multiplication</h3>
 <p>A layer is a matrix-vector product plus an elementwise function. A deep network is a chain of matrix products with kinks between them. That uniformity is the engineering miracle: the entire model reduces to the operation GPUs do fastest. When Volume 15 opens up a GPU kernel, you will see this same z = Wx + b staring back at you. It is also why the field scales by making the matrices bigger: more neurons per layer, more layers, same computation.</p>
 
@@ -577,6 +621,18 @@ html.xp-js .xp-reveal.xp-in {
 
 <p><strong>Next: Chapter 3</strong> scores the output: loss functions, and the landscape training walks downhill.</p>
 
+
+<figure>
+<img src="img/03-all-matmul.svg" alt="Chain of matrices and ReLUs from input x to output y-hat">
+<figcaption>Figure 2.3. The whole network is matrix multiplication with kinks between. That uniformity is the engineering miracle: the entire model reduces to the operation GPUs do fastest, and scale means bigger matrices, more layers, same computation.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Read left to right: input, matrix, kink, matrix, kink, matrix, output.</li>
+<li>Blue boxes are the fast operation; amber boxes are the bends that make depth real.</li>
+<li>Nothing else happens anywhere in the network.</li>
+</ol>
+</div>
+</figure>
 <h2 id="ch-loss">Chapter 3: Loss: How the Network Knows It Is Wrong</h2>
 
 <p>The forward pass produces predictions. Nothing so far scores them. This chapter adds the score: the loss function that turns a prediction and its answer into one number, and the landscape that number lives on.</p>
@@ -644,6 +700,18 @@ html.xp-js .xp-reveal.xp-in {
 
 <p><strong>Next: Chapter 4</strong> assigns blame: the chain rule, the backward pass, and gradient descent.</p>
 
+
+<figure>
+<img src="img/03-mse-vs-crossentropy.svg" alt="Left: regression line with squared residual boxes; right: class probability bars against a one-hot target">
+<figcaption>Figure 3.2. Two kinds of answers need two kinds of loss. Regression averages squared residuals; classification pays negative log of the true class’s probability, so being wrong and confident costs far more than being wrong and unsure.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Left: each box is one squared residual; MSE averages them.</li>
+<li>Right: the target is [1, 0, 0] and the model says cat with 0.7.</li>
+<li>Cross-entropy is -log(0.7): confidence in the wrong answer is what gets punished.</li>
+</ol>
+</div>
+</figure>
 <h2 id="ch-backprop">Chapter 4: Backpropagation</h2>
 
 <p>The loss is one number for the whole network. To improve, the network must blame individual weights: which knob do we turn, and which way? This chapter answers with the chain rule, the backward pass, and gradient descent.</p>
@@ -746,6 +814,18 @@ html.xp-js .xp-reveal.xp-in {
 
 <p><strong>Next: Chapter 5</strong> studies the bend: activation functions, and how classifiers turn scores into probabilities.</p>
 
+
+<figure>
+<img src="img/03-chain-rule-numbers.svg" alt="Forward chain x=2, w=3, y=6, L=4 with backward derivatives dL/dy=4, dy/dw=2, giving dL/dw=8">
+<figcaption>Figure 4.3. Blame flows backward, one multiplication per hop. The loss is 4, each local derivative is computed where it lives, and dL/dw = 4 x 2 = 8. That multiplication chain is the entire idea of backpropagation.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Top row is the forward pass: x = 2, w = 3, y = 6, L = 4 against target 4.</li>
+<li>Each amber arrow carries one local derivative: dL/dy needs only the loss, dy/dw needs only the neuron.</li>
+<li>Multiply the hops: 4 x 2 = 8 is the gradient on w.</li>
+</ol>
+</div>
+</figure>
 <h2 id="ch-activations">Chapter 5: Activation Functions</h2>
 
 <p>Chapter 1 used ReLU without asking what the options were, or why the bend matters at all. This chapter meets the full cast: sigmoid, tanh, ReLU, and softmax, the function that turns raw scores into probabilities.</p>
@@ -815,6 +895,18 @@ html.xp-js .xp-reveal.xp-in {
 
 <p><strong>Next: Chapter 6</strong> upgrades the update rule: momentum, Adam and AdamW, warmup and schedules.</p>
 
+
+<figure>
+<img src="img/03-relu-vs-saturation.svg" alt="Sigmoid curve flattening at the extremes with near-zero gradients, versus ReLU with derivative 0 or 1">
+<figcaption>Figure 5.2. Why ReLU won, and what it costs. Sigmoid and tanh flatten at the extremes, so gradients die and the dying compounds through depth; ReLU passes a clean derivative of 1 for positives, but a neuron stuck negative outputs zero forever: the dead ReLU.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Left: at the curve’s flat ends the slope is near zero, so learning stalls.</li>
+<li>Right: ReLU’s slope is 1 or 0, nothing in between.</li>
+<li>The red box is the price: always-negative input means always-zero output, no gradient, no recovery.</li>
+</ol>
+</div>
+</figure>
 <h2 id="ch3">Chapter 6: Optimizers</h2>
 
 <p>You can compute gradients now. The next question is what to do with them. Plain gradient descent gives every weight the same step size, which crawls through valleys and bounces across cliffs. This chapter upgrades the update rule: momentum, per-parameter adaptivity, the decoupled weight decay of AdamW, and the schedule that sets the stride.</p>
@@ -966,6 +1058,18 @@ Only the placement of the decay differs.
 <p><strong>Next: Chapter 7</strong> keeps the signal well-behaved through deep stacks: normalization.</p>
 
 
+
+<figure>
+<img src="img/03-optimizer-lab-roadmap.svg" alt="Part A: race of SGD, momentum, Adam, AdamW on an ill-conditioned quadratic; Part B: same decay, different placement">
+<figcaption>Figure 6.4. Lab 3.3 asks two different questions. Part A is an optimization story: who crosses the ill-conditioned valley fastest. Part B is a generalization story: same decay, only its placement differs. Conflating the two is how optimizer myths start.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Part A: four optimizers, one valley 100x steeper in one direction.</li>
+<li>Part B: everything identical except where the decay is applied.</li>
+<li>Judge optimizers on generalization (Part B), not just loss (Part A).</li>
+</ol>
+</div>
+</figure>
 <h2 id="ch1">Chapter 7: Normalization</h2>
 
 <p>You have now trained a network in your head: neuron, layer, forward pass, loss, backprop, activations, optimizer. Everything so far assumed the signals stay well-behaved through dozens of layers. They do not. As signals flow through a deep stack, their scale drifts: activations grow or shrink, gradients follow, and training stalls or explodes. Normalization is the fix. It re-centers and re-scales the activations at every layer, so each layer always receives well-behaved inputs.</p>
@@ -1193,7 +1297,7 @@ Worked example, fan_in = 512, fan_out = 512:
 
 <h3 id="s2-3">8.3 Dead networks and diagnosis</h3>
 <p><strong>Step 1: what "dead" means.</strong> A dead ReLU is a neuron whose input is always negative, so its output is always zero and its gradient is always zero: it can never recover. A few dead neurons are normal (ReLU zeroes about half its inputs at initialization with symmetric data). A network where most neurons are dead, or where whole layers output zeros, is a corpse: no gradient flows, no learning happens. Luck produces a few dead neurons; a bad initialization scale produces layers of them systematically.</p>
-<p><strong>Step 2: the cheap diagnosis.</strong> Forward one batch at initialization and check per-layer statistics. Healthy signs: activation variance near 1.0 and roughly half the ReLUs active. Warning signs: variance at 1e-30 or 1e54 (see Figure 2.1), or entire layers with zero variance. Lab 3.2 measured dead fractions at layer 30: 41.6% for the too-big, too-small, and He initializations (near the expected ~50% for ReLU), and 53.6% for Xavier. The dead fraction alone does not diagnose; the variance trajectory does.</p>
+<p><strong>Step 2: the cheap diagnosis.</strong> Forward one batch at initialization and check per-layer statistics. Healthy signs: activation variance near 1.0 and roughly half the ReLUs active. Warning signs: variance at 1e-30 or 1e54 (see Figure 8.1), or entire layers with zero variance. Lab 3.2 measured dead fractions at layer 30: 41.6% for the too-big, too-small, and He initializations (near the expected ~50% for ReLU), and 53.6% for Xavier. The dead fraction alone does not diagnose; the variance trajectory does.</p>
 <p><strong>Step 3: the field habit.</strong> "Before training, I forward a batch and check per-layer activation mean, variance, and dead fraction. If the variance is not order-1 by layer 10, I fix the initialization before burning GPU hours." That sentence signals you have debugged real training runs.</p>
 
 <figure>
@@ -1211,6 +1315,18 @@ Worked example, fan_in = 512, fan_out = 512:
 
 
 
+
+<figure>
+<img src="img/03-init-formulas.svg" alt="Variance across 30 layers: N(0,1) exploding, tiny init vanishing, Xavier and He staying flat, with the two formulas">
+<figcaption>Figure 8.3. Choose the scale so the signal survives every layer. Unit Gaussian weights explode the variance across 30 layers, tiny weights let it vanish; Xavier and He hold it flat. Xavier divides by fan-in plus fan-out for symmetric activations; He doubles the scale because ReLU halves the variance.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>The x-axis is depth, 1 to 30 layers; the y-axis is activation variance.</li>
+<li>Red explodes, blue vanishes, green survives.</li>
+<li>The formulas at the bottom are the fix: match the initialization to the activation.</li>
+</ol>
+</div>
+</figure>
 <h3 id="s8-4">8.4 Lab 3.2: the initialization sweep</h3>
 
 <div class="lab">
@@ -1481,6 +1597,18 @@ checkpointing trades compute for memory.
 <p>"Save every k-th layer, recompute the rest. Roughly a third more compute for five times less activation memory."</p>
 </blockquote>
 
+
+<figure>
+<img src="img/03-memory-accounting.svg" alt="Memory bars: 36.24 GB store-all, 10.47 GB with FlashAttention, 6.24 GB checkpointed, 1.95 GB both">
+<figcaption>Figure 10.2. Activations, not weights, dominate training memory. For the Lab 3.5 illustrative model, attention scores alone cost 36.24 GB per batch; FlashAttention and checkpointing every 4 layers multiply down to 1.95 GB for about 1.33x the compute.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>The four bars are the same model under four strategies.</li>
+<li>FlashAttention removes the score matrix; checkpointing forgets and recomputes.</li>
+<li>Together they cut memory about 5.8x: the two techniques multiply.</li>
+</ol>
+</div>
+</figure>
 <h3 id="s5-3">10.3 Lab 3.5: the memory-math lab</h3>
 
 <div class="lab">
@@ -1626,7 +1754,19 @@ input. Volume 4 builds the architecture that reads it all.</pre>
 
 
 <section class="watch-deeper" aria-labelledby="wd-h-dl">
-  <h2 class="watch-deeper-kicker" id="wd-h-dl">Watch and go deeper</h2>
+  
+<figure>
+<img src="img/03-volume4-slots.svg" alt="Four chapter groups mapped into a transformer: MLP blocks, training loop, signal control, scale budget">
+<figcaption>Figure 11.3. How every piece of this volume slots into the transformer. Neurons and layers become the MLP blocks, loss through optimizers becomes the training loop, normalization and init become signal control, precision and checkpointing become the scale budget.</figcaption>
+<div class="walkthrough"><strong>How to read this diagram.</strong>
+<ol>
+<li>Each card on the left is a chapter group with its job.</li>
+<li>The arrows show where each group lives inside the transformer.</li>
+<li>Volume 4 is this diagram, built at scale, on sequences.</li>
+</ol>
+</div>
+</figure>
+<h2 class="watch-deeper-kicker" id="wd-h-dl">Watch and go deeper</h2>
   <p class="watch-deeper-lede">Three videos that draw what the text can only describe: how a network sees a digit, how gradient descent walks a loss surface, and the exact update loop step by step.</p>
   <div class="watch-deeper-grid">
     <figure class="watch-card">
