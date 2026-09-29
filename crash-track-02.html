@@ -36,14 +36,16 @@
   unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 :root{
   --bg:#000000; --surface:#0d0d0d; --border:#262626;
-  --text:#ececec; --muted:#a8a8a8;
-  --accent:#f0b429; --link:#6cb2ff; --code-bg:#111111;
+  --text:#ececec; --muted:#a8a8a8; --faint:#8a8a8a;
+  --accent:#f0b429; --accent-ink:#000000; --link:#6cb2ff; --code-bg:#111111;
   --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
   --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
 body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
 p{text-align:justify;hyphens:auto;margin:.85rem 0}
 h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
@@ -150,51 +152,142 @@ blockquote p{margin:.4rem 0}
 @media(min-width:56.01rem){.ds-scrim{display:none!important}}
 
 
-/* ---- site header: home link, volume nav, breadcrumbs, prev/next ---- */
-.site-header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--border);padding:.65rem 0 .7rem;margin:0 0 1.6rem;max-width:72ch}
-.site-header-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
-.site-home{font:700 1rem/1.2 var(--font-ui);color:var(--text);text-decoration:none}
-.site-home:hover{color:var(--accent)}
-.site-home .site-home-mark{color:var(--accent)}
-.site-prevnext{display:flex;gap:.6rem;font:600 .82rem/1.4 var(--font-ui)}
-.site-prevnext a{color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
-.site-prevnext a:hover{color:var(--text);border-color:var(--accent)}
-.site-prevnext .site-prevnext-disabled{color:#4a4a4a;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
-.breadcrumbs{font:400 .8rem/1.5 var(--font-ui);color:var(--muted);margin:.45rem 0 0}
-.breadcrumbs a{color:var(--muted);text-decoration:none}
-.breadcrumbs a:hover{color:var(--text)}
-.breadcrumbs .bc-sep{margin:0 .35rem;color:#4a4a4a}
-.breadcrumbs .bc-current{color:var(--text)}
-details.site-nav{margin:.55rem 0 0;border:1px solid var(--border);border-radius:.55rem;background:var(--surface)}
-details.site-nav summary{cursor:pointer;list-style:none;font:600 .85rem/1.4 var(--font-ui);color:var(--text);padding:.55rem .9rem;display:flex;align-items:center;gap:.5rem}
-details.site-nav summary::-webkit-details-marker{display:none}
-details.site-nav summary::before{content:"+";color:var(--accent);font-weight:700}
-details.site-nav[open] summary::before{content:"\2212"}
-details.site-nav summary:hover{color:var(--accent)}
-.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem;padding:.2rem .9rem .9rem}
-.site-nav-groups h4{font:700 .75rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:.6rem 0 .35rem}
-.site-nav-groups ul{list-style:none;margin:0;padding:0}
-.site-nav-groups li{margin:.18rem 0}
-.site-nav-groups a{font:400 .83rem/1.45 var(--font-ui);color:var(--muted);text-decoration:none}
-.site-nav-groups a:hover{color:var(--text)}
-.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:700}
+/* Hallmark · pre-emit critique: P4 H4 E5 S5 R5 V5
+   Hallmark · macrostructure: newspaper-masthead chrome (N6 nav + Ft1 footer)
+   nav: N6 (knobs: issue-line=above, wordmark=left 2xl, rule=double) ·
+   footer: Ft1 (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+   slop: pass (42-45) · contrast: pass (40-41) · honest: pass (46) · chrome: pass (47) ·
+   tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50-57) */
+/* Hallmark · genre: editorial · verb: redesign · scope: chrome-only
+ * nav: N6 Newspaper masthead (knobs: issue-line=above, wordmark=left 2xl, rule=double)
+ * footer: Ft1 Mast-headed (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+ * Tokens preserved: --font-body/--font-ui (Charis SIL), full colour system.
+ * 4pt spacing rhythm; hairline dividers; hand-drawn SVG chevrons; no gradients. */
 
-/* ---- site footer: full sitemap ---- */
-.site-footer{border-top:1px solid var(--border);margin:3rem 0 0;padding:2rem 0 2.5rem;max-width:72ch}
-.site-footer .site-sitemap{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.2rem}
-.site-sitemap h4{font:700 .78rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 .4rem}
-.site-sitemap ul{list-style:none;margin:0;padding:0}
-.site-sitemap li{margin:.2rem 0}
-.site-sitemap a{font:400 .83rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none}
-.site-sitemap a:hover{color:var(--text)}
-.site-footer-note{font:400 .78rem/1.5 var(--font-ui);color:#6a6a6a;margin-top:1.6rem}
+/* ---- site header: N6 newspaper masthead ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);margin:0 0 2rem;max-width:72ch}
+.mast-line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:0;padding:.75rem 0 .5rem;font:600 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mast-line-right{color:var(--faint);white-space:nowrap}
+.mast-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:.75rem}
+.mast-name{font:800 1.5rem/1.15 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.mast-name:hover{color:var(--accent)}
+.site-prevnext{display:flex;gap:1.5rem;flex:none}
+.site-prevnext-group{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.site-prevnext-next{align-items:flex-end;text-align:right}
+.site-prevnext-kicker{font:600 .68rem/1.3 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.site-prevnext-link{display:inline-flex;align-items:center;gap:.4rem;font:600 .85rem/1.4 var(--font-ui);color:var(--text);text-decoration:none;max-width:15rem;min-height:1.75rem}
+.site-prevnext-link .chev{width:.8rem;height:.8rem;flex:none;color:var(--accent)}
+.site-prevnext-link:hover{color:var(--accent)}
+.site-prevnext-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-prevnext-empty{font:400 .85rem/1.75 var(--font-ui);color:var(--faint)}
+.mast-sub{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.25rem 0 .75rem}
+.breadcrumbs{font:400 .78rem/1.5 var(--font-ui);color:var(--muted);margin:0;min-width:0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.breadcrumbs .bc-sep{margin:0 .4rem;color:var(--faint)}
+.breadcrumbs .bc-current{color:var(--text)}
+.site-nav-toggle{display:inline-flex;align-items:center;gap:.5rem;flex:none;white-space:nowrap;background:none;border:1px solid var(--border);border-radius:.5rem;color:var(--text);font:600 .82rem/1.4 var(--font-ui);padding:.55rem .9rem;cursor:pointer;min-height:2.5rem}
+.site-nav-toggle:active,.site-nav-close:active,.watch-speed:active{transform:translateY(1px)}
+.site-nav-toggle .chev{width:.75rem;height:.75rem;color:var(--accent);transition:transform .25s var(--ease-out)}
+.site-nav-toggle:hover{border-color:var(--accent)}
+.site-nav-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.mast-rule-double{border:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:4px;margin:0}
+
+/* collapsible volume panel (desktop): smooth 0fr/1fr reveal */
+.site-nav-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease-out)}
+.site-nav-panel.is-open{grid-template-rows:1fr}
+.site-nav-panel-inner{overflow:hidden;min-height:0}
+.site-nav-drawer-head{display:none}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:1.25rem;max-height:70vh;overflow-y:auto;padding:1.25rem 0}
+.site-nav-groups h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:0}
+.site-nav-groups a{display:flex;gap:.6rem;align-items:baseline;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0;border-radius:.25rem}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups .site-nav-num{font:600 .72rem/1.6 var(--font-ui);color:var(--faint);min-width:1.75rem;flex:none}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:600}
+.site-nav-groups a.site-nav-current .site-nav-num{color:var(--accent)}
+.site-nav-scrim{display:none}
+
+/* ---- site footer: Ft1 mast-headed + grouped index ---- */
+.site-footer{margin:3.5rem 0 0;padding:0 0 3rem;max-width:72ch}
+.foot-mast{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.75rem 0 1.5rem;margin-bottom:2rem}
+.foot-name{font:800 1.25rem/1.2 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.foot-name:hover{color:var(--accent)}
+.foot-tag{font:400 .88rem/1.6 var(--font-ui);color:var(--muted);max-width:52ch;margin:.6rem 0 0;text-align:left}
+.foot-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.5rem;margin-bottom:2rem}
+.foot-group h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.foot-group ul{list-style:none;margin:0;padding:0}
+.foot-group li{margin:0}
+.foot-group a{display:block;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0}
+.foot-group a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.foot-group a.foot-current{color:var(--accent);font-weight:600}
+.foot-colophon{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;margin:0;padding-top:1.25rem;border-top:1px solid var(--border);font:400 .78rem/1.6 var(--font-ui);color:var(--faint);text-align:left}
+.foot-colophon .foot-sep{color:var(--faint)}
+
+/* ---- mobile: drawer + compact chrome (<=40rem) ---- */
+@media(max-width:40rem){
+  .mast-line-right{display:none}
+  .mast-row{flex-wrap:wrap;row-gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between;gap:.75rem}
+  .site-prevnext-link{max-width:44vw}
+  .site-prevnext-title{display:none}
+  .mast-sub{flex-wrap:wrap}
+  .site-nav-toggle{width:100%;justify-content:center}
+  /* volume nav becomes a fixed drawer: no layout shift, closes on link tap / scrim / Escape */
+  .site-nav-panel{position:fixed;top:0;left:0;bottom:0;width:min(20rem,88vw);z-index:70;display:block;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-104%);transition:transform .3s var(--ease-out)}
+  .site-nav-panel.is-open{transform:none}
+  .site-nav-panel-inner{height:100%;overflow-y:auto;padding:1.25rem 1.25rem 2rem}
+  .site-nav-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .site-nav-drawer-head span{font:600 .75rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+  .site-nav-close{background:none;border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:600 .8rem/1 var(--font-ui);padding:.55rem .85rem;cursor:pointer;min-height:2.75rem}
+  .site-nav-close:hover{border-color:var(--accent)}
+  .site-nav-groups{display:block;max-height:none;overflow:visible;padding:0}
+  .site-nav-groups>div{margin-bottom:1.25rem}
+  .site-nav-scrim{display:block;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .site-nav-scrim.is-open{opacity:1;pointer-events:auto}
+  body.site-nav-open{overflow:clip}
+  .foot-index{gap:1.25rem}
+}
 @media(max-width:56rem){
-  .site-header-row{flex-direction:column;align-items:flex-start;gap:.5rem}
-  .site-prevnext{width:100%;justify-content:space-between}
-  .site-header{padding-left:2.9rem} /* clear the fixed hamburger menu button */
+  .site-header{padding-left:2.9rem} /* clear the fixed section-drawer menu button */
 }
 @media print{
-  .site-header,.site-footer{display:none!important}
+  .site-header,.site-footer,.site-nav-scrim{display:none!important}
+  .watch-deeper .watch-frame{display:none}
+}
+
+/* ---- Watch and go deeper (content section skeleton; downstream fills real videos/links) ---- */
+.watch-deeper{margin:3rem 0 0;padding:2rem 0 0;border-top:1px solid var(--border);max-width:72ch}
+.watch-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.watch-deeper-lede{font:400 .95rem/1.6 var(--font-ui);color:var(--muted);margin:0 0 1.25rem;text-align:left}
+.watch-deeper-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem;margin:0 0 1.75rem}
+.watch-card{margin:0;border:1px solid var(--border);border-radius:.6rem;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.watch-frame{aspect-ratio:16/9;background:var(--bg)}
+.watch-frame iframe{width:100%;height:100%;border:0;display:block}
+.watch-card figcaption{padding:.85rem 1rem 1rem;font:400 .85rem/1.55 var(--font-ui);color:var(--muted);text-align:left}
+.watch-card figcaption strong{display:block;color:var(--text);font-weight:700;margin-bottom:.25rem}
+.go-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--text);margin:0 0 .5rem}
+.go-deeper-list{list-style:none;margin:0;padding:0}
+.go-deeper-list li{display:flex;gap:.6rem;align-items:baseline;padding:.5rem 0;border-top:1px solid var(--border)}
+.go-deeper-list li:last-child{border-bottom:1px solid var(--border)}
+.go-deeper-list a{font:600 .9rem/1.5 var(--font-ui);color:var(--text);text-decoration:none;flex:none;display:inline-flex;align-items:center;gap:.35rem}
+.go-deeper-list a:hover{color:var(--accent)}
+.go-deeper-list a:hover .ext-arrow{color:var(--accent)}
+.go-deeper-list .ext-arrow{width:.7rem;height:.7rem;color:var(--muted);flex:none}
+.go-deeper-list .go-deeper-note{font:400 .85rem/1.55 var(--font-ui);color:var(--muted)}
+
+/* speed-control bar (injected by the site script only when the YouTube IFrame
+   Player API loads; the iframe alone keeps working when it does not) */
+.watch-speedbar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;padding:.6rem .9rem;border-top:1px solid var(--border)}
+.watch-speedbar-label{font:600 .68rem/1.4 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.watch-speed{background:none;border:1px solid var(--border);border-radius:.4rem;color:var(--muted);font:600 .78rem/1 var(--font-ui);padding:.45rem .6rem;cursor:pointer;min-height:2rem}
+.watch-speed:hover{color:var(--text);border-color:var(--accent)}
+.watch-speed[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* motion respects the reader: no sliding drawers or expanding panels for reduced-motion users */
+@media (prefers-reduced-motion:reduce){
+  .ds-sidebar,.site-nav-toggle .chev,.site-nav-panel,.site-nav-scrim{transition:none}
 }
 
 /* ---- print ---- */
@@ -224,7 +317,7 @@ details.site-nav summary:hover{color:var(--accent)}
 </aside>
 <div class="ds-scrim" id="dsScrim"></div>
 <main class="ds-content" id="dsContent">
-<header class="site-header"><div class="site-header-row"><a class="site-home" href="index.html"><span class="site-home-mark">■</span> LLM Knowledge Base</a><div class="site-prevnext"><a href="crash-track-01.html">&larr; Crash: LLM Research Engineer</a><a href="crash-track-03.html">Crash: Inference and Serving &rarr;</a></div></div><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep">/</span><span>Crash packs</span><span class="bc-sep">/</span><span class="bc-current">Crash: Post-training / Alignment</span></nav><details class="site-nav"><summary>Browse all volumes and tracks</summary><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html" class="site-nav-current">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div></details></header>
+<header class="site-header"><p class="mast-line"><span>Research-Engineer Curriculum</span><span class="mast-line-right">No. 31 of 39 &middot; Sept 2026 edition</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a><nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span><a class="site-prevnext-link" href="crash-track-01.html" aria-label="Previous volume: Crash: LLM Research Engineer"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">Crash: LLM Research Engineer</span></a></div><div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span><a class="site-prevnext-link" href="crash-track-03.html" aria-label="Next volume: Crash: Inference and Serving"><span class="site-prevnext-title">Crash: Inference and Serving</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></nav></div><div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep" aria-hidden="true">/</span><span>Crash packs</span><span class="bc-sep" aria-hidden="true">/</span><span class="bc-current" aria-current="page">Crash: Post-training / Alignment</span></nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Browse all volumes</span></button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span><button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html" class="site-nav-current"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div></header>
 <h1 id="post-training-and-alignment-crash-pack">Post-Training and Alignment: Crash Pack</h1>
 <p>This is the compressed volume for Role Track 2. It assumes the base track chapters are read and keeps only what you must be able to recall cold: decision rules, numbers, formulas, traps, and reps. Five parts, in the order you use them on the job.</p>
 <p><strong>How to use this pack.</strong></p>
@@ -239,11 +332,12 @@ details.site-nav summary:hover{color:var(--accent)}
 <p>Rules are written as if-then because that is how they get used at 11pm when a run is red.</p>
 <h3 id="a1-dpo-vs-ppo-vs-grpo-the-selection-rules">A.1 DPO vs PPO vs GRPO: the selection rules</h3>
 <p><figure class="diagram"><svg id="my-svg" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 1400px; background-color: transparent; max-height: 1400px;" viewBox="4 4 609.703125 1261.890625" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#my-svg{font-family:Inter,system-ui,sans-serif;font-size:15px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#a44141;}#my-svg .error-text{fill:#ddd;stroke:#ddd;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:lightgrey;stroke:lightgrey;}#my-svg .marker.cross{stroke:lightgrey;}#my-svg svg{font-family:Inter,system-ui,sans-serif;font-size:15px;}#my-svg p{margin:0;}#my-svg .label{font-family:Inter,system-ui,sans-serif;color:#ccc;}#my-svg .cluster-label text{fill:#F9FFFE;}#my-svg .cluster-label span{color:#F9FFFE;}#my-svg .cluster-label span p{background-color:transparent;}#my-svg .label text,#my-svg span{fill:#ccc;color:#ccc;}#my-svg .node rect,#my-svg .node circle,#my-svg .node ellipse,#my-svg .node polygon,#my-svg .node path{fill:#1f2020;stroke:#ccc;stroke-width:1px;}#my-svg .rough-node .label text,#my-svg .node .label text,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-anchor:middle;}#my-svg .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#my-svg .rough-node .label,#my-svg .node .label,#my-svg .image-shape .label,#my-svg .icon-shape .label{text-align:center;}#my-svg .node.clickable{cursor:pointer;}#my-svg .root .anchor path{fill:lightgrey!important;stroke-width:0;stroke:lightgrey;}#my-svg .arrowheadPath{fill:lightgrey;}#my-svg .edgePaths .path{stroke:lightgrey;stroke-width:1px;}#my-svg .flowchart-link{stroke:lightgrey;fill:none;}#my-svg .edgeLabel{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .edgeLabel p{background-color:hsl(0, 0%, 34.4117647059%);}#my-svg .edgeLabel rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .labelBkg{background-color:rgba(87.75, 87.75, 87.75, 0.5);}#my-svg .cluster rect{fill:hsl(180, 1.5873015873%, 28.3529411765%);stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#my-svg .cluster text{fill:#F9FFFE;}#my-svg .cluster span{color:#F9FFFE;}#my-svg .node .collapsed-indicator{fill:rgba(255, 255, 255, 0.25);stroke:none;opacity:0.6;}#my-svg .node .collapsed-separator{stroke:rgba(255, 255, 255, 0.25);stroke-width:0.75px;}#my-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Inter,system-ui,sans-serif;font-size:12px;background:hsl(20, 1.5873015873%, 12.3529411765%);border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#my-svg .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#my-svg rect.text{fill:none;stroke-width:0;}#my-svg .icon-shape,#my-svg .image-shape{background-color:hsl(0, 0%, 34.4117647059%);text-align:center;}#my-svg .icon-shape p,#my-svg .image-shape p{background-color:hsl(0, 0%, 34.4117647059%);padding:2px;}#my-svg .icon-shape .label rect,#my-svg .image-shape .label rect{opacity:0.5;background-color:hsl(0, 0%, 34.4117647059%);fill:hsl(0, 0%, 34.4117647059%);}#my-svg .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#my-svg .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#my-svg .node .neo-node{stroke:#ccc;}#my-svg [data-look="neo"].node rect,#my-svg [data-look="neo"].cluster rect,#my-svg [data-look="neo"].node polygon{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].swimlane.cluster rect{filter:none;}#my-svg [data-look="neo"].node path{stroke:url(#my-svg-gradient);stroke-width:1px;}#my-svg [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#my-svg [data-look="neo"].node circle{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].node circle .state-start{fill:#000000;}#my-svg [data-look="neo"].icon-shape .icon{fill:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg [data-look="neo"].icon-shape .icon-neo path{stroke:url(#my-svg-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="my-svg_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"/></marker><marker id="my-svg_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"/></marker><g class="root"><g class="clusters"/><g class="edges edgePaths"><path d="M247.9609375,58.5L247.9609375,94.5" id="my-svg-L_S_Q1_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_S_Q1_0" data-points="W3sieCI6MjQ3Ljk2MDkzNzUsInkiOjU4LjV9LHsieCI6MjQ3Ljk2MDkzNzUsInkiOjk4LjV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M210.97135416666666,303.4478566646576L210.97135416666666,340.4375L210.97135416666666,353.3664321881345Q210.97135416666666,360.4375 203.90028635480118,360.4375L130.71950531186545,360.4375Q123.64843749999997,360.4375 123.64843749999997,367.5085678118655L123.64843749999997,461.4375" id="my-svg-L_Q1_GRPO_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 235.9842987060547 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_Q1_GRPO_0" data-points="W3sieCI6MjEwLjk3MTM1NDE2NjY2NjY2LCJ5IjozMDMuNDQ3ODU2NjY0NjU3Nn0seyJ4IjoyMTAuOTcxMzU0MTY2NjY2NjYsInkiOjM0MC40Mzc1fSx7IngiOjIxMC45NzEzNTQxNjY2NjY2NiwieSI6MzYwLjQzNzV9LHsieCI6MTIzLjY0ODQzNzQ5OTk5OTk3LCJ5IjozNjAuNDM3NX0seyJ4IjoxMjMuNjQ4NDM3NDk5OTk5OTcsInkiOjQ2NS40Mzc1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M284.9505208333333,303.4478566646576L284.9505208333333,340.4375L284.9505208333333,353.3664321881345Q284.9505208333333,360.4375 292.0215886451988,360.4375L365.2023696881345,360.4375Q372.2734375,360.4375 372.2734375,367.5085678118655L372.2734375,461.4375" id="my-svg-L_Q1_Q2_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 235.98428344726562 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_Q1_Q2_0" data-points="W3sieCI6Mjg0Ljk1MDUyMDgzMzMzMzMsInkiOjMwMy40NDc4NTY2NjQ2NTc2fSx7IngiOjI4NC45NTA1MjA4MzMzMzMzLCJ5IjozNDAuNDM3NX0seyJ4IjoyODQuOTUwNTIwODMzMzMzMywieSI6MzYwLjQzNzV9LHsieCI6MzcyLjI3MzQzNzUsInkiOjM2MC40Mzc1fSx7IngiOjM3Mi4yNzM0Mzc1LCJ5Ijo0NjUuNDM3NX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M343.28125,630.3983528912067L343.28125,659.390625L343.28125,672.3195571881345Q343.28125,679.390625 336.2101821881345,679.390625L249.41481781186545,679.390625Q242.34374999999997,679.390625 242.34374999999997,686.4616928118655L242.34374999999997,757.890625" id="my-svg-L_Q2_DPO_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 219.10147094726562 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_Q2_DPO_0" data-points="W3sieCI6MzQzLjI4MTI1LCJ5Ijo2MzAuMzk4MzUyODkxMjA2N30seyJ4IjozNDMuMjgxMjUsInkiOjY1OS4zOTA2MjV9LHsieCI6MzQzLjI4MTI1LCJ5Ijo2NzkuMzkwNjI1fSx7IngiOjI0Mi4zNDM3NDk5OTk5OTk5NywieSI6Njc5LjM5MDYyNX0seyJ4IjoyNDIuMzQzNzQ5OTk5OTk5OTcsInkiOjc2MS44OTA2MjV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M401.265625,630.3983528912067L401.265625,659.390625L401.265625,672.3195571881345Q401.265625,679.390625 408.3366928118655,679.390625L500.0226821881345,679.390625Q507.09375,679.390625 507.09375,686.4616928118655L507.09375,710.640625L507.09375,978.640625L507.09375,1115.140625L507.09375,1139.3195571881345Q507.09375,1146.390625 514.1648178118655,1146.390625L519.6268488548012,1146.390625Q526.6979166666666,1146.390625 526.6979166666666,1153.4616928118655L526.6979166666666,1162.390625" id="my-svg-L_Q2_PPO_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 642.7678833007812 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_Q2_PPO_0" data-points="W3sieCI6NDAxLjI2NTYyNSwieSI6NjMwLjM5ODM1Mjg5MTIwNjd9LHsieCI6NDAxLjI2NTYyNSwieSI6NjU5LjM5MDYyNX0seyJ4Ijo0MDEuMjY1NjI1LCJ5Ijo2NzkuMzkwNjI1fSx7IngiOjUwNy4wOTM3NSwieSI6Njc5LjM5MDYyNX0seyJ4Ijo1MDcuMDkzNzUsInkiOjcxMC42NDA2MjV9LHsieCI6NTA3LjA5Mzc1LCJ5Ijo5NzguNjQwNjI1fSx7IngiOjUwNy4wOTM3NSwieSI6MTExNS4xNDA2MjV9LHsieCI6NTA3LjA5Mzc1LCJ5IjoxMTQ2LjM5MDYyNX0seyJ4Ijo1MjYuNjk3OTE2NjY2NjY2NiwieSI6MTE0Ni4zOTA2MjV9LHsieCI6NTI2LjY5NzkxNjY2NjY2NjYsInkiOjExNjYuMzkwNjI1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M242.34374999999997,853.390625L242.34374999999997,889.390625" id="my-svg-L_DPO_Q3_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 32 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_DPO_Q3_0" data-points="W3sieCI6MjQyLjM0Mzc0OTk5OTk5OTk3LCJ5Ijo4NTMuMzkwNjI1fSx7IngiOjI0Mi4zNDM3NDk5OTk5OTk5NywieSI6ODkzLjM5MDYyNX1d" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M217.26041666666663,1038.807234287262L217.26041666666663,1063.890625L217.26041666666663,1076.8195571881345Q217.26041666666663,1083.890625 210.18934885480115,1083.890625L199.83669281186545,1083.890625Q192.76562499999997,1083.890625 192.76562499999997,1090.9616928118655L192.76562499999997,1162.390625" id="my-svg-L_Q3_STOP_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 138.74984741210938 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_Q3_STOP_0" data-points="W3sieCI6MjE3LjI2MDQxNjY2NjY2NjYzLCJ5IjoxMDM4LjgwNzIzNDI4NzI2Mn0seyJ4IjoyMTcuMjYwNDE2NjY2NjY2NjMsInkiOjEwNjMuODkwNjI1fSx7IngiOjIxNy4yNjA0MTY2NjY2NjY2MywieSI6MTA4My44OTA2MjV9LHsieCI6MTkyLjc2NTYyNDk5OTk5OTk3LCJ5IjoxMDgzLjg5MDYyNX0seyJ4IjoxOTIuNzY1NjI0OTk5OTk5OTcsInkiOjExNjYuMzkwNjI1fV0=" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/><path d="M267.4270833333333,1038.807234287262L267.4270833333333,1063.890625L267.4270833333333,1076.8195571881345Q267.4270833333333,1083.890625 274.4981511451988,1083.890625L367.73622385480115,1083.890625Q374.80729166666663,1083.890625 374.80729166666663,1090.9616928118655L374.80729166666663,1139.3195571881345Q374.80729166666663,1146.390625 381.8783594785321,1146.390625L450.62164052146784,1146.390625Q457.6927083333333,1146.390625 457.6927083333333,1153.4616928118655L457.6927083333333,1162.390625" id="my-svg-L_Q3_PPO_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style="stroke-dasharray: 0 0 299.1923828125 4; stroke-dashoffset: 0;;" data-edge="true" data-et="edge" data-id="L_Q3_PPO_0" data-points="W3sieCI6MjY3LjQyNzA4MzMzMzMzMzMsInkiOjEwMzguODA3MjM0Mjg3MjYyfSx7IngiOjI2Ny40MjcwODMzMzMzMzMzLCJ5IjoxMDYzLjg5MDYyNX0seyJ4IjoyNjcuNDI3MDgzMzMzMzMzMywieSI6MTA4My44OTA2MjV9LHsieCI6Mzc0LjgwNzI5MTY2NjY2NjYzLCJ5IjoxMDgzLjg5MDYyNX0seyJ4IjozNzQuODA3MjkxNjY2NjY2NjMsInkiOjExNDYuMzkwNjI1fSx7IngiOjQ1Ny42OTI3MDgzMzMzMzMzLCJ5IjoxMTQ2LjM5MDYyNX0seyJ4Ijo0NTcuNjkyNzA4MzMzMzMzMywieSI6MTE2Ni4zOTA2MjV9XQ==" data-look="neo" marker-end="url(#my-svg_flowchart-v2-pointEnd-margin)"/></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(123.27343749999997, 402.9375)"><g class="label" data-id="L_Q1_GRPO_0" transform="translate(-78.125, -22.5)"><foreignObject width="156.25" height="45"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Yes: math, code tests,<br />tool-call checkers</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(372.2734375, 402.9375)"><g class="label" data-id="L_Q1_Q2_0" transform="translate(-69.5, -22.5)"><foreignObject width="139" height="45"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>No: style, tone,<br />open-ended quality</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(242.23437499999997, 710.640625)"><g class="label" data-id="L_Q2_DPO_0" transform="translate(-58.890625, -11.25)"><foreignObject width="117.78125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Yes, or unknown</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(506.6875, 807.640625)"><g class="label" data-id="L_Q2_PPO_0" transform="translate(-83.59375, -22.5)"><foreignObject width="167.1875" height="45"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>No: DPO plateaued,<br />needs online correction</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(192.61718749999997, 1115.140625)"><g class="label" data-id="L_Q3_STOP_0" transform="translate(-12.8515625, -11.25)"><foreignObject width="25.703125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>Yes</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(374.45572916666663, 1115.140625)"><g class="label" data-id="L_Q3_PPO_0" transform="translate(-10.1484375, -11.25)"><foreignObject width="20.296875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p>No</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="my-svg-flowchart-S-0" data-look="neo" transform="translate(247.9609375, 35.25)"><rect class="basic label-container" style="" x="-115.390625" y="-23.25" width="230.78125" height="46.5"/><g class="label" style="" transform="translate(-99.390625, -11.25)"><rect/><foreignObject width="198.78125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>New preference-tuning task</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-Q1-1" data-look="neo" transform="translate(247.9609375, 219.46875)"><polygon points="120.96875,0 241.9375,-120.96875 120.96875,-241.9375 0,-120.96875" class="label-container" transform="translate(-120.46875, 120.96875)"/><g class="label" style="" transform="translate(-84.46875, -22.5)"><rect/><foreignObject width="168.9375" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Is the target behavior<br />checkable by a verifier?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-GRPO-3" data-look="neo" transform="translate(123.64843749999997, 511.1875)"><rect class="basic label-container" style="" x="-111.6484375" y="-45.75" width="223.296875" height="91.5"/><g class="label" style="" transform="translate(-95.6484375, -33.75)"><rect/><foreignObject width="191.296875" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>GRPO<br />group-relative advantage<br />no reward model, no labels</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-Q2-5" data-look="neo" transform="translate(372.2734375, 562.4140625)"><polygon points="96.9765625,0 193.953125,-96.9765625 96.9765625,-193.953125 0,-96.9765625" class="label-container" transform="translate(-96.4765625, 96.9765625)"/><g class="label" style="" transform="translate(-60.4765625, -22.5)"><rect/><foreignObject width="120.953125" height="45"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Does DPO hit the<br />eval targets?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-DPO-7" data-look="neo" transform="translate(242.34374999999997, 807.640625)"><rect class="basic label-container" style="" x="-135.859375" y="-45.75" width="271.71875" height="91.5"/><g class="label" style="" transform="translate(-119.859375, -33.75)"><rect/><foreignObject width="239.71875" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>DPO first<br />one loop, pairs + reference model<br />cheapest test of the signal</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-PPO-9" data-look="neo" transform="translate(492.1953125, 1212.140625)"><rect class="basic label-container" style="" x="-113.5078125" y="-45.75" width="227.015625" height="91.5"/><g class="label" style="" transform="translate(-97.5078125, -33.75)"><rect/><foreignObject width="195.015625" height="67.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>PPO<br />learned reward + rollouts<br />highest power, highest cost</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-Q3-11" data-look="neo" transform="translate(242.34374999999997, 978.640625)"><polygon points="85.25,0 170.5,-85.25 85.25,-170.5 0,-85.25" class="label-container" transform="translate(-84.75, 85.25)"/><g class="label" style="" transform="translate(-60, -11.25)"><rect/><foreignObject width="120" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center; width: 120px;"><span class="nodeLabel"><p>Targets met?</p></span></div></foreignObject></g></g><g class="node default" id="my-svg-flowchart-STOP-13" data-look="neo" transform="translate(192.76562499999997, 1189.640625)"><rect class="basic label-container" style="" x="-145.921875" y="-23.25" width="291.84375" height="46.5"/><g class="label" style="" transform="translate(-129.921875, -11.25)"><rect/><foreignObject width="259.84375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 380px; text-align: center;"><span class="nodeLabel"><p>Stop. Complexity must earn its keep.</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="my-svg-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><defs><filter id="my-svg-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"/></filter></defs><linearGradient id="my-svg-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"/><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"/></linearGradient></svg></figure></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
-<li>The first branch is the only one that matters most days. A verifier turns RL into supervised-like signal. No verifier means you need human taste, and human taste means a reward model or pairs.</li>
+<li>The first branch is the only one that matters most days. A verifier (an automatic checker with right and wrong answers, like unit tests or a math answer key) turns RL into supervised-like signal. No verifier means you need human taste, and human taste means a reward model or pairs.</li>
 <li>DPO is the default first try even when you suspect you will need PPO. If DPO wins, you saved a month of infra.</li>
-<li>The loop back from DPO to PPO is the standard production playbook: SFT, DPO baseline, then escalate only on evidence.</li>
-<li>GRPO never feeds back into PPO in this chart. If you have a verifier, you do not need a learned reward.</li>
+<li>The loop back from DPO to PPO is the standard production playbook: SFT (supervised fine-tuning: training on demonstration examples), DPO baseline, then escalate only on evidence.</li>
+<li>GRPO never feeds back into PPO in this chart. If you have a verifier, you do not need a learned reward. GRPO's "group-relative advantage" means: sample a group of completions per prompt and score each one against the group average (advantage = how much better than average this completion was), so no separate value model is needed.</li>
 </ol></div><p><strong>The signal table, one line per algorithm.</strong></p>
+<p><figure><img src="img/rlhf-instructgpt-pipeline.png" alt="The three-step RLHF pipeline from the InstructGPT paper: collect demonstrations and train a supervised policy; collect comparisons and train a reward model; optimize the policy against the reward model with PPO." loading="lazy"><figcaption><strong>Figure A.1.</strong> The classic three-step RLHF pipeline, from the InstructGPT paper (Figure 2): collect demonstrations and train a supervised policy; collect comparisons and train a reward model; optimize the policy against the reward model with PPO. PPO and GRPO keep this shape; DPO skips the reward model entirely.</figcaption></figure></p>
 <table>
 <thead>
 <tr>
@@ -387,7 +481,19 @@ for gap in [0.0, 0.5, 1.0, 1.7, 3.0]:
 <li>A gap of 0 is a coin flip: 0.500. The model has no opinion.</li>
 <li>A gap of 1.7 (the 2.1 vs 0.4 example) gives 0.846. Strong but not certain preference.</li>
 <li>A gap of 3.0 gives 0.953. Past a gap of about 3, the sigmoid saturates and bigger gaps barely change the probability. That saturation is why reward scores drift in scale during training without changing behavior.</li>
-</ol></div><h3 id="b2-dpo-loss-the-worked-number">B.2 DPO loss: the worked number</h3>
+</ol></div><h3 id="b2-dpo-loss-the-worked-number">
+<pre class="ascii">Bradley-Terry, worked by hand (from the example above)
+
+chosen score 2.1, rejected score 0.4
+gap = 2.1 - 0.4 = 1.7
+P(chosen wins) = sigmoid(1.7) = 1 / (1 + e^-1.7) = 0.846
+loss = -log(0.846) = 0.168 nats
+gradient weight = 1 - p = 0.154
+
+easy pair:  gap 4.0 -&gt; p = 0.982 -&gt; weight 0.018 (barely updates)
+hard pair:  gap 0.2 -&gt; p = 0.550 -&gt; weight 0.450 (drives the update)
+
+only the gap matters: add 100 to both scores, nothing changes</pre>B.2 DPO loss: the worked number</h3>
 <p>L_DPO = -log sigmoid( beta * [ log(pi(chosen)/pi_ref(chosen)) - log(pi(rejected)/pi_ref(rejected)) ] )</p>
 <p>Units: beta is unitless, typical value 0.1. The loss is in nats.</p>
 <p>Meaning: DPO is Bradley-Terry with the reward model solved out of the RLHF objective. The implicit reward of a response is beta * log(pi(y|x) / pi_ref(y|x)): how much more the policy likes it than the reference does.</p>
@@ -423,7 +529,21 @@ print(f&quot;gradient weight (1-p) = {1 - p:.3f}: this pair still teaches&quot;)
 <li>The gradient weight (1 - 0.522) = 0.478. Same (1 - p) shape as the Bradley-Terry gradient in B.1, because DPO is Bradley-Terry with the reward solved out. Pairs the model gets right contribute less.</li>
 </ol>
 <p>Memorize: beta = 0.1 is the standard starting point. The loss falls when the gap grows, and the gap grows by raising chosen log-probs, lowering rejected log-probs, or both. Only the first is real progress.</p>
-<h3 id="b3-grpo-advantage-the-worked-numbers">B.3 GRPO advantage: the worked numbers</h3>
+<h3 id="b3-grpo-advantage-the-worked-numbers">
+<pre class="ascii">DPO loss, worked by hand (beta = 0.1)
+
+policy log-probs:    chosen -2.0    rejected -3.5
+reference log-probs: chosen -2.2    rejected -2.8
+
+implicit reward, chosen   = 0.1 x (-2.0 - (-2.2)) =  0.020
+implicit reward, rejected = 0.1 x (-3.5 - (-2.8)) = -0.070
+gap = 0.020 - (-0.070) = 0.090
+P = sigmoid(0.090) = 0.5225
+loss = -log(0.5225) = 0.649 nats
+
+the policy already likes the chosen answer more than the
+reference does, so the loss is small: the preference is
+nearly satisfied before training even starts</pre>B.3 GRPO advantage: the worked numbers</h3>
 <p>A_i = (r_i - mean(r)) / std(r)</p>
 <p>Units: rewards are verifier scores, usually 0 or 1. Advantages are unitless, in standard-deviation units.</p>
 <p>Meaning: each response in the group is scored against its siblings, not against a learned baseline. No value network needed. The group is its own baseline.</p>
@@ -453,7 +573,17 @@ print(&quot;uniform [1,1,1,1]:&quot;, grpo_advantages([1, 1, 1, 1]))
 <li>Uniform [1,1,1,1]: std is 0, no signal. Filter these prompts out of the GRPO batch.</li>
 </ol>
 <p>Memorize: the standout case is why GRPO works on hard reasoning. Rare correct solutions get amplified, not averaged away.</p>
-<h3 id="b4-ppo-clip-the-trust-region-per-step">B.4 PPO clip: the trust region per step</h3>
+<h3 id="b4-ppo-clip-the-trust-region-per-step">
+<pre class="ascii">GRPO advantage, worked by hand: rewards [1, 1, 0, 0]
+
+mean = 0.5, std = 0.5
+A = (r - mean) / std = [+1.0, +1.0, -1.0, -1.0]
+
+the two correct answers get pushed up, the two wrong
+ones get pushed down, and no value network was needed:
+the group is its own baseline
+
+uniform group [1, 1, 1, 1]: std = 0, no signal, skip it</pre>B.4 PPO clip: the trust region per step</h3>
 <p>L = min( ratio * A, clip(ratio, 1 - eps, 1 + eps) * A )</p>
 <p>Units: ratio = pi_new / pi_old is unitless, starts at 1.0. A is the advantage in reward units. eps is unitless, typical value 0.2.</p>
 <p>Meaning: when the advantage is positive, the update can push the probability ratio up to at most 1 + eps = 1.2. One lucky sample cannot move the policy without bound. When the advantage is negative, the min with the clipped value keeps the pessimistic bound: the policy stops being pushed once it has moved past 1 - eps = 0.8.</p>
@@ -479,7 +609,20 @@ for ratio in [0.5, 0.9, 1.0, 1.1, 1.5, 3.0]:
 <li>With A = -1, the objective improves as the ratio shrinks, but the min() keeps the pessimistic value: once past 0.8, further movement is not rewarded.</li>
 <li>Eps = 0.2 is the standard value. The ratio is trusted only in [0.8, 1.2]. That narrow band is what makes PPO stable with noisy reward models.</li>
 </ol>
-<h3 id="b5-kl-divergence-the-distance-that-matters">B.5 KL divergence: the distance that matters</h3>
+<h3 id="b5-kl-divergence-the-distance-that-matters">
+<pre class="ascii">PPO clip, worked by hand (eps = 0.2, ratio = pi_new / pi_old)
+
+advantage +1.0, ratio 1.5 (lucky sample pushes too far):
+  unclipped = 1.5 x 1.0 = 1.5
+  clipped   = 1.2 x 1.0 = 1.2
+  L = min(1.5, 1.2) = 1.2   &lt;- the leash binds
+
+advantage -1.0, ratio 0.5 (policy moved too far down):
+  unclipped = 0.5 x (-1.0) = -0.5
+  clipped   = 0.8 x (-1.0) = -0.8
+  L = min(-0.5, -0.8) = -0.8  &lt;- pessimistic bound keeps it
+
+inside [0.8, 1.2] the clip never binds: plain policy gradient</pre>B.5 KL divergence: the distance that matters</h3>
 <p>KL(p || q) = sum_x p(x) * log( p(x) / q(x) )</p>
 <p>Units: nats per token when computed over token distributions.</p>
 <p>Meaning: how far the policy's token distribution has moved from the reference. This is the x-axis of the overoptimization plot and the leash in the RLHF objective. It is not symmetric: KL(pi || pi_ref) measures the policy drifting away from the reference, which is the direction you care about.</p>
@@ -507,7 +650,8 @@ print(&quot;collapsed to one: &quot;, round(kl([0.98, 0.01, 0.01], [0.5, 0.3, 0.
 <li>A small drift gives about 0.005 nats. Per-token KL numbers in real runs are small like this. They add up over a response.</li>
 <li>Collapse to one token gives about 0.60 nats. When you see KL climbing toward whole nats per token, the policy has left the region where the reward model is trustworthy. That is the overoptimization x-axis.</li>
 </ol>
-<h3 id="b6-wilson-interval-the-honest-confidence-interval">B.6 Wilson interval: the honest confidence interval</h3>
+<h3 id="b6-wilson-interval-the-honest-confidence-interval">
+<p><figure><img src="img/kl.png" alt="KL divergence as asymmetric mismatch cost: P true vs Q model distributions, with the rose region marking where using Q to approximate P costs you. Direction matters." loading="lazy"><figcaption><strong>Figure B.1.</strong> KL divergence as asymmetric mismatch cost: P (true) vs Q (model), the rose region marking where using Q to approximate P costs you. KL(P||Q) is not KL(Q||P): direction matters, and RLHF always measures the policy drifting away from the reference.</figcaption></figure></p>B.6 Wilson interval: the honest confidence interval</h3>
 <p>For a win rate p on n judgments, z = 1.96 for 95 percent:</p>
 <p>center = (p + z^2 / (2n)) / (1 + z^2 / n)
 half-width = z * sqrt( p(1-p)/n + z^2/(4n^2) ) / (1 + z^2 / n)</p>
@@ -736,7 +880,7 @@ print(f&quot;mean gap 0.33 on 60 pairs -&gt; 95% CI [{lo:.2f}, {hi:.2f}]&quot;)
 <p>Eight traps, in the order they tend to find you. Each has the mechanism, the signature you see on the dashboard or in the outputs, and the fix.</p>
 <h3 id="trap-1-reward-hacking-goodhart">Trap 1: Reward hacking (Goodhart)</h3>
 <p>Mechanism: the reward model is a proxy for human preference. RL optimizes the proxy, not the preference. The policy finds inputs the proxy scores highly that humans would not: sycophancy, hedging, formatting tricks, repeating the prompt.</p>
-<p>Signature: the overoptimization plot. Proxy score climbs while gold score peaks and falls. Outputs read like they are trying to please a rubric.</p>
+<p>Signature: the overoptimization plot from A.2: proxy climbs, gold peaks and falls. Outputs read like they are trying to please a rubric.</p>
 <p>Fix: early stopping on the gold metric, KL control, reward-model ensembles, iterative retraining of the reward model on fresh on-policy data.</p>
 <h3 id="trap-2-length-bias">Trap 2: Length bias</h3>
 <p>Mechanism: longer responses look more thorough, so labelers and LLM judges both use length as a proxy for quality. The reward model learns "longer is better." RL then makes everything bloated.</p>
@@ -757,7 +901,7 @@ print(f&quot;mean gap 0.33 on 60 pairs -&gt; 95% CI [{lo:.2f}, {hi:.2f}]&quot;)
 <h3 id="trap-6-off-policy-reward-models">Trap 6: Off-policy reward models</h3>
 <p>Mechanism: a reward model trained on responses from other models misranks the current policy's outputs. PPO then optimizes the misranking with full confidence. The staler the reward model, the worse the ranking where it matters most: on the policy's own samples.</p>
 <p>Signature: PPO reward climbs but human evals do not, or PPO finds bizarre outputs the reward model loves. The reward model was trained rounds ago on a different policy.</p>
-<p>Fix: refresh preference data every few RL rounds with samples from the current policy. The reward model chases the policy (T.1.3 rule 1). Validate the reward model on the current policy's outputs specifically, not on its training distribution.</p>
+<p>Fix: apply the Part A refresh rule (T.1.3 rule 1): the reward model chases the policy. Validate the reward model on the current policy's outputs specifically, not on its training distribution.</p>
 <h3 id="trap-7-judge-biases-self-preference-position-verbosity">Trap 7: Judge biases (self-preference, position, verbosity)</h3>
 <p>Mechanism: an LLM judge favors outputs in its own model's style (self-preference), favors whichever answer is shown second (position bias), and favors longer answers (verbosity). All three inflate win rates without any quality change.</p>
 <p>Signature: win rates that do not replicate with a different judge, or that flip when answer order is swapped. Calibration shows the judge passing long answers it should fail.</p>
@@ -912,11 +1056,11 @@ D. Neither; only 100 percent true refusals count</p></div><button class="pq-reve
 <li>Safety data at 5 to 15 percent of the SFT mix. Pair every refusal with a nearby compliance. Never train safety alone.</li>
 <li>Four eval layers: unit probes, benchmarks, preference evals, red team. Every layer gates.</li>
 <li>SE = sqrt(p(1-p)/n). 54 percent on n = 200 is noise until proven otherwise.</li>
-<li>Wilson interval for binomial rates, always. Normal approximation lies at small n and near 0 or 1.</li>
+<li>Wilson interval (the honest confidence interval for a proportion) for binomial rates, always. Normal approximation lies at small n and near 0 or 1.</li>
 <li>Slice before celebrating. Aggregates hide regressions.</li>
 <li>Kappa = (p_o - p_e)/(1 - p_e). License judges against the human ceiling near 0.8.</li>
 <li>Paired design, 3 to 5 repeats per case, 10,000 bootstrap resamples, 2.5th and 97.5th percentiles.</li>
-<li>20 metrics at 5 percent: expect one false hit. Bonferroni: 0.05/20 per test.</li>
+<li>20 metrics at 5 percent: expect one false hit. Bonferroni (divide the significance level by the number of tests): 0.05/20 per test.</li>
 <li>Quarantine pairs below 60 percent three-way agreement. Review labelers below 0.75 agreement with the majority.</li>
 <li>Near-dedup near 0.8 Jaccard. Hash every prompt against every eval set.</li>
 <li>Reward hacking tells in outputs: sycophancy, hedging stacks, listicles, prompt echo. Read 50 outputs per checkpoint.</li>
@@ -925,7 +1069,33 @@ D. Neither; only 100 percent true refusals count</p></div><button class="pq-reve
 <li>Length bias check: per-labeler correlation of picks with response length. Near 0.9 means the labels are broken.</li>
 <li>The loop is the job: evals steer, data fixes, recipe changes, repeat. Most weeks look like "F regressed, go fix C."</li>
 </ol><div class="provenance"><p><strong>Last verified: September 2026.</strong> Formulas (Bradley-Terry, DPO loss, GRPO advantage, PPO clip, KL divergence, Wilson interval, Cohen's kappa, standard error) are standard results from the published literature, consistent with Volume 7 chapters 4 to 6 and Appendix 11A. Worked numbers were computed from the formulas in this volume. <strong>UNVERIFIED:</strong> production data-mix fractions (5 to 15 percent safety, 2+1+1 sampling recipe), the 60 percent agreement quarantine bar, the 0.75 labeler review bar, the 0.8 dedup threshold, and the "3 to 5 times" PPO complexity multiple are practitioner working ranges, not published standards. The human kappa ceiling near 0.8 and the 20 to 50 calibration-set size are typical figures from practitioner writeups, not universal constants.</p></div></div></div></div></div></div></div></div></div>
-<footer class="site-footer"><div class="site-sitemap"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html" class="site-nav-current">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div><p class="site-footer-note">LLM Knowledge Base. Every page works offline from file:// and links back here. No personal information.</p></footer>
+<section class="watch-deeper" aria-labelledby="wd-h-crash-track-02">
+  <h2 class="watch-deeper-kicker" id="wd-h-crash-track-02">Watch and go deeper</h2>
+  <p class="watch-deeper-lede">The math of alignment, derived on camera: DPO from the Bradley-Terry model, then the full RLHF pipeline with PPO. Plus the papers and the code docs.</p>
+  <div class="watch-deeper-grid">
+    <figure class="watch-card">
+      <div class="watch-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/hvGa5Mba4c8?enablejsapi=1" title="Direct Preference Optimization (DPO) explained: Bradley-Terry model, log probabilities, math, Umar Jamil" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <figcaption><strong>Direct Preference Optimization (DPO) explained: Bradley-Terry model, log probabilities, math, Umar Jamil</strong><span>Derives DPO from the Bradley-Terry preference model down to token-level log probabilities. The video twin of Part B.2.</span></figcaption>
+    </figure>
+    <figure class="watch-card">
+      <div class="watch-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/qGyFrqc34yc?enablejsapi=1" title="Reinforcement Learning from Human Feedback explained with math derivations and the PyTorch code, Umar Jamil" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <figcaption><strong>Reinforcement Learning from Human Feedback explained with math derivations and the PyTorch code, Umar Jamil</strong><span>The full pipeline on camera: policy gradients, the reward model, log-action probabilities, the PPO clipped objective, and the advantage. Pairs with Parts A and B.</span></figcaption>
+    </figure>
+  </div>
+  <h3 class="go-deeper-kicker">Go deeper</h3>
+  <ul class="go-deeper-list">
+    <li><a href="https://arxiv.org/abs/2203.02155">Training language models to follow instructions with human feedback <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The InstructGPT paper: the three-step pipeline (SFT, reward model, PPO) in Figure 2.</span></li>
+    <li><a href="https://arxiv.org/abs/2305.18290">Direct Preference Optimization <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The paper that replaced the reward model with a direct preference loss.</span></li>
+    <li><a href="https://huggingface.co/docs/trl">TRL documentation <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">Hugging Face TRL docs: the reference implementations for DPO, PPO, and GRPO.</span></li>
+    <li><a href="https://yugeten.github.io/posts/2025/01/ppogrpo/">GRPO vs PPO <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">A write-up comparing GRPO and PPO training for reasoning models.</span></li>
+  </ul>
+</section>
+
+<footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html" class="foot-current">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav><p class="foot-colophon"><span>LLM Knowledge Base</span><span class="foot-sep" aria-hidden="true">/</span><span>Sept 2026 edition</span><span class="foot-sep" aria-hidden="true">/</span><span>Set in Charis SIL</span></p></footer>
 </main>
 <script>
 /* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
@@ -1042,6 +1212,34 @@ var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('
 if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
 if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
 
+/* ---------- site volume nav: collapsible panel on desktop, drawer on mobile ---------- */
+var siteNavToggle=document.getElementById('siteNavToggle'),
+    siteNavPanel=document.getElementById('siteNavPanel'),
+    siteNavScrim=document.getElementById('siteNavScrim'),
+    siteNavClose=document.getElementById('siteNavClose');
+function siteNavDrawerMode(){return window.matchMedia&&window.matchMedia('(max-width:40rem)').matches;}
+function openSiteNav(){
+  if(!siteNavPanel||!siteNavToggle)return;
+  siteNavPanel.classList.add('is-open');siteNavToggle.setAttribute('aria-expanded','true');
+  if(siteNavDrawerMode()){document.body.classList.add('site-nav-open');if(siteNavScrim)siteNavScrim.classList.add('is-open');}
+}
+function closeSiteNav(){
+  if(!siteNavPanel||!siteNavToggle)return;
+  siteNavPanel.classList.remove('is-open');siteNavToggle.setAttribute('aria-expanded','false');
+  document.body.classList.remove('site-nav-open');if(siteNavScrim)siteNavScrim.classList.remove('is-open');
+}
+if(siteNavToggle)siteNavToggle.addEventListener('click',function(){
+  if(siteNavPanel.classList.contains('is-open'))closeSiteNav();else openSiteNav();
+});
+if(siteNavClose)siteNavClose.addEventListener('click',closeSiteNav);
+if(siteNavScrim)siteNavScrim.addEventListener('click',closeSiteNav);
+if(siteNavPanel)siteNavPanel.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeSiteNav);});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&siteNavPanel&&siteNavPanel.classList.contains('is-open')){
+    closeSiteNav();if(siteNavToggle)siteNavToggle.focus();
+  }
+});
+
 /* ---------- keyboard nav: [ ] sections, / search ---------- */
 document.addEventListener('keydown',function(e){
   if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
@@ -1103,6 +1301,65 @@ document.querySelectorAll('.pq').forEach(function(pq){
     else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
   });
 });
+
+/* ---------- watch-deeper speed bars: 0.5x to 2x via the YouTube IFrame Player API ----------
+   Progressive enhancement: the bar is built only after the API loads. If the API
+   script fails or is blocked, no bar appears and the plain youtube-nocookie iframe
+   keeps working with YouTube's own controls. Honest cap: the embed player
+   hard-caps at 2x; no page-side trick can force 3x, so 2x is the top button. */
+(function(){
+  var frames=Array.prototype.slice.call(
+    document.querySelectorAll('.watch-frame iframe[src*="youtube-nocookie.com/embed/"]'));
+  if(!frames.length)return;
+  var RATES=[0.5,0.75,1,1.25,1.5,1.75,2];
+  function rateLabel(r){return (r===1?'1':String(r))+'x';}
+  function buildBar(host,player){
+    var bar=document.createElement('div');
+    bar.className='watch-speedbar';
+    bar.setAttribute('role','group');
+    bar.setAttribute('aria-label','Playback speed');
+    var lab=document.createElement('span');
+    lab.className='watch-speedbar-label';lab.textContent='Speed';
+    bar.appendChild(lab);
+    var btns=RATES.map(function(r){
+      var b=document.createElement('button');
+      b.type='button';b.className='watch-speed';b.textContent=rateLabel(r);
+      b.setAttribute('aria-pressed',r===1?'true':'false');
+      b.setAttribute('aria-label','Play at '+rateLabel(r)+' speed');
+      b.addEventListener('click',function(){
+        try{player.setPlaybackRate(r);}catch(e){return;}
+        btns.forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+      });
+      bar.appendChild(b);return b;
+    });
+    host.parentNode.insertBefore(bar,host.nextSibling);
+  }
+  function init(){
+    frames.forEach(function(f,i){
+      if(f.dataset.ytWired)return;
+      f.dataset.ytWired='1';
+      var src=f.getAttribute('src')||'';
+      if(src.indexOf('enablejsapi=1')<0){
+        f.setAttribute('src',src+(src.indexOf('?')<0?'?':'&')+'enablejsapi=1');
+      }
+      if(!f.id)f.id='watch-yt-'+(i+1);
+      new YT.Player(f.id,{events:{onReady:function(ev){buildBar(f,ev.target);}}});
+    });
+  }
+  if(window.YT&&window.YT.Player){init();}
+  else{
+    var prev=window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady=function(){
+      if(typeof prev==='function'){try{prev();}catch(e){}}
+      init();
+    };
+    var tag=document.createElement('script');
+    tag.src='https://www.youtube.com/iframe_api';tag.async=true;
+    var first=document.getElementsByTagName('script')[0];
+    if(first)first.parentNode.insertBefore(tag,first);
+    else document.head.appendChild(tag);
+  }
+})();
 })();
 
 </script>
