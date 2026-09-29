@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Top-300 LeetCode Mastery Path: DSA Track (Research-Engineer Curriculum)</title>
 <style>
@@ -469,12 +477,12 @@ html.xp-js .xp-reveal.xp-in {
 <h4>On the board</h4>
 <p>Before each chapter, say out loud: (1) What is the one-sentence recognition signal for this pattern? (2) What is the template, written from memory? (3) What is the classic trap? If you cannot answer all three, you are not done with the chapter.</p>
 </div>
-<div class="callout warn">
-<span class="tag"><figure class="diagram" id="fig-big-o-chart">
+<figure class="diagram" id="fig-big-o-chart">
 <img src="img/big-o-chart.png" alt="Big-O complexity chart showing growth curves from O(1) and O(log n) up to O(n factorial), with tables of time and space complexity for common data structures and sorting algorithms" loading="lazy">
 <figcaption><strong>Figure 2.</strong> The Big-O complexity chart. The curves show how each growth class behaves as input grows: O(1) and O(log n) stay flat, O(n) climbs steadily, O(n log n) bends upward, O(n^2) takes off, and O(2^n) and O(n!) explode. The tables list the exact bounds for common data structures and sorting algorithms. Use it when a chapter's Complexity section names a bound: look at the curve and feel how fast it grows. Chart by Eric Rowell, bigocheatsheet.com.</figcaption>
 </figure>
-Honesty note on frequency data</span>
+<div class="callout warn">
+<span class="tag">Honesty note on frequency data</span>
 <p>No lab publishes official per-company problem frequency data. Must-do marks in this track are cross-referenced from NeetCode 150, Blind 75, Grind 75, Sean Prashad's LeetCode patterns list, and community-reported 2025 to 2026 interview lists (for example, a public GitHub compilation of FAANG and frontier-lab questions). Treat the must-do subset as the highest-yield consensus; the appendix note "Frequency-data honesty" carries the full caveat.</p>
 </div>
 <div class="legend">
@@ -596,16 +604,16 @@ answer = 4</pre>
 <table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#1</strong> <span class="badge b-must">MUST-DO</span></td><td>Two Sum</td><td><span class='badge b-easy'>Easy</span></td><td>Complement lookup: store seen values, check target minus x.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p001">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#217</strong></td><td>Contains Duplicate</td><td><span class='badge b-easy'>Easy</span></td><td>Set membership check in one pass.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p002">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#242</strong></td><td>Valid Anagram</td><td><span class='badge b-easy'>Easy</span></td><td>Frequency counts; sorted forms are equal.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p003">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#383</strong></td><td>Ransom Note</td><td><span class='badge b-easy'>Easy</span></td><td>Multiset subtraction with a counter.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#169</strong></td><td>Majority Element</td><td><span class='badge b-easy'>Easy</span></td><td>Boyer-Moore vote (one candidate plus a counter: +1 on a match, -1 on a mismatch; a true majority survives); counter confirms.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p004">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#49</strong></td><td>Group Anagrams</td><td><span class='badge b-med'>Medium</span></td><td>Canonical key: sorted letters or count tuple.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p005">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#347</strong> <span class="badge b-must">MUST-DO</span></td><td>Top K Frequent Elements</td><td><span class='badge b-med'>Medium</span></td><td>Counter plus bucket or heap for top k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p006">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#238</strong> <span class="badge b-must">MUST-DO</span></td><td>Product of Array Except Self</td><td><span class='badge b-med'>Medium</span></td><td>Prefix and suffix products, O(1) extra.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p007">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#36</strong></td><td>Valid Sudoku</td><td><span class='badge b-med'>Medium</span></td><td>Three constraint sets: row, column, box.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p008">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#383</strong></td><td>Ransom Note</td><td><span class='badge b-easy'>Easy</span></td><td>Multiset subtraction with a counter.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p014">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#169</strong></td><td>Majority Element</td><td><span class='badge b-easy'>Easy</span></td><td>Boyer-Moore vote (one candidate plus a counter: +1 on a match, -1 on a mismatch; a true majority survives); counter confirms.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p008">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#49</strong></td><td>Group Anagrams</td><td><span class='badge b-med'>Medium</span></td><td>Canonical key: sorted letters or count tuple.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p004">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#347</strong> <span class="badge b-must">MUST-DO</span></td><td>Top K Frequent Elements</td><td><span class='badge b-med'>Medium</span></td><td>Counter plus bucket or heap for top k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p005">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#238</strong> <span class="badge b-must">MUST-DO</span></td><td>Product of Array Except Self</td><td><span class='badge b-med'>Medium</span></td><td>Prefix and suffix products, O(1) extra.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p006">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#36</strong></td><td>Valid Sudoku</td><td><span class='badge b-med'>Medium</span></td><td>Three constraint sets: row, column, box.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p018">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#442</strong></td><td>Find All Duplicates in an Array</td><td><span class='badge b-med'>Medium</span></td><td>Index-as-hash trick: mark visited positions.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#334</strong></td><td>Increasing Triplet Subsequence</td><td><span class='badge b-med'>Medium</span></td><td>Greedy two-minimum scan.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#560</strong></td><td>Subarray Sum Equals K</td><td><span class='badge b-med'>Medium</span></td><td>Prefix-sum frequencies; count target minus prefix.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#128</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Consecutive Sequence</td><td><span class='badge b-med'>Medium</span></td><td>Set plus sequence-start check, O(n).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p009">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#128</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Consecutive Sequence</td><td><span class='badge b-med'>Medium</span></td><td>Set plus sequence-start check, O(n).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p007">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#41</strong></td><td>First Missing Positive</td><td><span class='badge b-hard'>Hard</span></td><td>In-place cyclic placement 1..n.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p010">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
@@ -621,6 +629,18 @@ answer = 4</pre>
 </div>
 
 
+<figure id="fig-trace-two-sum">
+<img src="img/dsa-trace-two-sum.svg" alt="Two Sum, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 27.</strong> Two Sum, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 2 adds motion: two pointers walking the array with a rule.</p>
 <h2 id="pattern-2">2. Two Pointers</h2>
 <p>Pattern 1 gave you storage and lookup. The open problem: the array is sorted, and a nested loop throws that information away. Two pointers add motion: two indices walking with a rule for who moves.</p>
@@ -716,20 +736,20 @@ final water = 6</pre>
 <li><strong>Moving the wrong pointer</strong> in Container-style problems: always the limiting (shorter) side.</li>
 </ul>
 <blockquote class="sentence">"When the data is ordered, I let two pointers walk it: opposite ends for pair search with a discard rule I can prove, same direction with a write pointer for in-place filtering."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#344</strong></td><td>Reverse String</td><td><span class='badge b-easy'>Easy</span></td><td>Opposite ends swap inward.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p026">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#125</strong></td><td>Valid Palindrome</td><td><span class='badge b-easy'>Easy</span></td><td>Alphanumeric filter, then compare ends.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p027">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#88</strong></td><td>Merge Sorted Array</td><td><span class='badge b-easy'>Easy</span></td><td>Fill from the back to avoid overwrite.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p028">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#26</strong></td><td>Remove Duplicates from Sorted Array</td><td><span class='badge b-easy'>Easy</span></td><td>Slow/fast write pointer.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p029">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#283</strong></td><td>Move Zeroes</td><td><span class='badge b-easy'>Easy</span></td><td>Partition with a write pointer.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p030">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#977</strong></td><td>Squares of a Sorted Array</td><td><span class='badge b-easy'>Easy</span></td><td>Two ends: largest square wins.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p031">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#167</strong> <span class="badge b-must">MUST-DO</span></td><td>Two Sum II - Input Array Is Sorted</td><td><span class='badge b-med'>Medium</span></td><td>Sorted two-sum: move the side that is too big/small.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p032">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#15</strong> <span class="badge b-must">MUST-DO</span></td><td>3Sum</td><td><span class='badge b-med'>Medium</span></td><td>Sort, fix one, two-pointer pair, skip duplicates.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p035">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#344</strong></td><td>Reverse String</td><td><span class='badge b-easy'>Easy</span></td><td>Opposite ends swap inward.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p063">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#125</strong></td><td>Valid Palindrome</td><td><span class='badge b-easy'>Easy</span></td><td>Alphanumeric filter, then compare ends.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p046">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#88</strong></td><td>Merge Sorted Array</td><td><span class='badge b-easy'>Easy</span></td><td>Fill from the back to avoid overwrite.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p059">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#26</strong></td><td>Remove Duplicates from Sorted Array</td><td><span class='badge b-easy'>Easy</span></td><td>Slow/fast write pointer.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p053">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#283</strong></td><td>Move Zeroes</td><td><span class='badge b-easy'>Easy</span></td><td>Partition with a write pointer.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p052">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#977</strong></td><td>Squares of a Sorted Array</td><td><span class='badge b-easy'>Easy</span></td><td>Two ends: largest square wins.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p055">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#167</strong> <span class="badge b-must">MUST-DO</span></td><td>Two Sum II - Input Array Is Sorted</td><td><span class='badge b-med'>Medium</span></td><td>Sorted two-sum: move the side that is too big/small.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p047">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#15</strong> <span class="badge b-must">MUST-DO</span></td><td>3Sum</td><td><span class='badge b-med'>Medium</span></td><td>Sort, fix one, two-pointer pair, skip duplicates.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p048">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#16</strong></td><td>3Sum Closest</td><td><span class='badge b-med'>Medium</span></td><td>3Sum with best-so-far tracking.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#611</strong></td><td>Valid Triangle Number</td><td><span class='badge b-med'>Medium</span></td><td>Sorted two-pointer counting of valid triples.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#75</strong></td><td>Sort Colors</td><td><span class='badge b-med'>Medium</span></td><td>Dutch flag three-way partition (one pass splitting the array into 0s, then 1s, then 2s).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p033">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#18</strong></td><td>4Sum</td><td><span class='badge b-med'>Medium</span></td><td>3Sum with one more outer loop.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p034">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#11</strong> <span class="badge b-must">MUST-DO</span></td><td>Container With Most Water</td><td><span class='badge b-med'>Medium</span></td><td>Shrink the shorter side; area is height-limited.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p036">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#42</strong> <span class="badge b-must">MUST-DO</span></td><td>Trapping Rain Water</td><td><span class='badge b-hard'>Hard</span></td><td>Two pointers tracking left/right max.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p037">Atlas: full treatment</a></td></tr></tbody></table>
+<tr><td><strong>#75</strong></td><td>Sort Colors</td><td><span class='badge b-med'>Medium</span></td><td>Dutch flag three-way partition (one pass splitting the array into 0s, then 1s, then 2s).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p056">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#18</strong></td><td>4Sum</td><td><span class='badge b-med'>Medium</span></td><td>3Sum with one more outer loop.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p049">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#11</strong> <span class="badge b-must">MUST-DO</span></td><td>Container With Most Water</td><td><span class='badge b-med'>Medium</span></td><td>Shrink the shorter side; area is height-limited.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p050">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#42</strong> <span class="badge b-must">MUST-DO</span></td><td>Trapping Rain Water</td><td><span class='badge b-hard'>Hard</span></td><td>Two pointers tracking left/right max.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p051">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -744,6 +764,18 @@ final water = 6</pre>
 </div>
 
 
+<figure id="fig-trace-container-water">
+<img src="img/dsa-trace-container-water.svg" alt="Container With Most Water, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 28.</strong> Container With Most Water, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 3 keeps the two pointers adjacent and grows or shrinks the window: subarrays instead of pairs.</p>
 <h2 id="pattern-3">3. Sliding Window</h2>
 <p>Two pointers walk with a rule. Sliding window is the special case that stays adjacent: one window that grows and shrinks over contiguous subarrays.</p>
@@ -845,19 +877,19 @@ answer = [3,3,5,5,6,7]</pre>
 <li><strong>Recomputing validity from scratch</strong> each step instead of maintaining counts incrementally.</li>
 </ul>
 <blockquote class="sentence">"For contiguous slices with a monotone condition, I grow the right edge and shrink the left only until the condition holds again: both edges move forward, so the whole scan is linear."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#121</strong> <span class="badge b-must">MUST-DO</span></td><td>Best Time to Buy and Sell Stock</td><td><span class='badge b-easy'>Easy</span></td><td>Fixed-start window: track minimum price so far.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p051">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#643</strong></td><td>Maximum Average Subarray I</td><td><span class='badge b-easy'>Easy</span></td><td>Fixed-size window sum.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p052">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#209</strong></td><td>Minimum Size Subarray Sum</td><td><span class='badge b-med'>Medium</span></td><td>Variable window: shrink while sum is enough.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p053">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#3</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Substring Without Repeating Characters</td><td><span class='badge b-med'>Medium</span></td><td>Window plus last-seen index map.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p054">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#424</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Repeating Character Replacement</td><td><span class='badge b-med'>Medium</span></td><td>Window valid while window minus max count is at most k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p055">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#567</strong></td><td>Permutation in String</td><td><span class='badge b-med'>Medium</span></td><td>Fixed window; compare frequency maps.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p056">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1004</strong></td><td>Max Consecutive Ones III</td><td><span class='badge b-med'>Medium</span></td><td>Same as 424 with binary alphabet.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p057">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#904</strong></td><td>Fruit Into Baskets</td><td><span class='badge b-med'>Medium</span></td><td>At-most-two distinct types window.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p058">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#713</strong></td><td>Subarray Product Less Than K</td><td><span class='badge b-med'>Medium</span></td><td>Counting subarrays inside the window.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p059">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#930</strong></td><td>Binary Subarrays With Sum</td><td><span class='badge b-med'>Medium</span></td><td>Prefix sums or at-most-k window trick.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p060">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#121</strong> <span class="badge b-must">MUST-DO</span></td><td>Best Time to Buy and Sell Stock</td><td><span class='badge b-easy'>Easy</span></td><td>Fixed-start window: track minimum price so far.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p071">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#643</strong></td><td>Maximum Average Subarray I</td><td><span class='badge b-easy'>Easy</span></td><td>Fixed-size window sum.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p083">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#209</strong></td><td>Minimum Size Subarray Sum</td><td><span class='badge b-med'>Medium</span></td><td>Variable window: shrink while sum is enough.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p077">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#3</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Substring Without Repeating Characters</td><td><span class='badge b-med'>Medium</span></td><td>Window plus last-seen index map.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p072">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#424</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Repeating Character Replacement</td><td><span class='badge b-med'>Medium</span></td><td>Window valid while window minus max count is at most k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p073">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#567</strong></td><td>Permutation in String</td><td><span class='badge b-med'>Medium</span></td><td>Fixed window; compare frequency maps.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p074">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1004</strong></td><td>Max Consecutive Ones III</td><td><span class='badge b-med'>Medium</span></td><td>Same as 424 with binary alphabet.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p079">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#904</strong></td><td>Fruit Into Baskets</td><td><span class='badge b-med'>Medium</span></td><td>At-most-two distinct types window.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p078">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#713</strong></td><td>Subarray Product Less Than K</td><td><span class='badge b-med'>Medium</span></td><td>Counting subarrays inside the window.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p080">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#930</strong></td><td>Binary Subarrays With Sum</td><td><span class='badge b-med'>Medium</span></td><td>Prefix sums or at-most-k window trick.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p081">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#187</strong></td><td>Repeated DNA Sequences</td><td><span class='badge b-med'>Medium</span></td><td>Fixed 10-length window with seen sets.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#76</strong> <span class="badge b-must">MUST-DO</span></td><td>Minimum Window Substring</td><td><span class='badge b-hard'>Hard</span></td><td>Shrink window while all required chars are covered.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p061">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#239</strong> <span class="badge b-must">MUST-DO</span></td><td>Sliding Window Maximum</td><td><span class='badge b-hard'>Hard</span></td><td>Deque keeps candidates in decreasing order.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p062">Atlas: full treatment</a></td></tr></tbody></table>
+<tr><td><strong>#76</strong> <span class="badge b-must">MUST-DO</span></td><td>Minimum Window Substring</td><td><span class='badge b-hard'>Hard</span></td><td>Shrink window while all required chars are covered.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p075">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#239</strong> <span class="badge b-must">MUST-DO</span></td><td>Sliding Window Maximum</td><td><span class='badge b-hard'>Hard</span></td><td>Deque keeps candidates in decreasing order.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p076">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -872,6 +904,18 @@ answer = [3,3,5,5,6,7]</pre>
 </div>
 
 
+<figure id="fig-trace-sliding-window">
+<img src="img/dsa-trace-sliding-window.svg" alt="Sliding window, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 29.</strong> Sliding window, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 4 looks backward instead of forward: stacks remember what you have seen, in order.</p>
 <h2 id="pattern-4">4. Stacks and Monotonic Stacks</h2>
 <p>Windows scan forward. Some problems need to look backward at what you have already seen, in order. That is a stack.</p>
@@ -943,7 +987,7 @@ answer = [1,1,4,2,1,1,0,0]</pre>
 <details>
 <summary><strong>Largest Rectangle in Histogram (#84).</strong> heights = [2, 1, 5, 6, 2, 3].</summary>
 <p>For each bar, the rectangle it anchors extends left and right until a shorter bar. An increasing stack finds, for each popped bar, the first shorter bar on the right (the popper) and the first shorter on the left (the new top). Width = right - left - 1.</p>
-<pre class="ascii">Append sentinel 0. Increasing stack of indices.
+<pre class="ascii">Append sentinel 0 (a dummy boundary value that removes edge-case checks). Increasing stack of indices.
 i=0 (2): push [0]
 i=1 (1): pop 0: height 2, left = -1 (stack empty), right = 1. width=1-(-1)-1=1. area=2. push [1]
 i=2 (5): push [1,2]
@@ -977,19 +1021,19 @@ stack empty -&gt; True</pre>
 <li><strong>Circular arrays (#503):</strong> iterate 2n indices with <code>i % n</code>, but push each index only during the first pass.</li>
 </ul>
 <blockquote class="sentence">"A stack remembers the most recent unmatched item; a monotonic stack keeps the waiting items sorted so the first element that beats them settles all of them at once, in linear time."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#20</strong> <span class="badge b-must">MUST-DO</span></td><td>Valid Parentheses</td><td><span class='badge b-easy'>Easy</span></td><td>Push opens, match on close.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p081">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#225</strong></td><td>Implement Stack using Queues</td><td><span class='badge b-easy'>Easy</span></td><td>Rotate the queue so push is O(n).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p082">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#232</strong></td><td>Implement Queue using Stacks</td><td><span class='badge b-easy'>Easy</span></td><td>Two stacks: lazy transfer.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p083">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#496</strong></td><td>Next Greater Element I</td><td><span class='badge b-easy'>Easy</span></td><td>Monotonic stack plus map for queried keys.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p084">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#20</strong> <span class="badge b-must">MUST-DO</span></td><td>Valid Parentheses</td><td><span class='badge b-easy'>Easy</span></td><td>Push opens, match on close.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p131">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#225</strong></td><td>Implement Stack using Queues</td><td><span class='badge b-easy'>Easy</span></td><td>Rotate the queue so push is O(n).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p158">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#232</strong></td><td>Implement Queue using Stacks</td><td><span class='badge b-easy'>Easy</span></td><td>Two stacks: lazy transfer.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p157">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#496</strong></td><td>Next Greater Element I</td><td><span class='badge b-easy'>Easy</span></td><td>Monotonic stack plus map for queried keys.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p143">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#1047</strong></td><td>Remove All Adjacent Duplicates In String</td><td><span class='badge b-easy'>Easy</span></td><td>Stack cancels adjacent pairs.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#150</strong></td><td>Evaluate Reverse Polish Notation</td><td><span class='badge b-med'>Medium</span></td><td>Stack evaluates postfix directly.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p086">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#739</strong> <span class="badge b-must">MUST-DO</span></td><td>Daily Temperatures</td><td><span class='badge b-med'>Medium</span></td><td>Monotonic decreasing stack of indices.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p087">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#503</strong></td><td>Next Greater Element II</td><td><span class='badge b-med'>Medium</span></td><td>Circular pass: iterate twice.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p088">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#71</strong></td><td>Simplify Path</td><td><span class='badge b-med'>Medium</span></td><td>Stack of path components.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p089">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#394</strong></td><td>Decode String</td><td><span class='badge b-med'>Medium</span></td><td>Stack frames for nested brackets.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p090">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#735</strong></td><td>Asteroid Collision</td><td><span class='badge b-med'>Medium</span></td><td>Stack of survivors; collisions resolve greedily.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p091">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#150</strong></td><td>Evaluate Reverse Polish Notation</td><td><span class='badge b-med'>Medium</span></td><td>Stack evaluates postfix directly.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p133">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#739</strong> <span class="badge b-must">MUST-DO</span></td><td>Daily Temperatures</td><td><span class='badge b-med'>Medium</span></td><td>Monotonic decreasing stack of indices.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p134">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#503</strong></td><td>Next Greater Element II</td><td><span class='badge b-med'>Medium</span></td><td>Circular pass: iterate twice.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p144">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#71</strong></td><td>Simplify Path</td><td><span class='badge b-med'>Medium</span></td><td>Stack of path components.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p137">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#394</strong></td><td>Decode String</td><td><span class='badge b-med'>Medium</span></td><td>Stack frames for nested brackets.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p138">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#735</strong></td><td>Asteroid Collision</td><td><span class='badge b-med'>Medium</span></td><td>Stack of survivors; collisions resolve greedily.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p139">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#856</strong></td><td>Score of Parentheses</td><td><span class='badge b-med'>Medium</span></td><td>Stack tracks nesting depth contributions.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p150">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#84</strong> <span class="badge b-must">MUST-DO</span></td><td>Largest Rectangle in Histogram</td><td><span class='badge b-hard'>Hard</span></td><td>Monotonic stack finds each bar's width.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p093">Atlas: full treatment</a></td></tr></tbody></table>
+<tr><td><strong>#84</strong> <span class="badge b-must">MUST-DO</span></td><td>Largest Rectangle in Histogram</td><td><span class='badge b-hard'>Hard</span></td><td>Monotonic stack finds each bar's width.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p136">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -1004,6 +1048,18 @@ stack empty -&gt; True</pre>
 </div>
 
 
+<figure id="fig-trace-daily-temperatures">
+<img src="img/dsa-trace-daily-temperatures.svg" alt="Daily Temperatures, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 30.</strong> Daily Temperatures, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 5 exploits order to discard half the search space per step: binary search.</p>
 <h2 id="pattern-5">5. Binary Search (including Binary Search on Answer)</h2>
 <p>Stacks exploit recency. Binary search exploits order: each comparison discards half of the remaining search space.</p>
@@ -1092,22 +1148,22 @@ answer = 2.0</pre>
 <li><strong>Overflow in other languages:</strong> <code>mid = lo + (hi - lo) // 2</code>. In Python it does not matter, but interviewers ask.</li>
 </ul>
 <blockquote class="sentence">"Binary search finds the boundary where a yes-or-no question flips from false to true; on sorted arrays the question is about position, on answer-spaces the question is feasibility, and the template never changes."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#704</strong> <span class="badge b-must">MUST-DO</span></td><td>Binary Search</td><td><span class='badge b-easy'>Easy</span></td><td>Classic half-interval search.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p111">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#374</strong></td><td>Guess Number Higher or Lower</td><td><span class='badge b-easy'>Easy</span></td><td>Search over an API oracle.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p112">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#278</strong></td><td>First Bad Version</td><td><span class='badge b-easy'>Easy</span></td><td>Leftmost true of a monotonic predicate.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p113">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#35</strong></td><td>Search Insert Position</td><td><span class='badge b-easy'>Easy</span></td><td>Lower bound; return lo.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p114">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#69</strong></td><td>Sqrt(x)</td><td><span class='badge b-easy'>Easy</span></td><td>Binary search on answer in [0, x].</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p115">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#852</strong></td><td>Peak Index in a Mountain Array</td><td><span class='badge b-med'>Medium</span></td><td>Compare mid with mid plus 1.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p116">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#74</strong></td><td>Search a 2D Matrix</td><td><span class='badge b-med'>Medium</span></td><td>Treat matrix as a flat sorted array.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p117">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#153</strong> <span class="badge b-must">MUST-DO</span></td><td>Find Minimum in Rotated Sorted Array</td><td><span class='badge b-med'>Medium</span></td><td>The sorted half tells you where the pivot is.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p118">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#33</strong> <span class="badge b-must">MUST-DO</span></td><td>Search in Rotated Sorted Array</td><td><span class='badge b-med'>Medium</span></td><td>Find which half is sorted, then narrow.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p119">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#162</strong></td><td>Find Peak Element</td><td><span class='badge b-med'>Medium</span></td><td>A peak exists in the half with the higher neighbor.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p120">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#34</strong></td><td>Find First and Last Position of Element in Sorted Array</td><td><span class='badge b-med'>Medium</span></td><td>Two lower bounds.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p121">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#658</strong></td><td>Find K Closest Elements</td><td><span class='badge b-med'>Medium</span></td><td>Binary search the window's left edge.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p122">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#875</strong> <span class="badge b-must">MUST-DO</span></td><td>Koko Eating Bananas</td><td><span class='badge b-med'>Medium</span></td><td>Feasibility predicate: hours at speed k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p123">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1011</strong></td><td>Capacity To Ship Packages Within D Days</td><td><span class='badge b-med'>Medium</span></td><td>Predicate: days needed at capacity c.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p124">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1482</strong></td><td>Minimum Number of Days to Make m Bouquets</td><td><span class='badge b-med'>Medium</span></td><td>Predicate: bouquets possible by day d.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p125">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#4</strong></td><td>Median of Two Sorted Arrays</td><td><span class='badge b-hard'>Hard</span></td><td>Binary search the partition of the shorter array.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p126">Atlas: full treatment</a></td></tr></tbody></table>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#704</strong> <span class="badge b-must">MUST-DO</span></td><td>Binary Search</td><td><span class='badge b-easy'>Easy</span></td><td>Classic half-interval search.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p101">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#374</strong></td><td>Guess Number Higher or Lower</td><td><span class='badge b-easy'>Easy</span></td><td>Search over an API oracle.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p123">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#278</strong></td><td>First Bad Version</td><td><span class='badge b-easy'>Easy</span></td><td>Leftmost true of a monotonic predicate.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p124">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#35</strong></td><td>Search Insert Position</td><td><span class='badge b-easy'>Easy</span></td><td>Lower bound; return lo.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p102">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#69</strong></td><td>Sqrt(x)</td><td><span class='badge b-easy'>Easy</span></td><td>Binary search on answer in [0, x].</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p122">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#852</strong></td><td>Peak Index in a Mountain Array</td><td><span class='badge b-med'>Medium</span></td><td>Compare mid with mid plus 1.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p110">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#74</strong></td><td>Search a 2D Matrix</td><td><span class='badge b-med'>Medium</span></td><td>Treat matrix as a flat sorted array.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p104">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#153</strong> <span class="badge b-must">MUST-DO</span></td><td>Find Minimum in Rotated Sorted Array</td><td><span class='badge b-med'>Medium</span></td><td>The sorted half tells you where the pivot is.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p107">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#33</strong> <span class="badge b-must">MUST-DO</span></td><td>Search in Rotated Sorted Array</td><td><span class='badge b-med'>Medium</span></td><td>Find which half is sorted, then narrow.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p105">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#162</strong></td><td>Find Peak Element</td><td><span class='badge b-med'>Medium</span></td><td>A peak exists in the half with the higher neighbor.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p109">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#34</strong></td><td>Find First and Last Position of Element in Sorted Array</td><td><span class='badge b-med'>Medium</span></td><td>Two lower bounds.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p103">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#658</strong></td><td>Find K Closest Elements</td><td><span class='badge b-med'>Medium</span></td><td>Binary search the window's left edge.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p116">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#875</strong> <span class="badge b-must">MUST-DO</span></td><td>Koko Eating Bananas</td><td><span class='badge b-med'>Medium</span></td><td>Feasibility predicate: hours at speed k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p111">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1011</strong></td><td>Capacity To Ship Packages Within D Days</td><td><span class='badge b-med'>Medium</span></td><td>Predicate: days needed at capacity c.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p112">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1482</strong></td><td>Minimum Number of Days to Make m Bouquets</td><td><span class='badge b-med'>Medium</span></td><td>Predicate: bouquets possible by day d.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p114">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#4</strong></td><td>Median of Two Sorted Arrays</td><td><span class='badge b-hard'>Hard</span></td><td>Binary search the partition of the shorter array.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p118">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -1122,6 +1178,18 @@ answer = 2.0</pre>
 </div>
 
 
+<figure id="fig-trace-koko">
+<img src="img/dsa-trace-koko.svg" alt="Koko Eating Bananas, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 31.</strong> Koko Eating Bananas, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 6 trades away random access: linked lists, cheap splicing, and pointers meeting pointers.</p>
 <h2 id="pattern-6">6. Linked Lists</h2>
 <p>Arrays give random access. Linked lists give the opposite trade: no indices, but cheap splicing anywhere. The pointer skills from the foundations chapter finally meet a structure built from pointers.</p>
@@ -1214,23 +1282,23 @@ unweave:   restore A-&gt;B-&gt;C and extract A'-&gt;B'-&gt;C'</pre>
 <li><strong>None checks:</strong> <code>while fast and fast.next</code>, in that order.</li>
 </ul>
 <blockquote class="sentence">"Linked lists reward pointer surgery: one extra pointer per operation, a dummy head so the head is never special, and fast/slow whenever one pass must do the work of two."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#206</strong> <span class="badge b-must">MUST-DO</span></td><td>Reverse Linked List</td><td><span class='badge b-easy'>Easy</span></td><td>Iterative prev/curr rewiring.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p139">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#206</strong> <span class="badge b-must">MUST-DO</span></td><td>Reverse Linked List</td><td><span class='badge b-easy'>Easy</span></td><td>Iterative prev/curr rewiring.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p161">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#876</strong></td><td>Middle of the Linked List</td><td><span class='badge b-easy'>Easy</span></td><td>Slow/fast pointers.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#21</strong> <span class="badge b-must">MUST-DO</span></td><td>Merge Two Sorted Lists</td><td><span class='badge b-easy'>Easy</span></td><td>Dummy head zipper.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p140">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#21</strong> <span class="badge b-must">MUST-DO</span></td><td>Merge Two Sorted Lists</td><td><span class='badge b-easy'>Easy</span></td><td>Dummy head zipper.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p162">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#203</strong></td><td>Remove Linked List Elements</td><td><span class='badge b-easy'>Easy</span></td><td>Dummy head plus relink.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#83</strong></td><td>Remove Duplicates from Sorted List</td><td><span class='badge b-easy'>Easy</span></td><td>Compare adjacent values, skip repeats.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#141</strong></td><td>Linked List Cycle</td><td><span class='badge b-easy'>Easy</span></td><td>Slow/fast meeting means a cycle.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p138">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#160</strong></td><td>Intersection of Two Linked Lists</td><td><span class='badge b-easy'>Easy</span></td><td>Length difference or two-pointer switch.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p141">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#234</strong></td><td>Palindrome Linked List</td><td><span class='badge b-easy'>Easy</span></td><td>Reverse second half, compare.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p142">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#237</strong></td><td>Delete Node in a Linked List</td><td><span class='badge b-med'>Medium</span></td><td>Copy next into current; skip the node.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p137">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#19</strong></td><td>Remove Nth Node From End of List</td><td><span class='badge b-med'>Medium</span></td><td>Gap of n between two pointers.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p143">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#2</strong></td><td>Add Two Numbers</td><td><span class='badge b-med'>Medium</span></td><td>Digit-wise addition with carry.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p144">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#143</strong></td><td>Reorder List</td><td><span class='badge b-med'>Medium</span></td><td>Middle, reverse, interleave.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p145">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#328</strong></td><td>Odd Even Linked List</td><td><span class='badge b-med'>Medium</span></td><td>Two sublists, then stitch.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p146">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#142</strong></td><td>Linked List Cycle II</td><td><span class='badge b-med'>Medium</span></td><td>Find cycle entry with the phase argument.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p147">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#138</strong></td><td>Copy List with Random Pointer</td><td><span class='badge b-med'>Medium</span></td><td>Interleave copies, fix random, split.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p148">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#148</strong></td><td>Sort List</td><td><span class='badge b-med'>Medium</span></td><td>Merge sort on the list: split at middle.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p149">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#25</strong></td><td>Reverse Nodes in k-Group</td><td><span class='badge b-hard'>Hard</span></td><td>Reverse each chunk; stitch heads.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p150">Atlas: full treatment</a></td></tr></tbody></table>
+<tr><td><strong>#141</strong></td><td>Linked List Cycle</td><td><span class='badge b-easy'>Easy</span></td><td>Slow/fast meeting means a cycle.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p167">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#160</strong></td><td>Intersection of Two Linked Lists</td><td><span class='badge b-easy'>Easy</span></td><td>Length difference or two-pointer switch.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p175">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#234</strong></td><td>Palindrome Linked List</td><td><span class='badge b-easy'>Easy</span></td><td>Reverse second half, compare.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p174">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#237</strong></td><td>Delete Node in a Linked List</td><td><span class='badge b-med'>Medium</span></td><td>Copy next into current; skip the node.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p176">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#19</strong></td><td>Remove Nth Node From End of List</td><td><span class='badge b-med'>Medium</span></td><td>Gap of n between two pointers.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p164">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#2</strong></td><td>Add Two Numbers</td><td><span class='badge b-med'>Medium</span></td><td>Digit-wise addition with carry.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p166">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#143</strong></td><td>Reorder List</td><td><span class='badge b-med'>Medium</span></td><td>Middle, reverse, interleave.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p163">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#328</strong></td><td>Odd Even Linked List</td><td><span class='badge b-med'>Medium</span></td><td>Two sublists, then stitch.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p177">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#142</strong></td><td>Linked List Cycle II</td><td><span class='badge b-med'>Medium</span></td><td>Find cycle entry with the phase argument.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p168">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#138</strong></td><td>Copy List with Random Pointer</td><td><span class='badge b-med'>Medium</span></td><td>Interleave copies, fix random, split.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p165">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#148</strong></td><td>Sort List</td><td><span class='badge b-med'>Medium</span></td><td>Merge sort on the list: split at middle.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p179">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#25</strong></td><td>Reverse Nodes in k-Group</td><td><span class='badge b-hard'>Hard</span></td><td>Reverse each chunk; stitch heads.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p172">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -1245,6 +1313,18 @@ unweave:   restore A-&gt;B-&gt;C and extract A'-&gt;B'-&gt;C'</pre>
 </div>
 
 
+<figure id="fig-trace-reverse-list">
+<img src="img/dsa-trace-reverse-list.svg" alt="Reverse Linked List, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 32.</strong> Reverse Linked List, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 7 branches: trees, hierarchies, and traversals as the universal tool.</p>
 <h2 id="pattern-7">7. Trees and Traversals</h2>
 <p>Linked lists are chains. Trees are the first branching structure, and traversals are the universal tool for reading them.</p>
@@ -1359,26 +1439,26 @@ answer = 42  (path 15-20-7)</pre>
 <li><strong>Recursion depth:</strong> a skewed tree recurses n deep; Python's default limit is 1000.</li>
 </ul>
 <blockquote class="sentence">"Trees are recursion with a direction: preorder carries decisions down, postorder carries answers up, inorder reads a BST in order, and level order sweeps across; I pick the traversal whose information flow matches the question."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#104</strong></td><td>Maximum Depth of Binary Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Postorder: 1 plus max of children.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p161">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#100</strong></td><td>Same Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Simultaneous recursion, compare values.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p162">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#226</strong> <span class="badge b-must">MUST-DO</span></td><td>Invert Binary Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Swap children at every node.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p163">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#104</strong></td><td>Maximum Depth of Binary Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Postorder: 1 plus max of children.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p187">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#100</strong></td><td>Same Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Simultaneous recursion, compare values.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p190">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#226</strong> <span class="badge b-must">MUST-DO</span></td><td>Invert Binary Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Swap children at every node.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p186">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#94</strong></td><td>Binary Tree Inorder Traversal</td><td><span class='badge b-easy'>Easy</span></td><td>Left, node, right; iterative stack version.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#101</strong></td><td>Symmetric Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Mirror recursion on pairs.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p164">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#112</strong></td><td>Path Sum</td><td><span class='badge b-easy'>Easy</span></td><td>DFS with remaining target.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p165">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#543</strong></td><td>Diameter of Binary Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Best path through node plus postorder heights.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p166">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#110</strong></td><td>Balanced Binary Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Postorder returns -1 when unbalanced.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p167">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#108</strong></td><td>Convert Sorted Array to Binary Search Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Middle element as root, recurse.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p168">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#700</strong></td><td>Search in a Binary Search Tree</td><td><span class='badge b-easy'>Easy</span></td><td>BST property prunes one side.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p169">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#102</strong> <span class="badge b-must">MUST-DO</span></td><td>Binary Tree Level Order Traversal</td><td><span class='badge b-med'>Medium</span></td><td>BFS with per-level slices.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p172">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#199</strong></td><td>Binary Tree Right Side View</td><td><span class='badge b-med'>Medium</span></td><td>BFS: take the last node of each level.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p173">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#235</strong></td><td>Lowest Common Ancestor of a Binary Search Tree</td><td><span class='badge b-med'>Medium</span></td><td>Walk by comparisons to p and q.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p174">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#98</strong> <span class="badge b-must">MUST-DO</span></td><td>Validate Binary Search Tree</td><td><span class='badge b-med'>Medium</span></td><td>Bounds carried down: low < node < high.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p175">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#230</strong></td><td>Kth Smallest Element in a BST</td><td><span class='badge b-med'>Medium</span></td><td>Inorder is sorted; count to k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p176">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#236</strong> <span class="badge b-must">MUST-DO</span></td><td>Lowest Common Ancestor of a Binary Tree</td><td><span class='badge b-med'>Medium</span></td><td>Bottom-up: node where p and q split.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p177">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#105</strong></td><td>Construct Binary Tree from Preorder and Inorder Traversal</td><td><span class='badge b-med'>Medium</span></td><td>Root from preorder, split by inorder index map.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p178">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#114</strong></td><td>Flatten Binary Tree to Linked List</td><td><span class='badge b-med'>Medium</span></td><td>Reverse preorder rewiring.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p179">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#124</strong> <span class="badge b-must">MUST-DO</span></td><td>Binary Tree Maximum Path Sum</td><td><span class='badge b-hard'>Hard</span></td><td>Postorder returns best downward path; global best may pass through.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p180">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#297</strong></td><td>Serialize and Deserialize Binary Tree</td><td><span class='badge b-hard'>Hard</span></td><td>Preorder with null markers.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p181">Atlas: full treatment</a></td></tr></tbody></table>
+<tr><td><strong>#101</strong></td><td>Symmetric Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Mirror recursion on pairs.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p214">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#112</strong></td><td>Path Sum</td><td><span class='badge b-easy'>Easy</span></td><td>DFS with remaining target.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p201">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#543</strong></td><td>Diameter of Binary Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Best path through node plus postorder heights.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p188">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#110</strong></td><td>Balanced Binary Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Postorder returns -1 when unbalanced.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p189">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#108</strong></td><td>Convert Sorted Array to Binary Search Tree</td><td><span class='badge b-easy'>Easy</span></td><td>Middle element as root, recurse.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p227">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#700</strong></td><td>Search in a Binary Search Tree</td><td><span class='badge b-easy'>Easy</span></td><td>BST property prunes one side.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p226">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#102</strong> <span class="badge b-must">MUST-DO</span></td><td>Binary Tree Level Order Traversal</td><td><span class='badge b-med'>Medium</span></td><td>BFS with per-level slices.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p194">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#199</strong></td><td>Binary Tree Right Side View</td><td><span class='badge b-med'>Medium</span></td><td>BFS: take the last node of each level.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p195">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#235</strong></td><td>Lowest Common Ancestor of a Binary Search Tree</td><td><span class='badge b-med'>Medium</span></td><td>Walk by comparisons to p and q.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p192">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#98</strong> <span class="badge b-must">MUST-DO</span></td><td>Validate Binary Search Tree</td><td><span class='badge b-med'>Medium</span></td><td>Bounds carried down: low < node < high.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p197">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#230</strong></td><td>Kth Smallest Element in a BST</td><td><span class='badge b-med'>Medium</span></td><td>Inorder is sorted; count to k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p198">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#236</strong> <span class="badge b-must">MUST-DO</span></td><td>Lowest Common Ancestor of a Binary Tree</td><td><span class='badge b-med'>Medium</span></td><td>Bottom-up: node where p and q split.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p193">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#105</strong></td><td>Construct Binary Tree from Preorder and Inorder Traversal</td><td><span class='badge b-med'>Medium</span></td><td>Root from preorder, split by inorder index map.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p199">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#114</strong></td><td>Flatten Binary Tree to Linked List</td><td><span class='badge b-med'>Medium</span></td><td>Reverse preorder rewiring.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p206">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#124</strong> <span class="badge b-must">MUST-DO</span></td><td>Binary Tree Maximum Path Sum</td><td><span class='badge b-hard'>Hard</span></td><td>Postorder returns best downward path; global best may pass through.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p204">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#297</strong></td><td>Serialize and Deserialize Binary Tree</td><td><span class='badge b-hard'>Hard</span></td><td>Preorder with null markers.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p200">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -1393,6 +1473,18 @@ answer = 42  (path 15-20-7)</pre>
 </div>
 
 
+<figure id="fig-trace-tree-diameter">
+<img src="img/dsa-trace-tree-diameter.svg" alt="Diameter of Binary Tree, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 33.</strong> Diameter of Binary Tree, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 8 specializes trees for strings: tries, where prefixes are paths.</p>
 <h2 id="pattern-8">8. Tries</h2>
 <p>Trees branch by value. Tries are trees specialized for strings: every prefix is a path, and a million prefix queries stop being expensive.</p>
@@ -1507,18 +1599,18 @@ answer = 28</pre>
 <li><strong>Memory:</strong> a dict-of-dicts trie is heavy; for lowercase English, a length-26 list per node is the standard optimization. State it when asked about scale.</li>
 </ul>
 <blockquote class="sentence">"When many queries share prefixes, I store the dictionary as a trie: each query walks shared letter edges once, and the word flag separates complete words from mere prefixes."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#208</strong> <span class="badge b-must">MUST-DO</span></td><td>Implement Trie (Prefix Tree)</td><td><span class='badge b-med'>Medium</span></td><td>Node per letter; terminal flag.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p461">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#648</strong></td><td>Replace Words</td><td><span class='badge b-med'>Medium</span></td><td>Shortest-root search per word.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p462">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#720</strong></td><td>Longest Word in Dictionary</td><td><span class='badge b-med'>Medium</span></td><td>Every prefix must be a word.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p463">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#211</strong></td><td>Design Add and Search Words Data Structure</td><td><span class='badge b-med'>Medium</span></td><td>Dot wildcard needs DFS over children.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p464">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1268</strong></td><td>Search Suggestions System</td><td><span class='badge b-med'>Medium</span></td><td>Walk the trie per prefix; collect up to 3.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p465">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#421</strong></td><td>Maximum XOR of Two Numbers in an Array</td><td><span class='badge b-med'>Medium</span></td><td>Binary trie; greedy bit choice.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p467">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#208</strong> <span class="badge b-must">MUST-DO</span></td><td>Implement Trie (Prefix Tree)</td><td><span class='badge b-med'>Medium</span></td><td>Node per letter; terminal flag.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p466">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#648</strong></td><td>Replace Words</td><td><span class='badge b-med'>Medium</span></td><td>Shortest-root search per word.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p469">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#720</strong></td><td>Longest Word in Dictionary</td><td><span class='badge b-med'>Medium</span></td><td>Every prefix must be a word.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p475">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#211</strong></td><td>Design Add and Search Words Data Structure</td><td><span class='badge b-med'>Medium</span></td><td>Dot wildcard needs DFS over children.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p467">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1268</strong></td><td>Search Suggestions System</td><td><span class='badge b-med'>Medium</span></td><td>Walk the trie per prefix; collect up to 3.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p472">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#421</strong></td><td>Maximum XOR of Two Numbers in an Array</td><td><span class='badge b-med'>Medium</span></td><td>Binary trie; greedy bit choice.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p478">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#1804</strong></td><td>Implement Trie II (Prefix Tree)</td><td><span class='badge b-med'>Medium</span></td><td>Add count and prefix-count fields.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#820</strong></td><td>Short Encoding of Words</td><td><span class='badge b-med'>Medium</span></td><td>Suffixes absorbed by a reversed trie.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#3043</strong></td><td>Find the Length of the Longest Common Prefix</td><td><span class='badge b-med'>Medium</span></td><td>Insert one set, query the other.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#212</strong> <span class="badge b-must">MUST-DO</span></td><td>Word Search II</td><td><span class='badge b-hard'>Hard</span></td><td>Trie prunes DFS on the board.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p468">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#745</strong></td><td>Prefix and Suffix Search</td><td><span class='badge b-hard'>Hard</span></td><td>Combined key suffix + '#' + prefix.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p469">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1032</strong></td><td>Stream of Characters</td><td><span class='badge b-hard'>Hard</span></td><td>Reversed trie queried on the stream tail.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p470">Atlas: full treatment</a></td></tr></tbody></table>
+<tr><td><strong>#745</strong></td><td>Prefix and Suffix Search</td><td><span class='badge b-hard'>Hard</span></td><td>Combined key suffix + '#' + prefix.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p476">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1032</strong></td><td>Stream of Characters</td><td><span class='badge b-hard'>Hard</span></td><td>Reversed trie queried on the stream tail.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p473">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -1533,6 +1625,18 @@ answer = 28</pre>
 </div>
 
 
+<figure id="fig-trace-max-xor">
+<img src="img/dsa-trace-max-xor.svg" alt="Maximum XOR of Two Numbers, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 34.</strong> Maximum XOR of Two Numbers, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 9 organizes by priority instead of prefix: heaps.</p>
 <h2 id="pattern-9">9. Heaps</h2>
 <p>Tries organize by prefix. Heaps organize by priority: the minimum or maximum is always on top, which is exactly what streaming problems need.</p>
@@ -1628,18 +1732,18 @@ answer = [1,1,2,3,4,4,5,6]</pre>
 <li><strong>Re-sorting instead of heaping</strong> on streams; and the reverse mistake: using a heap for a one-shot top-k where <code>nlargest</code> or sort is clearer.</li>
 </ul>
 <blockquote class="sentence">"For a running extreme I keep a heap, not a sorted list: a size-k min-heap holds the k largest, and two balanced heaps hold the median, each update costing a logarithm."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#703</strong></td><td>Kth Largest Element in a Stream</td><td><span class='badge b-easy'>Easy</span></td><td>Min-heap of size k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p196">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1046</strong></td><td>Last Stone Weight</td><td><span class='badge b-easy'>Easy</span></td><td>Max-heap simulation.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p197">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#215</strong> <span class="badge b-must">MUST-DO</span></td><td>Kth Largest Element in an Array</td><td><span class='badge b-med'>Medium</span></td><td>Min-heap of size k or quickselect.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p198">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#973</strong></td><td>K Closest Points to Origin</td><td><span class='badge b-med'>Medium</span></td><td>Max-heap of size k on squared distance.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p199">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#703</strong></td><td>Kth Largest Element in a Stream</td><td><span class='badge b-easy'>Easy</span></td><td>Min-heap of size k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p232">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1046</strong></td><td>Last Stone Weight</td><td><span class='badge b-easy'>Easy</span></td><td>Max-heap simulation.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p233">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#215</strong> <span class="badge b-must">MUST-DO</span></td><td>Kth Largest Element in an Array</td><td><span class='badge b-med'>Medium</span></td><td>Min-heap of size k or quickselect.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p231">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#973</strong></td><td>K Closest Points to Origin</td><td><span class='badge b-med'>Medium</span></td><td>Max-heap of size k on squared distance.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p234">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#451</strong></td><td>Sort Characters By Frequency</td><td><span class='badge b-med'>Medium</span></td><td>Heap over counter items.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#692</strong></td><td>Top K Frequent Words</td><td><span class='badge b-med'>Medium</span></td><td>Heap with (neg freq, word) tie-breaking.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p200">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#692</strong></td><td>Top K Frequent Words</td><td><span class='badge b-med'>Medium</span></td><td>Heap with (neg freq, word) tie-breaking.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p238">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#378</strong></td><td>Kth Smallest Element in a Sorted Matrix</td><td><span class='badge b-med'>Medium</span></td><td>Heap over row heads; or value binary search.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#1642</strong></td><td>Furthest Building You Can Reach</td><td><span class='badge b-med'>Medium</span></td><td>Min-heap of climbs; replace big climbs with ladders.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p201">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#621</strong> <span class="badge b-must">MUST-DO</span></td><td>Task Scheduler</td><td><span class='badge b-med'>Medium</span></td><td>Max-heap of counts plus cooldown math.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p202">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#502</strong></td><td>IPO</td><td><span class='badge b-hard'>Hard</span></td><td>Min-heap by capital, max-heap by profit.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p203">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1642</strong></td><td>Furthest Building You Can Reach</td><td><span class='badge b-med'>Medium</span></td><td>Min-heap of climbs; replace big climbs with ladders.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p240">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#621</strong> <span class="badge b-must">MUST-DO</span></td><td>Task Scheduler</td><td><span class='badge b-med'>Medium</span></td><td>Max-heap of counts plus cooldown math.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p235">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#502</strong></td><td>IPO</td><td><span class='badge b-hard'>Hard</span></td><td>Min-heap by capital, max-heap by profit.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p241">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#1675</strong></td><td>Minimize Deviation in Array</td><td><span class='badge b-hard'>Hard</span></td><td>Max-heap with lazy halving.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#23</strong> <span class="badge b-must">MUST-DO</span></td><td>Merge k Sorted Lists</td><td><span class='badge b-hard'>Hard</span></td><td>Heap of current heads.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p204">Atlas: full treatment</a></td></tr></tbody></table>
+<tr><td><strong>#23</strong> <span class="badge b-must">MUST-DO</span></td><td>Merge k Sorted Lists</td><td><span class='badge b-hard'>Hard</span></td><td>Heap of current heads.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p171">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -1654,6 +1758,18 @@ answer = [1,1,2,3,4,4,5,6]</pre>
 </div>
 
 
+<figure id="fig-trace-kth-largest">
+<img src="img/dsa-trace-kth-largest.svg" alt="Kth Largest Element, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 35.</strong> Kth Largest Element, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 10 orders by position on a line: intervals, merging, and sweeping.</p>
 <h2 id="pattern-10">10. Intervals</h2>
 <p>Heaps order by value. Intervals order by position on a line: meetings, ranges, and overlaps, where sorting by start makes the rest trivial.</p>
@@ -1754,18 +1870,18 @@ rooms = 2</pre>
 <li><strong>Insert Interval (#57):</strong> three phases: add non-overlapping-before, merge the overlapping run, add the rest. Do not re-sort after inserting; the input is already sorted.</li>
 </ul>
 <blockquote class="sentence">"For intervals I sort first and ask which endpoint matters: start for merging and sweeping, end for greedy scheduling, and the sweep itself is always one linear pass."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#252</strong></td><td>Meeting Rooms</td><td><span class='badge b-easy'>Easy</span></td><td>Sort by start; check consecutive overlap.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p206">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#252</strong></td><td>Meeting Rooms</td><td><span class='badge b-easy'>Easy</span></td><td>Sort by start; check consecutive overlap.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p259">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#2446</strong></td><td>Determine if Two Events Have Conflict</td><td><span class='badge b-easy'>Easy</span></td><td>Direct overlap test.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#228</strong></td><td>Summary Ranges</td><td><span class='badge b-easy'>Easy</span></td><td>Scan for consecutive runs.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#56</strong> <span class="badge b-must">MUST-DO</span></td><td>Merge Intervals</td><td><span class='badge b-med'>Medium</span></td><td>Sort by start; extend the running interval.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p207">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#57</strong> <span class="badge b-must">MUST-DO</span></td><td>Insert Interval</td><td><span class='badge b-med'>Medium</span></td><td>Merge the overlapping run around the insert point.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p208">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#435</strong> <span class="badge b-must">MUST-DO</span></td><td>Non-overlapping Intervals</td><td><span class='badge b-med'>Medium</span></td><td>Greedy: sort by end, keep earliest finishers.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p209">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#452</strong></td><td>Minimum Number of Arrows to Burst Balloons</td><td><span class='badge b-med'>Medium</span></td><td>Same skeleton as 435.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p210">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#253</strong> <span class="badge b-must">MUST-DO</span></td><td>Meeting Rooms II</td><td><span class='badge b-med'>Medium</span></td><td>Heap of end times; or two-pointer sweep.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p211">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#986</strong></td><td>Interval List Intersections</td><td><span class='badge b-med'>Medium</span></td><td>Two pointers on both lists.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p212">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#763</strong></td><td>Partition Labels</td><td><span class='badge b-med'>Medium</span></td><td>Greedy cut at max last-occurrence.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p213">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1094</strong></td><td>Car Pooling</td><td><span class='badge b-med'>Medium</span></td><td>Difference array over the timeline.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p214">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1288</strong></td><td>Remove Covered Intervals</td><td><span class='badge b-med'>Medium</span></td><td>Sort by start asc, end desc; keep max end.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p215">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#56</strong> <span class="badge b-must">MUST-DO</span></td><td>Merge Intervals</td><td><span class='badge b-med'>Medium</span></td><td>Sort by start; extend the running interval.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p257">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#57</strong> <span class="badge b-must">MUST-DO</span></td><td>Insert Interval</td><td><span class='badge b-med'>Medium</span></td><td>Merge the overlapping run around the insert point.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p256">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#435</strong> <span class="badge b-must">MUST-DO</span></td><td>Non-overlapping Intervals</td><td><span class='badge b-med'>Medium</span></td><td>Greedy: sort by end, keep earliest finishers.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p258">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#452</strong></td><td>Minimum Number of Arrows to Burst Balloons</td><td><span class='badge b-med'>Medium</span></td><td>Same skeleton as 435.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p260">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#253</strong> <span class="badge b-must">MUST-DO</span></td><td>Meeting Rooms II</td><td><span class='badge b-med'>Medium</span></td><td>Heap of end times; or two-pointer sweep.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p247">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#986</strong></td><td>Interval List Intersections</td><td><span class='badge b-med'>Medium</span></td><td>Two pointers on both lists.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p261">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#763</strong></td><td>Partition Labels</td><td><span class='badge b-med'>Medium</span></td><td>Greedy cut at max last-occurrence.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p266">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1094</strong></td><td>Car Pooling</td><td><span class='badge b-med'>Medium</span></td><td>Difference array over the timeline.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p036">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1288</strong></td><td>Remove Covered Intervals</td><td><span class='badge b-med'>Medium</span></td><td>Sort by start asc, end desc; keep max end.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p262">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#2406</strong></td><td>Divide Intervals Into Minimum Number of Groups</td><td><span class='badge b-med'>Medium</span></td><td>Heap of group end times.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#1851</strong></td><td>Minimum Interval to Include Each Query</td><td><span class='badge b-hard'>Hard</span></td><td>Sweep queries by size; heap of candidate ends.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr></tbody></table>
 <div class="takeaway">
@@ -1782,6 +1898,18 @@ rooms = 2</pre>
 </div>
 
 
+<figure id="fig-trace-merge-intervals">
+<img src="img/dsa-trace-merge-intervals.svg" alt="Merge Intervals, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 36.</strong> Merge Intervals, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 11 handles what no shortcut covers: backtracking, systematic search with undo.</p>
 <h2 id="pattern-11">11. Backtracking</h2>
 <p>Every pattern so far had a clean structure: sorted input, a window, a heap. Backtracking is for the rest: systematic search with choose, explore, and undo.</p>
@@ -1892,23 +2020,23 @@ A D E E               (0,2) C ok -&gt; (1,2) C ok -&gt; (2,2) E ok -&gt; (2,1) D
 <li><strong>No pruning:</strong> check the bound (remainder, placement validity) before recursing, not after.</li>
 </ul>
 <blockquote class="sentence">"Backtracking is choose, explore, unchoose on a decision tree; I prune dead branches early, copy the path into results, and sort plus skip whenever the input has duplicates."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#78</strong> <span class="badge b-must">MUST-DO</span></td><td>Subsets</td><td><span class='badge b-med'>Medium</span></td><td>Include/exclude each element.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p221">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#77</strong></td><td>Combinations</td><td><span class='badge b-med'>Medium</span></td><td>Choose k from n with a start index.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p222">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#46</strong> <span class="badge b-must">MUST-DO</span></td><td>Permutations</td><td><span class='badge b-med'>Medium</span></td><td>Pick any unused element per slot.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p223">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#78</strong> <span class="badge b-must">MUST-DO</span></td><td>Subsets</td><td><span class='badge b-med'>Medium</span></td><td>Include/exclude each element.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p281">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#77</strong></td><td>Combinations</td><td><span class='badge b-med'>Medium</span></td><td>Choose k from n with a start index.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p293">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#46</strong> <span class="badge b-must">MUST-DO</span></td><td>Permutations</td><td><span class='badge b-med'>Medium</span></td><td>Pick any unused element per slot.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p283">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#784</strong></td><td>Letter Case Permutation</td><td><span class='badge b-med'>Medium</span></td><td>Branch on letter case.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#17</strong></td><td>Letter Combinations of a Phone Number</td><td><span class='badge b-med'>Medium</span></td><td>Product over digit mappings.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p224">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#22</strong> <span class="badge b-must">MUST-DO</span></td><td>Generate Parentheses</td><td><span class='badge b-med'>Medium</span></td><td>Only add ')' when closable.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p092">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#90</strong></td><td>Subsets II</td><td><span class='badge b-med'>Medium</span></td><td>Sort; skip duplicate starts.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p225">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#47</strong></td><td>Permutations II</td><td><span class='badge b-med'>Medium</span></td><td>Used-array plus duplicate skip rule.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p226">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#39</strong> <span class="badge b-must">MUST-DO</span></td><td>Combination Sum</td><td><span class='badge b-med'>Medium</span></td><td>Unlimited reuse: recurse on same index.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p228">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#40</strong></td><td>Combination Sum II</td><td><span class='badge b-med'>Medium</span></td><td>Each used once: recurse on next index.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p229">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#216</strong></td><td>Combination Sum III</td><td><span class='badge b-med'>Medium</span></td><td>Combinations with a target sum.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p227">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#93</strong></td><td>Restore IP Addresses</td><td><span class='badge b-med'>Medium</span></td><td>Place 3 dots; prune invalid segments.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p230">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#131</strong></td><td>Palindrome Partitioning</td><td><span class='badge b-med'>Medium</span></td><td>Cut after each palindromic prefix.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p231">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#79</strong></td><td>Word Search</td><td><span class='badge b-med'>Medium</span></td><td>Grid DFS with visited marking.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p232">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#51</strong></td><td>N-Queens</td><td><span class='badge b-hard'>Hard</span></td><td>Column/diagonal sets prune rows.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p233">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#52</strong></td><td>N-Queens II</td><td><span class='badge b-hard'>Hard</span></td><td>Count placements only.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p234">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#37</strong></td><td>Sudoku Solver</td><td><span class='badge b-hard'>Hard</span></td><td>Candidate propagation plus DFS.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p235">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#17</strong></td><td>Letter Combinations of a Phone Number</td><td><span class='badge b-med'>Medium</span></td><td>Product over digit mappings.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p288">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#22</strong> <span class="badge b-must">MUST-DO</span></td><td>Generate Parentheses</td><td><span class='badge b-med'>Medium</span></td><td>Only add ')' when closable.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p291">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#90</strong></td><td>Subsets II</td><td><span class='badge b-med'>Medium</span></td><td>Sort; skip duplicate starts.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p284">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#47</strong></td><td>Permutations II</td><td><span class='badge b-med'>Medium</span></td><td>Used-array plus duplicate skip rule.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p292">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#39</strong> <span class="badge b-must">MUST-DO</span></td><td>Combination Sum</td><td><span class='badge b-med'>Medium</span></td><td>Unlimited reuse: recurse on same index.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p282">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#40</strong></td><td>Combination Sum II</td><td><span class='badge b-med'>Medium</span></td><td>Each used once: recurse on next index.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p285">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#216</strong></td><td>Combination Sum III</td><td><span class='badge b-med'>Medium</span></td><td>Combinations with a target sum.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p294">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#93</strong></td><td>Restore IP Addresses</td><td><span class='badge b-med'>Medium</span></td><td>Place 3 dots; prune invalid segments.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p295">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#131</strong></td><td>Palindrome Partitioning</td><td><span class='badge b-med'>Medium</span></td><td>Cut after each palindromic prefix.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p287">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#79</strong></td><td>Word Search</td><td><span class='badge b-med'>Medium</span></td><td>Grid DFS with visited marking.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p286">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#51</strong></td><td>N-Queens</td><td><span class='badge b-hard'>Hard</span></td><td>Column/diagonal sets prune rows.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p289">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#52</strong></td><td>N-Queens II</td><td><span class='badge b-hard'>Hard</span></td><td>Count placements only.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p290">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#37</strong></td><td>Sudoku Solver</td><td><span class='badge b-hard'>Hard</span></td><td>Candidate propagation plus DFS.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p296">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#301</strong></td><td>Remove Invalid Parentheses</td><td><span class='badge b-hard'>Hard</span></td><td>BFS removal or DFS with pruning.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
@@ -1924,6 +2052,18 @@ A D E E               (0,2) C ok -&gt; (1,2) C ok -&gt; (2,2) E ok -&gt; (2,1) D
 </div>
 
 
+<figure id="fig-trace-subsets">
+<img src="img/dsa-trace-subsets.svg" alt="Subsets, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 37.</strong> Subsets, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 12 makes the search space explicit: graphs, BFS/DFS, and shortest paths.</p>
 <h2 id="pattern-12">12. Graphs (BFS/DFS, Topological Sort, Union-Find, Shortest Paths)</h2>
 <p>Backtracking searches implicitly, building the space as it goes. Graphs make the space explicit: nodes, edges, and traversals over all of it.</p>
@@ -2095,49 +2235,49 @@ answer = max(dist) = 2</pre>
 </ul>
 <blockquote class="sentence">"Graphs add the visited set to tree traversal: BFS waves give unweighted shortest paths, Kahn orders prerequisites and exposes cycles, union-find answers connectivity lazily, and Dijkstra generalizes BFS to non-negative weights."</blockquote>
 <table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#463</strong></td><td>Island Perimeter</td><td><span class='badge b-easy'>Easy</span></td><td>Count exposed edges per land cell.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#733</strong></td><td>Flood Fill</td><td><span class='badge b-easy'>Easy</span></td><td>DFS recoloring with a target check.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p251">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#841</strong></td><td>Keys and Rooms</td><td><span class='badge b-easy'>Easy</span></td><td>Reachability DFS/BFS from room 0.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p252">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#695</strong></td><td>Max Area of Island</td><td><span class='badge b-med'>Medium</span></td><td>DFS area counting.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p253">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#200</strong> <span class="badge b-must">MUST-DO</span></td><td>Number of Islands</td><td><span class='badge b-med'>Medium</span></td><td>Flood each unvisited land cell; count.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p254">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#547</strong> <span class="badge b-must">MUST-DO</span></td><td>Number of Provinces</td><td><span class='badge b-med'>Medium</span></td><td>Connected components in adjacency matrix.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p255">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#323</strong></td><td>Number of Connected Components in an Undirected Graph</td><td><span class='badge b-med'>Medium</span></td><td>DFS or union-find counting.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p256">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#130</strong></td><td>Surrounded Regions</td><td><span class='badge b-med'>Medium</span></td><td>Flood from borders; flip the rest.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p257">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1020</strong></td><td>Number of Enclaves</td><td><span class='badge b-med'>Medium</span></td><td>Border flood, count remaining land.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p258">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#133</strong></td><td>Clone Graph</td><td><span class='badge b-med'>Medium</span></td><td>Map old node to new; DFS copies edges.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p259">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#542</strong></td><td>01 Matrix</td><td><span class='badge b-med'>Medium</span></td><td>Multi-source BFS from all zeros.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p260">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#417</strong></td><td>Pacific Atlantic Water Flow</td><td><span class='badge b-med'>Medium</span></td><td>Reverse-flow DFS from both oceans.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p261">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#785</strong></td><td>Is Graph Bipartite?</td><td><span class='badge b-med'>Medium</span></td><td>Two-coloring DFS/BFS (bipartite: vertices split into two groups with every edge crossing between them).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p262">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#994</strong> <span class="badge b-must">MUST-DO</span></td><td>Rotting Oranges</td><td><span class='badge b-med'>Medium</span></td><td>Multi-source BFS with minutes.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p263">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1091</strong></td><td>Shortest Path in Binary Matrix</td><td><span class='badge b-med'>Medium</span></td><td>BFS on 8-directional grid.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p264">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#909</strong></td><td>Snakes and Ladders</td><td><span class='badge b-med'>Medium</span></td><td>BFS over board squares; ladders are edges.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p265">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#127</strong> <span class="badge b-must">MUST-DO</span></td><td>Word Ladder</td><td><span class='badge b-hard'>Hard</span></td><td>BFS over word transformations.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p266">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#207</strong> <span class="badge b-must">MUST-DO</span></td><td>Course Schedule</td><td><span class='badge b-med'>Medium</span></td><td>Cycle detection in a DAG.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p276">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#210</strong> <span class="badge b-must">MUST-DO</span></td><td>Course Schedule II</td><td><span class='badge b-med'>Medium</span></td><td>Topological order (Kahn).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p277">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#802</strong></td><td>Find Eventual Safe States</td><td><span class='badge b-med'>Medium</span></td><td>Reverse-graph topo sort.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p278">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#2115</strong></td><td>Find All Possible Recipes from Given Supplies</td><td><span class='badge b-med'>Medium</span></td><td>Topo sort over recipe dependencies.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p279">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1136</strong></td><td>Parallel Courses</td><td><span class='badge b-med'>Medium</span></td><td>Topo layers count semesters.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p280">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#444</strong></td><td>Sequence Reconstruction</td><td><span class='badge b-med'>Medium</span></td><td>Uniqueness check on topo order.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p281">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#310</strong></td><td>Minimum Height Trees</td><td><span class='badge b-med'>Medium</span></td><td>Peel leaves layer by layer.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p282">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#269</strong> <span class="badge b-must">MUST-DO</span></td><td>Alien Dictionary</td><td><span class='badge b-hard'>Hard</span></td><td>Build char graph from adjacent words.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p283">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1203</strong></td><td>Sort Items by Groups Respecting Dependencies</td><td><span class='badge b-hard'>Hard</span></td><td>Two-level topo sort.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p284">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1971</strong></td><td>Find if Path Exists in Graph</td><td><span class='badge b-easy'>Easy</span></td><td>DFS or union-find connectivity.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p291">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#684</strong> <span class="badge b-must">MUST-DO</span></td><td>Redundant Connection</td><td><span class='badge b-med'>Medium</span></td><td>First edge that connects an already-linked pair.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p292">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#990</strong></td><td>Satisfiability of Equality Equations</td><td><span class='badge b-med'>Medium</span></td><td>Union equalities; check inequalities.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p293">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#733</strong></td><td>Flood Fill</td><td><span class='badge b-easy'>Easy</span></td><td>DFS recoloring with a target check.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p318">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#841</strong></td><td>Keys and Rooms</td><td><span class='badge b-easy'>Easy</span></td><td>Reachability DFS/BFS from room 0.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p319">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#695</strong></td><td>Max Area of Island</td><td><span class='badge b-med'>Medium</span></td><td>DFS area counting.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p308">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#200</strong> <span class="badge b-must">MUST-DO</span></td><td>Number of Islands</td><td><span class='badge b-med'>Medium</span></td><td>Flood each unvisited land cell; count.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p306">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#547</strong> <span class="badge b-must">MUST-DO</span></td><td>Number of Provinces</td><td><span class='badge b-med'>Medium</span></td><td>Connected components in adjacency matrix.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p353">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#323</strong></td><td>Number of Connected Components in an Undirected Graph</td><td><span class='badge b-med'>Medium</span></td><td>DFS or union-find counting.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p337">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#130</strong></td><td>Surrounded Regions</td><td><span class='badge b-med'>Medium</span></td><td>Flood from borders; flip the rest.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p310">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1020</strong></td><td>Number of Enclaves</td><td><span class='badge b-med'>Medium</span></td><td>Border flood, count remaining land.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p322">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#133</strong></td><td>Clone Graph</td><td><span class='badge b-med'>Medium</span></td><td>Map old node to new; DFS copies edges.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p307">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#542</strong></td><td>01 Matrix</td><td><span class='badge b-med'>Medium</span></td><td>Multi-source BFS from all zeros.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p313">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#417</strong></td><td>Pacific Atlantic Water Flow</td><td><span class='badge b-med'>Medium</span></td><td>Reverse-flow DFS from both oceans.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p309">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#785</strong></td><td>Is Graph Bipartite?</td><td><span class='badge b-med'>Medium</span></td><td>Two-coloring DFS/BFS (bipartite: vertices split into two groups with every edge crossing between them).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p340">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#994</strong> <span class="badge b-must">MUST-DO</span></td><td>Rotting Oranges</td><td><span class='badge b-med'>Medium</span></td><td>Multi-source BFS with minutes.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p311">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1091</strong></td><td>Shortest Path in Binary Matrix</td><td><span class='badge b-med'>Medium</span></td><td>BFS on 8-directional grid.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p314">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#909</strong></td><td>Snakes and Ladders</td><td><span class='badge b-med'>Medium</span></td><td>BFS over board squares; ladders are edges.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p317">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#127</strong> <span class="badge b-must">MUST-DO</span></td><td>Word Ladder</td><td><span class='badge b-hard'>Hard</span></td><td>BFS over word transformations.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p315">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#207</strong> <span class="badge b-must">MUST-DO</span></td><td>Course Schedule</td><td><span class='badge b-med'>Medium</span></td><td>Cycle detection in a DAG.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p341">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#210</strong> <span class="badge b-must">MUST-DO</span></td><td>Course Schedule II</td><td><span class='badge b-med'>Medium</span></td><td>Topological order (Kahn).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p342">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#802</strong></td><td>Find Eventual Safe States</td><td><span class='badge b-med'>Medium</span></td><td>Reverse-graph topo sort.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p344">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#2115</strong></td><td>Find All Possible Recipes from Given Supplies</td><td><span class='badge b-med'>Medium</span></td><td>Topo sort over recipe dependencies.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p346">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1136</strong></td><td>Parallel Courses</td><td><span class='badge b-med'>Medium</span></td><td>Topo layers count semesters.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p347">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#444</strong></td><td>Sequence Reconstruction</td><td><span class='badge b-med'>Medium</span></td><td>Uniqueness check on topo order.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p349">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#310</strong></td><td>Minimum Height Trees</td><td><span class='badge b-med'>Medium</span></td><td>Peel leaves layer by layer.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p345">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#269</strong> <span class="badge b-must">MUST-DO</span></td><td>Alien Dictionary</td><td><span class='badge b-hard'>Hard</span></td><td>Build char graph from adjacent words.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p343">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1203</strong></td><td>Sort Items by Groups Respecting Dependencies</td><td><span class='badge b-hard'>Hard</span></td><td>Two-level topo sort.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p350">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1971</strong></td><td>Find if Path Exists in Graph</td><td><span class='badge b-easy'>Easy</span></td><td>DFS or union-find connectivity.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p320">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#684</strong> <span class="badge b-must">MUST-DO</span></td><td>Redundant Connection</td><td><span class='badge b-med'>Medium</span></td><td>First edge that connects an already-linked pair.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p351">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#990</strong></td><td>Satisfiability of Equality Equations</td><td><span class='badge b-med'>Medium</span></td><td>Union equalities; check inequalities.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p355">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#721</strong></td><td>Accounts Merge</td><td><span class='badge b-med'>Medium</span></td><td>Union accounts sharing emails.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#947</strong></td><td>Most Stones Removed with Same Row or Column</td><td><span class='badge b-med'>Medium</span></td><td>Union rows/columns; removals are stones minus components.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p294">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1319</strong></td><td>Number of Operations to Make Network Connected</td><td><span class='badge b-med'>Medium</span></td><td>Extra edges are unions beyond n minus 1.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p295">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1631</strong></td><td>Path With Minimum Effort</td><td><span class='badge b-med'>Medium</span></td><td>Union edges by effort; or Dijkstra.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p296">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#952</strong></td><td>Largest Component Size by Common Factor</td><td><span class='badge b-hard'>Hard</span></td><td>Union numbers with their prime factors.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p297">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#924</strong></td><td>Minimize Malware Spread</td><td><span class='badge b-hard'>Hard</span></td><td>Union components; score by size minus infected.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p298">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#305</strong> <span class="badge b-must">MUST-DO</span></td><td>Number of Islands II</td><td><span class='badge b-hard'>Hard</span></td><td>Dynamic unions as land arrives.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p299">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#743</strong> <span class="badge b-must">MUST-DO</span></td><td>Network Delay Time</td><td><span class='badge b-med'>Medium</span></td><td>Dijkstra from node k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p301">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1514</strong></td><td>Path with Maximum Probability</td><td><span class='badge b-med'>Medium</span></td><td>Max-heap Dijkstra on products.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p302">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#787</strong> <span class="badge b-must">MUST-DO</span></td><td>Cheapest Flights Within K Stops</td><td><span class='badge b-med'>Medium</span></td><td>Dijkstra on (cost, stops) or Bellman-Ford.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p303">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1976</strong></td><td>Number of Ways to Arrive at Destination</td><td><span class='badge b-med'>Medium</span></td><td>Dijkstra plus path counting.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p304">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1293</strong></td><td>Shortest Path in a Grid with Obstacles Elimination</td><td><span class='badge b-hard'>Hard</span></td><td>BFS on (row, col, remaining).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p305">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#2045</strong></td><td>Second Minimum Time to Reach Destination</td><td><span class='badge b-hard'>Hard</span></td><td>BFS tracking two best times per node.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p306">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#778</strong> <span class="badge b-must">MUST-DO</span></td><td>Swim in Rising Water</td><td><span class='badge b-hard'>Hard</span></td><td>Dijkstra on max-height edge cost.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p307">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#882</strong></td><td>Reachable Nodes In Subdivided Graph</td><td><span class='badge b-hard'>Hard</span></td><td>Dijkstra then count reachable subdivided edges.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p308">Atlas: full treatment</a></td></tr></tbody></table>
+<tr><td><strong>#947</strong></td><td>Most Stones Removed with Same Row or Column</td><td><span class='badge b-med'>Medium</span></td><td>Union rows/columns; removals are stones minus components.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p356">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1319</strong></td><td>Number of Operations to Make Network Connected</td><td><span class='badge b-med'>Medium</span></td><td>Extra edges are unions beyond n minus 1.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p354">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1631</strong></td><td>Path With Minimum Effort</td><td><span class='badge b-med'>Medium</span></td><td>Union edges by effort; or Dijkstra.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p364">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#952</strong></td><td>Largest Component Size by Common Factor</td><td><span class='badge b-hard'>Hard</span></td><td>Union numbers with their prime factors.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
+<tr><td><strong>#924</strong></td><td>Minimize Malware Spread</td><td><span class='badge b-hard'>Hard</span></td><td>Union components; score by size minus infected.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
+<tr><td><strong>#305</strong> <span class="badge b-must">MUST-DO</span></td><td>Number of Islands II</td><td><span class='badge b-hard'>Hard</span></td><td>Dynamic unions as land arrives.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p360">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#743</strong> <span class="badge b-must">MUST-DO</span></td><td>Network Delay Time</td><td><span class='badge b-med'>Medium</span></td><td>Dijkstra from node k.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p361">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1514</strong></td><td>Path with Maximum Probability</td><td><span class='badge b-med'>Medium</span></td><td>Max-heap Dijkstra on products.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p363">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#787</strong> <span class="badge b-must">MUST-DO</span></td><td>Cheapest Flights Within K Stops</td><td><span class='badge b-med'>Medium</span></td><td>Dijkstra on (cost, stops) or Bellman-Ford.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p362">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1976</strong></td><td>Number of Ways to Arrive at Destination</td><td><span class='badge b-med'>Medium</span></td><td>Dijkstra plus path counting.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
+<tr><td><strong>#1293</strong></td><td>Shortest Path in a Grid with Obstacles Elimination</td><td><span class='badge b-hard'>Hard</span></td><td>BFS on (row, col, remaining).</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
+<tr><td><strong>#2045</strong></td><td>Second Minimum Time to Reach Destination</td><td><span class='badge b-hard'>Hard</span></td><td>BFS tracking two best times per node.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p371">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#778</strong> <span class="badge b-must">MUST-DO</span></td><td>Swim in Rising Water</td><td><span class='badge b-hard'>Hard</span></td><td>Dijkstra on max-height edge cost.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p365">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#882</strong></td><td>Reachable Nodes In Subdivided Graph</td><td><span class='badge b-hard'>Hard</span></td><td>Dijkstra then count reachable subdivided edges.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p373">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -2152,6 +2292,18 @@ answer = max(dist) = 2</pre>
 </div>
 
 
+<figure id="fig-trace-course-schedule">
+<img src="img/dsa-trace-course-schedule.svg" alt="Course Schedule, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 38.</strong> Course Schedule, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 13 exploits overlapping subproblems: dynamic programming in one dimension.</p>
 <h2 id="pattern-13">13. Dynamic Programming 1D</h2>
 <p>Graphs explored every path. DP 1D exploits the opposite property: overlapping subproblems, solved once and reused forever, in one dimension.</p>
@@ -2249,24 +2401,24 @@ answer = True</pre>
 <li><strong>Off-by-one between 0-indexed arrays and 1-indexed dp:</strong> pick one convention (<code>dp[i]</code> = first i elements) and stick to it.</li>
 </ul>
 <blockquote class="sentence">"For 1D DP I define dp[i] in one sentence, write the recurrence from the definition, seed the base cases by hand, and fill in dependency order; the sentence is the algorithm."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#70</strong> <span class="badge b-must">MUST-DO</span></td><td>Climbing Stairs</td><td><span class='badge b-easy'>Easy</span></td><td>Fibonacci recurrence.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p326">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#70</strong> <span class="badge b-must">MUST-DO</span></td><td>Climbing Stairs</td><td><span class='badge b-easy'>Easy</span></td><td>Fibonacci recurrence.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p381">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#509</strong></td><td>Fibonacci Number</td><td><span class='badge b-easy'>Easy</span></td><td>Base case drill.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#746</strong></td><td>Min Cost Climbing Stairs</td><td><span class='badge b-easy'>Easy</span></td><td>Min of two predecessors.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p327">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#746</strong></td><td>Min Cost Climbing Stairs</td><td><span class='badge b-easy'>Easy</span></td><td>Min of two predecessors.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p382">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#1137</strong></td><td>N-th Tribonacci Number</td><td><span class='badge b-easy'>Easy</span></td><td>Three-term recurrence.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#198</strong> <span class="badge b-must">MUST-DO</span></td><td>House Robber</td><td><span class='badge b-med'>Medium</span></td><td>Take or skip; dp[i] is best up to i.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p328">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#213</strong></td><td>House Robber II</td><td><span class='badge b-med'>Medium</span></td><td>Two runs: exclude first or exclude last.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p329">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#91</strong></td><td>Decode Ways</td><td><span class='badge b-med'>Medium</span></td><td>One or two digit decodings.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p330">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#139</strong> <span class="badge b-must">MUST-DO</span></td><td>Word Break</td><td><span class='badge b-med'>Medium</span></td><td>dp[i]: prefix splittable.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p331">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#300</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Increasing Subsequence</td><td><span class='badge b-med'>Medium</span></td><td>dp[i] extends earlier smaller tails; patience alternative.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p332">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#152</strong></td><td>Maximum Product Subarray</td><td><span class='badge b-med'>Medium</span></td><td>Track max and min; sign flips.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p333">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#322</strong> <span class="badge b-must">MUST-DO</span></td><td>Coin Change</td><td><span class='badge b-med'>Medium</span></td><td>Unbounded knapsack: min coins.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p334">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#416</strong></td><td>Partition Equal Subset Sum</td><td><span class='badge b-med'>Medium</span></td><td>Subset sum to half total.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p335">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#377</strong></td><td>Combination Sum IV</td><td><span class='badge b-med'>Medium</span></td><td>Order matters: outer loop over amounts.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p336">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#494</strong></td><td>Target Sum</td><td><span class='badge b-med'>Medium</span></td><td>Subset sum with sign assignment.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p337">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#647</strong></td><td>Palindromic Substrings</td><td><span class='badge b-med'>Medium</span></td><td>Expand around centers; or interval DP.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p338">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#5</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Palindromic Substring</td><td><span class='badge b-med'>Medium</span></td><td>Expand around centers O(n^2) time, O(1) space.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p339">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#983</strong></td><td>Minimum Cost For Tickets</td><td><span class='badge b-med'>Medium</span></td><td>dp over days with pass lookback.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p340">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#120</strong></td><td>Triangle</td><td><span class='badge b-med'>Medium</span></td><td>Bottom-up 1D roll.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p341">Atlas: full treatment</a></td></tr></tbody></table>
+<tr><td><strong>#198</strong> <span class="badge b-must">MUST-DO</span></td><td>House Robber</td><td><span class='badge b-med'>Medium</span></td><td>Take or skip; dp[i] is best up to i.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p383">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#213</strong></td><td>House Robber II</td><td><span class='badge b-med'>Medium</span></td><td>Two runs: exclude first or exclude last.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p384">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#91</strong></td><td>Decode Ways</td><td><span class='badge b-med'>Medium</span></td><td>One or two digit decodings.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p386">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#139</strong> <span class="badge b-must">MUST-DO</span></td><td>Word Break</td><td><span class='badge b-med'>Medium</span></td><td>dp[i]: prefix splittable.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p389">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#300</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Increasing Subsequence</td><td><span class='badge b-med'>Medium</span></td><td>dp[i] extends earlier smaller tails; patience alternative.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p390">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#152</strong></td><td>Maximum Product Subarray</td><td><span class='badge b-med'>Medium</span></td><td>Track max and min; sign flips.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p388">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#322</strong> <span class="badge b-must">MUST-DO</span></td><td>Coin Change</td><td><span class='badge b-med'>Medium</span></td><td>Unbounded knapsack: min coins.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p387">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#416</strong></td><td>Partition Equal Subset Sum</td><td><span class='badge b-med'>Medium</span></td><td>Subset sum to half total.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p446">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#377</strong></td><td>Combination Sum IV</td><td><span class='badge b-med'>Medium</span></td><td>Order matters: outer loop over amounts.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p391">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#494</strong></td><td>Target Sum</td><td><span class='badge b-med'>Medium</span></td><td>Subset sum with sign assignment.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p449">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#647</strong></td><td>Palindromic Substrings</td><td><span class='badge b-med'>Medium</span></td><td>Expand around centers; or interval DP.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p385">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#5</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Palindromic Substring</td><td><span class='badge b-med'>Medium</span></td><td>Expand around centers O(n^2) time, O(1) space.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
+<tr><td><strong>#983</strong></td><td>Minimum Cost For Tickets</td><td><span class='badge b-med'>Medium</span></td><td>dp over days with pass lookback.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p395">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#120</strong></td><td>Triangle</td><td><span class='badge b-med'>Medium</span></td><td>Bottom-up 1D roll.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p414">Atlas: full treatment</a></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
 <ul>
@@ -2281,6 +2433,18 @@ answer = True</pre>
 </div>
 
 
+<figure id="fig-trace-house-robber">
+<img src="img/dsa-trace-house-robber.svg" alt="House Robber, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 39.</strong> House Robber, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 14 adds the second dimension: DP over grids and pairs of strings.</p>
 <h2 id="pattern-14">14. Dynamic Programming 2D</h2>
 <p>1D handled linear structure. Two-dimensional DP handles two dimensions of choice: grids, and pairs of strings like edit distance.</p>
@@ -2388,29 +2552,29 @@ answer = 167</pre>
 </ul>
 <blockquote class="sentence">"For two moving indices I build a table: strings share one skeleton of match-or-skip, grids combine top and left, and interval problems fill by increasing length with a split point."</blockquote>
 <table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#118</strong></td><td>Pascal's Triangle</td><td><span class='badge b-easy'>Easy</span></td><td>Each entry sums the two above.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#62</strong> <span class="badge b-must">MUST-DO</span></td><td>Unique Paths</td><td><span class='badge b-med'>Medium</span></td><td>Grid DP: sum from top and left.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p351">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#63</strong></td><td>Unique Paths II</td><td><span class='badge b-med'>Medium</span></td><td>Obstacles zero out cells.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p352">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#64</strong></td><td>Minimum Path Sum</td><td><span class='badge b-med'>Medium</span></td><td>Min of top and left.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p353">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#96</strong></td><td>Unique Binary Search Trees</td><td><span class='badge b-med'>Medium</span></td><td>Catalan: sum over root choices.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p354">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#931</strong></td><td>Minimum Falling Path Sum</td><td><span class='badge b-med'>Medium</span></td><td>Min over three cells above.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p355">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#221</strong></td><td>Maximal Square</td><td><span class='badge b-med'>Medium</span></td><td>Min of three neighbors plus 1.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p356">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#688</strong></td><td>Knight Probability in Chessboard</td><td><span class='badge b-med'>Medium</span></td><td>Probability DP over k moves.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p357">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1143</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Common Subsequence</td><td><span class='badge b-med'>Medium</span></td><td>Diagonal on match; max of skips otherwise.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p358">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#516</strong></td><td>Longest Palindromic Subsequence</td><td><span class='badge b-med'>Medium</span></td><td>Interval DP on the string.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p359">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#62</strong> <span class="badge b-must">MUST-DO</span></td><td>Unique Paths</td><td><span class='badge b-med'>Medium</span></td><td>Grid DP: sum from top and left.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p411">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#63</strong></td><td>Unique Paths II</td><td><span class='badge b-med'>Medium</span></td><td>Obstacles zero out cells.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p412">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#64</strong></td><td>Minimum Path Sum</td><td><span class='badge b-med'>Medium</span></td><td>Min of top and left.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p413">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#96</strong></td><td>Unique Binary Search Trees</td><td><span class='badge b-med'>Medium</span></td><td>Catalan: sum over root choices.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p230">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#931</strong></td><td>Minimum Falling Path Sum</td><td><span class='badge b-med'>Medium</span></td><td>Min over three cells above.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p440">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#221</strong></td><td>Maximal Square</td><td><span class='badge b-med'>Medium</span></td><td>Min of three neighbors plus 1.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p415">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#688</strong></td><td>Knight Probability in Chessboard</td><td><span class='badge b-med'>Medium</span></td><td>Probability DP over k moves.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p436">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1143</strong> <span class="badge b-must">MUST-DO</span></td><td>Longest Common Subsequence</td><td><span class='badge b-med'>Medium</span></td><td>Diagonal on match; max of skips otherwise.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p416">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#516</strong></td><td>Longest Palindromic Subsequence</td><td><span class='badge b-med'>Medium</span></td><td>Interval DP on the string.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p432">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#583</strong></td><td>Delete Operation for Two Strings</td><td><span class='badge b-med'>Medium</span></td><td>LCS complement.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#72</strong> <span class="badge b-must">MUST-DO</span></td><td>Edit Distance</td><td><span class='badge b-med'>Medium</span></td><td>Insert, delete, replace minimum.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p360">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#115</strong> <span class="badge b-must">MUST-DO</span></td><td>Distinct Subsequences</td><td><span class='badge b-hard'>Hard</span></td><td>Match or skip the current char.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p361">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#877</strong></td><td>Stone Game</td><td><span class='badge b-med'>Medium</span></td><td>Optimal play on intervals.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p371">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#486</strong></td><td>Predict the Winner</td><td><span class='badge b-med'>Medium</span></td><td>Net advantage DP.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p372">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#72</strong> <span class="badge b-must">MUST-DO</span></td><td>Edit Distance</td><td><span class='badge b-med'>Medium</span></td><td>Insert, delete, replace minimum.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p417">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#115</strong> <span class="badge b-must">MUST-DO</span></td><td>Distinct Subsequences</td><td><span class='badge b-hard'>Hard</span></td><td>Match or skip the current char.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p418">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#877</strong></td><td>Stone Game</td><td><span class='badge b-med'>Medium</span></td><td>Optimal play on intervals.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p427">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#486</strong></td><td>Predict the Winner</td><td><span class='badge b-med'>Medium</span></td><td>Net advantage DP.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p429">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#375</strong></td><td>Guess Number Higher or Lower II</td><td><span class='badge b-med'>Medium</span></td><td>Minimax over ranges.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#97</strong></td><td>Interleaving String</td><td><span class='badge b-med'>Medium</span></td><td>2D DP on prefix pairs.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p373">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1039</strong></td><td>Minimum Score Triangulation of Polygon</td><td><span class='badge b-med'>Medium</span></td><td>Interval DP with split point.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p374">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#329</strong></td><td>Longest Increasing Path in a Matrix</td><td><span class='badge b-hard'>Hard</span></td><td>DFS plus memo on DAG of increasing edges.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p362">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#97</strong></td><td>Interleaving String</td><td><span class='badge b-med'>Medium</span></td><td>2D DP on prefix pairs.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p419">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1039</strong></td><td>Minimum Score Triangulation of Polygon</td><td><span class='badge b-med'>Medium</span></td><td>Interval DP with split point.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p444">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#329</strong></td><td>Longest Increasing Path in a Matrix</td><td><span class='badge b-hard'>Hard</span></td><td>DFS plus memo on DAG of increasing edges.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p422">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#1547</strong></td><td>Minimum Cost to Cut a Stick</td><td><span class='badge b-hard'>Hard</span></td><td>Interval DP sorted cut positions.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#1312</strong></td><td>Minimum Insertion Steps to Make a String Palindrome</td><td><span class='badge b-hard'>Hard</span></td><td>LPS complement.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p375">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#44</strong></td><td>Wildcard Matching</td><td><span class='badge b-hard'>Hard</span></td><td>DP with star branching.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p376">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#10</strong> <span class="badge b-must">MUST-DO</span></td><td>Regular Expression Matching</td><td><span class='badge b-hard'>Hard</span></td><td>DP with star zero-or-more.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p377">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#312</strong> <span class="badge b-must">MUST-DO</span></td><td>Burst Balloons</td><td><span class='badge b-hard'>Hard</span></td><td>Interval DP: balloon burst last.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p378">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1312</strong></td><td>Minimum Insertion Steps to Make a String Palindrome</td><td><span class='badge b-hard'>Hard</span></td><td>LPS complement.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p433">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#44</strong></td><td>Wildcard Matching</td><td><span class='badge b-hard'>Hard</span></td><td>DP with star branching.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p421">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#10</strong> <span class="badge b-must">MUST-DO</span></td><td>Regular Expression Matching</td><td><span class='badge b-hard'>Hard</span></td><td>DP with star zero-or-more.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p420">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#312</strong> <span class="badge b-must">MUST-DO</span></td><td>Burst Balloons</td><td><span class='badge b-hard'>Hard</span></td><td>Interval DP: balloon burst last.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p426">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#87</strong></td><td>Scramble String</td><td><span class='badge b-hard'>Hard</span></td><td>Split point recursion plus memo.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#664</strong></td><td>Strange Printer</td><td><span class='badge b-hard'>Hard</span></td><td>Interval DP merging same chars.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr></tbody></table>
 <div class="takeaway">
@@ -2427,6 +2591,18 @@ answer = 167</pre>
 </div>
 
 
+<figure id="fig-trace-lcs">
+<img src="img/dsa-trace-lcs.svg" alt="Longest Common Subsequence: the DP table, traced" loading="lazy">
+<figcaption><strong>Figure 40.</strong> Longest Common Subsequence. The DP table, traced: matches extend from the diagonal, mismatches inherit the best neighbor.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 15 is what you reach for when the structure is even simpler: greedy, one local choice, provably enough.</p>
 <h2 id="pattern-15">15. Greedy</h2>
 <p>DP solved everything with structure. Greedy is the step beyond: problems where one locally best choice is provably enough, so no table is needed at all.</p>
@@ -2531,18 +2707,18 @@ answer = 6  ([4,-1,2,1])</pre>
 <li><strong>All-negative input</strong> in Kadane (initialize from the data, not 0).</li>
 </ul>
 <blockquote class="sentence">"Greedy takes the locally best choice and never looks back; I use it only when I can say why the choice is safe, usually a domination or exchange argument, and I keep a counterexample ready for when it is not."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#455</strong></td><td>Assign Cookies</td><td><span class='badge b-easy'>Easy</span></td><td>Smallest sufficient cookie per child.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p311">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#455</strong></td><td>Assign Cookies</td><td><span class='badge b-easy'>Easy</span></td><td>Smallest sufficient cookie per child.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p278">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#1005</strong></td><td>Maximize Sum Of Array After K Negations</td><td><span class='badge b-easy'>Easy</span></td><td>Flip the most negative first.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#1827</strong></td><td>Minimum Operations to Make the Array Increasing</td><td><span class='badge b-easy'>Easy</span></td><td>Raise each element to beat the previous.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#122</strong></td><td>Best Time to Buy and Sell Stock II</td><td><span class='badge b-med'>Medium</span></td><td>Sum all positive daily gains.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p312">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#53</strong> <span class="badge b-must">MUST-DO</span></td><td>Maximum Subarray</td><td><span class='badge b-med'>Medium</span></td><td>Kadane: extend or restart.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p313">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#55</strong> <span class="badge b-must">MUST-DO</span></td><td>Jump Game</td><td><span class='badge b-med'>Medium</span></td><td>Farthest reachable scan.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p314">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#45</strong> <span class="badge b-must">MUST-DO</span></td><td>Jump Game II</td><td><span class='badge b-med'>Medium</span></td><td>Jump counting with current-end frontier.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p315">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#134</strong> <span class="badge b-must">MUST-DO</span></td><td>Gas Station</td><td><span class='badge b-med'>Medium</span></td><td>Total gas decides; restart at the dip.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p316">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#122</strong></td><td>Best Time to Buy and Sell Stock II</td><td><span class='badge b-med'>Medium</span></td><td>Sum all positive daily gains.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p273">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#53</strong> <span class="badge b-must">MUST-DO</span></td><td>Maximum Subarray</td><td><span class='badge b-med'>Medium</span></td><td>Kadane: extend or restart.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p398">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#55</strong> <span class="badge b-must">MUST-DO</span></td><td>Jump Game</td><td><span class='badge b-med'>Medium</span></td><td>Farthest reachable scan.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p267">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#45</strong> <span class="badge b-must">MUST-DO</span></td><td>Jump Game II</td><td><span class='badge b-med'>Medium</span></td><td>Jump counting with current-end frontier.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p268">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#134</strong> <span class="badge b-must">MUST-DO</span></td><td>Gas Station</td><td><span class='badge b-med'>Medium</span></td><td>Total gas decides; restart at the dip.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p269">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#179</strong></td><td>Largest Number</td><td><span class='badge b-med'>Medium</span></td><td>Custom comparator a+b vs b+a.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#861</strong></td><td>Score After Flipping Matrix</td><td><span class='badge b-med'>Medium</span></td><td>Fix column 0, then optimize columns.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#767</strong></td><td>Reorganize String</td><td><span class='badge b-med'>Medium</span></td><td>Greedy by remaining counts; heap.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p317">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1647</strong></td><td>Minimum Deletions to Make Character Frequencies Unique</td><td><span class='badge b-med'>Medium</span></td><td>Greedy lower each frequency to unused.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p318">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#767</strong></td><td>Reorganize String</td><td><span class='badge b-med'>Medium</span></td><td>Greedy by remaining counts; heap.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p239">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1647</strong></td><td>Minimum Deletions to Make Character Frequencies Unique</td><td><span class='badge b-med'>Medium</span></td><td>Greedy lower each frequency to unused.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p280">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#1405</strong></td><td>Longest Happy String</td><td><span class='badge b-med'>Medium</span></td><td>Greedy construction with run limits.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
@@ -2558,6 +2734,18 @@ answer = 6  ([4,-1,2,1])</pre>
 </div>
 
 
+<figure id="fig-trace-jump-game">
+<img src="img/dsa-trace-jump-game.svg" alt="Jump Game, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 41.</strong> Jump Game, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 16 is the bit-level and number-theoretic toolbox the other patterns assume.</p>
 <h2 id="pattern-16">16. Bit Manipulation and Math</h2>
 <p>The algorithms are done. What remains is the bit-level and number-theoretic toolbox: XOR tricks, counting, and math the other sixteen patterns quietly assume.</p>
@@ -2605,7 +2793,7 @@ for x in nums:
 # Bit tricks
 x &amp; (x - 1)           # clears the lowest set bit
 x &amp; -x                # isolates the lowest set bit
-bin(x).count('1')     # popcount (Python 3.8+ has int.bit_count())
+bin(x).count('1')     # popcount (Python 3.10+ has int.bit_count())
 
 # Bitwise addition: sum = xor (no carry), carry = and-shifted
 def add(a, b):
@@ -2677,25 +2865,25 @@ primes: 2,3,5,7 -&gt; answer = 4</pre>
 <li><strong>Sieve bounds:</strong> mark from <code>i*i</code>, stop at sqrt(n); off-by-ones here silently miss composites.</li>
 </ul>
 <blockquote class="sentence">"Bits give O(1)-space answers: XOR cancels pairs, bit tricks clear and isolate the lowest set bit, shifts build fast power, and the sieve earns its bound from two small optimizations."</blockquote>
-<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#231</strong></td><td>Power of Two</td><td><span class='badge b-easy'>Easy</span></td><td>Exactly one set bit: x & (x-1) == 0.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p391">Atlas: full treatment</a></td></tr>
+<table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#231</strong></td><td>Power of Two</td><td><span class='badge b-easy'>Easy</span></td><td>Exactly one set bit: x & (x-1) == 0.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p489">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#389</strong></td><td>Find the Difference</td><td><span class='badge b-easy'>Easy</span></td><td>XOR or sum difference.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#461</strong></td><td>Hamming Distance</td><td><span class='badge b-easy'>Easy</span></td><td>Popcount of x ^ y.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#191</strong></td><td>Number of 1 Bits</td><td><span class='badge b-easy'>Easy</span></td><td>Clear lowest bit per count.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p392">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#338</strong></td><td>Counting Bits</td><td><span class='badge b-easy'>Easy</span></td><td>dp[i] = dp[i>>1] + (i&1).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p393">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#136</strong> <span class="badge b-must">MUST-DO</span></td><td>Single Number</td><td><span class='badge b-easy'>Easy</span></td><td>XOR cancels pairs.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p394">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#371</strong> <span class="badge b-must">MUST-DO</span></td><td>Sum of Two Integers</td><td><span class='badge b-med'>Medium</span></td><td>Add with carry loop on bits.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p395">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#137</strong></td><td>Single Number II</td><td><span class='badge b-med'>Medium</span></td><td>Count bits mod 3.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p396">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#260</strong></td><td>Single Number III</td><td><span class='badge b-med'>Medium</span></td><td>XOR then split by lowest differing bit.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p397">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#201</strong></td><td>Bitwise AND of Numbers Range</td><td><span class='badge b-med'>Medium</span></td><td>Common prefix via shifts.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p398">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#191</strong></td><td>Number of 1 Bits</td><td><span class='badge b-easy'>Easy</span></td><td>Clear lowest bit per count.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p484">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#338</strong></td><td>Counting Bits</td><td><span class='badge b-easy'>Easy</span></td><td>dp[i] = dp[i>>1] + (i&1).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p485">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#136</strong> <span class="badge b-must">MUST-DO</span></td><td>Single Number</td><td><span class='badge b-easy'>Easy</span></td><td>XOR cancels pairs.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p481">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#371</strong> <span class="badge b-must">MUST-DO</span></td><td>Sum of Two Integers</td><td><span class='badge b-med'>Medium</span></td><td>Add with carry loop on bits.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p487">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#137</strong></td><td>Single Number II</td><td><span class='badge b-med'>Medium</span></td><td>Count bits mod 3.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p482">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#260</strong></td><td>Single Number III</td><td><span class='badge b-med'>Medium</span></td><td>XOR then split by lowest differing bit.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p483">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#201</strong></td><td>Bitwise AND of Numbers Range</td><td><span class='badge b-med'>Medium</span></td><td>Common prefix via shifts.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p488">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#13</strong></td><td>Roman to Integer</td><td><span class='badge b-easy'>Easy</span></td><td>Subtract when a smaller value precedes.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#66</strong></td><td>Plus One</td><td><span class='badge b-easy'>Easy</span></td><td>Carry propagation.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p399">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#66</strong></td><td>Plus One</td><td><span class='badge b-easy'>Easy</span></td><td>Carry propagation.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p493">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#9</strong></td><td>Palindrome Number</td><td><span class='badge b-easy'>Easy</span></td><td>Reverse half the digits.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#202</strong></td><td>Happy Number</td><td><span class='badge b-easy'>Easy</span></td><td>Cycle detection with a set.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#50</strong> <span class="badge b-must">MUST-DO</span></td><td>Pow(x, n)</td><td><span class='badge b-med'>Medium</span></td><td>Binary exponentiation.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p400">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#204</strong> <span class="badge b-must">MUST-DO</span></td><td>Count Primes</td><td><span class='badge b-med'>Medium</span></td><td>Sieve of Eratosthenes.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p401">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#50</strong> <span class="badge b-must">MUST-DO</span></td><td>Pow(x, n)</td><td><span class='badge b-med'>Medium</span></td><td>Binary exponentiation.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p492">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#204</strong> <span class="badge b-must">MUST-DO</span></td><td>Count Primes</td><td><span class='badge b-med'>Medium</span></td><td>Sieve of Eratosthenes.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p499">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#7</strong></td><td>Reverse Integer</td><td><span class='badge b-med'>Medium</span></td><td>Overflow check before multiply.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#43</strong></td><td>Multiply Strings</td><td><span class='badge b-med'>Medium</span></td><td>Grade-school multiplication arrays.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p402">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#29</strong></td><td>Divide Two Integers</td><td><span class='badge b-med'>Medium</span></td><td>Bit-shift subtraction.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p403">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#43</strong></td><td>Multiply Strings</td><td><span class='badge b-med'>Medium</span></td><td>Grade-school multiplication arrays.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p494">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#29</strong></td><td>Divide Two Integers</td><td><span class='badge b-med'>Medium</span></td><td>Bit-shift subtraction.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p491">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#172</strong></td><td>Factorial Trailing Zeroes</td><td><span class='badge b-med'>Medium</span></td><td>Count factors of 5.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
@@ -2711,6 +2899,18 @@ primes: 2,3,5,7 -&gt; answer = 4</pre>
 </div>
 
 
+<figure id="fig-trace-single-number">
+<img src="img/dsa-trace-single-number.svg" alt="Single Number, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 42.</strong> Single Number, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> Pattern 17 asks you to build the structures yourself: design problems, composing all sixteen patterns.</p>
 <h2 id="pattern-17">17. Design Problems</h2>
 <p>Every pattern so far solved a fixed problem with a given structure. Design problems reverse it: you build the structure. LRU caches, stacks with min, and time maps compose everything above.</p>
@@ -2840,20 +3040,20 @@ answer = 10 most recent across followees</pre>
 </ul>
 <blockquote class="sentence">"Design problems are solved by combining structures so each covers the other's weakness: I name what each operation needs, pick the combination, and close with the per-operation cost table."</blockquote>
 <table><thead><tr><th>#</th><th>Problem</th><th>Difficulty</th><th>Pattern note</th><th>Deep treatment</th></tr></thead><tbody><tr><td><strong>#146</strong> <span class="badge b-must">MUST-DO</span></td><td>LRU Cache</td><td><span class='badge b-med'>Medium</span></td><td>Hash map plus doubly linked list.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p170">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#380</strong> <span class="badge b-must">MUST-DO</span></td><td>Insert Delete GetRandom O(1)</td><td><span class='badge b-med'>Medium</span></td><td>List plus index map; swap-with-last on remove.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p404">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#155</strong> <span class="badge b-must">MUST-DO</span></td><td>Min Stack</td><td><span class='badge b-med'>Medium</span></td><td>Stack of (value, current min).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p085">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#981</strong> <span class="badge b-must">MUST-DO</span></td><td>Time Based Key-Value Store</td><td><span class='badge b-med'>Medium</span></td><td>Map of key to sorted (time, value) lists.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p126">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#380</strong> <span class="badge b-must">MUST-DO</span></td><td>Insert Delete GetRandom O(1)</td><td><span class='badge b-med'>Medium</span></td><td>List plus index map; swap-with-last on remove.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p011">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#155</strong> <span class="badge b-must">MUST-DO</span></td><td>Min Stack</td><td><span class='badge b-med'>Medium</span></td><td>Stack of (value, current min).</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p132">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#981</strong> <span class="badge b-must">MUST-DO</span></td><td>Time Based Key-Value Store</td><td><span class='badge b-med'>Medium</span></td><td>Map of key to sorted (time, value) lists.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p117">Atlas: full treatment</a></td></tr>
 <tr><td><strong>#355</strong> <span class="badge b-must">MUST-DO</span></td><td>Design Twitter</td><td><span class='badge b-med'>Medium</span></td><td>Feed as k-way merge over followees.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p236">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#362</strong></td><td>Design Hit Counter</td><td><span class='badge b-med'>Medium</span></td><td>Sliding 5-minute window counts.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p237">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#295</strong> <span class="badge b-must">MUST-DO</span></td><td>Find Median from Data Stream</td><td><span class='badge b-hard'>Hard</span></td><td>Two heaps, balanced halves.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p205">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#284</strong></td><td>Peeking Iterator</td><td><span class='badge b-med'>Medium</span></td><td>Cache the next element.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p238">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#173</strong></td><td>Binary Search Tree Iterator</td><td><span class='badge b-med'>Medium</span></td><td>Controlled inorder with a stack.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p239">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1570</strong></td><td>Dot Product of Two Sparse Vectors</td><td><span class='badge b-easy'>Easy</span></td><td>Store only nonzero indices.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p240">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#362</strong></td><td>Design Hit Counter</td><td><span class='badge b-med'>Medium</span></td><td>Sliding 5-minute window counts.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
+<tr><td><strong>#295</strong> <span class="badge b-must">MUST-DO</span></td><td>Find Median from Data Stream</td><td><span class='badge b-hard'>Hard</span></td><td>Two heaps, balanced halves.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p237">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#284</strong></td><td>Peeking Iterator</td><td><span class='badge b-med'>Medium</span></td><td>Cache the next element.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
+<tr><td><strong>#173</strong></td><td>Binary Search Tree Iterator</td><td><span class='badge b-med'>Medium</span></td><td>Controlled inorder with a stack.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p223">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1570</strong></td><td>Dot Product of Two Sparse Vectors</td><td><span class='badge b-easy'>Easy</span></td><td>Store only nonzero indices.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#460</strong> <span class="badge b-must">MUST-DO</span></td><td>LFU Cache</td><td><span class='badge b-hard'>Hard</span></td><td>Frequency buckets plus recency.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#1146</strong></td><td>Snapshot Array</td><td><span class='badge b-med'>Medium</span></td><td>Per-index versioned lists.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p241">Atlas: full treatment</a></td></tr>
-<tr><td><strong>#1381</strong></td><td>Design a Stack With Increment Operation</td><td><span class='badge b-med'>Medium</span></td><td>Lazy increment propagation.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p242">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#1146</strong></td><td>Snapshot Array</td><td><span class='badge b-med'>Medium</span></td><td>Per-index versioned lists.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
+<tr><td><strong>#1381</strong></td><td>Design a Stack With Increment Operation</td><td><span class='badge b-med'>Medium</span></td><td>Lazy increment propagation.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#1166</strong></td><td>Design File System</td><td><span class='badge b-med'>Medium</span></td><td>Trie or nested maps of paths.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
-<tr><td><strong>#346</strong></td><td>Moving Average from Data Stream</td><td><span class='badge b-easy'>Easy</span></td><td>Fixed-size queue plus running sum.</td><td><a href="../dsa-interview-prep/LeetCode_500_Atlas_v6.html#p243">Atlas: full treatment</a></td></tr>
+<tr><td><strong>#346</strong></td><td>Moving Average from Data Stream</td><td><span class='badge b-easy'>Easy</span></td><td>Fixed-size queue plus running sum.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr>
 <tr><td><strong>#707</strong></td><td>Design Linked List</td><td><span class='badge b-easy'>Easy</span></td><td>Sentinel nodes make edge cases vanish.</td><td><span class="qa">Not in the 500 atlas; core ideas traced in this chapter</span></td></tr></tbody></table>
 <div class="takeaway">
 <h4>Key takeaways</h4>
@@ -2869,6 +3069,18 @@ answer = 10 most recent across followees</pre>
 </div>
 
 
+<figure id="fig-trace-lru">
+<img src="img/dsa-trace-lru.svg" alt="LRU Cache, traced: the worked example step by step" loading="lazy">
+<figcaption><strong>Figure 43.</strong> LRU Cache, traced. The worked example step by step, with the state and the decision at each step.</figcaption>
+</figure>
+<div class="walkthrough">
+<h4>How to read this diagram</h4>
+<ol>
+<li>Read the step column top to bottom: it is the algorithm running.</li>
+<li>The state column shows the data structure at each step. Cover it and predict before revealing.</li>
+<li>The decision column names the rule that fired. If you cannot name it, re-read the chapter.</li>
+</ol>
+</div>
 <p><strong>Next:</strong> The 10-week study schedule turns the 17 patterns into a daily plan.</p>
 <h2 id="schedule">10-week study schedule (1 to 2 hours/day, alongside the main spine)</h2>
 <p>The spine in CURRICULUM-MAP.md runs about 9 to 10 weeks at 4+ hours/day; this track runs in parallel at 1 to 2 hours/day. Each week: learn the pattern chapter (intuition + template), cold-write the template, climb that week's ladder easy to hard, and close the week with the review protocol below. Must-do problems are non-negotiable; the rest fill remaining time.</p>
@@ -2935,8 +3147,7 @@ answer = 10 most recent across followees</pre>
 <p><strong>Next:</strong> On-the-board drills: twenty pattern-recognition prompts to test yourself.</p>
 <h2 id="drills">On-the-board pattern-recognition drills</h2>
 <p>Read each prompt, name the pattern and the template move in under 30 seconds, then reveal the answer. Speed of recognition is the trained skill; the code follows.</p>
-<div class="pq">
-<p class="pq-q"><strong><figure class="diagram" id="fig-drill-card">
+<figure class="diagram" id="fig-drill-card">
 <pre class="ascii">How a drill round works: 30 seconds, out loud
 
   PROMPT:  "Detect a cycle; find where it starts."
@@ -2950,7 +3161,8 @@ answer = 10 most recent across followees</pre>
 <figcaption><strong>Figure 26.</strong> One drill round, broken open. Read the prompt, name the pattern, the template move, and the classic trap, all out loud, in under 30 seconds. Then reveal the answer. The drills below train exactly this reflex.</figcaption>
 <details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Prompt: the trigger sentence. Read it like an interviewer said it.</li><li>Three answers: pattern, move, trap. All three, out loud, under 30 seconds.</li><li>The point: recognition speed. Code fluency comes after.</li></ol></details>
 </figure>
-Drill 1.</strong> "Given an unsorted array, find two indices summing to target."</p>
+<div class="pq">
+<p class="pq-q"><strong>Drill 1.</strong> "Given an unsorted array, find two indices summing to target."</p>
 <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
 <div class="pq-a" hidden>
 <p>Arrays and Hashing: complement lookup, check-before-insert. (#1)</p>
@@ -3094,9 +3306,9 @@ Drill 1.</strong> "Given an unsorted array, find two indices summing to target."
 <p><strong>Next:</strong> The appendix: atlas cross-references and honesty notes on the must-do marks.</p>
 <h2 id="appendix">Appendix: atlas cross-reference and honesty notes</h2>
 <h3>How the ladders link into the 500 atlas</h3>
-<p>Every ladder row with an "Atlas: full treatment" link points to <code>../dsa-interview-prep/LeetCode_500_Atlas_v6.html</code> at the problem's anchor (<code>#p001</code> through <code>#p500</code>). Anchors were verified programmatically against the atlas file: 500 anchors exist, and each link in this track was generated from a name-matched mapping, so every anchor resolves to the intended problem's deep treatment (worked examples, follow-ups, constraint mutations).</p>
+<p>Every ladder row with an "Atlas: full treatment" link points to <code>../dsa-interview-prep/LeetCode_500_Atlas_v6.html</code> at the problem's anchor (<code>#p001</code> through <code>#p500</code>). Every link's anchor was resolved against the atlas and title-matched to its ladder row's problem name (September 2026): all 241 anchors resolve to the intended problem's deep treatment (worked examples, follow-ups, constraint mutations).</p>
 <h3>Problems not covered in the 500 atlas</h3>
-<p>49 of the 300 problems have no entry in the 500 atlas (verified by normalized title matching plus manual fuzzy review). Their ladder rows say so honestly. Their core techniques are fully traced in the pattern chapters of this track; the affected problems are concentrated in easier warm-ups (e.g. #383 Ransom Note, #876 Middle of the Linked List), a few hard graph problems (#2392, #1857, #1786-class), and the fresh design tutorials (#460 LFU Cache, #1166 Design File System, #707 Design Linked List), which are written from first principles here.</p>
+<p>59 of the 300 problems have no entry in the 500 atlas. 48 were found by normalized title matching plus manual fuzzy review; 11 more were found when anchor verification showed their rows linked to unrelated atlas problems (those links are now removed). Their ladder rows say so honestly. Their core techniques are fully traced in the pattern chapters of this track; the affected problems are concentrated in easier warm-ups (e.g. #876 Middle of the Linked List), a few hard graph problems (#2392, #1857, #1786-class), and the fresh design tutorials (#460 LFU Cache, #1166 Design File System, #707 Design Linked List), which are written from first principles here.</p>
 <h3>What this track deliberately does not duplicate</h3>
 <ul class="tight">
 <li><strong>Pattern fieldbook (v3/v4):</strong> intuition-first pattern catalog. This track assumes you have read it and focuses on templates, traces, and ladders.</li>
@@ -3108,7 +3320,7 @@ Drill 1.</strong> "Given an unsorted array, find two indices summing to target."
 <p>Must-do marks cross-reference NeetCode 150, Blind 75, Grind 75, Sean Prashad's LeetCode patterns list, and community-reported 2025-2026 interview lists including a public GitHub compilation of FAANG/frontier-lab questions. No official per-company frequency data exists; marks represent the highest-yield consensus, not leaked statistics.</p>
 
 
-<div class="provenance"><strong>Last verified: September 2026.</strong> Live-verified: all 251 atlas anchors resolve in LeetCode_500_Atlas_v6.html; 300 unique problems across 17 ladders; 19 embedded images decode and are non-blank; zero external dependencies; zero em dashes; balanced tags. <span class="uv">UNVERIFIED:</span> per-company problem frequency data: must-do marks are consensus from public lists (NeetCode 150, Blind 75, Grind 75, Sean Prashad, community 2025-2026 compilations), not measured data.</div>
+<div class="provenance"><strong>Last verified: September 2026.</strong> Live-verified: all 241 atlas anchors resolve to the intended problem; 300 unique problems across 17 ladders; 23 embedded images decode and are non-blank; zero external dependencies; balanced tags. <span class="uv">UNVERIFIED:</span> per-company problem frequency data: must-do marks are consensus from public lists (NeetCode 150, Blind 75, Grind 75, Sean Prashad, community 2025-2026 compilations), not measured data.</div>
 
 <div class="callout"><p><strong>Where to go next.</strong> The 17 patterns are the interview toolkit. From here, the main spine continues the research-engineer story: the base volumes teach the science (start with Vol 0, how to use), and the role tracks teach the job. The 300 problems stay here as the daily practice ground.</p></div>
 <section class="watch-deeper" id="watch-deeper" aria-label="Watch and go deeper">
