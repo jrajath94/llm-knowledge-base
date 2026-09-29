@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 660" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="660" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 3.1. The ten traps: failure shapes and their fixes</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">read as a pre-production checklist</text>
+<rect x="24" y="110" width="400" height="92" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">CONTEXT ROT</text>
+<text x="224.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">goal slides away; fix: compaction + milestone</text>
+<text x="224.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">re-injection</text>
+<rect x="24" y="214" width="400" height="92" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="240" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">TOOL-CALL LOOPS</text>
+<text x="224.0" y="258" font-size="11" fill="#a8a8a8" text-anchor="middle">retries a deterministic error; fix: the 1.4 classifier</text>
+<rect x="24" y="318" width="400" height="92" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="344" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">OVER-EAGER AUTONOMY</text>
+<text x="224.0" y="362" font-size="11" fill="#a8a8a8" text-anchor="middle">risky action, no human in path; fix: review gates +</text>
+<text x="224.0" y="377" font-size="11" fill="#a8a8a8" text-anchor="middle">tool-layer enforcement</text>
+<rect x="24" y="422" width="400" height="92" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="448" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">PROMPT INJECTION</text>
+<text x="224.0" y="466" font-size="11" fill="#a8a8a8" text-anchor="middle">tool output carries instructions; fix: outputs are</text>
+<text x="224.0" y="481" font-size="11" fill="#a8a8a8" text-anchor="middle">data, never directives</text>
+<rect x="24" y="526" width="400" height="92" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="552" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">MCP AS SECURITY</text>
+<text x="224.0" y="570" font-size="11" fill="#a8a8a8" text-anchor="middle">protocol is not security; fix: scope per trust domain,</text>
+<text x="224.0" y="585" font-size="11" fill="#a8a8a8" text-anchor="middle">auth, audit</text>
+<rect x="456" y="110" width="400" height="92" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">TUNING THE DEMO</text>
+<text x="656.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">works on 5 tasks; fix: pinned versions, cost ledger,</text>
+<text x="656.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">deploy gate</text>
+<rect x="456" y="214" width="400" height="92" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="240" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">UNCALIBRATED JUDGE</text>
+<text x="656.0" y="258" font-size="11" fill="#a8a8a8" text-anchor="middle">agent learns the blind spot; fix: golden set, kappa</text>
+<text x="656.0" y="273" font-size="11" fill="#a8a8a8" text-anchor="middle">0.7+</text>
+<rect x="456" y="318" width="400" height="92" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="344" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">AGENTS FOR SMARTS</text>
+<text x="656.0" y="362" font-size="11" fill="#a8a8a8" text-anchor="middle">cost triples, success flat; fix: start ReAct, add</text>
+<text x="656.0" y="377" font-size="11" fill="#a8a8a8" text-anchor="middle">structure for measured failures</text>
+<rect x="456" y="422" width="400" height="92" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="448" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">BESPOKE GLUE</text>
+<text x="656.0" y="466" font-size="11" fill="#a8a8a8" text-anchor="middle">custom integration everywhere; fix: MCP/A2A past the</text>
+<text x="656.0" y="481" font-size="11" fill="#a8a8a8" text-anchor="middle">threshold</text>
+<rect x="456" y="526" width="400" height="92" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="552" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">COST BLINDNESS</text>
+<text x="656.0" y="570" font-size="11" fill="#a8a8a8" text-anchor="middle">$6 tasks nobody notices; fix: token budget, ledger in</text>
+<text x="656.0" y="585" font-size="11" fill="#a8a8a8" text-anchor="middle">the loop</text>
+<text x="24" y="640" font-size="12" fill="#a8a8a8" text-anchor="start">Ten traps, each burned a real team. Confirm every one has an explicit countermeasure before any agent touches</text>
+<text x="24" y="657" font-size="12" fill="#a8a8a8" text-anchor="start">production.</text>
+</svg>
