@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>
+/* Validation-assembly: bridge + equation rendering (additive, 2026-09-29). */
+.chapter-bridge,.topic-bridge,.u-bridge{border-left:3px solid #8a8f98;border-left:3px solid color-mix(in srgb,currentColor 40%,transparent);padding:.55rem .9rem;margin:1.1rem 0;background:rgba(128,128,128,.08);border-radius:0 6px 6px 0}
+.next-chapter,.u-next,.u-goto{font-weight:650;margin:1.15rem 0}
+.display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
+.eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
+.eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Volume 11: Research Methods</title>
 <style>
@@ -539,6 +547,17 @@ html.xp-js .xp-reveal.xp-in {
 <p class="bridge-fwd"><b>Next:</b> <a href="#v11-ch2">Chapter 2, How to read a paper: the 3-pass method</a>, which answers how to absorb a paper's claims in passes instead of drowning in it.</p></section>
 
 <section id="v11-ch2">
+<figure class="diagram">
+<img src="img/v11-question-parts.svg" alt="Four cards for the parts of a research question: phenomenon, comparison, measure, scope">
+<figcaption>A good research question has four parts: phenomenon, comparison, measure, scope. "Make transformers better" has none of them. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Each card is one part the question must name.</li><li>The measure is the part most questions skip: how will you tell the difference?</li><li>Scope is the boundary of your claim: say it now, not in the limitations section.</li>
+</ol>
+</div>
+
 <h2><span class="num">2.</span> How to read a paper: the 3-pass method</h2>
 <p>You have a research question. The next problem is practical: before you run a single experiment, you must absorb what others already found, or you will rediscover it the expensive way. The field publishes thousands of papers a year, and most engineers read them wrong: top to bottom, trying to understand everything. This chapter answers how to read a paper in passes, so your deep attention goes only where it pays.</p>
 <p>Most engineers read papers the way they read documentation: top to bottom, trying to understand everything, drowning by page 4. Researchers do not read that way. They read in passes, each with a different goal, and they quit early when the paper does not deserve more time. The <dfn>3-pass method</dfn> comes from S. Keshav's "How to Read a Paper" (ACM SIGCOMM Computer Communication Review, 2007), and it is the single highest-leverage reading skill in this volume.</p>
@@ -708,6 +727,17 @@ html.xp-js .xp-reveal.xp-in {
 <p class="bridge-fwd"><b>Next:</b> <a href="#v11-ch5">Chapter 5, Designing experiments</a>, which answers how to prove your new component caused the gain, with ablations that assign credit honestly.</p></section>
 
 <section id="v11-ch5">
+<figure class="diagram">
+<img src="img/v11-hypothesis-anatomy.svg" alt="Checklist of the hypothesis parts: X, Y, mechanism, and the null hypothesis">
+<figcaption>A hypothesis is a falsifiable prediction: if X, then Y, because Z. Without the mechanism, a correct prediction is luck. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>X is what you change; Y is what you measure; Z is why the change should move the measurement.</li><li>The null hypothesis is the enemy: the boring alternative that the change does nothing.</li><li>Design the experiment to kill the null, not to confirm your belief.</li>
+</ol>
+</div>
+
 <h2><span class="num">5.</span> Designing experiments: ablations that prove something</h2>
 <p>A hypothesis names the change and the expected effect. The next problem is proof: when the full method beats the baseline, you still do not know which part caused the win. It could be your idea, or it could be the tuning, the seeds, or luck. This chapter answers how to design ablations that assign credit honestly.</p>
 <p>An <dfn>ablation study</dfn> is an experiment that removes one piece of your method and measures what breaks. The name comes from biology: ablate (remove) tissue, see what function is lost. In ML, you remove your new module, your new loss term, your new data augmentation, and you check whether the gain disappears. If it does, the module caused the gain. If it does not, something else did, and your paper's story is wrong.</p>
@@ -766,6 +796,17 @@ html.xp-js .xp-reveal.xp-in {
 
 <p class="bridge-fwd"><b>Next:</b> <a href="#v11-ch6">Chapter 6, Negative results and confounders</a>, which answers what to do when ideas fail and how to catch wins that are confounders in disguise.</p></section>
 <section id="v11-ch6">
+<figure class="diagram">
+<img src="img/v11-ablation-table.svg" alt="A good ablation table: one row per component, one edit per row">
+<figcaption>A good ablation table: one row per component, one edit per row. Change two things and you have proven nothing. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>The full method is the reference row: the number to beat.</li><li>Each other row removes exactly one component.</li><li>The dumb baseline row asks whether the sophistication was needed at all.</li>
+</ol>
+</div>
+
 <h2><span class="num">6.</span> Negative results and confounders</h2>
 <p>Not every experiment confirms the hypothesis, and not every win is real. The experiment loop leaves two problems unsolved: what to do with ideas that fail, and how to catch gains that are confounders in disguise. This chapter answers both: how to value negative results and how to hunt the boring explanations before they embarrass you.</p>
 <p>A <dfn>negative result</dfn> is an experiment that did not work: the idea failed, the ablation showed nothing, the gain vanished under scrutiny. A <dfn>confounder</dfn> is a hidden variable that moves with your treatment and actually causes the effect you attributed to your idea. These two concepts are the immune system of research: negative results tell you when to stop, and confounder-hunting tells you when your positive results are lying.</p>
@@ -828,6 +869,17 @@ html.xp-js .xp-reveal.xp-in {
 
 <p class="bridge-fwd"><b>Next:</b> <a href="#v11-ch7">Chapter 7, Statistics lab</a>, which answers how to tell a real difference from seed noise, with math.</p></section>
 <section id="v11-ch7">
+<figure class="diagram">
+<img src="img/v11-confounders.svg" alt="The four usual confounders: compute, tuning, data, seeds">
+<figcaption>The four usual confounders: compute, tuning, data, seeds. Interrogate every positive result with the most boring explanation first. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Each card names a confounder and how to kill it.</li><li>The pattern is the same: hold the confounder fixed and re-run.</li><li>A result that survives all four is worth believing.</li>
+</ol>
+</div>
+
 <h2><span class="num">7.</span> Statistics lab: what "significant" really means</h2>
 <p>Your experiments produce numbers, and the numbers wobble when the seed changes. Chapter 6 taught you to distrust a gain; this chapter answers how to decide, with math, whether the difference is bigger than the noise. You will learn the three tools that matter for ML experiments: the p-value, the confidence interval, and the standard error, plus the paired bootstrap that makes small-sample comparisons honest.</p>
 <p>"Significant" is the most abused word in experimental science. In statistics it has a narrow technical meaning: the observed difference is unlikely to have arisen by chance alone. It does not mean large, important, or real. This chapter gives you the three tools that matter for ML experiments: the <dfn>p-value</dfn>, the <dfn>confidence interval</dfn>, and the <dfn>standard error</dfn>, plus the one technique that makes small-sample ML comparisons honest: the <dfn>paired bootstrap</dfn>.</p>
@@ -961,6 +1013,17 @@ print(&quot;is broken, so the consistent-win signal is gone. Pair your seeds.&qu
 
 <p class="bridge-fwd"><b>Next:</b> <a href="#v11-ch8">Chapter 8, Writing results people trust</a>, which answers how to write up experiments so readers can check your work and believe your claims.</p></section>
 <section id="v11-ch8">
+<figure class="diagram">
+<img src="img/v11-stats-trio.svg" alt="The three statistics tools: p-value, confidence interval, standard error, plus the paired bootstrap">
+<figcaption>The three tools that matter: p-value, confidence interval, standard error, plus the paired bootstrap that makes small-sample ML comparisons honest. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>p-value: the probability of seeing this difference if nothing were really there.</li><li>Confidence interval: the honest range around your measurement.</li><li>Significant means "unlikely to have arisen by chance alone." Nothing more.</li>
+</ol>
+</div>
+
 <h2><span class="num">8.</span> Writing results people trust</h2>
 <p>The statistics say the effect is real. That verdict is worthless if nobody trusts the writeup. This chapter answers how to write results so that readers can check your work and believe your claims: the exact claim, the re-runnable method, the complete evidence, and the interpretation clearly labeled as yours.</p>
 <p>A result nobody trusts is a result that never happened. Writing up experiments is not decoration after the science; it <i>is</i> part of the science, because the writeup is where you commit to what you claim and show your work. Trusted writeups share a structure: they state the claim precisely, show the evidence completely (including the ugly parts), and separate what the data says from what you think it means.</p>
@@ -1024,6 +1087,17 @@ print(&quot;is broken, so the consistent-win signal is gone. Pair your seeds.&qu
 
 <p class="bridge-fwd"><b>Next:</b> <a href="#v11-ch9">Chapter 9, Reproducibility and preregistration</a>, which answers how to keep results true six months later and honest from the start.</p></section>
 <section id="v11-ch9">
+<figure class="diagram">
+<img src="img/v11-writeup-parts.svg" alt="The four load-bearing parts of a results writeup">
+<figcaption>A results writeup has four load-bearing parts: the exact claim, the method, the full evidence, and the interpretation, clearly labeled as yours. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>The claim carries numbers and conditions: "+0.4 points, 5 seeds, p < 0.05 paired."</li><li>The evidence includes the negative results found along the way.</li><li>The interpretation says what would change your mind.</li>
+</ol>
+</div>
+
 <h2><span class="num">9.</span> Reproducibility and preregistration</h2>
 <p>A trusted writeup freezes the result at the moment of measurement. Two problems remain: will the result still hold six months from now, and was the story fixed before the data arrived? This chapter answers both, with reproducibility hygiene and preregistration.</p>
 <p><dfn>Reproducibility</dfn> means someone else can re-run your experiment and get your result. <dfn>Preregistration</dfn> means writing down what you will test, and how, before you see the data. Together they are the difference between science and storytelling: reproducibility lets others check your work, and preregistration stops you from quietly rewriting the story after the results come in.</p>
@@ -1082,6 +1156,17 @@ print(&quot;is broken, so the consistent-win signal is gone. Pair your seeds.&qu
 
 <p class="bridge-fwd"><b>Next:</b> <a href="#v11-ch10">Chapter 10, Research taste</a>, which answers how to choose problems worth months of your life.</p></section>
 <section id="v11-ch10">
+<figure class="diagram">
+<img src="img/v11-repro-layers.svg" alt="The reproducibility layers: re-runnable, replicable, robust, preregistered">
+<figcaption>Reproducibility has layers: re-runnable, replicable, robust, and preregistered. Preregistration fixes the story before the data. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Each step is a stronger claim: you can reproduce it, a colleague can, an independent team can.</li><li>Preregistration is the top rung: hypothesis, metric, seeds, and analysis plan written before the big run.</li><li>Science is what survives being checked. Storytelling is what avoids it.</li>
+</ol>
+</div>
+
 <h2><span class="num">10.</span> Research taste: choosing what to work on</h2>
 <p>You now own the full machinery: questions, reading, hypotheses, ablations, statistics, writeups, reproducibility. The last question is where to aim it. This chapter answers how to choose problems worth months of your life: important, tractable, and neglected.</p>
 <p><dfn>Research taste</dfn> is the ability to pick problems that are important, tractable, and neglected: important enough that solving them matters, tractable enough that you can make progress, and neglected enough that you are not racing fifty other teams. It is the highest-leverage skill in research because working on the right problem multiplies every other skill, and working on the wrong one divides them.</p>
@@ -1145,6 +1230,17 @@ print(&quot;is broken, so the consistent-win signal is gone. Pair your seeds.&qu
 
 <p class="bridge-fwd"><b>Next:</b> <a href="#v11-ch11">Chapter 11, the Capstone</a>, where you replicate a published result on your own compute, end to end.</p></section>
 <section id="v11-ch11">
+<figure class="diagram">
+<img src="img/v11-taste-filters.svg" alt="The three research-taste filters: importance, tractability, neglect">
+<figcaption>Research taste: three filters before committing months: importance, tractability, neglect. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Importance: if this works, who cares, and how much?</li><li>Tractability: measurable progress in 3 months with the compute you have?</li><li>Neglect: is the reason nobody did this a real barrier or just inattention?</li><li>Fail ideas fast, in days not months.</li>
+</ol>
+</div>
+
 <h2><span class="num">11.</span> Capstone: replicate a result on your own compute</h2>
 <p>Ten chapters built the machinery and one taught judgment. The capstone answers whether you can use them: replicate a published result on your own compute, end to end, and write up honestly whether the central claim survives.</p>
 <p>Everything in this volume converges here: reading (Ch 2), experiment design (Ch 5), confounder-hunting (Ch 6), statistics (Ch 7), trusted writeups (Ch 8), reproducibility (Ch 9), and taste (Ch 10). The capstone is to replicate a published result on your own compute: pick a paper, rebuild its key experiment, and see if the claim survives. This is the rite of passage from consumer of research to producer.</p>
@@ -1192,6 +1288,17 @@ print(&quot;is broken, so the consistent-win signal is gone. Pair your seeds.&qu
 <p>Volume 11 covers the core statistics toolkit: p-values, confidence intervals, standard errors, and the paired bootstrap for comparing two methods on the same seeds. That chapter answers "is the difference real?" for deterministic training runs.</p>
 <p>Two important questions remain, and they belong to this appendix. First, how do you run an A/B comparison when the system itself is non-deterministic, as every LLM output is? Second, how do you check an LLM autorater against human judgment before you trust its scores? Both are skills you will use in any serious eval pipeline.</p>
 <div class="callout"><span class="tag">[PREREQUISITE]</span>Full treatment: Vol 1, Ch 5 (estimators, p-values, CIs, bootstrap). This appendix applies that toolkit to non-deterministic LLM systems. <a href="01-math-for-ml.html">01-math-for-ml.html</a></div>
+<figure class="diagram">
+<img src="img/v11-appendix-11a-map.svg" alt="Roadmap of Appendix 11A: A/B design and autorater calibration">
+<figcaption>Appendix 11A roadmap: Chapter 1 covers A/B design when outputs are random; Chapter 2 covers calibrating an autorater against humans. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Two chapters, two problems: comparing random outputs, and trusting a machine judge.</li><li>Read Chapter 1 if you run model comparisons; Chapter 2 if you use an LLM as a judge.</li>
+</ol>
+</div>
+
 <h3 id="a11a-chapter-1-ab-design-when-the-outputs-are-random">Chapter 1. A/B design when the outputs are random</h3>
 <h4 id="a11a-11-the-three-layers-of-noise">1.1 The three layers of noise</h4>
 <p>Compare two prompts on the same 100 questions. Prompt A wins by 3 points. Did it win, or did it get lucky? An LLM eval has three separate layers of randomness, and a good design controls each one.</p>
@@ -1413,10 +1520,32 @@ print(&quot;band:&quot;, kappa_band(cohen_kappa(60, 10, 15, 15)))
 </ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Cohen's kappa definition kappa = (p_o - p_e) / (1 - p_e) and the Landis and Koch bands (1977): standard psychometric practice. The six-step calibration loop: calibration set spanning the range, humans label first with 2-3 raters, compute kappa, inspect disagreements, revise the rubric not the judge. This is documented LLM-eval engineering practice, consistent across recent practitioner writeups. Krippendorff's alpha for multi-rater agreement: standard content-analysis practice. <strong>UNVERIFIED:</strong> the "20 to 50 examples" calibration-set size is a practitioner rule of thumb. The human-ceiling figure of kappa ~0.8 is typical for the tasks cited in practitioner writeups, not a universal constant.</p></div>
 <p class="bridge-fwd"><b>Next:</b> <a href="#a11b-preference-labeler-protocols">Appendix 11B, Preference Labeler Protocols</a>, which covers the operational half of preference data: training labelers, handling disagreement, and designing the pool.</p>
 
+<figure class="diagram">
+<img src="img/v11-kappa-explainer.svg" alt="Cohen's kappa: raw agreement versus the chance baseline">
+<figcaption>Cohen's kappa: raw agreement flatters, because chance alone produces most of it. Kappa subtracts the chance baseline. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>75% raw agreement looks good until you see the 60% chance baseline.</li><li>Kappa is the honest number: what survives after chance is removed.</li><li>The takeaway: if the humans disagree with each other, fix the rubric before touching the judge.</li>
+</ol>
+</div>
+
 <h2 id="a11b-preference-labeler-protocols">Appendix 11B: Preference Labeler Protocols</h2>
 
 <p>Volume 7 covers the other half of preference data: how to write rubrics, why agreement sits around 70 percent, and the classic pitfalls (verbosity bias, sycophancy, guideline drift, demographic skew). This appendix covers the operational half. How do you train labelers? How do you handle their disagreements? How do you design the labeler pool so it does not silently bias your reward model?</p>
 <p>A preference label is a measurement made by a human instrument. This appendix is the instrument's operating manual.</p>
+<figure class="diagram">
+<img src="img/v11-labeler-instrument.svg" alt="The human instrument operating manual: train, adjudicate, design the pool">
+<figcaption>The human instrument's operating manual: train the labelers, adjudicate disagreements, design the pool. Generated for this volume.</figcaption>
+</figure>
+<div class="walkthrough">
+<h5>How to read this diagram</h5>
+<ol>
+<li>Train: nobody labels before learning the rubric.</li><li>Adjudicate: disagreements mean the rubric or the task is broken.</li><li>Design the pool: an unexamined pool silently biases the reward model.</li>
+</ol>
+</div>
+
 <h3 id="a11b-chapter-1-from-rubric-to-reliable-labels">Chapter 1. From rubric to reliable labels</h3>
 <h4 id="a11b-11-the-instruction-packet">1.1 The instruction packet</h4>
 <p>Volume 7's rubric says what "better" means. The instruction packet teaches a new labeler to apply that rubric the same way a senior labeler would. The packet has four parts.</p>
