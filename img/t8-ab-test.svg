@@ -1,0 +1,27 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 450' width='100%' role='img'>
+<title>A/B test</title>
+<text x='480' y='44' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>A/B testing with users: the final grader</text>
+<text x='480' y='70' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Offline evals predict; users decide. The A/B test is the final grader of the prompt or model change.</text>
+<rect x='120' y='130' width='200' height='150' rx='10' fill='#1565c0' fill-opacity='0.22' stroke='#1565c0' stroke-width='2'/>
+<text x='220' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Users</text>
+<text x='220' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>eligible traffic;</text>
+<text x='220' y='194' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>randomly assigned</text>
+<rect x='400' y='130' width='200' height='150' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='500' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Arm A: control</text>
+<text x='500' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>current prompt/model;</text>
+<text x='500' y='194' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>the baseline</text>
+<rect x='640' y='130' width='200' height='150' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='740' y='156' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Arm B: candidate</text>
+<text x='740' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>new prompt/model;</text>
+<text x='740' y='194' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>one change at a time</text>
+<line x1='320' y1='205' x2='400' y2='205' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='391.8,208.7 400,205 391.8,201.3' fill='#8a8a8a'/>
+<line x1='320' y1='205' x2='640' y2='205' stroke='#8a8a8a' stroke-width='2' stroke-dasharray="7,5"/>
+<polygon points='631.8,208.7 640,205 631.8,201.3' fill='#8a8a8a'/>
+<rect x='280' y='320' width='400' height='80' rx='10' fill='#8e24aa' fill-opacity='0.22' stroke='#8e24aa' stroke-width='2'/>
+<text x='480' y='346' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Compare the same outcome metric</text>
+<text x='480' y='366' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13.5' font-weight='400' fill='#a8a8a8' text-anchor='middle'>the metric from Chapter 3.1, not vibes</text>
+<line x1='500' y1='280' x2='500' y2='320' stroke='#8a8a8a' stroke-width='2'/>
+<polygon points='496.3,311.8 500,320 503.7,311.8' fill='#8a8a8a'/>
+<text x='480' y='428' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Takeaway: the A/B test grades the change end to end, where the eval harness only grades the model.</text>
+</svg>
