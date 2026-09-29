@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 376" width="100%" style="max-width:700px" role="img" aria-label="Stacked memory pile of weights, grads, and optimizer states; ZeRO stages cut per-GPU memory from 112 GB to 14 GB">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="700" height="376" fill="none"/>
+<text class="t" x="24" y="30">The 16 bytes per parameter rule and ZeRO stages</text>
+<text class="m" x="24" y="58">Training memory: 16 bytes/param = 2 + 2 + 4 + 4 + 4</text>
+<rect x="24" y="70" width="72" height="34" rx="4" fill="#6cb2ff" opacity="0.85"/>
+<text class="num" x="60.0" y="92" text-anchor="middle">weights 2</text>
+<rect x="100" y="70" width="72" height="34" rx="4" fill="#6cb2ff" opacity="0.85"/>
+<text class="num" x="136.0" y="92" text-anchor="middle">grads 2</text>
+<rect x="176" y="70" width="144" height="34" rx="4" fill="#f0b429" opacity="0.85"/>
+<text class="num" x="248.0" y="92" text-anchor="middle">master 4</text>
+<rect x="324" y="70" width="144" height="34" rx="4" fill="#f0b429" opacity="0.85"/>
+<text class="num" x="396.0" y="92" text-anchor="middle">m 4</text>
+<rect x="472" y="70" width="144" height="34" rx="4" fill="#f0b429" opacity="0.85"/>
+<text class="num" x="544.0" y="92" text-anchor="middle">v 4</text>
+<text class="num" x="24" y="132">7B = 112 GB before activations. Optimizer pile alone: 12 bytes/param.</text>
+<text class="big g" x="24" y="162">ZeRO on 7B / 8 GPUs: memory per GPU by stage</text>
+<text class="num" x="24" y="194">Stage 0 (baseline)</text>
+<rect x="220" y="176" width="400" height="26" rx="4" fill="#e57373" opacity="0.9"/>
+<text class="num" x="630.0" y="195">112 GB</text>
+<text class="num" x="24" y="232">Stage 1</text>
+<rect x="220" y="214" width="138" height="26" rx="4" fill="#f0b429" opacity="0.9"/>
+<text class="num" x="367.5" y="233">38.5 GB</text>
+<text class="num" x="24" y="270">Stage 2</text>
+<rect x="220" y="252" width="94" height="26" rx="4" fill="#f0b429" opacity="0.9"/>
+<text class="num" x="323.75" y="271">26.25 GB</text>
+<text class="num" x="24" y="308">Stage 3</text>
+<rect x="220" y="290" width="50" height="26" rx="4" fill="#7fc97f" opacity="0.9"/>
+<text class="num" x="280.0" y="309">14 GB</text>
+<text class="m" x="24" y="350">Stage 3 costs ~1.5x comms. Pipeline bubble: (p-1)/(m+p-1); p=4, m=8 -&gt; 27.3% idle.</text>
+</svg>
