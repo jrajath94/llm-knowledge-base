@@ -452,7 +452,7 @@ html.xp-js .xp-reveal.xp-in {
 <li>Every code sample in this volume was executed during writing. Expected outputs sit in comments next to the prints that produce them.</li>
 </ul></div><h2 id="how-to-use-this-volume">How to use this volume</h2>
 <p>Read Part 1 and Part 2 straight through once. Work every drill in Part 4 with the answers covered, out loud, until the numbers come without pausing. Keep Part 5 open during design work. Revisit Part 3 after your first on-call rotation: the traps read differently once you have been paged.</p>
-<h2 id="part-1-decision-rules">Part 1. Decision rules</h2>
+<h2 id="part-1-decision-rules">Part 1. Decision rules</h2>\n<p>The chapters ahead follow the platform in order: decisions first, then the numbers behind them, then the traps, then drills. This part is the decisions: six rules, each naming its inputs, its formula or threshold, and what changes the answer.</p>
 <p>A decision rule is a test you can run in under a minute that picks the design. Each rule below names its inputs, its formula or threshold, and what changes the answer.</p>
 <h3 id="11-quorum-sizing">1.1 Quorum sizing</h3>
 <p><strong>Step 1: one copy is a single point of failure.</strong></p>
@@ -474,7 +474,7 @@ html.xp-js .xp-reveal.xp-in {
 <li>The caret marks replica B, which sits in both sets. That shared replica carries the newest write stamp.</li>
 <li>Because any 2 of 3 replicas share at least one member, no read can miss a completed write. The arithmetic does the guaranteeing, not luck.</li>
 </ol></div><p><strong>Step 4: the production picture: add the failure budget.</strong></p>
-<p>The second half of the rule is availability. To survive <strong>f</strong> dead replicas you need W &lt;= N - f and R &lt;= N - f. The standard picks:</p>
+<p>The second half of the rule is availability. To survive <strong>f</strong> dead replicas you need W &lt;= N - f and R &lt;= N - f. The standard picks:</p>\n<p style="text-align:center;font-size:1.08em;margin:1.25rem 0"><strong>W + R &gt; N</strong>&nbsp;&nbsp;(correctness: every read overlaps every write)</p>\n<p style="text-align:center;font-size:1.08em;margin:1.25rem 0"><strong>W &le; N &minus; f,&nbsp;&nbsp;R &le; N &minus; f</strong>&nbsp;&nbsp;(availability: survive f dead replicas)</p>\n<p>where: <strong>W</strong> is the write quorum (acknowledgments needed); <strong>R</strong> is the read quorum (replicas asked); <strong>N</strong> is the replica count; <strong>f</strong> is the failures you must survive. The table below lists the standard picks.</p>\n<p><strong>Worked example.</strong> N = 3, W = 2, R = 2: 2 + 2 &gt; 3, so every read touches a replica the write touched and sees the newest write. And 2 &le; 3 &minus; 1, so reads and writes survive one dead replica. Drop to W = 1, R = 1 and a write on replica A is invisible to a read of B and C.</p>
 <table>
 <thead>
 <tr>
@@ -555,11 +555,11 @@ print(quorum_ok(3, 1, 1), survives(3, 1, 1, 1))      # -&gt; False True
 # N=5 tolerating 2 failures with strong reads.
 print(quorum_ok(5, 3, 3), survives(5, 3, 3, 2))      # -&gt; True True
 </code></pre></p>
-<h3 id="12-consistency-model-selection">1.2 Consistency model selection</h3>
+<p>Quorums decide how many replicas you wait for. The next decision is what the waiting buys you: the consistency model, from linearizable down to eventual, picked as weak as the product allows.</p>\n<h3 id="12-consistency-model-selection">1.2 Consistency model selection</h3>
 <p><strong>Step 1: the tradeoff.</strong></p>
 <p>Not every dataset needs the strongest guarantee. Stronger consistency costs latency and availability, so pick the weakest model that keeps the product correct. The test: ask what breaks if a read is 5 seconds stale. If the answer is "money moves wrong" or "two leaders act at once," you need linearizable. If the answer is "a user sees a slightly old feed," eventual is fine and much cheaper.</p>
 <p><strong>Step 2: the ladder.</strong></p>
-<p><pre><code class="language-ascii">linearizable (consensus, single key)      slowest, strongest
+<p><pre><code class="language-ascii">linearizable (consensus: a group of machines agreeing on one value despite failures; single key)      slowest, strongest
      │
 sequential
      │
@@ -570,7 +570,7 @@ tunable quorum (W + R &gt; N)
 eventual                                 fastest, weakest
 
 Model artifacts and rollout config want linearizable.
-The feature store's online path usually takes tunable quorums.</code></pre></p>
+The feature store's online path (a feature store: the shared system that serves features to both training and serving) usually takes tunable quorums.</code></pre></p>
 <p><strong>Step 3: the production picks.</strong></p>
 <table>
 <thead>
@@ -629,8 +629,8 @@ STREAM (append-only log, per-consumer offsets)
   Each consumer moves its own offset. Rewind = replay.
 </code></pre></p>
 <p><strong>Step 3: the price of the stream.</strong></p>
-<p>Streams cost more to operate (partitions, retention, consumer-group rebalances) and pay back when more than one team reads the same events. A training-data pipeline and a live monitoring consumer reading the same request log is the classic stream-shaped workload.</p>
-<h3 id="14-batch-vs-micro-batch">1.4 Batch vs micro-batch</h3>
+<p>Streams cost more to operate (partitions, retention, consumer-group rebalances (the stream re-assigning partitions when a consumer joins or dies)) and pay back when more than one team reads the same events. A training-data pipeline and a live monitoring consumer reading the same request log is the classic stream-shaped workload.</p>
+<p>Queues and streams decide how work moves between stages. The next decision is how fresh the data must be when it arrives: batch, micro-batch, or streaming, picked by the freshness contract. Do not pay streaming prices for batch freshness.</p>\n<h3 id="14-batch-vs-micro-batch">1.4 Batch vs micro-batch</h3>
 <p><strong>Step 1: batch: yesterday is fine.</strong></p>
 <p>Ask one question: how stale may the output be? "Yesterday's data is fine" means batch: nightly jobs over the full dataset. Cheapest per event, simplest to reason about, easiest to re-run. A nightly embedding job over 10M documents is batch.</p>
 <p><strong>Step 2: streaming: the last few seconds.</strong></p>
@@ -645,7 +645,7 @@ The freshness contract picks the tier.
 Do not pay streaming prices for a batch contract.</code></pre></p>
 <h3 id="15-cache-sizing-with-littles-law">1.5 Cache sizing with Little's Law</h3>
 <p><strong>Step 1: how many entries: the rule.</strong></p>
-<p>A cache has two sizing questions: how many entries, and how long each lives. Size the hot path with Little's Law: capacity = service rate x maximum acceptable wait. The same arithmetic sizes connection pools, worker counts, and GPU batch slots.</p>
+<p>A cache has two sizing questions: how many entries, and how long each lives. Size the hot path with Little's Law (in one line: average concurrency = arrival rate x time in the system; Section 2.1 works it fully): capacity = service rate x maximum acceptable wait. The same arithmetic sizes connection pools, worker counts, and GPU batch slots.</p>
 <p><strong>Step 2: the bound, and what happens past it.</strong></p>
 <p>A downstream serving 100 requests per second with a 2-second deadline gets a queue bound of 200. Everything past it is rejected fast (429 or 503) instead of queued slow: a request that would wait past its deadline wastes its time and your memory. Little's Law assumes steady state. Bursts need burst math (Section 3.5), not the average.</p>
 <p><pre><code class="language-python"># WHAT: Little&#x27;s Law, L = arrival_rate * time_in_system.
@@ -666,7 +666,7 @@ def queue_capacity(service_per_s, max_wait_s):
     return service_per_s * max_wait_s
 
 
-# 120 req/s, each holding a GPU slot 1.5 s (prefill + decode).
+# 120 req/s, each holding a GPU slot 1.5 s (prefill: processing the prompt tokens; decode: generating output tokens one at a time).
 print(&quot;GPU slots:&quot;, little_slots(120, 1.5))            # -&gt; 180.0
 # Bounded queue: 100 req/s service, 2 s deadline.
 print(&quot;queue bound:&quot;, queue_capacity(100, 2))           # -&gt; 200
@@ -675,14 +675,14 @@ print(&quot;queue bound:&quot;, queue_capacity(100, 2))           # -&gt; 200
 <p>If the product tolerates 5-minute-old embeddings, the TTL is 5 minutes. Two refinements. <strong>Jitter the TTLs.</strong> A fixed 5-minute TTL on every key expires everything at once and stampedes the backend (Section 3.3). Spread expiry over 4 to 6 minutes instead. <strong>Serve stale-while-revalidate</strong> for hot keys: return the old value instantly and refresh in the background.</p>
 <p><strong>Step 4: how big in bytes: find the knee.</strong></p>
 <p>Measure the hit-ratio curve: plot hit ratio against cache size and find the knee where more memory stops buying hits. Size slightly past the knee. Size for the peak working set, not the average: caches fail at peak.</p>
-<h3 id="16-gpu-fleet-sizing">1.6 GPU fleet sizing</h3>
+<p>Caches and pools absorb spikes so you do not over-provision for them. The next decision is how many GPUs the serving fleet needs: a one-line formula with three measured inputs.</p>\n<h3 id="16-gpu-fleet-sizing">1.6 GPU fleet sizing</h3>
 <p><strong>Step 1: three inputs, all measured.</strong></p>
 <p>The fleet formula, in one line:</p>
 <p><pre><code>GPUs = ceil( Q x (T_in + T_out) / (S x rho) ) + spares
 </code></pre></p>
-<p>Q is requests per second (demand). T<sub>in</sub> + T<sub>out</sub> is average prompt plus completion tokens per request. S is tokens per second one GPU sustains at the target batch size: measure this on your fleet, because a brochure number sizes a fleet that falls over on Monday. rho is target utilization, 0.7. Spares: at least one per failure domain, so a rack loss does not take the SLO with it.</p>
+<p>Q is requests per second (demand). T<sub>in</sub> + T<sub>out</sub> is average prompt plus completion tokens per request. S is tokens per second one GPU sustains at the target batch size: measure this on your fleet, because a brochure number sizes a fleet that falls over on Monday. rho is target utilization, 0.7. Spares: at least one per failure domain, so a rack loss does not take the SLO (service-level objective: the product's promised latency/availability line) with it.</p>
 <p><strong>Step 2: worked, and the price of 0.9.</strong></p>
-<p>40 req/s, 2k in / 500 out, 900 tok/s per GPU measured, util 0.7: 160 GPUs. The same demand at util 0.9 needs 125 GPUs, but the M/M/1 wait at 0.9 is 9x service time versus 2.3x at 0.7 (Section 2.2). The extra 35 GPUs buy the latency SLO. That tradeoff is the capacity conversation.</p>
+<p>40 req/s, 2k in / 500 out, 900 tok/s per GPU measured, util 0.7: 160 GPUs. The same demand at util 0.9 needs 125 GPUs, but the M/M/1 wait (the classic single-server queue model with random arrivals and service times; Section 2.2 derives the curve) at 0.9 is 9x service time versus 2.3x at 0.7. The extra 35 GPUs buy the latency SLO. That tradeoff is the capacity conversation.</p>
 <p><pre><code class="language-python"># WHAT: GPU fleet sizing from demand, supply, and a policy.
 # WHY:  capacity reviews need one number with named inputs; this is it.
 # WHAT BREAKS: S (tokens/s per GPU) must be MEASURED at the target
@@ -707,7 +707,10 @@ print(&quot;GPUs:&quot;, gpu_fleet(40, 2000, 500, 900))   # -&gt; 160
 # buy the latency SLO. That tradeoff is the capacity conversation.
 print(&quot;GPUs at 0.9:&quot;, gpu_fleet(40, 2000, 500, 900, target_util=0.9))
 </code></pre></p>
-<p><pre><code class="language-ascii">fleet = ceil(demand / (supply x 0.7)) + spares
+<figure class="diagram">
+<img src="img/crash10-fleet-utilization.svg" alt="Bar comparison: 160 GPUs at 0.7 utilization with 2.3x wait versus 125 GPUs at 0.9 utilization with 9x wait" loading="lazy">
+<figcaption>Figure: the price of 0.9. Squeezing the same demand into 125 GPUs instead of 160 saves about 22% of the fleet but multiplies the queue wait by 4x. The M/M/1 hockey stick is why fleets target 60-75% utilization. <em>Source: generated for this pack.</em></figcaption>
+</figure><p><pre><code class="language-ascii">fleet = ceil(demand / (supply x 0.7)) + spares
 
 120 req/s demand / (40 req/s per GPU x 0.7) = 4.3 → 5 GPUs
 5 + 1 spare = 6 GPUs
@@ -720,13 +723,13 @@ print(&quot;GPUs at 0.9:&quot;, gpu_fleet(40, 2000, 500, 900, target_util=0.9))
 <li>Freshness contract picks batch, micro-batch, or streaming. Do not pay streaming prices for batch freshness.</li>
 <li>Little's Law sizes queues, pools, and GPU slots: capacity = rate x wait.</li>
 <li>GPU fleet = ceil(demand / (supply x 0.7)) + spares, with measured supply.</li>
-</ul></div><h2 id="part-2-must-memorize-numbers-and-formulas">Part 2. Must-memorize numbers and formulas</h2>
+</ul></div><p><strong>Next:</strong> Part 2 gives you the formulas worth memorizing: Little&#x27;s Law, queue waits, KV-cache math, burn rates, and idempotency.</p>\n<h2 id="part-2-must-memorize-numbers-and-formulas">Part 2. Must-memori\n<p>Part 1 gave you the rules. This part gives you the formulas worth carrying in your head: each one with its units, what it means in plain terms, and a worked number.</p>ze numbers and formulas</h2>
 <p>Each entry gives the formula, its units, what it means in plain terms, and a worked number. These are the ones worth carrying in your head.</p>
 <h3 id="21-littles-law-l-w">2.1 Little's Law: L = λW</h3>
 <p><strong>Step 1: the intuition.</strong></p>
 <p>The average number of jobs inside a system equals the arrival rate times the average time each job spends inside. A checkout line with 2 shoppers arriving per minute, each taking 3 minutes, holds 6 shoppers on average. It holds for any steady-state system: queues, thread pools, GPU batch slots.</p>
 <p><strong>Step 2: the formula, the units, the worked numbers.</strong></p>
-<p><strong>L = &lambda; x W.</strong> Units: jobs = (jobs/second) x seconds.</p>
+<p><strong>L = &lambda; x W.</strong> Units: jobs = (jobs/second) x seconds.</p>\n<p style="text-align:center;font-size:1.08em;margin:1.25rem 0"><strong>L = &lambda; &times; W</strong></p>\n<p>where: <strong>L</strong> is the average number of jobs inside the system; <strong>&lambda; (lambda)</strong> is the arrival rate in jobs/second; <strong>W</strong> is the average time each job spends inside, in seconds. Holds for any steady-state system: queues, thread pools, GPU batch slots. The code below works it three ways: 120 &times; 1.5 = 180 GPU slots, a 100 req/s &times; 2 s queue bound of 200, and a cache in-flight allowance.</p>
 <p><pre><code class="language-python"># WHAT: Little's Law worked three ways: L = arrival_rate x time_in_system. Units: jobs.
 # WHY: two measurable numbers (arrival rate, service time) become the one
 #       number you provision (concurrent slots).
@@ -736,7 +739,7 @@ print("GPU slots:", 120 * 1.5)             # -&gt; 180.0
 print("queue bound:", 100 * 2)             # -&gt; 200
 print("inflight allowance:", 40000 * 0.25)  # -&gt; 10000.0  (cache twin)
 </code></pre></p>
-<p>Read them: 120 requests/s x 1.5 s per request = 180 concurrent slots. With 8 slots per GPU (batch 8), that is 23 GPUs before headroom. A 100 req/s service with a 2 s deadline gets a queue bound of 200. A cache twin at 40k reads/s through a 250 ms refresh window allows 10,000 in flight.</p>
+<p>Read them: 120 requests/s x 1.5 s per request = 180 concurrent slots. With 8 slots per GPU (batch 8: requests processed together in one GPU pass), that is 23 GPUs before headroom. A 100 req/s service with a 2 s deadline gets a queue bound of 200. A cache twin at 40k reads/s through a 250 ms refresh window allows 10,000 in flight.</p>
 <p><strong>Step 3: see it on a cache.</strong></p>
 <figure class="diagram">
 <img src="img/crash10-littles-law.png" alt="Flow diagram: 500 requests per second arrive, spend 0.4 seconds in the cache, so 200 concurrent slots must exist" loading="lazy">
@@ -744,7 +747,7 @@ print("inflight allowance:", 40000 * 0.25)  # -&gt; 10000.0  (cache twin)
 </figure><p><strong>Boundary:</strong> steady state only. During a burst, arrivals exceed service and the queue grows without bound. Size for the burst (Section 3.5), not the average.</p>
 <h3 id="22-mm1-wait-times-1-">2.2 M/M/1 wait times: ρ/(μ(1-ρ))</h3>
 <p><strong>Step 1: the shape of the wait.</strong></p>
-<p>With random arrivals and random service times, the wait before service starts stays flat while the server is half empty, then bends up like a hockey stick. The last 10 percent of utilization costs roughly 10x the latency.</p>
+<p>The M/M/1 model is the classic picture of one server fed by random arrivals with random service times (the M's stand for memoryless, the 1 for one server). With random arrivals and random service times, the wait before service starts stays flat while the server is half empty, then bends up like a hockey stick. The last 10 percent of utilization costs roughly 10x the latency.</p>
 <p><pre><code class="language-ascii">wait
   ^
   |                                                    ****
@@ -757,7 +760,7 @@ print("inflight allowance:", 40000 * 0.25)  # -&gt; 10000.0  (cache twin)
 Flat while the server is half empty. The last 10% of
 utilization costs roughly 10x the latency.</code></pre></p>
 <p><strong>Step 2: the formula and the numbers.</strong></p>
-<p>Mean queue wait = &rho; / (&mu; x (1 - &rho;)), in seconds. &rho; is utilization (&lambda;/&mu;, a number from 0 to 1). &mu; is the service rate in jobs/second. Worked at 100 ms mean service time:</p>
+<p>Mean queue wait = &rho; / (&mu; x (1 - &rho;)), in seconds. &rho; is utilization (&lambda;/&mu;, a number from 0 to 1). &mu; is the service rate in jobs/second. Worked at 100 ms mean service time:</p>\n<p style="text-align:center;font-size:1.08em;margin:1.25rem 0"><strong>mean queue wait = &rho; / (&mu; &times; (1 &minus; &rho;))</strong></p>\n<p>where: <strong>&rho; (rho)</strong> is utilization (&lambda;/&mu;, a number from 0 to 1); <strong>&mu; (mu)</strong> is the service rate in jobs/second. The table below works it at 100 ms mean service time: the wait stays flat while the server is half empty, then bends up like a hockey stick.</p>
 <table>
 <thead>
 <tr>
@@ -816,12 +819,12 @@ for rho in (0.5, 0.8, 0.9, 0.95):
 <figure class="diagram">
 <img src="img/crash10-mm1-wait.png" alt="Average queue wait versus utilization for a 10 ms service time: flat until 70%, then a hockey stick; at 90% the wait is 9x the service time" loading="lazy">
 <figcaption>Figure: average queue wait vs utilization for a 10 ms service time. Flat until 70%, then the hockey stick: at 90% you wait 9x the service time. Never size a fleet to 100% of measured supply. <em>Source: generated for this pack.</em></figcaption>
-</figure><p>Target 60 to 75 percent utilization in production; treat 85 percent as an incident. Real traffic is burstier than the Poisson arrivals this model assumes, so treat these waits as optimistic lower bounds: budget above them, never below.</p>
-<h3 id="23-hnsw-recall-parameters">2.3 HNSW recall parameters</h3>
+</figure><p>Target 60 to 75 percent utilization in production; treat 85 percent as an incident. Real traffic is burstier than the Poisson (purely random, memoryless) arrivals this model assumes, so treat these waits as optimistic lower bounds: budget above them, never below.</p>
+<p>Queues tell you how long work waits. The next section is about finding things fast: HNSW recall parameters, and what they cost in memory and latency.</p>\n<h3 id="23-hnsw-recall-parameters">2.3 HNSW recall parameters</h3>
 <p><strong>Step 1: start with brute force.</strong></p>
-<p>Below about 100k vectors, brute force in memory is usually simpler and has perfect recall: compare the query against every vector. Past that, O(N) per query gets expensive, and you want an index.</p>
+<p>Below about 100k vectors, brute force in memory is usually simpler and has perfect recall: compare the query against every vector. Past that, O(N) per query (cost growing in direct proportion to the number of vectors) gets expensive, and you want an index.</p>
 <p><strong>Step 2: the layered graph.</strong></p>
-<p>HNSW (hierarchical navigable small world) is the standard approximate nearest-neighbor index for vector search. Vectors sit in layered graphs. Cheap greedy hops on the sparse upper layers find the right neighborhood, then a wide beam search on the dense bottom layer collects candidates. Search turns from O(N) into roughly O(log N) per query.</p>
+<p>HNSW (hierarchical navigable small world) is the standard approximate nearest-neighbor index for vector search. Vectors sit in layered graphs. Cheap greedy hops (greedy: always step to the nearest-looking neighbor) on the sparse upper layers find the right neighborhood, then a wide beam search (a shortlist of the best candidates, expanded from all of them at once) on the dense bottom layer collects candidates. Search turns from O(N) into roughly O(log N) per query.</p>
 <figure class="diagram">
 <img src="img/crash10-hnsw-layers.png" alt="Three layers of proximity graphs from sparse at top to dense at bottom, with a greedy descent path from the entry point down" loading="lazy">
 <figcaption>Figure: HNSW searches from the sparse top layer down to the dense bottom layer by greedy descent. efSearch widens the candidate beam at the bottom layer, trading recall against latency. <em>Source: generated for this pack.</em></figcaption>
@@ -835,7 +838,7 @@ for rho in (0.5, 0.8, 0.9, 0.95):
 <p><strong>Memory:</strong> vectors cost dim x 4 bytes each (FP32); the graph costs about M x 2 edges x 4 bytes per node. Worked: 1M vectors, dim 768, M = 16 gives 1M x 768 x 4 = 3.07 GB for vectors plus 1M x 16 x 2 x 4 = 128 MB for the graph. The vectors dominate; graph overhead is under 5 percent.</p>
 <h3 id="24-kv-cache-math-2-x-layers-x-hidden-x-bytes">2.4 KV-cache math: 2 x layers x hidden x bytes</h3>
 <p><strong>Step 1: why the cache exists.</strong></p>
-<p>During generation, each new token attends to every previous token. Recomputing all of them at every step is pure waste, so the model caches the keys and values of every previous token. The cache lives in GPU memory next to the weights and grows with context length and batch size.</p>
+<p>During generation, each new token attends to every previous token (attention: the mechanism by which each generated token weighs the previous tokens). Recomputing all of them at every step is pure waste, so the model caches the keys and values of every previous token. The cache lives in GPU memory next to the weights and grows with context length and batch size.</p>
 <figure class="diagram">
 <img src="img/kv-cache.png" alt="Diagram of the KV cache: the new query token attends to cached previous keys and values, and the new key and value are appended back into the cache" loading="lazy">
 <figcaption>Figure: what lives in the KV cache. Each decoding step attends the new query to cached keys and values, then appends the new key and value so the past is never recomputed. <em>Source: existing curriculum diagram.</em></figcaption>
@@ -858,7 +861,7 @@ for rho in (0.5, 0.8, 0.9, 0.95):
 <p><strong>Step 1: the rule.</strong></p>
 <p>A forward pass costs about 2 floating-point operations per parameter per token: one multiply and one add per weight. For an 8B model that is 16 GFLOP per token.</p>
 <p><strong>Step 2: the compute floor.</strong></p>
-<p>16 GFLOP / 300 TFLOPs effective = about 53 microseconds per token. But real decoding is memory-bound: each step streams all the weights from GPU memory, and bandwidth (not FLOPs) is the binding constraint. Treat the FLOP math as a floor, not a promise. Prompt processing (prefill) is closer to compute-bound, so the rule gives usable throughput estimates there. Batching helps for the same reason: one weight-streaming pass serves many tokens at once.</p>
+<p>16 GFLOP (billions of floating-point operations) / 300 TFLOPs (trillions per second) effective = about 53 microseconds per token. But real decoding is memory-bound: each step streams all the weights from GPU memory, and bandwidth (not FLOPs) is the binding constraint. Treat the FLOP math as a floor, not a promise. Prompt processing (prefill) is closer to compute-bound, so the rule gives usable throughput estimates there. Batching helps for the same reason: one weight-streaming pass serves many tokens at once.</p>
 <p><strong>Step 3: the bit ladder.</strong></p>
 <p><pre><code class="language-ascii">8B params x 2 FLOP/param/token = 16 GFLOP per token
 
@@ -897,9 +900,9 @@ print(f&quot;weights FP16: {model_bytes(8e9)/1e9:.0f} GB&quot;)  # -&gt; 16 GB
 print(f&quot;weights INT4: {model_bytes(8e9, 0.5)/1e9:.1f} GB&quot;)  # -&gt; 4.0 GB
 print(f&quot;forward: {forward_flops_per_token(8e9)/1e9:.0f} GFLOP/token&quot;)  # -&gt; 16
 </code></pre></p>
-<h3 id="26-burn-rate-alerting">2.6 Burn-rate alerting</h3>
+<p>The FLOP and memory math sizes the fleet. The next section watches it burn: burn-rate alerting on the error budget, paging on pace, not on raw counts.</p>\n<h3 id="26-burn-rate-alerting">2.6 Burn-rate alerting</h3>
 <p><strong>Step 1: why raw thresholds fail.</strong></p>
-<p>"Alert me when latency exceeds 2 seconds" pages you at 3am for one slow request, and misses a real degradation holding 30 percent of requests at 1.9 seconds. Threshold alerts ignore the error budget.</p>
+<p>"Alert me when latency exceeds 2 seconds" pages you at 3am for one slow request, and misses a real degradation holding 30 percent of requests at 1.9 seconds. Threshold alerts ignore the error budget (the allowed failure slice of the SLO: 0.1% of requests for a 99.9% SLO).</p>
 <p><strong>Step 2: the burn rate.</strong></p>
 <p><strong>Burn rate = observed error ratio / budgeted error ratio.</strong> A 99.9 percent SLO allows 0.1 percent errors; errors running at exactly 0.1 percent burn at 1x. At 10x, the monthly budget is gone in 3 days. At 2x, it lasts 15 days.</p>
 <p><strong>Step 3: two alerts, two urgencies.</strong></p>
@@ -1020,13 +1023,13 @@ print(&quot;side effects:&quot;, len(calls))
 <li>2 FLOP per param per token. Quantization halves memory per bit-ladder step.</li>
 <li>Burn rate: 10x over 5 min pages, 2x over 1 h tickets.</li>
 <li>Idempotency: client key + server key→result table with TTL beyond the retry window.</li>
-</ul></div><h2 id="part-3-classic-traps">Part 3. Classic traps</h2>
+</ul></div><p><strong>Next:</strong> Part 3 catalogs the classic traps: five outage shapes with their fixes.</p>\n<h2 id="part-3-classic-traps">Part 3. Classic traps</h2>\n<p>The formulas describe the system working. This part describes it failing. Five traps that have caused real outages. Each one looks reasonable until it fails, which is what makes it a trap.</p>
 <p>These five have caused real outages. Each one looks reasonable until it fails, which is what makes it a trap.</p>
 <h3 id="31-split-brain-without-fencing">3.1 Split-brain without fencing</h3>
 <p><strong>Step 1: the partition.</strong></p>
 <p>A network partition splits the cluster. Both sides elect a leader. The partition heals. Now two leaders have both been writing, and the data is corrupt in ways no quorum can untangle afterward.</p>
 <p><strong>Step 2: election is not enough.</strong></p>
-<p>The mistake is treating leader election as sufficient. It is not. "We have Raft, so we cannot have two leaders" is the trap version: Raft prevents two leaders in the same term, but a partitioned old leader that never learns about the new term can still issue writes to followers it can reach.</p>
+<p>The mistake is treating leader election as sufficient. It is not. "We have Raft (the standard consensus protocol for leader election), so we cannot have two leaders" is the trap version: Raft prevents two leaders in the same term (one numbered election round), but a partitioned old leader that never learns about the new term can still issue writes to followers it can reach.</p>
 <p><strong>Step 3: fencing tokens.</strong></p>
 <p>Every write carries a token from a monotonic sequencer (a tiny strongly-consistent service, or a database row with an atomic increment). The store only accepts a write whose token exceeds every token it has seen. When the new leader takes over, it fetches a fresh, larger token. The old leader's writes arrive with smaller tokens and are rejected. Split-brain becomes harmless: the old leader shouts into a void.</p>
 <p><pre><code class="language-ascii">FENCING TIMELINE (partition, then heal)
@@ -1043,7 +1046,7 @@ print(&quot;side effects:&quot;, len(calls))
 <p>Fencing is the second lock on the door. Any design with a leader needs to answer: <strong>what rejects the old leader's writes?</strong></p>
 <h3 id="32-exactly-once-illusions">3.2 Exactly-once illusions</h3>
 <p><strong>Step 1: the impossible.</strong></p>
-<p>"No, our pipeline is exactly-once" is the most expensive sentence in data engineering. Over a network that can drop, delay, or duplicate packets, exactly-once delivery is impossible: the sender can never be sure the receiver got the message exactly once, because the acknowledgment itself can be lost. This is the Two Generals problem, and it has no protocol fix.</p>
+<p>"No, our pipeline is exactly-once" is the most expensive sentence in data engineering. Over a network that can drop, delay, or duplicate packets, exactly-once delivery is impossible: the sender can never be sure the receiver got the message exactly once, because the acknowledgment itself can be lost. This is the Two Generals problem (the classic result: two parties cannot guarantee agreement over an unreliable link), and it has no protocol fix.</p>
 <p><strong>Step 2: what exists.</strong></p>
 <ul>
 <li><strong>At-most-once:</strong> fire and forget. Fast, lossy. Metrics and logs can live here.</li>
@@ -1055,7 +1058,10 @@ print(&quot;side effects:&quot;, len(calls))
 <p><pre><code class="language-ascii">"exactly-once" = at-least-once delivery + idempotent receiver
                + dedupe key with a TTL
 
-Audit every exactly-once claim by asking two questions:
+<figure class="diagram">
+<img src="img/crash10-delivery-semantics.svg" alt="Three delivery semantics: at-most-once (fast, lossy), at-least-once (nothing lost, some run twice), effectively-once (at-least-once plus idempotent receiver)" loading="lazy">
+<figcaption>Figure: name the guarantee honestly. Exactly-once delivery does not exist; effectively-once (at-least-once plus an idempotent receiver) is the real target. <em>Source: generated for this pack.</em></figcaption>
+</figure>
 where is the dedupe key, and what is its TTL?</code></pre></p>
 <h3 id="33-cache-stampedes">3.3 Cache stampedes</h3>
 <p><strong>Step 1: the death spiral.</strong></p>
@@ -1121,7 +1127,7 @@ print(&quot;requests:&quot;, len(results), &quot;| backend calls:&quot;, sf.back
 <p><strong>Step 1: what p99 means.</strong></p>
 <p><strong>p99 = 300 ms</strong> does not mean "the slowest request takes 300 ms." It means 1 percent of requests are slower than 300 ms. At 10,000 requests per second, that is 100 slow requests every second, each one a user having a bad time. The trap is reporting the p99 as if it describes the tail. It describes where the tail starts.</p>
 <p><strong>Step 2: tails multiply across hops.</strong></p>
-<p>A request that fans out to 20 backend calls, each with p99 = 100 ms, is not p99 = 100 ms end to end. The chance that all 20 calls land under their p99 is 0.99<sup>20</sup> &#8776; 0.818, so about 18 percent of end-to-end requests exceed 100 ms somewhere. The end-to-end p99 is set by the worst hop, and every hop you add drags it up.</p>
+<p>A request that fans out to 20 backend calls, each with p99 = 100 ms, is not p99 = 100 ms end to end. The chance that all 20 calls land under their p99 is 0.99<sup>20</sup> &#8776; 0.818, so about 18 percent of end-to-end requests exceed 100 ms somewhere. The end-to-end p99 is set by the worst hop, and every hop you add drags it up.</p>\n<div class="callout warn"><p><strong>The tail rule.</strong> p99 is where the tail starts, not the worst case, and tails multiply across hops: 20 hops at p99 each means about 18% of end-to-end requests exceed 100 ms somewhere. Report the p99 as the point the tail starts, never as the slowest request.</p></div>
 <p><pre><code class="language-ascii">TAIL COMPOSITION (20 hops, each p99 = 100 ms)
 
   P(all 20 under 100 ms) = 0.99^20 = 0.818
@@ -1137,7 +1143,7 @@ print(&quot;requests:&quot;, len(results), &quot;| backend calls:&quot;, sf.back
 <p><strong>Step 1: the boring outage.</strong></p>
 <p>A queue grows 2 percent faster than the consumer drains it. Nothing alerts. Latency creeps up over days. Then a deploy restarts the consumer, the backlog must be reprocessed, and the queue that looked "a little behind" turns out to hold 14 hours of work.</p>
 <p><strong>Step 2: depth is meaningless; age is everything.</strong></p>
-<p>The trap is monitoring queue depth instead of queue age. Depth without a rate is meaningless: 100,000 messages is 10 seconds at 10k/s and 28 hours at 1/s. Monitor lag in seconds:</p>
+<p>The trap is monitoring queue depth instead of queue age. Depth without a rate is meaningless: 100,000 messages is 10 seconds at 10k/s and 28 hours at 1/s. Monitor lag in seconds:</p>\n<div class="takeaway"><p><strong>The queue rule.</strong> Monitor queue lag in seconds and its growth rate, not raw depth: 100,000 messages is 10 seconds at 10k/s and 28 hours at 1/s. Depth without a rate is meaningless.</p></div>
 <p><pre><code>lag_seconds = queue_depth / consumption_rate_per_s
 </code></pre></p>
 <figure class="diagram">
@@ -1151,7 +1157,7 @@ print(&quot;requests:&quot;, len(results), &quot;| backend calls:&quot;, sf.back
 <li>Stampedes die to singleflight coalescing, jittered TTLs, and early refresh.</li>
 <li>p99 is where the tail starts, not the worst case; tails multiply across hops.</li>
 <li>Monitor queue lag in seconds and its growth rate, not raw depth. Alert on DLQ age.</li>
-</ul></div><h2 id="part-4-rapid-fire-drills">Part 4. Rapid-fire drills</h2>
+</ul></div><p><strong>Next:</strong> Part 4 tests the material: 26 rapid-fire drills with worked answers.</p>\n<h2 id="part-4-rapid-fire-drills">Part 4. Rapid-fire drills</h2>\n<p>This part is the checkpoint: 26 drills with worked answers. Cover the answers, answer out loud, then reveal. The categories match the platform: distributed systems, APIs and queues, storage, observability, pipelines, ML literacy, capacity planning.</p>
 <p>Twenty-six drills with worked answers. Cover the answers, answer out loud, then reveal. The categories match the platform: distributed systems, APIs and queues, storage, observability, pipelines, ML literacy, capacity planning.</p>
 <h3 id="distributed-systems">Distributed systems</h3><div class="pq"><div class="pq-q"><p><strong>D1.</strong> A metadata store runs 5 replicas with W = 3, R = 3. Two replicas go down during a deploy. Do reads and writes still work? What breaks if a third replica fails?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> reads and writes both still work, but there is no failure tolerance left.</p>
 <p>Worked: W = 3 needs 3 live replicas for a write; R = 3 needs 3 for a read. With 2 down, exactly 3 remain, so both succeed. The quorum rule holds (3 + 3 &gt; 5), so reads still see the latest writes. But one more failure leaves 2 live replicas: both reads and writes block until a replica returns. The design survives 2 failures only while all 5 are healthy; during the deploy it survives zero.</p></div></div><div class="pq"><div class="pq-q"><p><strong>D2.</strong> A network partition splits your 3-replica store (W = 2, R = 2) into a side with 2 replicas and a side with 1. Which side keeps serving writes, and what must the other side do?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> the 2-replica side keeps serving; the 1-replica side must refuse writes (and, strictly, reads that need the quorum).</p>
@@ -1164,7 +1170,7 @@ print(&quot;requests:&quot;, len(results), &quot;| backend calls:&quot;, sf.back
 <p>Worked: Little's Law, capacity = rate x wait = 100 x 2 = 200. A queue longer than 200 means the 201st request would wait more than its deadline even if everything ahead succeeds, so queueing it only wastes its time and the consumer's memory. Rejecting fast lets the caller retry elsewhere, shed load, or degrade gracefully instead of queueing slow.</p></div></div><div class="pq"><div class="pq-q"><p><strong>A4.</strong> A thousand clients hammer a recovering endpoint with retries in lockstep. Write the backoff formula that fixes it.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> full jitter: sleep = random_between(0, min(cap, base x 2^attempt)).</p>
 <p>Worked: exponential growth (1s, 2s, 4s, ...) spreads attempts over time; the random draw in [0, computed] breaks the lockstep so the thousand clients do not retry in the same millisecond and re-crash the endpoint. The cap (say 8 or 30 seconds) bounds the worst case. Missing jitter turns every recovery into a retry thundering herd.</p></div></div><h3 id="storage">Storage</h3><div class="pq"><div class="pq-q"><p><strong>S1.</strong> A hot key's TTL expires and 5,000 requests per second hit the database at once. Name the failure and give two fixes.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> a cache stampede (thundering herd). Fixes: request coalescing and jittered TTLs.</p>
 <p>Worked: coalescing (singleflight) makes the 5,000 concurrent misses share one in-flight backend call, so the database sees 1 query instead of 5,000. Jittered TTLs (expire over 4 to 6 minutes instead of exactly 5) stop keys from expiring in lockstep, so the herd never forms. A third layer is probabilistic early refresh of hot keys before expiry.</p></div></div><div class="pq"><div class="pq-q"><p><strong>S2.</strong> Your HNSW index scores recall@10 = 0.88 against brute force. The target is 0.95 and the latency budget has headroom. Which knob do you turn, which direction, and when do you stop?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> raise ef_search (say 50 to 100 to 200); stop at recall@k &gt;= 0.95 or when the latency budget runs out.</p>
-<p>Worked: ef is the query-time beam width; wider beams examine more candidates, so recall rises and latency grows roughly linearly. Measure recall@10 against brute force on real queries after each step. If the latency budget runs out before 0.95, the answer is not a bigger ef: it is sharding the index, quantizing vectors, or accepting the recall with a product-level fallback.</p></div></div><div class="pq"><div class="pq-q"><p><strong>S3.</strong> Under mod-N hashing, one shard holds 40 percent of the keys while others sit idle. Give two fixes.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> consistent hashing with virtual nodes, or a better shard key.</p>
+<p>Worked: ef is the query-time beam width; wider beams examine more candidates, so recall rises and latency grows roughly linearly. Measure recall@10 against brute force on real queries after each step. If the latency budget runs out before 0.95, the answer is not a bigger ef: it is sharding the index (splitting it across machines), quantizing vectors, or accepting the recall with a product-level fallback.</p></div></div><div class="pq"><div class="pq-q"><p><strong>S3.</strong> Under mod-N hashing, one shard holds 40 percent of the keys while others sit idle. Give two fixes.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> consistent hashing with virtual nodes, or a better shard key.</p>
 <p>Worked: virtual nodes place many small virtual replicas of each physical node on the ring, which evens out the key distribution and smooths the load when nodes join or leave. If the skew comes from the key itself (say, shard by tenant and one tenant is huge), no hash fixes it: split the hot tenant's key space or shard by a more uniform attribute.</p></div></div><div class="pq"><div class="pq-q"><p><strong>S4.</strong> An HNSW index holds 1M vectors of dim 768 in FP32 with M = 16. Roughly how much memory?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> about 3.2 GB total: 3.07 GB for vectors, ~128 MB for the graph.</p>
 <p>Worked: vectors cost 1M x 768 x 4 bytes = 3.07 GB. Graph edges cost about 1M x 16 x 2 (bidirectional) x 4 bytes = 128 MB. The vectors dominate; graph overhead is under 5 percent. This is why vector quantization (FP32 to INT8) pays more than graph tuning when memory is tight.</p></div></div><h3 id="observability">Observability</h3><div class="pq"><div class="pq-q"><p><strong>O1.</strong> Your service has a 99.9 percent SLO. Errors run at 1 percent for 5 minutes. What is the burn rate, and does it page or ticket?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> burn 10x; it pages.</p>
 <p>Worked: burn = observed / budgeted = 1% / 0.1% = 10. At 10x, the 30-day budget is gone in 3 days (30/10). The page tier is 10x over 5 minutes, so this pages. A 0.2 percent error rate would be burn 2x over an hour: ticket, look today, no page.</p></div></div><div class="pq"><div class="pq-q"><p><strong>O2.</strong> "Alert me when p99 latency exceeds 2 seconds" pages you at 3am for a single slow request, yet misses a real degradation holding 30 percent of traffic at 1.9 seconds. What is wrong, and what replaces it?</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> threshold alerts ignore the error budget; replace with burn-rate alerts.</p>
@@ -1188,7 +1194,7 @@ print(&quot;requests:&quot;, len(results), &quot;| backend calls:&quot;, sf.back
 average demand: 500 req/s     burst demand: 2,000 req/s
 Little's Law at burst: 2,000 x 0.4 s = 800 slots
 steady-state sizing would leave you 600 slots short at the worst moment.</code></pre></p>
-<h2 id="part-5-one-page-cheat-sheet-30-numbers-and-rules">Part 5. One-page cheat sheet: 30 numbers and rules</h2>
+<p><strong>Next:</strong> Part 5 compresses everything into a one-page cheat sheet.</p>\n<h2 id="part-5-one-page-cheat-sheet-30-numbers-and-rules">Part 5. One-\n<p>Everything above, compressed to one page: the 30 numbers and rules that matter most. Keep it open during design work.</p>page cheat sheet: 30 numbers and rules</h2>
 <ol>
 <li><strong>W + R &gt; N.</strong> Every read overlaps every write. The quorum rule.</li>
 <li><strong>W, R &lt;= N - f</strong> to survive f failed replicas. Pick the smallest pair that satisfies both rules.</li>
@@ -1222,7 +1228,7 @@ steady-state sizing would leave you 600 slots short at the worst moment.</code><
 <li><strong>Nines per month:</strong> 99% → 7.2 h; 99.9% → 43 min; 99.99% → 4.3 min; 99.999% → 26 s.</li>
 </ol><div class="provenance"><p><strong>Last verified: September 2026.</strong> Every Python sample here was executed during writing; expected outputs sit in comments beside the prints that produce them. Quorum math (W + R &gt; N), the M/M/1 wait formula, Little's Law, burn-rate alerting tiers, and the nines table are textbook results. HNSW's published structure (layered graphs, M, ef parameters) follows the original design; tuning ranges are standard practice. The KV-cache formula (2 x layers x hidden x bytes) holds for standard multi-head attention; grouped-query attention changes the constant. <strong>UNVERIFIED:</strong> the worked fleet numbers (GPU counts, tokens/s figures, request rates) are illustrative constructions for teaching the arithmetic, not measurements from a real deployment; H100 80 GB and FP16 throughput figures are representative 2026 hardware values, not vendor guarantees. Re-measure every input on your own fleet before sizing.</p></div>
 <section class="watch-deeper" aria-labelledby="wd-h-sweback">
-  <h2 class="watch-deeper-kicker" id="wd-h-sweback">Watch and go deeper</h2>
+  <div class="takeaway"><p><strong>Where to go next.</strong> This is the last crash pack: the full crash sequence ends here. The natural next step is the <a href="dsa-track-300.html">DSA Track: Top-300</a>, the coding-interview companion to these systems packs. The unabridged version of everything here lives in the full track volumes; start from <a href="index.html">the curriculum home</a>.</p></div>\n<h2 class="watch-deeper-kicker" id="wd-h-sweback">Watch and go deeper</h2>
   <p class="watch-deeper-lede">Two videos and four links that replay the pack’s core ideas: consensus, queues, and the math that sizes an inference fleet.</p>
   <div class="watch-deeper-grid">
     <figure class="watch-card">
