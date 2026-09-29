@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="100%" style="max-width:760px" role="img" aria-label="Cohen's kappa: a 2x2 confusion matrix showing agreement corrected for chance">
+<style>
+ text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+ .m{fill:#a8a8a8;font-size:12px}
+ .t{font-size:14px;font-weight:700}
+ .g{fill:#f0b429}
+ .cell{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+ .agree{fill:#16281a;stroke:#7fd08a;stroke-width:1.5}
+ .n{font-size:22px;font-weight:700}
+ .lbl{font-size:12.5px;fill:#a8a8a8}
+</style>
+<rect x="0" y="0" width="760" height="400" fill="none"/>
+<text class="t" x="30" y="30">Agreement is not accuracy: correct for chance</text>
+<text class="m" x="30" y="50">judge vs human, 100 items</text>
+<!-- matrix -->
+<g>
+ <text class="lbl" x="150" y="105">judge says good</text>
+ <text class="lbl" x="300" y="105">judge says bad</text>
+ <text class="lbl" x="30" y="150">human says good</text>
+ <text class="lbl" x="30" y="250">human says bad</text>
+ <rect class="agree" x="130" y="118" width="130" height="110"/>
+ <rect class="cell"  x="270" y="118" width="130" height="110"/>
+ <rect class="cell"  x="130" y="238" width="130" height="110"/>
+ <rect class="agree" x="270" y="238" width="130" height="110"/>
+ <text class="n" x="188" y="182">60</text>
+ <text class="n" x="328" y="182">10</text>
+ <text class="n" x="188" y="302">15</text>
+ <text class="n" x="328" y="302">15</text>
+</g>
+<text class="lbl" x="440" y="150">Raw agreement: 75 / 100 = 75%</text>
+<text class="lbl" x="440" y="175">Looks fine. But both sides lean toward "good":</text>
+<text class="lbl" x="440" y="200">humans say good 75%, the judge says good 70%.</text>
+<text class="lbl" x="440" y="225">Chance alone would agree 60% of the time.</text>
+<text class="g" x="440" y="262" font-size="15" font-weight="700">kappa = (0.75 - 0.60) / (1 - 0.60) = 0.375</text>
+<text class="lbl" x="440" y="287">Agreement beyond chance, on a -1 to 1 scale.</text>
+<text class="lbl" x="440" y="312">0.375 is only fair: the judge is mostly riding the base rate.</text>
+<text class="lbl" x="440" y="337">License bar used in this pack: 0.8.</text>
+<text class="lbl" x="30" y="388">Kappa punishes easy wins. That is why it beats raw agreement.</text>
+</svg>
