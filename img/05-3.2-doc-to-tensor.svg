@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="440" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">From documents to tensors</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">three operations bridge variable-length text and fixed-shape GPU math</text>
+<rect x="24" y="94" width="200" height="130" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="124" y="120" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">documents</text>
+<text x="124" y="140" font-size="11" fill="#a8a8a8" text-anchor="middle">variable lengths:</text>
+<text x="124" y="155" font-size="11" fill="#a8a8a8" text-anchor="middle">40 ... 12,000 tokens</text>
+<rect x="40" y="168" width="40" height="7" fill="#6cb2ff" rx="2" opacity="1"/>
+<rect x="40" y="180" width="120" height="7" fill="#4fd1a5" rx="2" opacity="1"/>
+<rect x="40" y="192" width="70" height="7" fill="#f0b429" rx="2" opacity="1"/>
+<rect x="40" y="204" width="150" height="7" fill="#e57ea6" rx="2" opacity="1"/>
+<line x1="234" y1="159" x2="286" y2="159" stroke="#6cb2ff" stroke-width="2"/>
+<polygon points="286,159 277.78219953718923,162.66984407753614 277.78219953718923,155.33015592246386" fill="#6cb2ff"/>
+<text x="260.0" y="151.0" font-size="11" fill="#8a8a8a" text-anchor="middle">tokenize</text>
+<rect x="296" y="94" width="200" height="130" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6"/>
+<text x="396" y="120" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">integer stream</text>
+<text x="396" y="152" font-size="11" font-family="DejaVu Sans Mono, monospace" fill="#a8a8a8" text-anchor="middle">1169 4937 8842 ...</text>
+<text x="396" y="174" font-size="11" fill="#8a8a8a" text-anchor="middle">one long token sequence;</text>
+<text x="396" y="190" font-size="11" fill="#8a8a8a" text-anchor="middle">documents concatenated</text>
+<line x1="506" y1="159" x2="556" y2="159" stroke="#4fd1a5" stroke-width="2"/>
+<polygon points="556,159 547.7821995371892,162.66984407753614 547.7821995371892,155.33015592246386" fill="#4fd1a5"/>
+<text x="531.0" y="151.0" font-size="11" fill="#8a8a8a" text-anchor="middle">pack</text>
+<rect x="566" y="94" width="290" height="130" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="711" y="120" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">[ rows x 4096 ]</text>
+<text x="711" y="140" font-size="11" fill="#a8a8a8" text-anchor="middle">fixed-length sequences</text>
+<rect x="582" y="156" width="240" height="9" fill="#f0b429" rx="2" opacity="0.85"/>
+<line x1="692" y1="156" x2="692" y2="165" stroke="#e57ea6" stroke-width="2"/>
+<rect x="582" y="172" width="240" height="9" fill="#f0b429" rx="2" opacity="0.85"/>
+<line x1="752" y1="172" x2="752" y2="181" stroke="#e57ea6" stroke-width="2"/>
+<rect x="582" y="188" width="240" height="9" fill="#f0b429" rx="2" opacity="0.85"/>
+<line x1="662" y1="188" x2="662" y2="197" stroke="#e57ea6" stroke-width="2"/>
+<text x="711" y="210" font-size="10" fill="#8a8a8a" text-anchor="middle">red ticks: document boundaries</text>
+<line x1="440" y1="244" x2="440" y2="282" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="440,282 436.33015592246386,273.78219953718923 443.66984407753614,273.78219953718923" fill="#8a8a8a"/>
+<text x="440.0" y="255.0" font-size="11" fill="#8a8a8a" text-anchor="middle">batch: stack B rows</text>
+<rect x="290" y="286" width="300" height="110" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6"/>
+<text x="440" y="312" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">[ B , 4096 ]</text>
+<text x="440" y="338" font-size="12" fill="#a8a8a8" text-anchor="middle">the tensor one optimizer</text>
+<text x="440" y="356" font-size="12" fill="#a8a8a8" text-anchor="middle">step eats</text>
+<text x="290" y="416" font-size="13" fill="#a8a8a8" text-anchor="start">B = rows per batch. Nothing variable-length survives past packing.</text>
+</svg>
