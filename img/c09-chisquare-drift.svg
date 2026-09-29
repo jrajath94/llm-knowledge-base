@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 389" role="img" aria-label="Chi-square drift: category shares the numeric detectors cannot see">
+<rect width="900" height="389" fill="#0d0d0d"/>
+<text x="450.0" y="20" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Chi-square drift: category shares the numeric detectors cannot see</text>
+<text x="450.0" y="46" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">A plan tier can flip from 20% to 60% of traffic while every numeric drift check stays green.</text>
+<text x="40.0" y="93.0" text-anchor="start" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">basic</text>
+<rect x="160.0" y="75.0" width="310.0" height="24.0" rx="6" fill="#4aa8ff" stroke="none" stroke-width="1" opacity="0.85"/>
+<text x="478.0" y="92.0" text-anchor="start" fill="#4aa8ff" font-size="11" font-family="Charis SIL, Georgia, serif">train 50%</text>
+<rect x="160.0" y="103.0" width="136.4" height="24.0" rx="6" fill="#e5484d" stroke="none" stroke-width="1" opacity="0.9"/>
+<text x="304.4" y="120.0" text-anchor="start" fill="#e5484d" font-size="11" font-family="Charis SIL, Georgia, serif">serve 22%</text>
+<text x="40.0" y="167.0" text-anchor="start" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">pro</text>
+<rect x="160.0" y="149.0" width="186.0" height="24.0" rx="6" fill="#4aa8ff" stroke="none" stroke-width="1" opacity="0.85"/>
+<text x="354.0" y="166.0" text-anchor="start" fill="#4aa8ff" font-size="11" font-family="Charis SIL, Georgia, serif">train 30%</text>
+<rect x="160.0" y="177.0" width="173.6" height="24.0" rx="6" fill="#e5484d" stroke="none" stroke-width="1" opacity="0.9"/>
+<text x="341.6" y="194.0" text-anchor="start" fill="#e5484d" font-size="11" font-family="Charis SIL, Georgia, serif">serve 28%</text>
+<text x="40.0" y="241.0" text-anchor="start" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">enterprise</text>
+<rect x="160.0" y="223.0" width="124.0" height="24.0" rx="6" fill="#4aa8ff" stroke="none" stroke-width="1" opacity="0.85"/>
+<text x="292.0" y="240.0" text-anchor="start" fill="#4aa8ff" font-size="11" font-family="Charis SIL, Georgia, serif">train 20%</text>
+<rect x="160.0" y="251.0" width="310.0" height="24.0" rx="6" fill="#e5484d" stroke="none" stroke-width="1" opacity="0.9"/>
+<text x="478.0" y="268.0" text-anchor="start" fill="#e5484d" font-size="11" font-family="Charis SIL, Georgia, serif">serve 50%</text>
+<line x1="160.0" y1="69.0" x2="160.0" y2="277.0" stroke="#6f6f6f" stroke-width="1"/>
+<text x="40.0" y="319.0" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">The chi-square verdict: the mix moved. Mass left basic and landed on enterprise. Find out why before</text>
+<text x="40.0" y="335.2" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">retraining: retraining bakes the breakage in. Same p-value caveat as KS at large n: read the</text>
+<text x="40.0" y="351.4" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">statistic, calibrated against history, not the p-value.</text>
+</svg>
