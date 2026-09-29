@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="445" viewBox="0 0 720 445" role="img" aria-label="Disaggregation decision rule">
+<rect width="720" height="445" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">The disaggregation decision rule</text>
+<rect class="box" x="90" y="60" width="540" height="48" rx="8"/>
+<text x="116" y="89" text-anchor="start" fill="#ececec" font-size="13" font-weight="400" font-family="Charis SIL, Georgia, serif">1. prefill and decode fight for the same GPUs</text>
+<rect x="600" y="74" width="20" height="20" rx="4" fill="none" stroke="#8a8a8a" stroke-width="1.5"/>
+<rect class="box" x="90" y="118" width="540" height="48" rx="8"/>
+<text x="116" y="147" text-anchor="start" fill="#ececec" font-size="13" font-weight="400" font-family="Charis SIL, Georgia, serif">2. the workload splits cleanly (interactive plus batch)</text>
+<rect x="600" y="132" width="20" height="20" rx="4" fill="none" stroke="#8a8a8a" stroke-width="1.5"/>
+<rect class="box" x="90" y="176" width="540" height="48" rx="8"/>
+<text x="116" y="205" text-anchor="start" fill="#ececec" font-size="13" font-weight="400" font-family="Charis SIL, Georgia, serif">3. the interconnect handles the KV handoff</text>
+<rect x="600" y="190" width="20" height="20" rx="4" fill="none" stroke="#8a8a8a" stroke-width="1.5"/>
+<rect class="box" x="90" y="234" width="540" height="48" rx="8"/>
+<text x="116" y="263" text-anchor="start" fill="#ececec" font-size="13" font-weight="400" font-family="Charis SIL, Georgia, serif">4. p99 TTFT is already the binding constraint</text>
+<rect x="600" y="248" width="20" height="20" rx="4" fill="none" stroke="#8a8a8a" stroke-width="1.5"/>
+<polygon points="360,292 480,340 360,388 240,340" fill="#0d0d0d" stroke="#f0b429" stroke-width="2"/>
+<text x="360" y="334" text-anchor="middle" fill="#ececec" font-size="14" font-weight="700" font-family="Charis SIL, Georgia, serif">2+ of 4 hold?</text>
+<text x="500" y="340" text-anchor="start" fill="#3fb950" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">yes: disaggregate</text>
+<text x="240" y="340" text-anchor="end" fill="#8a8a8a" font-size="12" font-weight="700" font-family="Charis SIL, Georgia, serif">no: colocate</text>
+<text x="360" y="420" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">disaggregation is a tool, not a religion: measure the handoff cost first</text>
+</svg>
