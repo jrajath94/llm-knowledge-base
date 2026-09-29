@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="480" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Peak FLOPS is not achieved FLOPS: three ways the ratio lies</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">MFU measures efficiency; goodput measures delivered value: quote both, and quote the peak</text>
+<text x="24" y="96" font-size="13" font-weight="bold" fill="#ececec" text-anchor="start">Three ways the ratio lies:</text>
+<rect x="24" y="110" width="560" height="58" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="304.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">wrong peak for the precision</text>
+<text x="304.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">BF16 math quoted against the FP8 peak halves the MFU silently</text>
+<rect x="24" y="184" width="560" height="58" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="304.0" y="210" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">wrong units</text>
+<text x="304.0" y="228" font-size="11" fill="#a8a8a8" text-anchor="middle">TFLOPS vs FLOPS is a factor of 1e12; it happens in spreadsheet math</text>
+<rect x="24" y="258" width="560" height="58" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="304.0" y="284" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">counting the wrong FLOPs</text>
+<text x="304.0" y="302" font-size="11" fill="#a8a8a8" text-anchor="middle">comm, recompute, and idle bubbles are not useful model math</text>
+<rect x="620" y="110" width="236" height="190" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="738.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">honest reading</text>
+<text x="738.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">a 60% MFU run with constant</text>
+<text x="738.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">restarts can deliver fewer</text>
+<text x="738.0" y="184" font-size="11" fill="#a8a8a8" text-anchor="middle">useful tokens than a 50% MFU</text>
+<text x="738.0" y="199" font-size="11" fill="#a8a8a8" text-anchor="middle">run that never stops</text>
+<text x="24" y="420" font-size="12" fill="#a8a8a8" text-anchor="start">The honest line: &quot;55% against the 989 TFLOPS BF16 dense peak.&quot; Two runs reporting MFUs that cannot</text>
+<text x="24" y="437" font-size="12" fill="#a8a8a8" text-anchor="start">both be true means at least one peak, unit, or numerator is wrong.</text>
+</svg>
