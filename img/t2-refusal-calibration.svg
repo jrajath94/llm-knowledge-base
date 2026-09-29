@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="480" viewBox="0 0 720 480" role="img" aria-label="Trade-off curve between true-refusal rate and false-refusal rate">
+<rect width="720" height="480" fill="#0d0d0d"/>
+<text x="360.0" y="32" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">Refusal calibration: one curve, five strictness settings</text>
+<line x1="90" y1="334.0" x2="650" y2="334.0" stroke="#1f1f1f"/>
+<text x="78" y="338.0" text-anchor="end" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">0.2</text>
+<line x1="90" y1="268.0" x2="650" y2="268.0" stroke="#1f1f1f"/>
+<text x="78" y="272.0" text-anchor="end" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">0.4</text>
+<line x1="90" y1="202.0" x2="650" y2="202.0" stroke="#1f1f1f"/>
+<text x="78" y="206.0" text-anchor="end" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">0.6</text>
+<line x1="90" y1="136.0" x2="650" y2="136.0" stroke="#1f1f1f"/>
+<text x="78" y="140.0" text-anchor="end" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">0.8</text>
+<line x1="90" y1="70.0" x2="650" y2="70.0" stroke="#1f1f1f"/>
+<text x="78" y="74.0" text-anchor="end" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">1.0</text>
+<text x="202.0" y="420" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">0.2</text>
+<text x="314.0" y="420" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">0.4</text>
+<text x="426.0" y="420" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">0.6</text>
+<text x="538.0" y="420" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">0.8</text>
+<text x="650.0" y="420" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">1.0</text>
+<path d="M454.0,70.0 L213.2,73.3 L123.6,89.8 L92.2,185.5 L90.1,327.4" fill="none" stroke="#f0b429" stroke-width="2.5"/>
+<circle cx="454.0" cy="70.0" r="6" fill="#0d0d0d" stroke="#f0b429" stroke-width="2"/>
+<text x="464.0" y="74.0" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">strictness 0.30</text>
+<circle cx="213.2" cy="73.3" r="6" fill="#0d0d0d" stroke="#f0b429" stroke-width="2"/>
+<text x="223.2" y="77.3" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">strictness 0.45</text>
+<circle cx="123.6" cy="89.8" r="6" fill="#0d0d0d" stroke="#f0b429" stroke-width="2"/>
+<text x="133.6" y="93.8" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">strictness 0.55</text>
+<circle cx="92.2" cy="185.5" r="6" fill="#0d0d0d" stroke="#f0b429" stroke-width="2"/>
+<text x="102.2" y="189.5" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">strictness 0.70</text>
+<circle cx="90.1" cy="327.4" r="6" fill="#0d0d0d" stroke="#f0b429" stroke-width="2"/>
+<text x="100.1" y="331.4" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">strictness 0.85</text>
+<circle cx="123.6" cy="89.8" r="10" fill="none" stroke="#e5484d" stroke-width="2"/>
+<text x="137.6" y="123.8" fill="#e5484d" font-size="12" font-family="Charis SIL, Georgia, serif">chosen: 0.55</text>
+<text x="437.2" y="162.4" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">sliding along this curve is NOT progress</text>
+<text x="437.2" y="182.2" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">better training moves the whole curve up-left</text>
+<text x="370.0" y="444" text-anchor="middle" fill="#8a8a8a" font-size="13" font-family="Charis SIL, Georgia, serif">false-refusal rate (benign-edge probes)</text>
+<text x="24" y="235.0" text-anchor="middle" fill="#8a8a8a" font-size="13" font-family="Charis SIL, Georgia, serif" transform="rotate(-90 24 235.0)">true-refusal rate (disallowed probes)</text>
+</svg>
