@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 315" role="img" aria-label="Chapter 12: Course Schedule — the worked example, traced">
+<rect width="900" height="315" fill="#0d0d0d"/>
+<text x="450.0" y="20" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Chapter 12: Course Schedule — the worked example, traced</text>
+<text x="450.0" y="46" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Figure 38. numCourses = 2, prerequisites = [[1, 0]] (take 0 before 1). Kahn's algorithm: repeatedly take courses with no remaining prerequisites.</text>
+<line x1="40.0" y1="75.0" x2="860.0" y2="75.0" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="48.0" y="93.0" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">step</text>
+<text x="128.0" y="93.0" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">state</text>
+<text x="488.0" y="93.0" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">decision</text>
+<rect x="40.0" y="101.0" width="820.0" height="29.0" rx="6" fill="#101010" stroke="none" stroke-width="1"/>
+<text x="48.0" y="120.5" text-anchor="start" fill="#f0b429" font-size="12.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">start</text>
+<text x="128.0" y="121.0" text-anchor="start" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">indegree [0, 1]; queue [0]</text>
+<text x="488.0" y="121.0" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">course 0 has no prerequisites</text>
+<text x="48.0" y="149.5" text-anchor="start" fill="#f0b429" font-size="12.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">pop 0</text>
+<text x="128.0" y="150.0" text-anchor="start" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">remove edge 0-&gt;1: indegree [0, 0]; queue [1]</text>
+<text x="488.0" y="150.0" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">course 1 is now free</text>
+<rect x="40.0" y="159.0" width="820.0" height="29.0" rx="6" fill="#101010" stroke="none" stroke-width="1"/>
+<text x="48.0" y="178.5" text-anchor="start" fill="#f0b429" font-size="12.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">pop 1</text>
+<text x="128.0" y="179.0" text-anchor="start" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">queue empty; taken = 2</text>
+<text x="488.0" y="179.0" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">taken == numCourses: True</text>
+<text x="48.0" y="207.5" text-anchor="start" fill="#f0b429" font-size="12.5" font-family="Charis SIL, Georgia, serif" font-weight="bold">verdict</text>
+<text x="128.0" y="208.0" text-anchor="start" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">True: all courses can be finished</text>
+<text x="488.0" y="208.0" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">a leftover queue with taken &lt; n means a cycle</text>
+<line x1="40.0" y1="217.0" x2="860.0" y2="217.0" stroke="#2a2a2a" stroke-width="1.5"/>
+<rect x="40.0" y="227.0" width="820.0" height="52.0" rx="6" fill="#0f0f0f" stroke="#2dd4bf" stroke-width="1"/>
+<text x="58.0" y="249.0" text-anchor="start" fill="#ececec" font-size="12.5" font-family="Charis SIL, Georgia, serif">Indegree counts unmet prerequisites. Peeling zero-indegree nodes is topological order; anything</text>
+<text x="58.0" y="265.9" text-anchor="start" fill="#ececec" font-size="12.5" font-family="Charis SIL, Georgia, serif">unpeeled at the end is in a cycle.</text>
+</svg>
