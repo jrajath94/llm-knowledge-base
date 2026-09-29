@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 388" width="100%" style="max-width:700px" role="img" aria-label="100M vectors need 614.4 GB; reranking adds 10 recall points; hybrid retrieval and 512 token chunks round out the recipe">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="700" height="388" fill="none"/>
+<text class="t" x="24" y="30">RAG math: the index capacity line and the highest-ROI stages</text>
+<text class="big g" x="24" y="58">Vector-store capacity line</text>
+<rect class="box" x="24" y="70" width="520" height="64" rx="8"/>
+<text class="big" x="38" y="98">100M x 1536 x 4 bytes = 614.4 GB</text>
+<text class="m" x="38" y="120">mmap + quantize or the index does not fit</text>
+<text class="big g" x="24" y="168">The highest-ROI stages</text>
+<rect x="24" y="182" width="8" height="44" rx="4" fill="#7fc97f"/>
+<text class="num" x="44" y="202">Rerank top 50-100 with a cross-encoder</text>
+<text class="m" x="44" y="220">+10 recall points</text>
+<rect x="24" y="234" width="8" height="44" rx="4" fill="#6cb2ff"/>
+<text class="num" x="44" y="254">Hybrid retrieval: dense + BM25 + RRF</text>
+<text class="m" x="44" y="272">beats either alone; out-of-domain strength</text>
+<rect x="24" y="286" width="8" height="44" rx="4" fill="#6cb2ff"/>
+<text class="num" x="44" y="306">Chunk default: 512 tokens, 10-20% overlap</text>
+<text class="m" x="44" y="324">the default to beat; respect structure</text>
+<text class="m" x="24" y="362">Agent loop tax: 2-3x tokens, 2-5x latency. One good agent before multi-agent.</text>
+</svg>
