@@ -299,7 +299,21 @@ SITE_MAP = [
 ]
 SITE_SECTIONS = ["Start here", "Base volumes", "Role tracks", "DSA track", "Crash packs"]
 
+_FILE_IDX = {f: n for n, (f, _, _) in enumerate(SITE_MAP)}
+
+# Hand-drawn chevrons (inline SVG, no emoji, no icon fonts).
+_CHEV_L = ('<svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false">'
+           '<path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" '
+           'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+_CHEV_R = ('<svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false">'
+           '<path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" '
+           'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+_CHEV_D = ('<svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false">'
+           '<path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" '
+           'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
 def _site_nav_groups(current):
+    """Numbered volume list grouped by section, for the header drawer/panel."""
     parts = []
     for sec in SITE_SECTIONS:
         items = [(f, t) for (f, t, s) in SITE_MAP if s == sec]
@@ -308,34 +322,94 @@ def _site_nav_groups(current):
         lis = []
         for f, t in items:
             cls = ' class="site-nav-current"' if f == current else ""
-            lis.append('<li><a href="%s"%s>%s</a></li>' % (f, cls, htmlmod.escape(t)))
+            num = _FILE_IDX[f] + 1
+            lis.append('<li><a href="%s"%s><span class="site-nav-num">%02d</span>'
+                       '<span class="site-nav-title">%s</span></a></li>'
+                       % (f, cls, num, htmlmod.escape(t)))
         parts.append("<div><h4>%s</h4><ul>%s</ul></div>" % (sec, "".join(lis)))
     return "".join(parts)
 
+def _foot_index_groups(current):
+    """Grouped sitemap with real hierarchy for the footer."""
+    parts = []
+    for sec in SITE_SECTIONS:
+        items = [(f, t) for (f, t, s) in SITE_MAP if s == sec]
+        if not items:
+            continue
+        lis = []
+        for f, t in items:
+            cls = ' class="foot-current"' if f == current else ""
+            lis.append('<li><a href="%s"%s>%s</a></li>' % (f, cls, htmlmod.escape(t)))
+        parts.append('<div class="foot-group"><h4>%s</h4><ul>%s</ul></div>'
+                     % (sec, "".join(lis)))
+    return "".join(parts)
+
 def site_header_html(current, section, page_title):
-    idx = [f for (f, _, _) in SITE_MAP].index(current) if current in [f for (f, _, _) in SITE_MAP] else -1
+    """N6 newspaper-masthead header: issue line, wordmark + volume sequence,
+    breadcrumb row + volume-nav toggle, collapsible panel (drawer on mobile),
+    double rule below."""
+    idx = _FILE_IDX.get(current, -1)
     if idx >= 0:
-        prev_html = ('<a href="%s">&larr; %s</a>' % (SITE_MAP[idx-1][0], htmlmod.escape(SITE_MAP[idx-1][1]))) if idx > 0 else '<span class="site-prevnext-disabled">&larr; Start</span>'
-        nxt = SITE_MAP[idx+1] if idx+1 < len(SITE_MAP) else None
-        next_html = ('<a href="%s">%s &rarr;</a>' % (nxt[0], htmlmod.escape(nxt[1]))) if nxt else '<span class="site-prevnext-disabled">End &rarr;</span>'
-        crumbs = ('<a href="index.html">Home</a><span class="bc-sep">/</span>'
-                  '<span>%s</span><span class="bc-sep">/</span>'
-                  '<span class="bc-current">%s</span>' % (htmlmod.escape(section), htmlmod.escape(page_title)))
+        total = len(SITE_MAP)
+        issue = "No. %02d of %d" % (idx + 1, total)
+        if idx > 0:
+            pf, pt = SITE_MAP[idx - 1][0], SITE_MAP[idx - 1][1]
+            prev_html = ('<div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span>'
+                         '<a class="site-prevnext-link" href="%s" aria-label="Previous volume: %s">%s'
+                         '<span class="site-prevnext-title">%s</span></a></div>'
+                         % (pf, htmlmod.escape(pt), _CHEV_L, htmlmod.escape(pt)))
+        else:
+            prev_html = ('<div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span>'
+                         '<span class="site-prevnext-empty">Start</span></div>')
+        nxt = SITE_MAP[idx + 1] if idx + 1 < total else None
+        if nxt:
+            next_html = ('<div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span>'
+                         '<a class="site-prevnext-link" href="%s" aria-label="Next volume: %s">'
+                         '<span class="site-prevnext-title">%s</span>%s</a></div>'
+                         % (nxt[0], htmlmod.escape(nxt[1]), htmlmod.escape(nxt[1]), _CHEV_R))
+        else:
+            next_html = ('<div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span>'
+                         '<span class="site-prevnext-empty">End</span></div>')
+        crumbs = ('<a href="index.html">Home</a><span class="bc-sep" aria-hidden="true">/</span>'
+                  '<span>%s</span><span class="bc-sep" aria-hidden="true">/</span>'
+                  '<span class="bc-current" aria-current="page">%s</span>'
+                  % (htmlmod.escape(section), htmlmod.escape(page_title)))
     else:
-        prev_html, next_html, crumbs = "", "", '<a href="index.html">Home</a>'
+        issue = "Curriculum"
+        prev_html, next_html = "", ""
+        crumbs = '<a href="index.html">Home</a>'
     return ("""<header class="site-header">"""
-            """<div class="site-header-row">"""
-            """<a class="site-home" href="index.html"><span class="site-home-mark">\u25a0</span> LLM Knowledge Base</a>"""
-            """<div class="site-prevnext">%s%s</div></div>"""
+            """<p class="mast-line"><span>Research-Engineer Curriculum</span>"""
+            """<span class="mast-line-right">%s &middot; Sept 2026 edition</span></p>"""
+            """<div class="mast-row">"""
+            """<a class="mast-name" href="index.html">LLM Knowledge Base</a>"""
+            """<nav class="site-prevnext" aria-label="Volume sequence">%s%s</nav></div>"""
+            """<div class="mast-sub">"""
             """<nav class="breadcrumbs" aria-label="Breadcrumb">%s</nav>"""
-            """<details class="site-nav"><summary>Browse all volumes and tracks</summary>"""
-            """<div class="site-nav-groups">%s</div></details></header>"""
-            % (prev_html, next_html, crumbs, _site_nav_groups(current)))
+            """<button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" """
+            """aria-controls="siteNavPanel">%s<span>Browse all volumes</span></button></div>"""
+            """<div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner">"""
+            """<div class="site-nav-drawer-head"><span>All volumes</span>"""
+            """<button class="site-nav-close" id="siteNavClose">Close</button></div>"""
+            """<div class="site-nav-groups">%s</div></div></div>"""
+            """<hr class="mast-rule-double" aria-hidden="true">"""
+            """<div class="site-nav-scrim" id="siteNavScrim"></div></header>"""
+            % (issue, prev_html, next_html, crumbs, _CHEV_D, _site_nav_groups(current)))
 
 def site_footer_html(current):
-    return ("""<footer class="site-footer"><div class="site-sitemap">%s</div>"""
-            """<p class="site-footer-note">LLM Knowledge Base. Every page works offline from file:// and links back here. No personal information.</p></footer>"""
-            % _site_nav_groups(current))
+    """Ft1 mast-headed footer: wordmark band + grouped index + colophon."""
+    return ("""<footer class="site-footer">"""
+            """<div class="foot-mast">"""
+            """<a class="foot-name" href="index.html">LLM Knowledge Base</a>"""
+            """<p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. """
+            """Every page works offline from file:// and links back here. No personal information.</p></div>"""
+            """<nav class="foot-index" aria-label="Site index">%s</nav>"""
+            """<p class="foot-colophon"><span>LLM Knowledge Base</span>"""
+            """<span class="foot-sep" aria-hidden="true">/</span>"""
+            """<span>Sept 2026 edition</span>"""
+            """<span class="foot-sep" aria-hidden="true">/</span>"""
+            """<span>Set in Charis SIL</span></p></footer>"""
+            % _foot_index_groups(current))
 
 # ---------------------------------------------------------------- page build
 
