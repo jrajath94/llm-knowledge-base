@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="560" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">The NCCL hang that was never the network: debug in likelihood order</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">each level rules out a cheaper cause before you pay for a more expensive one</text>
+<rect x="300" y="80" width="280" height="64" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="106" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">job stops progressing</text>
+<text x="440.0" y="124" font-size="11" fill="#a8a8a8" text-anchor="middle">GPUs idle AND logs stopped?</text>
+<line x1="440" y1="144" x2="440" y2="180" stroke="#f0b429" stroke-width="2"/>
+<polygon points="440,180 436.33015592246386,171.78219953718923 443.66984407753614,171.78219953718923" fill="#f0b429"/>
+<rect x="300" y="180" width="280" height="70" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="206" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">NCCL_DEBUG=INFO, rerun</text>
+<text x="440.0" y="224" font-size="11" fill="#a8a8a8" text-anchor="middle">do all ranks log the same collective</text>
+<text x="440.0" y="239" font-size="11" fill="#a8a8a8" text-anchor="middle">sequence?</text>
+<line x1="300" y1="215" x2="180" y2="215" stroke="#e57ea6" stroke-width="2"/>
+<polygon points="180,215 188.21780046281077,211.33015592246386 188.21780046281077,218.66984407753614" fill="#e57ea6"/>
+<text x="240.0" y="207.0" font-size="11" fill="#8a8a8a" text-anchor="middle">no</text>
+<text x="20" y="232" font-size="10" fill="#e57ea6" text-anchor="start">NO: diverged rank is the bug</text>
+<line x1="580" y1="215" x2="700" y2="215" stroke="#7dd87d" stroke-width="2"/>
+<polygon points="700,215 691.7821995371892,218.66984407753614 691.7821995371892,211.33015592246386" fill="#7dd87d"/>
+<text x="640.0" y="207.0" font-size="11" fill="#8a8a8a" text-anchor="middle">yes</text>
+<text x="706" y="232" font-size="10" fill="#7dd87d" text-anchor="start">YES: keep going</text>
+<line x1="440" y1="250" x2="440" y2="280" stroke="#6cb2ff" stroke-width="2"/>
+<polygon points="440,280 436.33015592246386,271.78219953718923 443.66984407753614,271.78219953718923" fill="#6cb2ff"/>
+<rect x="300" y="280" width="280" height="70" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="306" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">nccl-tests all_reduce_perf</text>
+<text x="440.0" y="324" font-size="11" fill="#a8a8a8" text-anchor="middle">does the isolated test hang too?</text>
+<line x1="300" y1="315" x2="180" y2="315" stroke="#e57ea6" stroke-width="2"/>
+<polygon points="180,315 188.21780046281077,311.33015592246386 188.21780046281077,318.66984407753614" fill="#e57ea6"/>
+<text x="240.0" y="307.0" font-size="11" fill="#8a8a8a" text-anchor="middle">no</text>
+<text x="20" y="332" font-size="10" fill="#e57ea6" text-anchor="start">NO: bug is in your code</text>
+<line x1="580" y1="315" x2="700" y2="315" stroke="#7dd87d" stroke-width="2"/>
+<polygon points="700,315 691.7821995371892,318.66984407753614 691.7821995371892,311.33015592246386" fill="#7dd87d"/>
+<text x="640.0" y="307.0" font-size="11" fill="#8a8a8a" text-anchor="middle">yes</text>
+<text x="706" y="332" font-size="10" fill="#7dd87d" text-anchor="start">YES: bisect the node</text>
+<text x="706" y="349" font-size="10" fill="#7dd87d" text-anchor="start">set</text>
+<line x1="440" y1="350" x2="440" y2="380" stroke="#6cb2ff" stroke-width="2"/>
+<polygon points="440,380 436.33015592246386,371.78219953718923 443.66984407753614,371.78219953718923" fill="#6cb2ff"/>
+<rect x="300" y="380" width="280" height="70" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="406" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">bisect nodes</text>
+<text x="440.0" y="424" font-size="11" fill="#a8a8a8" text-anchor="middle">does the hang follow nodes?</text>
+<line x1="300" y1="415" x2="180" y2="415" stroke="#e57ea6" stroke-width="2"/>
+<polygon points="180,415 188.21780046281077,411.33015592246386 188.21780046281077,418.66984407753614" fill="#e57ea6"/>
+<text x="240.0" y="407.0" font-size="11" fill="#8a8a8a" text-anchor="middle">no</text>
+<text x="20" y="432" font-size="10" fill="#e57ea6" text-anchor="start">YES: hardware or fabric</text>
+<line x1="580" y1="415" x2="700" y2="415" stroke="#7dd87d" stroke-width="2"/>
+<polygon points="700,415 691.7821995371892,418.66984407753614 691.7821995371892,411.33015592246386" fill="#7dd87d"/>
+<text x="640.0" y="407.0" font-size="11" fill="#8a8a8a" text-anchor="middle">yes</text>
+<text x="706" y="432" font-size="10" fill="#7dd87d" text-anchor="start">NO: recheck pattern</text>
+<line x1="440" y1="450" x2="440" y2="480" stroke="#6cb2ff" stroke-width="2"/>
+<polygon points="440,480 436.33015592246386,471.78219953718923 443.66984407753614,471.78219953718923" fill="#6cb2ff"/>
+<text x="24" y="512" font-size="12" fill="#a8a8a8" text-anchor="start">The network is last on a healthy cluster, not first. Reproduce with 2 ranks and a tiny tensor before</text>
+<text x="24" y="529" font-size="12" fill="#a8a8a8" text-anchor="start">debugging a thousand-GPU hang.</text>
+</svg>
