@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="680" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Kappa, worked: judge vs human on 50 emails</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Two humans and one judge each label 50 agent-drafted emails pass or fail</text>
+<rect x="24" y="88" width="200" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="109" font-size="12" fill="#ececec" text-anchor="start">Cell</text>
+<rect x="224" y="88" width="120" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="234" y="109" font-size="12" fill="#ececec" text-anchor="start">Count</text>
+<rect x="344" y="88" width="532" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="354" y="109" font-size="12" fill="#ececec" text-anchor="start">Read</text>
+<rect x="24" y="122" width="200" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="146" font-size="11" fill="#ececec" text-anchor="start">Both say pass</text>
+<rect x="224" y="122" width="120" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="234" y="146" font-size="11" fill="#a8a8a8" text-anchor="start">32</text>
+<rect x="344" y="122" width="532" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<rect x="24" y="186" width="200" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="210" font-size="11" fill="#ececec" text-anchor="start">Both say fail</text>
+<rect x="224" y="186" width="120" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="234" y="210" font-size="11" fill="#a8a8a8" text-anchor="start">9</text>
+<rect x="344" y="186" width="532" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<rect x="24" y="250" width="200" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="274" font-size="11" fill="#ececec" text-anchor="start">Judge pass, human fail</text>
+<rect x="224" y="250" width="120" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="234" y="274" font-size="11" fill="#a8a8a8" text-anchor="start">6</text>
+<rect x="344" y="250" width="532" height="64" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="354" y="274" font-size="11" fill="#a8a8a8" text-anchor="start">judge too lenient</text>
+<rect x="24" y="314" width="200" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="338" font-size="11" fill="#ececec" text-anchor="start">Judge fail, human pass</text>
+<rect x="224" y="314" width="120" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="234" y="338" font-size="11" fill="#a8a8a8" text-anchor="start">3</text>
+<rect x="344" y="314" width="532" height="64" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="354" y="338" font-size="11" fill="#a8a8a8" text-anchor="start">judge too strict</text>
+<rect x="24" y="404" width="852" height="62" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="48" y="430" font-size="13" font-weight="bold" fill="#4fd1a5" text-anchor="start">Observed agreement</text>
+<text x="48" y="450" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#ececec" text-anchor="start">p_o = (32 + 9) / 50 = 0.82</text>
+<rect x="24" y="474" width="852" height="62" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="48" y="500" font-size="13" font-weight="bold" fill="#f0b429" text-anchor="start">Chance agreement</text>
+<text x="48" y="520" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#ececec" text-anchor="start">p_e = 0.76 x 0.70 + 0.24 x 0.30 = 0.604</text>
+<rect x="24" y="544" width="852" height="62" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="48" y="570" font-size="13" font-weight="bold" fill="#7dd87d" text-anchor="start">Kappa</text>
+<text x="48" y="590" font-size="12" font-family="DejaVu Sans Mono, monospace" fill="#ececec" text-anchor="start">(0.82 - 0.604) / (1 - 0.604) = 0.216 / 0.396 = 0.545</text>
+<text x="24" y="622" font-size="11" fill="#a8a8a8" text-anchor="start">Moderate agreement. The split (6 vs 3) shows the judge leans lenient. Decision: tighten the anchors on partial</text>
+<text x="24" y="639" font-size="11" fill="#a8a8a8" text-anchor="start">answers, re-run on a fresh 50.</text>
+</svg>
