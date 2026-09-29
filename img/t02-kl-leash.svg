@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 394" width="100%" style="max-width:760px" role="img" aria-label="The shared objective with beta pricing drift; log KL per step; three signatures: healthy climb, vertical spike, flatline">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="760" height="394" fill="none"/>
+<text class="t" x="24" y="30">KL budgets: the leash rules</text>
+<rect x="24" y="56" width="712" height="72" rx="8" fill="#141414" stroke="#f0b429" stroke-width="1.8"/>
+<text class="big" x="44" y="88">J(p) = E[r(x,y)] - b x KL(p || p_ref)</text>
+<text class="m" x="44" y="112">beta prices drift: every unit of KL away from the reference costs beta units of reward</text>
+<text class="num" x="24" y="168">Log KL from the reference per step, not per epoch.</text>
+<text class="m" x="24" y="192">A spike is visible in steps and invisible in epochs.</text>
+<rect x="24" y="216" width="8" height="46" rx="4" fill="#7fc97f"/>
+<text class="big" x="44" y="236">Climbing steadily + gold scores rising</text>
+<text class="m" x="44" y="255">healthy optimization</text>
+<rect x="24" y="270" width="8" height="46" rx="4" fill="#e57373"/>
+<text class="big" x="44" y="290">Spiking vertically</text>
+<text class="m" x="44" y="309">broken run: beta too small, LR too high, or a reward bug</text>
+<rect x="24" y="324" width="8" height="46" rx="4" fill="#a8a8a8"/>
+<text class="big" x="44" y="344">Flat from step one</text>
+<text class="m" x="44" y="363">the run learned nothing: check the advantage signal</text>
+</svg>
