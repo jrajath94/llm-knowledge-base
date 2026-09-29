@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="560" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 1.2. Chunking, worked: 10,000 chars, 512 chunks, 64 overlap = 23 chunks</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">recursive splitting, ~512 tokens, 10-15% overlap</text>
+<rect x="90" y="140" width="640" height="60" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="6" opacity="1"/>
+<rect x="90.0" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="117.82608695652173" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="145.65217391304347" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="173.47826086956522" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="201.30434782608694" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="229.1304347826087" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="256.95652173913044" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="284.78260869565213" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="312.6086956521739" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="340.4347826086956" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="368.2608695652174" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="396.0869565217391" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="423.9130434782609" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="451.7391304347826" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="479.5652173913043" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="507.39130434782606" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="535.2173913043478" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="563.0434782608695" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="590.8695652173913" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="618.695652173913" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="646.5217391304348" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<rect x="674.3478260869565" y="148" width="34.78260869565217" height="44" fill="#4fd1a5" rx="3" opacity="0.75"/>
+<rect x="702.1739130434783" y="148" width="34.78260869565217" height="44" fill="#6cb2ff" rx="3" opacity="0.75"/>
+<text x="90" y="228" font-size="12" fill="#ececec" text-anchor="start">23 chunks</text>
+<text x="90" y="252" font-size="12" fill="#a8a8a8" text-anchor="start">1,408 chars duplicated by overlap (14%)</text>
+<rect x="24" y="300" width="832" height="110" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="326" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">THE RULES</text>
+<text x="440.0" y="344" font-size="11" fill="#a8a8a8" text-anchor="middle">split on structure (paragraphs, then sentences), never mid-sentence; overlap 10-15% so boundaries do not eat</text>
+<text x="440.0" y="359" font-size="11" fill="#a8a8a8" text-anchor="middle">meaning; ~512 tokens per chunk</text>
+<text x="24" y="470" font-size="12" fill="#a8a8a8" text-anchor="start">Chunking is where RAG is won or lost: the retriever can only return what the chunker preserved.</text>
+</svg>
