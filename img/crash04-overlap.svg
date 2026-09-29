@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="100%" style="max-width:760px" role="img" aria-label="Exposed versus overlapped communication: interleaved NCCL hides behind compute, a lone all-reduce does not">
+<style>
+ text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+ .m{fill:#a8a8a8;font-size:12px}
+ .t{font-size:14px;font-weight:700}
+ .g{fill:#f0b429}
+ .comp{fill:#6cb2ff;opacity:0.75}
+ .comm{fill:#f0b429;opacity:0.85}
+ .lbl{font-size:11.5px;fill:#a8a8a8}
+ .ok{fill:#7fd08a;font-size:13px;font-weight:700}
+ .bad{fill:#e57373;font-size:13px;font-weight:700}
+</style>
+<rect x="0" y="0" width="760" height="400" fill="none"/>
+<text class="t" x="30" y="30">Exposed communication: what the trace shows</text>
+<text class="ok" x="30" y="66">3% exposed: NCCL hides behind backward compute</text>
+<g>
+ <rect class="comp" x="30" y="80" width="150" height="34"/><rect class="comm" x="180" y="80" width="60" height="34"/>
+ <rect class="comp" x="240" y="80" width="150" height="34"/><rect class="comm" x="390" y="80" width="60" height="34"/>
+ <rect class="comp" x="450" y="80" width="150" height="34"/><rect class="comm" x="600" y="80" width="60" height="34"/>
+ <text class="lbl" x="30" y="134">blue: backward compute</text>
+ <text class="lbl" x="220" y="134">gold: NCCL, interleaved: nothing the compute rows did not already cover</text>
+</g>
+<text class="bad" x="30" y="176">27% exposed: one lone all-reduce, nothing hides it</text>
+<g>
+ <rect class="comp" x="30" y="190" width="420" height="34"/>
+ <rect class="comm" x="450" y="190" width="220" height="34"/>
+ <text class="lbl" x="30" y="244">blue: compute finishes, then the full all-reduce sits alone on the timeline</text>
+ <text class="lbl" x="30" y="264">gold block = exposed: GPUs communicate while compute rows sit empty</text>
+</g>
+<text class="g" x="30" y="306" font-size="14" font-weight="700">The fix is overlap, not speed.</text>
+<text class="lbl" x="30" y="328">Smaller gradient buckets, larger microbatches, or an earlier comm start move</text>
+<text class="lbl" x="30" y="348">gold blocks under blue ones. Interleaved NCCL under backward = healthy; a lone</text>
+<text class="lbl" x="30" y="368">block with empty compute rows = exposed, and that is the number to kill.</text>
+</svg>
