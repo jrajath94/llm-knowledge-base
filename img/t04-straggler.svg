@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="410" viewBox="0 0 720 410" role="img" aria-label="Straggler factor with 64-rank distribution">
+<rect width="720" height="410" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style><defs>
+<marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#f0b429" stroke-width="2"/></marker>
+<marker id="ah2" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker>
+<marker id="ahr" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+<path d="M0,0 L10,4 L0,8" fill="none" stroke="#e5484d" stroke-width="2"/></marker>
+</defs>
+<text x="360" y="30" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif">The straggler factor: max / median rank step time</text>
+<rect x="91" y="279" width="7" height="51" fill="#f0b429" opacity="0.9"/>
+<rect x="100" y="282" width="7" height="48" fill="#f0b429" opacity="0.9"/>
+<rect x="109" y="274" width="7" height="56" fill="#f0b429" opacity="0.9"/>
+<rect x="118" y="283" width="7" height="47" fill="#f0b429" opacity="0.9"/>
+<rect x="127" y="275" width="7" height="55" fill="#f0b429" opacity="0.9"/>
+<rect x="136" y="278" width="7" height="52" fill="#f0b429" opacity="0.9"/>
+<rect x="144" y="283" width="7" height="47" fill="#f0b429" opacity="0.9"/>
+<rect x="153" y="276" width="7" height="54" fill="#f0b429" opacity="0.9"/>
+<rect x="162" y="283" width="7" height="47" fill="#f0b429" opacity="0.9"/>
+<rect x="171" y="277" width="7" height="53" fill="#f0b429" opacity="0.9"/>
+<rect x="180" y="283" width="7" height="47" fill="#f0b429" opacity="0.9"/>
+<rect x="189" y="283" width="7" height="47" fill="#f0b429" opacity="0.9"/>
+<rect x="198" y="277" width="7" height="53" fill="#f0b429" opacity="0.9"/>
+<rect x="207" y="271" width="7" height="59" fill="#f0b429" opacity="0.9"/>
+<rect x="216" y="282" width="7" height="48" fill="#f0b429" opacity="0.9"/>
+<rect x="225" y="280" width="7" height="50" fill="#f0b429" opacity="0.9"/>
+<rect x="234" y="274" width="7" height="56" fill="#f0b429" opacity="0.9"/>
+<rect x="242" y="269" width="7" height="61" fill="#f0b429" opacity="0.9"/>
+<rect x="251" y="275" width="7" height="55" fill="#f0b429" opacity="0.9"/>
+<rect x="260" y="278" width="7" height="52" fill="#f0b429" opacity="0.9"/>
+<rect x="269" y="268" width="7" height="62" fill="#f0b429" opacity="0.9"/>
+<rect x="278" y="283" width="7" height="47" fill="#f0b429" opacity="0.9"/>
+<rect x="287" y="270" width="7" height="60" fill="#f0b429" opacity="0.9"/>
+<rect x="296" y="279" width="7" height="51" fill="#f0b429" opacity="0.9"/>
+<rect x="305" y="282" width="7" height="48" fill="#f0b429" opacity="0.9"/>
+<rect x="314" y="282" width="7" height="48" fill="#f0b429" opacity="0.9"/>
+<rect x="323" y="279" width="7" height="51" fill="#f0b429" opacity="0.9"/>
+<rect x="331" y="271" width="7" height="59" fill="#f0b429" opacity="0.9"/>
+<rect x="340" y="281" width="7" height="49" fill="#f0b429" opacity="0.9"/>
+<rect x="349" y="275" width="7" height="55" fill="#f0b429" opacity="0.9"/>
+<rect x="358" y="274" width="7" height="56" fill="#f0b429" opacity="0.9"/>
+<rect x="367" y="278" width="7" height="52" fill="#f0b429" opacity="0.9"/>
+<rect x="376" y="275" width="7" height="55" fill="#f0b429" opacity="0.9"/>
+<rect x="385" y="283" width="7" height="47" fill="#f0b429" opacity="0.9"/>
+<rect x="394" y="283" width="7" height="47" fill="#f0b429" opacity="0.9"/>
+<rect x="403" y="281" width="7" height="49" fill="#f0b429" opacity="0.9"/>
+<rect x="412" y="273" width="7" height="57" fill="#f0b429" opacity="0.9"/>
+<rect x="421" y="277" width="7" height="53" fill="#f0b429" opacity="0.9"/>
+<rect x="429" y="279" width="7" height="51" fill="#f0b429" opacity="0.9"/>
+<rect x="438" y="275" width="7" height="55" fill="#f0b429" opacity="0.9"/>
+<rect x="447" y="277" width="7" height="53" fill="#f0b429" opacity="0.9"/>
+<rect x="456" y="279" width="7" height="51" fill="#f0b429" opacity="0.9"/>
+<rect x="465" y="271" width="7" height="59" fill="#f0b429" opacity="0.9"/>
+<rect x="474" y="273" width="7" height="57" fill="#f0b429" opacity="0.9"/>
+<rect x="483" y="280" width="7" height="50" fill="#f0b429" opacity="0.9"/>
+<rect x="492" y="275" width="7" height="55" fill="#f0b429" opacity="0.9"/>
+<rect x="501" y="276" width="7" height="54" fill="#f0b429" opacity="0.9"/>
+<rect x="510" y="270" width="7" height="60" fill="#f0b429" opacity="0.9"/>
+<rect x="518" y="272" width="7" height="58" fill="#f0b429" opacity="0.9"/>
+<rect x="527" y="279" width="7" height="51" fill="#f0b429" opacity="0.9"/>
+<rect x="536" y="268" width="7" height="62" fill="#f0b429" opacity="0.9"/>
+<rect x="545" y="282" width="7" height="48" fill="#f0b429" opacity="0.9"/>
+<rect x="554" y="277" width="7" height="53" fill="#f0b429" opacity="0.9"/>
+<rect x="563" y="272" width="7" height="58" fill="#f0b429" opacity="0.9"/>
+<rect x="572" y="282" width="7" height="48" fill="#f0b429" opacity="0.9"/>
+<rect x="581" y="276" width="7" height="54" fill="#f0b429" opacity="0.9"/>
+<rect x="590" y="283" width="7" height="47" fill="#f0b429" opacity="0.9"/>
+<rect x="599" y="273" width="7" height="57" fill="#f0b429" opacity="0.9"/>
+<rect x="608" y="272" width="7" height="58" fill="#f0b429" opacity="0.9"/>
+<rect x="616" y="275" width="7" height="55" fill="#f0b429" opacity="0.9"/>
+<rect x="625" y="270" width="7" height="60" fill="#f0b429" opacity="0.9"/>
+<rect x="634" y="279" width="7" height="51" fill="#f0b429" opacity="0.9"/>
+<rect x="643" y="182" width="7" height="148" fill="#e5484d" opacity="0.9"/>
+<rect x="652" y="136" width="7" height="194" fill="#e5484d" opacity="0.9"/>
+<line x1="90" y1="249" x2="660" y2="249" stroke="#e5484d" stroke-width="1.5" stroke-dasharray="5,4"/>
+<text x="656" y="241.0" text-anchor="end" fill="#e5484d" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">1.1x: investigate</text>
+<line x1="90" y1="195" x2="660" y2="195" stroke="#e5484d" stroke-width="1.5" stroke-dasharray="5,4"/>
+<text x="656" y="187.0" text-anchor="end" fill="#e5484d" font-size="11" font-weight="400" font-family="Charis SIL, Georgia, serif">1.3x: act</text>
+<line x1="90" y1="330" x2="660" y2="330" stroke="#555" stroke-width="1.5"/>
+<text x="360" y="360" text-anchor="middle" fill="#8a8a8a" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">64 ranks, step time relative to median (two planted slow ranks)</text>
+<text x="360" y="384" text-anchor="middle" fill="#ececec" font-size="12" font-weight="400" font-family="Charis SIL, Georgia, serif">a collective completes when the slowest rank arrives: one slow rank slows every step</text>
+</svg>
