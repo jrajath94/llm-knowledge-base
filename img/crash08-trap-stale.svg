@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="520" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 3.2. Trap 4: caching stale answers</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">the cache remembers what the corpus forgot</text>
+<rect x="24" y="110" width="400" height="140" fill="#141414" stroke="#e57ea6" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="224.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">THE FAILURE</text>
+<text x="224.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">the corpus updates, the cache keeps serving last</text>
+<text x="224.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">month&#x27;s answer with full confidence</text>
+<rect x="456" y="110" width="400" height="140" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="656.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">THE FIX</text>
+<text x="656.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">evict affected keys on corpus updates; the TTL bounds</text>
+<text x="656.0" y="169" font-size="11" fill="#a8a8a8" text-anchor="middle">the damage, invalidation prevents it</text>
+<text x="24" y="330" font-size="12" fill="#a8a8a8" text-anchor="start">Version the cache keys by corpus version: corpus.v8 answers never serve for corpus.v9 questions.</text>
+<text x="24" y="390" font-size="12" fill="#a8a8a8" text-anchor="start">Monitor the semantic-cache hit rate: a sudden rise after a corpus update smells like staleness.</text>
+</svg>
