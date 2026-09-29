@@ -1,0 +1,40 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 440' width='100%' role='img'><title>Lab 2.A: singular values of the 50×30 random matrix</title><rect x='0' y='0' width='960' height='440' fill='#0d0d0d'/><text x='24' y='34' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec'>Lab 2.A: singular values of the 50×30 random matrix</text>
+<line x1='70' y1='370.0' x2='900' y2='370.0' stroke='#2a2a2a' stroke-width='1'/>
+<text x='58' y='375.0' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='end'>0</text>
+<line x1='70' y1='303.3' x2='900' y2='303.3' stroke='#2a2a2a' stroke-width='1'/>
+<text x='58' y='308.3' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='end'>3</text>
+<line x1='70' y1='236.7' x2='900' y2='236.7' stroke='#2a2a2a' stroke-width='1'/>
+<text x='58' y='241.7' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='end'>6</text>
+<line x1='70' y1='170.0' x2='900' y2='170.0' stroke='#2a2a2a' stroke-width='1'/>
+<text x='58' y='175.0' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='end'>9</text>
+<line x1='70' y1='103.3' x2='900' y2='103.3' stroke='#2a2a2a' stroke-width='1'/>
+<text x='58' y='108.3' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='end'>12</text>
+<text x='70.0' y='394' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>1</text>
+<text x='184.5' y='394' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>5</text>
+<text x='327.6' y='394' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>10</text>
+<text x='470.7' y='394' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>15</text>
+<text x='613.8' y='394' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>20</text>
+<text x='756.9' y='394' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>25</text>
+<text x='900.0' y='394' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>30</text>
+<polyline points='70.0,92.7 98.6,113.7 127.2,131.9 155.9,143.1 184.5,154.2 213.1,158.1 241.7,168.0 270.3,182.0 299.0,190.8 327.6,198.8 356.2,200.1 384.8,206.9 413.4,218.6 442.1,224.6 470.7,229.8 499.3,239.3 527.9,245.2 556.6,254.5 585.2,257.7 613.8,262.5 642.4,269.3 671.0,270.5 699.7,278.2 728.3,291.1 756.9,295.0 785.5,301.8 814.1,305.8 842.8,314.2 871.4,320.3 900.0,338.1' fill='none' stroke='#f0b429' stroke-width='3'/>
+<circle cx='70.0' cy='92.7' r='4' fill='#f0b429'/>
+<circle cx='127.2' cy='131.9' r='4' fill='#f0b429'/>
+<circle cx='184.5' cy='154.2' r='4' fill='#f0b429'/>
+<circle cx='241.7' cy='168.0' r='4' fill='#f0b429'/>
+<circle cx='299.0' cy='190.8' r='4' fill='#f0b429'/>
+<circle cx='356.2' cy='200.1' r='4' fill='#f0b429'/>
+<circle cx='413.4' cy='218.6' r='4' fill='#f0b429'/>
+<circle cx='470.7' cy='229.8' r='4' fill='#f0b429'/>
+<circle cx='527.9' cy='245.2' r='4' fill='#f0b429'/>
+<circle cx='585.2' cy='257.7' r='4' fill='#f0b429'/>
+<circle cx='642.4' cy='269.3' r='4' fill='#f0b429'/>
+<circle cx='699.7' cy='278.2' r='4' fill='#f0b429'/>
+<circle cx='756.9' cy='295.0' r='4' fill='#f0b429'/>
+<circle cx='814.1' cy='305.8' r='4' fill='#f0b429'/>
+<circle cx='871.4' cy='320.3' r='4' fill='#f0b429'/>
+<text x='70' y='77' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec'>σ1 ~ 12.5</text>
+<text x='900' y='368' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='end'>σ30 ~ 1.4</text>
+<text x='471' y='232' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' fill='#a8a8a8' text-anchor='middle'>slow decay, no clean elbow:</text>
+<text x='471' y='256' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' fill='#a8a8a8' text-anchor='middle'>random data has no low-rank structure</text>
+<text x='485' y='426' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' fill='#a8a8a8' text-anchor='middle'>singular value index i</text>
+</svg>
