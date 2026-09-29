@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" font-family="ui-sans-serif, system-ui, sans-serif" role="img" aria-label="Narrowing a topic into a research question in three steps">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#f0b429"/>
+    </marker>
+  </defs>
+  <rect x="90" y="18" width="500" height="70" rx="10" fill="#101010" stroke="#3a3a3a"/>
+  <text x="110" y="46" font-size="12" fill="#f0b429" font-weight="700" letter-spacing="1.5">TOPIC</text>
+  <text x="110" y="70" font-size="17" fill="#ececec">"LLM agents"</text>
+  <text x="470" y="70" font-size="12" fill="#a8a8a8">a neighborhood, not a question</text>
+  <line x1="340" y1="88" x2="340" y2="116" stroke="#f0b429" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="90" y="118" width="500" height="86" rx="10" fill="#101010" stroke="#3a3a3a"/>
+  <text x="110" y="146" font-size="12" fill="#f0b429" font-weight="700" letter-spacing="1.5">QUESTION, ATTEMPT 2</text>
+  <text x="110" y="172" font-size="15" fill="#ececec">Do agents with tool use solve multi-step tasks</text>
+  <text x="110" y="192" font-size="15" fill="#ececec">better than agents without?</text>
+  <text x="470" y="192" font-size="12" fill="#a8a8a8">+ comparison</text>
+  <line x1="340" y1="204" x2="340" y2="232" stroke="#f0b429" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="90" y="234" width="500" height="104" rx="10" fill="#101010" stroke="#f0b429" stroke-width="1.5"/>
+  <text x="110" y="262" font-size="12" fill="#f0b429" font-weight="700" letter-spacing="1.5">RESEARCH QUESTION</text>
+  <text x="110" y="288" font-size="15" fill="#ececec">On 200 multi-step web tasks, does giving the agent</text>
+  <text x="110" y="310" font-size="15" fill="#ececec">a calculator tool raise task success rate, and by how</text>
+  <text x="110" y="332" font-size="15" fill="#ececec">much per extra second of latency?</text>
+  <rect x="90" y="356" width="500" height="64" rx="10" fill="#0d0d0d" stroke="#3a3a3a" stroke-dasharray="5 4"/>
+  <text x="110" y="382" font-size="13" fill="#a8a8a8">Falsifiability check: an experiment could answer "no."</text>
+  <text x="110" y="402" font-size="13" fill="#a8a8a8">If no experiment could prove it wrong, it is a slogan.</text>
+</svg>
