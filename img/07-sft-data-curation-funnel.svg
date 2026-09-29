@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="660" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">The SFT data funnel</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">SFT is 10 percent algorithm and 90 percent data curation</text>
+<rect x="70.0" y="84" width="760" height="74" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="113.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Raw prompts and drafts</text>
+<text x="450.0" y="135.0" font-size="11" fill="#a8a8a8" text-anchor="middle">100K+ candidates; strong models draft, humans will filter</text>
+<line x1="450" y1="158" x2="450" y2="180" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="450,180 446.33015592246386,171.78219953718923 453.66984407753614,171.78219953718923" fill="#8a8a8a"/>
+<rect x="140.0" y="184" width="620" height="74" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="213.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Quality filter</text>
+<text x="450.0" y="235.0" font-size="11" fill="#a8a8a8" text-anchor="middle">correctness first, then target style and calibrated uncertainty</text>
+<line x1="450" y1="258" x2="450" y2="280" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="450,280 446.33015592246386,271.78219953718923 453.66984407753614,271.78219953718923" fill="#8a8a8a"/>
+<rect x="210.0" y="284" width="480" height="74" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="313.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Human verify and edit</text>
+<text x="450.0" y="335.0" font-size="11" fill="#a8a8a8" text-anchor="middle">distillation with a human filter; contractors follow guidelines</text>
+<line x1="450" y1="358" x2="450" y2="380" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="450,380 446.33015592246386,371.78219953718923 453.66984407753614,371.78219953718923" fill="#8a8a8a"/>
+<rect x="270.0" y="384" width="360" height="74" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="413.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Diversity check</text>
+<text x="450.0" y="435.0" font-size="11" fill="#a8a8a8" text-anchor="middle">Q and A, coding, writing, multi-turn, edge cases</text>
+<line x1="450" y1="458" x2="450" y2="480" stroke="#8a8a8a" stroke-width="2"/>
+<polygon points="450,480 446.33015592246386,471.78219953718923 453.66984407753614,471.78219953718923" fill="#8a8a8a"/>
+<rect x="330.0" y="484" width="240" height="74" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6"/>
+<text x="450.0" y="513.0" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">Final demonstrations</text>
+<text x="450.0" y="535.0" font-size="11" fill="#a8a8a8" text-anchor="middle">13,000 (InstructGPT) / 1,000 (LIMA)</text>
+<text x="24" y="578" font-size="12" fill="#f0b429" text-anchor="start">Both recipes point the same way: a smaller set of excellent demonstrations beats a large set of mediocre ones.</text>
+</svg>
