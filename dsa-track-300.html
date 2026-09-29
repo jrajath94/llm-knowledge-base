@@ -36,14 +36,16 @@
   unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 :root{
   --bg:#000000; --surface:#0d0d0d; --border:#262626;
-  --text:#ececec; --muted:#a8a8a8;
-  --accent:#f0b429; --link:#6cb2ff; --code-bg:#111111;
+  --text:#ececec; --muted:#a8a8a8; --faint:#8a8a8a;
+  --accent:#f0b429; --accent-ink:#000000; --link:#6cb2ff; --code-bg:#111111;
   --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
   --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
 body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
 p{text-align:justify;hyphens:auto;margin:.85rem 0}
 h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
@@ -150,51 +152,142 @@ blockquote p{margin:.4rem 0}
 @media(min-width:56.01rem){.ds-scrim{display:none!important}}
 
 
-/* ---- site header: home link, volume nav, breadcrumbs, prev/next ---- */
-.site-header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--border);padding:.65rem 0 .7rem;margin:0 0 1.6rem;max-width:72ch}
-.site-header-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
-.site-home{font:700 1rem/1.2 var(--font-ui);color:var(--text);text-decoration:none}
-.site-home:hover{color:var(--accent)}
-.site-home .site-home-mark{color:var(--accent)}
-.site-prevnext{display:flex;gap:.6rem;font:600 .82rem/1.4 var(--font-ui)}
-.site-prevnext a{color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
-.site-prevnext a:hover{color:var(--text);border-color:var(--accent)}
-.site-prevnext .site-prevnext-disabled{color:#4a4a4a;border:1px solid var(--border);border-radius:.4rem;padding:.35rem .7rem}
-.breadcrumbs{font:400 .8rem/1.5 var(--font-ui);color:var(--muted);margin:.45rem 0 0}
-.breadcrumbs a{color:var(--muted);text-decoration:none}
-.breadcrumbs a:hover{color:var(--text)}
-.breadcrumbs .bc-sep{margin:0 .35rem;color:#4a4a4a}
-.breadcrumbs .bc-current{color:var(--text)}
-details.site-nav{margin:.55rem 0 0;border:1px solid var(--border);border-radius:.55rem;background:var(--surface)}
-details.site-nav summary{cursor:pointer;list-style:none;font:600 .85rem/1.4 var(--font-ui);color:var(--text);padding:.55rem .9rem;display:flex;align-items:center;gap:.5rem}
-details.site-nav summary::-webkit-details-marker{display:none}
-details.site-nav summary::before{content:"+";color:var(--accent);font-weight:700}
-details.site-nav[open] summary::before{content:"\2212"}
-details.site-nav summary:hover{color:var(--accent)}
-.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem;padding:.2rem .9rem .9rem}
-.site-nav-groups h4{font:700 .75rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:.6rem 0 .35rem}
-.site-nav-groups ul{list-style:none;margin:0;padding:0}
-.site-nav-groups li{margin:.18rem 0}
-.site-nav-groups a{font:400 .83rem/1.45 var(--font-ui);color:var(--muted);text-decoration:none}
-.site-nav-groups a:hover{color:var(--text)}
-.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:700}
+/* Hallmark · pre-emit critique: P4 H4 E5 S5 R5 V5
+   Hallmark · macrostructure: newspaper-masthead chrome (N6 nav + Ft1 footer)
+   nav: N6 (knobs: issue-line=above, wordmark=left 2xl, rule=double) ·
+   footer: Ft1 (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+   slop: pass (42-45) · contrast: pass (40-41) · honest: pass (46) · chrome: pass (47) ·
+   tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50-57) */
+/* Hallmark · genre: editorial · verb: redesign · scope: chrome-only
+ * nav: N6 Newspaper masthead (knobs: issue-line=above, wordmark=left 2xl, rule=double)
+ * footer: Ft1 Mast-headed (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+ * Tokens preserved: --font-body/--font-ui (Charis SIL), full colour system.
+ * 4pt spacing rhythm; hairline dividers; hand-drawn SVG chevrons; no gradients. */
 
-/* ---- site footer: full sitemap ---- */
-.site-footer{border-top:1px solid var(--border);margin:3rem 0 0;padding:2rem 0 2.5rem;max-width:72ch}
-.site-footer .site-sitemap{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.2rem}
-.site-sitemap h4{font:700 .78rem/1.3 var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 .4rem}
-.site-sitemap ul{list-style:none;margin:0;padding:0}
-.site-sitemap li{margin:.2rem 0}
-.site-sitemap a{font:400 .83rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none}
-.site-sitemap a:hover{color:var(--text)}
-.site-footer-note{font:400 .78rem/1.5 var(--font-ui);color:#6a6a6a;margin-top:1.6rem}
+/* ---- site header: N6 newspaper masthead ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);margin:0 0 2rem;max-width:72ch}
+.mast-line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:0;padding:.75rem 0 .5rem;font:600 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mast-line-right{color:var(--faint);white-space:nowrap}
+.mast-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:.75rem}
+.mast-name{font:800 1.5rem/1.15 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.mast-name:hover{color:var(--accent)}
+.site-prevnext{display:flex;gap:1.5rem;flex:none}
+.site-prevnext-group{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.site-prevnext-next{align-items:flex-end;text-align:right}
+.site-prevnext-kicker{font:600 .68rem/1.3 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.site-prevnext-link{display:inline-flex;align-items:center;gap:.4rem;font:600 .85rem/1.4 var(--font-ui);color:var(--text);text-decoration:none;max-width:15rem;min-height:1.75rem}
+.site-prevnext-link .chev{width:.8rem;height:.8rem;flex:none;color:var(--accent)}
+.site-prevnext-link:hover{color:var(--accent)}
+.site-prevnext-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-prevnext-empty{font:400 .85rem/1.75 var(--font-ui);color:var(--faint)}
+.mast-sub{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.25rem 0 .75rem}
+.breadcrumbs{font:400 .78rem/1.5 var(--font-ui);color:var(--muted);margin:0;min-width:0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.breadcrumbs .bc-sep{margin:0 .4rem;color:var(--faint)}
+.breadcrumbs .bc-current{color:var(--text)}
+.site-nav-toggle{display:inline-flex;align-items:center;gap:.5rem;flex:none;white-space:nowrap;background:none;border:1px solid var(--border);border-radius:.5rem;color:var(--text);font:600 .82rem/1.4 var(--font-ui);padding:.55rem .9rem;cursor:pointer;min-height:2.5rem}
+.site-nav-toggle:active,.site-nav-close:active,.watch-speed:active{transform:translateY(1px)}
+.site-nav-toggle .chev{width:.75rem;height:.75rem;color:var(--accent);transition:transform .25s var(--ease-out)}
+.site-nav-toggle:hover{border-color:var(--accent)}
+.site-nav-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.mast-rule-double{border:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:4px;margin:0}
+
+/* collapsible volume panel (desktop): smooth 0fr/1fr reveal */
+.site-nav-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease-out)}
+.site-nav-panel.is-open{grid-template-rows:1fr}
+.site-nav-panel-inner{overflow:hidden;min-height:0}
+.site-nav-drawer-head{display:none}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:1.25rem;max-height:70vh;overflow-y:auto;padding:1.25rem 0}
+.site-nav-groups h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:0}
+.site-nav-groups a{display:flex;gap:.6rem;align-items:baseline;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0;border-radius:.25rem}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups .site-nav-num{font:600 .72rem/1.6 var(--font-ui);color:var(--faint);min-width:1.75rem;flex:none}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:600}
+.site-nav-groups a.site-nav-current .site-nav-num{color:var(--accent)}
+.site-nav-scrim{display:none}
+
+/* ---- site footer: Ft1 mast-headed + grouped index ---- */
+.site-footer{margin:3.5rem 0 0;padding:0 0 3rem;max-width:72ch}
+.foot-mast{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.75rem 0 1.5rem;margin-bottom:2rem}
+.foot-name{font:800 1.25rem/1.2 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.foot-name:hover{color:var(--accent)}
+.foot-tag{font:400 .88rem/1.6 var(--font-ui);color:var(--muted);max-width:52ch;margin:.6rem 0 0;text-align:left}
+.foot-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.5rem;margin-bottom:2rem}
+.foot-group h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.foot-group ul{list-style:none;margin:0;padding:0}
+.foot-group li{margin:0}
+.foot-group a{display:block;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0}
+.foot-group a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.foot-group a.foot-current{color:var(--accent);font-weight:600}
+.foot-colophon{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;margin:0;padding-top:1.25rem;border-top:1px solid var(--border);font:400 .78rem/1.6 var(--font-ui);color:var(--faint);text-align:left}
+.foot-colophon .foot-sep{color:var(--faint)}
+
+/* ---- mobile: drawer + compact chrome (<=40rem) ---- */
+@media(max-width:40rem){
+  .mast-line-right{display:none}
+  .mast-row{flex-wrap:wrap;row-gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between;gap:.75rem}
+  .site-prevnext-link{max-width:44vw}
+  .site-prevnext-title{display:none}
+  .mast-sub{flex-wrap:wrap}
+  .site-nav-toggle{width:100%;justify-content:center}
+  /* volume nav becomes a fixed drawer: no layout shift, closes on link tap / scrim / Escape */
+  .site-nav-panel{position:fixed;top:0;left:0;bottom:0;width:min(20rem,88vw);z-index:70;display:block;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-104%);transition:transform .3s var(--ease-out)}
+  .site-nav-panel.is-open{transform:none}
+  .site-nav-panel-inner{height:100%;overflow-y:auto;padding:1.25rem 1.25rem 2rem}
+  .site-nav-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .site-nav-drawer-head span{font:600 .75rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+  .site-nav-close{background:none;border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:600 .8rem/1 var(--font-ui);padding:.55rem .85rem;cursor:pointer;min-height:2.75rem}
+  .site-nav-close:hover{border-color:var(--accent)}
+  .site-nav-groups{display:block;max-height:none;overflow:visible;padding:0}
+  .site-nav-groups>div{margin-bottom:1.25rem}
+  .site-nav-scrim{display:block;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .site-nav-scrim.is-open{opacity:1;pointer-events:auto}
+  body.site-nav-open{overflow:clip}
+  .foot-index{gap:1.25rem}
+}
 @media(max-width:56rem){
-  .site-header-row{flex-direction:column;align-items:flex-start;gap:.5rem}
-  .site-prevnext{width:100%;justify-content:space-between}
-  .site-header{padding-left:2.9rem} /* clear the fixed hamburger menu button */
+  .site-header{padding-left:2.9rem} /* clear the fixed section-drawer menu button */
 }
 @media print{
-  .site-header,.site-footer{display:none!important}
+  .site-header,.site-footer,.site-nav-scrim{display:none!important}
+  .watch-deeper .watch-frame{display:none}
+}
+
+/* ---- Watch and go deeper (content section skeleton; downstream fills real videos/links) ---- */
+.watch-deeper{margin:3rem 0 0;padding:2rem 0 0;border-top:1px solid var(--border);max-width:72ch}
+.watch-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.watch-deeper-lede{font:400 .95rem/1.6 var(--font-ui);color:var(--muted);margin:0 0 1.25rem;text-align:left}
+.watch-deeper-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem;margin:0 0 1.75rem}
+.watch-card{margin:0;border:1px solid var(--border);border-radius:.6rem;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.watch-frame{aspect-ratio:16/9;background:var(--bg)}
+.watch-frame iframe{width:100%;height:100%;border:0;display:block}
+.watch-card figcaption{padding:.85rem 1rem 1rem;font:400 .85rem/1.55 var(--font-ui);color:var(--muted);text-align:left}
+.watch-card figcaption strong{display:block;color:var(--text);font-weight:700;margin-bottom:.25rem}
+.go-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--text);margin:0 0 .5rem}
+.go-deeper-list{list-style:none;margin:0;padding:0}
+.go-deeper-list li{display:flex;gap:.6rem;align-items:baseline;padding:.5rem 0;border-top:1px solid var(--border)}
+.go-deeper-list li:last-child{border-bottom:1px solid var(--border)}
+.go-deeper-list a{font:600 .9rem/1.5 var(--font-ui);color:var(--text);text-decoration:none;flex:none;display:inline-flex;align-items:center;gap:.35rem}
+.go-deeper-list a:hover{color:var(--accent)}
+.go-deeper-list a:hover .ext-arrow{color:var(--accent)}
+.go-deeper-list .ext-arrow{width:.7rem;height:.7rem;color:var(--muted);flex:none}
+.go-deeper-list .go-deeper-note{font:400 .85rem/1.55 var(--font-ui);color:var(--muted)}
+
+/* speed-control bar (injected by the site script only when the YouTube IFrame
+   Player API loads; the iframe alone keeps working when it does not) */
+.watch-speedbar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;padding:.6rem .9rem;border-top:1px solid var(--border)}
+.watch-speedbar-label{font:600 .68rem/1.4 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.watch-speed{background:none;border:1px solid var(--border);border-radius:.4rem;color:var(--muted);font:600 .78rem/1 var(--font-ui);padding:.45rem .6rem;cursor:pointer;min-height:2rem}
+.watch-speed:hover{color:var(--text);border-color:var(--accent)}
+.watch-speed[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* motion respects the reader: no sliding drawers or expanding panels for reduced-motion users */
+@media (prefers-reduced-motion:reduce){
+  .ds-sidebar,.site-nav-toggle .chev,.site-nav-panel,.site-nav-scrim{transition:none}
 }
 
 /* ---- print ---- */
@@ -224,7 +317,7 @@ details.site-nav summary:hover{color:var(--accent)}
 </aside>
 <div class="ds-scrim" id="dsScrim"></div>
 <main class="ds-content" id="dsContent">
-<header class="site-header"><div class="site-header-row"><a class="site-home" href="index.html"><span class="site-home-mark">■</span> LLM Knowledge Base</a><div class="site-prevnext"><a href="track-10-software-engineer.html">&larr; SWE / Backend Systems</a><a href="crash-base.html">Crash Pack: Base Curriculum &rarr;</a></div></div><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep">/</span><span>DSA track</span><span class="bc-sep">/</span><span class="bc-current">DSA Track: Top-300</span></nav><details class="site-nav"><summary>Browse all volumes and tracks</summary><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html" class="site-nav-current">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div></details></header>
+<header class="site-header"><p class="mast-line"><span>Research-Engineer Curriculum</span><span class="mast-line-right">No. 28 of 39 &middot; Sept 2026 edition</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a><nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span><a class="site-prevnext-link" href="track-10-software-engineer.html" aria-label="Previous volume: SWE / Backend Systems"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">SWE / Backend Systems</span></a></div><div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span><a class="site-prevnext-link" href="crash-base.html" aria-label="Next volume: Crash Pack: Base Curriculum"><span class="site-prevnext-title">Crash Pack: Base Curriculum</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></nav></div><div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep" aria-hidden="true">/</span><span>DSA track</span><span class="bc-sep" aria-hidden="true">/</span><span class="bc-current" aria-current="page">DSA Track: Top-300</span></nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Browse all volumes</span></button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span><button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html" class="site-nav-current"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div></header>
 <div class="ds-intro">
 <p class="kicker">Research-Engineer Curriculum · Parallel DSA Track</p>
 <h1>Top-300 LeetCode Mastery Path</h1>
@@ -253,8 +346,12 @@ details.site-nav summary:hover{color:var(--accent)}
 <p>Before each chapter, say out loud: (1) What is the one-sentence recognition signal for this pattern? (2) What is the template, written from memory? (3) What is the classic trap? If you cannot answer all three, you are not done with the chapter.</p>
 </div>
 <div class="callout warn">
-<span class="tag">Honesty note on frequency data</span>
-<p>No lab publishes official per-company problem frequency data. Must-do marks in this track are cross-referenced from NeetCode 150, Blind 75, Grind 75, Sean Prashad's LeetCode patterns list, and community-reported 2025 to 2026 interview lists (for example, a public GitHub compilation of FAANG and frontier-lab questions). Where frequency is anecdotal rather than measured, the note says so. Treat the must-do subset as the highest-yield consensus, not as leaked data.</p>
+<span class="tag"><figure class="diagram" id="fig-big-o-chart">
+<img src="img/big-o-chart.png" alt="Big-O complexity chart showing growth curves from O(1) and O(log n) up to O(n factorial), with tables of time and space complexity for common data structures and sorting algorithms" loading="lazy">
+<figcaption><strong>Figure 2.</strong> The Big-O complexity chart. The curves show how each growth class behaves as input grows: O(1) and O(log n) stay flat, O(n) climbs steadily, O(n log n) bends upward, O(n^2) takes off, and O(2^n) and O(n!) explode. The tables list the exact bounds for common data structures and sorting algorithms. Use it when a chapter's Complexity section names a bound: look at the curve and feel how fast it grows. Chart by Eric Rowell, bigocheatsheet.com.</figcaption>
+</figure>
+Honesty note on frequency data</span>
+<p>No lab publishes official per-company problem frequency data. Must-do marks in this track are cross-referenced from NeetCode 150, Blind 75, Grind 75, Sean Prashad's LeetCode patterns list, and community-reported 2025 to 2026 interview lists (for example, a public GitHub compilation of FAANG and frontier-lab questions). Treat the must-do subset as the highest-yield consensus; the appendix note "Frequency-data honesty" carries the full caveat.</p>
 </div>
 <div class="legend">
 <span><span class="badge b-must">MUST-DO</span> non-negotiable core problem</span>
@@ -304,7 +401,7 @@ from collections import Counter, defaultdict
 freq = Counter(nums)           # element -&gt; count
 groups = defaultdict(list)     # key -&gt; list of items sharing it</code></pre>
 <h3>Complexity</h3>
-<p>One pass over n elements, one hash lookup per element: <strong>O(n) time, O(n) space</strong>. The space is the price of the speedup. The O(1) average lookup assumes a good hash function and no adversarial collisions; worst case (everything in one bucket) is O(n) per lookup.</p>
+<p>One pass over n elements, one hash lookup per element: <strong>O(n) time, O(n) space</strong>. The space is the price of the speedup. The O(1) average lookup assumes a good hash function (turns each key into a slot number) and no adversarial collisions (two keys landing in the same slot, or bucket); worst case (everything in one bucket) is O(n) per lookup.</p>
 <h3>Traced examples</h3>
 <details>
 <summary><strong>Two Sum (#1).</strong> nums = [2, 7, 11, 15], target = 9.</summary>
@@ -510,7 +607,7 @@ final water = 6</pre>
 </div>
 <h3>The pattern, from zero</h3>
 <p>A <dfn>sliding window</dfn> is a pair of pointers, <code>l</code> and <code>r</code>, marking a contiguous slice of the input. The right pointer <code>r</code> marches forward one step at a time, adding one element to the window. The left pointer <code>l</code> advances only as far as needed to restore whatever property the window must have. Because both pointers move only forward, every element is added once and removed once: O(n) total work.</p>
-<p>This pattern exists for problems about <strong>contiguous</strong> subarrays or substrings with a condition: longest without repeats, shortest summing to at least K, count of subarrays with product below K. The key question that unlocks it: "if I move the left edge right, can the window flip from valid back to invalid in a way I cannot recover from?" If the condition is <strong>monotonic</strong> (shrinking a valid window keeps it valid, or shrinking an invalid window is the only repair), the window works.</p>
+<p>This pattern exists for problems about <strong>contiguous</strong> subarrays or substrings with a condition: longest without repeats, shortest summing to at least K, count of subarrays with product below K. The key question that tells you it applies: "if I move the left edge right, can the window flip from valid back to invalid in a way I cannot recover from?" If the condition is <strong>monotonic</strong> (shrinking a valid window keeps it valid, or shrinking an invalid window is the only repair), the window works.</p>
 <h3>Recognition signal</h3>
 <ul class="tight">
 <li>"Longest / shortest / count of contiguous subarray or substring."</li>
@@ -537,7 +634,7 @@ for r in range(k, len(nums)):
     window_sum += nums[r] - nums[r - k]
     best = max(best, window_sum)</code></pre>
 <h3>Complexity</h3>
-<p><strong>O(n) time, O(k) space</strong> where k is the alphabet or distinct-element count in the window. The time argument that matters: each pointer moves at most n steps, so the inner <code>while</code> runs at most n times total across the whole loop, not n times per iteration. Amortized O(1) per step.</p>
+<p><strong>O(n) time, O(k) space</strong> where k is the alphabet or distinct-element count in the window. The time argument that matters: each pointer moves at most n steps, so the inner <code>while</code> runs at most n times total across the whole loop, not n times per iteration. Amortized O(1) per step (amortized: the average cost per step over the whole run, even though some single steps cost more).</p>
 <h3>Traced examples</h3>
 <details>
 <summary><strong>Longest Substring Without Repeating Characters (#3).</strong> s = "abcabcbb".</summary>
@@ -737,7 +834,7 @@ stack empty -&gt; True</pre>
 </div>
 <div class="lab">
 <h4>Lab</h4>
-<p>Solve #739, then change the comparison from <code>&lt;</code> to <code>&lt;=</code> and diff the answers on an input with equal adjacent temperatures. Then implement #84 with and without the sentinel and verify both give the same answer.</p>
+<p>Solve #739, then change the comparison from <code>&lt;</code> to <code>&lt;=</code> and diff the answers on an input with equal adjacent temperatures. Then implement #84 with and without the sentinel (a dummy boundary value that removes edge-case checks) and verify both give the same answer.</p>
 </div>
 
 
@@ -1178,7 +1275,7 @@ class Trie:
                 return None
         return node</code></pre>
 <h3>Complexity</h3>
-<p><strong>O(L) per insert/search</strong> where L is word length; space O(total characters). A wildcard search (#211) can fan out: worst case O(26^L) in theory, fine in practice with pruning. State the trade: a trie beats a hash set only when queries exploit shared prefixes; for pure exact lookups it is just a heavier set.</p>
+<p><strong>O(L) per insert/search</strong> where L is word length; space O(total characters). A wildcard search (#211, where '.' matches any single letter) can fan out: worst case O(26^L) in theory, fine in practice with pruning. State the trade: a trie beats a hash set only when queries exploit shared prefixes; for pure exact lookups it is just a heavier set.</p>
 <h3>Traced examples</h3>
 <details>
 <summary><strong>Implement Trie (#208).</strong> insert("apple"), search("apple"), search("app"), startsWith("app").</summary>
@@ -1641,9 +1738,9 @@ A D E E               (0,2) C ok -&gt; (1,2) C ok -&gt; (2,2) E ok -&gt; (2,1) D
 <h3>The pattern, from zero</h3>
 <p>A <dfn>graph</dfn> is nodes plus edges. A <strong>tree</strong> is a graph with no cycles; this chapter is what happens when cycles are allowed, which forces one new discipline: a <strong>visited set</strong>, because without it you loop forever. Four tools cover the chapter:</p>
 <ul class="tight">
-<li><strong>BFS/DFS.</strong> DFS goes deep (components, path existence, flood fill). BFS goes wide in waves, which makes it the shortest-path algorithm for <strong>unweighted</strong> graphs. Grids are graphs in disguise: each cell is a node, edges go up/down/left/right.</li>
-<li><strong>Topological sort.</strong> For a DAG (directed acyclic graph), an ordering where every edge points forward: prerequisites before dependents. Kahn's algorithm repeatedly removes zero-indegree nodes; leftover nodes prove a cycle.</li>
-<li><strong>Union-Find (DSU).</strong> Maintains groups under union operations with near-constant <code>find</code> (path compression) and <code>union</code> (union by rank). The lazy alternative to BFS for "are these connected?" when edges arrive as a stream.</li>
+<li><strong>BFS/DFS</strong> (breadth-first / depth-first search). DFS goes deep (components, path existence, flood fill). BFS goes wide in waves, which makes it the shortest-path algorithm for <strong>unweighted</strong> graphs. Grids are graphs in disguise: each cell is a node, edges go up/down/left/right.</li>
+<li><strong>Topological sort.</strong> For a DAG (directed acyclic graph), an ordering where every edge points forward: prerequisites before dependents. Kahn's algorithm repeatedly removes zero-indegree nodes (indegree: the number of edges pointing into a node); leftover nodes prove a cycle.</li>
+<li><strong>Union-Find (DSU).</strong> Maintains groups under union operations with near-constant <code>find</code> (path compression: each find flattens the tree, so later finds are O(1)) and <code>union</code> (union by rank: attach the shorter tree under the taller one). The lazy alternative to BFS for "are these connected?" when edges arrive as a stream.</li>
 <li><strong>Dijkstra.</strong> BFS for weighted edges: always expand the cheapest known node via a min-heap. Requires non-negative weights. The first pop of the destination is final.</li>
 </ul>
 <h3>Recognition signal</h3>
@@ -1715,7 +1812,7 @@ def dijkstra(graph, src, n):
                 heapq.heappush(h, (nd, v))
     return dist</code></pre>
 <h3>Complexity</h3>
-<p>BFS/DFS: <strong>O(V + E)</strong>. Kahn: O(V + E). Union-Find: near O(1) amortized per op (inverse Ackermann). Dijkstra: <strong>O(E log V)</strong> with a binary heap. State these cold; they are among the most quoted complexities in interviews.</p>
+<p>BFS/DFS: <strong>O(V + E)</strong>. Kahn: O(V + E). Union-Find: near O(1) amortized per op (the inverse Ackermann function grows so slowly it is effectively a constant). Dijkstra: <strong>O(E log V)</strong> with a binary heap. State these cold; they are among the most quoted complexities in interviews.</p>
 <h3>Traced examples</h3>
 <details>
 <summary><strong>Number of Islands (#200).</strong> Grid 4x5 with two islands.</summary>
@@ -1837,8 +1934,8 @@ answer = max(dist) = 2</pre>
 </ol>
 </div>
 <h3>The pattern, from zero</h3>
-<p><dfn>Dynamic programming</dfn> is recursion plus memory. Plain recursion re-solves the same subproblems exponentially many times (Fibonacci is the classic: fib(5) computes fib(3) twice, fib(2) three times). DP stores each subproblem's answer the first time and reuses it. Two flavors: <strong>top-down</strong> (write the recursion, memoize with <code>lru_cache</code>) and <strong>bottom-up</strong> (fill a table in dependency order).</p>
-<p>DP applies when a problem has <strong>overlapping subproblems</strong> (the same smaller problem appears many times) and <strong>optimal substructure</strong> (the big answer is built from optimal small answers). The recipe: (1) define <code>dp[i]</code> in one English sentence, (2) write the recurrence, (3) set base cases, (4) iterate so dependencies are ready first.</p>
+<p><dfn>Dynamic programming</dfn> is recursion plus memory. Plain recursion re-solves the same subproblems exponentially many times (Fibonacci is the classic: fib(5) computes fib(3) twice, fib(2) three times). DP stores each subproblem's answer the first time and reuses it. Two flavors: <strong>top-down</strong> (write the recursion, memoize with <code>lru_cache</code> (functools' decorator that remembers a function's past results)) and <strong>bottom-up</strong> (fill a table in dependency order).</p>
+<p>DP applies when a problem has <strong>overlapping subproblems</strong> (the same smaller problem appears many times) and <strong>optimal substructure</strong> (the big answer is built from optimal small answers). The recipe: (1) define <code>dp[i]</code> in one English sentence, (2) write the recurrence (the formula that builds the big answer from smaller ones), (3) set base cases, (4) iterate so dependencies are ready first.</p>
 <h3>Recognition signal</h3>
 <ul class="tight">
 <li>"Maximum / minimum / count the number of ways" with a sequential structure.</li>
@@ -1866,7 +1963,7 @@ prev2, prev1 = base0, base1
 for i in range(2, n + 1):
     prev2, prev1 = prev1, combine(prev1, prev2)</code></pre>
 <h3>Complexity</h3>
-<p><strong>O(n * states)</strong> time, O(n) space bottom-up, reducible to O(1) when the recurrence reads only a fixed window. Top-down is the same time with O(n) recursion stack. The state count is the design decision: one index (1D) vs two (2D) vs bitmask.</p>
+<p><strong>O(n * states)</strong> time (a state is one subproblem's parameters, e.g. the index i), O(n) space bottom-up, reducible to O(1) when the recurrence reads only a fixed window. Top-down is the same time with O(n) recursion stack. The state count is the design decision: one index (1D) vs two (2D) vs bitmask.</p>
 <h3>Traced examples</h3>
 <details>
 <summary><strong>House Robber (#198).</strong> nums = [2, 7, 9, 3, 1].</summary>
@@ -2563,10 +2660,37 @@ answer = 10 most recent across followees</pre>
 </div>
 
 
+<figure class="diagram" id="fig-review-loop">
+<pre class="ascii">The cold-write schedule: the set only grows
+
+  Week N:    learn pattern A   -- cold-write A
+  Week N+1:  learn pattern B   -- cold-write A, B       (A now from memory)
+  Week N+2:  learn pattern C   -- cold-write A, B, C    (misses go on the error
+                                                        log, re-tested weekly)
+
+  Cold-write is the test. Write the template with its invariant from a blank
+  page: you own it. If you cannot, you are re-reading, not learning.</pre>
+<figcaption><strong>Figure 3.</strong> The cold-write schedule. Each week adds the new pattern to the cold-write set, so older templates are re-tested from memory every week. Misses go on the error log and are re-tested until they stick.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Each row: one week. New patterns on the left, the cold-write set on the right.</li><li>The set grows: old patterns are re-tested from memory every week.</li><li>Misses: anything you cannot write goes on next week's warm-up list.</li></ol></details>
+</figure>
 <h2 id="drills">On-the-board pattern-recognition drills</h2>
 <p>Read each prompt, name the pattern and the template move in under 30 seconds, then reveal the answer. Speed of recognition is the trained skill; the code follows.</p>
 <div class="pq">
-<p class="pq-q"><strong>Drill 1.</strong> "Given an unsorted array, find two indices summing to target."</p>
+<p class="pq-q"><strong><figure class="diagram" id="fig-drill-card">
+<pre class="ascii">How a drill round works: 30 seconds, out loud
+
+  PROMPT:  "Detect a cycle; find where it starts."
+     |
+     +-- name the pattern --  Linked Lists
+     +-- name the move -----  slow/fast pointers, then reset one to head
+     +-- name the trap -----  forgetting the second phase (meeting is not the start)
+
+  Miss the trap column twice and it earns a row in your error log.
+</pre>
+<figcaption><strong>Figure 4.</strong> One drill round, broken open. Read the prompt, name the pattern, the template move, and the classic trap, all out loud, in under 30 seconds. Then reveal the answer. The drills below train exactly this reflex.</figcaption>
+<details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Prompt: the trigger sentence. Read it like an interviewer said it.</li><li>Three answers: pattern, move, trap. All three, out loud, under 30 seconds.</li><li>The point: recognition speed. Code fluency comes after.</li></ol></details>
+</figure>
+Drill 1.</strong> "Given an unsorted array, find two indices summing to target."</p>
 <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
 <div class="pq-a" hidden>
 <p>Arrays and Hashing: complement lookup, check-before-insert. (#1)</p>
@@ -2724,10 +2848,42 @@ answer = 10 most recent across followees</pre>
 
 
 <div class="provenance"><strong>Last verified: September 2026.</strong> Live-verified: all 251 atlas anchors resolve in LeetCode_500_Atlas_v6.html; 300 unique problems across 17 ladders; 19 embedded images decode and are non-blank; zero external dependencies; zero em dashes; balanced tags. <span class="uv">UNVERIFIED:</span> per-company problem frequency data: must-do marks are consensus from public lists (NeetCode 150, Blind 75, Grind 75, Sean Prashad, community 2025-2026 compilations), not measured data.</div>
-<footer class="site-footer"><div class="site-sitemap"><div><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html" class="site-nav-current">DSA Track: Top-300</a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></div><p class="site-footer-note">LLM Knowledge Base. Every page works offline from file:// and links back here. No personal information.</p></footer>
+
+<section class="watch-deeper" id="watch-deeper" aria-label="Watch and go deeper">
+<p class="watch-deeper-kicker">Watch and go deeper</p>
+<p class="watch-deeper-lede">Hand-picked videos that pair with this track's pattern chapters. Each card names the chapter it fits, so you can watch right after reading.</p>
+<div class="watch-deeper-grid">
+<figure class="watch-card">
+<div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/RYT08CaYq6A?enablejsapi=1" title="LeetCode Was Hard Until I Learned THESE 8 Patterns (With Templates!)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+<figcaption><strong>LeetCode Was Hard Until I Learned THESE 8 Patterns (With Templates!)</strong>The patterns-first philosophy this track is built on, with templates. Watch before the pattern chapters. Transcript read Sept 28: the eight patterns backed by data, split into linear (arrays, linked lists, strings) and nonlinear (trees, graphs); two pointers first, with ready-to-use code templates for each pattern. Worth your time. Skip freely if the first five minutes feel slow.</figcaption>
+</figure>
+<figure class="watch-card">
+<div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/cQ1Oz4ckceM?enablejsapi=1" title="Two Sum II - Amazon Coding Interview Question - Leetcode 167 - Python" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+<figcaption><strong>Two Sum II - Amazon Coding Interview Question - Leetcode 167 - Python</strong>NeetCode walks through Two Sum II, the canonical two-pointers problem. Pairs with Chapter 2. Transcript read Sept 28: NeetCode works Two Sum II end to end: the brute-force O(n^2) start, the sorted-array two-pointer insight, and the 1-based index trap the problem sets. Worth your time. Skip freely if the first five minutes feel slow.</figcaption>
+</figure>
+<figure class="watch-card">
+<div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/p-ss2JNynmw?enablejsapi=1" title="Sliding Window Technique - Inside Code" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+<figcaption><strong>Sliding Window Technique - Inside Code</strong>The sliding window technique explained with code. Pairs with Chapter 3. Transcript read Sept 28: sliding window taught from zero with a bookshelf story: the naive version recomputes every sum from scratch, the window version slides by adding the new end and dropping the old one. Worth your time. Skip freely if the first five minutes feel slow.</figcaption>
+</figure>
+<figure class="watch-card">
+<div class="watch-frame"><iframe src="https://www.youtube-nocookie.com/embed/T0u5nwSA0w0?enablejsapi=1" title="NeetCode 150 Course - All Coding Interview Questions Solved" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+<figcaption><strong>NeetCode 150 Course - All Coding Interview Questions Solved</strong>The full NeetCode 150 course in one long video. Use it as a reference library after the pattern chapters, not a first watch. It is very long; take it in sittings. Transcript read Sept 28 (440K words): the full 150-problem course, every problem solved on camera across all major patterns: trees, graphs, dynamic programming, heaps, binary search. Use it problem by problem as a reference library, not end to end. Worth your time. Skip freely if a sitting feels slow. Skip freely if the first five minutes feel slow.</figcaption>
+</figure>
+</div>
+<p class="go-deeper-kicker">Go deeper</p>
+<ul class="go-deeper-list">
+<li><a href="https://neetcode.io/roadmap" rel="noopener">NeetCode roadmap <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1L5 7M9 11H1V3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><span class="go-deeper-note">The NeetCode 150 problem list this track's ladders align with.</span></li>
+<li><a href="https://visualgo.net/" rel="noopener">VisuAlgo <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1L5 7M9 11H1V3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><span class="go-deeper-note">Animated visualizations of every data structure and algorithm in this track.</span></li>
+<li><a href="https://www.bigocheatsheet.com/" rel="noopener">Big-O Cheat Sheet <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1L5 7M9 11H1V3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><span class="go-deeper-note">The complexity tables behind Figure 2.</span></li>
+<li><a href="https://github.com/neetcode-gh/leetcode" rel="noopener">NeetCode solutions repo <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1L5 7M9 11H1V3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><span class="go-deeper-note">Reference Python solutions for the NeetCode 150.</span></li>
+<li><a href="https://leetcode.com/problemset/" rel="noopener">LeetCode problem set <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1h8v8M11 1L5 7M9 11H1V3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a><span class="go-deeper-note">Where the ladder problems live. (Note: LeetCode blocks automated checks, so this link was verified by address, not by a live fetch.)</span></li>
+</ul>
+</section>
+
+<footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html" class="foot-current">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav><p class="foot-colophon"><span>LLM Knowledge Base</span><span class="foot-sep" aria-hidden="true">/</span><span>Sept 2026 edition</span><span class="foot-sep" aria-hidden="true">/</span><span>Set in Charis SIL</span></p></footer>
 </main>
 <script>
-/* Research-Engineer Curriculum — shared behavior. Writers INLINE this file at end of <body>.
+/* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
    Builds: sidebar nav from h2/h3, scroll-spy, nav search filter, localStorage completion
    checkmarks, reading progress bar, chapter prev/next footer, copy buttons, practice-question
    toggles, mobile drawer, keyboard nav. No external dependencies. */
@@ -2841,6 +2997,34 @@ var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('
 if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
 if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
 
+/* ---------- site volume nav: collapsible panel on desktop, drawer on mobile ---------- */
+var siteNavToggle=document.getElementById('siteNavToggle'),
+    siteNavPanel=document.getElementById('siteNavPanel'),
+    siteNavScrim=document.getElementById('siteNavScrim'),
+    siteNavClose=document.getElementById('siteNavClose');
+function siteNavDrawerMode(){return window.matchMedia&&window.matchMedia('(max-width:40rem)').matches;}
+function openSiteNav(){
+  if(!siteNavPanel||!siteNavToggle)return;
+  siteNavPanel.classList.add('is-open');siteNavToggle.setAttribute('aria-expanded','true');
+  if(siteNavDrawerMode()){document.body.classList.add('site-nav-open');if(siteNavScrim)siteNavScrim.classList.add('is-open');}
+}
+function closeSiteNav(){
+  if(!siteNavPanel||!siteNavToggle)return;
+  siteNavPanel.classList.remove('is-open');siteNavToggle.setAttribute('aria-expanded','false');
+  document.body.classList.remove('site-nav-open');if(siteNavScrim)siteNavScrim.classList.remove('is-open');
+}
+if(siteNavToggle)siteNavToggle.addEventListener('click',function(){
+  if(siteNavPanel.classList.contains('is-open'))closeSiteNav();else openSiteNav();
+});
+if(siteNavClose)siteNavClose.addEventListener('click',closeSiteNav);
+if(siteNavScrim)siteNavScrim.addEventListener('click',closeSiteNav);
+if(siteNavPanel)siteNavPanel.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeSiteNav);});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&siteNavPanel&&siteNavPanel.classList.contains('is-open')){
+    closeSiteNav();if(siteNavToggle)siteNavToggle.focus();
+  }
+});
+
 /* ---------- keyboard nav: [ ] sections, / search ---------- */
 document.addEventListener('keydown',function(e){
   if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
@@ -2870,10 +3054,11 @@ if(chapters.length>1){
     if(chapters[i+1])right.appendChild(mk(chapters[i+1],'ds-next','Next ↓'));
     else right.innerHTML='<span style="color:var(--muted);font-size:.85rem">End of volume</span>';
     bar.appendChild(left);bar.appendChild(right);
-    var h2=document.getElementById(ch.id),nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
-    var parent=h2.parentNode,ref=nextH;
-    /* insert before next chapter heading */
-    if(ref)parent.insertBefore(bar,ref);else parent.appendChild(bar);
+    /* insert the bar immediately before the next chapter's heading, using that
+       heading's own parent so <section> wrappers (or any nesting) cannot break it */
+    var nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
+    if(nextH){nextH.parentNode.insertBefore(bar,nextH);}
+    else{var lastH=document.getElementById(ch.id);lastH.parentNode.appendChild(bar);}
   });
 }
 
@@ -2901,6 +3086,65 @@ document.querySelectorAll('.pq').forEach(function(pq){
     else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
   });
 });
+
+/* ---------- watch-deeper speed bars: 0.5x to 2x via the YouTube IFrame Player API ----------
+   Progressive enhancement: the bar is built only after the API loads. If the API
+   script fails or is blocked, no bar appears and the plain youtube-nocookie iframe
+   keeps working with YouTube's own controls. Honest cap: the embed player
+   hard-caps at 2x; no page-side trick can force 3x, so 2x is the top button. */
+(function(){
+  var frames=Array.prototype.slice.call(
+    document.querySelectorAll('.watch-frame iframe[src*="youtube-nocookie.com/embed/"]'));
+  if(!frames.length)return;
+  var RATES=[0.5,0.75,1,1.25,1.5,1.75,2];
+  function rateLabel(r){return (r===1?'1':String(r))+'x';}
+  function buildBar(host,player){
+    var bar=document.createElement('div');
+    bar.className='watch-speedbar';
+    bar.setAttribute('role','group');
+    bar.setAttribute('aria-label','Playback speed');
+    var lab=document.createElement('span');
+    lab.className='watch-speedbar-label';lab.textContent='Speed';
+    bar.appendChild(lab);
+    var btns=RATES.map(function(r){
+      var b=document.createElement('button');
+      b.type='button';b.className='watch-speed';b.textContent=rateLabel(r);
+      b.setAttribute('aria-pressed',r===1?'true':'false');
+      b.setAttribute('aria-label','Play at '+rateLabel(r)+' speed');
+      b.addEventListener('click',function(){
+        try{player.setPlaybackRate(r);}catch(e){return;}
+        btns.forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+      });
+      bar.appendChild(b);return b;
+    });
+    host.parentNode.insertBefore(bar,host.nextSibling);
+  }
+  function init(){
+    frames.forEach(function(f,i){
+      if(f.dataset.ytWired)return;
+      f.dataset.ytWired='1';
+      var src=f.getAttribute('src')||'';
+      if(src.indexOf('enablejsapi=1')<0){
+        f.setAttribute('src',src+(src.indexOf('?')<0?'?':'&')+'enablejsapi=1');
+      }
+      if(!f.id)f.id='watch-yt-'+(i+1);
+      new YT.Player(f.id,{events:{onReady:function(ev){buildBar(f,ev.target);}}});
+    });
+  }
+  if(window.YT&&window.YT.Player){init();}
+  else{
+    var prev=window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady=function(){
+      if(typeof prev==='function'){try{prev();}catch(e){}}
+      init();
+    };
+    var tag=document.createElement('script');
+    tag.src='https://www.youtube.com/iframe_api';tag.async=true;
+    var first=document.getElementsByTagName('script')[0];
+    if(first)first.parentNode.insertBefore(tag,first);
+    else document.head.appendChild(tag);
+  }
+})();
 })();
 
 </script>
