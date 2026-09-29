@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="560" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 2.5. Evals as contracts: acceptance thresholds</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">the customer signs the definition of done</text>
+<rect x="24" y="110" width="832" height="66" fill="#141414" stroke="#6cb2ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="136" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">GOLDEN SET 100-300</text>
+<text x="440.0" y="154" font-size="11" fill="#a8a8a8" text-anchor="middle">fixed version, covers the customer&#x27;s real tasks</text>
+<rect x="24" y="188" width="832" height="66" fill="#141414" stroke="#4fd1a5" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="214" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">DETERMINISTIC GRADER</text>
+<text x="440.0" y="232" font-size="11" fill="#a8a8a8" text-anchor="middle">same input, same score; temperature 0, pinned version</text>
+<rect x="24" y="266" width="832" height="66" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="292" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">PASS THRESHOLD + NO-CRITICAL-FAILURE</text>
+<text x="440.0" y="310" font-size="11" fill="#a8a8a8" text-anchor="middle">a number AND a rule that one critical miss fails the batch</text>
+<rect x="24" y="344" width="832" height="66" fill="#141414" stroke="#b388ff" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="370" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">FAILURE TAXONOMY</text>
+<text x="440.0" y="388" font-size="11" fill="#a8a8a8" text-anchor="middle">every miss filed where the customer will look for it</text>
+<rect x="24" y="422" width="832" height="66" fill="#141414" stroke="#7dd87d" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="440.0" y="448" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">RE-RUN RULE</text>
+<text x="440.0" y="466" font-size="11" fill="#a8a8a8" text-anchor="middle">schedule plus after every model or prompt change</text>
+<text x="24" y="530" font-size="12" fill="#a8a8a8" text-anchor="start">An eval the customer did not sign is a wish. The contract turns &quot;it works&quot; into &quot;it works by this measure, on</text>
+<text x="24" y="547" font-size="12" fill="#a8a8a8" text-anchor="start">these tasks.&quot;</text>
+</svg>
