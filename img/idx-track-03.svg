@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="idx-track-03">
+<rect width="120" height="120" rx="26" fill="#111111"/>
+<rect x="3" y="3" width="114" height="114" rx="23" fill="none" stroke="#ff9f43" stroke-width="2.5"/>
+<path d="M30,78 A30,30 0 0 1 90,78" fill="none" stroke="#ff9f43" stroke-width="3"/><line x1="60" y1="78" x2="78" y2="56" stroke="#ff9f43" stroke-width="3.5"/><circle cx="60" cy="78" r="5" fill="#ff9f43"/>
+</svg>
