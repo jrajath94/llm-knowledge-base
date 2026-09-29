@@ -464,6 +464,10 @@ kappa bars, gate limits) are starting points tuned on practitioner experience.
 Your team's real numbers come from your own calibration data. Never ship a
 threshold you did not earn.</p></div><h2 id="1-decision-rules">1. Decision rules</h2>
 <p>Twelve rules. If you remember nothing else, remember these.</p>
+<div class="walkthrough">
+<p><strong>The four parts of an eval suite.</strong> Tasks are what you ask the model to do. Graders are how answers are scored: from checkable string checks to human raters to LLM judges. The harness is the code that runs everything: sampling, retries, logging, scoring. The gating policy is the rule that turns scores into a ship or no-ship decision.</p>
+<p>Treat an LLM judge as a measurement instrument, not an oracle: license it like one, which means proving it agrees with humans before you trust a single number from it. Calibration is that proof: comparing the judge against humans on a shared item set until the agreement is good enough to ship.</p>
+</div>
 <h3 id="rule-1-split-the-suite-into-three-tiers-and-never-merge-them">Rule 1. Split the suite into three tiers, and never merge them</h3>
 <ul>
 <li><strong>Tier 1, smoke:</strong> about 50 tasks, runs in minutes, on every commit. Job:
@@ -528,7 +532,7 @@ A gate with zero human eyes is a gate nobody trusts when it matters.</code></pre
 <ol>
 <li><strong>Checkable answer?</strong> Use a deterministic string check (normalize case and
    whitespace first; raw substring matching fails silently on formatting).</li>
-<li><strong>Open-ended?</strong> Write a rubric, then grade with humans first. Two humans
+<li><strong>Open-ended?</strong> Write a rubric, then grade with humans first. (A rubric is a written list of what earns what score: the grading instructions two humans must be able to apply consistently.) Two humans
    per item is the entry ticket.</li>
 <li><strong>Scale needed?</strong> Add an autorater only after it clears calibration
    (Rule 4). Keep some human-graded tasks in the gate tier permanently.
@@ -543,7 +547,7 @@ before any autorater sees it.</p>
 <ol>
 <li>Build a calibration set of 20 to 50 items spanning the full quality range.
    Deliberately include known-bad and known-borderline cases.</li>
-<li>Humans label first, 2 to 3 raters per item. If humans disagree, the rubric
+<li>Humans label first, 2 to 3 raters per item. (A labeler is a human who scores items.) If humans disagree, the rubric
    is broken. Fix the rubric.</li>
 <li>Run the judge on the same items. Compute Cohen's kappa (agreement corrected for chance; 2.1 works the formula), not raw agreement.</li>
 <li>Read the disagreements. Sort by gap size, read the top 10, and ask for each:
@@ -551,7 +555,7 @@ before any autorater sees it.</p>
    answer is almost always the rubric.</li>
 <li><strong>Revise the rubric, not the judge.</strong> Editing the judge prompt to chase
    individual disagreements is overfitting with extra steps.</li>
-<li>Re-run on a fresh sample. Never re-tune on the same golden set twice
+<li>Re-run on a fresh sample. Never re-tune on the same golden set twice (the golden set: the fixed, human-scored items every judge is licensed against)
    without a fresh holdout.</li>
 </ol>
 <p>The bar: judge-vs-human kappa near the human-vs-human ceiling (about 0.8 on
@@ -573,7 +577,7 @@ basics problem.</p>
 
 <p>Cover all four attacker goals with separate probe sets, because a model can
 be strong against one and weak against another: refusal bypasses, prompt
-extraction, injection (instructions hidden in tool output or pasted content),
+extraction, injection (instructions hidden in tool output or pasted content), (A jailbreak is a prompt crafted to make the model bypass its refusal training. Prompt extraction is getting the model to reveal its system prompt or hidden instructions.)
 misuse enablement.</p>
 <p>Cover all six attack families for every high-risk goal: direct requests,
 roleplay and persona, encoding and translation, multi-turn buildup,
@@ -608,18 +612,19 @@ reproduce it.</p>
   | 1. SYSTEM PROMPT .. hardened instructions,       |
   |    least privilege, secret minimization          |
   +--------------------------------------------------+
-</code></pre></p>
+</code></pre>
+<p>Two terms from the diagram. Post-training is the training phase after pre-training that teaches refusal and values. The instruction hierarchy is the rule that instructions from higher-priority sources outrank lower ones: system prompt first, then the developer, then the user, then tool output.</p></p>
 <p>For each layer ask two questions: what does this layer catch that the others
 miss, and what sails straight through it? System-prompt hardening is cheap
 and fast to deploy, and weaker than training. Use it as a layer, never as
 the plan. A filter with unknown precision and recall is not a mitigation; it
 is a hope.</p>
 <h3 id="rule-8-gate-on-deltas-against-the-baseline-not-on-absolute-scores">Rule 8. Gate on deltas against the baseline, not on absolute scores</h3>
-<p>A 92% that used to be 95% ships under an absolute bar. Deltas catch decay.
+<p>A 92% that used to be 95% ships under an absolute bar. Deltas catch decay. (A delta is the change from the released baseline.)
 Every release diffs the candidate against the released baseline on the same
 suite, same seeds. The gate policy is versioned code, not a number in
 someone's head:</p>
-<figure class="diagram"><svg class="gen-svg" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 660 300' width='100%' style='max-width:900px;background-color:transparent' role='img'><style>text{font-family='Inter,system-ui,-apple-system,sans-serif';fill:#ececec}.m{fill:#a8a8a8}.g{fill:#f0b429}.b{fill:#6cb2ff}.r{fill:#e57373}.gr{fill:#7fc97f}</style><text x='330' y='24' font-size='14' text-anchor='middle' font-weight='700'>Gate on the delta, not the absolute score</text><text x='70' y='85' font-size='13' text-anchor='end' font-weight='700'>baseline v3</text><line x1='390' y1='80' x2='450' y2='80' stroke='#a8a8a8' stroke-width='6' stroke-linecap='round'/><line x1='390' y1='70' x2='390' y2='90' stroke='#a8a8a8' stroke-width='2'/><line x1='450' y1='70' x2='450' y2='90' stroke='#a8a8a8' stroke-width='2'/><circle cx='420' cy='80' r='6' fill='#a8a8a8' stroke='#0d0d0d' stroke-width='2'/><text x='70' y='145' font-size='13' text-anchor='end' font-weight='700'>candidate</text><line x1='425' y1='140' x2='485' y2='140' stroke='#6cb2ff' stroke-width='6' stroke-linecap='round'/><line x1='425' y1='130' x2='425' y2='150' stroke='#6cb2ff' stroke-width='2'/><line x1='485' y1='130' x2='485' y2='150' stroke='#6cb2ff' stroke-width='2'/><circle cx='455' cy='140' r='6' fill='#6cb2ff' stroke='#0d0d0d' stroke-width='2'/><text x='330' y='180' font-size='13' class='r' font-weight='700'>intervals overlap: inconclusive. Add eval items (Rule: CI shrinks with n), do not ship on vibes.</text><text x='70' y='230' font-size='13' text-anchor='end' font-weight='700'>baseline v3</text><line x1='390' y1='225' x2='430' y2='225' stroke='#a8a8a8' stroke-width='6' stroke-linecap='round'/><line x1='390' y1='215' x2='390' y2='235' stroke='#a8a8a8' stroke-width='2'/><line x1='430' y1='215' x2='430' y2='235' stroke='#a8a8a8' stroke-width='2'/><circle cx='410' cy='225' r='6' fill='#a8a8a8' stroke='#0d0d0d' stroke-width='2'/><text x='70' y='270' font-size='13' text-anchor='end' font-weight='700'>candidate v4</text><line x1='460' y1='265' x2='510' y2='265' stroke='#7fc97f' stroke-width='6' stroke-linecap='round'/><line x1='460' y1='255' x2='460' y2='275' stroke='#7fc97f' stroke-width='2'/><line x1='510' y1='255' x2='510' y2='275' stroke='#7fc97f' stroke-width='2'/><circle cx='485' cy='265' r='6' fill='#7fc97f' stroke='#0d0d0d' stroke-width='2'/><text x='330' y='292' font-size='13' class='gr' font-weight='700'>clean separation: ship it. Report the delta with its interval, not a single number.</text></svg><figcaption><strong>How to read: each bar is a model's score with its 95% interval. Top pair: the intervals overlap, so the 'win' is noise; add eval items until the interval shrinks, do not ship on vibes. Bottom pair: clean separation, so the delta is real. Report the delta with its interval, never a single number.</strong></figcaption></figure>
+<figure class="diagram"><svg class="gen-svg" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 660 300' width='100%' style='max-width:900px;background-color:transparent' role='img'><style>text{font-family='Inter,system-ui,-apple-system,sans-serif';fill:#ececec}.m{fill:#a8a8a8}.g{fill:#f0b429}.b{fill:#6cb2ff}.r{fill:#e57373}.gr{fill:#7fc97f}</style><text x='330' y='24' font-size='14' text-anchor='middle' font-weight='700'>Gate on the delta, not the absolute score</text><text x='70' y='85' font-size='13' text-anchor='end' font-weight='700'>baseline v3</text><line x1='390' y1='80' x2='450' y2='80' stroke='#a8a8a8' stroke-width='6' stroke-linecap='round'/><line x1='390' y1='70' x2='390' y2='90' stroke='#a8a8a8' stroke-width='2'/><line x1='450' y1='70' x2='450' y2='90' stroke='#a8a8a8' stroke-width='2'/><circle cx='420' cy='80' r='6' fill='#a8a8a8' stroke='#0d0d0d' stroke-width='2'/><text x='70' y='145' font-size='13' text-anchor='end' font-weight='700'>candidate</text><line x1='425' y1='140' x2='485' y2='140' stroke='#6cb2ff' stroke-width='6' stroke-linecap='round'/><line x1='425' y1='130' x2='425' y2='150' stroke='#6cb2ff' stroke-width='2'/><line x1='485' y1='130' x2='485' y2='150' stroke='#6cb2ff' stroke-width='2'/><circle cx='455' cy='140' r='6' fill='#6cb2ff' stroke='#0d0d0d' stroke-width='2'/><text x='330' y='180' font-size='13' class='r' font-weight='700'>intervals overlap: inconclusive. Add eval items (Rule: CI shrinks with n), do not ship on vibes.</text><text x='70' y='230' font-size='13' text-anchor='end' font-weight='700'>baseline v3</text><line x1='390' y1='225' x2='430' y2='225' stroke='#a8a8a8' stroke-width='6' stroke-linecap='round'/><line x1='390' y1='215' x2='390' y2='235' stroke='#a8a8a8' stroke-width='2'/><line x1='430' y1='215' x2='430' y2='235' stroke='#a8a8a8' stroke-width='2'/><circle cx='410' cy='225' r='6' fill='#a8a8a8' stroke='#0d0d0d' stroke-width='2'/><text x='70' y='270' font-size='13' text-anchor='end' font-weight='700'>candidate v4</text><line x1='460' y1='265' x2='510' y2='265' stroke='#7fc97f' stroke-width='6' stroke-linecap='round'/><line x1='460' y1='255' x2='460' y2='275' stroke='#7fc97f' stroke-width='2'/><line x1='510' y1='255' x2='510' y2='275' stroke='#7fc97f' stroke-width='2'/><circle cx='485' cy='265' r='6' fill='#7fc97f' stroke='#0d0d0d' stroke-width='2'/><text x='330' y='292' font-size='13' class='gr' font-weight='700'>clean separation: ship it. Report the delta with its interval, not a single number. (The interval is the 95% confidence interval: the range the true score plausibly sits in. It shrinks as n grows.)</text></svg><figcaption><strong>How to read: each bar is a model's score with its 95% interval. Top pair: the intervals overlap, so the 'win' is noise; add eval items until the interval shrinks, do not ship on vibes. Bottom pair: clean separation, so the delta is real. Report the delta with its interval, never a single number.</strong></figcaption></figure>
 
 <ul>
 <li><strong>max smoke regressions: 0.</strong> Any smoke regression holds.</li>
@@ -678,7 +683,7 @@ mitigation within the week); S3 is concerning but rare (normal cycle); S4 is
 a paper cut (log it).</p>
 <p>The first hour has a checklist: reproduce the behavior and record exact
 prompts, model version, and settings; assess blast radius and check whether
-it is being shared publicly; decide hold vs rollback; open the incident
+it is being shared publicly; (Blast radius: how far the harm reaches: who is affected and how widely it is spreading.) decide hold vs rollback; open the incident
 record; assign one owner.</p>
 <p>Write rollback criteria before the incident, in the units you already
 measure, and rehearse the rollback path. A rollback you have never rehearsed
@@ -691,14 +696,21 @@ with owners and dates). The most important rule: the incident's reproduction
 prompts become regression tasks in the suite, the missing probe family gets
 built, the metric that should have caught it gets a threshold. An incident
 that does not change the eval suite will happen again.</p>
+<p><strong>Next:</strong> Section 2, the numbers behind the rules: kappa, Wilson intervals, pass@k, majority-vote math, and the constant sheet.</p>
 <h2 id="2-numbers-and-formulas-to-memorize">2. Numbers and formulas to memorize</h2>
+<p>The rules say what to build. Section 2 gives you the arithmetic to trust the build: agreement metrics, sample-size math, and the pass@k family, so you can tell a real improvement from noise.</p>
 <p>Every snippet below was executed. The printed outputs are real.</p>
 <h3 id="21-cohens-kappa-the-agreement-number-that-does-not-flatter">2.1 Cohen's kappa: the agreement number that does not flatter</h3>
-<p>kappa = (p_o - p_e) / (1 - p_e), where p_o is observed agreement and p_e is
-the agreement expected from the two raters' individual yes-rates by chance.</p>
+<div role="math" style="text-align:center;font-size:1.15em;margin:1.2rem 0">&kappa; = (p<sub>o</sub> &#8722; p<sub>e</sub>) / (1 &#8722; p<sub>e</sub>)</div>
+<p><strong>Where:</strong> p<sub>o</sub> is observed agreement, p<sub>e</sub> is the agreement expected from the two raters' individual yes-rates by chance. Landis and Koch bands: below 0 worse than chance; 0.00-0.20 slight; 0.21-0.40 fair; 0.41-0.60 moderate; 0.61-0.80 substantial; 0.81-1.00 almost perfect.</p>
+<p><strong>Worked:</strong> cohen_kappa(60, 10, 15, 15) = 0.375, a fair rating. The lazy judge (always says pass) gets kappa = 0.000: raw agreement looks fine, chance-corrected agreement is zero.</p>
 <p>Landis and Koch bands: below 0 is worse than chance; 0.00-0.20 slight;
 0.21-0.40 fair; 0.41-0.60 moderate; 0.61-0.80 substantial; 0.81-1.00 almost
 perfect.</p>
+<figure>
+<img src="img/crash05-kappa.svg" alt="Cohen's kappa: 2x2 confusion matrix showing agreement corrected for chance">
+<figcaption>Why kappa beats raw agreement. 75% of the items match, but both sides lean toward "yes": chance alone would agree 62% of the time. Kappa strips that out: (0.75 - 0.62) / (1 - 0.62) = 0.34, a fair rating on the Landis-Koch bands, and well below this pack's 0.8 licensing bar.</figcaption>
+</figure>
 <p><pre><code class="language-python">def cohen_kappa(a, b, c, d):
     # Confusion matrix, judge rows vs human columns:
     #   a = both say yes   b = judge yes, human no
@@ -750,8 +762,9 @@ print(f&quot;lazy judge kappa = {k2:.3f}&quot;)  # lazy judge kappa = 0.000
 <p>For a yes/no rate with n trials and z = 1.96 (95%):</p>
 <figure class="diagram"><img src="img/v11-confidence-interval.png" alt="A measured win-rate delta of zero with its 95 percent confidence interval" loading="lazy"><figcaption><strong>The interval is the honest statement: the truth could be anywhere inside it. More eval items shrink the interval. This is the picture behind the Wilson formula in this section: small, lopsided samples get wide intervals, and wide intervals mean you do not know yet. Figure: curriculum eval-stats appendix (v11).</strong></figcaption></figure>
 
-<p>center = (p + z^2 / 2n) / (1 + z^2 / n), half-width = z * sqrt(p(1-p)/n +
-z^2/4n^2) / (1 + z^2 / n), interval = [center - half, center + half].</p>
+<div role="math" style="text-align:center;font-size:1.15em;margin:1.2rem 0">center = (p&#770; + z&#178;/2n) / (1 + z&#178;/n)<br>half-width = z &#183; &#8730;(p&#770;(1&#8722;p&#770;)/n + z&#178;/4n&#178;) / (1 + z&#178;/n)<br>interval = [center &#8722; half, center + half]</div>
+<p><strong>Where:</strong> p&#770; is the observed rate, n is the trial count, z = 1.96 for a 95% interval. Use Wilson instead of the plain bootstrap when the sample is small and lopsided: a bootstrap of 20 hits out of 20 tries claims a width of zero, which is a lie.</p>
+<p><strong>Worked:</strong> wilson_interval(20, 20) gives 20/20 &#8594; 95% CI [0.839, 1.000]. Twenty successes buy you a lower bound of 0.839, not 1.0.</p>
 <p>Use Wilson instead of the bootstrap (resampling your data with replacement to estimate uncertainty) when the sample is small and lopsided,
 for example 20 hits out of 20 tries, where a plain bootstrap would claim a
 confidence interval of [1, 1], which is certainty you do not have.</p>
@@ -774,6 +787,7 @@ print(f&quot;47/50 -&gt; 95% CI [{lo:.3f}, {hi:.3f}]&quot;)   # [0.838, 0.979]
 </code></pre></p>
 <p>Memorize: <strong>20 out of 20 is not 100%.</strong> It is [0.839, 1.000] at 95%. Any
 report that writes "100% (n=20)" without the interval is hiding uncertainty.</p>
+<p>Agreement is licensed and the error bars are honest. Now the comparison itself: paired bootstrap on per-item score deltas, the standard A/B design for LLM outputs.</p>
 <h3 id="23-paired-bootstrap-the-standard-ab-design-for-llm-outputs">2.3 Paired bootstrap: the standard A/B design for LLM outputs</h3>
 <p>Three layers of noise, three fixes: pair the systems on the same items (kills
 item noise), repeat each case 3 to 5 times and average (kills decoding
@@ -810,11 +824,11 @@ print(f&quot;mean gap = {mean:.2f}, 95% CI = [{lo:.2f}, {hi:.2f}]&quot;)
 5% level. But the interval's width says the true gap could be as small as
 0.05. <strong>Significance says the gap is real; the interval says whether it is
 big enough to care about.</strong> Most teams forget the second sentence.</p>
+<p>The bootstrap compares models. Now the labelers behind the labels: how majority vote pools them, by binomial arithmetic.</p>
 <h3 id="24-majority-vote-the-binomial-arithmetic-of-labeler-pools">2.4 Majority vote: the binomial arithmetic of labeler pools</h3>
-<p>If each labeler is right with probability p independently, the majority of
-n (odd) labelers is right with probability P = sum over k of C(n,k) p^k
-(1-p)^(n-k) for k from majority threshold to n. "Independently" is the
-load-bearing assumption: labelers must work blind to each other.</p>
+<div role="math" style="text-align:center;font-size:1.15em;margin:1.2rem 0">P = &#8721; C(n,k) &#183; p<sup>k</sup> &#183; (1&#8722;p)<sup>n&#8722;k</sup>, &nbsp;k = (n+1)/2 &hellip; n</div>
+<p><strong>Where:</strong> p is each labeler's accuracy, n is the (odd) labeler count, C(n,k) is the binomial coefficient, k runs from the majority threshold to n. "Independently" is the load-bearing assumption: labelers must work blind to each other.</p>
+<p><strong>Worked:</strong> majority_vote_accuracy(0.75, 3) = 0.844. Three labelers at 75% each pool to 84.4% majority accuracy.</p>
 <p><pre><code class="language-python">import math
 
 def majority_vote_accuracy(p, n=3):
@@ -834,12 +848,15 @@ print(f&quot;3 labelers at 60%: {majority_vote_accuracy(0.60, 3):.3f}&quot;)  # 
 <p>Memorize: <strong>3 x 75% votes to 84.4%.</strong> Going 3 to 5 buys only 5 more points:
 diminishing returns. And 3 x 60% only reaches 64.8%: majority vote amplifies
 a decent signal; it does not rescue a weak one. Qualify labelers first.</p>
+<p>Human labels are pooled. Now the sampling math for the agent itself: pass@k, pass@1, pass^k.</p>
 <h3 id="25-passk-pass1-passk-ceiling-typical-reliability">2.5 pass@k, pass@1, pass^k: ceiling, typical, reliability</h3>
-<p>pass@k = 1 - C(n-c, k) / C(n, k): if the agent gets k independent tries, the
-chance at least one succeeds. It measures the <strong>ceiling</strong>. pass@1 = c/n is
-the plain success rate: <strong>typical</strong> performance. pass^k = C(c, k) / C(n, k):
-the chance <em>all</em> k tries succeed. It measures <strong>reliability</strong>, the number
-production usually cares about.</p>
+<div role="math" style="text-align:center;font-size:1.15em;margin:1.2rem 0">pass@k = 1 &#8722; C(n&#8722;c, k) / C(n, k) &nbsp;&nbsp;&nbsp; pass@1 = c / n &nbsp;&nbsp;&nbsp; pass<sup>k</sup> = C(c, k) / C(n, k)</div>
+<p><strong>Where:</strong> n is the total tries, c is the successful tries, k is the try budget. pass@k is the <strong>ceiling</strong> (at least one of k succeeds). pass@1 = c/n is the plain success rate: <strong>typical</strong> performance. pass<sup>k</sup> is the chance <em>all</em> k succeed: <strong>reliability</strong>, the number production usually cares about.</p>
+<p><strong>Worked:</strong> pass@1 = 0.30 typical; pass@5 = 0.9167 ceiling; pass<sup>2</sup> = 0.0667 reliability. The same model reads as 0.92 or 0.07 depending on the k you pick.</p>
+<figure>
+<img src="img/crash05-passatk.svg" alt="pass@k versus pass@1 versus (pass@1)^k: three bars showing why repeated sampling inflates the headline">
+<figcaption>The same model reads as 97% or 70% depending on the k you pick. pass@10 is the ceiling (at least one of ten tries succeeds); pass@1 is the typical single-try number production runs on; (pass@1)^10 is the reliability check (all ten succeed). Report all three; the third bar is what separates a reliable model from a lucky one.</figcaption>
+</figure>
 <p><pre><code class="language-python">import math
 
 def pass_at_k(n, c, k):
@@ -863,6 +880,7 @@ print(f&quot;pass^2 = {pass_pow_k(n,c,2):.4f}&quot;)  # 0.0667 reliability
 <p>Memorize: <strong>report the pair, with n stated.</strong> "pass@5 = 0.92, pass@1 = 0.30,
 n = 10" tells the full story. "92% success" tells a lie. An agent with high
 pass@k and low pass^k is brilliant sometimes and flaky usually.</p>
+<p>The formulas are in. Now the verdict as code: the gate that turns scores into ship or no-ship.</p>
 <h3 id="26-the-gate-verdict-as-code">2.6 The gate verdict, as code</h3>
 <p><pre><code class="language-python">def gate_verdict(smoke_regressions, worst_family_break_rate, judge_kappa=None,
                  max_smoke_regressions=0, max_break_rate=0.10, min_kappa=0.60):
@@ -891,6 +909,7 @@ print(v, &quot;--&quot;, r)   # HOLD -- judge kappa 0.51 below warning bar 0.6
 <p>The third case is the subtle one: the model is fine, the <em>judge</em> drifted.
 A gate that cannot distinguish "model regressed" from "instrument drifted"
 will block good releases and erode trust in the suite.</p>
+<p>Everything you need to quote, on one sheet.</p>
 <h3 id="27-the-constant-sheet">2.7 The constant sheet</h3>
 <table>
 <thead>
@@ -1023,7 +1042,9 @@ will block good releases and erode trust in the suite.</p>
 </tr>
 </tbody>
 </table>
+<p><strong>Next:</strong> Section 3, twelve traps with symptoms first, so you can match what you are seeing.</p>
 <h2 id="3-classic-traps">3. Classic traps</h2>
+<p>The math is right and the eval still lies. Section 3 is the symptom-first field guide: contaminated benchmarks, prompt-format variance, lazy judges, and the pass@k ceiling.</p>
 <p>Each trap names why it fools you and the one move that beats it.</p>
 <h3 id="trap-1-position-bias-in-autoraters">Trap 1. Position bias in autoraters</h3>
 <p>The judge favors whichever response is listed first (or second; it varies by
@@ -1104,7 +1125,9 @@ what it should, comply with what it may), and style (short, non-preachy,
 offer a safe alternative when one exists). Use benign edge prompts near the
 refusal boundary, and report the capability cost in the same sentence as the
 safety gain.</p>
+<p><strong>Next:</strong> Section 4, twenty-eight questions with worked answers spanning agreement, significance, sampling, and judges.</p>
 <h2 id="4-rapid-fire-qa">4. Rapid-fire Q&amp;A</h2>
+<p>Work the arithmetic before you reveal. These are the questions interviewers ask and error bars answer.</p>
 <p>Twenty-eight questions. Answer each out loud before revealing.</p><div class="pq"><div class="pq-q"><p><strong>Q1.</strong> Name the four parts of an eval suite, and say which two most teams
 improvise.</p></div><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p>Tasks (prompts plus context), graders (code or rubrics that score), the
 harness (runs tasks, calls the model, applies graders, stores results), and
@@ -1227,7 +1250,9 @@ worst family break 4%, judge kappa 0.51. What happened and what do you do?</p></
 instrument failure, not model failure. Do not block the release on a broken
 instrument and do not wave it through either: send the judge back through
 the calibration loop (Rule 4), re-run the judged tasks with the
-recalibrated judge or human graders, then take the verdict.</p></div></div><h2 id="5-one-page-cheat-sheet-the-30-numbers-and-rules-that-matter-most">5. One-page cheat sheet: the 30 numbers and rules that matter most</h2>
+recalibrated judge or human graders, then take the verdict.</p></div></div><p><strong>Next:</strong> Section 5, the constants and rules on one page.</p>
+<h2 id="5-one-page-cheat-sheet-the-30-numbers-and-rules-that-matter-most">5. One-page cheat sheet: the 30 numbers and rules that matter most</h2>
+<p>The pack on one page: the constants you quote and the thresholds you act on.</p>
 <ol>
 <li>Suite = tasks + graders + harness + gating policy. Teams improvise the
    last two; do not be those teams.</li>
@@ -1265,7 +1290,7 @@ recalibrated judge or human graders, then take the verdict.</p></div></div><h2 i
     production batch; pause and retrain on drift. [rule of thumb]</li>
 <li>Majority vote: 3 x 75% -&gt; 84.4%; 5 x 75% -&gt; 89.6%; 3 x 60% -&gt; 64.8%.
     Voting amplifies signal; it does not rescue weak labelers.</li>
-<li>~30% of preference pairs draw split verdicts; human agreement sits
+<li>~30% of preference pairs draw split verdicts (a split verdict: the humans disagree on the item); human agreement sits
     around 70%. Disagreement is signal about the rubric, not noise to
     average away.</li>
 <li>Red-team order: curious user, then motivated amateur, then skilled
@@ -1306,7 +1331,8 @@ practitioner heuristics from eval-engineering writeups (suite tier sizes,
 seeding rate, the 80% qual bar, the 0.7/0.6 kappa bars, the 10% probe break
 limit), not theorems or published standards. Tune every one against your
 own data before it gates a release.</p></div>
-<footer class="site-footer"><section class="watch-deeper" aria-labelledby="wd-h-crash-05">
+<footer class="site-footer"><div class="takeaway"><h4>Where to go next</h4><p>The next pack in the sequence is <a href="crash-track-06.html">Crash: Agent Systems</a>. This pack measured models and kept them safe. The next one asks what happens when models act: tool use, multi-step agents, and the evals that catch agents failing.</p></div>
+<section class="watch-deeper" aria-labelledby="wd-h-crash-05">
   <h2 class="watch-deeper-kicker" id="wd-h-crash-05">Watch and go deeper</h2>
   <p class="watch-deeper-lede">Two videos on evals done right: a practitioner workshop on the eval pyramid and harnesses, and a research talk on why eval signal is the bottleneck in alignment.</p>
   <div class="watch-deeper-grid">
