@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="540" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">The checkpoint that was not a resume: four variants, one checklist</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">a checkpoint you have never restored is a rumor: verify by restoring into a fresh process</text>
+<text x="24" y="88" font-size="13" font-weight="bold" fill="#ececec" text-anchor="start">Four variants, each a real bug:</text>
+<rect x="24" y="100" width="10" height="34" fill="#e57ea6" rx="2" opacity="1"/>
+<text x="44" y="115" font-size="12" font-weight="bold" fill="#ececec" text-anchor="start">missing optimizer state</text>
+<text x="44" y="131" font-size="11" fill="#a8a8a8" text-anchor="start">saved 140 GB of params, not the 560 GB of Adam state</text>
+<rect x="24" y="148" width="10" height="34" fill="#f0b429" rx="2" opacity="1"/>
+<text x="44" y="163" font-size="12" font-weight="bold" fill="#ececec" text-anchor="start">single retained checkpoint</text>
+<text x="44" y="179" font-size="11" fill="#a8a8a8" text-anchor="start">one write, one corruption: everything lost; keep K=3 plus daily</text>
+<rect x="24" y="196" width="10" height="34" fill="#b388ff" rx="2" opacity="1"/>
+<text x="44" y="211" font-size="12" font-weight="bold" fill="#ececec" text-anchor="start">async staging race</text>
+<text x="44" y="227" font-size="11" fill="#a8a8a8" text-anchor="start">two background writes overlap; exactly one in-flight write</text>
+<rect x="24" y="244" width="10" height="34" fill="#6cb2ff" rx="2" opacity="1"/>
+<text x="44" y="259" font-size="12" font-weight="bold" fill="#ececec" text-anchor="start">preemption mid-write</text>
+<text x="44" y="275" font-size="11" fill="#a8a8a8" text-anchor="start">node dies between local NVMe write and copy-out to durable storage</text>
+<text x="24" y="300" font-size="13" font-weight="bold" fill="#ececec" text-anchor="start">The resume checklist:</text>
+<rect x="24" y="320" width="14" height="14" fill="#7dd87d" rx="3" opacity="0.9"/>
+<text x="31" y="331" font-size="11" font-weight="bold" fill="#0d0d0d" text-anchor="middle">x</text>
+<text x="48" y="332" font-size="12" fill="#a8a8a8" text-anchor="start">weights hash matches</text>
+<rect x="444" y="320" width="14" height="14" fill="#7dd87d" rx="3" opacity="0.9"/>
+<text x="451" y="331" font-size="11" font-weight="bold" fill="#0d0d0d" text-anchor="middle">x</text>
+<text x="468" y="332" font-size="12" fill="#a8a8a8" text-anchor="start">optimizer state loaded, not re-initialized</text>
+<rect x="24" y="350" width="14" height="14" fill="#7dd87d" rx="3" opacity="0.9"/>
+<text x="31" y="361" font-size="11" font-weight="bold" fill="#0d0d0d" text-anchor="middle">x</text>
+<text x="48" y="362" font-size="12" fill="#a8a8a8" text-anchor="start">RNG states restored</text>
+<rect x="444" y="350" width="14" height="14" fill="#7dd87d" rx="3" opacity="0.9"/>
+<text x="451" y="361" font-size="11" font-weight="bold" fill="#0d0d0d" text-anchor="middle">x</text>
+<text x="468" y="362" font-size="12" fill="#a8a8a8" text-anchor="start">dataloader resumes at the right sample</text>
+<rect x="24" y="380" width="14" height="14" fill="#7dd87d" rx="3" opacity="0.9"/>
+<text x="31" y="391" font-size="11" font-weight="bold" fill="#0d0d0d" text-anchor="middle">x</text>
+<text x="48" y="392" font-size="12" fill="#a8a8a8" text-anchor="start">LR schedule resumes at the right step</text>
+<rect x="444" y="380" width="14" height="14" fill="#7dd87d" rx="3" opacity="0.9"/>
+<text x="451" y="391" font-size="11" font-weight="bold" fill="#0d0d0d" text-anchor="middle">x</text>
+<text x="468" y="392" font-size="12" fill="#a8a8a8" text-anchor="start">loss curve continues smoothly, no jump</text>
+<text x="24" y="428" font-size="12" fill="#f0b429" text-anchor="start">What checkpointing cannot do: it preserves state faithfully, including corrupted state. Detection</text>
+<text x="24" y="445" font-size="12" fill="#f0b429" text-anchor="start">picks which checkpoint is worth restoring; the checkpoint is only as good as that judgment.</text>
+</svg>
