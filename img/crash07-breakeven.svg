@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="500" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 3.4. Breakeven: n = fixed / (human - variable)</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">how many tasks before the build pays for itself</text>
+<text x="440" y="150" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">n = fixed cost / (human cost per task - variable cost per task)</text>
+<line x1="90" y1="190" x2="790" y2="190" stroke="#8a8a8a" stroke-width="1.5"/>
+<text x="120" y="230" font-size="13" font-weight="bold" fill="#6cb2ff" text-anchor="start">fixed cost</text>
+<text x="400" y="230" font-size="12" fill="#a8a8a8" text-anchor="start">the build: eng time, infra, evals</text>
+<text x="120" y="270" font-size="13" font-weight="bold" fill="#f0b429" text-anchor="start">human cost / task</text>
+<text x="400" y="270" font-size="12" fill="#a8a8a8" text-anchor="start">the fully-loaded human baseline</text>
+<text x="120" y="310" font-size="13" font-weight="bold" fill="#4fd1a5" text-anchor="start">variable cost / task</text>
+<text x="400" y="310" font-size="12" fill="#a8a8a8" text-anchor="start">inference + review per task</text>
+<text x="24" y="400" font-size="12" fill="#a8a8a8" text-anchor="start">If the denominator is small, the breakeven is far: cheap human tasks are the hardest to justify automating.</text>
+<text x="24" y="450" font-size="12" fill="#a8a8a8" text-anchor="start">Recompute breakeven quarterly: model prices fall, which moves the line in your favor.</text>
+</svg>
