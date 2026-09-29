@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="900" height="660" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">A rubric, concretely</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Criterion: clarity of intent. Does the query express one clear question? Scale 0 to 2, with anchors written before grading</text>
+<rect x="24" y="88" width="90" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="109" font-size="12" fill="#ececec" text-anchor="start">Score</text>
+<rect x="114" y="88" width="762" height="34" fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="124" y="109" font-size="12" fill="#ececec" text-anchor="start">Anchor: what this score looks like</text>
+<rect x="24" y="122" width="90" height="96" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="146" font-size="11" fill="#ececec" text-anchor="start">2</text>
+<rect x="114" y="122" width="762" height="96" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="124" y="146" font-size="11" fill="#a8a8a8" text-anchor="start">SELECT customer, SUM(total) FROM orders WHERE status=&#x27;paid&#x27; GROUP BY customer. One question, named columns, filter</text>
+<text x="124" y="163" font-size="11" fill="#a8a8a8" text-anchor="start">before grouping.</text>
+<rect x="24" y="218" width="90" height="96" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="242" font-size="11" fill="#ececec" text-anchor="start">1</text>
+<rect x="114" y="218" width="762" height="96" fill="#161616" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="124" y="242" font-size="11" fill="#a8a8a8" text-anchor="start">Correct result but SELECT * with filtering in Python afterwards. Right answer, wrong division of labor.</text>
+<rect x="24" y="314" width="90" height="96" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="34" y="338" font-size="11" fill="#ececec" text-anchor="start">0</text>
+<rect x="114" y="314" width="762" height="96" fill="#141414" stroke="#8a8a8a" stroke-width="1.5" rx="4" opacity="1"/>
+<text x="124" y="338" font-size="11" fill="#a8a8a8" text-anchor="start">A query that returns the right rows by accident, for example filtering on a coincidental id range.</text>
+<rect x="24" y="438" width="852" height="96" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6" opacity="1"/>
+<text x="450" y="470" font-size="14" font-weight="bold" fill="#ececec" text-anchor="middle">The rule</text>
+<text x="48" y="498" font-size="11" fill="#a8a8a8" text-anchor="start">Anchors are the difference between a rubric and a wish. Write them before you grade anything.</text>
+</svg>
