@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="620" viewBox="0 0 800 620" role="img" aria-label="Diagram of the MCP server lifecycle: initialize, list tools, call tools, over stdio or streamable HTTP.">
+<rect width="800" height="620" fill="#0d0d0d"/>
+<text x="400" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">MCP: the server lifecycle</text>
+<text x="400" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Initialize, list primitives, then call. Stdout is the protocol channel.</text>
+<rect x="120" y="110" width="240" height="80" rx="10" fill="#161616" stroke="#5aa9e6" stroke-width="2"/>
+<text x="240" y="142" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="bold" fill="#5aa9e6">MCP client</text>
+<text x="240" y="168" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">the agent host</text>
+<rect x="440" y="110" width="240" height="80" rx="10" fill="#161616" stroke="#e6a75a" stroke-width="2"/>
+<text x="560" y="142" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="bold" fill="#e6a75a">MCP server</text>
+<text x="560" y="168" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">the tool process</text>
+<line x1="360" y1="210" x2="440" y2="210" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="428,204 428,216 440,210" fill="#a8a8a8"/>
+<text x="400" y="200" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="bold" fill="#ececec">initialize</text>
+<text x="400" y="252" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">exchange capabilities</text>
+<line x1="360" y1="276" x2="440" y2="276" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="428,270 428,282 440,276" fill="#a8a8a8"/>
+<text x="400" y="266" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="bold" fill="#ececec">tools/list</text>
+<text x="400" y="318" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">list the primitives</text>
+<line x1="360" y1="342" x2="440" y2="342" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="428,336 428,348 440,342" fill="#a8a8a8"/>
+<text x="400" y="332" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="bold" fill="#ececec">tools/call</text>
+<text x="400" y="384" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">call with validated inputs</text>
+<rect x="120" y="430" width="270" height="100" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="255" y="462" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#7fd08a">stdio</text>
+<text x="255" y="488" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">client spawns the server as</text>
+<text x="255" y="508" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">a local subprocess; stdin/stdout</text>
+<rect x="410" y="430" width="270" height="100" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="545" y="462" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#7fd08a">Streamable HTTP</text>
+<text x="545" y="488" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">client POSTs JSON-RPC; server</text>
+<text x="545" y="508" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">streams back over SSE</text>
+<text x="400" y="574" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#e67e7e">The iron rule of stdio servers: never print() to stdout. It corrupts the JSON-RPC stream.</text>
+</svg>
