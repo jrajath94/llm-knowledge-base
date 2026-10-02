@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Diagram of the four parts of a labeler instruction packet: task definition, worked examples, edge-case playbook, skip and flag rules.">
+<rect width="800" height="600" fill="#0d0d0d"/>
+<text x="400" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">The instruction packet</text>
+<text x="400" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Train labelers with a packet, not a paragraph. Four parts, each with a job.</text>
+<rect x="90" y="90" width="620" height="105" rx="10" fill="#161616" stroke="#5aa9e6" stroke-width="2"/>
+<text x="120" y="126" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#5aa9e6">Task definition</text>
+<text x="120" y="156" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">What is the labeler comparing, and what does a label mean? Pin the task down in one paragraph.</text>
+<rect x="90" y="210" width="620" height="105" rx="10" fill="#161616" stroke="#e6a75a" stroke-width="2"/>
+<text x="120" y="246" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#e6a75a">Worked examples</text>
+<text x="120" y="276" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Ten or more right and wrong calls, with the reasoning shown, not just the verdict.</text>
+<rect x="90" y="330" width="620" height="105" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="120" y="366" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#7fd08a">Edge-case playbook</text>
+<text x="120" y="396" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Adjudication write-ups feed back here. The protocol learns from its hard cases.</text>
+<rect x="90" y="450" width="620" height="105" rx="10" fill="#161616" stroke="#e67e7e" stroke-width="2"/>
+<text x="120" y="486" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#e67e7e">Skip and flag rules</text>
+<text x="120" y="516" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">When in doubt, the labeler skips and flags. Bad labels cost more than slow labels.</text>
+<text x="400" y="580" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Qualification bar: 80% agreement with gold labels, with a hard floor on the easy items.</text>
+</svg>
