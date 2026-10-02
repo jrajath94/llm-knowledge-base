@@ -153,23 +153,41 @@ blockquote p{margin:.4rem 0}
 <h2 id="chapter-1-ab-design-when-the-outputs-are-random">Chapter 1. A/B design when the outputs are random</h2>
 <h3 id="11-the-three-layers-of-noise">1.1 The three layers of noise</h3>
 <p>Compare two prompts on the same 100 questions. Prompt A wins by 3 points. Did it win, or did it get lucky? An LLM eval has three separate layers of randomness, and a good design controls each one.</p>
-<p>Layer one is the items. Some questions are easy, some are hard. If you score A on one batch of questions and B on another, you are mostly measuring which batch was easier. The fix is pairing: run both A and B on the same items and analyze the per-item differences. Volume 11's paired bootstrap chapter is built on this idea.</p>
-<p>Layer two is decoding. The same prompt on the same question can give different answers on two runs, because sampling is random. If you compare one A sample against one B sample, decoding noise can swamp the real difference.</p>
+<p>Layer one is the items. Some questions are easy, some are hard. If you score A on one batch of questions and B on another, you are mostly measuring which batch was easier. The fix: pair the runs. Run both A and B on the same items and analyze the per-item differences. Volume 11's paired bootstrap chapter is built on this idea.</p>
+<p><figure class="diagram"><img alt="Diagram comparing unpaired testing, where A and B run on different batches, with paired testing, where A and B run on the same items." src="../img/appendix-11a-paired-design.svg"><figcaption>Unpaired testing confounds skill with batch luck. Paired testing cancels the batch effect.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The left side shows the unpaired design. A runs on batch X, B runs on batch Y.</li><li>Each batch has its own mix of easy, mid, and hard items. Score equals skill plus batch luck.</li><li>The right side shows the paired design. A and B both answer the same five items.</li><li>For each item, take the difference d_i = A_i - B_i. Batch luck cancels inside each difference.</li><li>The verdict is a paired difference with a confidence interval: A minus B is 0.05, 95 percent CI [0.01, 0.09].</li>
+</ol></div>
+<p>Layer two covers decoding. The same prompt on the same question can give different answers on two runs, because sampling is random. If you compare one A sample against one B sample, decoding noise can swamp the real difference.</p>
 <p>Layer three is the judge. If a human or an LLM rates the outputs, that rating carries its own noise. One tired rater on a Friday afternoon is a different instrument than the same rater on Monday morning.</p>
+<p><figure class="diagram"><img alt="Diagram of the three noise layers in evals: item noise, decoding noise, and judge noise, each with its fix." src="../img/appendix-11a-noise-layers.svg"><figcaption>The three noise layers and the fix for each.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>Three stacked boxes name the three layers: item noise, decoding noise, and judge noise.</li><li>Item noise comes from question difficulty. The fix pairs runs: test A and B on the same items.</li><li>Decoding noise comes from random sampling. The fix is temperature 0 with a fixed seed, or 3 to 5 repeats.</li><li>Judge noise comes from rater disagreement. The fix measures kappa before you trust judge scores.</li><li>Fix the layers separately. One flat average cannot remove all three.</li>
+</ol></div>
 <p>A design that ignores any layer is a design that can lie to you.</p>
 <p><pre><code>Item noise ......... fix with a paired design: same items for A and B
 Decoding noise ..... fix by repeating each case 3 to 5 times, then average
 Judge noise ........ fix by calibrating the judge first (see Chapter 2)
 </code></pre></p>
 <h3 id="12-the-standard-design-step-by-step">1.2 The standard design, step by step</h3>
-<p>Fix the decoding layer first. Where you can, set temperature to 0 and fix the seed. Deterministic outputs are simply easier to compare. Where you cannot fix the seed, or where you want to measure typical behavior rather than one lucky draw, run each case 3 to 5 times and average the scores. That turns decoding noise from a lie into a measurable wobble.</p>
+<p>Fix the decoding layer first. Where you can, set temperature to 0 and fix the seed. Deterministic outputs are simply easier to compare. Where you cannot fix the seed, run each case 3 to 5 times and average the scores. Do the same when you want to measure typical behavior rather than one lucky draw. That turns decoding noise from a lie into a measurable wobble.</p>
 <p>Next, pair the systems. Feed the exact same items to A and B. For each item i, compute the difference d_i = score_B(i) minus score_A(i). Then run all your statistics on the differences, not on the two raw score lists. This is the paired design. It subtracts out "this item was easy" before any test is run, which gives much more statistical power than comparing two independent score distributions.</p>
-<p>Finally, size the test before you run it. A common working rule is at least 30 test cases per variant. That number comes from the Central Limit Theorem kicking in, not from superstition. Decide your minimum detectable effect in advance: how big a difference would have to be for you to act on it? If only a 5 point gap would change your decision, then a test that can only detect 10 point gaps is wasted compute.</p>
+<p>Finally, size the test before you run it. A common working rule is at least 30 test cases per variant. That number comes from the Central Limit Theorem kicking in, not from superstition. Decide your minimum detectable effect in advance: how big a difference would have to be for you to act on it? If only a 5 point gap would change your decision, then a test that can only detect 10 point gaps wastes compute.</p>
 <h3 id="13-a-worked-example-with-real-numbers">1.3 A worked example, with real numbers</h3>
 <p>You compare two system prompts on 60 customer-support questions. An LLM judge scores each answer from 1 to 5. You run each case once per system at temperature 0, and you pair the scores per question.</p>
 <p>The raw results: system A averages 3.62, system B averages 3.95. The gap is 0.33. Is it real?</p>
 <p>First compute the per-item differences d_i = B minus A. The mean of the differences is also 0.33. Now bootstrap those differences. Resample the 60 differences with replacement, compute the mean of each resample, repeat 10,000 times, and take the 2.5th and 97.5th percentiles. You get a 95% confidence interval of [0.08, 0.58].</p>
 <p>Zero is not inside the interval, so the difference is significant at the 5% level. But look at the width: the true gap could be as small as 0.08. On a 1 to 5 scale, 0.08 is a small effect. Significance tells you the gap is probably real. The interval tells you whether it is big enough to care about. That is the sentence most teams forget to write.</p>
+<p><figure class="diagram"><img alt="Bootstrap flow: 60 per-item differences, resample 10,000 times, 95 percent confidence interval from 0.08 to 0.58." src="../img/appendix-11a-bootstrap-ci.svg"><figcaption>The bootstrap turns 60 differences into one interval.</figcaption></figure></p>
+<div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>Box 1 holds the 60 per-item differences, B minus A, with mean 0.33.</li>
+<li>Box 2 resamples 60 differences with replacement and takes the mean, 10,000 times.</li>
+<li>Box 3 takes the 2.5th and 97.5th percentiles of those 10,000 means.</li>
+<li>The number line shows the interval [0.08, 0.58]. The gold dot is the mean, 0.33.</li>
+<li>The red tick marks zero, which sits outside the interval: the gap is significant at the 5% level.</li>
+<li>The gold box adds the caution: the true gap could be 0.08, which is small on a 1 to 5 scale.</li>
+</ol></div>
 <p>Here is the whole analysis in one short program.</p>
 <p><pre><code class="language-python">import random
 
@@ -233,21 +251,43 @@ print(f&quot;Wilson 95% CI for 20/20: [{lo_w:.3f}, {hi_w:.3f}]&quot;)
 </ul></div><h3 id="14-the-traps-that-inflate-wins">1.4 The traps that inflate wins</h3>
 <p>Four mistakes show up in almost every eval postmortem. All four are cheap to prevent.</p>
 <p>The first is multiple comparisons. If you test 20 metrics, one will look significant by luck at the 5% level. When you run many tests, divide your significance bar by the number of tests. That is the Bonferroni correction, and it is deliberately strict.</p>
-<p>The second is test-set overfitting. If you tune the prompt against the same 60 questions you report on, you are measuring memory of the tuning process, not quality. Keep a hold-out set you never look at until the final number.</p>
+<p>The second is test-set overfitting. If you tune the prompt against the same 60 questions you report on, you measure memory of the tuning process, not quality. Keep a hold-out set you never look at until the final number.</p>
 <p>The third is judge shopping. If the judge is an LLM, it may favor longer answers, or answers written in its own style, or the answer shown second. Average across judges, randomize answer order, and calibrate the judge first. Which brings us to Chapter 2.</p>
-<p>The fourth is cluster structure. If each prompt produces 5 answers and one judge rates all of them, those 5 ratings are not independent: they share the same prompt and the same judge. Resampling individual ratings as if they were independent makes your interval artificially narrow. Resample by prompt instead. This is called a cluster bootstrap. It is the fix for hierarchical variance. Item noise, decoding noise, and judge noise live in different layers. One flat bootstrap cannot represent all of them.</p><div class="provenance"><p><strong>Last verified: September 2026.</strong> Paired design and percentile bootstrap: standard experiment-design practice; the paired-difference construction matches Volume 11 Chapter 5. Wilson score interval for degenerate small samples and cluster bootstrap by prompt: widely used in eval-statistics practice (e.g. recent eval-benchmarking writeups, 2026). Multiple-comparison correction (Bonferroni), minimum 30 cases per variant, and 3 to 5 repeats per case: community standard rules of thumb from LLM eval engineering practice. <strong>UNVERIFIED:</strong> the exact constants (30, 3 to 5) are heuristics, not theorems; they come from practitioner writeups, not from a single citable paper.</p></div><h2 id="chapter-2-calibrating-an-autorater-against-humans">Chapter 2. Calibrating an autorater against humans</h2>
+<p>The fourth is cluster structure. If each prompt produces 5 answers and one judge rates all of them, the 5 ratings are not independent. They share the same prompt and the same judge. If you resample individual ratings as if they were independent, your interval becomes artificially narrow. Resample by prompt instead. Practitioners call this a cluster bootstrap.</p>
+<p><figure class="diagram"><img alt="Four traps that inflate eval wins: multiple comparisons, test-set overfitting, judge shopping, and cluster structure." src="../img/appendix-11a-traps.svg"><figcaption>Four traps that inflate wins, each with its fix.</figcaption></figure></p>
+<div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>Each box names one trap (red title), describes the mistake, and gives the fix (green).</li>
+<li>Multiple comparisons: testing 20 metrics guarantees a lucky hit. Divide the bar by the number of tests.</li>
+<li>Test-set overfitting: tuning on the reported set measures memory, not quality. Keep a hold-out set.</li>
+<li>Judge shopping: the judge has its own biases. Calibrate it first, average across judges, randomize order.</li>
+<li>Cluster structure: ratings that share a prompt are not independent. Resample by prompt, not by rating.</li>
+</ol></div>
+<p>It is the fix for hierarchical variance. Item noise, decoding noise, and judge noise live in different layers. One flat bootstrap cannot represent all of them.</p><div class="provenance"><p><strong>Last verified: September 2026.</strong> Paired design and percentile bootstrap are standard experiment-design practice, and the paired-difference construction matches Volume 11 Chapter 5. Wilson score interval for degenerate small samples and cluster bootstrap by prompt: widely used in eval-statistics practice (e.g. recent eval-benchmarking writeups, 2026). Multiple-comparison correction (Bonferroni), minimum 30 cases per variant, and 3 to 5 repeats per case: community standard rules of thumb from LLM eval engineering practice. <strong>UNVERIFIED:</strong> the exact constants (30, 3 to 5) are heuristics, not theorems. They come from practitioner writeups, not from a single citable paper.</p></div><h2 id="chapter-2-calibrating-an-autorater-against-humans">Chapter 2. Calibrating an autorater against humans</h2>
 <h3 id="21-why-judges-need-a-license">2.1 Why judges need a license</h3>
 <p>An LLM judge is a measurement instrument, and every instrument needs calibration before its numbers count. The naive check is raw agreement: "the judge agrees with a human 75% of the time." That number flatters, because some agreement happens by chance.</p>
 <p>Picture a task where humans accept 80% of candidates and the judge also accepts 80%. Even a judge that understands nothing would agree about 68% of the time, purely from the two 80% rates overlapping. Cohen's kappa subtracts that chance agreement. It answers the honest question: how much does this judge agree beyond luck?</p>
+<p><figure class="diagram"><img alt="Diagram showing that two 80 percent accept rates overlap to produce 68 percent agreement by chance alone." src="../img/appendix-11a-chance-agreement.svg"><figcaption>Raw agreement flatters. Chance agreement explains most of it.</figcaption></figure></p>
+<div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The top bar is the human accept rate: 80%. The middle bar is the judge accept rate: 80%.</li>
+<li>The bottom bar shows the overlap: 0.80 times 0.80, which is 68%.</li>
+<li>A judge that understands nothing still agrees 68% of the time, purely from the two rates overlapping.</li>
+<li>The green box names the fix: Cohen’s kappa subtracts the chance agreement.</li>
+</ol></div>
 <h3 id="22-the-calibration-loop">2.2 The calibration loop</h3>
 <p>The loop has six steps, and the order matters.</p>
+<p><figure class="diagram"><img alt="Flowchart of the six-step judge calibration loop: calibration set, human labels, kappa, disagreements, rubric revision, repeat." src="../img/appendix-11a-calibration-loop.svg"><figcaption>Calibrate the rubric against humans before you trust any judge score.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>Six boxes run left to right: calibration set, human labels, kappa, disagreements, rubric revision, repeat.</li><li>Humans label first, with 2 to 3 raters per example. Kappa measures their agreement.</li><li>You inspect every disagreement and revise the rubric, never the judge prompt.</li><li>The dashed arrow loops from step 6 back to step 1. Repeat until kappa reaches the human ceiling.</li><li>Rule at the bottom: editing the judge prompt to chase disagreements overfits.</li>
+</ol></div>
 <ol>
 <li>Build a calibration set of 20 to 50 examples that span the whole quality range. If you only sample good examples, you calibrate on a narrow band and the judge falls apart at the tails. Deliberately include known-bad and known-borderline cases.</li>
-<li>Have humans label the set first, with 2 or 3 raters per example. If the humans do not agree with each other, the task or the rubric is broken. Fix the rubric before you touch the judge. A judge cannot beat the ceiling set by its own ground truth.</li>
-<li>Run the autorater on the same set with the same rubric. Keep the judge's reasoning for every rating; you will need it in step 5.</li>
+<li>Have humans label the set first, with 2 or 3 raters per example. If the humans do not agree with each other, the task or the rubric needs a fix. Fix the rubric before you touch the judge. A judge cannot beat the ceiling set by its own ground truth.</li>
+<li>Run the autorater on the same set with the same rubric. Keep the judge's reasoning for every rating. You will need it in step 5.</li>
 <li>Compute agreement with Cohen's kappa. For ordinal scales with two raters, use the weighted form. With several human raters, use Krippendorff's alpha, which handles missing data gracefully. Do not report raw percent agreement alone.</li>
 <li>Read the disagreements. Sort by the size of the gap and read the top 10. For each one, ask: did the judge miss something, did the human miss something, or is the rubric ambiguous? The answer is almost always the rubric.</li>
-<li>Revise the rubric, not the judge. Tighten the anchor language, add a sub-criterion, move a behavior into a worked example. Do not edit the judge prompt to chase individual disagreements; that overfits to the calibration set.</li>
+<li>Revise the rubric, not the judge. Tighten the anchor language, add a sub-criterion, move a behavior into a worked example. Do not edit the judge prompt to chase individual disagreements. That overfits to the calibration set.</li>
 </ol>
 <p><pre><code>Calibration set (20-50 items, full quality range)
         |
@@ -284,7 +324,11 @@ not the judge       scores count
 <p>Here p_o is the fraction of items where both raters agree. p_e is the agreement expected by chance from each rater's marginal rate.</p>
 <p>A worked example. A judge and a human label 100 answers as pass or fail. The judge passes 70, the human passes 75, and they agree on 75 items (60 passes plus 15 fails). Raw agreement is 75%, which sounds good.</p>
 <p>Chance agreement: the judge passes 70% of items and the human passes 75%. By luck alone they would both pass 0.70 times 0.75 = 0.525 of items. They would both fail 0.30 times 0.25 = 0.075. That is p_e = 0.60. Kappa is (0.75 - 0.60) / (1 - 0.60) = 0.375.</p>
-<p>The raw number said 75%. Kappa says 0.375. The 37.5 point gap is the chance agreement the raw number was hiding.</p>
+<p>The raw number said 75%. Kappa says 0.375. The 37.5 point gap is the chance agreement that the raw number hid.</p>
+<p><figure class="diagram"><img alt="Bar chart of the kappa worked example: raw agreement 0.75, expected chance agreement 0.60, kappa 0.375." src="../img/appendix-11a-kappa-worked.svg"><figcaption>Kappa rescales raw agreement by removing the part chance explains.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The blue bar is raw agreement: 0.75.</li><li>The gold bar is the agreement chance alone produces: 0.60.</li><li>The green bar is kappa: 0.375.</li><li>The formula is kappa = (p_o - p_e) / (1 - p_e), which gives (0.75 - 0.60) / (1 - 0.60) = 0.375.</li><li>Lesson: a 75 percent raw score can hide a weak 0.375 kappa.</li>
+</ol></div>
 <p>Read kappa on the standard Landis and Koch scale. Below 0 is worse than chance. 0.00 to 0.20 is slight, 0.21 to 0.40 is fair, 0.41 to 0.60 is moderate. 0.61 to 0.80 is substantial, 0.81 to 1.00 is almost perfect. Our 0.375 is fair. A judge at 0.375 should not decide anything important.</p>
 <p>Here is the computation as code.</p>
 <p><pre><code class="language-python">def cohen_kappa(a, b, c, d):
@@ -334,12 +378,27 @@ print(&quot;band:&quot;, kappa_band(cohen_kappa(60, 10, 15, 15)))
 </ol></div><h3 id="24-the-human-ceiling">2.4 The human ceiling</h3>
 <p>Humans do not agree with each other perfectly either. On many real tasks, two human raters land around kappa 0.8, not 1.0. That human-versus-human number is the ceiling. Judging the LLM against a perfect 1.0 would be unfair. It would guarantee the judge "fails" on any task where humans themselves wobble.</p>
 <p>The right bar is the ceiling. A judge that reaches human-versus-human agreement is as reliable as a human on this task. A judge below it is not a human substitute. You only see which case you are in when you report both numbers side by side.</p>
-<p>Two bias traps deserve special attention. Self-preference: a judge built on model X tends to favor outputs written in X's style. Never let a model judge its own outputs without a calibration check against humans. Verbosity: judges, like rushed humans, use length as a proxy for quality. If your calibration shows the judge passes long answers it should fail, add an explicit "do not reward padding" rule to the rubric. Then add more long-but-wrong examples to the calibration set.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
+<p><figure class="diagram"><img alt="Bar chart: human versus human kappa 0.80 is the ceiling, judge versus human 0.65 is below it, 1.00 is the wrong bar." src="../img/appendix-11a-human-ceiling.svg"><figcaption>The human ceiling is the bar. Perfection is not.</figcaption></figure></p>
+<div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The y-axis is kappa from 0 to 1.00.</li>
+<li>The blue bar is human-versus-human agreement: 0.80. This is the ceiling.</li>
+<li>The gold bar is judge-versus-human agreement: 0.65. It sits below the ceiling.</li>
+<li>The dashed red line marks 1.00: the wrong bar. No human reaches it.</li>
+<li>The green box states the rule: report both numbers side by side.</li>
+</ol></div>
+<p>Two bias traps deserve special attention. Self-preference: a judge built on model X tends to favor outputs written in X's style. Never let a model judge its own outputs without a calibration check against humans. Verbosity: judges, like rushed humans, use length as a proxy for quality. If your calibration shows the judge passes long answers it should fail, add an explicit "do not reward padding" rule to the rubric. Then add more long-but-wrong examples to the calibration set.</p>
+<p><figure class="diagram"><img alt="Diagram of three autorater bias traps: verbosity, position, and self-preference, each with its control." src="../img/appendix-11a-bias-traps.svg"><figcaption>Name each judge bias trap, then control for it.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>Three boxes name three traps: verbosity, position, and self-preference.</li><li>Verbosity means judges reward long answers. Control it by length normalization.</li><li>Position means the first shown answer wins too often. Control it by randomizing answer order.</li><li>Self-preference means a model judge favors its own style. Control it by calibrating against human raters.</li><li>An uncontrolled bias becomes a fake win.</li>
+</ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>Calibrate before you trust: 20 to 50 human-labeled items across the quality range, then Cohen's kappa.</li>
 <li>Raw percent agreement flatters. Kappa subtracts chance agreement. Report the kappa.</li>
 <li>The bar is the human ceiling: judge-versus-human kappa compared against human-versus-human kappa.</li>
 <li>When calibration fails, revise the rubric, not the judge. Overfitting the judge to the calibration set just hides the problem.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Cohen's kappa definition kappa = (p_o - p_e) / (1 - p_e) and the Landis and Koch bands (1977): standard psychometric practice. The six-step calibration loop: calibration set spanning the range, humans label first with 2-3 raters, compute kappa, inspect disagreements, revise the rubric not the judge. This is documented LLM-eval engineering practice, consistent across recent practitioner writeups. Krippendorff's alpha for multi-rater agreement: standard content-analysis practice. <strong>UNVERIFIED:</strong> the "20 to 50 examples" calibration-set size is a practitioner rule of thumb. The human-ceiling figure of kappa ~0.8 is typical for the tasks cited in practitioner writeups, not a universal constant.</p></div>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Cohen's kappa definition kappa = (p_o - p_e) / (1 - p_e) and the Landis and Koch bands (1977): standard psychometric practice. The six-step calibration loop: calibration set spanning the range, humans label first with 2-3 raters, compute kappa, inspect disagreements, revise the rubric not the judge.</p>
+<p>Practitioner writeups document this loop as standard LLM-eval engineering practice.</p>
+<p>Krippendorff's alpha for multi-rater agreement: standard content-analysis practice. <strong>UNVERIFIED:</strong> the "20 to 50 examples" calibration-set size is a practitioner rule of thumb. The human-ceiling figure of kappa ~0.8 is typical for the tasks cited in practitioner writeups, not a universal constant.</p></div>
 </main>
 <script>
 /* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
