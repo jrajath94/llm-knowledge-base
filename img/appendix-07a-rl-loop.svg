@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="900" height="480" fill="#0d0d0d"/>
+<text x="450" y="34" text-anchor="middle" fill="#ececec" font-size="20" font-weight="600">The online RL loop: generate, score, update</text>
+
+<!-- three stage boxes in a loop -->
+<g font-size="13">
+<rect x="60" y="110" width="220" height="150" rx="10" fill="#1a1a1a" stroke="#6cb2ff" stroke-width="2"/>
+<text x="170" y="140" text-anchor="middle" fill="#6cb2ff" font-weight="600" font-size="15">1. generate</text>
+<text x="170" y="164" text-anchor="middle" fill="#a8a8a8">rollout workers run</text>
+<text x="170" y="184" text-anchor="middle" fill="#a8a8a8">the current policy</text>
+<text x="170" y="204" text-anchor="middle" fill="#a8a8a8">on fresh prompts</text>
+<text x="170" y="232" text-anchor="middle" fill="#e08080" font-size="12">~90% of step time</text>
+
+<rect x="340" y="110" width="220" height="150" rx="10" fill="#1a1a1a" stroke="#f0b429" stroke-width="2"/>
+<text x="450" y="140" text-anchor="middle" fill="#f0b429" font-weight="600" font-size="15">2. score</text>
+<text x="450" y="164" text-anchor="middle" fill="#a8a8a8">a reward signal</text>
+<text x="450" y="184" text-anchor="middle" fill="#a8a8a8">rates each rollout</text>
+<text x="450" y="232" text-anchor="middle" fill="#a8a8a8" font-size="12">fast, cheap</text>
+
+<rect x="620" y="110" width="220" height="150" rx="10" fill="#1a1a1a" stroke="#7fd08a" stroke-width="2"/>
+<text x="730" y="140" text-anchor="middle" fill="#7fd08a" font-weight="600" font-size="15">3. update</text>
+<text x="730" y="164" text-anchor="middle" fill="#a8a8a8">gradient step on</text>
+<text x="730" y="184" text-anchor="middle" fill="#a8a8a8">the same tokens</text>
+<text x="730" y="232" text-anchor="middle" fill="#a8a8a8" font-size="12">~10% of step time</text>
+</g>
+
+<g stroke="#a8a8a8" stroke-width="2" fill="none">
+<path d="M 280 185 L 336 185" marker-end="url(#arr)"/>
+<path d="M 560 185 L 616 185" marker-end="url(#arr)"/>
+<path d="M 730 260 L 730 320 L 170 320 L 170 264" marker-end="url(#arr)"/>
+</g>
+<text x="450" y="310" text-anchor="middle" fill="#a8a8a8" font-size="12">the updated policy becomes the generator for the next step: "online"</text>
+
+<!-- the split bar -->
+<text x="450" y="360" text-anchor="middle" fill="#ececec" font-size="14" font-weight="600">why generation dominates</text>
+<rect x="120" y="380" width="540" height="34" rx="5" fill="#1a3a3a"/>
+<rect x="660" y="380" width="60" height="34" rx="5" fill="#3a2a10"/>
+<text x="390" y="402" text-anchor="middle" fill="#6cb2ff" font-size="12">decode: memory-bandwidth bound</text>
+<text x="690" y="402" text-anchor="middle" fill="#f0b429" font-size="12">train</text>
+<text x="450" y="440" text-anchor="middle" fill="#a8a8a8" font-size="13">the same 2M tokens cost ~10x more to generate than to train on</text>
+
+<defs>
+<marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 z" fill="#a8a8a8"/>
+</marker>
+</defs>
+</svg>
