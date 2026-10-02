@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif">
+<rect width="800" height="480" fill="#0d0d0d"/>
+<text x="400" y="36" text-anchor="middle" fill="#ececec" font-size="22" font-weight="700">Shadow traffic: the worked economics</text>
+<text x="400" y="60" text-anchor="middle" fill="#a8a8a8" font-size="14">50,000 requests per day, 10% mirrored</text>
+<!-- production -->
+<rect x="60" y="130" width="180" height="70" rx="8" fill="#262626" stroke="#a8a8a8" stroke-width="2"/>
+<text x="150" y="160" text-anchor="middle" fill="#ececec" font-size="15" font-weight="700">production</text>
+<text x="150" y="182" text-anchor="middle" fill="#a8a8a8" font-size="13">50k req/day</text>
+<!-- arrow to shadow -->
+<line x1="240" y1="165" x2="310" y2="165" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="310,165 298,157 298,173" fill="#a8a8a8"/>
+<text x="275" y="150" text-anchor="middle" fill="#a8a8a8" font-size="12">mirror 10%</text>
+<!-- shadow fleet -->
+<rect x="310" y="130" width="180" height="70" rx="8" fill="#f0b429" opacity="0.2" stroke="#f0b429" stroke-width="2"/>
+<text x="400" y="160" text-anchor="middle" fill="#f0b429" font-size="15" font-weight="700">shadow fleet</text>
+<text x="400" y="182" text-anchor="middle" fill="#a8a8a8" font-size="13">5k req/day</text>
+<!-- comparator -->
+<line x1="490" y1="165" x2="560" y2="165" stroke="#a8a8a8" stroke-width="2"/>
+<rect x="560" y="130" width="180" height="70" rx="8" fill="#6cb2ff" opacity="0.2" stroke="#6cb2ff" stroke-width="2"/>
+<text x="650" y="160" text-anchor="middle" fill="#6cb2ff" font-size="15" font-weight="700">comparator</text>
+<text x="650" y="182" text-anchor="middle" fill="#a8a8a8" font-size="13">quality, latency, cost</text>
+<!-- cost box -->
+<rect x="250" y="260" width="300" height="90" rx="8" fill="#262626" stroke="#e08080" stroke-width="2"/>
+<text x="400" y="292" text-anchor="middle" fill="#e08080" font-size="16" font-weight="700">cost: $4,900 for the week</text>
+<text x="400" y="318" text-anchor="middle" fill="#a8a8a8" font-size="13">real GPUs, every mirrored request</text>
+<!-- rules -->
+<g fill="#ececec" font-size="14">
+<text x="150" y="400">Sample aggressively at first.</text>
+<text x="150" y="428">Shut the shadow down the day the decision is made.</text>
+<text x="150" y="456">Logs nobody reads are an expensive way to feel careful.</text>
+</g>
+</svg>
