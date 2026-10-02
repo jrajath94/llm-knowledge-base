@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 360" width="100%" style="max-width:660px" role="img" aria-label="KL from the reference over training steps: a healthy gradual climb versus a vertical spike that means stop and inspect">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+.ax{stroke:#5a5a5a;stroke-width:1.5}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="30">KL from the reference: healthy climb vs spike</text><line class="ax" x1="70" y1="300" x2="630" y2="300"/><line class="ax" x1="70" y1="300" x2="70" y2="60"/><text class="m" x="350" y="330" text-anchor="middle">training steps</text><text class="m" x="30" y="180" text-anchor="middle">KL from reference</text><polyline points="70,300 76,299 81,298 87,297 92,295 98,294 104,293 109,292 115,291 120,289 126,288 132,287 137,286 143,284 148,283 154,282 160,280 165,279 171,278 176,276 182,275 188,273 193,272 199,270 204,269 210,268 216,266 221,264 227,263 232,261 238,260 244,258 249,257 255,255 260,253 266,252 272,250 277,248 283,247 288,245 294,243 300,241 305,240 311,238 316,236 322,234 328,232 333,231 339,229 344,227 350,225 356,223 361,221 367,219 372,217 378,215 384,213 389,211 395,209 400,207 406,205 412,203 417,201 423,199 428,197 434,195 440,193 445,190 451,188 456,186 462,184 468,182 473,179 479,177 484,175 490,172 496,170 501,168 507,166 512,163 518,161 524,158 529,156 535,154 540,151 546,149 552,146 557,144 563,141 568,139 574,136 580,134 585,131 591,129 596,126 602,123 608,121 613,118 619,115 624,113 630,110" fill="none" stroke="#7fc97f" stroke-width="2.5"/><text class="gr" x="560" y="200">healthy</text><text class="m" x="560" y="218">KL climbs with</text><text class="m" x="560" y="234">gold scores</text><polyline points="70,290 120,285 150,280 165,120 175,60" fill="none" stroke="#e57373" stroke-width="2.5"/><text class="r" x="190" y="80">vertical spike</text><text class="m" x="190" y="100">beta too small or</text><text class="m" x="190" y="118">learning rate too high</text><text class="m" x="190" y="140" font-weight="700" fill="#ececec">Action: pause and inspect.</text><text class="m" x="190" y="158">Do not tune through it.</text></svg>
