@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="560" viewBox="0 0 660 560" role="img" aria-label="Two by two confusion matrix of judge verdicts against human verdicts for 50 items">
+<rect width="660" height="560" fill="#0d0d0d"/>
+<text x="330" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">Judge vs human: the agreement table</text>
+<text x="330" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">50 items. Judge says pass 38 times, human says pass 35 times.</text>
+
+<!-- Column headers -->
+<text x="330" y="100" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#ececec">Human: pass</text>
+<text x="500" y="100" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#ececec">Human: fail</text>
+<!-- Row headers -->
+<text x="140" y="185" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#ececec">Judge:</text>
+<text x="140" y="207" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#ececec">pass</text>
+<text x="140" y="345" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#ececec">Judge:</text>
+<text x="140" y="367" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#ececec">fail</text>
+
+<!-- Cells -->
+<rect x="230" y="130" width="170" height="150" rx="8" fill="#1f3a24" stroke="#7fd08a" stroke-width="1.5"/>
+<text x="315" y="185" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="30" font-weight="bold" fill="#7fd08a">32</text>
+<text x="315" y="212" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">agree: pass</text>
+
+<rect x="430" y="130" width="170" height="150" rx="8" fill="#3a2a1a" stroke="#f0b429" stroke-width="1.5"/>
+<text x="515" y="185" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="30" font-weight="bold" fill="#f0b429">6</text>
+<text x="515" y="212" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">judge lenient</text>
+
+<rect x="230" y="300" width="170" height="150" rx="8" fill="#3a1f1f" stroke="#e08080" stroke-width="1.5"/>
+<text x="315" y="355" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="30" font-weight="bold" fill="#e08080">3</text>
+<text x="315" y="382" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">judge strict</text>
+
+<rect x="430" y="300" width="170" height="150" rx="8" fill="#1f3a24" stroke="#7fd08a" stroke-width="1.5"/>
+<text x="515" y="355" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="30" font-weight="bold" fill="#7fd08a">9</text>
+<text x="515" y="382" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">agree: fail</text>
+
+<!-- Math -->
+<text x="330" y="492" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13.5" fill="#ececec">Observed agreement p_o = (32 + 9) / 50 = 0.82</text>
+<text x="330" y="514" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13.5" fill="#ececec">Chance agreement p_e = 0.76 x 0.70 + 0.24 x 0.30 = 0.604</text>
+<text x="330" y="542" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#f0b429">Cohen kappa = (0.82 - 0.604) / (1 - 0.604) = 0.545: moderate agreement</text>
+</svg>
