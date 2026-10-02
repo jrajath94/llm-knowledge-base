@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" width="640" height="300" role="img" aria-label="Latency vs throughput: the knee where queueing starts">
 <style>
-.t { font: 600 13px system-ui, sans-serif; fill: #1a1a1a; }
-.s { font: 400 11px system-ui, sans-serif; fill: #444; }
-.b { font: 700 12px system-ui, sans-serif; fill: #fff; }
-.box { fill: #f5f7fa; stroke: #2a6db5; stroke-width: 1.5; rx: 6; }
-.box2 { fill: #eef6ee; stroke: #2e7d32; stroke-width: 1.5; rx: 6; }
-.box3 { fill: #fff8e6; stroke: #b7791f; stroke-width: 1.5; rx: 6; }
-.arr { stroke: #333; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
+.t { font:600 13px 'Charis SIL',Georgia,serif; fill: #ececec; }
+.s { font:400 11px 'Charis SIL',Georgia,serif; fill: #a8a8a8; }
+.b { font:700 12px 'Charis SIL',Georgia,serif; fill: #fff; }
+.box { fill: #141414; stroke: #6cb2ff; stroke-width: 1.5; rx: 6; }
+.box2 { fill: #141414; stroke: #7fc97f; stroke-width: 1.5; rx: 6; }
+.box3 { fill: #141414; stroke: #f0b429; stroke-width: 1.5; rx: 6; }
+.arr { stroke: #8a8a8a; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
 </style>
-<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#333"/></marker></defs>
-<rect width="640" height="300" fill="#ffffff"/>
-<text x="20" y="28" class="t">The knee: latency stays flat, then bends up</text><line x1="60" y1="40" x2="60" y2="240" stroke="#333"/><line x1="60" y1="240" x2="600" y2="240" stroke="#333"/><text x="300" y="265" class="s">Throughput (requests/sec)</text><text x="15" y="150" class="s" transform="rotate(-90 15 150)">Latency</text><path d="M60,200 C200,200 300,195 380,190 C460,180 520,140 580,60" stroke="#c62828" stroke-width="2.5" fill="none"/><circle cx="380" cy="190" r="6" fill="#c62828"/><text x="395" y="185" class="s">Knee: serve here</text><text x="20" y="290" class="s">Left of knee: spare capacity. Right of knee: queueing dominates. Report both axes.</text></svg>
+<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#8a8a8a" /></marker></defs>
+<text x="20" y="28" class="t">The knee: latency stays flat, then bends up</text><line x1="60" y1="40" x2="60" y2="240" stroke="#8a8a8a" /><line x1="60" y1="240" x2="600" y2="240" stroke="#8a8a8a" /><text x="300" y="265" class="s">Throughput (requests/sec)</text><text x="15" y="150" class="s" transform="rotate(-90 15 150)">Latency</text><path d="M60,200 C200,200 300,195 380,190 C460,180 520,140 580,60" stroke="#e57373" stroke-width="2.5" fill="none" /><circle cx="380" cy="190" r="6" fill="#e57373" /><text x="395" y="185" class="s">Knee: serve here</text><text x="20" y="290" class="s">Left of knee: spare capacity. Right of knee: queueing dominates. Report both axes.</text></svg>
