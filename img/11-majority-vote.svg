@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" font-family="Charis SIL, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="Majority vote arithmetic">
+<rect x="14" y="12" width="932" height="376" rx="10" fill="#141414" stroke="#2e2e2e"/>
+<text x="32" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#6cb2ff">MAJORITY VOTE</text>
+<text x="32" y="72" font-size="16" font-weight="700" fill="#ececec">Arithmetic, not magic</text>
+<text x="32" y="122" font-size="12.5" fill="#a8a8a8">1 labeler, 75%</text>
+<rect x="200" y="104" width="420.0" height="26" rx="5" fill="#a8a8a8"/>
+<text x="630.0" y="123" font-size="12.5" font-weight="700" fill="#ececec">0.750</text>
+<text x="32" y="166" font-size="12.5" fill="#a8a8a8">3 labelers, 75%</text>
+<rect x="200" y="148" width="472.64" height="26" rx="5" fill="#6cb2ff"/>
+<text x="682.64" y="167" font-size="12.5" font-weight="700" fill="#ececec">0.844</text>
+<text x="32" y="210" font-size="12.5" fill="#a8a8a8">5 labelers, 75%</text>
+<rect x="200" y="192" width="501.76" height="26" rx="5" fill="#6cb2ff"/>
+<text x="711.76" y="211" font-size="12.5" font-weight="700" fill="#ececec">0.896</text>
+<text x="32" y="254" font-size="12.5" fill="#a8a8a8">3 labelers, 60%</text>
+<rect x="200" y="236" width="362.88" height="26" rx="5" fill="#e8b34b"/>
+<text x="572.88" y="255" font-size="12.5" font-weight="700" fill="#ececec">0.648</text>
+<text x="32" y="294" font-size="12.5" fill="#ececec">The jump from 1 to 3 beats the jump from 3 to 5. Diminishing returns.</text>
+<text x="32" y="318" font-size="12.5" fill="#ececec">At 60% individual accuracy the majority only reaches 0.648. Vote amplifies a decent</text>
+<text x="32" y="340" font-size="12.5" fill="#ececec">signal. It does not rescue a weak one. Only if errors are independent.</text>
+</svg>
