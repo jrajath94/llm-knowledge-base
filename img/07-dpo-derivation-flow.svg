@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="210" viewBox="0 0 780 210" font-family="DejaVu Sans, sans-serif">
+<defs><style>.t{font-size:13px;fill:#1a3a5c;font-weight:bold}.b{font-size:11.5px;fill:#333333}.s{font-size:10.5px;fill:#555555}.box{fill:#f4f7fa;stroke:#1a3a5c;stroke-width:1.5;rx:8}.box2{fill:#eef6f3;stroke:#2a9d8f;stroke-width:1.5;rx:8}.box3{fill:#fdf3ec;stroke:#e76f51;stroke-width:1.5;rx:8}.arr{stroke:#1a3a5c;stroke-width:2;fill:none;marker-end:url(#ah)}</style><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#1a3a5c"/></marker></defs>
+<rect x="20" y="60" width="140" height="120" class="box"/>
+<text x="90.0" y="82" text-anchor="middle" class="t">Step 1: RLHF objective</text>
+<text x="90.0" y="102" text-anchor="middle" class="b">max E[r(x,y)]</text>
+<text x="90.0" y="120" text-anchor="middle" class="b">- beta KL(pi || pi_ref)</text>
+<rect x="160" y="60" width="140" height="120" class="box2"/>
+<text x="230.0" y="82" text-anchor="middle" class="t">Step 2: solve for pi*</text>
+<text x="230.0" y="102" text-anchor="middle" class="b">optimal policy has a</text>
+<text x="230.0" y="120" text-anchor="middle" class="b">closed form in terms of r</text>
+<rect x="300" y="60" width="140" height="120" class="box"/>
+<text x="370.0" y="82" text-anchor="middle" class="t">Step 3: reparameterize</text>
+<text x="370.0" y="102" text-anchor="middle" class="b">solve the closed form</text>
+<text x="370.0" y="120" text-anchor="middle" class="b">for r in terms of pi*</text>
+<rect x="440" y="60" width="140" height="120" class="box2"/>
+<text x="510.0" y="82" text-anchor="middle" class="t">Step 4: plug into Bradley-Terry</text>
+<text x="510.0" y="102" text-anchor="middle" class="b">preference probability now</text>
+<text x="510.0" y="120" text-anchor="middle" class="b">uses pi*, no reward model</text>
+<rect x="580" y="60" width="140" height="120" class="box3"/>
+<text x="650.0" y="82" text-anchor="middle" class="t">Step 5: max likelihood</text>
+<text x="650.0" y="102" text-anchor="middle" class="b">fit pi directly on pairs</text>
+<text x="650.0" y="120" text-anchor="middle" class="b">-> the DPO loss</text>
+<path d="M160,120 L180,120" class="arr"/>
+<path d="M300,120 L320,120" class="arr"/>
+<path d="M440,120 L460,120" class="arr"/>
+<path d="M580,120 L600,120" class="arr"/>
+</svg>
