@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 430" role="img" aria-labelledby="t08lw-title t08lw-desc">
+<title id="t08lw-title">Request latency waterfall: generation dominates</title>
+<desc id="t08lw-desc">Horizontal bars on a millisecond scale. Embed the query: 5 ms. Retrieve from the index: 20 ms. Rerank 20 candidates: 80 ms. Generate 300 tokens: 1,200 ms. Generation is 92 percent of the total.</desc>
+<style>
+  .k text { font-family: "Charis SIL", Georgia, serif; fill: #ececec; }
+  .k .lane { font-size: 13px; font-weight: bold; fill: #f0b429; letter-spacing: 2px; }
+  .k .box { font-size: 14.5px; font-weight: bold; text-anchor: middle; }
+  .k .d { font-size: 12px; fill: #a8a8a8; text-anchor: middle; }
+  .k .dl { font-size: 12px; fill: #a8a8a8; }
+  .k .cap { font-size: 12.5px; fill: #a8a8a8; text-anchor: middle; font-style: italic; }
+  .k .capl { font-size: 12.5px; fill: #a8a8a8; font-style: italic; }
+  .k .num { font-size: 13px; font-weight: bold; text-anchor: middle; }
+  .k .tl { font-size: 12px; text-anchor: middle; }
+</style>
+<g class="k">
+<rect x="0" y="0" width="940" height="430" fill="#0d0d0d"/>
+<text x="30" y="40" class="lane">LATENCY WATERFALL (ONE USER QUESTION)</text>
+<text x="30" y="100" class="dl">embed query</text>
+<rect x="220" y="80" width="8" height="30" rx="4" fill="#6ab0ff" stroke="#262626" stroke-width="1.5"/>
+<text x="243" y="100" class="dl" fill="#a8a8a8">5 ms</text>
+<text x="30" y="152" class="dl">retrieve top-50</text>
+<rect x="220" y="132" width="10.76923076923077" height="30" rx="4" fill="#6ab0ff" stroke="#262626" stroke-width="1.5"/>
+<text x="245.76923076923077" y="152" class="dl" fill="#a8a8a8">20 ms</text>
+<text x="30" y="204" class="dl">rerank to top-5</text>
+<rect x="220" y="184" width="43.07692307692308" height="30" rx="4" fill="#f0b429" stroke="#262626" stroke-width="1.5"/>
+<text x="278.0769230769231" y="204" class="dl" fill="#a8a8a8">80 ms</text>
+<text x="30" y="256" class="dl">generate 300 tokens</text>
+<rect x="220" y="236" width="646.1538461538462" height="30" rx="4" fill="#ff7a7a" stroke="#262626" stroke-width="1.5"/>
+<text x="881.1538461538462" y="256" class="dl" fill="#a8a8a8">1200 ms</text>
+<text x="30" y="330" class="dl">Total about 1305 ms. Generation is 91% of the total.</text>
+<text x="30" y="352" class="dl">To cut latency, cut output tokens or stream them. Do not micro-tune retrieval.</text>
+<text x="30" y="396" class="capl">How to read: bar length = milliseconds. Red dominates, so optimize there first.</text>
+</g>
+<defs><marker id="t08lw-ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#a8a8a8"/></marker></defs>
+</svg>
