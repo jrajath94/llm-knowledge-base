@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 420" role="img" aria-labelledby="t09cd-title t09cd-desc">
+<title id="t09cd-title">ML CI/CD: gates before anything reaches users</title>
+<desc id="t09cd-desc">A pipeline of six stages with gates between them. Commit. Data tests: schema and distribution checks. Train: the model trains. Eval gate: metrics must beat the champion. Registry: the artifact is versioned. Deploy: rollout starts. A red gate blocks a model that loses to the champion.</desc>
+<style>
+  .k text { font-family: "Charis SIL", Georgia, serif; fill: #ececec; }
+  .k .lane { font-size: 13px; font-weight: bold; fill: #f0b429; letter-spacing: 2px; }
+  .k .box { font-size: 14.5px; font-weight: bold; text-anchor: middle; }
+  .k .d { font-size: 12px; fill: #a8a8a8; text-anchor: middle; }
+  .k .dl { font-size: 12px; fill: #a8a8a8; }
+  .k .cap { font-size: 12.5px; fill: #a8a8a8; text-anchor: middle; font-style: italic; }
+  .k .capl { font-size: 12.5px; fill: #a8a8a8; font-style: italic; }
+  .k .num { font-size: 13px; font-weight: bold; text-anchor: middle; }
+  .k .tl { font-size: 12px; text-anchor: middle; }
+</style>
+<g class="k">
+<rect x="0" y="0" width="940" height="420" fill="#0d0d0d"/>
+<text x="30" y="40" class="lane">ML CI/CD PIPELINE</text>
+<rect x="30" y="110" width="128" height="80" rx="10" fill="#111111" stroke="#6ab0ff" stroke-width="1.5"/>
+<text x="94.0" y="144" class="box" fill="#ececec">commit</text>
+<rect x="180" y="110" width="128" height="80" rx="10" fill="#111111" stroke="#6ab0ff" stroke-width="1.5"/>
+<text x="244.0" y="144" class="box" fill="#ececec">data tests</text>
+<line x1="158" y1="150" x2="180" y2="150" stroke="#a8a8a8" stroke-width="1.8" marker-end="url(#t09cd-ah)"/>
+<rect x="330" y="110" width="128" height="80" rx="10" fill="#111111" stroke="#f0b429" stroke-width="1.5"/>
+<text x="394.0" y="144" class="box" fill="#ececec">train</text>
+<line x1="308" y1="150" x2="330" y2="150" stroke="#a8a8a8" stroke-width="1.8" marker-end="url(#t09cd-ah)"/>
+<rect x="480" y="110" width="128" height="80" rx="10" fill="#111111" stroke="#ff7a7a" stroke-width="1.5"/>
+<text x="544.0" y="144" class="box" fill="#ececec">eval gate</text>
+<line x1="458" y1="150" x2="480" y2="150" stroke="#a8a8a8" stroke-width="1.8" marker-end="url(#t09cd-ah)"/>
+<rect x="630" y="110" width="128" height="80" rx="10" fill="#111111" stroke="#7fd67f" stroke-width="1.5"/>
+<text x="694.0" y="144" class="box" fill="#ececec">registry</text>
+<line x1="608" y1="150" x2="630" y2="150" stroke="#a8a8a8" stroke-width="1.8" marker-end="url(#t09cd-ah)"/>
+<rect x="780" y="110" width="128" height="80" rx="10" fill="#111111" stroke="#a8a8a8" stroke-width="1.5"/>
+<text x="844.0" y="144" class="box" fill="#ececec">deploy</text>
+<line x1="758" y1="150" x2="780" y2="150" stroke="#a8a8a8" stroke-width="1.8" marker-end="url(#t09cd-ah)"/>
+<rect x="30" y="250" width="880" height="110" rx="8" fill="#161616" stroke="#262626" stroke-width="1.5"/>
+<text x="50" y="280" class="dl" fill="#f0b429">The eval gate is the difference from normal CI/CD.</text>
+<text x="50" y="302" class="dl">Rule: a challenger ships only when it beats the champion on the golden set.</text>
+<text x="50" y="324" class="dl" fill="#ff7a7a">A model that fails the gate never reaches the registry. No exceptions.</text>
+<text x="50" y="346" class="capl">How to read: left to right = time. Each box is a stage. The red box is the gate.</text>
+</g>
+<defs><marker id="t09cd-ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#a8a8a8"/></marker></defs>
+</svg>
