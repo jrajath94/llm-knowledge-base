@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Diagram of the capability layer: a proposed action passes schema, allowlist, credential, and irreversibility checks.">
+<rect width="800" height="600" fill="#0d0d0d"/>
+<text x="400" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">The capability layer: four checks in order</text>
+<text x="400" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">No step asks the model to behave. Code enforces every step.</text>
+<rect x="170" y="110" width="460" height="92" rx="10" fill="#161616" stroke="#5aa9e6" stroke-width="2"/>
+<text x="200" y="144" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="bold" fill="#5aa9e6">1. Schema</text>
+<text x="200" y="172" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">named parameters, types, ranges, enums</text>
+<line x1="400" y1="202" x2="400" y2="222" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="394,216 406,216 400,224" fill="#a8a8a8"/>
+<rect x="170" y="222" width="460" height="92" rx="10" fill="#161616" stroke="#e6a75a" stroke-width="2"/>
+<text x="200" y="256" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="bold" fill="#e6a75a">2. Allowlist</text>
+<text x="200" y="284" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">agent cannot call a tool outside its role allowlist</text>
+<line x1="400" y1="314" x2="400" y2="334" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="394,328 406,328 400,336" fill="#a8a8a8"/>
+<rect x="170" y="334" width="460" height="92" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="200" y="368" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="bold" fill="#7fd08a">3. Credential</text>
+<text x="200" y="396" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">weakest credential that lets the tool do its job</text>
+<line x1="400" y1="426" x2="400" y2="446" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="394,440 406,440 400,448" fill="#a8a8a8"/>
+<rect x="170" y="446" width="460" height="92" rx="10" fill="#161616" stroke="#e67e7e" stroke-width="2"/>
+<text x="200" y="480" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="bold" fill="#e67e7e">4. Irreversibility</text>
+<text x="200" y="508" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">irreversible actions pause at the human approval queue</text>
+<text x="400" y="566" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Log every denial. The log is what the red team reads.</text>
+</svg>
