@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="320" viewBox="0 0 560 320" role="img" aria-label="Position bias: swapping order flips the verdict">
+<rect width="560" height="320" fill="#ffffff"/>
+<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<text x="280" y="36" text-anchor="middle" class="t">Position bias: order changes the verdict</text>
+<text x="280" y="58" text-anchor="middle" class="xs">Same two answers. Only the order changes.</text>
+<text x="140" y="100" text-anchor="middle" class="s b">Trial 1</text>
+<rect x="60" y="115" width="160" height="44" rx="6" fill="#f3f4f6" stroke="#6b7280"/>
+<text x="140" y="142" text-anchor="middle" class="s">1st: Answer A</text>
+<rect x="60" y="165" width="160" height="44" rx="6" fill="#f3f4f6" stroke="#6b7280"/>
+<text x="140" y="192" text-anchor="middle" class="s">2nd: Answer B</text>
+<text x="140" y="240" text-anchor="middle" class="s b" fill="#16a34a">Judge picks A</text>
+<text x="420" y="100" text-anchor="middle" class="s b">Trial 2</text>
+<rect x="340" y="115" width="160" height="44" rx="6" fill="#f3f4f6" stroke="#6b7280"/>
+<text x="420" y="142" text-anchor="middle" class="s">1st: Answer B</text>
+<rect x="340" y="165" width="160" height="44" rx="6" fill="#f3f4f6" stroke="#6b7280"/>
+<text x="420" y="192" text-anchor="middle" class="s">2nd: Answer A</text>
+<text x="420" y="240" text-anchor="middle" class="s b" fill="#dc2626">Judge picks B</text>
+<text x="280" y="285" text-anchor="middle" class="s">The verdict followed the position, not the content. Run both orders.</text>
+</svg>
