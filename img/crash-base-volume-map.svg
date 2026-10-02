@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600">
+  <defs>
+    <style>
+      .title { font: bold 28px sans-serif; fill: #1a1a1a; }
+      .vol { font: bold 16px sans-serif; fill: white; }
+      .volnum { font: bold 14px sans-serif; fill: white; }
+      .label { font: 13px sans-serif; fill: #333; }
+      .arrow { stroke: #666; stroke-width: 2; fill: none; marker-end: url(#ah); }
+    </style>
+    <marker id="ah" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <rect width="960" height="600" fill="#fafafa"/>
+  <text x="480" y="40" text-anchor="middle" class="title">The 16 Volumes: From Math to Kernels</text>
+  
+  <!-- Phase 1: Foundations (Vols 0-3) -->
+  <rect x="40" y="70" width="880" height="110" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+  <text x="60" y="95" font-size="14" font-weight="bold" fill="#1976d2">FOUNDATIONS</text>
+  <g>
+    <rect x="60" y="105" width="140" height="60" rx="6" fill="#1976d2"/><text x="130" y="125" text-anchor="middle" class="volnum">Vol 0</text><text x="130" y="145" text-anchor="middle" class="vol">Study System</text>
+    <rect x="220" y="105" width="140" height="60" rx="6" fill="#1976d2"/><text x="290" y="125" text-anchor="middle" class="volnum">Vol 1</text><text x="290" y="145" text-anchor="middle" class="vol">Math</text>
+    <rect x="380" y="105" width="140" height="60" rx="6" fill="#1976d2"/><text x="450" y="125" text-anchor="middle" class="volnum">Vol 2</text><text x="450" y="145" text-anchor="middle" class="vol">Statistics</text>
+    <rect x="540" y="105" width="140" height="60" rx="6" fill="#1976d2"/><text x="610" y="125" text-anchor="middle" class="volnum">Vol 3</text><text x="610" y="145" text-anchor="middle" class="vol">Deep Learning</text>
+  </g>
+  
+  <!-- Phase 2: The Model (Vols 4-7) -->
+  <rect x="40" y="200" width="880" height="110" rx="8" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+  <text x="60" y="225" font-size="14" font-weight="bold" fill="#7b1fa2">THE MODEL</text>
+  <g>
+    <rect x="60" y="235" width="140" height="60" rx="6" fill="#7b1fa2"/><text x="130" y="255" text-anchor="middle" class="volnum">Vol 4</text><text x="130" y="275" text-anchor="middle" class="vol">LLM Internals</text>
+    <rect x="220" y="235" width="140" height="60" rx="6" fill="#7b1fa2"/><text x="290" y="255" text-anchor="middle" class="volnum">Vol 5</text><text x="290" y="275" text-anchor="middle" class="vol">Training</text>
+    <rect x="380" y="235" width="140" height="60" rx="6" fill="#7b1fa2"/><text x="450" y="255" text-anchor="middle" class="volnum">Vol 6</text><text x="450" y="275" text-anchor="middle" class="vol">Distributed</text>
+    <rect x="540" y="235" width="140" height="60" rx="6" fill="#7b1fa2"/><text x="610" y="255" text-anchor="middle" class="volnum">Vol 7</text><text x="610" y="275" text-anchor="middle" class="vol">Post-Training</text>
+  </g>
+  
+  <!-- Phase 3: Deployment (Vols 8-11) -->
+  <rect x="40" y="330" width="880" height="110" rx="8" fill="#e8f5e9" stroke="#388e3c" stroke-width="2"/>
+  <text x="60" y="355" font-size="14" font-weight="bold" fill="#388e3c">DEPLOYMENT</text>
+  <g>
+    <rect x="60" y="365" width="140" height="60" rx="6" fill="#388e3c"/><text x="130" y="385" text-anchor="middle" class="volnum">Vol 8</text><text x="130" y="405" text-anchor="middle" class="vol">Inference</text>
+    <rect x="220" y="365" width="140" height="60" rx="6" fill="#388e3c"/><text x="290" y="385" text-anchor="middle" class="volnum">Vol 9</text><text x="290" y="405" text-anchor="middle" class="vol">RAG</text>
+    <rect x="380" y="365" width="140" height="60" rx="6" fill="#388e3c"/><text x="450" y="385" text-anchor="middle" class="volnum">Vol 10</text><text x="450" y="405" text-anchor="middle" class="vol">Agents</text>
+    <rect x="540" y="365" width="140" height="60" rx="6" fill="#388e3c"/><text x="610" y="385" text-anchor="middle" class="volnum">Vol 11</text><text x="610" y="405" text-anchor="middle" class="vol">Evals</text>
+  </g>
+  
+  <!-- Phase 4: Frontier (Vols 12-15) -->
+  <rect x="40" y="460" width="880" height="110" rx="8" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <text x="60" y="485" font-size="14" font-weight="bold" fill="#f57c00">FRONTIER</text>
+  <g>
+    <rect x="60" y="495" width="140" height="60" rx="6" fill="#f57c00"/><text x="130" y="515" text-anchor="middle" class="volnum">Vol 12</text><text x="130" y="535" text-anchor="middle" class="vol">Safety</text>
+    <rect x="220" y="495" width="140" height="60" rx="6" fill="#f57c00"/><text x="290" y="515" text-anchor="middle" class="volnum">Vol 13</text><text x="290" y="535" text-anchor="middle" class="vol">Multimodal</text>
+    <rect x="380" y="495" width="140" height="60" rx="6" fill="#f57c00"/><text x="450" y="515" text-anchor="middle" class="volnum">Vol 14</text><text x="450" y="535" text-anchor="middle" class="vol">Audio</text>
+    <rect x="540" y="495" width="140" height="60" rx="6" fill="#f57c00"/><text x="610" y="515" text-anchor="middle" class="volnum">Vol 15</text><text x="610" y="535" text-anchor="middle" class="vol">GPU Kernels</text>
+  </g>
+  
+  <!-- Arrows showing flow -->
+  <line x1="480" y1="180" x2="480" y2="200" class="arrow"/>
+  <line x1="480" y1="310" x2="480" y2="330" class="arrow"/>
+  <line x1="480" y1="440" x2="480" y2="460" class="arrow"/>
+  <text x="700" y="595" text-anchor="middle" class="label">Each phase builds on the last. Vol 4 (transformer) is the hinge: everything after assumes it.</text>
+</svg>
