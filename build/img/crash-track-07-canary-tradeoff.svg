@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="470" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 3.8. Canary size: detection speed vs blast radius</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">Small canary: slow to detect, few users exposed. Large canary: the reverse.</text>
+<text x="24" y="115" font-size="14" font-weight="bold" fill="#ececec">1% canary</text>
+<rect x="200" y="92" width="300" height="22" fill="#1c1c1c" rx="6"/>
+<rect x="200" y="92" width="40" height="22" fill="#8a8a8a" rx="6"/>
+<text x="520" y="112" font-size="13" fill="#8a8a8a">detect: a day or more | exposed: 1% of users</text>
+<text x="24" y="185" font-size="14" font-weight="bold" fill="#ececec">5% canary</text>
+<rect x="200" y="162" width="300" height="22" fill="#1c1c1c" rx="6"/>
+<rect x="200" y="162" width="130" height="22" fill="#7aa2f7" rx="6"/>
+<text x="520" y="182" font-size="13" fill="#8a8a8a">detect: several hours | exposed: 5% of users</text>
+<text x="24" y="255" font-size="14" font-weight="bold" fill="#ececec">20% canary</text>
+<rect x="200" y="232" width="300" height="22" fill="#1c1c1c" rx="6"/>
+<rect x="200" y="232" width="300" height="22" fill="#f0b429" rx="6"/>
+<text x="520" y="252" font-size="13" fill="#8a8a8a">detect: about an hour | exposed: 20% of users (4x)</text>
+<text x="24" y="360" font-size="13" fill="#ececec">Telling 1% from 2% reliably needs roughly <tspan font-weight="bold">2,000-5,000 samples</tspan> (binomial noise).</text>
+<text x="24" y="390" font-size="13" fill="#ececec">The trade is always detection speed vs blast radius.</text>
+</svg>
