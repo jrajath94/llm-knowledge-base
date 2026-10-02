@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340" role="img" aria-label="Reliability horizon: 43 steps">
+<rect width="600" height="340" fill="#ffffff"/>
+<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<text x="300" y="36" text-anchor="middle" class="t">Reliability horizon</text>
+<text x="300" y="58" text-anchor="middle" class="xs">pass@1 drops below 0.5 at ~43 steps. Milestones stay honest to ~25.</text>
+<rect x="70" y="90" width="460" height="180" fill="none" stroke="#6b7280"/>
+<text x="300.0" y="294" text-anchor="middle" class="xs">steps</text>
+<text x="60" y="104" text-anchor="end" class="xs">pass@1</text>
+<path d="M70,115 L82,132 L93,147 L104,160 L116,171 L128,181 L139,190 L150,198 L162,205 L174,211 L185,216 L196,221 L208,225 L220,229 L231,232 L242,235 L254,237 L266,239 L277,241 L288,243 L300,244 L312,246 L323,247 L334,248 L346,249 L358,249 L369,250 L380,251 L392,251 L404,252 L415,252 L426,252 L438,253 L450,253 L461,253 L472,253 L484,254 L496,254 L507,254 L518,254 L530,254" fill="none" stroke="#2563eb" stroke-width="3"/>
+<line x1="70" y1="185.0" x2="530" y2="185.0" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="526" y="177.0" text-anchor="end" class="xs">0.5</text>
+<text x="250" y="177.0" text-anchor="middle" class="xs">~43 steps</text>
+<text x="300" y="312" text-anchor="middle" class="xs">Binary pass/fail collapses. Milestones degrade smoothly.</text>
+</svg>
