@@ -1,0 +1,22 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 380' width='100%' role='img' aria-label='The dependency chain: why you do not skip ahead'>
+<rect x='0' y='0' width='960' height='380' fill='#0d0d0d'/>
+<text x='24' y='36' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec'>The dependency chain: why you do not skip ahead</text>
+<rect x='24' y='80' width='280' height='150' rx='10' fill='#141414' stroke='#6cb2ff' stroke-width='2'/>
+<text x='164' y='116' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='600' fill='#6cb2ff' text-anchor='middle'>Vol 1</text>
+<text x='164' y='148' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='16' font-weight='700' fill='#ececec' text-anchor='middle'>Math for ML</text>
+<text x='164' y='180' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'>defines: KL divergence</text>
+<line x1='304' y1='155' x2='340' y2='155' stroke='#a8a8a8' stroke-width='3'/>
+<polygon points='344,155 334,147 334,163' fill='#a8a8a8'/>
+<rect x='324' y='80' width='280' height='150' rx='10' fill='#141414' stroke='#f0b429' stroke-width='2'/>
+<text x='464' y='116' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='600' fill='#f0b429' text-anchor='middle'>Vol 6</text>
+<text x='464' y='148' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='16' font-weight='700' fill='#ececec' text-anchor='middle'>Distributed Training</text>
+<text x='464' y='180' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'>defines: FSDP, ZeRO</text>
+<line x1='604' y1='155' x2='640' y2='155' stroke='#a8a8a8' stroke-width='3'/>
+<polygon points='644,155 634,147 634,163' fill='#a8a8a8'/>
+<rect x='624' y='80' width='280' height='150' rx='10' fill='#141414' stroke='#7fd08a' stroke-width='2'/>
+<text x='764' y='116' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='600' fill='#7fd08a' text-anchor='middle'>Vol 7</text>
+<text x='764' y='148' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='16' font-weight='700' fill='#ececec' text-anchor='middle'>Post-training + RL</text>
+<text x='764' y='180' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'>uses both, no re-explaining</text>
+<text x='24' y='280' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>Concepts are taught once, then used by name. If you jump to Vol 7 first,</text>
+<text x='24' y='306' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>the DPO derivation reads like magic instead of math.</text>
+</svg>
