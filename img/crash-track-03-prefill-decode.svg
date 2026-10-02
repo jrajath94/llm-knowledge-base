@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" width="100%" style="max-width:680px" role="img" aria-label="Prefill versus decode: one parallel compute-bound pass versus sequential memory-bound token steps">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+.ax{stroke:#5a5a5a;stroke-width:1.5}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.cell{font-size:13px;font-weight:700}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="30">Prefill and decode want different things</text>
+<text class="m" x="24" y="52">Prefill runs once per request. Decode runs once per token.</text>
+<text class="big" x="24" y="105">Prefill</text>
+<rect x="150" y="82" width="410" height="38" rx="6" fill="#6cb2ff" opacity="0.85"/>
+<text class="cell" x="355" y="106" text-anchor="middle" fill="#101010">one full pass over 2k tokens: 0.29 s</text>
+<text class="m" x="150" y="142">compute-bound: FLOPS-hungry, fully parallel</text>
+<text class="big" x="24" y="200">Decode</text>
+<rect x="150" y="177" width="46" height="38" rx="6" fill="#7fc97f" opacity="0.85"/>
+<text class="cell" x="173" y="201" text-anchor="middle" fill="#101010">t1</text>
+<rect x="203" y="177" width="46" height="38" rx="6" fill="#7fc97f" opacity="0.85"/>
+<text class="cell" x="226" y="201" text-anchor="middle" fill="#101010">t2</text>
+<rect x="256" y="177" width="46" height="38" rx="6" fill="#7fc97f" opacity="0.85"/>
+<text class="cell" x="279" y="201" text-anchor="middle" fill="#101010">t3</text>
+<rect x="309" y="177" width="46" height="38" rx="6" fill="#7fc97f" opacity="0.85"/>
+<text class="cell" x="332" y="201" text-anchor="middle" fill="#101010">t4</text>
+<rect x="362" y="177" width="46" height="38" rx="6" fill="#7fc97f" opacity="0.85"/>
+<text class="cell" x="385" y="201" text-anchor="middle" fill="#101010">t5</text>
+<rect x="415" y="177" width="46" height="38" rx="6" fill="#7fc97f" opacity="0.85"/>
+<text class="cell" x="438" y="201" text-anchor="middle" fill="#101010">t6</text>
+<rect x="468" y="177" width="46" height="38" rx="6" fill="#7fc97f" opacity="0.85"/>
+<text class="cell" x="491" y="201" text-anchor="middle" fill="#101010">t7</text>
+<rect x="521" y="177" width="46" height="38" rx="6" fill="#7fc97f" opacity="0.85"/>
+<text class="cell" x="544" y="201" text-anchor="middle" fill="#101010">t8</text>
+<text class="m" x="150" y="237">memory-bound: 0.042 s per token, full 140 GB weight read each step</text>
+<rect class="box" x="24" y="262" width="632" height="88" rx="8"/>
+<text class="big" x="40" y="290">Same weights, wildly different reuse.</text>
+<text class="m" x="40" y="312">Prefill reuses the weights across 2048 tokens in one pass.</text>
+<text class="m" x="40" y="332">Decode reads the same 140 GB for a single token, again and again.</text>
+</svg>
