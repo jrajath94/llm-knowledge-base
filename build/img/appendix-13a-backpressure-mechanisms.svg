@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="560" viewBox="0 0 800 560" role="img" aria-label="Diagram of three backpressure mechanisms: block, reject, and demand signaling.">
+<rect width="800" height="560" fill="#0d0d0d"/>
+<text x="400" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">Three backpressure mechanisms</text>
+<text x="400" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">A full queue never grows. It pushes back on the producer instead.</text>
+<rect x="90" y="90" width="620" height="120" rx="10" fill="#161616" stroke="#5aa9e6" stroke-width="2"/>
+<text x="120" y="130" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#5aa9e6">Block</text>
+<text x="120" y="162" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">The producer waits. Simple, but a stuck consumer freezes everyone upstream.</text>
+<rect x="90" y="226" width="620" height="120" rx="10" fill="#161616" stroke="#e6a75a" stroke-width="2"/>
+<text x="120" y="266" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#e6a75a">Reject</text>
+<text x="120" y="298" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Answer 429 or 503: try later. Use it when latency matters and you can retry the work.</text>
+<rect x="90" y="362" width="620" height="120" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="120" y="402" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#7fd08a">Demand signaling</text>
+<text x="120" y="434" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">The consumer requests n items (request(n), TCP window). The producer never outruns the consumer.</text>
+<text x="400" y="520" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Load shedding drops work to protect the system. Backpressure slows the producer instead.</text>
+</svg>
