@@ -1,12 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="560" height="300" viewBox="0 0 560 300" role="img" aria-label="Verbosity bias: padding a weak answer raises its score">
-<rect width="560" height="300" fill="#ffffff"/>
-<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<style>text{font-family:'Charis SIL',Georgia,serif;fill:#ececec} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#a8a8a8} .b{font-weight:700}</style>
 <text x="280" y="36" text-anchor="middle" class="t">Verbosity bias: filler raises the score</text>
 <text x="280" y="58" text-anchor="middle" class="xs">Same weak answer. Only filler added.</text>
-<rect x="120" y="180" width="120" height="60" fill="#6b7280" opacity="0.7"/>
+<rect x="120" y="180" width="120" height="60" fill="#a8a8a8" opacity="0.7" />
 <text x="180" y="170" text-anchor="middle" class="s">Weak answer</text>
 <text x="180" y="258" text-anchor="middle" class="s b">6.1 / 10</text>
-<rect x="320" y="110" width="120" height="130" fill="#dc2626" opacity="0.7"/>
+<rect x="320" y="110" width="120" height="130" fill="#e57373" opacity="0.7" />
 <text x="380" y="100" text-anchor="middle" class="s">Weak answer + filler</text>
 <text x="380" y="258" text-anchor="middle" class="s b">7.4 / 10</text>
 <text x="280" y="292" text-anchor="middle" class="xs">The probe: pad with filler. If the score rises, the judge rewards length.</text>
