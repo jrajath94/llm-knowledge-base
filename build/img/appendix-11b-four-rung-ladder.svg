@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Flowchart of the four-rung adjudication ladder for preference labeler disagreements.">
+<rect width="800" height="600" fill="#0d0d0d"/>
+<text x="400" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">The four-rung adjudication ladder</text>
+<text x="400" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Each rung costs more. Climb only when the rung below cannot settle the item.</text>
+<rect x="150" y="90" width="500" height="100" rx="10" fill="#161616" stroke="#5aa9e6" stroke-width="2"/>
+<text x="400" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#5aa9e6">Rung 1: double label</text>
+<text x="400" y="154" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Every item goes to two labelers who cannot see each other.</text>
+<line x1="400" y1="190" x2="400" y2="202" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="394,194 406,194 400,202" fill="#a8a8a8"/>
+<rect x="150" y="202" width="500" height="100" rx="10" fill="#161616" stroke="#e6a75a" stroke-width="2"/>
+<text x="400" y="238" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#e6a75a">Rung 2: majority vote</text>
+<text x="400" y="266" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Disputed items go to a third labeler. The majority wins.</text>
+<line x1="400" y1="302" x2="400" y2="314" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="394,306 406,306 400,314" fill="#a8a8a8"/>
+<rect x="150" y="314" width="500" height="100" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="400" y="350" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#7fd08a">Rung 3: adjudication</text>
+<text x="400" y="378" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Systematic patterns go to a senior labeler, who writes down why.</text>
+<line x1="400" y1="414" x2="400" y2="426" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="394,418 406,418 400,426" fill="#a8a8a8"/>
+<rect x="150" y="426" width="500" height="100" rx="10" fill="#161616" stroke="#e67e7e" stroke-width="2"/>
+<text x="400" y="462" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#e67e7e">Rung 4: escalation</text>
+<text x="400" y="490" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">If a whole category stays disputed, rewrite the rubric and relabel.</text>
+<text x="400" y="570" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Rule: disagreements are signal. The ladder turns them into rubric fixes.</text>
+</svg>
