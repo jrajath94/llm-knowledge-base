@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="100%" style="max-width:760px" role="img" aria-label="Three by two grid of runs A to F: read down a column for the mix effect, across a row for the schedule effect, cell F shows the interaction.">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}.s{fill:#a8a8a8;font-size:11px}
+.t{font-size:15px;font-weight:700}.big{font-size:13px;font-weight:700}.num{font-size:13px}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text x="24" y="30" text-anchor="start" class="t">Ablation matrix: one factor per axis, one run per cell</text>
+<text x="300" y="70" text-anchor="middle" class="lbl">cosine decay</text>
+<text x="520" y="70" text-anchor="middle" class="lbl">WSD schedule</text>
+<text x="150" y="123" text-anchor="end" class="num">old mix</text>
+<rect x="230" y="95" width="180" height="52" rx="8" class="box"/>
+<text x="320" y="127" text-anchor="middle" class="big">run A</text>
+<rect x="450" y="95" width="180" height="52" rx="8" class="box"/>
+<text x="540" y="127" text-anchor="middle" class="big">run B</text>
+<text x="150" y="193" text-anchor="end" class="num">new mix</text>
+<rect x="230" y="165" width="180" height="52" rx="8" class="box"/>
+<text x="320" y="197" text-anchor="middle" class="big">run C</text>
+<rect x="450" y="165" width="180" height="52" rx="8" class="box"/>
+<text x="540" y="197" text-anchor="middle" class="big">run D</text>
+<text x="150" y="263" text-anchor="end" class="num">new mix + filter</text>
+<rect x="230" y="235" width="180" height="52" rx="8" class="box"/>
+<text x="320" y="267" text-anchor="middle" class="big">run E</text>
+<rect x="450" y="235" width="180" height="52" rx="8" class="pick"/>
+<text x="540" y="267" text-anchor="middle" class="big">run F</text>
+<path class="arr" d="M45 95 L45 290"/>
+<text x="45" y="85" text-anchor="middle" class="s">read down</text>
+<path class="arr" d="M230 320 L590 320"/>
+<text x="410" y="345" text-anchor="middle" class="s">read across: schedule effect</text>
+<text x="640" y="200" text-anchor="start" class="s">F = interaction</text>
+</svg>
