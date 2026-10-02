@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="380" viewBox="0 0 800 380" role="img" aria-label="Softmax temperature: low T sharpens, high T flattens">
+<rect width="800" height="380" rx="12" fill="#0f1420"/>
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5aa9ff"/></marker>
+<marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa4b8"/></marker></defs>
+<text x="400" y="36" font-family="sans-serif" font-size="20" fill="#e8ecf4" text-anchor="middle" font-weight="bold">Softmax temperature</text>
+<text x="400" y="62" font-family="sans-serif" font-size="14" fill="#9aa4b8" text-anchor="middle" font-weight="normal">same logits, different T</text>
+<text x="190" y="100" font-family="sans-serif" font-size="14" fill="#5aa9ff" text-anchor="middle" font-weight="bold">T=0.5 (sharp)</text>
+<rect x="120" y="130" width="120.41363745997776" height="34" rx="5" fill="#5aa9ff" opacity="0.85"/>
+<text x="248.41363745997776" y="153" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="start" font-weight="normal">0.86</text>
+<text x="110" y="153" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="end" font-weight="normal">tok1</text>
+<rect x="120" y="185" width="16.29621373119689" height="34" rx="5" fill="#5aa9ff" opacity="0.85"/>
+<text x="144.2962137311969" y="208" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="start" font-weight="normal">0.12</text>
+<text x="110" y="208" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="end" font-weight="normal">tok2</text>
+<rect x="120" y="240" width="3.290148808825343" height="34" rx="5" fill="#5aa9ff" opacity="0.85"/>
+<text x="131.29014880882534" y="263" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="start" font-weight="normal">0.02</text>
+<text x="110" y="263" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="end" font-weight="normal">tok3</text>
+<text x="410" y="100" font-family="sans-serif" font-size="14" fill="#5fd08a" text-anchor="middle" font-weight="bold">T=1.0</text>
+<rect x="340" y="130" width="91.3135786724984" height="34" rx="5" fill="#5fd08a" opacity="0.85"/>
+<text x="439.3135786724984" y="153" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="start" font-weight="normal">0.65</text>
+<text x="330" y="153" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="end" font-weight="normal">tok1</text>
+<rect x="340" y="185" width="33.59238829340324" height="34" rx="5" fill="#5fd08a" opacity="0.85"/>
+<text x="381.59238829340325" y="208" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="start" font-weight="normal">0.24</text>
+<text x="330" y="208" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="end" font-weight="normal">tok2</text>
+<rect x="340" y="240" width="15.094033034098361" height="34" rx="5" fill="#5fd08a" opacity="0.85"/>
+<text x="363.09403303409835" y="263" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="start" font-weight="normal">0.11</text>
+<text x="330" y="263" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="end" font-weight="normal">tok3</text>
+<text x="630" y="100" font-family="sans-serif" font-size="14" fill="#ffb347" text-anchor="middle" font-weight="bold">T=2.0 (flat)</text>
+<rect x="560" y="130" width="69.54447259639036" height="34" rx="5" fill="#ffb347" opacity="0.85"/>
+<text x="637.5444725963904" y="153" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="start" font-weight="normal">0.50</text>
+<text x="550" y="153" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="end" font-weight="normal">tok1</text>
+<rect x="560" y="185" width="42.1808548432558" height="34" rx="5" fill="#ffb347" opacity="0.85"/>
+<text x="610.1808548432558" y="208" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="start" font-weight="normal">0.30</text>
+<text x="550" y="208" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="end" font-weight="normal">tok2</text>
+<rect x="560" y="240" width="28.274672560353853" height="34" rx="5" fill="#ffb347" opacity="0.85"/>
+<text x="596.2746725603539" y="263" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="start" font-weight="normal">0.20</text>
+<text x="550" y="263" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="end" font-weight="normal">tok3</text>
+<text x="400" y="340" font-family="sans-serif" font-size="13" fill="#9aa4b8" text-anchor="middle" font-weight="normal">Low T: model commits to the top token. High T: mass spreads out.</text>
+</svg>
