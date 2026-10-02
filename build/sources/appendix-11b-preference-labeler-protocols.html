@@ -153,10 +153,23 @@ blockquote p{margin:.4rem 0}
 <h2 id="chapter-1-from-rubric-to-reliable-labels">Chapter 1. From rubric to reliable labels</h2>
 <h3 id="11-the-instruction-packet">1.1 The instruction packet</h3>
 <p>Volume 7's rubric says what "better" means. The instruction packet teaches a new labeler to apply that rubric the same way a senior labeler would. The packet has four parts.</p>
-<p>First, the task definition in one paragraph. What is the labeler comparing, and what does a label mean? "Pick the response you would rather receive" is not the same task as "pick the more factually correct response." Labelers will silently substitute one for the other. The packet must pin down which task they are doing.</p>
-<p>Second, worked examples of right and wrong calls. Not one example; ten or more, including the close calls where reasonable people disagree. Each example carries the reasoning, not just the verdict. Labelers copy the reasoning pattern, not the verdict.</p>
+<p>First, the task definition in one paragraph. What is the labeler comparing, and what does a label mean? "Pick the response you would rather receive" is one task. "Pick the more factually correct response" is a different task. Labelers will silently substitute one for the other. The packet must pin down which task the labelers do.</p>
+<p>Second, worked examples of right and wrong calls. Not one example. Use ten or more, including the close calls where reasonable people disagree. Each example carries the reasoning, not just the verdict. Labelers copy the reasoning pattern, not the verdict.</p>
 <p>Third, an edge-case playbook. What to do when both answers are wrong, when both are correct, when one is correct but rude, when the answer refuses. Every unlabeled edge case becomes a coin flip, and coin flips become noise your reward model then learns.</p>
 <p>Fourth, when to skip or flag. Some items are unlabelable: the question needs expertise the labeler lacks, or the rubric does not cover the case. A "flag for review" button is cheaper than a confident wrong label. Flagged items feed the adjudication queue in section 1.3.</p>
+<p><figure class="diagram"><img alt="Decision flow for unlabelable items: flag for review if the rubric does not cover the case, skip if you lack the expertise, label otherwise." src="../img/appendix-11b-skip-flag.svg"><figcaption>Skip or flag: the unlabelable-item flow.</figcaption></figure></p>
+<div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The top diamond asks: does the rubric cover this case? No leads left to FLAG for review.</li>
+<li>Yes leads down to the second diamond: do you have the expertise? No leads left to SKIP the item.</li>
+<li>Yes leads right to LABEL it.</li>
+<li>The blue box explains the routing: flagged items feed the adjudication queue, skipped items return to the pool.</li>
+<li>The bottom lines state why: a confident wrong label becomes noise the reward model learns.</li>
+</ol></div>
+<p><figure class="diagram"><img alt="Diagram of the four parts of a labeler instruction packet: task definition, worked examples, edge-case playbook, skip and flag rules." src="../img/appendix-11b-instruction-packet.svg"><figcaption>Train labelers with a packet, not a paragraph.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>Four boxes name the four parts of the packet.</li><li>Task definition pins down the task in one paragraph.</li><li>Worked examples show ten or more right and wrong calls, with the reasoning, not just the verdict.</li><li>The edge-case playbook grows from adjudication write-ups.</li><li>Skip and flag rules: a flag for review costs less than a confident wrong label.</li>
+</ol></div>
 <p><pre><code>Rubric (Volume 7: what &quot;better&quot; means)
         |
         v
@@ -176,17 +189,45 @@ labeling    do not hire
    |
    v
 Ongoing monitoring: gold items in every batch
-</code></pre></p>
+</code></pre>
+<p><figure class="diagram"><img alt="Diagram of the labeler pipeline: rubric, instruction packet, qualification, production or retrain, ongoing monitoring." src="../img/appendix-11b-labeler-pipeline.svg"><figcaption>The labeler pipeline: train, qualify, monitor.</figcaption></figure></p>
+<div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>Read left to right. The rubric defines what "better" means. The packet teaches it.</li>
+<li>Qualification is the gold-item test batch with an 80% bar.</li>
+<li>Passing leads to production labeling. Failing leads to retraining or no hire.</li>
+<li>Production feeds ongoing monitoring: gold items in every batch catch drift.</li>
+<li>The green box states the point: the pipeline never ends at hiring.</li>
+</ol></div></p>
 <h3 id="12-qualification-the-gold-item-test">1.2 Qualification: the gold-item test</h3>
 <p>Before a labeler touches production data, they label a test batch of 30 to 50 items where the correct answer is already known. These are gold items: written and adjudicated by senior labelers, covering the easy calls and the known-hard edge cases.</p>
-<p>The bar is set in advance. A common bar is 80% agreement with the gold labels, with a hard floor on the easy items. Anyone who misses the obvious ones is not having a bad day. They misunderstand the task. Labelers who fail are retrained once, then not hired. This sounds harsh until you price the alternative: a mislabeled preference pair poisons the reward model, and the policy then optimizes toward the poison.</p>
-<p>Qualification is not a one-time event. Seed gold items into every production batch, invisibly, at around 5%. If a labeler's gold accuracy drifts below the bar, they are paused and retrained. This is how you catch guideline drift, the slow reinterpretation of the rubric over weeks that Volume 7 names as a classic pitfall.</p>
+<p>The bar is set in advance. A common bar is 80% agreement with the gold labels, with a hard floor on the easy items. Anyone who misses the obvious ones is not having a bad day. They misunderstand the task. Labelers who fail receive one retraining, then no more work. This sounds harsh until you price the alternative: a mislabeled preference pair poisons the reward model, and the policy then optimizes toward the poison.</p>
+<p>Qualification is not a one-time event. Seed gold items into every production batch, invisibly, at around 5%. If a labeler's gold accuracy drifts below the bar, pause the labeler and retrain them. This is how you catch guideline drift, the slow reinterpretation of the rubric over weeks that Volume 7 names as a classic pitfall.</p>
+<p><figure class="diagram"><img alt="Flowchart of gold item seeding: 5 percent of items are gold, accuracy below 80 percent triggers pause and retraining." src="../img/appendix-11b-gold-seeding.svg"><figcaption>Seed gold items into every batch. The bar is 80 percent.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The top box is the production batch. About 5 percent of its items are gold items with known answers.</li><li>The middle box measures gold accuracy on every batch, invisibly.</li><li>The green box: at or above 80 percent, the labeler keeps working.</li><li>The red box: below 80 percent, pause the labeler and retrain them.</li><li>This catches guideline drift: the slow reinterpretation of the rubric over weeks.</li>
+</ol></div>
 <h3 id="13-disagreement-handling-the-adjudication-ladder">1.3 Disagreement handling: the adjudication ladder</h3>
 <p>Even good labelers disagree. Around 30% of preference pairs draw split verdicts in practice. The protocol decides what happens to those items, in four rungs.</p>
-<p>Rung one is independent double labeling. Every production item goes to two labelers who cannot see each other. This is the cheapest way to find the items that matter: the agreements are your data, the disagreements are your signal about where the rubric is weak.</p>
-<p>Rung two is majority vote. Disputed items go to a third independent labeler, and the majority wins. Majority vote is not magic; it is arithmetic. If each labeler is right 75% of the time independently, the majority of three is right about 84% of the time. The math: the majority is correct when at least 2 of 3 are correct. That is 3 times 0.75 squared times 0.25, plus 0.75 cubed, or 0.84375. The improvement only holds if the errors are independent, which is why the three labelers must work blind to each other.</p>
-<p>Rung three is adjudication. Items that survive majority vote with patterns that look systematic, all the borderline cases of one type failing the same way, go to a senior labeler. The adjudicator does not just pick a winner; they write down why, and that write-up goes back into the instruction packet's edge-case playbook. Adjudication is how the protocol learns.</p>
-<p>Rung four is escalation. If disagreement on a whole category stays high after adjudication, the rubric itself is ambiguous and no amount of voting fixes it. The item type is pulled from production, the rubric is rewritten, and previously labeled items of that type are relabeled. This is expensive and it is the right call. A reward model trained on coin flips learns to flip coins.</p>
+<p>Rung one is independent double labeling. Every production item goes to two labelers who cannot see each other. This is the cheapest way to find the items that matter. The agreements are your data. The disagreements signal where the rubric is weak.</p>
+<p><figure class="diagram"><img alt="Flowchart of the four-rung adjudication ladder for preference labeler disagreements." src="../img/appendix-11b-four-rung-ladder.svg"><figcaption>Disagreements climb a ladder. Each rung costs more than the one below.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>Four boxes run top to bottom: double label, majority vote, adjudication, escalation.</li><li>Rung 1 sends every item to two labelers who cannot see each other.</li><li>Rung 2 sends disputed items to a third labeler. The majority wins.</li><li>Rung 3 sends systematic patterns to a senior labeler, who writes down why.</li><li>Rung 4 pulls a disputed category from production and rewrites the rubric.</li>
+</ol></div>
+<p>Rung two is majority vote. Disputed items go to a third independent labeler, and the majority wins. Majority vote is not magic. It is arithmetic.</p>
+<p>If each labeler is right 75% of the time independently, the majority of three is right about 84% of the time. The math: the majority is correct when at least 2 of 3 are correct. That is 3 times 0.75 squared times 0.25, plus 0.75 cubed, or 0.84375.</p>
+<p>The improvement only holds if the errors are independent, which is why the three labelers must work blind to each other.</p>
+<p><figure class="diagram"><img alt="Diagram of majority vote math: 75 percent individual accuracy gives 84 percent majority accuracy. 60 percent gives only 64.8 percent." src="../img/appendix-11b-majority-math.svg"><figcaption>Majority vote amplifies a decent signal. It does not rescue a weak one.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The top box starts at 75 percent individual accuracy. The binomial math gives 0.84375, about 84 percent.</li><li>The bottom box starts at 60 percent individual accuracy. The same math gives 0.648, about 65 percent.</li><li>The rule between them: the majority is correct when at least 2 of 3 labelers are correct.</li><li>Lesson: 75 percent labelers become an 84 percent majority. 60 percent labelers stay weak.</li>
+</ol></div>
+<p>Rung three is adjudication. Items that survive majority vote with systematic-looking patterns go to a senior labeler. This covers the borderline cases of one type that fail the same way.</p>
+<p>The adjudicator does not just pick a winner. They write down why. That write-up goes back into the instruction packet's edge-case playbook. Adjudication is how the protocol learns.</p>
+<p>Rung four is escalation. If disagreement on a whole category stays high after adjudication, the rubric itself is ambiguous and no amount of voting fixes it. Pull the item type from production, rewrite the rubric, and relabel previously labeled items of that type. This is expensive and it is the right call. A reward model trained on coin flips learns to flip coins.</p>
+<p><figure class="diagram"><img alt="Diagram of the independence assumption: three blind labelers versus three labelers sharing one misunderstanding." src="../img/appendix-11b-independence.svg"><figcaption>Independence is the load-bearing assumption of the whole ladder.</figcaption></figure></p><div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The left side shows three blind labelers, L1 to L3. Their errors are independent, so majority vote works.</li><li>The right side shows three labelers joined by a dashed line: the same wrong rule.</li><li>With a shared misunderstanding, the errors correlate. The majority agrees, confidently and wrongly.</li><li>Blind labeling plus gold items is what keeps the assumption honest.</li><li>If the assumption breaks, the 84 percent math collapses.</li>
+</ol></div>
 <p><pre><code>Two independent labels
         |
    +----+----+
@@ -246,18 +287,36 @@ print(f&quot;3 labelers at 60%: majority = {majority_vote_accuracy(0.60, 3):.3f}
 </code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li>The function sums binomial terms: for each k from the majority threshold up to n, it adds the probability that exactly k labelers are right.</li>
 <li>With 75% individual accuracy, 3 labelers give 0.844. Five give 0.896. The jump from 1 to 3 is worth more than the jump from 3 to 5: diminishing returns.</li>
-<li>With 60% individual accuracy, the majority only reaches 0.648. Majority vote amplifies a decent signal; it does not rescue a weak one. This is why qualification (section 1.2) comes first.</li>
-<li>The independence assumption is doing the heavy lifting. If all three labelers share the same misunderstanding, they agree confidently and wrongly. Blind labeling plus gold items is what keeps the assumption honest.</li>
+<li>With 60% individual accuracy, the majority only reaches 0.648. Majority vote amplifies a decent signal. It does not rescue a weak one. This is why qualification (section 1.2) comes first.</li>
+<li>The independence assumption does the heavy lifting. If all three labelers share the same misunderstanding, they agree confidently and wrongly. Blind labeling plus gold items is what keeps the assumption honest.</li>
 </ol></div><h3 id="14-designing-the-pool-diversity-as-a-protocol">1.4 Designing the pool: diversity as a protocol</h3>
-<p>Volume 7 names demographic skew as a classic pitfall: a small, homogeneous labeler pool teaches the reward model one group's tastes as if they were universal. Diversity of the labeler pool is not a slogan; it is a design input with three concrete levers.</p>
+<p>Volume 7 names demographic skew as a classic pitfall. A small, homogeneous labeler pool teaches the reward model one group's tastes as if they were universal. Diversity of the labeler pool is not a slogan. It is a design input with three concrete levers.</p>
+<p><figure class="diagram"><img alt="Three levers of labeler pool diversity: coverage, overlap, and rotation." src="../img/appendix-11b-pool-levers.svg"><figcaption>Pool diversity: three concrete levers.</figcaption></figure></p>
+<div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The blue box is coverage: map the deployment population, then staff the pool to cover it.</li>
+<li>The gold box is overlap: assign the same items across slices, then measure agreement by slice.</li>
+<li>The red box is rotation: rotate people across task types before house styles calcify.</li>
+<li>The green box states the principle: diversity is a design input, not a slogan.</li>
+</ol></div>
 <p>The first lever is coverage. Map the deployment population (languages, regions, age bands, domains of expertise) and staff the pool to cover it. If the model will serve medical questions, some labelers need medical literacy. If it will serve three languages, each language needs native-fluent labelers, not one bilingual hero doing triple duty.</p>
 <p>The second lever is overlap. Assign the same items across demographic slices on purpose, then measure agreement by slice. If one slice systematically prefers shorter answers and another prefers thorough ones, you have found a real preference difference, not noise. The rubric then needs an explicit rule, or the product needs a per-audience decision. Either way, you found it in the data instead of shipping it as a bug.</p>
+<p><figure class="diagram"><img alt="Agreement by slice: slice A prefers shorter answers, slice B prefers thorough answers, revealing a real preference difference." src="../img/appendix-11b-agreement-slice.svg"><figcaption>Agreement by slice: find the real differences.</figcaption></figure></p>
+<div class="walkthrough"><h4>How to read this diagram</h4>
+<ol>
+<li>The two boxes show two demographic slices labeling the same items.</li>
+<li>Slice A systematically prefers shorter answers. Slice B systematically prefers thorough answers.</li>
+<li>The green box names the finding: a real preference difference, not noise.</li>
+<li>The bottom line gives the two responses: write an explicit rubric rule, or make a per-audience product decision.</li>
+</ol></div>
 <p>The third lever is rotation. Labelers who label the same task for months develop house styles and shared shortcuts. Rotate people across task types, and retire anyone whose agreement with fresh labelers collapses. A pool that never turns over is a pool that has stopped measuring the world and started measuring itself.</p><div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>Train labelers with an instruction packet: task definition, worked examples, edge-case playbook, skip and flag rules.</li>
 <li>Qualify on gold items before production, and keep seeding golds into every batch to catch drift.</li>
 <li>Handle disagreement on a ladder: double label, majority vote, adjudication with written reasoning, escalation to rubric rewrite.</li>
 <li>Design the pool for coverage across your deployment population, measure agreement by slice, and rotate people before house styles calcify.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Majority-vote binomial arithmetic: standard probability. The four-rung adjudication ladder: double label, majority vote, senior adjudication with written reasoning, rubric escalation. Gold-item seeding at ~5% with an 80% bar. Both are documented preference-data operations practice from RLHF practitioner writeups. InstructGPT's reported ~70% labeler agreement and the named pitfalls (verbosity bias, guideline drift, demographic skew): Volume 7's coverage, consistent with the InstructGPT paper's reported methodology. <strong>UNVERIFIED:</strong> the specific constants (30 to 50 gold items, 5% seeding, 80% bar) are practitioner rules of thumb from operations writeups, not from one citable paper.</p></div>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> Majority-vote binomial arithmetic: standard probability. The four-rung adjudication ladder: double label, majority vote, senior adjudication with written reasoning, rubric escalation. Gold-item seeding at ~5% with an 80% bar.</p>
+<p>RLHF practitioner writeups document both as preference-data operations practice.</p>
+<p>InstructGPT's reported ~70% labeler agreement and the named pitfalls (verbosity bias, guideline drift, demographic skew): Volume 7's coverage, consistent with the InstructGPT paper's reported methodology. <strong>UNVERIFIED:</strong> the specific constants (30 to 50 gold items, 5% seeding, 80% bar) are practitioner rules of thumb from operations writeups, not from one citable paper.</p></div>
 </main>
 <script>
 /* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
