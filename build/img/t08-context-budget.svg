@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 400" role="img" aria-labelledby="t08cb-title t08cb-desc">
+<title id="t08cb-title">Context budget: how 128K tokens are spent</title>
+<desc id="t08cb-desc">A horizontal stacked bar of 128,000 tokens. System prompt 2K, few-shot examples 6K, retrieved chunks 40K, user query 1K, reserved for the answer 79K. Text below warns that every token you spend on input is a token you cannot spend on output.</desc>
+<style>
+  .k text { font-family: "Charis SIL", Georgia, serif; fill: #ececec; }
+  .k .lane { font-size: 13px; font-weight: bold; fill: #f0b429; letter-spacing: 2px; }
+  .k .box { font-size: 14.5px; font-weight: bold; text-anchor: middle; }
+  .k .d { font-size: 12px; fill: #a8a8a8; text-anchor: middle; }
+  .k .dl { font-size: 12px; fill: #a8a8a8; }
+  .k .cap { font-size: 12.5px; fill: #a8a8a8; text-anchor: middle; font-style: italic; }
+  .k .capl { font-size: 12.5px; fill: #a8a8a8; font-style: italic; }
+  .k .num { font-size: 13px; font-weight: bold; text-anchor: middle; }
+  .k .tl { font-size: 12px; text-anchor: middle; }
+</style>
+<g class="k">
+<rect x="0" y="0" width="940" height="400" fill="#0d0d0d"/>
+<text x="30" y="40" class="lane">CONTEXT BUDGET (128K MODEL)</text>
+<rect x="30" y="90" width="13.75" height="64" rx="4" fill="#6ab0ff" stroke="#262626" stroke-width="1.5"/>
+<rect x="43.75" y="90" width="41.25" height="64" rx="4" fill="#c79bff" stroke="#262626" stroke-width="1.5"/>
+<text x="64.375" y="172" class="tl" fill="#a8a8a8">few-shot 6K</text>
+<rect x="85.0" y="90" width="275.0" height="64" rx="4" fill="#f0b429" stroke="#262626" stroke-width="1.5"/>
+<text x="222.5" y="120" class="tl" fill="#0d0d0d">retrieved chunks</text>
+<text x="222.5" y="138" class="tl" fill="#0d0d0d">40K</text>
+<rect x="360.0" y="90" width="6.875" height="64" rx="4" fill="#7fd67f" stroke="#262626" stroke-width="1.5"/>
+<rect x="366.875" y="90" width="543.125" height="64" rx="4" fill="#2e2e2e" stroke="#262626" stroke-width="1.5"/>
+<text x="638.4375" y="120" class="tl" fill="#ececec">answer reserve</text>
+<text x="638.4375" y="138" class="tl" fill="#ececec">79K</text>
+<rect x="30" y="174" width="14" height="14" rx="3" fill="#6ab0ff"/>
+<text x="50" y="186" class="dl" fill="#a8a8a8">system prompt 2K</text>
+<rect x="220" y="174" width="14" height="14" rx="3" fill="#c79bff"/>
+<text x="240" y="186" class="dl" fill="#a8a8a8">few-shot 6K</text>
+<rect x="410" y="174" width="14" height="14" rx="3" fill="#f0b429"/>
+<text x="430" y="186" class="dl" fill="#a8a8a8">retrieved chunks 40K</text>
+<rect x="600" y="174" width="14" height="14" rx="3" fill="#7fd67f"/>
+<text x="620" y="186" class="dl" fill="#a8a8a8">user query 1K</text>
+<rect x="790" y="174" width="14" height="14" rx="3" fill="#2e2e2e"/>
+<text x="810" y="186" class="dl" fill="#a8a8a8">answer reserve 79K</text>
+<text x="30" y="222" class="dl">Rule: budget the answer first, then fill what is left with context.</text>
+<text x="30" y="232" class="dl">Each retrieved chunk costs input tokens AND output quality when it is irrelevant.</text>
+<text x="30" y="254" class="dl">A 40K chunk pile with 5K of useful text wastes 35K tokens of budget.</text>
+<text x="30" y="300" class="lane">How to read this diagram:</text>
+<text x="30" y="324" class="dl">1. The bar is the full 128,000-token window. Width = tokens.</text>
+<text x="30" y="346" class="dl">2. Gold is the biggest cost: retrieved chunks. Shrink it first when you run out.</text>
+<text x="30" y="368" class="dl">3. Gray is reserve for the answer. If it hits zero, the model stops mid-sentence.</text>
+</g>
+<defs><marker id="t08cb-ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#a8a8a8"/></marker></defs>
+</svg>
