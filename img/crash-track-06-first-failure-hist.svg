@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="100%" style="max-width:720px" role="img" aria-label="First-failure histogram shapes: early deaths mean prompt problems, flat means per-step reliability problems, late deaths mean context or budget exhaustion">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.big{font-size:13px;font-weight:700}
+.ax{stroke:#5a5a5a;stroke-width:1.5}
+</style>
+<text class="t" x="24" y="32">The first-failure histogram points at the chapter that owns the fix</text>
+<text class="m" x="24" y="54">Plot the step where each failed run died. Read the shape.</text>
+
+<text class="big" x="130" y="92" text-anchor="middle">early deaths</text>
+<rect class="box" x="30" y="104" width="200" height="130" rx="8"/>
+<rect class="b" x="50" y="134" width="30" height="90" opacity="0.9"/>
+<rect class="b" x="86" y="164" width="30" height="60" opacity="0.9"/>
+<rect class="b" x="122" y="194" width="30" height="30" opacity="0.9"/>
+<rect class="b" x="158" y="209" width="30" height="15" opacity="0.9"/>
+<rect class="b" x="194" y="214" width="30" height="10" opacity="0.9"/>
+<text class="m" x="130" y="256" text-anchor="middle">prompt or task-understanding</text>
+
+<text class="big" x="360" y="92" text-anchor="middle">flat</text>
+<rect class="box" x="260" y="104" width="200" height="130" rx="8"/>
+<rect class="g" x="280" y="174" width="30" height="50" opacity="0.9"/>
+<rect class="g" x="316" y="169" width="30" height="55" opacity="0.9"/>
+<rect class="g" x="352" y="179" width="30" height="45" opacity="0.9"/>
+<rect class="g" x="388" y="164" width="30" height="60" opacity="0.9"/>
+<rect class="g" x="424" y="174" width="30" height="50" opacity="0.9"/>
+<text class="m" x="360" y="256" text-anchor="middle">per-step reliability (ch. 2.1)</text>
+
+<text class="big" x="590" y="92" text-anchor="middle">late deaths</text>
+<rect class="box" x="490" y="104" width="200" height="130" rx="8"/>
+<rect class="r" x="510" y="214" width="30" height="10" opacity="0.9"/>
+<rect class="r" x="546" y="209" width="30" height="15" opacity="0.9"/>
+<rect class="r" x="582" y="194" width="30" height="30" opacity="0.9"/>
+<rect class="r" x="618" y="164" width="30" height="60" opacity="0.9"/>
+<rect class="r" x="654" y="134" width="30" height="90" opacity="0.9"/>
+<text class="m" x="590" y="256" text-anchor="middle">context or budget exhaustion</text>
+
+<rect class="box" x="24" y="292" width="672" height="56" rx="8" stroke="#f0b429"/>
+<text class="big" x="360" y="316" text-anchor="middle">"The model is the problem" is the wrong read.</text>
+<text class="m" x="360" y="336" text-anchor="middle">The model usually did something reasonable given what it saw.</text>
+</svg>
