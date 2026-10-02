@@ -148,7 +148,7 @@ blockquote p{margin:.4rem 0}
 <div class="ds-scrim" id="dsScrim"></div>
 <main class="ds-content" id="dsContent">
 <h1 id="long-context-engineering-rope-extension-and-kv-eviction">Long-Context Engineering: RoPE Extension and KV Eviction</h1>
-<p>Volume 4 derives RoPE from scratch and notes the boundary: a model trained on 4k context degrades beyond it. Volume 8 covers the KV cache. It does not cover the two engineering disciplines that stretch context in practice. The first is rescaling positions so the model survives longer inputs. The second is evicting cache entries so the memory bill stays payable. This appendix teaches both from zero.</p>
+<p>Volume 4 derives RoPE from scratch and notes the boundary: a model trained on 4k context degrades beyond it. Volume 8 covers the KV cache. It does not cover the two engineering disciplines that stretch context in practice. The first rescales positions so the model survives longer inputs. The second evicts cache entries so the memory bill stays payable. This appendix teaches both from zero.</p>
 <h2 id="chapter-1-stretching-rope-past-its-training-window">Chapter 1. Stretching RoPE past its training window</h2>
 <h3 id="11-why-extrapolation-breaks">1.1 Why extrapolation breaks</h3>
 <p>RoPE encodes position by rotating each pair of embedding dimensions at a fixed frequency. During training, the model only ever sees positions 0 through L, the training length. The rotation angles for those positions become familiar territory. Position L+5000 is not. The model has never seen those angles, and its attention patterns fall apart on them. Perplexity climbs, and long-range answers degrade first.</p>
@@ -216,25 +216,80 @@ for s in (8, 16, 32):
     print(f&quot;  scale {s:2d}x -&gt; 1/t = {t_inv:.4f}, q,k scale = {math.sqrt(t_inv):.4f}&quot;)
 </code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li><code>ntk_aware_theta</code> is the one-line formula. The exponent dim/(dim-2) is slightly above 1, so the base grows a little faster than the scale factor. For dim 128 and scale 4, theta moves from 10,000 to 40,890.</li>
-<li><code>yarn_temperature</code> computes the entropy compensation. At 16x the logits are divided by 1.277, or equivalently q and k are scaled by 1.13 before the dot product.</li>
+<li><code>yarn_temperature</code> computes the entropy compensation. At 16x, divide the logits by 1.277. Equivalently, scale q and k by 1.13 before the dot product.</li><figure>
+<img src="../img/appendix-04a-yarn-temperature.svg" alt="Two attention distributions: short context shows one sharp dominant bar, long context shows flat spread bars, with the YaRN temperature fix that re-sharpens the distribution" loading="lazy">
+<figcaption>Figure: why longer contexts flatten attention, and the YaRN temperature fix.</figcaption>
+</figure>
+<div class="walkthrough">
+<p><strong>How to read this diagram.</strong></p>
+<ol>
+<li>The left chart is a short context. One token dominates: attention is sharp.</li>
+<li>The right chart is a long context. Weights spread out: attention flattens.</li>
+<li>The fix: divide the logits by t, where 1/t = 0.1 ln s + 1. This re-sharpens the distribution.</li>
+</ol>
+<p><strong>What breaks without the fix.</strong> Flat attention dilutes the signal. Long-context answers degrade.</p>
+</div>
+
 <li><code>precompute_freqs_ntk</code> builds the actual rotation tables: frequencies from the scaled base, then cos and sin of position times frequency. This is the same table Volume 4 derives, with theta replaced by theta prime.</li>
-<li>The printed tables are the numbers you would put in a model config. If a config shows theta 40,890 on a 4k-trained model serving 16k, it is doing exactly this.</li>
+<li>The printed tables are the numbers you would put in a model config. If a config shows theta 40,890 on a 4k-trained model serving 16k, the config does exactly this.</li>
 </ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>RoPE breaks past its training length because the angles are unfamiliar. Every extension method makes long positions look familiar again.</li>
-<li>Position interpolation divides positions by s. NTK-aware scaling raises the base to b * s^(D/(D-2)), protecting high frequencies. YaRN adds per-dimension ramps plus a temperature fix.</li>
+<li>Position interpolation divides positions by s. NTK-aware scaling raises the base to b * s^(D/(D-2)), protecting high frequencies. YaRN adds per-dimension ramps plus a temperature fix.</li><figure>
+<img src="../img/appendix-04a-rope-methods.svg" alt="Three RoPE extension methods compared: position interpolation divides positions, NTK-aware scaling raises the RoPE base, YaRN adds per-dimension ramps and a temperature fix" loading="lazy">
+<figcaption>Figure: the three RoPE extension methods. Each changes a different part of the position signal.</figcaption>
+</figure>
+<div class="walkthrough">
+<p><strong>How to read this diagram.</strong></p>
+<ol>
+<li>Read the three rows. Each row is one extension method.</li>
+<li>Each row shows what the method changes and what effect the change has.</li>
+<li>PI divides position indices. NTK-aware raises the RoPE base. YaRN adds ramps and a temperature fix.</li>
+</ol>
+<p><strong>What breaks if you pick the wrong one.</strong> PI blurs high frequencies, so local position detail suffers. NTK-aware protects high frequencies. YaRN re-sharpens flattened attention.</p>
+</div>
+
 <li>NTK-aware often works with no fine-tuning at 2x to 4x. YaRN is the recipe when you plan to fine-tune.</li>
-</ul></div><h2 id="chapter-2-kv-cache-eviction-policies">Chapter 2. KV cache eviction policies</h2>
+</ul></div><h2 id="chapter-2-kv-cache-eviction-policies">Chapter 2. Policies for KV cache eviction</h2>
 <h3 id="21-why-you-cannot-keep-everything">2.1 Why you cannot keep everything</h3>
-<p>Every generated token appends its key and value vectors to the KV cache, and every future token attends to all of them. The cache grows linearly with sequence length, and at long context it dominates GPU memory.</p>
+<p>Every generated token appends its key and value vectors to the KV cache, and every future token attends to all of them. The cache grows linearly with sequence length, and at long context it dominates GPU memory.</p><figure>
+<img src="../img/appendix-04a-eviction-policies.svg" alt="Token retention for three eviction policies across 20 token slots: sliding window keeps only recent tokens, StreamingLLM keeps 4 sink tokens plus the recent window, H2O keeps sinks, the window, and heavy hitters" loading="lazy">
+<figcaption>Figure: what each eviction policy keeps. Colored slots stay. Grey slots go.</figcaption>
+</figure>
+<div class="walkthrough">
+<p><strong>How to read this diagram.</strong></p>
+<ol>
+<li>Each row is one eviction policy. The 20 slots show token positions.</li>
+<li>The policy keeps the colored slots. It evicts the grey slots.</li>
+<li>Sliding window keeps only recent tokens.</li>
+<li>StreamingLLM keeps the 4 sink tokens plus the recent window.</li>
+<li>H2O keeps sinks, the window, and the heavy hitters (the green slots in the middle).</li>
+</ol>
+<p><strong>What breaks if you drop the sinks.</strong> Attention collapses without the sink tokens. Every policy protects them.</p>
+</div>
+
 <p>The worked numbers: a 32-layer model with d_model 4096 in fp16 stores 2 (K and V) * 32 * 4096 * 2 bytes = 0.5 MB per token. At 128k tokens that is 64 GB, more than most single GPUs hold, before counting the model weights at all. Something has to give: either buy more memory, or keep fewer tokens.</p>
 <p>Eviction keeps a fixed budget of tokens and discards the rest. The research question is which tokens are safe to discard.</p>
 <h3 id="22-the-attention-sink-discovery">2.2 The attention sink discovery</h3>
-<p>The surprise finding: the first few tokens of any sequence attract huge attention weights no matter what they say. They act as sinks that stabilize the attention distribution. Drop them and the model breaks. Drop middle tokens and often nothing happens.</p>
+<p>The surprise finding: the first few tokens of any sequence attract huge attention weights no matter what they say. They act as sinks that stabilize the attention distribution. Drop them and the model breaks. Drop middle tokens and often nothing happens.</p><figure>
+<img src="../img/appendix-04a-attention-sinks.svg" alt="Bar chart of attention weights across token positions: the first two tokens attract the largest weights, middle tokens attract small weights, the most recent token attracts a large weight" loading="lazy">
+<figcaption>Figure: the attention sink phenomenon. The first tokens attract huge weights.</figcaption>
+</figure>
+<div class="walkthrough">
+<p><strong>How to read this diagram.</strong></p>
+<ol>
+<li>Each bar is one token position. Bar height is the attention weight the token receives.</li>
+<li>The gold bars are the first two tokens. They attract the largest weights.</li>
+<li>The blue bar is the most recent token.</li>
+<li>The green bars are middle tokens. Their weights stay small.</li>
+</ol>
+<p><strong>What breaks if you evict the sinks.</strong> Attention becomes unstable. Eviction policies must protect the first tokens.</p>
+</div>
+
 <p>This single fact shapes every policy below. Whatever else you evict, protect the sinks.</p>
 <h3 id="23-three-policies">2.3 Three policies</h3>
 <p>Sliding window. Keep the most recent W tokens, evict everything older. Simple, fast, and wrong for anything that needs long-range recall: the answer buried 50k tokens back is gone. Good for streaming chat where only recent context matters.</p>
-<p>StreamingLLM. Keep the sink tokens (typically the first 4) plus a sliding window of recent tokens. The cache stays bounded at sink + window no matter how long the stream grows, so the model can generate coherently forever. The price: middle context is discarded entirely, so retrieval over the full history fails.</p>
-<p>H2O (Heavy-Hitter Oracle). Attention scores follow a power law: a small set of tokens, the heavy hitters, receives most of the attention mass across generation steps. H2O keeps a running sum of each token's received attention and, at a fixed budget, retains the top heavy hitters plus recent tokens. With only 20% of the full cache budget, it matches full-cache accuracy across the paper's benchmarks, and it beat StreamingLLM on perplexity in long streaming runs. The cost is bookkeeping: you must track accumulated scores per token per head.</p>
+<p>StreamingLLM. Keep the sink tokens (typically the first 4) plus a sliding window of recent tokens. The cache stays bounded at sink + window no matter how long the stream grows, so the model can generate coherently forever. The price: the method discards middle context entirely, so retrieval over the full history fails.</p>
+<p>H2O (Heavy-Hitter Oracle). Attention scores follow a power law: a small set of tokens, the heavy hitters, receives most of the attention mass across generation steps. H2O keeps a running sum of each token's received attention and, at a fixed budget, retains the top heavy hitters plus recent tokens. With only 20% of the full cache budget, it matches full-cache accuracy across the paper's benchmarks. It beat StreamingLLM on perplexity in long streaming runs. The cost: you must track accumulated scores per token per head.</p>
 <p>The honest comparison: sliding window is a positional rule, blind to content. StreamingLLM adds sinks to the positional rule. H2O is content-aware, which is why it keeps quality at small budgets, and heavier to implement, which is why it is not everywhere.</p>
 <p><pre><code class="language-python">def kv_cache_bytes(n_layers, d_model, seq_len, bytes_per=2):
     # KV memory: 2 (K and V) * layers * d_model * seq_len * bytes.
@@ -279,14 +334,27 @@ print(&quot;kept positions:&quot;, h2o_evict(accum, budget=8))
 </code></pre></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li><code>kv_cache_bytes</code> is the memory arithmetic. The factor of 2 for K and V is the line people forget. The per-sequence note is the line that saves you in capacity planning, because batch size multiplies everything.</li>
 <li><code>h2o_evict</code> takes accumulated attention scores, not per-step ones. Accumulation is what makes "heavy hitter" a stable property instead of a noisy one.</li>
-<li>Sinks are protected unconditionally (the first 4 indices), then the recent window, then the top scorers fill the remaining budget. The demo prints which of 20 positions survive an 8-token budget.</li>
-<li>The printed memory numbers show the payoff: 64 GB full cache versus about 13 GB at H2O's 20% budget, with matched accuracy on the paper's tasks.</li>
+<li>The method protects sinks unconditionally (the first 4 indices), then the recent window, then the top scorers fill the remaining budget. The demo prints which of 20 positions survive an 8-token budget.</li>
+<li>The printed memory numbers show the payoff: 64 GB full cache versus about 13 GB at H2O's 20% budget. Accuracy matches on the paper's tasks.</li><figure>
+<img src="../img/appendix-04a-kv-memory.svg" alt="KV memory at 128k tokens: full cache 64 GB versus H2O 20 percent budget about 13 GB, for a 32-layer 4096-wide fp16 model" loading="lazy">
+<figcaption>Figure: the KV memory bill at 128k tokens, full cache versus the H2O budget.</figcaption>
+</figure>
+<div class="walkthrough">
+<p><strong>How to read this diagram.</strong></p>
+<ol>
+<li>The red bar is the full KV cache at 128k tokens: 64 GB.</li>
+<li>The green bar is H2O at a 20% budget: about 13 GB.</li>
+<li>Both bars assume a 32-layer, 4096-wide fp16 model.</li>
+</ol>
+<p><strong>What the numbers mean.</strong> H2O matches full-cache accuracy at one fifth of the memory. The 20% budget is the lever.</p>
+</div>
+
 </ol></div><div class="takeaway"><h4>Key takeaways</h4><ul>
 <li>The KV cache grows linearly with length: 0.5 MB per token for a 32-layer 4096-wide fp16 model, 64 GB at 128k tokens.</li>
 <li>Attention sinks (the first tokens) must always be kept. Every policy builds on this.</li>
 <li>Sliding window is blind to content; StreamingLLM adds sinks to the window; H2O keeps heavy hitters by accumulated attention and holds quality at 20% budget.</li>
 <li>Eviction is lossy. For tasks that need exact long-range recall, eviction is the wrong tool: buy memory or retrieve differently.</li>
-</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> NTK-aware scaling (b' = b * s^(D/(D-2)), bloc97, June 2023; adopted by Code Llama with base 1,000,000): documented in the YaRN paper's treatment (arXiv:2309.00071, 2023). YaRN (NTK-by-parts ramp with alpha=1, beta=32 for LLaMA; temperature 1/t = 0.1 ln s + 1; ~400 fine-tuning steps): arXiv:2309.00071. Position interpolation (Chen et al., 2023): the baseline method YaRN compares against. StreamingLLM attention sinks (Xiao et al., 2023): the sink phenomenon and sink-plus-window policy. H2O (Zhang et al., NeurIPS 2023): power-law attention, heavy hitters plus recent tokens, 20% budget matching full-cache accuracy. <strong>UNVERIFIED:</strong> the 0.5 MB/token and 64 GB figures are computed from the stated architecture (32 layers, d_model 4096, fp16). They are not quoted from a paper. Verify against your own model's config before capacity planning.</p></div>
+</ul></div><div class="provenance"><p><strong>Last verified: September 2026.</strong> NTK-aware scaling (b' = b * s^(D/(D-2)), bloc97, June 2023, adopted by Code Llama with base 1,000,000): documented in the YaRN paper's treatment (arXiv:2309.00071, 2023). YaRN (NTK-by-parts ramp with alpha=1, beta=32 for LLaMA, temperature 1/t = 0.1 ln s + 1, about 400 fine-tuning steps): arXiv:2309.00071. Position interpolation (Chen et al., 2023): the baseline method YaRN compares against.</p><p>StreamingLLM attention sinks (Xiao et al., 2023): the sink phenomenon and sink-plus-window policy. H2O (Zhang et al., NeurIPS 2023): power-law attention, heavy hitters plus recent tokens, 20% budget matching full-cache accuracy. <strong>UNVERIFIED:</strong> the 0.5 MB/token and 64 GB figures come from the stated architecture (32 layers, d_model 4096, fp16). They are not quoted from a paper. Verify against your own model's config before capacity planning.</p></div>
 </main>
 <script>
 /* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
