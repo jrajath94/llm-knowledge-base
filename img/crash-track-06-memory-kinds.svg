@@ -1,15 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" role="img" aria-label="Three memory kinds">
-<rect width="600" height="300" fill="#ffffff"/>
-<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<style>text{font-family:'Charis SIL',Georgia,serif;fill:#ececec} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#a8a8a8} .b{font-weight:700}</style>
 <text x="300" y="36" text-anchor="middle" class="t">Three memory kinds</text>
 <text x="300" y="58" text-anchor="middle" class="xs">Retrieve, never preload.</text>
-<rect x="60" y="65" width="480" height="60" rx="8" fill="#f3f4f6" stroke="#2563eb" stroke-width="2"/>
+<rect x="60" y="65" width="480" height="60" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2"/>
 <text x="80" y="90" class="s b">Episodic</text>
 <text x="80" y="110" class="xs">Past trajectories. Indexed by task similarity.</text>
-<rect x="60" y="135" width="480" height="60" rx="8" fill="#f3f4f6" stroke="#0d9488" stroke-width="2"/>
+<rect x="60" y="135" width="480" height="60" rx="8" fill="#141414" stroke="#2dd4bf" stroke-width="2"/>
 <text x="80" y="160" class="s b">Semantic</text>
 <text x="80" y="180" class="xs">Facts and docs. Indexed by topic.</text>
-<rect x="60" y="205" width="480" height="60" rx="8" fill="#f3f4f6" stroke="#7c3aed" stroke-width="2"/>
+<rect x="60" y="205" width="480" height="60" rx="8" fill="#141414" stroke="#a78bfa" stroke-width="2"/>
 <text x="80" y="230" class="s b">Procedural</text>
 <text x="80" y="250" class="xs">Skills and prompts. Versioned, pinned.</text>
 </svg>
