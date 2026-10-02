@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" width="100%" style="max-width:760px" role="img" aria-label="Five phase boxes in a row: P0 restate claims, P1 fix the data, P2 run the sweep, P3 fit and predict, P4 price it.">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}.s{fill:#a8a8a8;font-size:11px}
+.t{font-size:15px;font-weight:700}.big{font-size:13px;font-weight:700}.num{font-size:13px}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text x="24" y="30" text-anchor="start" class="t">Capstone: five phases in order</text>
+<rect x="40" y="90" width="120" height="84" rx="8" class="pick"/>
+<text x="100" y="122" text-anchor="middle" class="big">P0</text>
+<text x="100" y="146" text-anchor="middle" class="m">restate claims</text>
+<path class="arr" d="M160 132 L180 132"/>
+<rect x="180" y="90" width="120" height="84" rx="8" class="box"/>
+<text x="240" y="122" text-anchor="middle" class="big">P1</text>
+<text x="240" y="146" text-anchor="middle" class="m">fix the data</text>
+<path class="arr" d="M300 132 L320 132"/>
+<rect x="320" y="90" width="120" height="84" rx="8" class="box"/>
+<text x="380" y="122" text-anchor="middle" class="big">P2</text>
+<text x="380" y="146" text-anchor="middle" class="m">run the sweep</text>
+<path class="arr" d="M440 132 L460 132"/>
+<rect x="460" y="90" width="120" height="84" rx="8" class="box"/>
+<text x="520" y="122" text-anchor="middle" class="big">P3</text>
+<text x="520" y="146" text-anchor="middle" class="m">fit and predict</text>
+<path class="arr" d="M580 132 L600 132"/>
+<rect x="600" y="90" width="120" height="84" rx="8" class="pick"/>
+<text x="660" y="122" text-anchor="middle" class="big">P4</text>
+<text x="660" y="146" text-anchor="middle" class="m">price it</text>
+<text x="24" y="230" text-anchor="start" class="s">P0: C1, C2, C3 as falsifiable statements. P1: dedupe, decontaminate, freeze one mix.</text>
+<text x="24" y="252" text-anchor="start" class="s">P2: 3 budgets x 4-6 sizes. P3: parabola per budget, join minima. P4: GPU-hours before launch.</text>
+</svg>
