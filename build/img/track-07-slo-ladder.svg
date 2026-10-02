@@ -1,0 +1,19 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 580' width='100%' role='img'>
+<title>Reliability and SLOs for customer-facing AI</title>
+<defs><marker id='ar' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill='#a8a8a8'/></marker></defs>
+<text x='450' y='40' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>Reliability and SLOs for customer-facing AI</text>
+<text x='450' y='64' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' fill='#a8a8a8' text-anchor='middle'>Four rungs. Each rung is a promise with a number.</text>
+<rect x='180' y='100' width='540' height='100' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='450.0' y='130' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Availability</text>
+<text x='450.0' y='152' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>99.9% uptime; about 43 minutes down / month</text>
+<rect x='180' y='214' width='540' height='100' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='450.0' y='244' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Latency p95</text>
+<text x='450.0' y='266' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>under 3 seconds; for the common task</text>
+<rect x='180' y='328' width='540' height='100' rx='10' fill='#1565c0' fill-opacity='0.22' stroke='#1565c0' stroke-width='2'/>
+<text x='450.0' y='358' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Task success</text>
+<text x='450.0' y='380' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>95% of tasks; complete without human rescue</text>
+<rect x='180' y='442' width='540' height='100' rx='10' fill='#c0392b' fill-opacity='0.22' stroke='#c0392b' stroke-width='2'/>
+<text x='450.0' y='472' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Time to recovery</text>
+<text x='450.0' y='494' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>under 30 minutes; from alert to fixed</text>
+<text x='450' y='566' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>An SLO without a number is a wish. Write the number, then build the alert.</text>
+</svg>
