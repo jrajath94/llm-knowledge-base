@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="420" viewBox="0 0 560 420" role="img" aria-label="The gate decision: ship or hold">
+<rect width="560" height="420" fill="#ffffff"/>
+<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<text x="280" y="36" text-anchor="middle" class="t">The gate: ship or hold</text>
+<text x="280" y="58" text-anchor="middle" class="xs">Every release walks this path.</text>
+<rect x="200" y="80" width="160" height="46" rx="8" fill="#f3f4f6" stroke="#1a1a1a"/>
+<text x="280" y="108" text-anchor="middle" class="s">Run the suite</text>
+<line x1="280" y1="126" x2="280" y2="136" stroke="#1a1a1a" stroke-width="2"/>
+<polygon points="280,136 342,186 280,236 218,186" fill="#dbeafe" stroke="#1a1a1a"/>
+<text x="280" y="180" text-anchor="middle" class="s b">Smoke</text>
+<text x="280" y="198" text-anchor="middle" class="s b">regression?</text>
+<line x1="342" y1="186" x2="400" y2="186" stroke="#1a1a1a" stroke-width="2"/>
+<text x="352" y="178" class="s" fill="#dc2626">yes</text>
+<rect x="400" y="163" width="110" height="46" rx="8" fill="#dc2626"/>
+<text x="455" y="191" text-anchor="middle" class="s b" fill="#fff">HOLD</text>
+<line x1="280" y1="236" x2="280" y2="246" stroke="#1a1a1a" stroke-width="2"/>
+<text x="272" y="246" text-anchor="end" class="xs">no</text>
+<polygon points="280,246 342,296 280,346 218,296" fill="#dbeafe" stroke="#1a1a1a"/>
+<text x="280" y="300" text-anchor="middle" class="s b">Deltas pass?</text>
+<line x1="342" y1="296" x2="400" y2="296" stroke="#1a1a1a" stroke-width="2"/>
+<text x="352" y="288" class="s" fill="#dc2626">no</text>
+<rect x="400" y="273" width="110" height="46" rx="8" fill="#dc2626"/>
+<text x="455" y="301" text-anchor="middle" class="s b" fill="#fff">HOLD</text>
+<line x1="280" y1="346" x2="280" y2="356" stroke="#1a1a1a" stroke-width="2"/>
+<text x="272" y="356" text-anchor="end" class="xs">yes</text>
+<rect x="200" y="356" width="160" height="46" rx="8" fill="#16a34a"/>
+<text x="280" y="384" text-anchor="middle" class="s b" fill="#fff">SHIP</text>
+</svg>
