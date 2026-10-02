@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="100%" style="max-width:760px" role="img" aria-label="Flowchart: loss spikes, check the gradient norm, flat means a data artifact so inspect the batch, climbing means the optimizer so tighten clipping and lower the learning rate.">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}.s{fill:#a8a8a8;font-size:11px}
+.t{font-size:15px;font-weight:700}.big{font-size:13px;font-weight:700}.num{font-size:13px}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.pick{fill:#141414;stroke:#f0b429;stroke-width:2}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.lbl{font-size:12px;fill:#a8a8a8}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text x="24" y="30" text-anchor="start" class="t">Rule 6: loss went up, data or optimizer?</text>
+<rect x="270" y="55" width="220" height="56" rx="8" class="pick"/>
+<text x="380" y="90" text-anchor="middle" class="big">Loss spikes</text>
+<path class="arr" d="M380 111 L380 141"/>
+<rect x="280" y="141" width="200" height="52" rx="8" class="box"/>
+<text x="380" y="172" text-anchor="middle" class="big">Gradient norm?</text>
+<path class="arr" d="M280 167 L150 167"/>
+<text x="205" y="151" text-anchor="middle" class="lbl">flat</text>
+<rect x="30" y="141" width="240" height="84" rx="8" class="box"/>
+<text x="150" y="169" text-anchor="middle" class="big">DATA ARTIFACT</text>
+<text x="150" y="191" text-anchor="middle" class="m">inspect that batch</text>
+<text x="150" y="209" text-anchor="middle" class="s">bad batch, corrupt seq</text>
+<path class="arr" d="M480 167 L610 167"/>
+<text x="555" y="151" text-anchor="middle" class="lbl">climbing</text>
+<rect x="490" y="141" width="240" height="84" rx="8" class="box"/>
+<text x="610" y="169" text-anchor="middle" class="big">OPTIMIZER</text>
+<text x="610" y="191" text-anchor="middle" class="m">tighten clip, lower LR</text>
+<text x="610" y="209" text-anchor="middle" class="s">resume last checkpoint</text>
+</svg>
