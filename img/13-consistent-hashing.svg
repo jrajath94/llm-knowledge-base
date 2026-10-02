@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="500" viewBox="0 0 600 500" font-family="sans-serif">
+<rect width="600" height="500" fill="#ffffff"/>
+<defs>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+</marker>
+</defs>
+<text x="300" y="30" text-anchor="middle" font-size="18" font-weight="bold">Consistent Hashing Ring</text>
+<circle cx="300" cy="250" r="150" fill="none" stroke="#1a73e8" stroke-width="3"/>
+<circle cx="450.0" cy="250.0" r="12" fill="#1a73e8"/>
+<text x="450.0" y="230.0" text-anchor="middle" font-size="12" font-weight="bold">S1</text>
+<circle cx="225.00000000000003" cy="379.9038105676658" r="12" fill="#1a73e8"/>
+<text x="225.00000000000003" y="359.9038105676658" text-anchor="middle" font-size="12" font-weight="bold">S2</text>
+<circle cx="224.99999999999994" cy="120.09618943233426" r="12" fill="#1a73e8"/>
+<text x="224.99999999999994" y="100.09618943233426" text-anchor="middle" font-size="12" font-weight="bold">S3</text>
+<text x="300" y="450" text-anchor="middle" font-size="12" fill="#555">Keys hash to points. Each key goes to the next server clockwise.</text>
+<text x="300" y="475" text-anchor="middle" font-size="12" fill="#555">Add S4: only keys between S4 and S3 move. Others stay.</text>
+</svg>
