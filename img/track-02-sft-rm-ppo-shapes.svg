@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360" role="img" aria-label="SFT, reward model, and PPO stages with dataset sizes">
+<rect width="760" height="360" fill="#0d0d0d"/>
+<style>
+.box{fill:#0d0d0d;stroke:#3a3a3a;stroke-width:1.5}
+.t{font:600 14px 'Charis SIL',Georgia,serif;fill:#ececec}
+.s{font:400 12px 'Charis SIL',Georgia,serif;fill:#a8a8a8}
+.ss{font:400 11px 'Charis SIL',Georgia,serif;fill:#8a8a8a}
+.arr{stroke:#f0b429;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arr2{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah2)}
+.num{font:700 15px 'Charis SIL',Georgia,serif;fill:#f0b429}
+</style>
+<defs>
+<marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#f0b429" stroke-width="1.6"/></marker>
+<marker id="ah2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.4"/></marker>
+</defs>
+<text x="24" y="34" class="t">What flows where: dataset sizes at each stage</text><rect x="30" y="60" width="200" height="150" rx="8" class="box" stroke="#2dd4bf"/><text x="46" y="92" class="t" fill="#2dd4bf">SFT</text><text x="46" y="118" class="s">10k-100k demonstrations</text><text x="46" y="140" class="ss">in: base model + demos</text><text x="46" y="162" class="ss">out: trained sft</text><text x="46" y="188" class="ss">judged by: next stage</text><rect x="280" y="60" width="200" height="150" rx="8" class="box" stroke="#4aa8ff"/><text x="296" y="92" class="t" fill="#4aa8ff">Reward model</text><text x="296" y="118" class="s">50k-500k preference pairs</text><text x="296" y="140" class="ss">in: SFT model + pairs</text><text x="296" y="162" class="ss">out: trained reward model</text><text x="296" y="188" class="ss">judged by: next stage</text><rect x="530" y="60" width="200" height="150" rx="8" class="box" stroke="#f0b429"/><text x="546" y="92" class="t" fill="#f0b429">PPO / DPO / GRPO</text><text x="546" y="118" class="s">prompts + live samples</text><text x="546" y="140" class="ss">in: SFT model + RM</text><text x="546" y="162" class="ss">out: trained ppo</text><text x="546" y="188" class="ss">judged by: next stage</text><path d="230,135 h40" class="arr"/><path d="480,135 h40" class="arr"/><text x="232" y="122" class="ss">SFT model</text><text x="482" y="122" class="ss">policy + RM</text><text x="30" y="250" class="s">Read left to right. Each stage consumes the previous stage’s output.</text><text x="30" y="274" class="s">Bigger arrows are not shown: the reward model is the narrow gate. Its quality bounds everything after it.</text><text x="30" y="310" class="ss">Sizes are working ranges from production practice, not standards.</text></svg>
