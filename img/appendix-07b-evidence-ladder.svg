@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif">
+<rect width="800" height="520" fill="#0d0d0d"/>
+<text x="400" y="36" text-anchor="middle" fill="#ececec" font-size="22" font-weight="700">The standard of evidence: correlation plus intervention</text>
+<text x="400" y="60" text-anchor="middle" fill="#a8a8a8" font-size="14">Each rung up is harder and more valuable</text>
+<!-- ladder rails -->
+<line x1="250" y1="100" x2="250" y2="460" stroke="#a8a8a8" stroke-width="4"/>
+<line x1="550" y1="100" x2="550" y2="460" stroke="#a8a8a8" stroke-width="4"/>
+<!-- rung 4 top: intervention -->
+<rect x="250" y="100" width="300" height="70" fill="#2e9e5b" opacity="0.25"/>
+<line x1="250" y1="170" x2="550" y2="170" stroke="#7fd08a" stroke-width="4"/>
+<text x="400" y="128" text-anchor="middle" fill="#7fd08a" font-size="16" font-weight="700">Rung 4: intervene</text>
+<text x="400" y="150" text-anchor="middle" fill="#ececec" font-size="13">Steer or ablate the feature. Behavior changes.</text>
+<!-- rung 3 -->
+<rect x="250" y="190" width="300" height="70" fill="#f0b429" opacity="0.14"/>
+<line x1="250" y1="260" x2="550" y2="260" stroke="#f0b429" stroke-width="4"/>
+<text x="400" y="218" text-anchor="middle" fill="#f0b429" font-size="16" font-weight="700">Rung 3: SAE feature activates</text>
+<text x="400" y="240" text-anchor="middle" fill="#ececec" font-size="13">A clean direction fires with the behavior.</text>
+<!-- rung 2 -->
+<rect x="250" y="280" width="300" height="70" fill="#6cb2ff" opacity="0.14"/>
+<line x1="250" y1="350" x2="550" y2="350" stroke="#6cb2ff" stroke-width="4"/>
+<text x="400" y="308" text-anchor="middle" fill="#6cb2ff" font-size="16" font-weight="700">Rung 2: probe fires</text>
+<text x="400" y="330" text-anchor="middle" fill="#ececec" font-size="13">A classifier reads the information. Correlation only.</text>
+<!-- rung 1 bottom -->
+<rect x="250" y="370" width="300" height="70" fill="#e08080" opacity="0.14"/>
+<line x1="250" y1="440" x2="550" y2="440" stroke="#e08080" stroke-width="4"/>
+<text x="400" y="398" text-anchor="middle" fill="#e08080" font-size="16" font-weight="700">Rung 1: attention heatmap</text>
+<text x="400" y="420" text-anchor="middle" fill="#ececec" font-size="13">The model looked here. Not an explanation.</text>
+<!-- side arrow -->
+<line x1="620" y1="440" x2="620" y2="120" stroke="#a8a8a8" stroke-width="2"/>
+<polygon points="620,100 610,122 630,122" fill="#a8a8a8"/>
+<text x="640" y="290" fill="#a8a8a8" font-size="14" transform="rotate(-90 640 290)" text-anchor="middle">stronger evidence upward</text>
+<text x="400" y="492" text-anchor="middle" fill="#a8a8a8" font-size="14">Correlation proposes. Intervention disposes.</text>
+</svg>
