@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300" role="img" aria-label="A2A task lifecycle">
+<rect width="800" height="300" fill="#141414"/>
+<style>text { font-family: Charis SIL, serif; fill: #e8e8e8; } .accent { fill: #f0b429; } .muted { fill: #888888; } .box { fill: none; stroke: #f0b429; stroke-width: 1.5; } .line { stroke: #888888; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }</style>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#888888" stroke-width="1.5"/></marker></defs>
+<text x="400.0" y="28" text-anchor="middle" font-size="18" class="accent">A2A Task Lifecycle</text>
+<rect x="80" y="120" width="150" height="60" class="box" rx="4"/>
+<text x="155.0" y="142" text-anchor="middle" font-size="14">submitted</text>
+<line x1="230" y1="150" x2="250" y2="150" class="line"/>
+<rect x="250" y="120" width="150" height="60" class="box" rx="4"/>
+<text x="325.0" y="142" text-anchor="middle" font-size="14">working</text>
+<line x1="400" y1="150" x2="420" y2="150" class="line"/>
+<rect x="420" y="120" width="150" height="60" class="box" rx="4"/>
+<text x="495.0" y="142" text-anchor="middle" font-size="14">input-required</text>
+<line x1="570" y1="150" x2="590" y2="150" class="line"/>
+<rect x="590" y="120" width="150" height="60" class="box" rx="4"/>
+<text x="665.0" y="142" text-anchor="middle" font-size="14">completed</text>
+<text x="400" y="230" text-anchor="middle" font-size="12" class="muted">input-required: remote agent pauses to ask for one more detail</text>
+</svg>
