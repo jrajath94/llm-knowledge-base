@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 366" width="100%" style="max-width:680px" role="img" aria-label="Quantization decision tree: pick FP8, GPTQ/AWQ, KV-cache quantization, or GGUF by the scarce resource">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+.ax{stroke:#5a5a5a;stroke-width:1.5}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.cell{font-size:13px;font-weight:700}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="30">Pick the quantization method by what is scarce</text>
+<text class="m" x="24" y="52">Hardware first: Hopper or Ada or newer unlocks FP8.</text>
+<rect class="box" x="240" y="70" width="200" height="52" rx="8" stroke="#f0b429"/>
+<text class="big" x="340" y="101" text-anchor="middle">What is scarce?</text>
+<line class="arr" x1="340" y1="122" x2="91" y2="160"/>
+<rect class="box" x="20" y="160" width="142" height="120" rx="8"/>
+<text class="lbl" x="91" y="186" text-anchor="middle">Decode bytes</text>
+<text class="big b" x="91" y="216" text-anchor="middle">FP8 W8A8</text>
+<text class="m" x="91" y="244" text-anchor="middle">halves bytes per step</text>
+<line class="arr" x1="340" y1="122" x2="253" y2="160"/>
+<rect class="box" x="182" y="160" width="142" height="120" rx="8"/>
+<text class="lbl" x="253" y="186" text-anchor="middle">GPU memory</text>
+<text class="big b" x="253" y="216" text-anchor="middle">GPTQ / AWQ 4-bit</text>
+<text class="m" x="253" y="244" text-anchor="middle">4x smaller weights</text>
+<line class="arr" x1="340" y1="122" x2="415" y2="160"/>
+<rect class="box" x="344" y="160" width="142" height="120" rx="8"/>
+<text class="lbl" x="415" y="186" text-anchor="middle">KV capacity</text>
+<text class="big b" x="415" y="216" text-anchor="middle">KV-cache quant</text>
+<text class="m" x="415" y="244" text-anchor="middle">longer contexts fit</text>
+<line class="arr" x1="340" y1="122" x2="577" y2="160"/>
+<rect class="box" x="506" y="160" width="142" height="120" rx="8"/>
+<text class="lbl" x="577" y="186" text-anchor="middle">CPU or edge</text>
+<text class="big b" x="577" y="216" text-anchor="middle">GGUF k-quants</text>
+<text class="m" x="577" y="244" text-anchor="middle">runs anywhere</text>
+<text class="m" x="24" y="322">Scales fit one checkpoint. They are not portable to the next.</text>
+<text class="m" x="24" y="344">Test both traffic shapes: activation quantization bites hardest in prefill.</text>
+</svg>
