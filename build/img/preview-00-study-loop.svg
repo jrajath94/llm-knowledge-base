@@ -1,0 +1,27 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 400' width='100%' role='img' aria-label='How to study one chapter: the loop'>
+<rect x='0' y='0' width='960' height='400' fill='#0d0d0d'/>
+<text x='24' y='36' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec'>How to study one chapter: the loop</text>
+<circle cx='128' cy='130' r='40' fill='#141414' stroke='#6cb2ff' stroke-width='2.5'/>
+<text x='128' y='142' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='22' font-weight='700' fill='#6cb2ff' text-anchor='middle'>1</text>
+<text x='128' y='200' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='700' fill='#ececec' text-anchor='middle'>Learn the anatomy</text>
+<text x='128' y='226' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='12' font-weight='400' fill='#a8a8a8' text-anchor='middle'>what / why / how / example / trap / visual</text>
+<line x1='232' y1='130' x2='248' y2='130' stroke='#a8a8a8' stroke-width='3'/>
+<polygon points='252,130 242,122 242,138' fill='#a8a8a8'/>
+<circle cx='356' cy='130' r='40' fill='#141414' stroke='#f0b429' stroke-width='2.5'/>
+<text x='356' y='142' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='22' font-weight='700' fill='#f0b429' text-anchor='middle'>2</text>
+<text x='356' y='200' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='700' fill='#ececec' text-anchor='middle'>Run the labs</text>
+<text x='356' y='226' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='12' font-weight='400' fill='#a8a8a8' text-anchor='middle'>change one variable, observe</text>
+<line x1='460' y1='130' x2='476' y2='130' stroke='#a8a8a8' stroke-width='3'/>
+<polygon points='480,130 470,122 470,138' fill='#a8a8a8'/>
+<circle cx='584' cy='130' r='40' fill='#141414' stroke='#7fd08a' stroke-width='2.5'/>
+<text x='584' y='142' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='22' font-weight='700' fill='#7fd08a' text-anchor='middle'>3</text>
+<text x='584' y='200' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='700' fill='#ececec' text-anchor='middle'>Quiz yourself</text>
+<text x='584' y='226' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='12' font-weight='400' fill='#a8a8a8' text-anchor='middle'>cover the board answers, say them aloud</text>
+<line x1='688' y1='130' x2='704' y2='130' stroke='#a8a8a8' stroke-width='3'/>
+<polygon points='708,130 698,122 698,138' fill='#a8a8a8'/>
+<circle cx='812' cy='130' r='40' fill='#141414' stroke='#2e9e5b' stroke-width='2.5'/>
+<text x='812' y='142' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='22' font-weight='700' fill='#2e9e5b' text-anchor='middle'>4</text>
+<text x='812' y='200' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='700' fill='#ececec' text-anchor='middle'>Check done</text>
+<text x='812' y='226' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='12' font-weight='400' fill='#a8a8a8' text-anchor='middle'>all four checks pass, or re-read</text>
+<text x='24' y='290' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>If step 4 fails, go back to step 1. The loop is the method.</text>
+</svg>
