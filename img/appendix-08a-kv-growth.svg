@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif">
+<rect width="800" height="500" fill="#0d0d0d"/>
+<text x="400" y="36" text-anchor="middle" fill="#ececec" font-size="22" font-weight="700">KV cache grows with every token</text>
+<text x="400" y="60" text-anchor="middle" fill="#a8a8a8" font-size="14">70B-class model, fp16, about 2.5 MB per token per sequence</text>
+<!-- bars: 1k=2.5GB, 4k=10GB, 32k=80GB ; scale: 80GB -> 280px -->
+<text x="150" y="120" text-anchor="middle" fill="#ececec" font-size="15" font-weight="700">1k context</text>
+<rect x="90" y="380" width="120" height="10" fill="#6cb2ff" opacity="0.6"/>
+<text x="150" y="410" text-anchor="middle" fill="#a8a8a8" font-size="13">2.5 GB</text>
+<text x="350" y="120" text-anchor="middle" fill="#ececec" font-size="15" font-weight="700">4k context</text>
+<rect x="290" y="355" width="120" height="35" fill="#6cb2ff" opacity="0.6"/>
+<text x="350" y="410" text-anchor="middle" fill="#a8a8a8" font-size="13">10 GB</text>
+<text x="580" y="120" text-anchor="middle" fill="#ececec" font-size="15" font-weight="700">32k context</text>
+<rect x="520" y="110" width="120" height="280" fill="#e08080" opacity="0.55"/>
+<text x="580" y="410" text-anchor="middle" fill="#a8a8a8" font-size="13">80 GB</text>
+<text x="580" y="250" text-anchor="middle" fill="#0d0d0d" font-size="13">one H100</text>
+<!-- int4 annotation -->
+<line x1="290" y1="355" x2="520" y2="355" stroke="#7fd08a" stroke-width="2" stroke-dasharray="6,4"/>
+<text x="660" y="360" fill="#7fd08a" font-size="13">int4: ~62 GB per</text>
+<text x="660" y="378" fill="#7fd08a" font-size="13">100 seqs at 4k</text>
+<text x="400" y="455" text-anchor="middle" fill="#ececec" font-size="15">100 concurrent sequences at 4k need about 250 GB of KV memory in fp16.</text>
+<text x="400" y="480" text-anchor="middle" fill="#a8a8a8" font-size="13">That is the difference between fitting the workload and buying more GPUs.</text>
+</svg>
