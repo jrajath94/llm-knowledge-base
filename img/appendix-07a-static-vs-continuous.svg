@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="900" height="520" fill="#0d0d0d"/>
+<text x="450" y="34" text-anchor="middle" fill="#ececec" font-size="20" font-weight="600">Static vs continuous batching</text>
+
+<!-- STATIC -->
+<text x="225" y="66" text-anchor="middle" fill="#e08080" font-size="15" font-weight="600">static batching: wait for the longest</text>
+<g font-size="11">
+<rect x="40" y="90" width="90" height="30" rx="4" fill="#1a1a1a" stroke="#3a3a3a"/>
+<text x="85" y="109" text-anchor="middle" fill="#a8a8a8">slot 0</text>
+<rect x="140" y="90" width="90" height="30" rx="4" fill="#1a1a1a" stroke="#3a3a3a"/>
+<text x="185" y="109" text-anchor="middle" fill="#a8a8a8">slot 1</text>
+<rect x="240" y="90" width="90" height="30" rx="4" fill="#1a1a1a" stroke="#3a3a3a"/>
+<text x="285" y="109" text-anchor="middle" fill="#a8a8a8">slot 2</text>
+<rect x="340" y="90" width="90" height="30" rx="4" fill="#1a1a1a" stroke="#3a3a3a"/>
+<text x="385" y="109" text-anchor="middle" fill="#a8a8a8">slot 3</text>
+
+<!-- bars: slot 0 short, slot 1 long, slot 2 short, slot 3 medium -->
+<rect x="40" y="130" width="90" height="60" rx="4" fill="#6cb2ff" opacity="0.8"/>
+<text x="85" y="164" text-anchor="middle" fill="#0d0d0d">200 tok</text>
+<rect x="40" y="190" width="90" height="80" rx="4" fill="#1a1a1a" stroke="#e08080" stroke-dasharray="4,3"/>
+<text x="85" y="232" text-anchor="middle" fill="#e08080">idle</text>
+
+<rect x="140" y="130" width="90" height="140" rx="4" fill="#6cb2ff" opacity="0.8"/>
+<text x="185" y="204" text-anchor="middle" fill="#0d0d0d">4000 tok</text>
+
+<rect x="240" y="130" width="90" height="60" rx="4" fill="#6cb2ff" opacity="0.8"/>
+<text x="285" y="164" text-anchor="middle" fill="#0d0d0d">200 tok</text>
+<rect x="240" y="190" width="90" height="80" rx="4" fill="#1a1a1a" stroke="#e08080" stroke-dasharray="4,3"/>
+<text x="285" y="232" text-anchor="middle" fill="#e08080">idle</text>
+
+<rect x="340" y="130" width="90" height="100" rx="4" fill="#6cb2ff" opacity="0.8"/>
+<text x="385" y="184" text-anchor="middle" fill="#0d0d0d">800 tok</text>
+<rect x="340" y="230" width="90" height="40" rx="4" fill="#1a1a1a" stroke="#e08080" stroke-dasharray="4,3"/>
+<text x="385" y="254" text-anchor="middle" fill="#e08080">idle</text>
+</g>
+<text x="225" y="300" text-anchor="middle" fill="#e08080" font-size="12">the batch ends when the longest member ends</text>
+<text x="225" y="320" text-anchor="middle" fill="#a8a8a8" font-size="12">short members sit idle: wasted GPU</text>
+
+<line x1="460" y1="60" x2="460" y2="330" stroke="#3a3a3a"/>
+
+<!-- CONTINUOUS -->
+<text x="680" y="66" text-anchor="middle" fill="#7fd08a" font-size="15" font-weight="600">continuous batching: refill every iteration</text>
+<g font-size="11">
+<rect x="500" y="90" width="90" height="30" rx="4" fill="#1a1a1a" stroke="#3a3a3a"/>
+<text x="545" y="109" text-anchor="middle" fill="#a8a8a8">slot 0</text>
+<rect x="600" y="90" width="90" height="30" rx="4" fill="#1a1a1a" stroke="#3a3a3a"/>
+<text x="645" y="109" text-anchor="middle" fill="#a8a8a8">slot 1</text>
+<rect x="700" y="90" width="90" height="30" rx="4" fill="#1a1a1a" stroke="#3a3a3a"/>
+<text x="745" y="109" text-anchor="middle" fill="#a8a8a8">slot 2</text>
+<rect x="800" y="90" width="90" height="30" rx="4" fill="#1a1a1a" stroke="#3a3a3a"/>
+<text x="845" y="109" text-anchor="middle" fill="#a8a8a8">slot 3</text>
+
+<rect x="500" y="130" width="90" height="60" rx="4" fill="#7fd08a" opacity="0.8"/>
+<text x="545" y="156" text-anchor="middle" fill="#0d0d0d">200</text>
+<text x="545" y="170" text-anchor="middle" fill="#0d0d0d">tok</text>
+<rect x="500" y="194" width="90" height="76" rx="4" fill="#7fd08a" opacity="0.55"/>
+<text x="545" y="226" text-anchor="middle" fill="#0d0d0d">new</text>
+<text x="545" y="240" text-anchor="middle" fill="#0d0d0d">request</text>
+
+<rect x="600" y="130" width="90" height="140" rx="4" fill="#7fd08a" opacity="0.8"/>
+<text x="645" y="204" text-anchor="middle" fill="#0d0d0d">4000 tok</text>
+
+<rect x="700" y="130" width="90" height="60" rx="4" fill="#7fd08a" opacity="0.8"/>
+<text x="745" y="156" text-anchor="middle" fill="#0d0d0d">200</text>
+<text x="745" y="170" text-anchor="middle" fill="#0d0d0d">tok</text>
+<rect x="700" y="194" width="90" height="76" rx="4" fill="#7fd08a" opacity="0.55"/>
+<text x="745" y="226" text-anchor="middle" fill="#0d0d0d">new</text>
+<text x="745" y="240" text-anchor="middle" fill="#0d0d0d">request</text>
+
+<rect x="800" y="130" width="90" height="100" rx="4" fill="#7fd08a" opacity="0.8"/>
+<text x="845" y="184" text-anchor="middle" fill="#0d0d0d">800 tok</text>
+<rect x="800" y="234" width="90" height="36" rx="4" fill="#7fd08a" opacity="0.55"/>
+<text x="845" y="258" text-anchor="middle" fill="#0d0d0d">new</text>
+</g>
+<text x="680" y="300" text-anchor="middle" fill="#7fd08a" font-size="12">finished sequences leave, new ones join</text>
+<text x="680" y="320" text-anchor="middle" fill="#a8a8a8" font-size="12">no batch boundaries, almost no gaps</text>
+
+<rect x="60" y="360" width="780" height="120" rx="8" fill="#141414" stroke="#3a3a3a"/>
+<text x="450" y="388" text-anchor="middle" fill="#ececec" font-size="14" font-weight="600">the rule</text>
+<text x="450" y="414" text-anchor="middle" fill="#a8a8a8" font-size="13">continuous batching wins when lengths vary: the long tail no longer holds the batch hostage</text>
+<text x="450" y="438" text-anchor="middle" fill="#a8a8a8" font-size="13">with uniform lengths and no queue, the two designs perform the same</text>
+</svg>
