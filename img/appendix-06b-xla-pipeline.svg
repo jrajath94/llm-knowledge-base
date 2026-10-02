@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="900" height="480" fill="#0d0d0d"/>
+<text x="450" y="34" text-anchor="middle" fill="#ececec" font-size="20" font-weight="600">XLA compilation pipeline</text>
+<text x="450" y="58" text-anchor="middle" fill="#a8a8a8" font-size="13">compile once per (shape, dtype) key, then run the binary many times</text>
+
+<g font-size="12">
+<!-- stage boxes -->
+<rect x="30" y="110" width="140" height="110" rx="8" fill="#1a1a1a" stroke="#6cb2ff" stroke-width="1.5"/>
+<text x="100" y="138" text-anchor="middle" fill="#6cb2ff" font-weight="600">1. Python</text>
+<text x="100" y="160" text-anchor="middle" fill="#a8a8a8">your function</text>
+<text x="100" y="178" text-anchor="middle" fill="#a8a8a8">with jnp ops</text>
+<text x="100" y="204" text-anchor="middle" fill="#ececec" font-size="11">no code changes</text>
+
+<rect x="200" y="110" width="140" height="110" rx="8" fill="#1a1a1a" stroke="#f0b429" stroke-width="1.5"/>
+<text x="270" y="138" text-anchor="middle" fill="#f0b429" font-weight="600">2. trace to jaxpr</text>
+<text x="270" y="160" text-anchor="middle" fill="#a8a8a8">run once with</text>
+<text x="270" y="178" text-anchor="middle" fill="#a8a8a8">abstract tracers</text>
+<text x="270" y="204" text-anchor="middle" fill="#ececec" font-size="11">Python if on a</text>
+<text x="270" y="218" text-anchor="middle" fill="#ececec" font-size="11">tracer: error</text>
+
+<rect x="370" y="110" width="140" height="110" rx="8" fill="#1a1a1a" stroke="#7fd08a" stroke-width="1.5"/>
+<text x="440" y="138" text-anchor="middle" fill="#7fd08a" font-weight="600">3. lower to HLO</text>
+<text x="440" y="160" text-anchor="middle" fill="#a8a8a8">hardware-neutral</text>
+<text x="440" y="178" text-anchor="middle" fill="#a8a8a8">ops graph</text>
+<text x="440" y="204" text-anchor="middle" fill="#ececec" font-size="11">fuse ops into</text>
+<text x="440" y="218" text-anchor="middle" fill="#ececec" font-size="11">few big kernels</text>
+
+<rect x="540" y="110" width="140" height="110" rx="8" fill="#1a1a1a" stroke="#e08080" stroke-width="1.5"/>
+<text x="610" y="138" text-anchor="middle" fill="#e08080" font-weight="600">4. gSPMD</text>
+<text x="610" y="160" text-anchor="middle" fill="#a8a8a8">partition the HLO</text>
+<text x="610" y="178" text-anchor="middle" fill="#a8a8a8">per your sharding</text>
+<text x="610" y="204" text-anchor="middle" fill="#ececec" font-size="11">insert collectives</text>
+<text x="610" y="218" text-anchor="middle" fill="#ececec" font-size="11">where shards meet</text>
+
+<rect x="710" y="110" width="140" height="110" rx="8" fill="#1a1a1a" stroke="#a8a8a8" stroke-width="1.5"/>
+<text x="780" y="138" text-anchor="middle" fill="#ececec" font-weight="600">5. binary</text>
+<text x="780" y="160" text-anchor="middle" fill="#a8a8a8">one compiled</text>
+<text x="780" y="178" text-anchor="middle" fill="#a8a8a8">artifact</text>
+<text x="780" y="204" text-anchor="middle" fill="#ececec" font-size="11">runs on every</text>
+<text x="780" y="218" text-anchor="middle" fill="#ececec" font-size="11">chip in the mesh</text>
+</g>
+
+<g stroke="#a8a8a8" stroke-width="1.5">
+<path d="M 170 165 L 196 165" marker-end="url(#arr)"/>
+<path d="M 340 165 L 366 165" marker-end="url(#arr)"/>
+<path d="M 510 165 L 536 165" marker-end="url(#arr)"/>
+<path d="M 680 165 L 706 165" marker-end="url(#arr)"/>
+</g>
+
+<!-- shape key panel -->
+<rect x="30" y="260" width="820" height="180" rx="8" fill="#141414" stroke="#3a3a3a"/>
+<text x="450" y="288" text-anchor="middle" fill="#ececec" font-size="14" font-weight="600">the shape rule</text>
+<text x="450" y="314" text-anchor="middle" fill="#a8a8a8" font-size="13">shapes must be static: one binary per (shape, dtype) key</text>
+<text x="450" y="336" text-anchor="middle" fill="#a8a8a8" font-size="13">change the sequence length and you pay a full recompile</text>
+<text x="450" y="368" text-anchor="middle" fill="#7fd08a" font-size="13">standard answer: bucketed padding, round lengths up to fixed buckets</text>
+<text x="450" y="392" text-anchor="middle" fill="#7fd08a" font-size="13">production code pads to bucket boundaries (128, 256, 512) and compiles once per bucket</text>
+<text x="450" y="424" text-anchor="middle" fill="#e08080" font-size="13">recompiling on every length wastes far more than padding costs</text>
+
+<defs>
+<marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+<path d="M0,0 L8,4 L0,8 z" fill="#a8a8a8"/>
+</marker>
+</defs>
+</svg>
