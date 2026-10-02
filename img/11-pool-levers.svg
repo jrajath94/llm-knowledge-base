@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" font-family="Charis SIL, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="Three levers for a diverse labeler pool">
+<rect x="14" y="12" width="932" height="376" rx="10" fill="#141414" stroke="#2e2e2e"/>
+<text x="32" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#6cb2ff">POOL DESIGN</text>
+<text x="32" y="72" font-size="16" font-weight="700" fill="#ececec">Three levers against demographic skew</text>
+<rect x="32" y="96" width="292" height="252" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="48" y="128" font-size="12" font-weight="700" letter-spacing="1.2" fill="#6cb2ff">LEVER 1: COVERAGE</text>
+<text x="48" y="162" font-size="12.5" fill="#a8a8a8">Map the deployment population.</text>
+<text x="48" y="186" font-size="12.5" fill="#a8a8a8">Staff the pool to cover it.</text>
+<text x="48" y="218" font-size="12.5" fill="#a8a8a8">Medical questions need</text>
+<text x="48" y="242" font-size="12.5" fill="#a8a8a8">medical literacy.</text>
+<rect x="340" y="96" width="292" height="252" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="356" y="128" font-size="12" font-weight="700" letter-spacing="1.2" fill="#6cb2ff">LEVER 2: OVERLAP</text>
+<text x="356" y="162" font-size="12.5" fill="#a8a8a8">Same items across slices.</text>
+<text x="356" y="186" font-size="12.5" fill="#a8a8a8">Measure agreement by slice.</text>
+<text x="356" y="218" font-size="12.5" fill="#a8a8a8">A real preference difference</text>
+<text x="356" y="242" font-size="12.5" fill="#a8a8a8">is data, not noise.</text>
+<rect x="648" y="96" width="292" height="252" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="664" y="128" font-size="12" font-weight="700" letter-spacing="1.2" fill="#6cb2ff">LEVER 3: ROTATION</text>
+<text x="664" y="162" font-size="12.5" fill="#a8a8a8">Rotate across task types.</text>
+<text x="664" y="186" font-size="12.5" fill="#a8a8a8">Retire stale agreement.</text>
+<text x="664" y="218" font-size="12.5" fill="#a8a8a8">A pool that never turns over</text>
+<text x="664" y="242" font-size="12.5" fill="#a8a8a8">measures itself.</text>
+</svg>
