@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="450" viewBox="0 0 960 450">
+  <defs><style>.t{font:bold 22px sans-serif;fill:#1a1a1a}.b{font:bold 13px sans-serif;fill:#fff}.l{font:12px sans-serif;fill:#333}.h{font:bold 14px sans-serif;fill:#1a1a1a}</style></defs>
+  <rect width="960" height="450" fill="#fafafa"/>
+  <text x="480" y="35" text-anchor="middle" class="t">3D Parallelism: DP × TP × PP</text>
+  <!-- Grid visualization -->
+  <g>
+    <!-- DP dimension -->
+    <text x="80" y="90" class="h">Data Parallel (DP=2)</text>
+    <text x="80" y="110" class="l">Different batches</text>
+    <!-- TP dimension -->
+    <text x="380" y="90" class="h">Tensor Parallel (TP=2)</text>
+    <text x="380" y="110" class="l">Split each layer</text>
+    <!-- PP dimension -->
+    <text x="680" y="90" class="h">Pipeline Parallel (PP=2)</text>
+    <text x="680" y="110" class="l">Split layers</text>
+  </g>
+  <!-- 2x2x2 grid -->
+  <g>
+    <!-- DP0 -->
+    <rect x="50" y="140" width="260" height="120" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+    <text x="180" y="165" text-anchor="middle" font-weight="bold" font-size="13">DP Rank 0</text>
+    <rect x="70" y="175" width="110" height="70" rx="4" fill="#1976d2"/><text x="125" y="200" text-anchor="middle" class="b">TP0</text><text x="125" y="220" text-anchor="middle" class="b" font-size="10">PP0: L0-15</text>
+    <rect x="190" y="175" width="110" height="70" rx="4" fill="#1565c0"/><text x="245" y="200" text-anchor="middle" class="b">TP1</text><text x="245" y="220" text-anchor="middle" class="b" font-size="10">PP0: L0-15</text>
+    <!-- DP1 -->
+    <rect x="350" y="140" width="260" height="120" rx="8" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+    <text x="480" y="165" text-anchor="middle" font-weight="bold" font-size="13">DP Rank 1</text>
+    <rect x="370" y="175" width="110" height="70" rx="4" fill="#7b1fa2"/><text x="425" y="200" text-anchor="middle" class="b">TP0</text><text x="425" y="220" text-anchor="middle" class="b" font-size="10">PP1: L16-31</text>
+    <rect x="490" y="175" width="110" height="70" rx="4" fill="#6a1b9a"/><text x="545" y="200" text-anchor="middle" class="b">TP1</text><text x="545" y="220" text-anchor="middle" class="b" font-size="10">PP1: L16-31</text>
+    <!-- Legend -->
+    <rect x="650" y="140" width="260" height="120" rx="8" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+    <text x="780" y="165" text-anchor="middle" font-weight="bold" font-size="13">8 GPUs total</text>
+    <text x="780" y="190" text-anchor="middle" class="l">2 × 2 × 2 = 8</text>
+    <text x="780" y="210" text-anchor="middle" class="l">DP: all-reduce grads</text>
+    <text x="780" y="230" text-anchor="middle" class="l">TP: all-reduce acts</text>
+    <text x="780" y="250" text-anchor="middle" class="l">PP: send/recv acts</text>
+  </g>
+  <g>
+    <rect x="50" y="290" width="860" height="120" rx="8" fill="#e8f5e9" stroke="#388e3c" stroke-width="2"/>
+    <text x="480" y="315" text-anchor="middle" font-weight="bold" font-size="15">ZeRO: Shard optimizer states across DP ranks</text>
+    <text x="480" y="340" text-anchor="middle" class="l">ZeRO-1: shard optimizer. ZeRO-2: + gradients. ZeRO-3: + parameters.</text>
+    <text x="480" y="365" text-anchor="middle" class="l">7B model: 112 GB → 14 GB per GPU (ZeRO-3, 8 GPUs).</text>
+    <text x="480" y="390" text-anchor="middle" class="l" font-style="italic">Rule: TP within node (NVLink), DP across nodes, PP for huge models.</text>
+  </g>
+</svg>
