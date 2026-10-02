@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" font-family="Charis SIL, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="The four-week capstone plan">
+<rect x="14" y="12" width="932" height="276" rx="10" fill="#141414" stroke="#2e2e2e"/>
+<text x="32" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#6cb2ff">CAPSTONE PLAN</text>
+<text x="32" y="72" font-size="16" font-weight="700" fill="#ececec">Four weeks, one replication</text>
+<rect x="32" y="92" width="205" height="176" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="46" y="118" font-size="11" font-weight="700" letter-spacing="1.4" fill="#6cb2ff">WEEK 1</text>
+<text x="46" y="142" font-size="13.5" font-weight="700" fill="#ececec">Pick and triage</text>
+<text x="46" y="168" font-size="12.5" fill="#a8a8a8">Pass 1 over 10 papers.</text>
+<text x="46" y="189" font-size="12.5" fill="#a8a8a8">Pass 2 on 3.</text>
+<text x="46" y="210" font-size="12.5" fill="#a8a8a8">Pick 1 with code.</text>
+<line x1="237" y1="180" x2="257" y2="180" stroke="#6cb2ff" stroke-width="2.4"/>
+<path d="M 248 175 L 257 180 L 248 185" stroke="#6cb2ff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="257" y="92" width="205" height="176" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="271" y="118" font-size="11" font-weight="700" letter-spacing="1.4" fill="#6cb2ff">WEEK 2</text>
+<text x="271" y="142" font-size="13.5" font-weight="700" fill="#ececec">Rebuild</text>
+<text x="271" y="168" font-size="12.5" fill="#a8a8a8">Run the authors' code</text>
+<text x="271" y="189" font-size="12.5" fill="#a8a8a8">or reimplement.</text>
+<text x="271" y="210" font-size="12.5" fill="#a8a8a8">Log every deviation.</text>
+<line x1="462" y1="180" x2="482" y2="180" stroke="#6cb2ff" stroke-width="2.4"/>
+<path d="M 473 175 L 482 180 L 473 185" stroke="#6cb2ff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="482" y="92" width="205" height="176" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="496" y="118" font-size="11" font-weight="700" letter-spacing="1.4" fill="#6cb2ff">WEEK 3</text>
+<text x="496" y="142" font-size="13.5" font-weight="700" fill="#ececec">Run</text>
+<text x="496" y="168" font-size="12.5" fill="#a8a8a8">Preregister the</text>
+<text x="496" y="189" font-size="12.5" fill="#a8a8a8">comparison. Run it.</text>
+<text x="496" y="210" font-size="12.5" fill="#a8a8a8">Do not peek early.</text>
+<line x1="687" y1="180" x2="707" y2="180" stroke="#6cb2ff" stroke-width="2.4"/>
+<path d="M 698 175 L 707 180 L 698 185" stroke="#6cb2ff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="707" y="92" width="205" height="176" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="721" y="118" font-size="11" font-weight="700" letter-spacing="1.4" fill="#6cb2ff">WEEK 4</text>
+<text x="721" y="142" font-size="13.5" font-weight="700" fill="#ececec">Compare and write up</text>
+<text x="721" y="168" font-size="12.5" fill="#a8a8a8">Your numbers vs theirs.</text>
+<text x="721" y="189" font-size="12.5" fill="#a8a8a8">Hunt confounders.</text>
+<text x="721" y="210" font-size="12.5" fill="#a8a8a8">Four-part writeup.</text>
+</svg>
