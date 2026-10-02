@@ -1,14 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="560" height="320" viewBox="0 0 560 320" role="img" aria-label="Judge staleness: kappa decays as the world moves">
-<rect width="560" height="320" fill="#ffffff"/>
-<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<style>text{font-family:'Charis SIL',Georgia,serif;fill:#ececec} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#a8a8a8} .b{font-weight:700}</style>
 <text x="280" y="36" text-anchor="middle" class="t">Judge staleness: kappa decays</text>
 <text x="280" y="58" text-anchor="middle" class="xs">A calibrated judge goes stale. Re-calibrate on a schedule.</text>
-<rect x="70" y="90" width="420" height="160" fill="none" stroke="#6b7280"/>
+<rect x="70" y="90" width="420" height="160" fill="none" stroke="#a8a8a8" />
 <text x="280.0" y="274" text-anchor="middle" class="xs">time since calibration</text>
 <text x="60" y="104" text-anchor="end" class="xs">kappa</text>
-<path d="M70,110 L91,110 L112,111 L133,113 L154,114 L175,117 L196,120 L217,124 L238,128 L259,133 L280,138 L301,144 L322,150 L343,157 L364,165 L385,173 L406,182 L427,191 L448,201 L469,211 L490,222" fill="none" stroke="#dc2626" stroke-width="3"/>
-<line x1="70" y1="200" x2="490" y2="200" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="6,4"/>
+<path d="M70,110 L91,110 L112,111 L133,113 L154,114 L175,117 L196,120 L217,124 L238,128 L259,133 L280,138 L301,144 L322,150 L343,157 L364,165 L385,173 L406,182 L427,191 L448,201 L469,211 L490,222" fill="none" stroke="#e57373" stroke-width="3" />
+<line x1="70" y1="200" x2="490" y2="200" stroke="#ececec" stroke-width="1.5" stroke-dasharray="6,4" />
 <text x="486" y="190" text-anchor="end" class="xs">your bar (e.g. 0.6)</text>
-<text x="370" y="230" class="s" fill="#dc2626">re-calibrate here</text>
+<text x="370" y="230" class="s" fill="#e57373">re-calibrate here</text>
 <text x="280" y="300" text-anchor="middle" class="xs">Distribution shift, prompt leakage, and gaming all push kappa down.</text>
 </svg>
