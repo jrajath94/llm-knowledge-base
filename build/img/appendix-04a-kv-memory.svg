@@ -1,0 +1,11 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 400' width='100%' role='img' aria-label='The KV memory bill at 128k tokens (32 layers, 4096 wide, fp16)'>
+<rect x='0' y='0' width='960' height='400' fill='#0d0d0d'/>
+<text x='24' y='36' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec'>The KV memory bill at 128k tokens (32 layers, 4096 wide, fp16)</text>
+<rect x='180' y='100' width='700.0' height='48' rx='8' fill='#e57373' opacity='0.85'/>
+<text x='24' y='130' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='start'>Full cache</text>
+<text x='892.0' y='130' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='700' fill='#ececec' text-anchor='start'>64 GB</text>
+<rect x='180' y='190' width='142.1875' height='48' rx='8' fill='#7fd08a' opacity='0.85'/>
+<text x='24' y='220' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='start'>H2O 20% budget</text>
+<text x='334.1875' y='220' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='700' fill='#ececec' text-anchor='start'>13 GB</text>
+<text x='24' y='330' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>0.5 MB per token x 128,000 tokens = 64 GB. H2O matches full-cache accuracy at 20% of the budget.</text>
+</svg>
