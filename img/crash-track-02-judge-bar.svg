@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 330" width="100%" style="max-width:660px" role="img" aria-label="Judge kappa 0.375 labeled fair and not licensed, against the human-vs-human ceiling near 0.8">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+.ax{stroke:#5a5a5a;stroke-width:1.5}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="30">The judge is licensed only at the human ceiling</text>
+<text class="m" x="24" y="54">Cohen's kappa on the same 100 items. Scale: -1 to 1.</text>
+<text class="big" x="24" y="96">Your judge vs humans</text>
+<rect class="box" x="220" y="78" width="360" height="26" rx="4"/>
+<rect x="220" y="78" width="135" height="26" fill="#e57373" rx="4"/>
+<text class="num" x="590" y="97">0.375</text>
+<text class="r" x="24" y="126">"fair" - not licensed for anything important</text>
+<text class="big" x="24" y="168">Human vs human</text>
+<rect class="box" x="220" y="150" width="360" height="26" rx="4"/>
+<rect x="220" y="150" width="288" height="26" fill="#7fc97f" rx="4"/>
+<text class="num" x="590" y="169">0.80</text>
+<text class="gr" x="24" y="198">the ceiling: the license bar</text>
+<text class="m" x="24" y="238">The 0.425 gap is chance agreement the raw 75 percent hid.</text>
+<text class="m" x="24" y="260">Below the ceiling, the judge is a filter, not a substitute.</text>
+<text class="m" x="24" y="292">Landis-Koch scale: 0.375 counts as "fair". License at about 0.8.</text></svg>
