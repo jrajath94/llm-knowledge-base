@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" font-family="Charis SIL, Georgia, serif" role="img">
+<rect x="0" y="0" width="880" height="420" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Figure 2.8. Kill early or kill late</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">The kill criteria decide when. The calendar decides the price.</text>
+<text x="24" y="100" font-size="14" font-weight="bold" fill="#7bc98a">Kill in week 2</text>
+<rect x="24" y="115" width="832" height="14" fill="#1c1c1c" rx="7"/>
+<rect x="24" y="115" width="120" height="14" fill="#7bc98a" rx="7"/>
+<text x="24" y="160" font-size="13" fill="#ececec">Cost: <tspan font-weight="bold">one week</tspan>. The team moves on. The sponsor trusts you.</text>
+<text x="24" y="230" font-size="14" font-weight="bold" fill="#e57ea6">Kill in month 4</text>
+<rect x="24" y="245" width="832" height="14" fill="#1c1c1c" rx="7"/>
+<rect x="24" y="245" width="832" height="14" fill="#e57ea6" rx="7" opacity="0.55"/>
+<text x="24" y="290" font-size="13" fill="#ececec">Cost: <tspan font-weight="bold">the relationship</tspan>. Four months of budget burned on a zombie.</text>
+<rect x="24" y="330" width="832" height="56" fill="#141414" stroke="#f0b429" stroke-width="1.5" rx="6"/>
+<text x="440" y="364" font-size="13" fill="#ececec" text-anchor="middle">Write the kill criteria before building. Triggering one is a success, not a failure.</text>
+</svg>
