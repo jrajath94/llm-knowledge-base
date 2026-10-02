@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="680" height="300" role="img" aria-label="Disaggregated prefill and decode: separate GPU pools for each phase">
+<style>
+.t { font: 600 13px system-ui, sans-serif; fill: #1a1a1a; }
+.s { font: 400 11px system-ui, sans-serif; fill: #444; }
+.b { font: 700 12px system-ui, sans-serif; fill: #fff; }
+.box { fill: #f5f7fa; stroke: #2a6db5; stroke-width: 1.5; rx: 6; }
+.box2 { fill: #eef6ee; stroke: #2e7d32; stroke-width: 1.5; rx: 6; }
+.box3 { fill: #fff8e6; stroke: #b7791f; stroke-width: 1.5; rx: 6; }
+.arr { stroke: #333; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#333"/></marker></defs>
+<rect width="680" height="300" fill="#ffffff"/>
+<text x="20" y="28" class="t">Disaggregated prefill/decode: split the two phases</text><rect x="20" y="50" width="200" height="120" class="box"/><text x="35" y="75" class="s">Prefill pool</text><text x="35" y="97" class="s">Compute-bound.</text><text x="35" y="119" class="s">High FLOPS GPUs.</text><text x="35" y="141" class="s">Sets time to first token.</text><rect x="460" y="50" width="200" height="120" class="box2"/><text x="475" y="75" class="s">Decode pool</text><text x="475" y="97" class="s">Memory-bound.</text><text x="475" y="119" class="s">High bandwidth GPUs.</text><text x="475" y="141" class="s">Sets tokens per second.</text><line x1="220" y1="110" x2="455" y2="110" class="arr"/><text x="250" y="100" class="s">KV cache ships over network</text><text x="20" y="210" class="s">Why: prefill wants FLOPS, decode wants memory bandwidth.</text><text x="20" y="232" class="s">One pool cannot be optimal for both. Split them, pay the transfer cost.</text><text x="20" y="254" class="s">What breaks: the KV transfer becomes the bottleneck if the network is slow.</text></svg>
