@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="100%" style="max-width:720px" role="img" aria-label="Checkpoint after the work, not before: a checkpoint written before the side effect fires skips work that never happened on resume">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.big{font-size:13px;font-weight:700}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="32">Checkpoint after the work, not before</text>
+<text class="m" x="24" y="54">The checkpoint stores the idempotency keys of completed side effects.</text>
+
+<text class="big gr" x="24" y="92">CORRECT: work, then checkpoint</text>
+<rect class="box" x="24" y="104" width="120" height="46" rx="8"/><text class="m" x="84" y="132" text-anchor="middle">do the work</text>
+<rect class="box" x="168" y="104" width="140" height="46" rx="8"/><text class="m" x="238" y="132" text-anchor="middle">checkpoint</text>
+<rect class="box" x="332" y="104" width="120" height="46" rx="8"/><text class="m" x="392" y="132" text-anchor="middle">crash</text>
+<rect class="box" x="476" y="104" width="200" height="46" rx="8" stroke="#7fc97f"/><text class="m gr" x="576" y="126" text-anchor="middle">resume: replays keys,</text><text class="m gr" x="576" y="142" text-anchor="middle">skips nothing real</text>
+<line class="arr" x1="144" y1="127" x2="162" y2="127"/>
+<line class="arr" x1="308" y1="127" x2="326" y2="127"/>
+<line class="arr" x1="452" y1="127" x2="470" y2="127"/>
+
+<text class="big r" x="24" y="192">WRONG: checkpoint, then work</text>
+<rect class="box" x="24" y="204" width="140" height="46" rx="8"/><text class="m" x="94" y="232" text-anchor="middle">checkpoint</text>
+<rect class="box" x="188" y="204" width="120" height="46" rx="8"/><text class="m" x="248" y="232" text-anchor="middle">do the work</text>
+<rect class="box" x="332" y="204" width="200" height="46" rx="8" stroke="#e57373"/><text class="m r" x="432" y="226" text-anchor="middle">crash mid-work</text><text class="m r" x="432" y="242" text-anchor="middle">(side effect may have fired)</text>
+<line class="arr" x1="164" y1="227" x2="182" y2="227"/>
+<line class="arr" x1="308" y1="227" x2="326" y2="227"/>
+<rect class="box" x="24" y="266" width="300" height="46" rx="8" stroke="#e57373"/><text class="m r" x="174" y="288" text-anchor="middle">resume: keys say "done" - work skipped</text>
+<text class="m r" x="348" y="294">work that never happened is now "complete"</text>
+
+<text class="m" x="24" y="344">A checkpoint written before the side effect fires will skip work that never happened on resume.</text>
+</svg>
