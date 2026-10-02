@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="100%" style="max-width:720px" role="img" aria-label="Context rot: the goal slides out of attention over long runs; the fix is compaction plus milestone re-injection">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.big{font-size:13px;font-weight:700}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="32">Context rot: the goal slides out of attention</text>
+<text class="m" x="24" y="54">Over long runs the agent starts optimizing a subgoal it invented hours ago.</text>
+
+<rect class="box" x="24" y="76" width="150" height="60" rx="8" stroke="#7fc97f"/><text class="big gr" x="99" y="104" text-anchor="middle">step 1</text><text class="m" x="99" y="124" text-anchor="middle">goal is clear</text>
+<rect class="box" x="198" y="76" width="150" height="60" rx="8"/><text class="big" x="273" y="104" text-anchor="middle">step 15</text><text class="m" x="273" y="124" text-anchor="middle">goal is background</text>
+<rect class="box" x="372" y="76" width="150" height="60" rx="8"/><text class="big" x="447" y="104" text-anchor="middle">step 30</text><text class="m" x="447" y="124" text-anchor="middle">goal is faint</text>
+<rect class="box" x="546" y="76" width="150" height="60" rx="8" stroke="#e57373"/><text class="big r" x="621" y="104" text-anchor="middle">step 45</text><text class="m r" x="621" y="124" text-anchor="middle">invented subgoal</text>
+<line class="arr" x1="174" y1="106" x2="192" y2="106"/>
+<line class="arr" x1="348" y1="106" x2="366" y2="106"/>
+<line class="arr" x1="522" y1="106" x2="540" y2="106"/>
+
+<text class="big g" x="24" y="176">The fix has two parts</text>
+<rect class="box" x="24" y="190" width="330" height="90" rx="8" stroke="#f0b429"/>
+<text class="big" x="40" y="218">1. compaction</text>
+<text class="m" x="40" y="242">summarize old steps, keep the task text</text>
+<text class="m" x="40" y="262">verbatim so the goal cannot rot</text>
+<rect class="box" x="378" y="190" width="318" height="90" rx="8" stroke="#f0b429"/>
+<text class="big" x="394" y="218">2. milestone re-injection</text>
+<text class="m" x="394" y="242">re-state the original goal at each</text>
+<text class="m" x="394" y="262">milestone boundary; grade milestones</text>
+
+<rect class="box" x="24" y="300" width="672" height="56" rx="8"/>
+<text class="m" x="360" y="324" text-anchor="middle">A 100k-token prompt does not get 100k tokens of attention.</text>
+<text class="m" x="360" y="344" text-anchor="middle">Compaction is about putting the right tokens in the right positions, not just fitting.</text>
+</svg>
