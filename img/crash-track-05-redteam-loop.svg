@@ -1,23 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="560" height="300" viewBox="0 0 560 300" role="img" aria-label="Red-team loop: from finding to regression test">
-<rect width="560" height="300" fill="#ffffff"/>
-<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<style>text{font-family:'Charis SIL',Georgia,serif;fill:#ececec} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#a8a8a8} .b{font-weight:700}</style>
 <text x="280" y="36" text-anchor="middle" class="t">Red-team loop</text>
 <text x="280" y="58" text-anchor="middle" class="xs">Every finding becomes a permanent test.</text>
-<rect x="70" y="110" width="100" height="60" rx="30" fill="#dc2626"/>
-<text x="120" y="146" text-anchor="middle" class="s b" fill="#fff">Find</text>
-<line x1="170" y1="140" x2="200" y2="140" stroke="#1a1a1a" stroke-width="2"/>
-<polygon points="200,132 212,140 200,148" fill="#1a1a1a"/>
-<rect x="200" y="110" width="100" height="60" rx="30" fill="#d97706"/>
-<text x="250" y="146" text-anchor="middle" class="s b" fill="#fff">Reproduce</text>
-<line x1="300" y1="140" x2="330" y2="140" stroke="#1a1a1a" stroke-width="2"/>
-<polygon points="330,132 342,140 330,148" fill="#1a1a1a"/>
-<rect x="330" y="110" width="100" height="60" rx="30" fill="#2563eb"/>
-<text x="380" y="146" text-anchor="middle" class="s b" fill="#fff">Fix</text>
-<line x1="430" y1="140" x2="460" y2="140" stroke="#1a1a1a" stroke-width="2"/>
-<polygon points="460,132 472,140 460,148" fill="#1a1a1a"/>
-<rect x="460" y="110" width="100" height="60" rx="30" fill="#16a34a"/>
-<text x="510" y="146" text-anchor="middle" class="s b" fill="#fff">Regression test</text>
-<path d="M470,170 C470,240 90,240 90,176" fill="none" stroke="#6b7280" stroke-width="2" stroke-dasharray="6,4"/>
-<polygon points="90,164 78,178 102,178" fill="#6b7280"/>
+<rect x="70" y="110" width="100" height="60" rx="30" fill="#e57373" />
+<text x="120" y="146" text-anchor="middle" class="s b" fill="#fff" style="fill:#1a1a1a">Find</text>
+<line x1="170" y1="140" x2="200" y2="140" stroke="#ececec" stroke-width="2" />
+<polygon points="200,132 212,140 200,148" fill="#ececec" />
+<rect x="200" y="110" width="100" height="60" rx="30" fill="#f0b429" />
+<text x="250" y="146" text-anchor="middle" class="s b" fill="#fff" style="fill:#1a1a1a">Reproduce</text>
+<line x1="300" y1="140" x2="330" y2="140" stroke="#ececec" stroke-width="2" />
+<polygon points="330,132 342,140 330,148" fill="#ececec" />
+<rect x="330" y="110" width="100" height="60" rx="30" fill="#6cb2ff" />
+<text x="380" y="146" text-anchor="middle" class="s b" fill="#fff" style="fill:#1a1a1a">Fix</text>
+<line x1="430" y1="140" x2="460" y2="140" stroke="#ececec" stroke-width="2" />
+<polygon points="460,132 472,140 460,148" fill="#ececec" />
+<rect x="460" y="110" width="100" height="60" rx="30" fill="#7fc97f" />
+<text x="510" y="146" text-anchor="middle" class="s b" fill="#fff" style="fill:#1a1a1a">Regression test</text>
+<path d="M470,170 C470,240 90,240 90,176" fill="none" stroke="#a8a8a8" stroke-width="2" stroke-dasharray="6,4" />
+<polygon points="90,164 78,178 102,178" fill="#a8a8a8" />
 <text x="280" y="262" text-anchor="middle" class="xs">The loop never ends: new attacks feed the next round.</text>
 </svg>
