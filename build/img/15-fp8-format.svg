@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="350" viewBox="0 0 600 350" font-family="sans-serif">
+<rect width="600" height="350" fill="#ffffff"/>
+<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+<text x="300" y="30" text-anchor="middle" font-size="18" font-weight="bold">FP8 Format (E4M3)</text>
+<rect x="100" y="80" width="40" height="50" fill="#e8f0fe" stroke="#333"/>
+<text x="120" y="110" text-anchor="middle" font-size="12">S</text>
+<rect x="140" y="80" width="160" height="50" fill="#fef7e0" stroke="#333"/>
+<text x="220" y="110" text-anchor="middle" font-size="12">Exponent (4)</text>
+<rect x="300" y="80" width="120" height="50" fill="#e6f4ea" stroke="#333"/>
+<text x="360" y="110" text-anchor="middle" font-size="12">Mantissa (3)</text>
+<text x="300" y="180" text-anchor="middle" font-size="12" fill="#555">8 bits total. Half the size of FP16.</text>
+</svg>
