@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 436" width="100%" style="max-width:680px" role="img" aria-label="Disaggregation decision gate: split only if KV transfer stays under a quarter of TTFT and costs less than the interference it removes">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+.ax{stroke:#5a5a5a;stroke-width:1.5}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+.cell{font-size:13px;font-weight:700}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="30">The disaggregation gate: two numbers decide</text>
+<text class="m" x="24" y="52">Disaggregation is the optimization you graduate to with measurements in hand.</text>
+<polygon points="340,80 470,130 340,180 210,130" fill="#141414" stroke="#f0b429" stroke-width="1.5"/>
+<text class="big" x="340" y="124" text-anchor="middle">Transfer under</text>
+<text class="big" x="340" y="144" text-anchor="middle">1/4 of TTFT?</text>
+<polygon points="340,210 470,260 340,310 210,260" fill="#141414" stroke="#f0b429" stroke-width="1.5"/>
+<text class="big" x="340" y="254" text-anchor="middle">Cheaper than the</text>
+<text class="big" x="340" y="274" text-anchor="middle">interference removed?</text>
+<line class="arr" x1="340" y1="180" x2="340" y2="210"/>
+<text class="gr" x="352" y="200">yes</text>
+<rect class="box" x="500" y="105" width="150" height="50" rx="8"/>
+<text class="m" x="575" y="126" text-anchor="middle">Stay shared:</text>
+<text class="m" x="575" y="144" text-anchor="middle">chunked prefill</text>
+<line class="arr" x1="470" y1="130" x2="500" y2="130"/>
+<text class="r" x="478" y="122">no</text>
+<rect class="box" x="500" y="235" width="150" height="50" rx="8"/>
+<text class="m" x="575" y="256" text-anchor="middle">Stay shared:</text>
+<text class="m" x="575" y="274" text-anchor="middle">chunked prefill</text>
+<line class="arr" x1="470" y1="260" x2="500" y2="260"/>
+<text class="r" x="478" y="252">no</text>
+<rect class="box" x="240" y="330" width="200" height="56" rx="8" stroke="#7fc97f"/>
+<text class="gr" x="340" y="353" text-anchor="middle" font-weight="700">SPLIT</text>
+<text class="m" x="340" y="373" text-anchor="middle">prefill pool + decode pool</text>
+<line class="arr" x1="340" y1="310" x2="340" y2="330"/>
+<text class="gr" x="352" y="326">yes</text>
+<text class="m" x="24" y="414">Do not split when prompts are short, when one pool would idle, or when the team cannot run the transfer layer.</text>
+</svg>
