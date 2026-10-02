@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="520" viewBox="0 0 840 520" role="img" aria-label="The noisy neighbor: FIFO gives the bursting team 96 percent of GPU time; weighted fair scheduling gives 75 to 25">
+<rect width="840" height="520" fill="#0d0d0d"/>
+<text x="420" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">The noisy neighbor: FIFO is not fair</text>
+<text x="420" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Team C bursts at 240,000 requests per second. Team D trickles at 9,700 per second.</text>
+
+<g font-family="system-ui,-apple-system,sans-serif">
+<rect x="30" y="90" width="375" height="200" rx="10" fill="#1a1a1a" stroke="#e08080" stroke-width="1.5"/>
+<text x="217" y="122" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#e08080">Single FIFO queue</text>
+<text x="217" y="150" text-anchor="middle" font-size="12" fill="#ececec">Service follows arrivals.</text>
+<rect x="60" y="165" width="315" height="22" rx="11" fill="#141414"/>
+<rect x="60" y="165" width="302" height="22" rx="11" fill="#e08080" opacity="0.75"/>
+<rect x="60" y="165" width="13" height="22" rx="11" fill="#6cb2ff"/>
+<text x="217" y="204" text-anchor="middle" font-size="12.5" fill="#ececec">C: 96% of GPU time</text>
+<text x="217" y="226" text-anchor="middle" font-size="12.5" fill="#ececec">D: 4% (waits behind C's backlog)</text>
+<text x="217" y="258" text-anchor="middle" font-size="11.5" fill="#a8a8a8">D did nothing wrong and gets nothing.</text>
+
+<rect x="435" y="90" width="375" height="200" rx="10" fill="#1a1a1a" stroke="#7fd08a" stroke-width="1.5"/>
+<text x="622" y="122" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#7fd08a">Fair scheduling, weights 3:1</text>
+<text x="622" y="150" text-anchor="middle" font-size="12" fill="#ececec">Service is divided deliberately.</text>
+<rect x="465" y="165" width="315" height="22" rx="11" fill="#141414"/>
+<rect x="465" y="165" width="236" height="22" rx="11" fill="#e08080" opacity="0.55"/>
+<rect x="701" y="165" width="79" height="22" rx="11" fill="#6cb2ff" opacity="0.85"/>
+<text x="622" y="204" text-anchor="middle" font-size="12.5" fill="#ececec">C: 75% — D: 25%</text>
+<text x="622" y="226" text-anchor="middle" font-size="12" fill="#ececec">D's next request runs within a</text>
+<text x="622" y="246" text-anchor="middle" font-size="12" fill="#ececec">bounded number of turns.</text>
+<text x="622" y="272" text-anchor="middle" font-size="11.5" fill="#a8a8a8">No matter how large C's backlog grows.</text>
+</g>
+
+<rect x="30" y="320" width="780" height="160" rx="10" fill="#141414" stroke="#2e9e5b" stroke-width="1"/>
+<text x="420" y="352" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="bold" fill="#2e9e5b">Fair scheduling divides service among the tenants that have work waiting.</text>
+<text x="420" y="380" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">Weights let a bigger contract earn a bigger share without taking everything.</text>
+<text x="420" y="404" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">Weighted round robin works when requests cost about the same.</text>
+<text x="420" y="428" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">Deficit round robin charges each tenant for cost, so expensive jobs burn credit faster.</text>
+<text x="420" y="452" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">Dominant Resource Fairness equalizes dominant shares across CPU, memory, GPU, and bandwidth.</text>
+</svg>
