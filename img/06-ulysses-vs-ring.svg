@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" font-family="Charis SIL, Georgia, serif" role="img">
+<defs><marker id="ah3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#f0b429"/></marker>
+<marker id="ah4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#7dd87d"/></marker></defs>
+<rect x="0" y="0" width="880" height="470" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">Two ways to shard long sequences: Ulysses vs ring attention</text>
+<text x="24" y="64" font-size="15" font-weight="bold" fill="#f0b429">Ulysses: all-to-all flips the layout</text>
+<text x="24" y="88" font-size="12" fill="#8a8a8a">sequence shards -&gt; head shards, attention runs locally</text>
+<rect x="30" y="150" width="80" height="56" fill="#141414" stroke="#6cb2ff" stroke-width="2" rx="6"/>
+<text x="70" y="184" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">G0</text>
+<rect x="125" y="150" width="80" height="56" fill="#141414" stroke="#6cb2ff" stroke-width="2" rx="6"/>
+<text x="165" y="184" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">G1</text>
+<rect x="220" y="150" width="80" height="56" fill="#141414" stroke="#6cb2ff" stroke-width="2" rx="6"/>
+<text x="260" y="184" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">G2</text>
+<rect x="315" y="150" width="80" height="56" fill="#141414" stroke="#6cb2ff" stroke-width="2" rx="6"/>
+<text x="355" y="184" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">G3</text>
+<path d="M 70 220 Q 120 280 170 220" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah3)"/>
+<path d="M 165 220 Q 215 280 265 220" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah3)"/>
+<path d="M 260 220 Q 310 280 360 220" stroke="#f0b429" stroke-width="2" fill="none" marker-end="url(#ah3)"/>
+<text x="215" y="300" font-size="12" fill="#f0b429" text-anchor="middle">all-to-all: 2 per layer</text>
+<text x="215" y="330" font-size="12" fill="#ececec" text-anchor="middle">each GPU gets all tokens</text>
+<text x="215" y="350" font-size="12" fill="#ececec" text-anchor="middle">for its head shard</text>
+<text x="460" y="64" font-size="15" font-weight="bold" fill="#7dd87d">Ring: K/V blocks rotate</text>
+<text x="460" y="88" font-size="12" fill="#8a8a8a">point-to-point sends overlap with compute</text>
+<rect x="470" y="150" width="80" height="56" fill="#141414" stroke="#7dd87d" stroke-width="2" rx="6"/>
+<text x="510" y="184" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">G0</text>
+<rect x="565" y="150" width="80" height="56" fill="#141414" stroke="#7dd87d" stroke-width="2" rx="6"/>
+<text x="605" y="184" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">G1</text>
+<rect x="660" y="150" width="80" height="56" fill="#141414" stroke="#7dd87d" stroke-width="2" rx="6"/>
+<text x="700" y="184" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">G2</text>
+<rect x="755" y="150" width="80" height="56" fill="#141414" stroke="#7dd87d" stroke-width="2" rx="6"/>
+<text x="795" y="184" font-size="13" font-weight="bold" fill="#ececec" text-anchor="middle">G3</text>
+<path d="M 590 178 Q 640 150 690 178" stroke="#7dd87d" stroke-width="2" fill="none" marker-end="url(#ah4)"/>
+<path d="M 590 232 Q 640 260 690 232" stroke="#7dd87d" stroke-width="2" fill="none" marker-end="url(#ah4)"/>
+<text x="640" y="300" font-size="12" fill="#7dd87d" text-anchor="middle">K/V block passes to neighbor</text>
+<text x="640" y="330" font-size="12" fill="#ececec" text-anchor="middle">blockwise softmax with</text>
+<text x="640" y="350" font-size="12" fill="#ececec" text-anchor="middle">running max and norm sum</text>
+<text x="24" y="420" font-size="13" fill="#f0b429">Rule of thumb: Ulysses moves more bytes per layer; ring keeps memory flat as GPUs join.</text>
+</svg>
