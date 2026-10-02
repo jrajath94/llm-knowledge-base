@@ -1,22 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="560" height="300" viewBox="0 0 560 300" role="img" aria-label="Wilson interval: 20 out of 20 is not 100 percent">
-<rect width="560" height="300" fill="#ffffff"/>
-<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<style>text{font-family:'Charis SIL',Georgia,serif;fill:#ececec} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#a8a8a8} .b{font-weight:700}</style>
 <text x="280" y="36" text-anchor="middle" class="t">Wilson interval: 20/20 is not 100%</text>
 <text x="280" y="58" text-anchor="middle" class="xs">20 hits out of 20 tries. 95% confidence.</text>
-<line x1="80" y1="150" x2="500" y2="150" stroke="#1a1a1a" stroke-width="2"/>
-<line x1="80.0" y1="144" x2="80.0" y2="156" stroke="#1a1a1a"/>
+<line x1="80" y1="150" x2="500" y2="150" stroke="#ececec" stroke-width="2" />
+<line x1="80.0" y1="144" x2="80.0" y2="156" stroke="#ececec" />
 <text x="80.0" y="176" text-anchor="middle" class="xs">0.7</text>
-<line x1="220.00000000000014" y1="144" x2="220.00000000000014" y2="156" stroke="#1a1a1a"/>
+<line x1="220.00000000000014" y1="144" x2="220.00000000000014" y2="156" stroke="#ececec" />
 <text x="220.00000000000014" y="176" text-anchor="middle" class="xs">0.8</text>
-<line x1="360.0000000000001" y1="144" x2="360.0000000000001" y2="156" stroke="#1a1a1a"/>
+<line x1="360.0000000000001" y1="144" x2="360.0000000000001" y2="156" stroke="#ececec" />
 <text x="360.0000000000001" y="176" text-anchor="middle" class="xs">0.9</text>
-<line x1="500.0000000000001" y1="144" x2="500.0000000000001" y2="156" stroke="#1a1a1a"/>
+<line x1="500.0000000000001" y1="144" x2="500.0000000000001" y2="156" stroke="#ececec" />
 <text x="500.0000000000001" y="176" text-anchor="middle" class="xs">1.0</text>
-<circle cx="500.0000000000001" cy="110" r="7" fill="#dc2626"/>
+<circle cx="500.0000000000001" cy="110" r="7" fill="#e57373" />
 <text x="500.0000000000001" y="92" text-anchor="middle" class="s">Naive: 100%</text>
-<rect x="274.6" y="195" width="225.4000000000001" height="18" fill="#2563eb" opacity="0.85"/>
-<line x1="274.6" y1="190" x2="274.6" y2="218" stroke="#1a1a1a" stroke-width="2"/>
-<line x1="500.0000000000001" y1="190" x2="500.0000000000001" y2="218" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="274.6" y="195" width="225.4000000000001" height="18" fill="#6cb2ff" opacity="0.85" />
+<line x1="274.6" y1="190" x2="274.6" y2="218" stroke="#ececec" stroke-width="2" />
+<line x1="500.0000000000001" y1="190" x2="500.0000000000001" y2="218" stroke="#ececec" stroke-width="2" />
 <text x="387.30000000000007" y="242" text-anchor="middle" class="s">Wilson: [0.839, 1.000]</text>
 <text x="280" y="262" text-anchor="middle" class="xs">The honest bar is wide. 20 successes buy less certainty than you feel.</text>
 </svg>
