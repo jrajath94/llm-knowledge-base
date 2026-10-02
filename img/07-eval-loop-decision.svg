@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="385" viewBox="0 0 800 385" font-family="DejaVu Sans, sans-serif">
+<defs><style>.t{font-size:13px;fill:#1a3a5c;font-weight:bold}.b{font-size:11.5px;fill:#333333}.s{font-size:10.5px;fill:#555555}.box{fill:#f4f7fa;stroke:#1a3a5c;stroke-width:1.5;rx:8}.box2{fill:#eef6f3;stroke:#2a9d8f;stroke-width:1.5;rx:8}.box3{fill:#fdf3ec;stroke:#e76f51;stroke-width:1.5;rx:8}.arr{stroke:#1a3a5c;stroke-width:2;fill:none;marker-end:url(#ah)}</style><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#1a3a5c"/></marker></defs>
+<text x="400" y="30" text-anchor="middle" class="t" font-size="15">The post-training eval loop</text>
+<rect x="250" y="55" width="300" height="80" class="box"/>
+<text x="400.0" y="77" text-anchor="middle" class="t">Train one stage</text>
+<text x="400.0" y="97" text-anchor="middle" class="b">SFT, DPO, or one RL run</text>
+<path d="M400,135 L400,160" class="arr"/>
+<rect x="250" y="160" width="300" height="80" class="box2"/>
+<text x="400.0" y="182" text-anchor="middle" class="t">Run the frozen eval suite</text>
+<text x="400.0" y="202" text-anchor="middle" class="b">capability, safety,</text>
+<text x="400.0" y="220" text-anchor="middle" class="b">regression, and human evals</text>
+<path d="M400,240 L400,265" class="arr"/>
+<rect x="250" y="265" width="300" height="90" class="box3"/>
+<text x="400" y="295" text-anchor="middle" class="t">Did it improve?</text>
+<text x="400" y="315" text-anchor="middle" class="b">no regressions, gains hold</text>
+<text x="400" y="335" text-anchor="middle" class="b">on held-out prompts</text>
+<path d="M250,310 L120,310" class="arr"/>
+<text x="80" y="300" text-anchor="middle" class="s">no: diagnose,</text>
+<text x="80" y="314" text-anchor="middle" class="s">fix data, retry</text>
+<path d="M550,310 L680,310" class="arr"/>
+<text x="720" y="300" text-anchor="middle" class="s">yes: lock the</text>
+<text x="720" y="314" text-anchor="middle" class="s">checkpoint,</text>
+<text x="720" y="328" text-anchor="middle" class="s">next stage</text>
+</svg>
