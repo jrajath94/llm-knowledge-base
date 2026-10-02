@@ -1,20 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="450" viewBox="0 0 700 450" font-family="sans-serif">
-<rect width="700" height="450" fill="#ffffff"/>
-<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
-<text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold">GPU Memory Hierarchy</text>
-<rect x="200" y="60" width="300" height="60" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
-<text x="350.0" y="88" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">Registers</text>
-<text x="350.0" y="108" text-anchor="middle" font-size="11" fill="#555">Fastest, per-thread</text>
-<rect x="200" y="135" width="300" height="60" rx="8" fill="#fef7e0" stroke="#1a73e8" stroke-width="2"/>
-<text x="350.0" y="163" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">Shared Memory</text>
-<text x="350.0" y="183" text-anchor="middle" font-size="11" fill="#555">Fast, per-block</text>
-<rect x="200" y="210" width="300" height="60" rx="8" fill="#e6f4ea" stroke="#1a73e8" stroke-width="2"/>
-<text x="350.0" y="238" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">L1 Cache</text>
-<text x="350.0" y="258" text-anchor="middle" font-size="11" fill="#555">Per-SM</text>
-<rect x="200" y="285" width="300" height="60" rx="8" fill="#fce8e6" stroke="#1a73e8" stroke-width="2"/>
-<text x="350.0" y="313" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">L2 Cache</text>
-<text x="350.0" y="333" text-anchor="middle" font-size="11" fill="#555">Shared, 50MB</text>
-<rect x="200" y="360" width="300" height="60" rx="8" fill="#f3e8fd" stroke="#1a73e8" stroke-width="2"/>
-<text x="350.0" y="388" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">HBM</text>
-<text x="350.0" y="408" text-anchor="middle" font-size="11" fill="#555">Slow, 80GB, 3.35 TB/s</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="450" viewBox="0 0 700 450" font-family="'Charis SIL',Georgia,serif">
+<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#8a8a8a" /></marker></defs>
+<text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" style="fill:#ececec">GPU Memory Hierarchy</text>
+<rect x="200" y="60" width="300" height="60" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2" />
+<text x="350.0" y="88" text-anchor="middle" font-size="14" font-weight="bold" fill="#ececec">Registers</text>
+<text x="350.0" y="108" text-anchor="middle" font-size="11" fill="#a8a8a8">Fastest, per-thread</text>
+<rect x="200" y="135" width="300" height="60" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2" />
+<text x="350.0" y="163" text-anchor="middle" font-size="14" font-weight="bold" fill="#ececec">Shared Memory</text>
+<text x="350.0" y="183" text-anchor="middle" font-size="11" fill="#a8a8a8">Fast, per-block</text>
+<rect x="200" y="210" width="300" height="60" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2" />
+<text x="350.0" y="238" text-anchor="middle" font-size="14" font-weight="bold" fill="#ececec">L1 Cache</text>
+<text x="350.0" y="258" text-anchor="middle" font-size="11" fill="#a8a8a8">Per-SM</text>
+<rect x="200" y="285" width="300" height="60" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2" />
+<text x="350.0" y="313" text-anchor="middle" font-size="14" font-weight="bold" fill="#ececec">L2 Cache</text>
+<text x="350.0" y="333" text-anchor="middle" font-size="11" fill="#a8a8a8">Shared, 50MB</text>
+<rect x="200" y="360" width="300" height="60" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2" />
+<text x="350.0" y="388" text-anchor="middle" font-size="14" font-weight="bold" fill="#ececec">HBM</text>
+<text x="350.0" y="408" text-anchor="middle" font-size="11" fill="#a8a8a8">Slow, 80GB, 3.35 TB/s</text>
 </svg>
