@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 330" font-family="Charis SIL, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="The replication pipeline: five stages">
+<rect x="14" y="12" width="932" height="306" rx="10" fill="#141414" stroke="#2e2e2e"/>
+<text x="32" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#6cb2ff">REPLICATION PIPELINE</text>
+<text x="32" y="72" font-size="16" font-weight="700" fill="#ececec">Each stage answers one question</text>
+<rect x="32" y="92" width="168" height="206" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="44" y="120" font-size="11" font-weight="700" letter-spacing="1.4" fill="#6cb2ff">CLAIM</text>
+<text x="44" y="146" font-size="13" font-weight="700" fill="#ececec">State it precisely</text>
+<text x="44" y="172" font-size="12.5" fill="#a8a8a8">What does the paper</text>
+<text x="44" y="192" font-size="12.5" fill="#a8a8a8">claim, with numbers?</text>
+<circle cx="116" cy="272" r="13" fill="#6cb2ff"/>
+<text x="116" y="277" font-size="13" font-weight="700" fill="#101010" text-anchor="middle">1</text>
+<line x1="200" y1="195" x2="220" y2="195" stroke="#6cb2ff" stroke-width="2.4"/>
+<path d="M 211 190 L 220 195 L 211 200" stroke="#6cb2ff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="220" y="92" width="168" height="206" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="232" y="120" font-size="11" font-weight="700" letter-spacing="1.4" fill="#6cb2ff">REBUILD</text>
+<text x="232" y="146" font-size="13" font-weight="700" fill="#ececec">Reimplement or adapt</text>
+<text x="232" y="172" font-size="12.5" fill="#a8a8a8">Every deviation goes in</text>
+<text x="232" y="192" font-size="12.5" fill="#a8a8a8">the log.</text>
+<circle cx="304" cy="272" r="13" fill="#6cb2ff"/>
+<text x="304" y="277" font-size="13" font-weight="700" fill="#101010" text-anchor="middle">2</text>
+<line x1="388" y1="195" x2="408" y2="195" stroke="#6cb2ff" stroke-width="2.4"/>
+<path d="M 399 190 L 408 195 L 399 200" stroke="#6cb2ff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="408" y="92" width="168" height="206" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="420" y="120" font-size="11" font-weight="700" letter-spacing="1.4" fill="#6cb2ff">RUN</text>
+<text x="420" y="146" font-size="13" font-weight="700" fill="#ececec">Your seeds, your hardware</text>
+<text x="420" y="172" font-size="12.5" fill="#a8a8a8">Preregister before you</text>
+<text x="420" y="192" font-size="12.5" fill="#a8a8a8">look.</text>
+<circle cx="492" cy="272" r="13" fill="#6cb2ff"/>
+<text x="492" y="277" font-size="13" font-weight="700" fill="#101010" text-anchor="middle">3</text>
+<line x1="576" y1="195" x2="596" y2="195" stroke="#6cb2ff" stroke-width="2.4"/>
+<path d="M 587 190 L 596 195 L 587 200" stroke="#6cb2ff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="596" y="92" width="168" height="206" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="608" y="120" font-size="11" font-weight="700" letter-spacing="1.4" fill="#6cb2ff">COMPARE</text>
+<text x="608" y="146" font-size="13" font-weight="700" fill="#ececec">Yours vs theirs</text>
+<text x="608" y="172" font-size="12.5" fill="#a8a8a8">Match the claim, not</text>
+<text x="608" y="192" font-size="12.5" fill="#a8a8a8">the digits.</text>
+<circle cx="680" cy="272" r="13" fill="#6cb2ff"/>
+<text x="680" y="277" font-size="13" font-weight="700" fill="#101010" text-anchor="middle">4</text>
+<line x1="764" y1="195" x2="784" y2="195" stroke="#6cb2ff" stroke-width="2.4"/>
+<path d="M 775 190 L 784 195 L 775 200" stroke="#6cb2ff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="784" y="92" width="168" height="206" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="796" y="120" font-size="11" font-weight="700" letter-spacing="1.4" fill="#6cb2ff">WRITE UP</text>
+<text x="796" y="146" font-size="13" font-weight="700" fill="#ececec">Four-part writeup</text>
+<text x="796" y="172" font-size="12.5" fill="#a8a8a8">Claim, method,</text>
+<text x="796" y="192" font-size="12.5" fill="#a8a8a8">evidence, reading.</text>
+<circle cx="868" cy="272" r="13" fill="#6cb2ff"/>
+<text x="868" y="277" font-size="13" font-weight="700" fill="#101010" text-anchor="middle">5</text>
+</svg>
