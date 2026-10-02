@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 440" role="img" aria-labelledby="t09sk-title t09sk-desc">
+<title id="t09sk-title">Training-serving skew: the gap between two pipelines</title>
+<desc id="t09sk-desc">Two lanes. Training lane: batch transform on yesterday's data, clean and complete. Serving lane: real-time transform on live data, with missing fields and different defaults. A red gap labeled skew sits between the two feature vectors. The model trained on the left sees different numbers on the right.</desc>
+<style>
+  .k text { font-family: "Charis SIL", Georgia, serif; fill: #ececec; }
+  .k .lane { font-size: 13px; font-weight: bold; fill: #f0b429; letter-spacing: 2px; }
+  .k .box { font-size: 14.5px; font-weight: bold; text-anchor: middle; }
+  .k .d { font-size: 12px; fill: #a8a8a8; text-anchor: middle; }
+  .k .dl { font-size: 12px; fill: #a8a8a8; }
+  .k .cap { font-size: 12.5px; fill: #a8a8a8; text-anchor: middle; font-style: italic; }
+  .k .capl { font-size: 12.5px; fill: #a8a8a8; font-style: italic; }
+  .k .num { font-size: 13px; font-weight: bold; text-anchor: middle; }
+  .k .tl { font-size: 12px; text-anchor: middle; }
+</style>
+<g class="k">
+<rect x="0" y="0" width="940" height="440" fill="#0d0d0d"/>
+<text x="30" y="40" class="lane">TRAINING-SERVING SKEW</text>
+<text x="60" y="90" class="dl" fill="#6ab0ff">training (batch, yesterday)</text>
+<rect x="60" y="110" width="360" height="80" rx="10" fill="#111111" stroke="#6ab0ff" stroke-width="1.5"/>
+<text x="240.0" y="144" class="box" fill="#ececec">features</text>
+<text x="240.0" y="166" class="d">age=34, country=US</text>
+<text x="240.0" y="184" class="d">complete, clean</text>
+<text x="60" y="250" class="dl" fill="#ff7a7a">serving (live, now)</text>
+<rect x="60" y="270" width="360" height="80" rx="10" fill="#111111" stroke="#ff7a7a" stroke-width="1.5"/>
+<text x="240.0" y="304" class="box" fill="#ececec">features</text>
+<text x="240.0" y="326" class="d">age=?, country=US</text>
+<text x="240.0" y="344" class="d">missing, defaults differ</text>
+<rect x="470" y="180" width="400" height="100" rx="10" fill="#2a1414" stroke="#ff7a7a" stroke-width="1.5"/>
+<text x="670" y="220" class="box" fill="#ff7a7a">SKEW</text>
+<text x="670" y="244" class="d">same name, different numbers</text>
+<line x1="420" y1="150" x2="470" y2="210" stroke="#ff7a7a" stroke-width="1.8" marker-end="url(#t09sk-ah)"/>
+<line x1="420" y1="310" x2="470" y2="270" stroke="#ff7a7a" stroke-width="1.8" marker-end="url(#t09sk-ah)"/>
+<text x="30" y="400" class="capl">How to read: top lane is what the model learned on. Bottom lane is what it sees live.</text>
+<text x="30" y="422" class="dl" fill="#7fd67f">Fix: log serving features and compare distributions with training features daily.</text>
+</g>
+<defs><marker id="t09sk-ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#a8a8a8"/></marker></defs>
+</svg>
