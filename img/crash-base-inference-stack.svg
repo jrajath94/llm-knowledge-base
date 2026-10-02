@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500">
+  <defs><style>.t{font:bold 22px sans-serif;fill:#1a1a1a}.b{font:bold 15px sans-serif;fill:#fff}.l{font:13px sans-serif;fill:#333}.s{font:12px monospace;fill:#555}.a{stroke:#333;stroke-width:2;fill:none;marker-end:url(#a4)}</style>
+  <marker id="a4" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#333"/></marker></defs>
+  <rect width="960" height="500" fill="#fafafa"/>
+  <text x="480" y="35" text-anchor="middle" class="t">Inference: Prefill then Decode</text>
+  <g>
+    <rect x="80" y="70" width="180" height="90" rx="8" fill="#1976d2"/><text x="170" y="100" text-anchor="middle" class="b">PREFILL</text><text x="170" y="120" text-anchor="middle" class="b" font-size="12">Process prompt</text><text x="170" y="140" text-anchor="middle" class="s" fill="#fff">compute-bound</text>
+    <text x="170" y="175" text-anchor="middle" class="l">1 pass, all tokens</text><text x="170" y="195" text-anchor="middle" class="l">Time to first token</text>
+    <line x1="260" y1="115" x2="340" y2="115" class="a"/>
+    <rect x="340" y="70" width="180" height="90" rx="8" fill="#7b1fa2"/><text x="430" y="100" text-anchor="middle" class="b">KV CACHE</text><text x="430" y="120" text-anchor="middle" class="b" font-size="12">Store K, V</text><text x="430" y="140" text-anchor="middle" class="s" fill="#fff">per token</text>
+    <text x="430" y="175" text-anchor="middle" class="l">2 × layers × heads</text><text x="430" y="195" text-anchor="middle" class="l">× dim × bytes</text>
+    <line x1="520" y1="115" x2="600" y2="115" class="a"/>
+    <rect x="600" y="70" width="180" height="90" rx="8" fill="#f57c00"/><text x="690" y="100" text-anchor="middle" class="b">DECODE</text><text x="690" y="120" text-anchor="middle" class="b" font-size="12">One token/step</text><text x="690" y="140" text-anchor="middle" class="s" fill="#fff">bandwidth-bound</text>
+    <text x="690" y="175" text-anchor="middle" class="l">Read cache + weights</text><text x="690" y="195" text-anchor="middle" class="l">Append new K/V</text>
+  </g>
+  <line x1="690" y1="210" x2="690" y2="250" class="a"/>
+  <line x1="690" y1="250" x2="430" y2="250" class="a"/>
+  <line x1="430" y1="250" x2="430" y2="160" class="a"/>
+  <text x="550" y="240" class="l">loop until &lt;eos&gt;</text>
+  <g>
+    <rect x="80" y="280" width="800" height="80" rx="8" fill="#e8f5e9" stroke="#388e3c" stroke-width="2"/>
+    <text x="480" y="305" text-anchor="middle" font-weight="bold" font-size="15">Why decode is slow: memory bandwidth, not compute</text>
+    <text x="480" y="330" text-anchor="middle" class="l">70B fp16 = 140 GB weights. At 2 TB/s: 70 ms/token. Batch 8: same 70 ms, 8 tokens → 9 ms/token.</text>
+  </g>
+  <g>
+    <rect x="80" y="380" width="380" height="80" rx="8" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+    <text x="270" y="405" text-anchor="middle" font-weight="bold" font-size="14">Continuous Batching</text>
+    <text x="270" y="430" text-anchor="middle" class="l">Insert/evict per step. No waiting.</text>
+  </g>
+  <g>
+    <rect x="500" y="380" width="380" height="80" rx="8" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+    <text x="690" y="405" text-anchor="middle" font-weight="bold" font-size="14">Disaggregated Serving</text>
+    <text x="690" y="430" text-anchor="middle" class="l">Prefill on A, decode on B.</text>
+  </g>
+</svg>
