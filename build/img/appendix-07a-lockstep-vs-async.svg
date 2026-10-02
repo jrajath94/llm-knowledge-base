@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="540" viewBox="0 0 900 540" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="900" height="540" fill="#0d0d0d"/>
+<text x="450" y="34" text-anchor="middle" fill="#ececec" font-size="20" font-weight="600">Lockstep vs async RL</text>
+
+<!-- LOCKSTEP -->
+<text x="225" y="66" text-anchor="middle" fill="#e08080" font-size="15" font-weight="600">lockstep: take turns, sit idle</text>
+<g font-size="11">
+<text x="45" y="110" fill="#a8a8a8">trainers</text>
+<rect x="120" y="96" width="300" height="28" rx="4" fill="#7fd08a" opacity="0.75"/>
+<text x="270" y="114" text-anchor="middle" fill="#0d0d0d">gradient step</text>
+<rect x="120" y="130" width="300" height="28" rx="4" fill="#1a1a1a" stroke="#e08080" stroke-dasharray="4,3"/>
+<text x="270" y="148" text-anchor="middle" fill="#e08080">idle: waiting for rollouts</text>
+
+<text x="45" y="196" fill="#a8a8a8">rollout</text>
+<text x="45" y="212" fill="#a8a8a8">workers</text>
+<rect x="120" y="182" width="300" height="28" rx="4" fill="#1a1a1a" stroke="#e08080" stroke-dasharray="4,3"/>
+<text x="270" y="200" text-anchor="middle" fill="#e08080">idle: waiting for weights</text>
+<rect x="120" y="216" width="300" height="28" rx="4" fill="#6cb2ff" opacity="0.75"/>
+<text x="270" y="234" text-anchor="middle" fill="#0d0d0d">generate rollouts</text>
+</g>
+<text x="225" y="276" text-anchor="middle" fill="#e08080" font-size="12">trainers idle 90% of the step when generation dominates</text>
+<text x="225" y="296" text-anchor="middle" fill="#a8a8a8" font-size="12">one straggler stalls everything</text>
+
+<line x1="460" y1="60" x2="460" y2="310" stroke="#3a3a3a"/>
+
+<!-- ASYNC -->
+<text x="680" y="66" text-anchor="middle" fill="#7fd08a" font-size="15" font-weight="600">async: both sides busy</text>
+<g font-size="11">
+<text x="500" y="110" fill="#a8a8a8">trainers</text>
+<rect x="575" y="96" width="300" height="28" rx="4" fill="#7fd08a" opacity="0.75"/>
+<text x="725" y="114" text-anchor="middle" fill="#0d0d0d">gradient steps, continuously</text>
+
+<text x="500" y="196" fill="#a8a8a8">rollout</text>
+<text x="500" y="212" fill="#a8a8a8">workers</text>
+<rect x="575" y="182" width="300" height="28" rx="4" fill="#6cb2ff" opacity="0.75"/>
+<text x="725" y="200" text-anchor="middle" fill="#0d0d0d">generate, continuously</text>
+
+<rect x="575" y="240" width="300" height="40" rx="4" fill="#1a1a1a" stroke="#f0b429" stroke-width="1.5"/>
+<text x="725" y="256" text-anchor="middle" fill="#f0b429">bounded queue</text>
+<text x="725" y="272" text-anchor="middle" fill="#a8a8a8" font-size="10">rendezvous only at weight sync</text>
+</g>
+<text x="680" y="310" text-anchor="middle" fill="#7fd08a" font-size="12">no side ever waits for the other</text>
+
+<rect x="60" y="340" width="780" height="160" rx="8" fill="#141414" stroke="#3a3a3a"/>
+<text x="450" y="368" text-anchor="middle" fill="#ececec" font-size="14" font-weight="600">the price: staleness, bounded and corrected</text>
+<text x="450" y="394" text-anchor="middle" fill="#a8a8a8" font-size="13">rollouts come from a slightly older policy than the current one</text>
+<text x="450" y="420" text-anchor="middle" fill="#a8a8a8" font-size="13">bounded: sync every N updates, pause if queued data is older than K versions</text>
+<text x="450" y="446" text-anchor="middle" fill="#a8a8a8" font-size="13">corrected: proximal clipping and three-policy accounting in the update</text>
+<text x="450" y="478" text-anchor="middle" fill="#7fd08a" font-size="13">one-step-off: while the trainer runs iteration k, the fleet generates k+1</text>
+</svg>
