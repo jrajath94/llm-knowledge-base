@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" width="100%" style="max-width:720px" role="img" aria-label="Kappa 2 by 2 table: 32 both pass, 9 both fail, 6 judge-only pass, 3 human-only pass; kappa 0.545, below the 0.70 gate">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.big{font-size:13px;font-weight:700}
+.cell{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+</style>
+<text class="t" x="24" y="32">Cohen's kappa: the 2x2 that exposes a lazy judge</text>
+<text class="m" x="24" y="54">50 graded outputs. A judge that always says "pass" on a 90%-pass set gets 90% agreement and kappa near zero.</text>
+
+<text class="m" x="200" y="100" text-anchor="middle">human: pass</text>
+<text class="m" x="360" y="100" text-anchor="middle">human: fail</text>
+<text class="m" x="60" y="160">judge: pass</text>
+<text class="m" x="60" y="250">judge: fail</text>
+<rect class="cell" x="120" y="120" width="160" height="80" rx="8" stroke="#7fc97f"/><text class="big gr" x="200" y="156" text-anchor="middle">32</text><text class="m" x="200" y="176" text-anchor="middle">both pass</text>
+<rect class="cell" x="280" y="120" width="160" height="80" rx="8"/><text class="big" x="360" y="156" text-anchor="middle">6</text><text class="m" x="360" y="176" text-anchor="middle">judge-only pass</text>
+<rect class="cell" x="120" y="210" width="160" height="80" rx="8"/><text class="big" x="200" y="246" text-anchor="middle">3</text><text class="m" x="200" y="266" text-anchor="middle">human-only pass</text>
+<rect class="cell" x="280" y="210" width="160" height="80" rx="8" stroke="#7fc97f"/><text class="big gr" x="360" y="246" text-anchor="middle">9</text><text class="m" x="360" y="266" text-anchor="middle">both fail</text>
+
+<text class="m" x="480" y="160">p_o = (32 + 9) / 50 = 0.82</text>
+<text class="m" x="480" y="184">p_e = 0.76 x 0.70 + 0.24 x 0.30</text>
+<text class="m" x="480" y="208">= 0.604</text>
+<text class="big" x="480" y="244">kappa = (0.82 - 0.604) / (1 - 0.604)</text>
+<text class="big r" x="480" y="268">= 0.545: below the 0.70 gate</text>
+
+<rect class="box" x="24" y="316" width="672" height="56" rx="8" stroke="#f0b429"/>
+<text class="big" x="360" y="340" text-anchor="middle">The judge leans lenient: 6 vs 3.</text>
+<text class="m" x="360" y="360" text-anchor="middle">Fix: tighten the rubric anchors on partial answers, re-run on a fresh 50.</text>
+</svg>
