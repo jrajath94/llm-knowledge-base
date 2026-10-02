@@ -1,0 +1,17 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 380' width='100%' role='img' aria-label='What "done" means: the four checks'>
+<rect x='0' y='0' width='960' height='380' fill='#0d0d0d'/>
+<text x='24' y='36' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec'>What "done" means: the four checks</text>
+<rect x='24' y='80' width='912' height='44' rx='8' fill='#141414' stroke='#262626'/>
+<rect x='40' y='92' width='20' height='20' rx='4' fill='none' stroke='#7fd08a' stroke-width='2'/>
+<text x='76' y='108' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>Define every term in plain words.</text>
+<rect x='24' y='136' width='912' height='44' rx='8' fill='#141414' stroke='#262626'/>
+<rect x='40' y='148' width='20' height='20' rx='4' fill='none' stroke='#7fd08a' stroke-width='2'/>
+<text x='76' y='164' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>Work the example's numbers yourself.</text>
+<rect x='24' y='192' width='912' height='44' rx='8' fill='#141414' stroke='#262626'/>
+<rect x='40' y='204' width='20' height='20' rx='4' fill='none' stroke='#7fd08a' stroke-width='2'/>
+<text x='76' y='220' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>Explain the diagram to someone else.</text>
+<rect x='24' y='248' width='912' height='44' rx='8' fill='#141414' stroke='#262626'/>
+<rect x='40' y='260' width='20' height='20' rx='4' fill='none' stroke='#7fd08a' stroke-width='2'/>
+<text x='76' y='276' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='400' fill='#ececec' text-anchor='start'>Answer the "On the board" questions out loud.</text>
+<text x='24' y='330' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>If any check fails, re-read before you move on.</text>
+</svg>
