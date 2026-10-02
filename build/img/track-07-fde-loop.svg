@@ -1,0 +1,36 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 560' width='100%' role='img'>
+<title>The forward deployed engineer loop</title>
+<defs><marker id='ar' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill='#a8a8a8'/></marker></defs>
+<text x='450' y='40' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>The forward deployed engineer loop</text>
+<text x='450' y='64' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' fill='#a8a8a8' text-anchor='middle'>You live at the customer site, in the loop between product and reality.</text>
+<rect x='350.0' y='63.0' width='200' height='104' rx='10' fill='#1565c0' fill-opacity='0.22' stroke='#1565c0' stroke-width='2'/>
+<text x='450.0' y='93.0' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Discover</text>
+<text x='450.0' y='115.0' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>sit with users,</text>
+<text x='450.0' y='134.0' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>find the real pain</text>
+<rect x='510.2146997001212' y='155.5' width='200' height='104' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='610.2146997001212' y='185.5' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Scope</text>
+<text x='610.2146997001212' y='207.5' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>write what you will</text>
+<text x='610.2146997001212' y='226.5' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>and will not build</text>
+<rect x='510.2146997001212' y='340.5' width='200' height='104' rx='10' fill='#8e24aa' fill-opacity='0.22' stroke='#8e24aa' stroke-width='2'/>
+<text x='610.2146997001212' y='370.5' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Prototype</text>
+<text x='610.2146997001212' y='392.5' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>a working demo</text>
+<text x='610.2146997001212' y='411.5' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>in days, not months</text>
+<rect x='350.0' y='433.0' width='200' height='104' rx='10' fill='#00897b' fill-opacity='0.22' stroke='#00897b' stroke-width='2'/>
+<text x='450.0' y='463.0' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Pilot</text>
+<text x='450.0' y='485.0' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>one team uses it</text>
+<text x='450.0' y='504.0' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>for real work</text>
+<rect x='189.78530029987888' y='340.50000000000006' width='200' height='104' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='289.7853002998789' y='370.50000000000006' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Production</text>
+<text x='289.7853002998789' y='392.50000000000006' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>harden, monitor,</text>
+<text x='289.7853002998789' y='411.50000000000006' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>support it</text>
+<rect x='189.78530029987883' y='155.5' width='200' height='104' rx='10' fill='#c0392b' fill-opacity='0.22' stroke='#c0392b' stroke-width='2'/>
+<text x='289.7853002998788' y='185.5' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Expand</text>
+<text x='289.7853002998788' y='207.5' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>roll out wider,</text>
+<text x='289.7853002998788' y='226.5' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>find the next pain</text>
+<line x1='566.5004058808213' y1='86.74743746063945' x2='576.4319336408053' y2='92.48140768633041' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ar)'/>
+<line x1='692.9323395216267' y1='294.266029774309' x2='692.9323395216267' y2='305.73397022569094' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ar)'/>
+<line x1='576.4319336408054' y1='507.51859231366956' x2='566.5004058808213' y2='513.2525625393605' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ar)'/>
+<line x1='333.4995941191787' y1='513.2525625393606' x2='323.56806635919475' y2='507.5185923136696' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ar)'/>
+<line x1='207.06766047837334' y1='305.7339702256911' x2='207.06766047837334' y2='294.26602977430895' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ar)'/>
+<line x1='323.5680663591947' y1='92.48140768633041' x2='333.4995941191786' y2='86.74743746063945' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ar)'/>
+</svg>
