@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 560" role="img" aria-label="Binary search halves the interval: target 13">
+<rect width="900" height="560" fill="#0d0d0d"/>
+<text x="450.0" y="24" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Binary search halves the interval: target 13</text>
+<text x="450.0" y="48" text-anchor="middle" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">Each step discards the half that cannot hold the target.</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker></defs>
+<text x="30" y="120" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 1</text>
+<rect x="90" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="113.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">1</text>
+<text x="113.0" y="152" text-anchor="middle" fill="#6aa8ff" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">lo</text>
+<rect x="142" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="165.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">3</text>
+<rect x="194" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="217.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">5</text>
+<rect x="246" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="269.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">7</text>
+<rect x="298" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="321.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">9</text>
+<rect x="350" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="373.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">11</text>
+<rect x="402" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="425.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">13</text>
+<rect x="454" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#f0b429"/>
+<text x="477.0" y="118" text-anchor="middle" fill="#f0b429" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">15</text>
+<text x="477.0" y="80" text-anchor="middle" fill="#f0b429" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">mid</text>
+<rect x="506" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="529.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">17</text>
+<rect x="558" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="581.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">19</text>
+<rect x="610" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="633.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">21</text>
+<rect x="662" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="685.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">23</text>
+<rect x="714" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="737.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">25</text>
+<rect x="766" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="789.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">27</text>
+<rect x="818" y="90" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="841.0" y="118" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">29</text>
+<text x="841.0" y="152" text-anchor="middle" fill="#6aa8ff" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">hi</text>
+<text x="880" y="118" text-anchor="start" fill="#ececec" font-size="12.5" font-family="Charis SIL, Georgia, serif">a[7] = 15 &gt; 13: drop the right half</text>
+<text x="30" y="228" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 2</text>
+<rect x="90" y="198" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="113.0" y="226" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">1</text>
+<text x="113.0" y="260" text-anchor="middle" fill="#6aa8ff" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">lo</text>
+<rect x="142" y="198" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="165.0" y="226" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">3</text>
+<rect x="194" y="198" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="217.0" y="226" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">5</text>
+<rect x="246" y="198" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#f0b429"/>
+<text x="269.0" y="226" text-anchor="middle" fill="#f0b429" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">7</text>
+<text x="269.0" y="188" text-anchor="middle" fill="#f0b429" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">mid</text>
+<rect x="298" y="198" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="321.0" y="226" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">9</text>
+<rect x="350" y="198" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="373.0" y="226" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">11</text>
+<rect x="402" y="198" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="425.0" y="226" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">13</text>
+<text x="425.0" y="260" text-anchor="middle" fill="#6aa8ff" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">hi</text>
+<rect x="454" y="198" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="477.0" y="226" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">15</text>
+<rect x="506" y="198" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="529.0" y="226" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">17</text>
+<rect x="558" y="198" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="581.0" y="226" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">19</text>
+<rect x="610" y="198" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="633.0" y="226" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">21</text>
+<rect x="662" y="198" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="685.0" y="226" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">23</text>
+<rect x="714" y="198" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="737.0" y="226" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">25</text>
+<rect x="766" y="198" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="789.0" y="226" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">27</text>
+<rect x="818" y="198" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="841.0" y="226" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">29</text>
+<text x="880" y="226" text-anchor="start" fill="#ececec" font-size="12.5" font-family="Charis SIL, Georgia, serif">a[3] = 7 &lt; 13: drop the left half</text>
+<text x="30" y="336" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 3</text>
+<rect x="90" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="113.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">1</text>
+<rect x="142" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="165.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">3</text>
+<rect x="194" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="217.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">5</text>
+<rect x="246" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="269.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">7</text>
+<rect x="298" y="306" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="321.0" y="334" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">9</text>
+<text x="321.0" y="368" text-anchor="middle" fill="#6aa8ff" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">lo</text>
+<rect x="350" y="306" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#f0b429"/>
+<text x="373.0" y="334" text-anchor="middle" fill="#f0b429" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">11</text>
+<text x="373.0" y="296" text-anchor="middle" fill="#f0b429" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">mid</text>
+<rect x="402" y="306" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="425.0" y="334" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">13</text>
+<text x="425.0" y="368" text-anchor="middle" fill="#6aa8ff" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">hi</text>
+<rect x="454" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="477.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">15</text>
+<rect x="506" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="529.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">17</text>
+<rect x="558" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="581.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">19</text>
+<rect x="610" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="633.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">21</text>
+<rect x="662" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="685.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">23</text>
+<rect x="714" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="737.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">25</text>
+<rect x="766" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="789.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">27</text>
+<rect x="818" y="306" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="841.0" y="334" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">29</text>
+<text x="880" y="334" text-anchor="start" fill="#ececec" font-size="12.5" font-family="Charis SIL, Georgia, serif">a[5] = 11 &lt; 13: drop the left half</text>
+<text x="30" y="444" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 4</text>
+<rect x="90" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="113.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">1</text>
+<rect x="142" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="165.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">3</text>
+<rect x="194" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="217.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">5</text>
+<rect x="246" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="269.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">7</text>
+<rect x="298" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="321.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">9</text>
+<rect x="350" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="373.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">11</text>
+<rect x="402" y="414" width="46" height="44" rx="6" fill="#1a1a1a" stroke="#7bc96f"/>
+<text x="425.0" y="442" text-anchor="middle" fill="#7bc96f" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">13</text>
+<text x="425.0" y="404" text-anchor="middle" fill="#7bc96f" font-size="10" font-family="Charis SIL, Georgia, serif" font-weight="bold">mid</text>
+<rect x="454" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="477.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">15</text>
+<rect x="506" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="529.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">17</text>
+<rect x="558" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="581.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">19</text>
+<rect x="610" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="633.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">21</text>
+<rect x="662" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="685.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">23</text>
+<rect x="714" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="737.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">25</text>
+<rect x="766" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="789.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">27</text>
+<rect x="818" y="414" width="46" height="44" rx="6" fill="#101010" stroke="#2a2a2a"/>
+<text x="841.0" y="442" text-anchor="middle" fill="#4a4a4a" font-size="12" font-family="Charis SIL, Georgia, serif">29</text>
+<text x="880" y="442" text-anchor="start" fill="#7bc96f" font-size="12.5" font-family="Charis SIL, Georgia, serif">a[6] = 13: found</text>
+<text x="30" y="530" text-anchor="start" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif">15 elements need at most 4 steps: each step halves n, so the cost is O(log n).</text>
+</svg>
