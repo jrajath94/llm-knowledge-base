@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="440" viewBox="0 0 780 440"><rect width="780" height="440" fill="#0d0d0d"/>
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#e8e8e8}
+.t{font-size:19px;font-weight:bold}.s{font-size:13.5px}.xs{font-size:12px;fill:#8a8a8a}
+.b{fill:#161616;stroke:#3a3a3a;stroke-width:1.4}
+</style>
+<text x="30" y="38" class="t">Static batching waits. Continuous batching fills every slot.</text>
+<text x="30" y="102" class="s">static</text>
+<rect x="150" y="80" width="560" height="34" rx="6" class="b"/>
+<rect x="153" y="83" width="554" height="28" rx="4" fill="#2dd4bf" opacity="0.30"/>
+<text x="430" y="102" text-anchor="middle" class="xs" fill="#e8e8e8">batch of 4 runs to the longest request, then the next batch starts</text>
+<text x="30" y="182" class="s">continuous</text>
+<rect x="150" y="160" width="560" height="44" rx="6" class="b"/>
+<rect x="153" y="163" width="194" height="38" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<rect x="213" y="163" width="234" height="38" rx="4" fill="#4aa8ff" opacity="0.85"/>
+<rect x="313" y="163" width="254" height="38" rx="4" fill="#f0b429" opacity="0.85"/>
+<rect x="433" y="163" width="274" height="38" rx="4" fill="#3fb950" opacity="0.85"/>
+<text x="253.0" y="189" text-anchor="middle" class="xs" fill="#0d0d0d" font-weight="bold">A</text>
+<text x="333.0" y="189" text-anchor="middle" class="xs" fill="#0d0d0d" font-weight="bold">B</text>
+<text x="443.0" y="189" text-anchor="middle" class="xs" fill="#0d0d0d" font-weight="bold">C</text>
+<text x="573.0" y="189" text-anchor="middle" class="xs" fill="#0d0d0d" font-weight="bold">D</text>
+<text x="153" y="222" text-anchor="middle" class="xs">t0</text>
+<text x="223" y="222" text-anchor="middle" class="xs">t1</text>
+<text x="293" y="222" text-anchor="middle" class="xs">t2</text>
+<text x="363" y="222" text-anchor="middle" class="xs">t3</text>
+<text x="433" y="222" text-anchor="middle" class="xs">t4</text>
+<text x="503" y="222" text-anchor="middle" class="xs">t5</text>
+<text x="573" y="222" text-anchor="middle" class="xs">t6</text>
+<text x="643" y="222" text-anchor="middle" class="xs">t7</text>
+<text x="713" y="222" text-anchor="middle" class="xs">t8</text>
+<text x="30" y="280" class="s" fill="#2dd4bf">Finished requests leave. New requests join at the next step.</text>
+<text x="30" y="306" class="xs">No slot ever idles while work waits. Short requests stop queueing behind long ones.</text>
+<text x="30" y="352" class="s">Why it matters:</text>
+<text x="30" y="378" class="xs">p99 latency drops because short requests no longer wait for the longest request in the batch.</text>
+<text x="30" y="400" class="xs">Throughput rises because the GPU never waits for a batch boundary.</text>
+</svg>
