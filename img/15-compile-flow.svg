@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="350" viewBox="0 0 700 350" font-family="sans-serif">
+<rect width="700" height="350" fill="#ffffff"/>
+<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+<text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold">torch.compile Flow</text>
+<rect x="50" y="100" width="150" height="70" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
+<text x="125.0" y="128" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">Python</text>
+<text x="125.0" y="148" text-anchor="middle" font-size="11" fill="#555">Eager code</text>
+<rect x="250" y="100" width="150" height="70" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
+<text x="325.0" y="128" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">Graph</text>
+<text x="325.0" y="148" text-anchor="middle" font-size="11" fill="#555">FX graph</text>
+<rect x="450" y="100" width="150" height="70" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
+<text x="525.0" y="128" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">Triton</text>
+<text x="525.0" y="148" text-anchor="middle" font-size="11" fill="#555">Fused kernels</text>
+<line x1="200" y1="135" x2="250" y2="135" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="400" y1="135" x2="450" y2="135" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+<text x="350" y="220" text-anchor="middle" font-size="12" fill="#555">Automates fusion. No manual Triton needed.</text>
+</svg>
