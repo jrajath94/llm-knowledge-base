@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="560" viewBox="0 0 800 560" role="img" aria-label="Diagram of three autorater bias traps: verbosity, position, and self-preference, each with its control.">
+<rect width="800" height="560" fill="#0d0d0d"/>
+<text x="400" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">Three judge bias traps</text>
+<text x="400" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Name the trap, then control for it. Uncontrolled bias becomes a fake win.</text>
+<rect x="60" y="90" width="680" height="140" rx="10" fill="#161616" stroke="#5aa9e6" stroke-width="2"/>
+<text x="86" y="124" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="bold" fill="#5aa9e6">Verbosity</text>
+<text x="86" y="152" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Judges use length as a proxy for quality, like rushed humans do.</text>
+<text x="86" y="186" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Control: length-normalize or blind the judge to length.</text>
+<rect x="60" y="246" width="680" height="140" rx="10" fill="#161616" stroke="#e6a75a" stroke-width="2"/>
+<text x="86" y="280" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="bold" fill="#e6a75a">Position</text>
+<text x="86" y="308" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">The answer shown first wins more often than it should.</text>
+<text x="86" y="342" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Control: randomize answer order.</text>
+<rect x="60" y="402" width="680" height="140" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="86" y="436" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="bold" fill="#7fd08a">Self-preference</text>
+<text x="86" y="464" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">A model judge favors answers that sound like its own style.</text>
+<text x="86" y="498" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Control: calibrate against human raters, not vibes.</text>
+</svg>
