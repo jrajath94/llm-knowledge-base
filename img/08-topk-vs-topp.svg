@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" width="640" height="280" role="img" aria-label="Top-k keeps k tokens, top-p keeps the smallest set covering p probability">
 <style>
-.t { font: 600 13px system-ui, sans-serif; fill: #1a1a1a; }
-.s { font: 400 11px system-ui, sans-serif; fill: #444; }
-.b { font: 700 12px system-ui, sans-serif; fill: #fff; }
-.box { fill: #f5f7fa; stroke: #2a6db5; stroke-width: 1.5; rx: 6; }
-.box2 { fill: #eef6ee; stroke: #2e7d32; stroke-width: 1.5; rx: 6; }
-.box3 { fill: #fff8e6; stroke: #b7791f; stroke-width: 1.5; rx: 6; }
-.arr { stroke: #333; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
+.t { font:600 13px 'Charis SIL',Georgia,serif; fill: #ececec; }
+.s { font:400 11px 'Charis SIL',Georgia,serif; fill: #a8a8a8; }
+.b { font:700 12px 'Charis SIL',Georgia,serif; fill: #fff; }
+.box { fill: #141414; stroke: #6cb2ff; stroke-width: 1.5; rx: 6; }
+.box2 { fill: #141414; stroke: #7fc97f; stroke-width: 1.5; rx: 6; }
+.box3 { fill: #141414; stroke: #f0b429; stroke-width: 1.5; rx: 6; }
+.arr { stroke: #8a8a8a; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
 </style>
-<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#333"/></marker></defs>
-<rect width="640" height="280" fill="#ffffff"/>
-<text x="20" y="28" class="t">Top-k vs top-p: two ways to cut the tail</text><rect x="20" y="45" width="290" height="190" class="box"/><text x="35" y="70" class="b" fill="#1a1a1a">Top-k = 3</text><text x="35" y="95" class="s">Keep the 3 highest-probability tokens.</text><text x="35" y="115" class="s">Discard everything else, renormalize.</text><text x="35" y="140" class="s">Fixed count. Simple. Can cut a good</text><text x="35" y="158" class="s">token or keep a bad one.</text><rect x="330" y="45" width="290" height="190" class="box2"/><text x="345" y="70" class="b" fill="#1a1a1a">Top-p = 0.9</text><text x="345" y="95" class="s">Sort by probability. Keep adding tokens</text><text x="345" y="115" class="s">until the total reaches 0.9.</text><text x="345" y="140" class="s">Adaptive count. Sharp distributions</text><text x="345" y="158" class="s">keep few tokens, flat ones keep many.</text><text x="20" y="260" class="s">Both run before sampling. Both reduce repetition and nonsense.</text></svg>
+<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#8a8a8a" /></marker></defs>
+<text x="20" y="28" class="t">Top-k vs top-p: two ways to cut the tail</text><rect x="20" y="45" width="290" height="190" class="box" /><text x="35" y="70" class="b" fill="#ececec">Top-k = 3</text><text x="35" y="95" class="s">Keep the 3 highest-probability tokens.</text><text x="35" y="115" class="s">Discard everything else, renormalize.</text><text x="35" y="140" class="s">Fixed count. Simple. Can cut a good</text><text x="35" y="158" class="s">token or keep a bad one.</text><rect x="330" y="45" width="290" height="190" class="box2" /><text x="345" y="70" class="b" fill="#ececec">Top-p = 0.9</text><text x="345" y="95" class="s">Sort by probability. Keep adding tokens</text><text x="345" y="115" class="s">until the total reaches 0.9.</text><text x="345" y="140" class="s">Adaptive count. Sharp distributions</text><text x="345" y="158" class="s">keep few tokens, flat ones keep many.</text><text x="20" y="260" class="s">Both run before sampling. Both reduce repetition and nonsense.</text></svg>
