@@ -1,21 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400" role="img" aria-label="Tool contract anatomy">
-<rect width="600" height="400" fill="#ffffff"/>
-<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<style>text{font-family:'Charis SIL',Georgia,serif;fill:#ececec} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#a8a8a8} .b{font-weight:700}</style>
 <text x="300" y="36" text-anchor="middle" class="t">Tool contract anatomy</text>
 <text x="300" y="58" text-anchor="middle" class="xs">A tool is a contract, not a function.</text>
-<rect x="60" y="88" width="480" height="54" rx="8" fill="#f3f4f6" stroke="#2563eb" stroke-width="2"/>
+<rect x="60" y="88" width="480" height="54" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2"/>
 <text x="80" y="111" class="s b">Name + description</text>
 <text x="80" y="129" class="xs">Written for the model</text>
-<rect x="60" y="150" width="480" height="54" rx="8" fill="#f3f4f6" stroke="#0d9488" stroke-width="2"/>
+<rect x="60" y="150" width="480" height="54" rx="8" fill="#141414" stroke="#2dd4bf" stroke-width="2"/>
 <text x="80" y="173" class="s b">Typed input schema</text>
 <text x="80" y="191" class="xs">With examples</text>
-<rect x="60" y="212" width="480" height="54" rx="8" fill="#f3f4f6" stroke="#d97706" stroke-width="2"/>
+<rect x="60" y="212" width="480" height="54" rx="8" fill="#141414" stroke="#f0b429" stroke-width="2"/>
 <text x="80" y="235" class="s b">Idempotency declaration</text>
 <text x="80" y="253" class="xs">What retry logic depends on</text>
-<rect x="60" y="274" width="480" height="54" rx="8" fill="#f3f4f6" stroke="#dc2626" stroke-width="2"/>
+<rect x="60" y="274" width="480" height="54" rx="8" fill="#141414" stroke="#e57373" stroke-width="2"/>
 <text x="80" y="297" class="s b">Timeouts + error contract</text>
 <text x="80" y="315" class="xs">Three-rule error messages</text>
-<rect x="60" y="336" width="480" height="54" rx="8" fill="#f3f4f6" stroke="#7c3aed" stroke-width="2"/>
+<rect x="60" y="336" width="480" height="54" rx="8" fill="#141414" stroke="#a78bfa" stroke-width="2"/>
 <text x="80" y="359" class="s b">Side-effect list</text>
 <text x="80" y="377" class="xs">Decides the review gate</text>
 </svg>
