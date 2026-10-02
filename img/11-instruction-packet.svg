@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" font-family="Charis SIL, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="The four parts of a labeler instruction packet">
+<rect x="14" y="12" width="932" height="376" rx="10" fill="#141414" stroke="#2e2e2e"/>
+<text x="32" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#6cb2ff">INSTRUCTION PACKET</text>
+<text x="32" y="72" font-size="16" font-weight="700" fill="#ececec">Four parts. Nobody labels before this.</text>
+<rect x="32" y="92" width="212" height="276" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="46" y="122" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="#6cb2ff">PART 1</text>
+<text x="46" y="148" font-size="13.5" font-weight="700" fill="#ececec">Task definition</text>
+<text x="46" y="178" font-size="12.5" fill="#a8a8a8">One paragraph.</text>
+<text x="46" y="200" font-size="12.5" fill="#a8a8a8">Which task exactly?</text>
+<text x="46" y="222" font-size="12.5" fill="#a8a8a8">Pin it down.</text>
+<rect x="260" y="92" width="212" height="276" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="274" y="122" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="#6cb2ff">PART 2</text>
+<text x="274" y="148" font-size="13.5" font-weight="700" fill="#ececec">Worked examples</text>
+<text x="274" y="178" font-size="12.5" fill="#a8a8a8">Ten or more.</text>
+<text x="274" y="200" font-size="12.5" fill="#a8a8a8">Close calls included.</text>
+<text x="274" y="222" font-size="12.5" fill="#a8a8a8">Reasoning, not verdict.</text>
+<rect x="488" y="92" width="212" height="276" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="502" y="122" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="#6cb2ff">PART 3</text>
+<text x="502" y="148" font-size="13.5" font-weight="700" fill="#ececec">Edge-case playbook</text>
+<text x="502" y="178" font-size="12.5" fill="#a8a8a8">Both wrong? Both right?</text>
+<text x="502" y="200" font-size="12.5" fill="#a8a8a8">Correct but rude?</text>
+<text x="502" y="222" font-size="12.5" fill="#a8a8a8">No coin flips.</text>
+<rect x="716" y="92" width="212" height="276" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="730" y="122" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="#6cb2ff">PART 4</text>
+<text x="730" y="148" font-size="13.5" font-weight="700" fill="#ececec">When to skip</text>
+<text x="730" y="178" font-size="12.5" fill="#a8a8a8">Unlabelable items exist.</text>
+<text x="730" y="200" font-size="12.5" fill="#a8a8a8">Flag for review.</text>
+<text x="730" y="222" font-size="12.5" fill="#a8a8a8">Cheaper than a wrong label.</text>
+</svg>
