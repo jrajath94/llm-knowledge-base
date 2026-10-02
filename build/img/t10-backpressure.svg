@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 440" role="img" aria-labelledby="t10bp-title t10bp-desc">
+<title id="t10bp-title">Backpressure: the queue pushes back</title>
+<desc id="t10bp-desc">A producer sends requests into a bounded queue of 1,000 slots. A consumer drains it. When the queue fills, a valve labeled load shedding drops new requests with HTTP 429 instead of crashing. A gauge shows the queue at 950/1000, nearly full.</desc>
+<style>
+  .k text { font-family: "Charis SIL", Georgia, serif; fill: #ececec; }
+  .k .lane { font-size: 13px; font-weight: bold; fill: #f0b429; letter-spacing: 2px; }
+  .k .box { font-size: 14.5px; font-weight: bold; text-anchor: middle; }
+  .k .d { font-size: 12px; fill: #a8a8a8; text-anchor: middle; }
+  .k .dl { font-size: 12px; fill: #a8a8a8; }
+  .k .cap { font-size: 12.5px; fill: #a8a8a8; text-anchor: middle; font-style: italic; }
+  .k .capl { font-size: 12.5px; fill: #a8a8a8; font-style: italic; }
+  .k .num { font-size: 13px; font-weight: bold; text-anchor: middle; }
+  .k .tl { font-size: 12px; text-anchor: middle; }
+</style>
+<g class="k">
+<rect x="0" y="0" width="940" height="440" fill="#0d0d0d"/>
+<text x="30" y="40" class="lane">BACKPRESSURE (BOUNDED QUEUE + LOAD SHEDDING)</text>
+<rect x="30" y="150" width="170" height="90" rx="10" fill="#111111" stroke="#6ab0ff" stroke-width="1.5"/>
+<text x="115.0" y="184" class="box" fill="#ececec">producer</text>
+<text x="115.0" y="206" class="d">incoming requests</text>
+<rect x="280" y="150" width="380" height="90" rx="8" fill="#111111" stroke="#262626" stroke-width="1.5"/>
+<rect x="288.0" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="307.4" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="326.8" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="346.2" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="365.6" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="385.0" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="404.4" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="423.79999999999995" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="443.2" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="462.6" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="482.0" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="501.4" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="520.8" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="540.2" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="559.5999999999999" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="579.0" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="598.4" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="617.8" y="162" width="14" height="66" rx="3" fill="#f0b429"/>
+<rect x="637.2" y="162" width="14" height="66" rx="3" fill="#333333"/>
+<text x="470.0" y="262" class="capl">queue: 950 / 1000</text>
+<rect x="730" y="150" width="180" height="90" rx="10" fill="#111111" stroke="#7fd67f" stroke-width="1.5"/>
+<text x="820.0" y="184" class="box" fill="#ececec">consumer</text>
+<text x="820.0" y="206" class="d">drains steadily</text>
+<line x1="200" y1="195" x2="280" y2="195" stroke="#a8a8a8" stroke-width="1.8" marker-end="url(#t10bp-ah)"/>
+<line x1="660" y1="195" x2="730" y2="195" stroke="#a8a8a8" stroke-width="1.8" marker-end="url(#t10bp-ah)"/>
+<rect x="280" y="300" width="380" height="70" rx="8" fill="#2a1414" stroke="#ff7a7a" stroke-width="1.5"/>
+<text x="470" y="326" class="box" fill="#ff7a7a">valve: load shedding</text>
+<text x="470" y="348" class="d">full queue returns 429, never crashes</text>
+<text x="30" y="410" class="dl">Rule: every queue needs a bound and a shedding policy. An unbounded queue is a memory leak.</text>
+</g>
+<defs><marker id="t10bp-ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#a8a8a8"/></marker></defs>
+</svg>
