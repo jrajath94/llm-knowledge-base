@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="420" viewBox="0 0 560 420" role="img" aria-label="The eval pyramid: three tiers">
+<rect width="560" height="420" fill="#ffffff"/>
+<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<text x="280" y="36" text-anchor="middle" class="t">The eval pyramid</text>
+<text x="280" y="58" text-anchor="middle" class="xs">Cheap and fast at the top. Expensive and deep at the bottom.</text>
+<polygon points="280,90 400,210 160,210" fill="#16a34a" opacity="0.85"/>
+<polygon points="160,210 400,210 460,330 100,330" fill="#2563eb" opacity="0.85"/>
+<polygon points="100,330 460,330 500,400 60,400" fill="#7c3aed" opacity="0.85"/>
+<text x="280" y="160" text-anchor="middle" class="s b" fill="#fff">SMOKE</text>
+<text x="280" y="190" text-anchor="middle" class="xs" fill="#fff">20 attacks, minutes, every commit</text>
+<text x="280" y="262" text-anchor="middle" class="s b" fill="#fff">GATE</text>
+<text x="280" y="282" text-anchor="middle" class="xs" fill="#fff">Full probe families, per release</text>
+<text x="280" y="368" text-anchor="middle" class="s b" fill="#fff">GROUND TRUTH</text>
+<text x="280" y="388" text-anchor="middle" class="xs" fill="#fff">Human labels, private sets, slow</text>
+</svg>
