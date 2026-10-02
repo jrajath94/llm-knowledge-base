@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="380" viewBox="0 0 560 380" role="img" aria-label="Harness anatomy: what makes a suite infrastructure">
+<rect width="560" height="380" fill="#ffffff"/>
+<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<text x="280" y="36" text-anchor="middle" class="t">Harness anatomy</text>
+<text x="280" y="58" text-anchor="middle" class="xs">Five parts. Miss one and the suite is a pile of notebooks.</text>
+<rect x="60" y="88" width="440" height="52" rx="8" fill="#f3f4f6" stroke="#2563eb" stroke-width="2"/>
+<circle cx="92" cy="114" r="14" fill="#2563eb"/>
+<text x="92" y="119" text-anchor="middle" class="s b" fill="#fff">1</text>
+<text x="118" y="110" class="s b">Seed everything</text>
+<text x="118" y="128" class="xs">Same seed, same samples, same deltas</text>
+<rect x="60" y="148" width="440" height="52" rx="8" fill="#f3f4f6" stroke="#0d9488" stroke-width="2"/>
+<circle cx="92" cy="174" r="14" fill="#0d9488"/>
+<text x="92" y="179" text-anchor="middle" class="s b" fill="#fff">2</text>
+<text x="118" y="170" class="s b">Isolate each task</text>
+<text x="118" y="188" class="xs">One crashing grader never kills the run</text>
+<rect x="60" y="208" width="440" height="52" rx="8" fill="#f3f4f6" stroke="#7c3aed" stroke-width="2"/>
+<circle cx="92" cy="234" r="14" fill="#7c3aed"/>
+<text x="92" y="239" text-anchor="middle" class="s b" fill="#fff">3</text>
+<text x="118" y="230" class="s b">Append-only JSONL</text>
+<text x="118" y="248" class="xs">Raw rows are evidence; aggregates are views</text>
+<rect x="60" y="268" width="440" height="52" rx="8" fill="#f3f4f6" stroke="#d97706" stroke-width="2"/>
+<circle cx="92" cy="294" r="14" fill="#d97706"/>
+<text x="92" y="299" text-anchor="middle" class="s b" fill="#fff">4</text>
+<text x="118" y="290" class="s b">Version the golden set</text>
+<text x="118" y="308" class="xs">Changelog, retire stale items</text>
+<rect x="60" y="328" width="440" height="52" rx="8" fill="#f3f4f6" stroke="#16a34a" stroke-width="2"/>
+<circle cx="92" cy="354" r="14" fill="#16a34a"/>
+<text x="92" y="359" text-anchor="middle" class="s b" fill="#fff">5</text>
+<text x="118" y="350" class="s b">Gate on deltas</text>
+<text x="118" y="368" class="xs">Compare against baseline, not absolutes</text>
+</svg>
