@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340" role="img" aria-label="Retry budget and stuck detection">
+<rect width="600" height="340" fill="#ffffff"/>
+<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<text x="300" y="36" text-anchor="middle" class="t">Retry budget and stuck detection</text>
+<text x="300" y="58" text-anchor="middle" class="xs">One retry per sub-task, then move on.</text>
+<line x1="80" y1="150" x2="520" y2="150" stroke="#1a1a1a" stroke-width="2"/>
+<circle cx="150" cy="150" r="28" fill="#2563eb" opacity="0.85"/>
+<text x="150" y="156" text-anchor="middle" class="s b" fill="#fff">Try 1</text>
+<circle cx="290" cy="150" r="28" fill="#d97706" opacity="0.85"/>
+<text x="290" y="156" text-anchor="middle" class="s b" fill="#fff">Retry 1</text>
+<circle cx="430" cy="150" r="28" fill="#dc2626" opacity="0.85"/>
+<text x="430" y="156" text-anchor="middle" class="s b" fill="#fff">Stuck?</text>
+<text x="300" y="210" text-anchor="middle" class="s">3+ repeats with no progress = stuck. Never retry a stuck loop.</text>
+<text x="300" y="235" text-anchor="middle" class="xs">Unbounded retries burn budgets while looking busy.</text>
+<rect x="80" y="260" width="440" height="44" rx="8" fill="#f3f4f6" stroke="#6b7280"/>
+<text x="300" y="287" text-anchor="middle" class="s">Budget: one retry per sub-task, then escalate or move on.</text>
+</svg>
