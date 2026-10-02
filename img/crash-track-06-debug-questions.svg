@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" width="100%" style="max-width:720px" role="img" aria-label="The five debugging questions in order: where it first went wrong, plan action or observation at fault, did the agent notice, did it recover, what would a human have done">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.big{font-size:13px;font-weight:700}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="32">Open one failed trajectory: five questions, in order</text>
+<text class="m" x="24" y="54">Start from the one-line-per-step outline, not the full log.</text>
+
+<rect class="box" x="24" y="76" width="672" height="48" rx="8"/><text class="big b" x="44" y="106">1. Where did it first go wrong?</text><text class="m" x="380" y="106">Not where it failed. Where it stopped being recoverable.</text>
+<rect class="box" x="24" y="134" width="672" height="48" rx="8"/><text class="big b" x="44" y="164">2. Plan, action, or observation at fault?</text><text class="m" x="400" y="164">Each points at a different chapter for the fix.</text>
+<rect class="box" x="24" y="192" width="672" height="48" rx="8"/><text class="big b" x="44" y="222">3. Did the agent notice?</text><text class="m" x="300" y="222">An ignored error is an error-message design failure.</text>
+<rect class="box" x="24" y="250" width="672" height="48" rx="8"/><text class="big b" x="44" y="280">4. Did it recover, and how?</text><text class="m" x="330" y="280">Good recoveries feed retry policy. Looping ones are stuck signatures.</text>
+<rect class="box" x="24" y="308" width="672" height="48" rx="8"/><text class="big b" x="44" y="338">5. What would a human have done?</text><text class="m" x="400" y="338">At the first-wrong step. That is usually the fix.</text>
+
+<text class="m" x="24" y="390">Cluster by structural signature (failing tool + error class). Fix causes, not incidents. Verify the cluster shrinks on the eval set.</text>
+</svg>
