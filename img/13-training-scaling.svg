@@ -1,25 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" font-family="sans-serif">
-<rect width="800" height="400" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" font-family="'Charis SIL',Georgia,serif">
 <defs>
 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-<polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+<polygon points="0 0, 10 3.5, 0 7" fill="#8a8a8a" />
 </marker>
 </defs>
-<text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold">Training Parallelism</text>
-<rect x="50" y="80" width="200" height="80" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
-<text x="150.0" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">Data Parallel</text>
-<text x="150.0" y="128" text-anchor="middle" font-size="11" fill="#555">Same model, split data</text>
-<rect x="300" y="80" width="200" height="80" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
-<text x="400.0" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">Tensor Parallel</text>
-<text x="400.0" y="128" text-anchor="middle" font-size="11" fill="#555">Split layers, split GPUs</text>
-<rect x="550" y="80" width="200" height="80" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
-<text x="650.0" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">Pipeline Parallel</text>
-<text x="650.0" y="128" text-anchor="middle" font-size="11" fill="#555">Split layers, stages</text>
-<text x="150" y="200" text-anchor="middle" font-size="11" fill="#555">8 GPUs, 8x data</text>
-<text x="400" y="200" text-anchor="middle" font-size="11" fill="#555">1 layer, 8 GPUs</text>
-<text x="650" y="200" text-anchor="middle" font-size="11" fill="#555">8 stages, 1 GPU each</text>
-<rect x="200" y="250" width="400" height="80" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
-<text x="400.0" y="278" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a1a">3D Parallel</text>
-<text x="400.0" y="298" text-anchor="middle" font-size="11" fill="#555">All three combined</text>
-<text x="400" y="370" text-anchor="middle" font-size="12" fill="#555">Use all three for 70B+ models. Data for throughput. Tensor for memory. Pipeline for scale.</text>
+<text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" style="fill:#ececec">Training Parallelism</text>
+<rect x="50" y="80" width="200" height="80" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2" />
+<text x="150.0" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#ececec">Data Parallel</text>
+<text x="150.0" y="128" text-anchor="middle" font-size="11" fill="#a8a8a8">Same model, split data</text>
+<rect x="300" y="80" width="200" height="80" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2" />
+<text x="400.0" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#ececec">Tensor Parallel</text>
+<text x="400.0" y="128" text-anchor="middle" font-size="11" fill="#a8a8a8">Split layers, split GPUs</text>
+<rect x="550" y="80" width="200" height="80" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2" />
+<text x="650.0" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#ececec">Pipeline Parallel</text>
+<text x="650.0" y="128" text-anchor="middle" font-size="11" fill="#a8a8a8">Split layers, stages</text>
+<text x="150" y="200" text-anchor="middle" font-size="11" fill="#a8a8a8">8 GPUs, 8x data</text>
+<text x="400" y="200" text-anchor="middle" font-size="11" fill="#a8a8a8">1 layer, 8 GPUs</text>
+<text x="650" y="200" text-anchor="middle" font-size="11" fill="#a8a8a8">8 stages, 1 GPU each</text>
+<rect x="200" y="250" width="400" height="80" rx="8" fill="#141414" stroke="#6cb2ff" stroke-width="2" />
+<text x="400.0" y="278" text-anchor="middle" font-size="14" font-weight="bold" fill="#ececec">3D Parallel</text>
+<text x="400.0" y="298" text-anchor="middle" font-size="11" fill="#a8a8a8">All three combined</text>
+<text x="400" y="370" text-anchor="middle" font-size="12" fill="#a8a8a8">Use all three for 70B+ models. Data for throughput. Tensor for memory. Pipeline for scale.</text>
 </svg>
