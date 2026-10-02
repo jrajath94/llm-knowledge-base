@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="640" viewBox="0 0 860 640" role="img" aria-label="Cycle diagram of the red-team loop: staging agent, probes, detectors, findings, fixes, regression.">
+<rect width="860" height="640" fill="#0d0d0d"/>
+<text x="430" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">The red-team loop</text>
+<text x="430" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Probe a staging copy. Fix at the capability layer. Regress in CI.</text>
+<rect x="330" y="81" width="200" height="88" rx="10" fill="#161616" stroke="#5aa9e6" stroke-width="2"/>
+<text x="430" y="111" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#5aa9e6">Staging agent</text>
+<text x="430" y="133" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">a copy of your agent,</text>
+<text x="430" y="150" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">never production</text>
+<polygon points="518,195 494,181 529,201" fill="#a8a8a8"/>
+<rect x="499" y="178" width="200" height="88" rx="10" fill="#161616" stroke="#e6a75a" stroke-width="2"/>
+<text x="599" y="208" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#e6a75a">Probes</text>
+<text x="599" y="230" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">single (Garak) and</text>
+<text x="599" y="248" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">multi-turn (PyRIT)</text>
+<polygon points="582,334 582,306 582,346" fill="#a8a8a8"/>
+<rect x="499" y="374" width="200" height="88" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="599" y="404" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#7fd08a">Detectors</text>
+<text x="599" y="426" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">score responses;</text>
+<text x="599" y="442" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">humans confirm findings</text>
+<polygon points="494,459 518,445 484,465" fill="#a8a8a8"/>
+<rect x="330" y="471" width="200" height="88" rx="10" fill="#161616" stroke="#e6d75a" stroke-width="2"/>
+<text x="430" y="501" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#e6d75a">Findings</text>
+<text x="430" y="523" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">each maps to</text>
+<text x="430" y="540" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">an OWASP row</text>
+<polygon points="342,445 366,459 331,439" fill="#a8a8a8"/>
+<rect x="161" y="374" width="200" height="88" rx="10" fill="#161616" stroke="#e67e7e" stroke-width="2"/>
+<text x="261" y="404" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#e67e7e">Fix</text>
+<text x="261" y="426" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">fix at the</text>
+<text x="261" y="442" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">capability layer</text>
+<polygon points="278,306 278,334 278,294" fill="#a8a8a8"/>
+<rect x="161" y="178" width="200" height="88" rx="10" fill="#161616" stroke="#5aa9e6" stroke-width="2"/>
+<text x="261" y="208" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="bold" fill="#5aa9e6">Regression</text>
+<text x="261" y="230" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">regression set</text>
+<text x="261" y="247" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">runs in CI</text>
+<polygon points="366,181 342,195 376,175" fill="#a8a8a8"/>
+<text x="430" y="600" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Document accepted risks and monitor them. Do not forget them.</text>
+</svg>
