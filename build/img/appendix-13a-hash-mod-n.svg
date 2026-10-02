@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="480" viewBox="0 0 840 480" role="img" aria-label="Hash mod N reshuffles 99 percent of keys when a server is added, versus 1 percent with consistent hashing">
+<rect width="840" height="480" fill="#0d0d0d"/>
+<text x="420" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">hash mod N: the scaling event that moves everything</text>
+<text x="420" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">100 servers, 1,000,000 keys. Then server 101 arrives.</text>
+
+<g font-family="system-ui,-apple-system,sans-serif">
+<rect x="30" y="90" width="375" height="210" rx="10" fill="#1a1a1a" stroke="#e08080" stroke-width="1.5"/>
+<text x="217" y="122" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#e08080">server = hash(key) mod 100</text>
+<text x="217" y="150" text-anchor="middle" font-size="12" fill="#ececec">Now it is mod 101. Every key's</text>
+<text x="217" y="170" text-anchor="middle" font-size="12" fill="#ececec">home changes.</text>
+<text x="217" y="206" text-anchor="middle" font-size="13" font-weight="bold" fill="#e08080">~990,000 of 1,000,000 keys move</text>
+<text x="217" y="228" text-anchor="middle" font-size="12" fill="#a8a8a8">99% reshuffled at once</text>
+<rect x="60" y="245" width="315" height="18" rx="9" fill="#141414"/>
+<rect x="60" y="245" width="312" height="18" rx="9" fill="#e08080" opacity="0.75"/>
+<text x="217" y="290" text-anchor="middle" font-size="11.5" fill="#a8a8a8">The new server gets a thundering herd. The old servers sit idle.</text>
+
+<rect x="435" y="90" width="375" height="210" rx="10" fill="#1a1a1a" stroke="#7fd08a" stroke-width="1.5"/>
+<text x="622" y="122" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#7fd08a">Consistent hashing</text>
+<text x="622" y="150" text-anchor="middle" font-size="12" fill="#ececec">The new server takes over</text>
+<text x="622" y="170" text-anchor="middle" font-size="12" fill="#ececec">only its slice of the ring.</text>
+<text x="622" y="206" text-anchor="middle" font-size="13" font-weight="bold" fill="#7fd08a">~9,900 keys move</text>
+<text x="622" y="228" text-anchor="middle" font-size="12" fill="#a8a8a8">about 1/101 of the ring</text>
+<rect x="465" y="245" width="315" height="18" rx="9" fill="#141414"/>
+<rect x="465" y="245" width="4" height="18" rx="2" fill="#7fd08a"/>
+<text x="622" y="290" text-anchor="middle" font-size="11.5" fill="#a8a8a8">Everything else stays put. 1% instead of 99%.</text>
+</g>
+
+<rect x="30" y="330" width="780" height="105" rx="10" fill="#141414" stroke="#2e9e5b" stroke-width="1"/>
+<text x="420" y="362" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="bold" fill="#2e9e5b">The general problem: a scheme that depends on the number of servers reshuffles everything when that number changes.</text>
+<text x="420" y="390" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">The fix is a scheme where adding or removing a server moves only the keys that must move.</text>
+<text x="420" y="412" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">That scheme is consistent hashing.</text>
+</svg>
