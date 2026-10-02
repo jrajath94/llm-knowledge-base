@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="380" viewBox="0 0 700 380" role="img" aria-label="Law of large numbers: sample mean converges to true mean">
+<rect width="700" height="380" rx="12" fill="#0f1420"/>
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5aa9ff"/></marker>
+<marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa4b8"/></marker></defs>
+<text x="350" y="36" font-family="sans-serif" font-size="20" fill="#e8ecf4" text-anchor="middle" font-weight="bold">Law of large numbers</text>
+<text x="350" y="62" font-family="sans-serif" font-size="14" fill="#9aa4b8" text-anchor="middle" font-weight="normal">sample mean -&gt; true mean as n grows</text>
+<line x1="70" y1="300" x2="630" y2="300" stroke="#9aa4b8" stroke-width="1.5"/>
+<line x1="70" y1="300" x2="70" y2="90" stroke="#9aa4b8" stroke-width="1.5"/>
+<text x="350" y="330" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">n (samples)</text>
+<text x="40" y="200" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">mean</text>
+<line x1="70" y1="200" x2="630" y2="200" stroke="#5fd08a" stroke-width="2" stroke-dasharray="6,4"/>
+<text x="640" y="204" font-family="sans-serif" font-size="12" fill="#5fd08a" text-anchor="start" font-weight="normal">true mean</text>
+<polyline points="70.0,202.8 79.5,266.8 89.0,273.6 98.5,228.4 108.0,171.5 117.5,141.5 126.9,159.3 136.4,199.9 145.9,236.6 155.4,241.6 164.9,217.8 174.4,183.6 183.9,166.7 193.4,177.6 202.9,201.3 212.4,220.0 221.9,224.0 231.4,209.9 240.8,191.3 250.3,182.7 259.8,186.8 269.3,201.2 278.8,212.4 288.3,213.0 297.8,204.6 307.3,193.9 316.8,189.7 326.3,193.1 335.8,201.1 345.3,207.2 354.7,207.0 364.2,202.9 373.7,196.6 383.2,194.6 392.7,196.2 402.2,200.0 411.7,203.9 421.2,203.9 430.7,201.5 440.2,198.3 449.7,196.5 459.2,197.9 468.6,200.5 478.1,202.0 487.6,202.1 497.1,200.9 506.6,198.9 516.1,198.2 525.6,198.8 535.1,200.3 544.6,201.3 554.1,201.2 563.6,200.3 573.1,199.4 582.5,199.0 592.0,199.5 601.5,200.0 611.0,200.7 620.5,200.7 630.0,200.2" fill="none" stroke="#5aa9ff" stroke-width="2.5"/>
+<text x="350" y="362" font-family="sans-serif" font-size="13" fill="#9aa4b8" text-anchor="middle" font-weight="normal">Early: wild swings. Late: pinned near the truth.</text>
+</svg>
