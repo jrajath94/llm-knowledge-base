@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" width="640" height="320" role="img" aria-label="MoE routing: each token visits only its top-k experts">
+<style>
+.t { font: 600 13px system-ui, sans-serif; fill: #1a1a1a; }
+.s { font: 400 11px system-ui, sans-serif; fill: #444; }
+.b { font: 700 12px system-ui, sans-serif; fill: #fff; }
+.box { fill: #f5f7fa; stroke: #2a6db5; stroke-width: 1.5; rx: 6; }
+.box2 { fill: #eef6ee; stroke: #2e7d32; stroke-width: 1.5; rx: 6; }
+.box3 { fill: #fff8e6; stroke: #b7791f; stroke-width: 1.5; rx: 6; }
+.arr { stroke: #333; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#333"/></marker></defs>
+<rect width="640" height="320" fill="#ffffff"/>
+<text x="20" y="28" class="t">MoE: many experts, few active per token</text><rect x="20" y="50" width="120" height="50" class="box"/><text x="35" y="80" class="s">Token in</text><rect x="200" y="130" width="140" height="34" fill="#2e7d32" opacity="0.9" rx="6"/><text x="215" y="152" class="s" fill="#fff">Expert 1</text><line x1="140" y1="75" x2="195" y2="147" class="arr"/><rect x="200" y="172" width="140" height="34" fill="#cccccc" opacity="0.5" rx="6"/><text x="215" y="194" class="s" fill="#fff">Expert 2</text><rect x="200" y="214" width="140" height="34" fill="#2e7d32" opacity="0.9" rx="6"/><text x="215" y="236" class="s" fill="#fff">Expert 3</text><line x1="140" y1="75" x2="195" y2="231" class="arr"/><rect x="200" y="256" width="140" height="34" fill="#cccccc" opacity="0.5" rx="6"/><text x="215" y="278" class="s" fill="#fff">Expert 4</text><text x="370" y="155" class="s">Router picks top-2.</text><text x="370" y="177" class="s">Only 2 of 4 run.</text><text x="370" y="199" class="s">Active params: fixed.</text><text x="20" y="300" class="s">Cost is memory (all experts live on GPU), not compute per token.</text></svg>
