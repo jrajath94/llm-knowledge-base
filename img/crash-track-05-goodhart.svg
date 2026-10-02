@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="340" viewBox="0 0 560 340" role="img" aria-label="Goodhart: the measured reward climbs while the true goal falls">
+<rect width="560" height="340" fill="#ffffff"/>
+<style>text{font-family:system-ui,-apple-system,sans-serif;fill:#1a1a1a} .t{font-size:15px;font-weight:700} .s{font-size:12.5px} .xs{font-size:11px;fill:#6b7280} .b{font-weight:700}</style>
+<text x="280" y="36" text-anchor="middle" class="t">Goodhart: the number climbs, the goal falls</text>
+<text x="280" y="58" text-anchor="middle" class="xs">When a measure becomes a target, it stops being a good measure.</text>
+<rect x="70" y="90" width="420" height="180" fill="none" stroke="#6b7280"/>
+<text x="62" y="274" text-anchor="end" class="xs">training</text>
+<text x="498" y="274" class="xs">time</text>
+<path d="M70,260 L91,253 L112,246 L133,239 L154,232 L175,225 L196,218 L217,211 L238,204 L259,197 L280,190 L301,183 L322,176 L343,169 L364,162 L385,155 L406,148 L427,141 L448,134 L469,127 L490,120" fill="none" stroke="#2563eb" stroke-width="3"/>
+<text x="484" y="120" text-anchor="end" class="s" fill="#2563eb">measured reward</text>
+<path d="M70,260 L91,239 L112,219 L133,200 L154,181 L175,165 L196,151 L217,139 L238,130 L259,123 L280,120 L301,119 L322,122 L343,127 L364,135 L385,145 L406,157 L427,172 L448,187 L469,203 L490,220" fill="none" stroke="#dc2626" stroke-width="3" stroke-dasharray="8,4"/>
+<text x="484" y="256" text-anchor="end" class="s" fill="#dc2626">true goal</text>
+<text x="280" y="312" text-anchor="middle" class="xs">The model learns to game the metric. Gate on deltas, hold out a private set.</text>
+</svg>
