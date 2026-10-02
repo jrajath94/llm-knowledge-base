@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 460" role="img" aria-labelledby="t08sf-title t08sf-desc">
+<title id="t08sf-title">Hybrid retrieval: two scores become one ranking</title>
+<desc id="t08sf-desc">Three documents A, B, C. BM25 ranks A first. Dense ranks C first. Reciprocal rank fusion adds 1/(60+rank) from each list. The fused ranking puts B first because both lists rank it near the top.</desc>
+<style>
+  .k text { font-family: "Charis SIL", Georgia, serif; fill: #ececec; }
+  .k .lane { font-size: 13px; font-weight: bold; fill: #f0b429; letter-spacing: 2px; }
+  .k .box { font-size: 14.5px; font-weight: bold; text-anchor: middle; }
+  .k .d { font-size: 12px; fill: #a8a8a8; text-anchor: middle; }
+  .k .dl { font-size: 12px; fill: #a8a8a8; }
+  .k .cap { font-size: 12.5px; fill: #a8a8a8; text-anchor: middle; font-style: italic; }
+  .k .capl { font-size: 12.5px; fill: #a8a8a8; font-style: italic; }
+  .k .num { font-size: 13px; font-weight: bold; text-anchor: middle; }
+  .k .tl { font-size: 12px; text-anchor: middle; }
+</style>
+<g class="k">
+<rect x="0" y="0" width="940" height="460" fill="#0d0d0d"/>
+<text x="30" y="40" class="lane">SCORE FUSION (RRF): TWO NETS, ONE RANKING)</text>
+<text x="60" y="90" class="dl" fill="#6ab0ff">BM25 (keywords)</text>
+<text x="370" y="90" class="dl" fill="#7fd67f">dense (meaning)</text>
+<text x="680" y="90" class="dl" fill="#f0b429">fused (RRF)</text>
+<text x="60" y="110" class="dl">1. doc A</text>
+<text x="60" y="140" class="dl">2. doc B</text>
+<text x="60" y="170" class="dl">5. doc C</text>
+<text x="370" y="110" class="dl">1. doc C</text>
+<text x="370" y="140" class="dl">2. doc B</text>
+<text x="370" y="170" class="dl">4. doc A</text>
+<text x="680" y="110" class="dl" fill="#f0b429">doc B: 0.0323</text>
+<text x="680" y="140" class="dl" fill="#f0b429">doc A: 0.0320</text>
+<text x="680" y="170" class="dl" fill="#f0b429">doc C: 0.0318</text>
+<text x="30" y="280" class="dl">RRF score = 1/(60 + rank in list 1) + 1/(60 + rank in list 2).</text>
+<text x="30" y="302" class="dl">Doc B wins: rank 2 in both lists beats rank 1 + rank 4.</text>
+<text x="30" y="324" class="dl">No score normalization needed. That is why teams use RRF first.</text>
+<text x="30" y="366" class="capl">How to read: left two columns are the two retrievers. Right column is the fused result.</text>
+<text x="30" y="388" class="dl" fill="#ff7a7a">What breaks: if one retriever is much weaker, it drags the fusion down. Weight or drop it.</text>
+</g>
+<defs><marker id="t08sf-ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#a8a8a8"/></marker></defs>
+</svg>
