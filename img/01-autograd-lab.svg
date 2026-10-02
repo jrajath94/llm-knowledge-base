@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="400" viewBox="0 0 900 400" role="img" aria-label="Autograd lab: the Value engine computation graph">
+<rect width="900" height="400" rx="12" fill="#0f1420"/>
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5aa9ff"/></marker>
+<marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa4b8"/></marker></defs>
+<text x="450" y="36" font-family="sans-serif" font-size="20" fill="#e8ecf4" text-anchor="middle" font-weight="bold">Lab 8.A: autograd from scratch</text>
+<text x="450" y="62" font-family="sans-serif" font-size="14" fill="#9aa4b8" text-anchor="middle" font-weight="normal">each Value holds data and grad; _backward chains them</text>
+<circle cx="150" cy="150" r="42" fill="#182030" stroke="#b48cff" stroke-width="2"/>
+<text x="150" y="155" font-family="sans-serif" font-size="15" fill="#b48cff" text-anchor="middle" font-weight="bold">a</text>
+<circle cx="150" cy="280" r="42" fill="#182030" stroke="#b48cff" stroke-width="2"/>
+<text x="150" y="285" font-family="sans-serif" font-size="15" fill="#b48cff" text-anchor="middle" font-weight="bold">b</text>
+<circle cx="400" cy="215" r="42" fill="#182030" stroke="#b48cff" stroke-width="2"/>
+<text x="400" y="220" font-family="sans-serif" font-size="15" fill="#b48cff" text-anchor="middle" font-weight="bold">c</text>
+<circle cx="620" cy="215" r="42" fill="#182030" stroke="#b48cff" stroke-width="2"/>
+<text x="620" y="220" font-family="sans-serif" font-size="15" fill="#b48cff" text-anchor="middle" font-weight="bold">d</text>
+<circle cx="800" cy="215" r="42" fill="#182030" stroke="#b48cff" stroke-width="2"/>
+<text x="800" y="220" font-family="sans-serif" font-size="15" fill="#b48cff" text-anchor="middle" font-weight="bold">L</text>
+<line x1="192" y1="150" x2="358" y2="215" stroke="#5fd08a" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="192" y1="280" x2="358" y2="215" stroke="#5fd08a" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="442" y1="215" x2="578" y2="215" stroke="#5fd08a" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="662" y1="215" x2="758" y2="215" stroke="#5fd08a" stroke-width="2" marker-end="url(#arr)"/>
+<text x="450" y="350" font-family="sans-serif" font-size="13" fill="#9aa4b8" text-anchor="middle" font-weight="normal">topological sort -&gt; forward pass -&gt; backward pass -&gt; gradients</text>
+<text x="450" y="375" font-family="sans-serif" font-size="13" fill="#9aa4b8" text-anchor="middle" font-weight="normal">Remove the sort and _backward runs too early: gradients go wrong.</text>
+</svg>
