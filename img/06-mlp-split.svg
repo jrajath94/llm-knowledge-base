@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" font-family="Charis SIL, Georgia, serif" role="img">
+<defs><marker id="ah2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8a8a8a"/></marker>
+<marker id="ahb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#6cb2ff"/></marker></defs>
+<rect x="0" y="0" width="880" height="470" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">The MLP split: W1 column-wise, W2 row-wise</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">y = W2(GeLU(W1(x))). One all-reduce per layer, after W2's partial sums.</text>
+<rect x="60" y="100" width="150" height="200" fill="#141414" stroke="#6cb2ff" stroke-width="2" rx="8"/>
+<text x="135" y="126" font-size="14" font-weight="bold" fill="#6cb2ff" text-anchor="middle">GPU 0</text>
+<rect x="80" y="145" width="55" height="120" fill="#6cb2ff" opacity="0.85" rx="3"/>
+<text x="107" y="210" font-size="12" fill="#0d0d0d" text-anchor="middle">W1</text>
+<text x="107" y="228" font-size="12" fill="#0d0d0d" text-anchor="middle">cols</text>
+<rect x="140" y="145" width="55" height="120" fill="#141414" stroke="#4a4a4a" stroke-width="1.5" rx="3"/>
+<text x="167" y="205" font-size="11" fill="#8a8a8a" text-anchor="middle">W2</text>
+<text x="167" y="222" font-size="11" fill="#8a8a8a" text-anchor="middle">rows</text>
+<rect x="280" y="100" width="150" height="200" fill="#141414" stroke="#6cb2ff" stroke-width="2" rx="8"/>
+<text x="355" y="126" font-size="14" font-weight="bold" fill="#6cb2ff" text-anchor="middle">GPU 1</text>
+<rect x="300" y="145" width="55" height="120" fill="#141414" stroke="#4a4a4a" stroke-width="1.5" rx="3"/>
+<text x="327" y="205" font-size="11" fill="#8a8a8a" text-anchor="middle">W1</text>
+<text x="327" y="222" font-size="11" fill="#8a8a8a" text-anchor="middle">cols</text>
+<rect x="360" y="145" width="55" height="120" fill="#6cb2ff" opacity="0.85" rx="3"/>
+<text x="387" y="210" font-size="12" fill="#0d0d0d" text-anchor="middle">W2</text>
+<text x="387" y="228" font-size="12" fill="#0d0d0d" text-anchor="middle">rows</text>
+<line x1="210" y1="200" x2="280" y2="200" stroke="#8a8a8a" stroke-width="2" marker-end="url(#ah2)"/>
+<text x="245" y="180" font-size="12" fill="#8a8a8a" text-anchor="middle">GeLU: no comm.</text>
+<line x1="430" y1="200" x2="560" y2="200" stroke="#6cb2ff" stroke-width="3" marker-end="url(#ahb)"/>
+<text x="495" y="190" font-size="12" fill="#6cb2ff" text-anchor="middle">partial sums</text>
+<rect x="560" y="150" width="150" height="100" fill="#141414" stroke="#f0b429" stroke-width="2" rx="8"/>
+<text x="635" y="180" font-size="14" font-weight="bold" fill="#f0b429" text-anchor="middle">all-reduce</text>
+<text x="635" y="202" font-size="12" fill="#8a8a8a" text-anchor="middle">sums the partials</text>
+<text x="635" y="222" font-size="12" fill="#8a8a8a" text-anchor="middle">every GPU gets y</text>
+<line x1="710" y1="200" x2="790" y2="200" stroke="#8a8a8a" stroke-width="2" marker-end="url(#ah2)"/>
+<text x="750" y="190" font-size="12" fill="#8a8a8a" text-anchor="middle">y</text>
+<text x="60" y="350" font-size="13" fill="#ececec">Each GPU computes its half of the hidden layer, applies GeLU element-wise (no communication),</text>
+<text x="60" y="372" font-size="13" fill="#ececec">then its half of the output. Only the final sums cross GPUs.</text>
+<text x="24" y="430" font-size="13" fill="#f0b429">Rule of thumb: split at the one place that needs no communication mid-block.</text>
+</svg>
