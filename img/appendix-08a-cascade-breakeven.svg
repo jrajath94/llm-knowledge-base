@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif">
+<rect width="800" height="500" fill="#0d0d0d"/>
+<text x="400" y="36" text-anchor="middle" fill="#ececec" font-size="22" font-weight="700">Cascade cost vs escalation rate</text>
+<text x="400" y="60" text-anchor="middle" fill="#a8a8a8" font-size="14">Small model $0.22/1M. Big model $1.11/1M. Cost = (1-e) x 0.22 + e x 1.11.</text>
+<!-- axes -->
+<line x1="90" y1="420" x2="730" y2="420" stroke="#a8a8a8" stroke-width="2"/>
+<line x1="90" y1="420" x2="90" y2="100" stroke="#a8a8a8" stroke-width="2"/>
+<text x="400" y="460" text-anchor="middle" fill="#a8a8a8" font-size="14">escalation rate</text>
+<text x="40" y="260" text-anchor="middle" fill="#a8a8a8" font-size="14" transform="rotate(-90 40 260)">cost $/1M</text>
+<g fill="#a8a8a8" font-size="12" text-anchor="middle">
+<text x="90" y="440">0%</text><text x="218" y="440">20%</text><text x="410" y="440">50%</text><text x="730" y="440">100%</text>
+</g>
+<g fill="#a8a8a8" font-size="12" text-anchor="end">
+<text x="80" y="368">$0.22</text><text x="80" y="320">$0.40</text><text x="80" y="248">$0.67</text><text x="80" y="131">$1.11</text>
+</g>
+<!-- big model line at 1.11: y = 420 - 1.11/1.2*320 = 124 -->
+<line x1="90" y1="124" x2="730" y2="124" stroke="#e08080" stroke-width="2" stroke-dasharray="8,5"/>
+<text x="720" y="114" text-anchor="end" fill="#e08080" font-size="13">big model only: $1.11</text>
+<!-- cascade line from (90,361) to (730,124) -->
+<line x1="90" y1="361" x2="730" y2="124" stroke="#6cb2ff" stroke-width="3"/>
+<text x="620" y="200" fill="#6cb2ff" font-size="13">cascade cost</text>
+<!-- 20%: $0.40, y=313 -->
+<circle cx="218" cy="313" r="6" fill="#7fd08a"/>
+<text x="218" y="294" text-anchor="middle" fill="#7fd08a" font-size="13">20%: $0.40</text>
+<!-- 50%: $0.67, y=241 -->
+<circle cx="410" cy="241" r="6" fill="#7fd08a"/>
+<text x="410" y="222" text-anchor="middle" fill="#7fd08a" font-size="13">50%: $0.67</text>
+<!-- breakeven 100% -->
+<circle cx="730" cy="124" r="7" fill="#f0b429"/>
+<text x="700" y="150" text-anchor="end" fill="#f0b429" font-size="13" font-weight="700">breakeven at 100%</text>
+<text x="400" y="490" text-anchor="middle" fill="#a8a8a8" font-size="13">Escalate everything and the cascade is just the big model. The gate earns its keep below that.</text>
+</svg>
