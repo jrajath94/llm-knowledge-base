@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420" role="img" aria-label="Math to model pipeline: four pillars feeding ML systems">
+<rect width="900" height="420" rx="12" fill="#0f1420"/>
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5aa9ff"/></marker>
+<marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa4b8"/></marker></defs>
+<text x="450" y="36" font-family="sans-serif" font-size="20" fill="#e8ecf4" text-anchor="middle" font-weight="bold">From math pillars to working ML</text>
+<rect x="70" y="70" width="160" height="110" rx="8" fill="#182030" stroke="#5aa9ff" stroke-width="1.5"/>
+<text x="150" y="100" font-family="sans-serif" font-size="15" fill="#5aa9ff" text-anchor="middle" font-weight="bold">Linear algebra</text>
+<text x="150" y="128" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">attention, KV cache,</text>
+<text x="150" y="148" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">tensor parallelism</text>
+<line x1="150" y1="180" x2="150" y2="230" stroke="#5aa9ff" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="270" y="70" width="160" height="110" rx="8" fill="#182030" stroke="#5aa9ff" stroke-width="1.5"/>
+<text x="350" y="100" font-family="sans-serif" font-size="15" fill="#5aa9ff" text-anchor="middle" font-weight="bold">Probability</text>
+<text x="350" y="128" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">eval metrics,</text>
+<text x="350" y="148" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">confidence, reward models</text>
+<line x1="350" y1="180" x2="350" y2="230" stroke="#5aa9ff" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="470" y="70" width="160" height="110" rx="8" fill="#182030" stroke="#5aa9ff" stroke-width="1.5"/>
+<text x="550" y="100" font-family="sans-serif" font-size="15" fill="#5aa9ff" text-anchor="middle" font-weight="bold">Calculus</text>
+<text x="550" y="128" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">backprop,</text>
+<text x="550" y="148" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">gradients</text>
+<line x1="550" y1="180" x2="550" y2="230" stroke="#5aa9ff" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="670" y="70" width="160" height="110" rx="8" fill="#182030" stroke="#5aa9ff" stroke-width="1.5"/>
+<text x="750" y="100" font-family="sans-serif" font-size="15" fill="#5aa9ff" text-anchor="middle" font-weight="bold">Optimization</text>
+<text x="750" y="128" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">Adam, SGD,</text>
+<text x="750" y="148" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">learning-rate schedules</text>
+<line x1="750" y1="180" x2="750" y2="230" stroke="#5aa9ff" stroke-width="2" marker-end="url(#arr)"/>
+<rect x="250" y="230" width="400" height="110" rx="8" fill="#14202e" stroke="#5fd08a" stroke-width="1.5"/>
+<text x="450" y="262" font-family="sans-serif" font-size="17" fill="#5fd08a" text-anchor="middle" font-weight="bold">Transformer training loop</text>
+<text x="450" y="292" font-family="sans-serif" font-size="13" fill="#9aa4b8" text-anchor="middle" font-weight="normal">forward pass  -&gt;  loss  -&gt;  backward pass  -&gt;  optimizer step</text>
+<text x="450" y="316" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">every arrow above feeds one stage of this loop</text>
+<text x="450" y="392" font-family="sans-serif" font-size="13" fill="#9aa4b8" text-anchor="middle" font-weight="normal">Each pillar is load-bearing: remove one and the loop breaks.</text>
+</svg>
