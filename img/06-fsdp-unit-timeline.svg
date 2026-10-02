@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" font-family="Charis SIL, Georgia, serif" role="img">
+<defs><marker id="ah10" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8a8a8a"/></marker></defs>
+<rect x="0" y="0" width="880" height="440" fill="#0d0d0d" rx="8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#ececec">One FSDP unit: gather, compute, scatter</text>
+<text x="24" y="60" font-size="13" fill="#8a8a8a">While unit i computes, the all-gather for unit i+1 is already in flight.</text>
+<text x="60" y="110" font-size="12" fill="#8a8a8a">time</text>
+<line x1="60" y1="130" x2="820" y2="130" stroke="#4a4a4a" stroke-width="1.5" marker-end="url(#ah10)"/>
+<rect x="60" y="160" width="130" height="40" fill="#6cb2ff" rx="4"/>
+<text x="125" y="185" font-size="12" fill="#0d0d0d" text-anchor="middle">all-gather unit i</text>
+<rect x="190" y="160" width="200" height="40" fill="#7dd87d" rx="4"/>
+<text x="290" y="185" font-size="12" fill="#0d0d0d" text-anchor="middle">forward compute</text>
+<rect x="190" y="215" width="130" height="40" fill="#6cb2ff" rx="4" opacity="0.55"/>
+<text x="255" y="240" font-size="12" fill="#0d0d0d" text-anchor="middle">all-gather unit i+1</text>
+<rect x="390" y="215" width="200" height="40" fill="#7dd87d" rx="4" opacity="0.55"/>
+<text x="490" y="240" font-size="12" fill="#0d0d0d" text-anchor="middle">forward compute</text>
+<rect x="390" y="160" width="200" height="40" fill="#f0b429" rx="4"/>
+<text x="490" y="185" font-size="12" fill="#0d0d0d" text-anchor="middle">backward compute</text>
+<rect x="590" y="160" width="130" height="40" fill="#e06c75" rx="4"/>
+<text x="655" y="185" font-size="12" fill="#0d0d0d" text-anchor="middle">reduce-scatter</text>
+<text x="60" y="300" font-size="13" fill="#ececec">Prefetching hides the all-gather behind compute. After backward, each rank keeps only its shard.</text>
+<text x="60" y="326" font-size="13" fill="#ececec">Two knobs: wrapping policy (one transformer layer per unit) and prefetching.</text>
+<text x="24" y="390" font-size="13" fill="#f0b429">Rule of thumb: if the all-gather is exposed, make units bigger or prefetch earlier.</text>
+</svg>
