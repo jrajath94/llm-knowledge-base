@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 520" role="img" aria-label="Attention data flow: from tokens to weighted output">
+<rect width="900" height="520" fill="#0d0d0d"/>
+<text x="450" y="20" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Attention, as data flow</text>
+<text x="450" y="46" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">One input sentence becomes an output vector. Follow the numbers 1 to 6.</text>
+<rect x="40" y="90" width="130" height="80" rx="6" fill="#1a1a1a" stroke="#4aa8ff" stroke-width="2"/>
+<text x="105.0" y="116" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">1. Tokens</text>
+<text x="105.0" y="136" text-anchor="middle" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">"Je suis etudiant"</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.6"/></marker></defs>
+<line x1="170" y1="130" x2="205" y2="130" stroke="#8a8a8a" stroke-width="1.8" marker-end="url(#ah)"/>
+<rect x="205" y="90" width="150" height="80" rx="6" fill="#1a1a1a" stroke="#4aa8ff" stroke-width="2"/>
+<text x="280.0" y="116" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">2. Projections</text>
+<text x="280.0" y="136" text-anchor="middle" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">Q, K, V matrices</text>
+<text x="280" y="152" text-anchor="middle" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">three learned maps</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.6"/></marker></defs>
+<line x1="355" y1="130" x2="390" y2="130" stroke="#8a8a8a" stroke-width="1.8" marker-end="url(#ah)"/>
+<rect x="390" y="90" width="150" height="80" rx="6" fill="#1a1a1a" stroke="#f0b429" stroke-width="2"/>
+<text x="465.0" y="116" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">3. Scores</text>
+<text x="465.0" y="136" text-anchor="middle" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">QK-transpose / sqrt(d-k)</text>
+<text x="465" y="152" text-anchor="middle" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">how much each pair matches</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.6"/></marker></defs>
+<line x1="540" y1="130" x2="575" y2="130" stroke="#8a8a8a" stroke-width="1.8" marker-end="url(#ah)"/>
+<rect x="575" y="90" width="130" height="80" rx="6" fill="#1a1a1a" stroke="#f0b429" stroke-width="2"/>
+<text x="640.0" y="116" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">4. Softmax</text>
+<text x="640.0" y="136" text-anchor="middle" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">weights sum to 1</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.6"/></marker></defs>
+<line x1="705" y1="130" x2="740" y2="130" stroke="#8a8a8a" stroke-width="1.8" marker-end="url(#ah)"/>
+<rect x="740" y="90" width="130" height="80" rx="6" fill="#1a1a1a" stroke="#2dd4bf" stroke-width="2"/>
+<text x="805.0" y="116" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">5. x V</text>
+<text x="805.0" y="136" text-anchor="middle" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">weighted mix</text>
+<text x="805" y="152" text-anchor="middle" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">mix the values</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.6"/></marker></defs>
+<line x1="455" y1="170" x2="455" y2="210" stroke="#8a8a8a" stroke-width="1.8" marker-end="url(#ah)"/>
+<rect x="355" y="210" width="200" height="80" rx="6" fill="#1a1a1a" stroke="#2dd4bf" stroke-width="2"/>
+<text x="455.0" y="236" text-anchor="middle" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">6. Output vector</text>
+<text x="455.0" y="256" text-anchor="middle" fill="#8a8a8a" font-size="10.5" font-family="Charis SIL, Georgia, serif">one per position</text>
+<text x="455" y="272" text-anchor="middle" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">feeds the next layer</text>
+<text x="60" y="340" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">What it is:</text>
+<text x="60" y="360" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">a lookup with learned weights. Each position asks every other position how relevant it is.</text>
+<text x="60" y="384" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">Why it exists:</text>
+<text x="60" y="404" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">it mixes information across positions, so the model sees context, not just single words.</text>
+<text x="60" y="428" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">What breaks:</text>
+<text x="60" y="448" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">without the divide by sqrt(d-k), scores grow with size and softmax saturates: gradients die.</text>
+<text x="60" y="472" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">The equation:</text>
+<text x="60" y="492" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">Attention(Q, K, V) = softmax(QK-transpose / sqrt(d-k)) V. You will reproduce this most often.</text>
+</svg>
