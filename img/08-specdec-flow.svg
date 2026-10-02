@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" width="680" height="320" role="img" aria-label="Speculative decoding: draft model proposes, target model verifies">
 <style>
-.t { font: 600 13px system-ui, sans-serif; fill: #1a1a1a; }
-.s { font: 400 11px system-ui, sans-serif; fill: #444; }
-.b { font: 700 12px system-ui, sans-serif; fill: #fff; }
-.box { fill: #f5f7fa; stroke: #2a6db5; stroke-width: 1.5; rx: 6; }
-.box2 { fill: #eef6ee; stroke: #2e7d32; stroke-width: 1.5; rx: 6; }
-.box3 { fill: #fff8e6; stroke: #b7791f; stroke-width: 1.5; rx: 6; }
-.arr { stroke: #333; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
+.t { font:600 13px 'Charis SIL',Georgia,serif; fill: #ececec; }
+.s { font:400 11px 'Charis SIL',Georgia,serif; fill: #a8a8a8; }
+.b { font:700 12px 'Charis SIL',Georgia,serif; fill: #fff; }
+.box { fill: #141414; stroke: #6cb2ff; stroke-width: 1.5; rx: 6; }
+.box2 { fill: #141414; stroke: #7fc97f; stroke-width: 1.5; rx: 6; }
+.box3 { fill: #141414; stroke: #f0b429; stroke-width: 1.5; rx: 6; }
+.arr { stroke: #8a8a8a; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
 </style>
-<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#333"/></marker></defs>
-<rect width="680" height="320" fill="#ffffff"/>
-<text x="20" y="28" class="t">Speculative decoding: propose fast, verify in parallel</text><rect x="20" y="50" width="150" height="60" class="box2"/><text x="35" y="75" class="s">Draft model</text><text x="35" y="95" class="s">(small, fast)</text><rect x="265" y="50" width="150" height="60" class="box"/><text x="280" y="75" class="s">Target model</text><text x="280" y="95" class="s">(large, 1 pass)</text><rect x="510" y="50" width="150" height="60" class="box3"/><text x="525" y="75" class="s">Output</text><text x="525" y="95" class="s">tokens</text><line x1="170" y1="80" x2="260" y2="80" class="arr"/><text x="180" y="70" class="s">proposes 4</text><line x1="415" y1="80" x2="505" y2="80" class="arr"/><text x="425" y="70" class="s">accepts 3</text><text x="20" y="150" class="s">1. Draft writes 4 tokens autoregressively (cheap).</text><text x="20" y="172" class="s">2. Target scores all 4 in ONE parallel pass (expensive but parallel).</text><text x="20" y="194" class="s">3. Accept the prefix the target agrees with. Sample one bonus token.</text><text x="20" y="216" class="s">4. Reject the rest. Repeat.</text><text x="20" y="250" class="s">Speedup = accepted tokens per target pass. Good draft = high acceptance rate.</text><text x="20" y="272" class="s">If the draft is bad, it is slower than baseline. The draft must be good AND cheap.</text></svg>
+<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#8a8a8a" /></marker></defs>
+<text x="20" y="28" class="t">Speculative decoding: propose fast, verify in parallel</text><rect x="20" y="50" width="150" height="60" class="box2" /><text x="35" y="75" class="s">Draft model</text><text x="35" y="95" class="s">(small, fast)</text><rect x="265" y="50" width="150" height="60" class="box" /><text x="280" y="75" class="s">Target model</text><text x="280" y="95" class="s">(large, 1 pass)</text><rect x="510" y="50" width="150" height="60" class="box3" /><text x="525" y="75" class="s">Output</text><text x="525" y="95" class="s">tokens</text><line x1="170" y1="80" x2="260" y2="80" class="arr" /><text x="180" y="70" class="s">proposes 4</text><line x1="415" y1="80" x2="505" y2="80" class="arr" /><text x="425" y="70" class="s">accepts 3</text><text x="20" y="150" class="s">1. Draft writes 4 tokens autoregressively (cheap).</text><text x="20" y="172" class="s">2. Target scores all 4 in ONE parallel pass (expensive but parallel).</text><text x="20" y="194" class="s">3. Accept the prefix the target agrees with. Sample one bonus token.</text><text x="20" y="216" class="s">4. Reject the rest. Repeat.</text><text x="20" y="250" class="s">Speedup = accepted tokens per target pass. Good draft = high acceptance rate.</text><text x="20" y="272" class="s">If the draft is bad, it is slower than baseline. The draft must be good AND cheap.</text></svg>
