@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="500" viewBox="0 0 700 500" role="img" aria-label="Agent perceive-reason-act loop">
+<rect width="700" height="500" fill="#141414"/>
+<style>text { font-family: Charis SIL, serif; fill: #e8e8e8; } .accent { fill: #f0b429; } .muted { fill: #888888; } .box { fill: none; stroke: #f0b429; stroke-width: 1.5; } .line { stroke: #888888; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }</style>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#888888" stroke-width="1.5"/></marker></defs>
+<text x="350.0" y="28" text-anchor="middle" font-size="18" class="accent">The Agent Loop</text>
+<rect x="280.0" y="100.0" width="140" height="60" class="box" rx="4"/>
+<text x="350.0" y="122.0" text-anchor="middle" font-size="14">Perceive</text>
+<text x="448.99494936611666" y="151.00505063388334" text-anchor="middle" font-size="16" class="muted">→</text>
+<rect x="400.0" y="220.0" width="140" height="60" class="box" rx="4"/>
+<text x="470.0" y="242.0" text-anchor="middle" font-size="14">Reason</text>
+<text x="448.99494936611666" y="348.99494936611666" text-anchor="middle" font-size="16" class="muted">→</text>
+<rect x="280.0" y="340.0" width="140" height="60" class="box" rx="4"/>
+<text x="350.0" y="362.0" text-anchor="middle" font-size="14">Act</text>
+<text x="251.00505063388334" y="348.99494936611666" text-anchor="middle" font-size="16" class="muted">→</text>
+<rect x="160.0" y="220.00000000000003" width="140" height="60" class="box" rx="4"/>
+<text x="230.0" y="242.00000000000003" text-anchor="middle" font-size="14">Observe</text>
+<text x="251.00505063388334" y="151.00505063388334" text-anchor="middle" font-size="16" class="muted">→</text>
+<text x="350" y="450" text-anchor="middle" font-size="13" class="accent">Stop: step budget, time budget, loop detection</text>
+</svg>
