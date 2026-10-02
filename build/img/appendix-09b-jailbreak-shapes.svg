@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="600" viewBox="0 0 820 600" role="img" aria-label="Five jailbreak attack shapes against agents, each with its defeat">
+<rect width="820" height="600" fill="#0d0d0d"/>
+<text x="410" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">Jailbreak taxonomies: the attack shapes</text>
+<text x="410" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Learn the shapes and you recognize new attacks as variants. Each shape has a structural defeat.</text>
+
+<g font-family="system-ui,-apple-system,sans-serif">
+<!-- row template: attack box left (red), defeat box right (green) -->
+<g>
+<rect x="30" y="85" width="360" height="80" rx="8" fill="#3a1f1f" stroke="#e08080" stroke-width="1.2"/>
+<text x="50" y="112" font-size="14" font-weight="bold" fill="#e08080">Direct instruction override</text>
+<text x="50" y="134" font-size="11.5" fill="#a8a8a8">"Ignore previous instructions and..." The classic.</text>
+<text x="50" y="152" font-size="11.5" fill="#a8a8a8">Arrives in user text or pasted content.</text>
+<rect x="420" y="85" width="370" height="80" rx="8" fill="#1f3a24" stroke="#7fd08a" stroke-width="1.2"/>
+<text x="440" y="112" font-size="13" font-weight="bold" fill="#7fd08a">Defeat: instruction hierarchy</text>
+<text x="440" y="134" font-size="11.5" fill="#a8a8a8">Rank wins over cleverness. No prompt</text>
+<text x="440" y="152" font-size="11.5" fill="#a8a8a8">can outrank a higher instruction.</text>
+</g>
+<g>
+<rect x="30" y="180" width="360" height="80" rx="8" fill="#3a1f1f" stroke="#e08080" stroke-width="1.2"/>
+<text x="50" y="207" font-size="14" font-weight="bold" fill="#e08080">Indirect injection</text>
+<text x="50" y="229" font-size="11.5" fill="#a8a8a8">Payload hides in retrieved content: web page,</text>
+<text x="50" y="247" font-size="11.5" fill="#a8a8a8">document, tool result. Highest severity for RAG.</text>
+<rect x="420" y="180" width="370" height="80" rx="8" fill="#1f3a24" stroke="#7fd08a" stroke-width="1.2"/>
+<text x="440" y="207" font-size="13" font-weight="bold" fill="#7fd08a">Defeat: retrieved content is data</text>
+<text x="440" y="229" font-size="11.5" fill="#a8a8a8">Strip or quarantine imperative language</text>
+<text x="440" y="247" font-size="11.5" fill="#a8a8a8">from tool outputs before the model sees it.</text>
+</g>
+<g>
+<rect x="30" y="275" width="360" height="80" rx="8" fill="#3a1f1f" stroke="#e08080" stroke-width="1.2"/>
+<text x="50" y="302" font-size="14" font-weight="bold" fill="#e08080">Encoding and obfuscation</text>
+<text x="50" y="324" font-size="11.5" fill="#a8a8a8">Base64, leetspeak, translation chains,</text>
+<text x="50" y="342" font-size="11.5" fill="#a8a8a8">ASCII smuggling. Looks innocent to naive filters.</text>
+<rect x="420" y="275" width="370" height="80" rx="8" fill="#1f3a24" stroke="#7fd08a" stroke-width="1.2"/>
+<text x="440" y="302" font-size="13" font-weight="bold" fill="#7fd08a">Defeat: normalize before filtering</text>
+<text x="440" y="324" font-size="11.5" fill="#a8a8a8">Decode and normalize inputs first.</text>
+<text x="440" y="342" font-size="11.5" fill="#a8a8a8">Longer blocklists never win this race.</text>
+</g>
+<g>
+<rect x="30" y="370" width="360" height="80" rx="8" fill="#3a1f1f" stroke="#e08080" stroke-width="1.2"/>
+<text x="50" y="397" font-size="14" font-weight="bold" fill="#e08080">Multi-turn escalation</text>
+<text x="50" y="419" font-size="11.5" fill="#a8a8a8">Each turn looks benign. "Help me write a story"</text>
+<text x="50" y="437" font-size="11.5" fill="#a8a8a8">becomes "the character needs to..." becomes payload.</text>
+<rect x="420" y="370" width="370" height="80" rx="8" fill="#1f3a24" stroke="#7fd08a" stroke-width="1.2"/>
+<text x="440" y="397" font-size="13" font-weight="bold" fill="#7fd08a">Defeat: score whole conversations</text>
+<text x="440" y="419" font-size="11.5" fill="#a8a8a8">Single-turn detectors miss the buildup.</text>
+<text x="440" y="437" font-size="11.5" fill="#a8a8a8">Grade the full transcript, not each turn.</text>
+</g>
+<g>
+<rect x="30" y="465" width="360" height="80" rx="8" fill="#3a1f1f" stroke="#e08080" stroke-width="1.2"/>
+<text x="50" y="492" font-size="14" font-weight="bold" fill="#e08080">Tool-mediated attacks</text>
+<text x="50" y="514" font-size="11.5" fill="#a8a8a8">Agent calls a real tool with attacker-chosen</text>
+<text x="50" y="532" font-size="11.5" fill="#a8a8a8">arguments. Unique to agents (LLM06).</text>
+<rect x="420" y="465" width="370" height="80" rx="8" fill="#1f3a24" stroke="#7fd08a" stroke-width="1.2"/>
+<text x="440" y="492" font-size="13" font-weight="bold" fill="#7fd08a">Defeat: capability layer</text>
+<text x="440" y="514" font-size="11.5" fill="#a8a8a8">Schemas, allowlists, scoped credentials.</text>
+<text x="440" y="532" font-size="11.5" fill="#a8a8a8">The tool cannot do what it was never given.</text>
+</g>
+</g>
+<text x="410" y="578" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#a8a8a8">Every defeat is boring engineering at the capability layer. None of them is a cleverer prompt.</text>
+</svg>
