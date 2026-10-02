@@ -1,10 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450" font-family="sans-serif">
-<rect width="600" height="450" fill="#ffffff"/>
-<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
-<text x="300" y="30" text-anchor="middle" font-size="18" font-weight="bold">Good Figure Anatomy</text>
-<rect x="100" y="60" width="400" height="300" fill="none" stroke="#333" stroke-width="2"/>
-<text x="300" y="85" text-anchor="middle" font-size="12" font-weight="bold">Title is the conclusion</text>
-<text x="120" y="200" font-size="11" transform="rotate(-90 120 200)">Y-axis: what + units</text>
-<text x="300" y="345" text-anchor="middle" font-size="11">X-axis: what + units</text>
-<text x="300" y="400" text-anchor="middle" font-size="12" fill="#555">Every axis labeled. No "x". No unlabeled lines.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450" font-family="'Charis SIL',Georgia,serif">
+<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#8a8a8a" /></marker></defs>
+<text x="300" y="30" text-anchor="middle" font-size="18" font-weight="bold" style="fill:#ececec">Good Figure Anatomy</text>
+<rect x="100" y="60" width="400" height="300" fill="none" stroke="#8a8a8a" stroke-width="2" />
+<text x="300" y="85" text-anchor="middle" font-size="12" font-weight="bold" style="fill:#ececec">Title is the conclusion</text>
+<text x="120" y="200" font-size="11" transform="rotate(-90 120 200)" style="fill:#ececec">Y-axis: what + units</text>
+<text x="300" y="345" text-anchor="middle" font-size="11" style="fill:#ececec">X-axis: what + units</text>
+<text x="300" y="400" text-anchor="middle" font-size="12" fill="#a8a8a8">Every axis labeled. No "x". No unlabeled lines.</text>
 </svg>
