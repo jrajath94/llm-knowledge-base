@@ -1,0 +1,31 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 470' width='100%' role='img'>
+<text x='22' y='32' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec' text-anchor='start'>Where to start</text>
+<text x='22' y='58' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>Pick the entry point that fits you. The DSA lane runs under every path.</text>
+<rect x='30' y='96' width='280' height='70' rx='10' fill='#1565c0' fill-opacity='0.18' stroke='#1565c0' stroke-width='2'/>
+<text x='170' y='124' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>New to the</text>
+<text x='170' y='148' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>curriculum?</text>
+<rect x='340' y='96' width='280' height='70' rx='10' fill='#f0b429' fill-opacity='0.18' stroke='#f0b429' stroke-width='2'/>
+<text x='480' y='124' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Have a</text>
+<text x='480' y='148' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>target role?</text>
+<rect x='650' y='96' width='280' height='70' rx='10' fill='#2e9e5b' fill-opacity='0.18' stroke='#2e9e5b' stroke-width='2'/>
+<text x='790' y='124' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Interviewing</text>
+<text x='790' y='148' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>soon?</text>
+<line x1='170' y1='166' x2='170' y2='196' stroke='#ececec' stroke-width='2'/>
+<polygon points='170,206 162,194 178,194' fill='#ececec'/>
+<line x1='480' y1='166' x2='480' y2='196' stroke='#ececec' stroke-width='2'/>
+<polygon points='480,206 472,194 488,194' fill='#ececec'/>
+<line x1='790' y1='166' x2='790' y2='196' stroke='#ececec' stroke-width='2'/>
+<polygon points='790,206 782,194 798,194' fill='#ececec'/>
+<rect x='30' y='206' width='280' height='80' rx='10' fill='#1565c0' fill-opacity='0.30' stroke='#1565c0' stroke-width='2'/>
+<text x='170' y='238' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Start with</text>
+<text x='170' y='262' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Volume 0</text>
+<rect x='340' y='206' width='280' height='80' rx='10' fill='#f0b429' fill-opacity='0.30' stroke='#f0b429' stroke-width='2'/>
+<text x='480' y='238' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Go to the</text>
+<text x='480' y='262' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>role tracks</text>
+<rect x='650' y='206' width='280' height='80' rx='10' fill='#2e9e5b' fill-opacity='0.30' stroke='#2e9e5b' stroke-width='2'/>
+<text x='790' y='238' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>Start with the</text>
+<text x='790' y='262' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>crash packs</text>
+<rect x='30' y='330' width='900' height='86' rx='10' fill='#d84a4a' fill-opacity='0.14' stroke='#d84a4a' stroke-width='2' stroke-dasharray='10,6'/>
+<text x='480' y='364' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='600' fill='#ececec' text-anchor='middle'>DSA track: 1-2 hours a day</text>
+<text x='480' y='390' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>from day one, alongside everything above</text>
+</svg>
