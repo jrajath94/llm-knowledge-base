@@ -1,0 +1,23 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 540' width='100%' role='img'>
+<title>Cascade design: try cheap, escalate on failure</title>
+<defs><marker id='ar' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill='#a8a8a8'/></marker></defs>
+<text x='480' y='40' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='21' font-weight='600' fill='#ececec' text-anchor='middle'>Cascade design: try cheap, escalate on failure</text>
+<text x='480' y='64' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' fill='#a8a8a8' text-anchor='middle'>Most steps are easy. Do not pay the strong model for easy steps.</text>
+<rect x='230' y='100' width='500' height='105' rx='10' fill='#2e9e5b' fill-opacity='0.22' stroke='#2e9e5b' stroke-width='2'/>
+<text x='480.0' y='130' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Cheap model</text>
+<text x='480.0' y='152' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>$0.10 / 1M tokens</text>
+<text x='480.0' y='171' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>handles ~80% of steps</text>
+<rect x='230' y='230' width='500' height='105' rx='10' fill='#f0b429' fill-opacity='0.22' stroke='#f0b429' stroke-width='2'/>
+<text x='480.0' y='260' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Mid model</text>
+<text x='480.0' y='282' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>$1 / 1M tokens</text>
+<text x='480.0' y='301' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>handles ~15% of steps</text>
+<rect x='230' y='360' width='500' height='105' rx='10' fill='#c0392b' fill-opacity='0.22' stroke='#c0392b' stroke-width='2'/>
+<text x='480.0' y='390' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Strong model</text>
+<text x='480.0' y='412' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>$10 / 1M tokens</text>
+<text x='480.0' y='431' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>handles ~5% of steps</text>
+<line x1='740' y1='152' x2='740' y2='282' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ar)'/>
+<text x='752' y='222' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8'>low confidence: escalate</text>
+<line x1='740' y1='282' x2='740' y2='412' stroke='#a8a8a8' stroke-width='2' marker-end='url(#ar)'/>
+<text x='752' y='352' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='12' fill='#a8a8a8'>still failing: escalate</text>
+<text x='480' y='510' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' fill='#a8a8a8' text-anchor='middle'>Set a confidence threshold per tier. Log every escalation: it is your cost signal.</text>
+</svg>
