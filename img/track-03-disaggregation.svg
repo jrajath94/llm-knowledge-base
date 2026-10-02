@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="440" viewBox="0 0 780 440"><rect width="780" height="440" fill="#0d0d0d"/>
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#e8e8e8}
+.t{font-size:19px;font-weight:bold}.s{font-size:13.5px}.xs{font-size:12px;fill:#8a8a8a}
+.b{fill:#161616;stroke:#3a3a3a;stroke-width:1.4}
+.acc{fill:none;stroke:#f0b429;stroke-width:2;marker-end:url(#ah)}
+.acc2{fill:none;stroke:#8a8a8a;stroke-width:1.5;marker-end:url(#ah2)}
+.teal{fill:#2dd4bf}.amber{fill:#f0b429}.red{fill:#e5484d}.blue{fill:#4aa8ff}
+</style>
+<defs>
+<marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#f0b429" stroke-width="1.6"/></marker>
+<marker id="ah2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.4"/></marker>
+</defs>
+<text x="30" y="38" class="t">Disaggregation: prefill and decode on separate pools</text>
+<rect x="40" y="90" width="220" height="130" rx="10" class="b"/>
+<text x="150.0" y="120" text-anchor="middle" class="s" font-weight="bold" fill="#4aa8ff">Prefill pool</text>
+<text x="150.0" y="142" text-anchor="middle" class="xs">reads prompts</text>
+<text x="150.0" y="161" text-anchor="middle" class="xs">builds KV cache</text>
+<text x="150.0" y="180" text-anchor="middle" class="xs">compute-bound</text>
+<rect x="520" y="90" width="220" height="130" rx="10" class="b"/>
+<text x="630.0" y="120" text-anchor="middle" class="s" font-weight="bold" fill="#2dd4bf">Decode pool</text>
+<text x="630.0" y="142" text-anchor="middle" class="xs">streams tokens</text>
+<text x="630.0" y="161" text-anchor="middle" class="xs">reads KV cache</text>
+<text x="630.0" y="180" text-anchor="middle" class="xs">memory-bound</text>
+<path d="M 260 155 L 500 155" class="acc"/>
+<text x="380" y="140" text-anchor="middle" class="s" fill="#f0b429">KV cache ships over the network</text>
+<text x="380" y="200" text-anchor="middle" class="xs">one transfer per request</text>
+<rect x="280" y="280" width="220" height="120" rx="10" class="b"/>
+<text x="390.0" y="310" text-anchor="middle" class="s" font-weight="bold" fill="#f0b429">When it pays</text>
+<text x="390.0" y="332" text-anchor="middle" class="xs">long prompts +</text>
+<text x="390.0" y="351" text-anchor="middle" class="xs">long decodes</text>
+<text x="390.0" y="370" text-anchor="middle" class="xs">split traffic shapes</text>
+<path d="M 150 220 L 150 300 L 278 300" class="acc2"/>
+<path d="M 630 220 L 630 300 L 502 300" class="acc2"/>
+<text x="60" y="330" class="xs">size each pool from its own bottleneck</text>
+<text x="560" y="330" class="xs">independent autoscalers</text>
+<text x="30" y="420" class="xs">If one pool idles while the other queues, the split ratio is wrong. Measure and resize.</text>
+</svg>
