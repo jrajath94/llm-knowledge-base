@@ -1,0 +1,41 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 430' width='100%' role='img' aria-label='The spine: five phases, read in order'>
+<rect x='0' y='0' width='960' height='430' fill='#0d0d0d'/>
+<text x='24' y='36' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec'>The spine: five phases, read in order</text>
+<rect x='24' y='80' width='160' height='190' rx='10' fill='#141414' stroke='#6cb2ff' stroke-width='2'/>
+<text x='104.0' y='112' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='600' fill='#6cb2ff' text-anchor='middle'>Phase 1</text>
+<text x='104.0' y='146' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='#ececec' text-anchor='middle'>Foundation</text>
+<text x='104.0' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Vols 0-3</text>
+<text x='104.0' y='202' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>~2 weeks</text>
+<polygon points='186,170 194,162 194,178' fill='#6cb2ff'/>
+<line x1='184' y1='170' x2='194' y2='170' stroke='#6cb2ff' stroke-width='3'/>
+<rect x='196' y='80' width='160' height='190' rx='10' fill='#141414' stroke='#f0b429' stroke-width='2'/>
+<text x='276.0' y='112' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='600' fill='#f0b429' text-anchor='middle'>Phase 2</text>
+<text x='276.0' y='146' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='#ececec' text-anchor='middle'>Core Build</text>
+<text x='276.0' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Vols 4-8</text>
+<text x='276.0' y='202' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>~3 weeks</text>
+<polygon points='358,170 366,162 366,178' fill='#f0b429'/>
+<line x1='356' y1='170' x2='366' y2='170' stroke='#f0b429' stroke-width='3'/>
+<rect x='368' y='80' width='160' height='190' rx='10' fill='#141414' stroke='#7fd08a' stroke-width='2'/>
+<text x='448.0' y='112' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='600' fill='#7fd08a' text-anchor='middle'>Phase 3</text>
+<text x='448.0' y='146' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='#ececec' text-anchor='middle'>Production</text>
+<text x='448.0' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Vols 9-10</text>
+<text x='448.0' y='202' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>~1 week</text>
+<polygon points='530,170 538,162 538,178' fill='#7fd08a'/>
+<line x1='528' y1='170' x2='538' y2='170' stroke='#7fd08a' stroke-width='3'/>
+<rect x='540' y='80' width='160' height='190' rx='10' fill='#141414' stroke='#2e9e5b' stroke-width='2'/>
+<text x='620.0' y='112' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='600' fill='#2e9e5b' text-anchor='middle'>Phase 4</text>
+<text x='620.0' y='146' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='#ececec' text-anchor='middle'>Research</text>
+<text x='620.0' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Vols 11-12</text>
+<text x='620.0' y='202' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>~2 weeks</text>
+<polygon points='702,170 710,162 710,178' fill='#2e9e5b'/>
+<line x1='700' y1='170' x2='710' y2='170' stroke='#2e9e5b' stroke-width='3'/>
+<rect x='712' y='80' width='160' height='190' rx='10' fill='#141414' stroke='#b388eb' stroke-width='2'/>
+<text x='792.0' y='112' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='600' fill='#b388eb' text-anchor='middle'>Phase 5</text>
+<text x='792.0' y='146' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='#ececec' text-anchor='middle'>Interview</text>
+<text x='792.0' y='176' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Vols 13-14</text>
+<text x='792.0' y='202' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='middle'>~1 week</text>
+<rect x='24' y='300' width='912' height='64' rx='10' fill='#141414' stroke='#262626' stroke-width='1.5' stroke-dasharray='6 4'/>
+<text x='480' y='326' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='15' font-weight='600' fill='#ececec' text-anchor='middle'>Parallel track: DSA (Top-300 LeetCode path)</text>
+<text x='480' y='350' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'>1-2 hours a day, pattern by pattern, runs alongside the whole spine</text>
+<text x='24' y='402' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>Each phase builds on the last. Do not skip ahead.</text>
+</svg>
