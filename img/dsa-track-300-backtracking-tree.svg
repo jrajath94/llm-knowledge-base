@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 640" role="img" aria-label="Backtracking: the decision tree for subsets of [1, 2, 3]">
+<rect width="900" height="640" fill="#0d0d0d"/>
+<text x="450.0" y="24" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Backtracking: the decision tree for subsets of [1, 2, 3]</text>
+<text x="450.0" y="48" text-anchor="middle" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">At each level, take the number or skip it. Each root-to-leaf path is one subset.</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker></defs>
+<line x1="450" y1="110" x2="227" y2="214" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="346.5" y="164.0" text-anchor="start" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">skip</text>
+<line x1="450" y1="110" x2="673" y2="214" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="569.5" y="164.0" text-anchor="start" fill="#7bc96f" font-size="10" font-family="Charis SIL, Georgia, serif">take</text>
+<line x1="227" y1="230" x2="122" y2="334" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="182.5" y="284.0" text-anchor="start" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">skip</text>
+<line x1="227" y1="230" x2="332" y2="334" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="287.5" y="284.0" text-anchor="start" fill="#7bc96f" font-size="10" font-family="Charis SIL, Georgia, serif">take</text>
+<line x1="673" y1="230" x2="568" y2="334" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="628.5" y="284.0" text-anchor="start" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">skip</text>
+<line x1="673" y1="230" x2="778" y2="334" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="733.5" y="284.0" text-anchor="start" fill="#7bc96f" font-size="10" font-family="Charis SIL, Georgia, serif">take</text>
+<line x1="122" y1="350" x2="70" y2="544" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="104.0" y="449.0" text-anchor="start" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">skip</text>
+<line x1="122" y1="350" x2="175" y2="544" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="156.5" y="449.0" text-anchor="start" fill="#7bc96f" font-size="10" font-family="Charis SIL, Georgia, serif">take</text>
+<line x1="332" y1="350" x2="280" y2="544" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="314.0" y="449.0" text-anchor="start" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">skip</text>
+<line x1="332" y1="350" x2="385" y2="544" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="366.5" y="449.0" text-anchor="start" fill="#7bc96f" font-size="10" font-family="Charis SIL, Georgia, serif">take</text>
+<line x1="568" y1="350" x2="515" y2="544" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="549.5" y="449.0" text-anchor="start" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">skip</text>
+<line x1="568" y1="350" x2="620" y2="544" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="602.0" y="449.0" text-anchor="start" fill="#7bc96f" font-size="10" font-family="Charis SIL, Georgia, serif">take</text>
+<line x1="778" y1="350" x2="725" y2="544" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="759.5" y="449.0" text-anchor="start" fill="#8a8a8a" font-size="10" font-family="Charis SIL, Georgia, serif">skip</text>
+<line x1="778" y1="350" x2="830" y2="544" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="812.0" y="449.0" text-anchor="start" fill="#7bc96f" font-size="10" font-family="Charis SIL, Georgia, serif">take</text>
+<rect x="416" y="92" width="68" height="32" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="450" y="115" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">[]</text>
+<rect x="193" y="212" width="68" height="32" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="227" y="235" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">[]</text>
+<rect x="639" y="212" width="68" height="32" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="673" y="235" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">[1]</text>
+<rect x="88" y="332" width="68" height="32" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="122" y="355" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">[]</text>
+<rect x="298" y="332" width="68" height="32" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="332" y="355" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">[2]</text>
+<rect x="534" y="332" width="68" height="32" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="568" y="355" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">[1]</text>
+<rect x="744" y="332" width="68" height="32" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="778" y="355" text-anchor="middle" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">[1,2]</text>
+<rect x="30" y="544" width="80" height="32" rx="6" fill="#142114" stroke="#7bc96f"/>
+<text x="70" y="565" text-anchor="middle" fill="#7bc96f" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">[]</text>
+<rect x="135" y="544" width="80" height="32" rx="6" fill="#142114" stroke="#7bc96f"/>
+<text x="175" y="565" text-anchor="middle" fill="#7bc96f" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">[3]</text>
+<rect x="240" y="544" width="80" height="32" rx="6" fill="#142114" stroke="#7bc96f"/>
+<text x="280" y="565" text-anchor="middle" fill="#7bc96f" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">[2]</text>
+<rect x="345" y="544" width="80" height="32" rx="6" fill="#142114" stroke="#7bc96f"/>
+<text x="385" y="565" text-anchor="middle" fill="#7bc96f" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">[2,3]</text>
+<rect x="475" y="544" width="80" height="32" rx="6" fill="#142114" stroke="#7bc96f"/>
+<text x="515" y="565" text-anchor="middle" fill="#7bc96f" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">[1]</text>
+<rect x="580" y="544" width="80" height="32" rx="6" fill="#142114" stroke="#7bc96f"/>
+<text x="620" y="565" text-anchor="middle" fill="#7bc96f" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">[1,3]</text>
+<rect x="685" y="544" width="80" height="32" rx="6" fill="#142114" stroke="#7bc96f"/>
+<text x="725" y="565" text-anchor="middle" fill="#7bc96f" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">[1,2]</text>
+<rect x="790" y="544" width="80" height="32" rx="6" fill="#142114" stroke="#7bc96f"/>
+<text x="830" y="565" text-anchor="middle" fill="#7bc96f" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">[1,2,3]</text>
+<text x="450" y="620" text-anchor="middle" fill="#ececec" font-size="12.5" font-family="Charis SIL, Georgia, serif">8 leaves = 2 x 2 x 2 subsets. Prune a branch and its whole subtree disappears.</text>
+</svg>
