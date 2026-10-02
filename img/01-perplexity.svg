@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="380" viewBox="0 0 700 380" role="img" aria-label="Perplexity as exponentiated cross-entropy">
+<rect width="700" height="380" rx="12" fill="#0f1420"/>
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5aa9ff"/></marker>
+<marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa4b8"/></marker></defs>
+<text x="350" y="36" font-family="sans-serif" font-size="20" fill="#e8ecf4" text-anchor="middle" font-weight="bold">Perplexity = 2^(cross-entropy)</text>
+<text x="350" y="62" font-family="sans-serif" font-size="14" fill="#9aa4b8" text-anchor="middle" font-weight="normal">bits per token, exponentiated</text>
+<rect x="120" y="206.66666666666669" width="90" height="73.33333333333333" rx="6" fill="#9aa4b8" opacity="0.85"/>
+<text x="165.0" y="300" font-family="sans-serif" font-size="13" fill="#e8ecf4" text-anchor="middle" font-weight="normal">data entropy</text>
+<text x="165.0" y="196.66666666666669" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="middle" font-weight="normal">1.5 bits</text>
+<text x="165.0" y="322" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">PPL 2.8</text>
+<rect x="250" y="177.33333333333331" width="90" height="102.66666666666667" rx="6" fill="#5fd08a" opacity="0.85"/>
+<text x="295.0" y="300" font-family="sans-serif" font-size="13" fill="#e8ecf4" text-anchor="middle" font-weight="normal">model A</text>
+<text x="295.0" y="167.33333333333331" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="middle" font-weight="normal">2.1 bits</text>
+<text x="295.0" y="322" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">PPL 4.3</text>
+<rect x="380" y="113.77777777777777" width="90" height="166.22222222222223" rx="6" fill="#ffb347" opacity="0.85"/>
+<text x="425.0" y="300" font-family="sans-serif" font-size="13" fill="#e8ecf4" text-anchor="middle" font-weight="normal">model B</text>
+<text x="425.0" y="103.77777777777777" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="middle" font-weight="normal">3.4 bits</text>
+<text x="425.0" y="322" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">PPL 10.6</text>
+<rect x="510" y="84.44444444444446" width="90" height="195.55555555555554" rx="6" fill="#ff7a9e" opacity="0.85"/>
+<text x="555.0" y="300" font-family="sans-serif" font-size="13" fill="#e8ecf4" text-anchor="middle" font-weight="normal">uniform</text>
+<text x="555.0" y="74.44444444444446" font-family="sans-serif" font-size="12" fill="#e8ecf4" text-anchor="middle" font-weight="normal">4.0 bits</text>
+<text x="555.0" y="322" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">PPL 16.0</text>
+<text x="350" y="362" font-family="sans-serif" font-size="13" fill="#9aa4b8" text-anchor="middle" font-weight="normal">Lower cross-entropy = lower perplexity = less surprise per token.</text>
+</svg>
