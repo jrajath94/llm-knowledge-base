@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="380" viewBox="0 0 900 380" role="img" aria-label="Backprop flow: forward values left to right, gradients right to left">
+<rect width="900" height="380" rx="12" fill="#0f1420"/>
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5aa9ff"/></marker>
+<marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9aa4b8"/></marker></defs>
+<text x="450" y="36" font-family="sans-serif" font-size="20" fill="#e8ecf4" text-anchor="middle" font-weight="bold">Backprop: forward values, backward gradients</text>
+<rect x="90" y="120" width="110" height="90" rx="8" fill="#182030" stroke="#ffb347" stroke-width="1.5"/>
+<text x="145" y="155" font-family="sans-serif" font-size="15" fill="#ffb347" text-anchor="middle" font-weight="bold">x=2.0</text>
+<rect x="300" y="120" width="110" height="90" rx="8" fill="#182030" stroke="#ffb347" stroke-width="1.5"/>
+<text x="355" y="155" font-family="sans-serif" font-size="15" fill="#ffb347" text-anchor="middle" font-weight="bold">* w</text>
+<text x="355" y="180" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">w=0.5</text>
+<rect x="510" y="120" width="110" height="90" rx="8" fill="#182030" stroke="#ffb347" stroke-width="1.5"/>
+<text x="565" y="155" font-family="sans-serif" font-size="15" fill="#ffb347" text-anchor="middle" font-weight="bold">tanh</text>
+<rect x="720" y="120" width="110" height="90" rx="8" fill="#182030" stroke="#ffb347" stroke-width="1.5"/>
+<text x="775" y="155" font-family="sans-serif" font-size="15" fill="#ffb347" text-anchor="middle" font-weight="bold">(a-t)^2</text>
+<text x="775" y="180" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">t=1.0</text>
+<line x1="200" y1="165" x2="300" y2="165" stroke="#5fd08a" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="410" y1="165" x2="510" y2="165" stroke="#5fd08a" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="620" y1="165" x2="720" y2="165" stroke="#5fd08a" stroke-width="2" marker-end="url(#arr)"/>
+<text x="450" y="250" font-family="sans-serif" font-size="13" fill="#5fd08a" text-anchor="middle" font-weight="normal">forward: values flow left to right (green)</text>
+<line x1="300" y1="120" x2="200" y2="120" stroke="#ff7a9e" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="510" y1="120" x2="410" y2="120" stroke="#ff7a9e" stroke-width="2" marker-end="url(#arr)"/>
+<line x1="720" y1="120" x2="620" y2="120" stroke="#ff7a9e" stroke-width="2" marker-end="url(#arr)"/>
+<text x="450" y="300" font-family="sans-serif" font-size="13" fill="#ff7a9e" text-anchor="middle" font-weight="normal">backward: each box multiplies the incoming gradient by its local derivative (rose)</text>
+<text x="450" y="340" font-family="sans-serif" font-size="12" fill="#9aa4b8" text-anchor="middle" font-weight="normal">Local derivatives: 2(a-t) for square, (1-a^2) for tanh, x and 1 for linear.</text>
+</svg>
