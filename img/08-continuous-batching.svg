@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="680" height="300" role="img" aria-label="Continuous batching: requests join and leave without waiting for the batch">
+<style>
+.t { font: 600 13px system-ui, sans-serif; fill: #1a1a1a; }
+.s { font: 400 11px system-ui, sans-serif; fill: #444; }
+.b { font: 700 12px system-ui, sans-serif; fill: #fff; }
+.box { fill: #f5f7fa; stroke: #2a6db5; stroke-width: 1.5; rx: 6; }
+.box2 { fill: #eef6ee; stroke: #2e7d32; stroke-width: 1.5; rx: 6; }
+.box3 { fill: #fff8e6; stroke: #b7791f; stroke-width: 1.5; rx: 6; }
+.arr { stroke: #333; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#333"/></marker></defs>
+<rect width="680" height="300" fill="#ffffff"/>
+<text x="20" y="28" class="t">Continuous batching: no one waits for the slowest request</text><text x="20" y="55" class="s">Static batching (old way)</text><rect x="20" y="65" width="140" height="30" class="box3"/><text x="30" y="85" class="s">Req 1</text><rect x="180" y="65" width="140" height="30" class="box3"/><text x="190" y="85" class="s">Req 2</text><rect x="340" y="65" width="140" height="30" class="box3"/><text x="350" y="85" class="s">Req 3</text><rect x="500" y="65" width="140" height="30" class="box3"/><text x="510" y="85" class="s">Req 4</text><text x="20" y="120" class="s">All 4 finish together. Fast requests wait for slow ones.</text><text x="20" y="150" class="s">Continuous batching (vLLM way)</text><rect x="20" y="160" width="120" height="28" fill="#2a6db5" opacity="0.8" rx="4"/><text x="28" y="179" class="b">A</text><rect x="60" y="160" width="200" height="28" fill="#2e7d32" opacity="0.8" rx="4"/><text x="68" y="179" class="b">B</text><rect x="140" y="160" width="100" height="28" fill="#c62828" opacity="0.8" rx="4"/><text x="148" y="179" class="b">C</text><rect x="220" y="160" width="160" height="28" fill="#b7791f" opacity="0.8" rx="4"/><text x="228" y="179" class="b">D</text><line x1="20" y1="200" x2="660" y2="200" stroke="#333"/><text x="20" y="220" class="s">Time</text><text x="20" y="245" class="s">When A finishes, C joins the running batch. The GPU never idles.</text><text x="20" y="265" class="s">Throughput rises because no slot sits empty.</text></svg>
