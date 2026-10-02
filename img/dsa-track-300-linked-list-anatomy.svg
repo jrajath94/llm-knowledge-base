@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 730" role="img" aria-label="Linked list: nodes, pointers, and reversal">
+<rect width="900" height="730" fill="#0d0d0d"/>
+<text x="450.0" y="24" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Linked list: nodes, pointers, and reversal</text>
+<text x="450.0" y="48" text-anchor="middle" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">A node holds a value and the address of the next node. Reversal rewires each next pointer.</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker></defs>
+<text x="40" y="100" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">one node</text>
+<rect x="140" y="76" width="90" height="48" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="185" y="105" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">7</text>
+<line x1="230" y1="76" x2="230" y2="124" stroke="#6aa8ff" stroke-width="1.5"/>
+<rect x="230" y="76" width="110" height="48" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="285" y="105" text-anchor="middle" fill="#6aa8ff" font-size="13" font-family="Charis SIL, Georgia, serif">next</text>
+<line x1="344" y1="100" x2="420" y2="100" stroke="#6aa8ff" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="430" y="105" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">points to the next node</text>
+<text x="40" y="180" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">reverse 1 -&gt; 2 -&gt; 3</text>
+<text x="40" y="234" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 1</text>
+<rect x="150" y="210" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="178" y="238" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">1</text>
+<rect x="260" y="210" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="288" y="238" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">2</text>
+<rect x="370" y="210" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="398" y="238" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">3</text>
+<line x1="208" y1="232" x2="258" y2="232" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#ah)"/>
+<line x1="318" y1="232" x2="368" y2="232" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="150" y="272" text-anchor="start" fill="#6aa8ff" font-size="11" font-family="Charis SIL, Georgia, serif">prev = none</text>
+<text x="178" y="198" text-anchor="middle" fill="#f0b429" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">curr</text>
+<text x="560" y="238" text-anchor="start" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">start: prev = none, curr = 1</text>
+<text x="40" y="358" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 2</text>
+<rect x="150" y="334" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="178" y="362" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">1</text>
+<rect x="260" y="334" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="288" y="362" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">2</text>
+<rect x="370" y="334" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="398" y="362" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">3</text>
+<line x1="318" y1="356" x2="368" y2="356" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="178" y="400" text-anchor="middle" fill="#7bc96f" font-size="11" font-family="Charis SIL, Georgia, serif">next = none</text>
+<text x="178" y="434" text-anchor="middle" fill="#6aa8ff" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">prev</text>
+<text x="288" y="322" text-anchor="middle" fill="#f0b429" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">curr</text>
+<text x="560" y="362" text-anchor="start" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">rewire 1: 1.next = none. advance.</text>
+<text x="40" y="482" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 3</text>
+<rect x="150" y="458" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="178" y="486" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">1</text>
+<rect x="260" y="458" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="288" y="486" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">2</text>
+<rect x="370" y="458" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="398" y="486" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">3</text>
+<path d="M 278 502 C 248 536, 218 536, 188 502" fill="none" stroke="#7bc96f" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="288" y="558" text-anchor="middle" fill="#6aa8ff" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">prev</text>
+<text x="398" y="446" text-anchor="middle" fill="#f0b429" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">curr</text>
+<text x="560" y="486" text-anchor="start" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">rewire 2: 2.next = 1. advance.</text>
+<text x="40" y="606" text-anchor="start" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 4</text>
+<rect x="150" y="582" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="178" y="610" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">1</text>
+<rect x="260" y="582" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="288" y="610" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">2</text>
+<rect x="370" y="582" width="56" height="44" rx="6" fill="#1a1a1a" stroke="#2a2a2a"/>
+<text x="398" y="610" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">3</text>
+<path d="M 388 626 C 358 660, 328 660, 298 626" fill="none" stroke="#7bc96f" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="398" y="682" text-anchor="middle" fill="#6aa8ff" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">prev</text>
+<text x="560" y="610" text-anchor="start" fill="#ececec" font-size="12" font-family="Charis SIL, Georgia, serif">rewire 3: 3.next = 2. done.</text>
+</svg>
