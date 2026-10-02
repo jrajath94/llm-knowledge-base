@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="620" viewBox="0 0 800 620" role="img" aria-label="Diagram of three delivery semantics: at-most-once, at-least-once, and effectively-once.">
+<rect width="800" height="620" fill="#0d0d0d"/>
+<text x="400" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">Delivery semantics: three promises</text>
+<text x="400" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Strictly exactly-once is impossible. Effectively-once is the honest version.</text>
+<rect x="70" y="90" width="660" height="140" rx="10" fill="#161616" stroke="#e67e7e" stroke-width="2"/>
+<text x="100" y="124" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#e67e7e">At-most-once</text>
+<text x="100" y="152" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">The system delivers the message zero or one times.</text>
+<text x="100" y="180" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">0 or 1 deliveries</text>
+<text x="100" y="204" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">Fast and simple. If the consumer crashes mid-processing, the message is gone.</text>
+<rect x="70" y="246" width="660" height="140" rx="10" fill="#161616" stroke="#e6a75a" stroke-width="2"/>
+<text x="100" y="280" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#e6a75a">At-least-once</text>
+<text x="100" y="308" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">The broker delivers the message one or more times.</text>
+<text x="100" y="336" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">1 or more deliveries</text>
+<text x="100" y="360" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">Nothing is lost, but duplicates happen. Crash before the ack means the broker resends.</text>
+<rect x="70" y="402" width="660" height="140" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="100" y="436" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="bold" fill="#7fd08a">Effectively-once</text>
+<text x="100" y="464" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">At-least-once delivery plus idempotent processing.</text>
+<text x="100" y="492" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">looks like exactly 1</text>
+<text x="100" y="516" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#a8a8a8">Duplicates have no effect. The observable behavior is exactly-once, even though the wire is not.</text>
+<text x="400" y="580" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Networks can lose the acknowledgment, so the sender can never be sure the message arrived.</text>
+</svg>
