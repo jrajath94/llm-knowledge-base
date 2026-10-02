@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="480" viewBox="0 0 860 480" role="img" aria-label="Labeler pipeline: rubric, instruction packet, qualification, production or retrain, ongoing monitoring">
+<rect width="860" height="480" fill="#0d0d0d"/>
+<text x="430" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">The labeler pipeline: train, qualify, monitor</text>
+<text x="430" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Train labelers with a packet, not a paragraph. Then never stop checking them.</text>
+
+<g font-family="system-ui,-apple-system,sans-serif">
+<rect x="20" y="110" width="140" height="90" rx="10" fill="#1a1a1a" stroke="#6cb2ff" stroke-width="1.5"/>
+<text x="90" y="140" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#6cb2ff">Rubric</text>
+<text x="90" y="162" text-anchor="middle" font-size="11" fill="#a8a8a8">Volume 7: what</text>
+<text x="90" y="180" text-anchor="middle" font-size="11" fill="#a8a8a8">"better" means</text>
+
+<line x1="160" y1="155" x2="185" y2="155" stroke="#555" stroke-width="2"/>
+<polygon points="185,155 177,149 177,161" fill="#555"/>
+
+<rect x="185" y="110" width="140" height="90" rx="10" fill="#1a1a1a" stroke="#6cb2ff" stroke-width="1.5"/>
+<text x="255" y="140" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#6cb2ff">Instruction packet</text>
+<text x="255" y="162" text-anchor="middle" font-size="11" fill="#a8a8a8">task, examples,</text>
+<text x="255" y="180" text-anchor="middle" font-size="11" fill="#a8a8a8">edge cases, skip rules</text>
+
+<line x1="325" y1="155" x2="350" y2="155" stroke="#555" stroke-width="2"/>
+<polygon points="350,155 342,149 342,161" fill="#555"/>
+
+<rect x="350" y="110" width="140" height="90" rx="10" fill="#1a1a1a" stroke="#f0b429" stroke-width="1.5"/>
+<text x="420" y="140" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#f0b429">Qualification</text>
+<text x="420" y="162" text-anchor="middle" font-size="11" fill="#a8a8a8">gold-item test batch,</text>
+<text x="420" y="180" text-anchor="middle" font-size="11" fill="#a8a8a8">80% bar</text>
+
+<line x1="490" y1="130" x2="515" y2="130" stroke="#555" stroke-width="2"/>
+<polygon points="515,130 507,124 507,136" fill="#555"/>
+<text x="505" y="118" text-anchor="middle" font-size="10.5" fill="#a8a8a8">passes</text>
+<line x1="490" y1="180" x2="515" y2="180" stroke="#555" stroke-width="2"/>
+<polygon points="515,180 507,174 507,186" fill="#555"/>
+<text x="505" y="198" text-anchor="middle" font-size="10.5" fill="#a8a8a8">fails</text>
+
+<rect x="515" y="85" width="140" height="90" rx="10" fill="#1f3a24" stroke="#7fd08a" stroke-width="1.5"/>
+<text x="585" y="115" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7fd08a">Production</text>
+<text x="585" y="137" text-anchor="middle" font-size="11" fill="#a8a8a8">labeling</text>
+
+<rect x="515" y="185" width="140" height="90" rx="10" fill="#3a1f1f" stroke="#e08080" stroke-width="1.5"/>
+<text x="585" y="215" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#e08080">Retrain or</text>
+<text x="585" y="235" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#e08080">do not hire</text>
+
+<line x1="655" y1="130" x2="690" y2="130" stroke="#555" stroke-width="2"/>
+<polygon points="690,130 682,124 682,136" fill="#555"/>
+
+<rect x="690" y="85" width="150" height="90" rx="10" fill="#1a1a1a" stroke="#6cb2ff" stroke-width="1.5"/>
+<text x="765" y="115" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#6cb2ff">Ongoing</text>
+<text x="765" y="135" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#6cb2ff">monitoring</text>
+<text x="765" y="157" text-anchor="middle" font-size="11" fill="#a8a8a8">gold in every batch</text>
+</g>
+
+<rect x="20" y="230" width="820" height="90" rx="10" fill="#141414" stroke="#2e9e5b" stroke-width="1"/>
+<text x="430" y="260" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="bold" fill="#2e9e5b">The pipeline never ends at hiring.</text>
+<text x="430" y="284" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">Gold items keep flowing into every production batch. Accuracy below the bar pauses the labeler for retraining.</text>
+
+<text x="430" y="360" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#a8a8a8">Each stage has one job. The rubric defines "better". The packet teaches it. The gold test proves it.</text>
+<text x="430" y="384" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#a8a8a8">Production earns it daily. Monitoring keeps it honest.</text>
+</svg>
