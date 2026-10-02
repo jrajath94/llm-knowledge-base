@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 470" role="img" aria-labelledby="t09roc-title t09roc-desc">
+<title id="t09roc-title">ROC curve: one picture of the quality tradeoff</title>
+<desc id="t09roc-desc">Axes: false positive rate left to right, true positive rate bottom to top. A diagonal gray line is random guessing. A blue curve bows toward the top-left corner. The shaded area under the curve is 0.91. Three threshold points sit on the curve: strict, balanced, loose.</desc>
+<style>
+  .k text { font-family: "Charis SIL", Georgia, serif; fill: #ececec; }
+  .k .lane { font-size: 13px; font-weight: bold; fill: #f0b429; letter-spacing: 2px; }
+  .k .box { font-size: 14.5px; font-weight: bold; text-anchor: middle; }
+  .k .d { font-size: 12px; fill: #a8a8a8; text-anchor: middle; }
+  .k .dl { font-size: 12px; fill: #a8a8a8; }
+  .k .cap { font-size: 12.5px; fill: #a8a8a8; text-anchor: middle; font-style: italic; }
+  .k .capl { font-size: 12.5px; fill: #a8a8a8; font-style: italic; }
+  .k .num { font-size: 13px; font-weight: bold; text-anchor: middle; }
+  .k .tl { font-size: 12px; text-anchor: middle; }
+</style>
+<g class="k">
+<rect x="0" y="0" width="940" height="470" fill="#0d0d0d"/>
+<text x="30" y="40" class="lane">ROC CURVE (AUC 0.91)</text>
+<line x1="120" y1="390" x2="680" y2="390" stroke="#a8a8a8" stroke-width="1.5"/>
+<line x1="120" y1="390" x2="120" y2="90" stroke="#a8a8a8" stroke-width="1.5"/>
+<text x="400.0" y="418" class="capl">false positive rate</text>
+<text x="36" y="240.0" class="capl">true positive rate</text>
+<line x1="120" y1="390" x2="680" y2="90" stroke="#555555" stroke-width="1.5" stroke-dasharray="6,5"/>
+<text x="550" y="120" class="dl" fill="#777777">random: AUC 0.5</text>
+<path d="M120.0,390.0 L134.0,373.7 L148.0,358.0 L162.0,342.7 L176.0,327.9 L190.0,313.6 L204.0,299.8 L218.0,286.5 L232.0,273.6 L246.0,261.2 L260.0,249.3 L274.0,237.9 L288.0,226.9 L302.0,216.4 L316.0,206.3 L330.0,196.7 L344.0,187.5 L358.0,178.8 L372.0,170.5 L386.0,162.7 L400.0,155.3 L414.0,148.3 L428.0,141.8 L442.0,135.7 L456.0,130.0 L470.0,124.7 L484.0,119.8 L498.0,115.3 L512.0,111.2 L526.0,107.5 L540.0,104.2 L554.0,101.3 L568.0,98.7 L582.0,96.5 L596.0,94.6 L610.0,93.1 L624.0,91.9 L638.0,91.0 L652.0,90.4 L666.0,90.1 L680.0,90.0 L680,390 L120,390 z" fill="#6ab0ff" opacity="0.15"/>
+<path d="M120.0,390.0 L134.0,373.7 L148.0,358.0 L162.0,342.7 L176.0,327.9 L190.0,313.6 L204.0,299.8 L218.0,286.5 L232.0,273.6 L246.0,261.2 L260.0,249.3 L274.0,237.9 L288.0,226.9 L302.0,216.4 L316.0,206.3 L330.0,196.7 L344.0,187.5 L358.0,178.8 L372.0,170.5 L386.0,162.7 L400.0,155.3 L414.0,148.3 L428.0,141.8 L442.0,135.7 L456.0,130.0 L470.0,124.7 L484.0,119.8 L498.0,115.3 L512.0,111.2 L526.0,107.5 L540.0,104.2 L554.0,101.3 L568.0,98.7 L582.0,96.5 L596.0,94.6 L610.0,93.1 L624.0,91.9 L638.0,91.0 L652.0,90.4 L666.0,90.1 L680.0,90.0" fill="none" stroke="#6ab0ff" stroke-width="2.5"/>
+<circle cx="164.8" cy="339.72066045951664" r="8" fill="#ff7a7a" stroke="#0d0d0d" stroke-width="1.5"/>
+<text x="178.8" y="329.72066045951664" class="tl" fill="#ff7a7a">strict</text>
+<circle cx="260.0" cy="249.31476753101472" r="8" fill="#f0b429" stroke="#0d0d0d" stroke-width="1.5"/>
+<text x="274.0" y="239.31476753101472" class="tl" fill="#f0b429">balanced</text>
+<circle cx="428.0" cy="141.7831881230324" r="8" fill="#7fd67f" stroke="#0d0d0d" stroke-width="1.5"/>
+<text x="442.0" y="131.7831881230324" class="tl" fill="#7fd67f">loose</text>
+<text x="30" y="448" class="capl">How to read: closer to the top-left = better. The threshold picks your point on the curve.</text>
+</g>
+<defs><marker id="t09roc-ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#a8a8a8"/></marker></defs>
+</svg>
