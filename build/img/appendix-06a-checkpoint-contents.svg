@@ -1,0 +1,17 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 460' width='100%' role='img' aria-label='What a checkpoint contains (70B model, BF16)'>
+<rect x='0' y='0' width='960' height='460' fill='#0d0d0d'/>
+<text x='24' y='36' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec'>What a checkpoint contains (70B model, BF16)</text>
+<rect x='240' y='80' width='140.0' height='44' rx='7' fill='#6cb2ff' opacity='0.9'/>
+<text x='24' y='108' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='start'>Parameters</text>
+<text x='392.0' y='108' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='700' fill='#ececec' text-anchor='start'>140 GB</text>
+<rect x='240' y='164' width='560.0' height='44' rx='7' fill='#f0b429' opacity='0.9'/>
+<text x='24' y='192' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='start'>Optimizer state</text>
+<text x='812.0' y='192' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='700' fill='#ececec' text-anchor='start'>560 GB</text>
+<rect x='240' y='248' width='40.0' height='44' rx='7' fill='#7fd08a' opacity='0.9'/>
+<text x='24' y='276' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='start'>RNG state</text>
+<text x='292.0' y='276' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='700' fill='#ececec' text-anchor='start'>small</text>
+<rect x='240' y='332' width='40.0' height='44' rx='7' fill='#b388eb' opacity='0.9'/>
+<text x='24' y='360' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='600' fill='#ececec' text-anchor='start'>Data position</text>
+<text x='292.0' y='360' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='700' fill='#ececec' text-anchor='start'>small</text>
+<text x='24' y='428' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>The optimizer state is four times bigger than the model. Forgetting it turns a resume into a restart with amnesia.</text>
+</svg>
