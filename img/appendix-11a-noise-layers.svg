@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="560" viewBox="0 0 800 560" role="img" aria-label="Diagram of three noise layers: item, decoding, and judge, each with its fix.">
+<rect width="800" height="560" fill="#0d0d0d"/>
+<text x="400" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">Three noise layers</text>
+<text x="400" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Each layer adds its own wobble. Fix each layer with its own method.</text>
+<rect x="60" y="90" width="680" height="140" rx="10" fill="#161616" stroke="#5aa9e6" stroke-width="2"/>
+<text x="86" y="124" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="bold" fill="#5aa9e6">Item noise</text>
+<text x="86" y="152" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Questions differ in difficulty. One batch looks better than another for no real reason.</text>
+<text x="86" y="186" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Fix: pair the runs. Test A and B on the same items.</text>
+<rect x="60" y="246" width="680" height="140" rx="10" fill="#161616" stroke="#e6a75a" stroke-width="2"/>
+<text x="86" y="280" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="bold" fill="#e6a75a">Decoding noise</text>
+<text x="86" y="308" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Sampling is random. The same prompt gives different answers on two runs.</text>
+<text x="86" y="342" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Fix: set temperature 0 and fix the seed, or repeat 3-5 times and average.</text>
+<rect x="60" y="402" width="680" height="140" rx="10" fill="#161616" stroke="#7fd08a" stroke-width="2"/>
+<text x="86" y="436" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="bold" fill="#7fd08a">Judge noise</text>
+<text x="86" y="464" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#ececec">Raters disagree. A judge cannot beat the ceiling of its own ground truth.</text>
+<text x="86" y="498" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Fix: measure rater agreement (kappa) before you trust judge scores.</text>
+</svg>
