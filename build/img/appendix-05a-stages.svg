@@ -1,0 +1,28 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 420' width='100%' role='img' aria-label='The three training stages: what changes at each'>
+<rect x='0' y='0' width='960' height='420' fill='#0d0d0d'/>
+<text x='24' y='36' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec'>The three training stages: what changes at each</text>
+<rect x='24' y='80' width='280' height='180' rx='10' fill='#141414' stroke='#6cb2ff' stroke-width='2'/>
+<text x='164' y='116' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='#6cb2ff' text-anchor='middle'>Pre-training</text>
+<text x='164' y='142' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Vol 5</text>
+<text x='164' y='178' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#ececec' text-anchor='middle'>data: broad web data</text>
+<text x='164' y='204' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#ececec' text-anchor='middle'>objective: next-token objective</text>
+<text x='164' y='236' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'></text>
+<line x1='304' y1='170' x2='340' y2='170' stroke='#a8a8a8' stroke-width='3'/>
+<polygon points='344,170 334,162 334,178' fill='#a8a8a8'/>
+<rect x='324' y='80' width='280' height='180' rx='10' fill='#141414' stroke='#f0b429' stroke-width='2'/>
+<text x='464' y='116' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='#f0b429' text-anchor='middle'>Mid-training</text>
+<text x='464' y='142' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'>this appendix</text>
+<text x='464' y='178' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#ececec' text-anchor='middle'>data: curated mix, quality up</text>
+<text x='464' y='204' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#ececec' text-anchor='middle'>objective: same objective</text>
+<text x='464' y='236' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'></text>
+<line x1='604' y1='170' x2='640' y2='170' stroke='#a8a8a8' stroke-width='3'/>
+<polygon points='644,170 634,162 634,178' fill='#a8a8a8'/>
+<rect x='624' y='80' width='280' height='180' rx='10' fill='#141414' stroke='#7fd08a' stroke-width='2'/>
+<text x='764' y='116' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='17' font-weight='700' fill='#7fd08a' text-anchor='middle'>Post-training</text>
+<text x='764' y='142' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'>Vol 7</text>
+<text x='764' y='178' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#ececec' text-anchor='middle'>data: instruction + preference data</text>
+<text x='764' y='204' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#ececec' text-anchor='middle'>objective: new objectives</text>
+<text x='764' y='236' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='13' font-weight='400' fill='#a8a8a8' text-anchor='middle'></text>
+<text x='24' y='310' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>Mid-training changes the data on purpose. The objective stays the same.</text>
+<text x='24' y='336' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>That is what makes it its own stage, not a longer pre-training run.</text>
+</svg>
