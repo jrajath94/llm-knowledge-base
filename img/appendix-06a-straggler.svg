@@ -1,0 +1,12 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 400' width='100%' role='img' aria-label='One slow rank taxes everyone'>
+<rect x='0' y='0' width='960' height='400' fill='#0d0d0d'/>
+<text x='24' y='36' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='20' font-weight='600' fill='#ececec'>One slow rank taxes everyone</text>
+<rect x='24' y='100' width='700' height='48' rx='8' fill='#2e9e5b' opacity='0.8'/>
+<text x='374' y='130' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='700' fill='#0d0d0d' text-anchor='middle'>999 ranks at 2.0 s per step</text>
+<rect x='24' y='180' width='910' height='48' rx='8' fill='#e57373' opacity='0.8'/>
+<text x='479' y='210' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='700' fill='#0d0d0d' text-anchor='middle'>1 slow rank at 2.6 s per step</text>
+<line x1='748' y1='80' x2='748' y2='228' stroke='#f0b429' stroke-width='2' stroke-dasharray='8 6'/>
+<text x='748' y='70' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='12' font-weight='600' fill='#f0b429' text-anchor='middle'>everyone waits here</text>
+<text x='24' y='290' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>Every step takes 2.6 seconds. The loss curve looks normal. GPU utilization looks fine on average.</text>
+<text x='24' y='316' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif' font-size='14' font-weight='400' fill='#a8a8a8' text-anchor='start'>That is what makes fail-slow failures hard to spot.</text>
+</svg>
