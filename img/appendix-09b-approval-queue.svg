@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="520" viewBox="0 0 820 520" role="img" aria-label="Approval queue flow for irreversible actions: propose, human approves, tool executes, denials logged">
+<rect width="820" height="520" fill="#0d0d0d"/>
+<text x="410" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">The approval queue: humans gate the irreversible</text>
+<text x="410" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">Sending money, deleting data, publishing content: the agent proposes, a human approves, the tool executes.</text>
+
+<g font-family="system-ui,-apple-system,sans-serif">
+<rect x="30" y="110" width="160" height="90" rx="10" fill="#1a1a1a" stroke="#6cb2ff" stroke-width="1.5"/>
+<text x="110" y="142" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#6cb2ff">Agent proposes</text>
+<text x="110" y="164" text-anchor="middle" font-size="11.5" fill="#a8a8a8">exact action +</text>
+<text x="110" y="182" text-anchor="middle" font-size="11.5" fill="#a8a8a8">arguments</text>
+
+<line x1="190" y1="155" x2="225" y2="155" stroke="#555" stroke-width="2"/>
+<polygon points="225,155 217,149 217,161" fill="#555"/>
+
+<rect x="225" y="95" width="210" height="120" rx="10" fill="#1a1a1a" stroke="#f0b429" stroke-width="1.5"/>
+<text x="330" y="122" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#f0b429">Approval queue</text>
+<text x="330" y="144" text-anchor="middle" font-size="11.5" fill="#ececec">approval binds to the</text>
+<text x="330" y="162" text-anchor="middle" font-size="11.5" fill="#ececec">exact action id</text>
+<text x="330" y="184" text-anchor="middle" font-size="11" fill="#a8a8a8">with timeout + clear</text>
+<text x="330" y="200" text-anchor="middle" font-size="11" fill="#a8a8a8">context of what happens</text>
+
+<line x1="435" y1="155" x2="470" y2="155" stroke="#555" stroke-width="2"/>
+<polygon points="470,155 462,149 462,161" fill="#555"/>
+
+<polygon points="585,90 700,155 585,220 470,155" fill="#1a1a1a" stroke="#ececec" stroke-width="1.5"/>
+<text x="585" y="148" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#ececec">Human</text>
+<text x="585" y="170" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#ececec">decides</text>
+
+<text x="640" y="120" font-size="11.5" fill="#a8a8a8">approve</text>
+<line x1="660" y1="130" x2="720" y2="130" stroke="#7fd08a" stroke-width="2"/>
+<polygon points="720,130 712,124 712,136" fill="#7fd08a"/>
+<rect x="720" y="95" width="80" height="70" rx="10" fill="#1f3a24" stroke="#7fd08a" stroke-width="1.5"/>
+<text x="760" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#7fd08a">Tool</text>
+<text x="760" y="142" text-anchor="middle" font-size="12" font-weight="bold" fill="#7fd08a">executes</text>
+
+<text x="640" y="205" font-size="11.5" fill="#a8a8a8">deny</text>
+<line x1="660" y1="195" x2="720" y2="195" stroke="#e08080" stroke-width="2"/>
+<polygon points="720,195 712,189 712,201" fill="#e08080"/>
+<rect x="720" y="160" width="80" height="70" rx="10" fill="#3a1f1f" stroke="#e08080" stroke-width="1.5"/>
+<text x="760" y="189" text-anchor="middle" font-size="12" font-weight="bold" fill="#e08080">Deny +</text>
+<text x="760" y="207" text-anchor="middle" font-size="12" font-weight="bold" fill="#e08080">log</text>
+</g>
+
+<rect x="30" y="260" width="770" height="120" rx="10" fill="#141414" stroke="#2e9e5b" stroke-width="1"/>
+<text x="410" y="292" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13.5" font-weight="bold" fill="#2e9e5b">Why binding matters</text>
+<text x="410" y="318" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">The approval covers one exact action id, not "whatever the agent does next". A swapped argument</text>
+<text x="410" y="340" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">is a different action and needs a new approval. Denials are logged: the log is what the red team reads.</text>
+
+<rect x="30" y="400" width="770" height="90" rx="10" fill="#141414" stroke="#e08080" stroke-width="1"/>
+<text x="410" y="428" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13.5" font-weight="bold" fill="#e08080">The failure mode</text>
+<text x="410" y="452" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">Approval queues need timeouts and clear context. Without them, humans click "approve" blindly</text>
+<text x="410" y="472" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">and the control rots into a rubber stamp.</text>
+</svg>
