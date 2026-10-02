@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" font-family="Charis SIL, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="Three layers of randomness in an LLM eval">
+<rect x="14" y="12" width="932" height="376" rx="10" fill="#141414" stroke="#2e2e2e"/>
+<text x="32" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#6cb2ff">EVAL RANDOMNESS</text>
+<text x="32" y="72" font-size="16" font-weight="700" fill="#ececec">Three separate layers of noise</text>
+<rect x="32" y="96" width="896" height="76" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<rect x="32" y="96" width="6" height="76" fill="#6cb2ff"/>
+<text x="56" y="124" font-size="12.5" font-weight="700" letter-spacing="1.2" fill="#6cb2ff">LAYER 1: ITEMS</text>
+<text x="56" y="148" font-size="13" fill="#a8a8a8">Some questions are easy, some are hard.  Fix: pair A and B on the same items.</text>
+<rect x="32" y="184" width="896" height="76" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<rect x="32" y="184" width="6" height="76" fill="#e8b34b"/>
+<text x="56" y="212" font-size="12.5" font-weight="700" letter-spacing="1.2" fill="#e8b34b">LAYER 2: DECODING</text>
+<text x="56" y="236" font-size="13" fill="#a8a8a8">Same prompt, same question, different answers.  Fix: temperature 0, or average 3 to 5 runs.</text>
+<rect x="32" y="272" width="896" height="76" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<rect x="32" y="272" width="6" height="76" fill="#c07fe0"/>
+<text x="56" y="300" font-size="12.5" font-weight="700" letter-spacing="1.2" fill="#c07fe0">LAYER 3: JUDGE</text>
+<text x="56" y="324" font-size="13" fill="#a8a8a8">The rater carries its own noise.  Fix: calibrate the judge first (Ch 2).</text>
+<text x="32" y="372" font-size="12.5" fill="#ececec">A design that ignores any layer is a design that can lie to you.</text>
+</svg>
