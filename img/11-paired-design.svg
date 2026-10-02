@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" font-family="Charis SIL, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="Unpaired versus paired comparison design">
+<rect x="14" y="12" width="932" height="356" rx="10" fill="#141414" stroke="#2e2e2e"/>
+<text x="32" y="44" font-size="11.5" font-weight="700" letter-spacing="1.6" fill="#6cb2ff">PAIRED DESIGN</text>
+<rect x="32" y="64" width="440" height="286" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="52" y="96" font-size="13.5" font-weight="700" fill="#c05555">Unpaired: do not do this</text>
+<text x="52" y="122" font-size="12.5" fill="#a8a8a8">System A scored on batch X.</text>
+<text x="52" y="144" font-size="12.5" fill="#a8a8a8">System B scored on batch Y.</text>
+<rect x="52" y="162" width="180" height="46" rx="6" fill="#2a2a2a" stroke="#2e2e2e"/>
+<text x="62" y="190" font-size="12.5" fill="#ececec">Batch X: easy set</text>
+<rect x="252" y="162" width="180" height="46" rx="6" fill="#2a2a2a" stroke="#2e2e2e"/>
+<text x="262" y="190" font-size="12.5" fill="#ececec">Batch Y: hard set</text>
+<text x="52" y="240" font-size="12.5" fill="#a8a8a8">The gap mixes system quality</text>
+<text x="52" y="262" font-size="12.5" fill="#a8a8a8">with batch difficulty.</text>
+<text x="52" y="296" font-size="13" font-weight="700" fill="#c05555">You measure which batch</text>
+<text x="52" y="318" font-size="13" font-weight="700" fill="#c05555">was easier. Not the systems.</text>
+<rect x="488" y="64" width="440" height="286" rx="8" fill="#1c1c1c" stroke="#2e2e2e"/>
+<text x="508" y="96" font-size="13.5" font-weight="700" fill="#3fae5a">Paired: do this</text>
+<text x="508" y="122" font-size="12.5" fill="#a8a8a8">Both systems see the same items.</text>
+<text x="508" y="144" font-size="12.5" fill="#a8a8a8">Analyze the per-item differences.</text>
+<rect x="508" y="162" width="400" height="46" rx="6" fill="#2a2a2a" stroke="#2e2e2e"/>
+<text x="518" y="190" font-size="12.5" fill="#ececec">d_i = score_B(i) minus score_A(i)</text>
+<text x="508" y="240" font-size="12.5" fill="#a8a8a8">Item difficulty cancels out</text>
+<text x="508" y="262" font-size="12.5" fill="#a8a8a8">before any test runs.</text>
+<text x="508" y="296" font-size="13" font-weight="700" fill="#3fae5a">Much more statistical</text>
+<text x="508" y="318" font-size="13" font-weight="700" fill="#3fae5a">power from the same data.</text>
+</svg>
