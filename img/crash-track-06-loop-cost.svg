@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="100%" style="max-width:720px" role="img" aria-label="Anatomy of one agent step: think costs one model call, act costs one tool call, observe re-bills the output into the next prompt">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.big{font-size:13px;font-weight:700}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="32">One step: three bills</text>
+<text class="m" x="24" y="54">Think, act, observe. Each phase costs tokens, time, or both.</text>
+
+<rect class="box" x="24" y="76" width="200" height="180" rx="8"/>
+<text class="big b" x="40" y="104">THINK</text>
+<text class="m" x="40" y="130">1 model call</text>
+<text class="m" x="40" y="152">input: 4,000 tokens</text>
+<text class="m" x="40" y="174">output: 300 tokens</text>
+<text class="m" x="40" y="196">cost: $0.0165</text>
+<text class="m" x="40" y="218">time: TTFT + decode</text>
+
+<rect class="box" x="260" y="76" width="200" height="180" rx="8"/>
+<text class="big g" x="276" y="104">ACT</text>
+<text class="m" x="276" y="130">1 tool call</text>
+<text class="m" x="276" y="152">args + schema</text>
+<text class="m" x="276" y="174">tool runs the world</text>
+<text class="m" x="276" y="196">time: ~200 ms here</text>
+<text class="m" x="276" y="218">money: sometimes real</text>
+
+<rect class="box" x="496" y="76" width="200" height="180" rx="8"/>
+<text class="big gr" x="512" y="104">OBSERVE</text>
+<text class="m" x="512" y="130">read the tool output</text>
+<text class="m" x="512" y="152">output joins the prompt</text>
+<text class="m" x="512" y="174">re-billed every next step</text>
+<text class="m" x="512" y="196">this is why history is the bill</text>
+<text class="m" x="512" y="218">tag it: data, not instructions</text>
+
+<line class="arr" x1="224" y1="166" x2="252" y2="166"/>
+<line class="arr" x1="460" y1="166" x2="488" y2="166"/>
+<path class="arr" d="M 620 256 Q 620 300 360 300 Q 100 300 100 262" stroke-dasharray="6,4"/>
+
+<rect class="box" x="24" y="316" width="672" height="56" rx="8" stroke="#f0b429"/>
+<text class="big" x="360" y="340" text-anchor="middle">12 steps at 2.45 s each = 29.4 s wall clock</text>
+<text class="m" x="360" y="360" text-anchor="middle">2.45 s = 150 ms TTFT + 300 tokens x 7 ms + 200 ms tool</text>
+</svg>
