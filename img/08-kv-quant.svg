@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" width="640" height="300" role="img" aria-label="KV cache quantization: compress keys and values separately">
+<style>
+.t { font: 600 13px system-ui, sans-serif; fill: #1a1a1a; }
+.s { font: 400 11px system-ui, sans-serif; fill: #444; }
+.b { font: 700 12px system-ui, sans-serif; fill: #fff; }
+.box { fill: #f5f7fa; stroke: #2a6db5; stroke-width: 1.5; rx: 6; }
+.box2 { fill: #eef6ee; stroke: #2e7d32; stroke-width: 1.5; rx: 6; }
+.box3 { fill: #fff8e6; stroke: #b7791f; stroke-width: 1.5; rx: 6; }
+.arr { stroke: #333; stroke-width: 1.8; fill: none; marker-end: url(#ah); }
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#333"/></marker></defs>
+<rect width="640" height="300" fill="#ffffff"/>
+<text x="20" y="28" class="t">KV cache quantization: a separate lever from weight quantization</text><rect x="20" y="50" width="280" height="90" class="box"/><text x="35" y="75" class="s">Keys (K)</text><text x="35" y="97" class="s">Per-channel scales work well.</text><text x="35" y="119" class="s">Outliers live in fixed channels.</text><rect x="340" y="50" width="280" height="90" class="box2"/><text x="355" y="75" class="s">Values (V)</text><text x="355" y="97" class="s">Per-token scales work better.</text><text x="355" y="119" class="s">No stable outlier channels.</text><text x="20" y="180" class="s">Why it matters: at long context, the KV cache dwarfs the weights.</text><text x="20" y="202" class="s">4k context, 70B, fp16: ~2.5 MB per token. 100k context = 250 GB.</text><text x="20" y="224" class="s">Quantize K and V to int8/int4. Keys and values need different schemes.</text><text x="20" y="250" class="s">What breaks: attention scores are sensitive. Bad K quantization collapses quality.</text></svg>
