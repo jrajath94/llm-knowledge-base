@@ -148,7 +148,7 @@ blockquote p{margin:.4rem 0}
 <div class="ds-scrim" id="dsScrim"></div>
 <main class="ds-content" id="dsContent">
 <h1 id="how-to-use-this-curriculum">How to Use This Curriculum</h1>
-<p>This is the operating manual for the whole program. Read it first, once, then start Volume 1. It tells you the order to study, how to pace 4+ hours a day, how the volumes connect, and how the capstone project threads through everything.</p>
+<p>This is the operating manual for the whole program. Read it first, once, then start Volume 1. It tells you the order to study. It shows how to pace 4+ hours a day. It explains how the volumes connect and how the capstone project threads through everything.</p>
 <h2 id="1-what-this-curriculum-promises">1. What this curriculum promises</h2>
 <p>When you finish, you can do three things:</p>
 <ol>
@@ -158,7 +158,21 @@ blockquote p{margin:.4rem 0}
 </ol>
 <p>That combination, research depth plus production proof, is what L5-L7 Research Engineer, Applied AI Engineer, and ML Engineer loops at frontier labs actually test.</p>
 <h2 id="2-study-order-and-the-dependency-graph">2. Study order and the dependency graph</h2>
-<p>The volumes form a Russian doll. Each one assumes you read the ones before it. Concepts are taught once, then referenced by name. Do not skip ahead: Volume 7 (post-training) will use words like "KL divergence" and "FSDP" without re-explaining them, because Volumes 1 and 6 already built them.</p>
+<p>The volumes form a Russian doll. Each one assumes you read the ones before it. Concepts are taught once, then referenced by name. Do not skip ahead. Volume 7 (post-training) will use words like "KL divergence" and "FSDP" without re-explaining them. Volumes 1 and 6 already built them.</p><figure>
+<img src="../img/preview-00-dependency.svg" alt="Dependency chain of three volumes: Volume 1 defines KL divergence, Volume 6 defines FSDP and ZeRO, Volume 7 uses both terms without re-explaining them" loading="lazy">
+<figcaption>Figure: the dependency chain. The curriculum defines each term once, then uses it by name.</figcaption>
+</figure>
+<div class="walkthrough">
+<p><strong>How to read this diagram.</strong></p>
+<ol>
+<li>Read left to right. Each box is one volume.</li>
+<li>Volume 1 defines "KL divergence". Volume 6 defines "FSDP" and "ZeRO".</li>
+<li>Volume 7 uses all three terms without re-explaining them.</li>
+<li>The arrows show what you must read before Volume 7.</li>
+</ol>
+<p><strong>What breaks if you skip ahead.</strong> If you jump to Volume 7 first, the DPO derivation looks like magic instead of math.</p>
+</div>
+
 <p><pre><code>Vol 0 (this guide)
   └─ Vol 1 · Math for ML
     └─ Vol 2 · ML foundations bridge
@@ -179,7 +193,7 @@ DSA track ══════════════ runs parallel to everything
 
 * = THE CORE BUILD: one tiny LLM grown volume by volume.
 </code></pre></p>
-<p><em>Figure 0.1. The dependency graph. Read top to bottom. The DSA track runs alongside, 1-2 hours a day.</em></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
+<p><em>Figure 0.1. The dependency graph. Read top to bottom. The DSA track runs in parallel, 1-2 hours a day.</em></p><div class="walkthrough"><h4>How to read this diagram</h4><ol>
 <li><strong>Top to bottom is time.</strong> Start at Volume 0, end at Volume 14. The DSA track is separate and parallel.</li>
 <li><strong>Indentation is dependency.</strong> Each volume builds directly on the one above it. Volume 6 assumes Volumes 1-5.</li>
 <li><strong>The starred volumes (4-8, "the core build")</strong> are where you grow one tiny LLM volume by volume. Do the labs; this is the heart of the program.</li>
@@ -253,7 +267,20 @@ DSA track ══════════════ runs parallel to everything
 <td>Re-explain the day's hardest idea out loud, from memory, in plain words. If you cannot, you do not know it yet.</td>
 </tr>
 </tbody>
-</table><div class="callout warn"><p><strong>The re-explanation rule.</strong> Reading is not learning. Every day ends with you explaining the hardest idea of the day out loud, from memory, in simple sentences. This is the single highest-leverage habit in the program.</p></div><div class="callout"><p><strong>Attention management.</strong> Work in 50-minute blocks with 10-minute breaks. One volume at a time; do not parallel-read volumes. If a chapter feels easy, do its lab anyway, the lab is where the understanding actually forms.</p></div><h2 id="4-the-capstone-build-an-llm-from-scratch">4. The capstone: build an LLM from scratch</h2>
+</table><figure>
+<img src="../img/preview-00-week.svg" alt="Daily time split: 4 or more hours of curriculum study plus 1 to 2 hours of DSA practice every day" loading="lazy">
+<figcaption>Figure: the daily time split. Rest is part of the schedule.</figcaption>
+</figure>
+<div class="walkthrough">
+<p><strong>How to read this diagram.</strong></p>
+<ol>
+<li>The gold bar is curriculum study: 4 or more hours.</li>
+<li>The blue bar is DSA practice: 1 to 2 hours, every day.</li>
+<li>Split the study block however you like. Two fresh 2-hour sessions beat one tired 4-hour session.</li>
+<li>The grey bar is rest. A rested brain keeps more.</li>
+</ol>
+</div>
+<div class="callout warn"><p><strong>The re-explanation rule.</strong> Reading is not learning. Every day ends with you explaining the hardest idea of the day out loud, from memory, in simple sentences. This is the single highest-leverage habit in the program.</p></div><div class="callout"><p><strong>Attention management.</strong> Work in 50-minute blocks with 10-minute breaks. One volume at a time; do not parallel-read volumes. If a chapter feels easy, do its lab anyway, the lab is where the understanding actually forms.</p></div><h2 id="4-the-capstone-build-an-llm-from-scratch">4. The capstone: build an LLM from scratch</h2>
 <p>One project threads through Volumes 1-8. You build the same tiny model up, volume by volume:</p>
 <table>
 <thead>
@@ -293,27 +320,57 @@ DSA track ══════════════ runs parallel to everything
 <h2 id="5-how-to-study-each-volume">5. How to study each volume</h2>
 <p>Every volume follows the same anatomy. Learn it once:</p>
 <ul>
-<li><strong>Chapters</strong> teach one idea each, from zero. Every chapter has: what it is, why it exists, how it works under the hood, a worked example with real numbers, a common misunderstanding (the interview trap), a visual with a walkthrough, and an interview-relevance line.</li>
+<li><strong>Chapters</strong> teach one idea each, from zero. Every chapter has: what it is, why it exists, and how it works under the hood. It has a worked example with real numbers and a common misunderstanding (the interview trap). It has a visual with a walkthrough and an interview-relevance line.</li>
 <li><strong>"How to read this diagram" walkthroughs</strong> sit under every significant figure. Read them. They are the fastest path to the mental model.</li>
-<li><strong>Labs</strong> are runnable code. Run them. Change one variable at a time and observe. Mark GPU labs "RunPod-ready" when a GPU helps.</li>
+<li><strong>Labs</strong> are runnable code. Run them. Change one variable at a time and observe. Mark GPU labs as "RunPod-ready" when a GPU helps.</li>
 <li><strong>"On the board"</strong> boxes list the interview questions each chapter answers. Cover the answers and quiz yourself before moving on.</li>
-</ul><div class="callout"><p><strong>What "done" means for a chapter.</strong> You can (a) define every term in plain words, (b) work the example's numbers yourself, (c) explain the diagram to someone else, (d) answer its "On the board" questions out loud. If any of the four fails, re-read before advancing.</p></div><h2 id="6-the-parallel-dsa-track">6. The parallel DSA track</h2>
+</ul><figure>
+<img src="../img/preview-00-study-loop.svg" alt="Four step study loop: 1 learn the chapter anatomy, 2 run the labs, 3 quiz yourself, 4 check the done criteria" loading="lazy">
+<figcaption>Figure: the study loop for one chapter.</figcaption>
+</figure>
+<div class="walkthrough">
+<p><strong>How to read this diagram.</strong></p>
+<ol>
+<li>Follow the circles from 1 to 4.</li>
+<li>Step 1: learn the chapter anatomy (what, why, how, example, trap, visual).</li>
+<li>Step 2: run the labs. Change one variable and observe.</li>
+<li>Step 3: quiz yourself on the board questions.</li>
+<li>Step 4: run the four "done" checks. If any check fails, return to step 1.</li>
+</ol>
+<p><strong>What breaks if you skip a step.</strong> Skipping the labs leaves the idea abstract. Skipping the quiz hides the gaps.</p>
+</div>
+<div class="callout"><p><strong>What "done" means for a chapter.</strong> You can (a) define every term in plain words. You can (b) work the example's numbers yourself. You can (c) explain the diagram to someone else. You can (d) answer its "On the board" questions out loud. If any of the four fails, re-read before advancing.</p></div><figure>
+<img src="../img/preview-00-done.svg" alt="Four done checks: define every term in plain words, work the example numbers yourself, explain the diagram to someone else, answer the on the board questions out loud" loading="lazy">
+<figcaption>Figure: the four checks that define "done" for a chapter.</figcaption>
+</figure>
+<div class="walkthrough">
+<p><strong>How to read this diagram.</strong></p>
+<ol>
+<li>Run the four checks in any order.</li>
+<li>Check 1: define every term in plain words.</li>
+<li>Check 2: work the example's numbers yourself.</li>
+<li>Check 3: explain the diagram to someone else.</li>
+<li>Check 4: answer the "On the board" questions out loud.</li>
+</ol>
+<p><strong>What breaks if a check fails.</strong> If any check fails, re-read before you move on. Moving on with a gap compounds.</p>
+</div>
+<h2 id="6-the-parallel-dsa-track">6. The parallel DSA track</h2>
 <p>Data structures and algorithms run <strong>alongside</strong> the spine, not inside it: 1-2 hours a day, pattern by pattern. The track file is the Top-300 LeetCode Mastery Path: organized by pattern, with code templates and deep links into the existing 500-problem atlas.</p>
 <p>Rule: patterns before problems. Learn the pattern's template, then solve 2-3 problems with it, then move on. Never grind problems without naming the pattern first.</p>
 <h2 id="7-existing-modules-you-already-own">7. Existing modules you already own</h2>
-<p>These are slotted into the spine where noted. Do not re-study them cover to cover unless a volume tells you to revisit a chapter:</p>
+<p>The volumes slot these in where noted. Do not re-study them cover to cover unless a volume tells you to revisit a chapter:</p>
 <ul>
 <li><strong>RRK Agentic AI Textbook v2 + Interview QA Bank v2</strong> (agents, RAG, evals, guardrails, GPU infra basics) - the core of Volume 9.</li>
 <li><strong>ML/DL fundamentals refresher + 300 Q&amp;A</strong> - classical ML and deep learning basics; Volumes 2 and 3 build on top of it.</li>
 <li><strong>DSA Pattern Fieldbook v3, LeetCode 500 Atlas, 300-problem curriculum</strong> - the DSA track's deep reference.</li>
-<li><strong>FDE interview materials</strong> - applied alongside Volumes 9-10 for customer-facing engineering roles.</li>
+<li><strong>FDE interview materials</strong> - applied alongside Volumes 9-10 for roles in customer-facing engineering.</li>
 </ul>
 <h2 id="8-ground-rules">8. Ground rules</h2>
 <ul>
 <li><strong>No skipping the math.</strong> Volume 1 is the foundation. Everything later stands on it.</li>
 <li><strong>Labs are mandatory.</strong> Reading about training is not training. Run the code.</li>
 <li><strong>One volume at a time.</strong> Finish the volume, do its capstone lab, then advance.</li>
-<li><strong>Honest markers.</strong> Where a volume says a number is illustrative or a treatment is reconstructed from first principles, believe it. The curriculum never invents facts.</li>
+<li><strong>Honest markers.</strong> Where a volume says a number is illustrative, or says the volume rebuilds a treatment from first principles, believe it. The curriculum never invents facts.</li>
 <li><strong>Generic and portable.</strong> These files contain no personal information and work fully offline. Copy them anywhere.</li>
 </ul><div class="ob-board"><h4>On the board</h4><ul>
 <li>What are the three things this curriculum promises you will be able to do at the end?</li>
