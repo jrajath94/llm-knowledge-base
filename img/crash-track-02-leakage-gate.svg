@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" style="max-width:680px" role="img" aria-label="The leakage gate: hash new prompts against every eval set, dedupe near-duplicates with shingles and Jaccard, quarantine instead of silently dropping">
+<style>
+text{font-family:'Charis SIL',Georgia,serif;fill:#ececec}
+.m{fill:#a8a8a8;font-size:12px}
+.t{font-size:15px;font-weight:700}
+.g{fill:#f0b429}.b{fill:#6cb2ff}.gr{fill:#7fc97f}.r{fill:#e57373}
+.box{fill:#141414;stroke:#3a3a3a;stroke-width:1.5}
+.lbl{font-size:12px;fill:#a8a8a8}
+.big{font-size:13px;font-weight:700}
+.num{font-size:13px}
+.ax{stroke:#5a5a5a;stroke-width:1.5}
+.arr{stroke:#8a8a8a;stroke-width:1.5;fill:none;marker-end:url(#ah)}
+</style>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a8a8a"/></marker></defs>
+<text class="t" x="24" y="30">The leakage gate: keep evals honest</text>
+<rect class="box" x="24" y="70" width="150" height="80" rx="8"/>
+<text class="big" x="99" y="96" text-anchor="middle">New prompts</text>
+<text class="m" x="99" y="118" text-anchor="middle">preference batch</text>
+<text class="m" x="99" y="136" text-anchor="middle">or SFT set</text>
+<line class="arr" x1="174" y1="110" x2="214" y2="110"/>
+<rect class="box" x="214" y="70" width="170" height="80" rx="8"/>
+<text class="big" x="299" y="96" text-anchor="middle">Hash vs all eval sets</text>
+<text class="m" x="299" y="118" text-anchor="middle">exact prompt match</text>
+<text class="m" x="299" y="136" text-anchor="middle">= contamination</text>
+<line class="arr" x1="384" y1="110" x2="424" y2="110"/>
+<rect class="box" x="424" y="70" width="180" height="80" rx="8"/>
+<text class="big" x="514" y="96" text-anchor="middle">Shingle + Jaccard</text>
+<text class="m" x="514" y="118" text-anchor="middle">near-duplicate prompts</text>
+<text class="m" x="514" y="136" text-anchor="middle">= overweighting risk</text>
+<line class="arr" x1="514" y1="150" x2="514" y2="196"/>
+<rect class="box" x="394" y="196" width="240" height="80" rx="8" stroke="#f0b429"/>
+<text class="big" x="514" y="222" text-anchor="middle">Quarantine, do not silently drop</text>
+<text class="m" x="514" y="244" text-anchor="middle">the failure rate stays visible</text>
+<text class="m" x="514" y="262" text-anchor="middle">in the review</text>
+<text class="m" x="24" y="316">A preference pair built on an eval prompt is contamination with extra steps.</text>
+<text class="m" x="24" y="338">Leaked prompts make benchmarks lie; duplicates overweight one pattern in the reward model.</text></svg>
