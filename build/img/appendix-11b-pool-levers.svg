@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="520" viewBox="0 0 820 520" role="img" aria-label="Three levers of pool diversity: coverage, overlap, rotation">
+<rect width="820" height="520" fill="#0d0d0d"/>
+<text x="410" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="bold" fill="#ececec">Pool diversity: three concrete levers</text>
+<text x="410" y="58" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#a8a8a8">A homogeneous pool teaches the reward model one group's tastes as if they were universal.</text>
+
+<g font-family="system-ui,-apple-system,sans-serif">
+<g>
+<rect x="30" y="85" width="240" height="260" rx="10" fill="#1a1a1a" stroke="#6cb2ff" stroke-width="1.5"/>
+<text x="150" y="118" text-anchor="middle" font-size="15" font-weight="bold" fill="#6cb2ff">1. Coverage</text>
+<text x="150" y="148" text-anchor="middle" font-size="12" fill="#ececec">Map the deployment</text>
+<text x="150" y="168" text-anchor="middle" font-size="12" fill="#ececec">population, then staff</text>
+<text x="150" y="188" text-anchor="middle" font-size="12" fill="#ececec">the pool to cover it.</text>
+<text x="150" y="222" text-anchor="middle" font-size="11.5" fill="#a8a8a8">Medical questions need</text>
+<text x="150" y="242" text-anchor="middle" font-size="11.5" fill="#a8a8a8">medically literate labelers.</text>
+<text x="150" y="262" text-anchor="middle" font-size="11.5" fill="#a8a8a8">Three languages need native-</text>
+<text x="150" y="282" text-anchor="middle" font-size="11.5" fill="#a8a8a8">fluent labelers per language,</text>
+<text x="150" y="302" text-anchor="middle" font-size="11.5" fill="#a8a8a8">not one bilingual hero.</text>
+</g>
+<g>
+<rect x="290" y="85" width="240" height="260" rx="10" fill="#1a1a1a" stroke="#f0b429" stroke-width="1.5"/>
+<text x="410" y="118" text-anchor="middle" font-size="15" font-weight="bold" fill="#f0b429">2. Overlap</text>
+<text x="410" y="148" text-anchor="middle" font-size="12" fill="#ececec">Assign the same items</text>
+<text x="410" y="168" text-anchor="middle" font-size="12" fill="#ececec">across demographic slices,</text>
+<text x="410" y="188" text-anchor="middle" font-size="12" fill="#ececec">then measure agreement</text>
+<text x="410" y="208" text-anchor="middle" font-size="12" fill="#ececec">by slice.</text>
+<text x="410" y="242" text-anchor="middle" font-size="11.5" fill="#a8a8a8">One slice prefers short answers,</text>
+<text x="410" y="262" text-anchor="middle" font-size="11.5" fill="#a8a8a8">another prefers thorough ones:</text>
+<text x="410" y="282" text-anchor="middle" font-size="11.5" fill="#a8a8a8">a real preference difference,</text>
+<text x="410" y="302" text-anchor="middle" font-size="11.5" fill="#a8a8a8">not noise. Write the rule.</text>
+</g>
+<g>
+<rect x="550" y="85" width="240" height="260" rx="10" fill="#1a1a1a" stroke="#e08080" stroke-width="1.5"/>
+<text x="670" y="118" text-anchor="middle" font-size="15" font-weight="bold" fill="#e08080">3. Rotation</text>
+<text x="670" y="148" text-anchor="middle" font-size="12" fill="#ececec">Rotate people across</text>
+<text x="670" y="168" text-anchor="middle" font-size="12" fill="#ececec">task types before house</text>
+<text x="670" y="188" text-anchor="middle" font-size="12" fill="#ececec">styles calcify.</text>
+<text x="670" y="222" text-anchor="middle" font-size="11.5" fill="#a8a8a8">Retire anyone whose agreement</text>
+<text x="670" y="242" text-anchor="middle" font-size="11.5" fill="#a8a8a8">with fresh labelers collapses.</text>
+<text x="670" y="276" text-anchor="middle" font-size="11.5" fill="#a8a8a8">A pool that never turns over</text>
+<text x="670" y="296" text-anchor="middle" font-size="11.5" fill="#a8a8a8">measures itself, not the world.</text>
+</g>
+</g>
+
+<rect x="30" y="375" width="760" height="110" rx="10" fill="#141414" stroke="#2e9e5b" stroke-width="1"/>
+<text x="410" y="408" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="bold" fill="#2e9e5b">Diversity is a design input, not a slogan.</text>
+<text x="410" y="434" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">Coverage staffs the right people. Overlap finds real preference differences in the data.</text>
+<text x="410" y="456" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12.5" fill="#ececec">Rotation keeps the pool measuring the world instead of itself.</text>
+</svg>
