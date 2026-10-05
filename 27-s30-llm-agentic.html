@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM and Agentic AI: Production Intelligence</title>
+<style>
+
+/* Research-Engineer Curriculum: shared design system (dark, Hallmark discipline)
+   Source of truth. Writers INLINE this file into each volume's <head> inside <style>.
+   Font files live in fonts/ relative to the site root (each HTML is at the root,
+   so the inlined url(fonts/...) resolves correctly from file:// with no network).
+   Tokens (exact, do not improvise): pitch-black dark mode. */
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{
+  --bg:#000000; --surface:#0d0d0d; --border:#262626;
+  --text:#ececec; --muted:#a8a8a8; --faint:#8a8a8a;
+  --accent:#f0b429; --accent-ink:#000000; --link:#6cb2ff; --code-bg:#111111;
+  --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
+p{text-align:justify;hyphens:auto;margin:.85rem 0}
+h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
+h1{font-size:2rem;font-weight:800}
+h2{font-size:1.5rem;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:1.05rem;font-weight:700}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:.2rem}
+ul,ol{margin:.7rem 0;padding-left:1.6rem}
+li{margin:.3rem 0}
+li::marker{color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;display:block;overflow-x:auto}
+thead,tbody,tr{display:table;width:100%;table-layout:fixed}
+th,td{border:1px solid var(--border);padding:.6rem .75rem;text-align:left;vertical-align:top}
+th{background:var(--surface);font-weight:700}
+code{font-family:var(--font-code);background:var(--code-bg);border:1px solid var(--border);padding:.08rem .35rem;border-radius:.3rem;font-size:.88em}
+p code,li code,td code,th code{overflow-wrap:break-word;word-break:break-word}
+pre{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:.6rem;padding:1rem 1.1rem;overflow-x:auto;font-size:.88rem;line-height:1.6;margin:1.1rem 0}
+pre code{background:none;border:none;padding:0;font-size:1em}
+pre.ascii{background:#0a0a0a;color:#d8d8d8}
+figure{margin:1.5rem 0;border:1px solid var(--border);border-radius:.7rem;padding:1rem;background:var(--surface)}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:.3rem}
+.ds-content img{max-width:100%;height:auto} /* bare <img> in <p> must never overflow */
+figcaption{font-size:.9rem;color:var(--muted);margin-top:.7rem;text-align:left}
+details{border:1px solid var(--border);border-radius:.6rem;padding:.75rem 1.05rem;margin:.9rem 0;background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--text)}
+dfn{font-style:normal;font-weight:600;border-bottom:2px dotted var(--accent);cursor:help}
+blockquote{border-left:3px solid var(--accent);margin:1.1rem 0;padding:.6rem 1rem;background:var(--surface);border-radius:0 .5rem .5rem 0}
+blockquote p{margin:.4rem 0}
+
+/* ---- layout: sidebar + content ---- */
+.ds-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60}
+.ds-menu-btn{display:none;position:fixed;top:.7rem;left:.7rem;z-index:55;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:.5rem;font-family:var(--font-ui);font-size:1.2rem;padding:.35rem .7rem;cursor:pointer}
+.ds-sidebar{position:fixed;top:0;left:0;bottom:0;width:19rem;background:var(--surface);border-right:1px solid var(--border);z-index:50;display:flex;flex-direction:column}
+.ds-side-head{padding:1.1rem 1.1rem .8rem;border-bottom:1px solid var(--border)}
+.ds-side-eyebrow{margin:0;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ds-side-title{margin:.3rem 0 .7rem;font-family:var(--font-ui);font-size:1.02rem;font-weight:700;line-height:1.35}
+.ds-side-search{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:400 .88rem/1.4 var(--font-ui);padding:.5rem .7rem}
+.ds-side-search::placeholder{color:var(--muted)}
+.ds-nav{flex:1;overflow-y:auto;padding:.7rem .6rem}
+.ds-nav ul{list-style:none;margin:0;padding:0}
+.ds-nav-group{margin-bottom:.35rem}
+.ds-nav-group>button{width:100%;text-align:left;background:none;border:none;color:var(--text);font:700 .86rem/1.4 var(--font-ui);padding:.45rem .55rem;border-radius:.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+.ds-nav-group>button:hover{background:#161616}
+.ds-nav-group>button .ds-caret{color:var(--muted);font-size:.75rem}
+.ds-nav-items{list-style:none;margin:0;padding:0 0 .3rem .4rem}
+.ds-nav-items a{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:var(--font-ui);font-size:.85rem;line-height:1.45;padding:.32rem .55rem;border-radius:.4rem;border-left:2px solid transparent}
+.ds-nav-items a:hover{color:var(--text);background:#161616}
+.ds-nav-items a.ds-active{color:var(--text);border-left-color:var(--accent);background:#161616}
+.ds-check{flex:none;width:.95rem;height:.95rem;accent-color:var(--accent);cursor:pointer}
+.ds-nav-empty{color:var(--muted);font-size:.85rem;padding:.5rem}
+.ds-side-foot{border-top:1px solid var(--border);padding:.7rem 1.1rem;font-family:var(--font-ui);font-size:.8rem;color:var(--muted)}
+.ds-scrim{display:none}
+.ds-content{margin-left:19rem;padding:0 2rem;max-width:calc(72ch + 4rem)}
+.ds-content>*{max-width:72ch}
+.ds-content table,.ds-content figure,.ds-content pre{max-width:72ch}
+.ds-chapter-nav{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--border);margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-chapter-nav a{text-decoration:none;font-weight:600}
+.ds-chapter-nav .ds-prev{text-align:left}
+.ds-chapter-nav .ds-next{text-align:right}
+.ds-kbd-hint{font-family:var(--font-ui);font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+/* ---- learning components ---- */
+.walkthrough{background:#101010;border:1px solid var(--border);border-radius:.55rem;padding:.85rem 1.05rem;margin-top:.9rem;font-size:.93rem}
+.walkthrough strong{color:var(--text)}
+.walkthrough ol{margin:.45rem 0;padding-left:1.35rem}
+.walkthrough li{margin:.32rem 0}
+.walkthrough p{text-align:left}
+.ob-board{background:#0e0c06;border:1px solid #4a3a12;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.ob-board h4{margin:.1rem 0 .5rem;font-size:1rem;color:var(--accent)}
+.ob-board ul{margin:.4rem 0;padding-left:1.3rem}
+.takeaway{background:#0b0f0b;border:1px solid #1f3a24;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.takeaway h4{margin:.1rem 0 .5rem;font-size:1rem;color:#7fd08a}
+.callout{border-left:4px solid var(--link);background:var(--surface);padding:.85rem 1.1rem;margin:1.15rem 0;border-radius:0 .55rem .55rem 0}
+.callout.warn{border-left-color:var(--accent)}
+.callout p{text-align:left;margin:.45rem 0}
+.provenance{border:1px dashed var(--border);border-radius:.6rem;padding:.8rem 1.05rem;margin:1.2rem 0;font-size:.88rem;color:var(--muted);background:#0a0a0a}
+.provenance strong{color:var(--text)}
+.provenance .uv{color:var(--accent);font-weight:700}
+.pq{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--surface)}
+.pq-q{margin:.1rem 0 .7rem;text-align:left}
+.pq-reveal{background:var(--accent);border:none;color:#000;font:700 .88rem/1 var(--font-ui);padding:.55rem 1rem;border-radius:.45rem;cursor:pointer}
+.pq-reveal:hover{filter:brightness(1.08)}
+.pq-a{margin-top:.9rem;border-top:1px solid var(--border);padding-top:.8rem}
+.pq-a ul{margin:.5rem 0}
+.pq-opt-right{color:#7fd08a}
+.pq-opt-wrong{color:#e08080}
+.ds-copy-btn{position:absolute;top:.5rem;right:.5rem;background:#1c1c1c;border:1px solid var(--border);color:var(--muted);font:600 .75rem/1 var(--font-ui);padding:.4rem .65rem;border-radius:.4rem;cursor:pointer}
+.ds-copy-btn:hover{color:var(--text);border-color:var(--accent)}
+.lab{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.2rem 0;background:#0b0b0b}
+.lab h4{margin:.1rem 0 .5rem;color:var(--accent)}
+
+/* ---- responsive: sidebar becomes drawer ---- */
+@media(max-width:56rem){
+  .ds-sidebar{transform:translateX(-105%);transition:transform .25s ease;width:17.5rem}
+  body.ds-nav-open .ds-sidebar{transform:none;z-index:56} /* above the menu button so it never overlaps the eyebrow */
+  .ds-menu-btn{display:block}
+  .ds-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:45}
+  body.ds-nav-open .ds-scrim{display:block}
+  .ds-content{margin-left:0;padding:0 1.1rem}
+}
+@media(min-width:56.01rem){.ds-scrim{display:none!important}}
+
+
+/* Hallmark · pre-emit critique: P4 H4 E5 S5 R5 V5
+   Hallmark · macrostructure: newspaper-masthead chrome (N6 nav + Ft1 footer)
+   nav: N6 (knobs: issue-line=above, wordmark=left 2xl, rule=double) ·
+   footer: Ft1 (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+   slop: pass (42-45) · contrast: pass (40-41) · honest: pass (46) · chrome: pass (47) ·
+   tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50-57) */
+/* Hallmark · genre: editorial · verb: redesign · scope: chrome-only
+ * nav: N6 Newspaper masthead (knobs: issue-line=above, wordmark=left 2xl, rule=double)
+ * footer: Ft1 Mast-headed (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+ * Tokens preserved: --font-body/--font-ui (Charis SIL), full colour system.
+ * 4pt spacing rhythm; hairline dividers; hand-drawn SVG chevrons; no gradients. */
+
+/* ---- site header: N6 newspaper masthead ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);margin:0 0 2rem;max-width:72ch}
+.mast-line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:0;padding:.75rem 0 .5rem;font:600 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mast-line-right{color:var(--faint);white-space:nowrap}
+.mast-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:.75rem}
+.mast-name{font:800 1.5rem/1.15 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.mast-name:hover{color:var(--accent)}
+.site-prevnext{display:flex;gap:1.5rem;flex:none}
+.site-prevnext-group{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.site-prevnext-next{align-items:flex-end;text-align:right}
+.site-prevnext-kicker{font:600 .68rem/1.3 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.site-prevnext-link{display:inline-flex;align-items:center;gap:.4rem;font:600 .85rem/1.4 var(--font-ui);color:var(--text);text-decoration:none;max-width:15rem;min-height:1.75rem}
+.site-prevnext-link .chev{width:.8rem;height:.8rem;flex:none;color:var(--accent)}
+.site-prevnext-link:hover{color:var(--accent)}
+.site-prevnext-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-prevnext-empty{font:400 .85rem/1.75 var(--font-ui);color:var(--faint)}
+.mast-sub{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.25rem 0 .75rem}
+.breadcrumbs{font:400 .78rem/1.5 var(--font-ui);color:var(--muted);margin:0;min-width:0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.breadcrumbs .bc-sep{margin:0 .4rem;color:var(--faint)}
+.breadcrumbs .bc-current{color:var(--text)}
+.site-nav-toggle{display:inline-flex;align-items:center;gap:.5rem;flex:none;white-space:nowrap;background:none;border:1px solid var(--border);border-radius:.5rem;color:var(--text);font:600 .82rem/1.4 var(--font-ui);padding:.55rem .9rem;cursor:pointer;min-height:2.5rem}
+.site-nav-toggle:active,.site-nav-close:active,.watch-speed:active{transform:translateY(1px)}
+.site-nav-toggle .chev{width:.75rem;height:.75rem;color:var(--accent);transition:transform .25s var(--ease-out)}
+.site-nav-toggle:hover{border-color:var(--accent)}
+.site-nav-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.mast-rule-double{border:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:4px;margin:0}
+
+/* collapsible volume panel (desktop): smooth 0fr/1fr reveal */
+.site-nav-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease-out)}
+.site-nav-panel.is-open{grid-template-rows:1fr}
+.site-nav-panel-inner{overflow:hidden;min-height:0}
+.site-nav-drawer-head{display:none}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:1.25rem;max-height:70vh;overflow-y:auto;padding:1.25rem 0}
+.site-nav-groups h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:0}
+.site-nav-groups a{display:flex;gap:.6rem;align-items:baseline;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0;border-radius:.25rem}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups .site-nav-num{font:600 .72rem/1.6 var(--font-ui);color:var(--faint);min-width:1.75rem;flex:none}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:600}
+.site-nav-groups a.site-nav-current .site-nav-num{color:var(--accent)}
+.site-nav-scrim{display:none}
+
+/* ---- site footer: Ft1 mast-headed + grouped index ---- */
+.site-footer{margin:3.5rem 0 0;padding:0 0 3rem;max-width:72ch}
+.foot-mast{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.75rem 0 1.5rem;margin-bottom:2rem}
+.foot-name{font:800 1.25rem/1.2 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.foot-name:hover{color:var(--accent)}
+.foot-tag{font:400 .88rem/1.6 var(--font-ui);color:var(--muted);max-width:52ch;margin:.6rem 0 0;text-align:left}
+.foot-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.5rem;margin-bottom:2rem}
+.foot-group h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.foot-group ul{list-style:none;margin:0;padding:0}
+.foot-group li{margin:0}
+.foot-group a{display:block;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0}
+.foot-group a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.foot-group a.foot-current{color:var(--accent);font-weight:600}
+.foot-colophon{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;margin:0;padding-top:1.25rem;border-top:1px solid var(--border);font:400 .78rem/1.6 var(--font-ui);color:var(--faint);text-align:left}
+.foot-colophon .foot-sep{color:var(--faint)}
+
+/* ---- mobile: drawer + compact chrome (<=40rem) ---- */
+@media(max-width:40rem){
+  .mast-line-right{display:none}
+  .mast-row{flex-wrap:wrap;row-gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between;gap:.75rem}
+  .site-prevnext-link{max-width:44vw}
+  .site-prevnext-title{display:none}
+  .mast-sub{flex-wrap:wrap}
+  .site-nav-toggle{width:100%;justify-content:center}
+  /* volume nav becomes a fixed drawer: no layout shift, closes on link tap / scrim / Escape */
+  .site-nav-panel{position:fixed;top:0;left:0;bottom:0;width:min(20rem,88vw);z-index:70;display:block;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-104%);transition:transform .3s var(--ease-out)}
+  .site-nav-panel.is-open{transform:none}
+  .site-nav-panel-inner{height:100%;overflow-y:auto;padding:1.25rem 1.25rem 2rem}
+  .site-nav-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .site-nav-drawer-head span{font:600 .75rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+  .site-nav-close{background:none;border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:600 .8rem/1 var(--font-ui);padding:.55rem .85rem;cursor:pointer;min-height:2.75rem}
+  .site-nav-close:hover{border-color:var(--accent)}
+  .site-nav-groups{display:block;max-height:none;overflow:visible;padding:0}
+  .site-nav-groups>div{margin-bottom:1.25rem}
+  .site-nav-scrim{display:block;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .site-nav-scrim.is-open{opacity:1;pointer-events:auto}
+  body.site-nav-open{overflow:clip}
+  .foot-index{gap:1.25rem}
+}
+@media(max-width:56rem){
+  .site-header{padding-left:2.9rem} /* clear the fixed section-drawer menu button */
+}
+@media print{
+  .site-header,.site-footer,.site-nav-scrim{display:none!important}
+  .watch-deeper .watch-frame{display:none}
+}
+
+/* ---- Watch and go deeper (content section skeleton; downstream fills real videos/links) ---- */
+.watch-deeper{margin:3rem 0 0;padding:2rem 0 0;border-top:1px solid var(--border);max-width:72ch}
+.watch-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.watch-deeper-lede{font:400 .95rem/1.6 var(--font-ui);color:var(--muted);margin:0 0 1.25rem;text-align:left}
+.watch-deeper-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem;margin:0 0 1.75rem}
+.watch-card{margin:0;border:1px solid var(--border);border-radius:.6rem;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.watch-frame{aspect-ratio:16/9;background:var(--bg)}
+.watch-frame iframe{width:100%;height:100%;border:0;display:block}
+.watch-card figcaption{padding:.85rem 1rem 1rem;font:400 .85rem/1.55 var(--font-ui);color:var(--muted);text-align:left}
+.watch-card figcaption strong{display:block;color:var(--text);font-weight:700;margin-bottom:.25rem}
+.go-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--text);margin:0 0 .5rem}
+.go-deeper-list{list-style:none;margin:0;padding:0}
+.go-deeper-list li{display:flex;gap:.6rem;align-items:baseline;padding:.5rem 0;border-top:1px solid var(--border)}
+.go-deeper-list li:last-child{border-bottom:1px solid var(--border)}
+.go-deeper-list a{font:600 .9rem/1.5 var(--font-ui);color:var(--text);text-decoration:none;flex:none;display:inline-flex;align-items:center;gap:.35rem}
+.go-deeper-list a:hover{color:var(--accent)}
+.go-deeper-list a:hover .ext-arrow{color:var(--accent)}
+.go-deeper-list .ext-arrow{width:.7rem;height:.7rem;color:var(--muted);flex:none}
+.go-deeper-list .go-deeper-note{font:400 .85rem/1.55 var(--font-ui);color:var(--muted)}
+
+/* speed-control bar (injected by the site script only when the YouTube IFrame
+   Player API loads; the iframe alone keeps working when it does not) */
+.watch-speedbar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;padding:.6rem .9rem;border-top:1px solid var(--border)}
+.watch-speedbar-label{font:600 .68rem/1.4 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.watch-speed{background:none;border:1px solid var(--border);border-radius:.4rem;color:var(--muted);font:600 .78rem/1 var(--font-ui);padding:.45rem .6rem;cursor:pointer;min-height:2rem}
+.watch-speed:hover{color:var(--text);border-color:var(--accent)}
+.watch-speed[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* motion respects the reader: no sliding drawers or expanding panels for reduced-motion users */
+@media (prefers-reduced-motion:reduce){
+  .ds-sidebar,.site-nav-toggle .chev,.site-nav-panel,.site-nav-scrim{transition:none}
+}
+
+/* ---- print ---- */
+@media print{
+  .ds-sidebar,.ds-menu-btn,.ds-progress,.ds-scrim,.ds-chapter-nav,.ds-copy-btn{display:none!important}
+  .ds-content{margin:0;max-width:100%;padding:0}
+  body{background:#fff;color:#000;font-size:12pt;line-height:1.6}
+  p{text-align:left}
+  h1,h2,h3,h4,a{color:#000}
+  pre,figure,details,.lab,.ob-board,.takeaway,.callout,.walkthrough,.pq{background:#fff;border-color:#999;break-inside:avoid}
+  code{background:#f0f0f0;border-color:#999;color:#000}
+}
+
+
+</style>
+<style>
+
+/* S30 integration layer (additive, uses design tokens only) */
+.diff{display:inline-block;font-family:var(--font-ui);font-size:.72rem;font-weight:700;
+  letter-spacing:.04em;padding:.18rem .6rem;border-radius:999px;border:1px solid var(--border);
+  vertical-align:middle;margin-left:.6rem;text-transform:uppercase}
+.diff-easy{color:#7fd08a;border-color:#2c5a34;background:#0f1f13}
+.diff-medium{color:#f0b429;border-color:#6b5518;background:#1f1a0c}
+.diff-hard{color:#ff9d6b;border-color:#6e3d1e;background:#20130c}
+.diff-expert{color:#ff7b8a;border-color:#6e2430;background:#200f13}
+.lab-meta{font-family:var(--font-ui);font-size:.86rem;color:var(--muted)}
+.tags{margin:.8rem 0}
+.tagchip{display:inline-block;font-family:var(--font-ui);font-size:.78rem;color:var(--muted);
+  border:1px solid var(--border);border-radius:999px;padding:.15rem .65rem;margin:.15rem .25rem .15rem 0}
+.tagchip.co{color:var(--accent);border-color:var(--accent)}
+details.task{border:1px solid var(--border);border-radius:.6rem;padding:.7rem 1rem;margin:.7rem 0;background:#0b0b0b}
+details.task>summary{cursor:pointer;font-weight:700}
+details.task>summary .task-n{font-family:var(--font-ui);font-size:.75rem;color:var(--accent);
+  border:1px solid var(--accent);border-radius:.35rem;padding:.1rem .45rem;margin-right:.6rem}
+.task-sec{font-weight:400;color:var(--muted);font-size:.85rem}
+.task-body{padding-top:.6rem}
+details.hints,details.solution{margin:.8rem 0}
+details.hints>summary,details.solution>summary{cursor:pointer;font-weight:600;color:var(--link)}
+.diagram-walkthrough{background:var(--surface);border:1px solid var(--border);border-radius:.6rem;
+  padding:.8rem 1.1rem;margin:0 0 1.6rem}
+.diagram-walkthrough h4{margin:.2rem 0 .5rem}
+.diagram-walkthrough ol{margin:.4rem 0;padding-left:1.5rem}
+figure.diagram svg{max-width:100%;height:auto;display:block;margin:0 auto;background:#0a0a0a;border-radius:.4rem}
+.fig-src{color:var(--faint);font-size:.82rem}
+.site-header{border-bottom:1px solid var(--border);padding:1.2rem 0 .8rem;margin-bottom:1.6rem}
+.mast-line{display:flex;justify-content:space-between;font-family:var(--font-ui);font-size:.78rem;
+  color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin:0 0 1rem;text-align:left}
+.s30-hero-lede{font-size:1.12rem;color:var(--muted);max-width:60ch;text-align:left}
+.hero-stats{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.2rem 0}
+.hero-stat{font-family:var(--font-ui);font-size:.85rem;border:1px solid var(--border);border-radius:.5rem;
+  padding:.45rem .8rem;background:var(--surface)}
+.hero-stat b{color:var(--accent)}
+.lab-tabs{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:.5rem 0;margin:0 0 1.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.lab-tabs button{font-family:var(--font-ui);font-size:.8rem;background:var(--surface);color:var(--text);
+  border:1px solid var(--border);border-radius:999px;padding:.3rem .75rem;cursor:pointer}
+.lab-tabs button:hover,.lab-tabs button.on{border-color:var(--accent);color:var(--accent)}
+section.lab{scroll-margin-top:4.5rem}
+.ds-volume-nav{display:flex;justify-content:space-between;gap:1rem;border-top:2px solid var(--accent);
+  margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-volume-nav a{text-decoration:none;font-weight:700;font-family:var(--font-ui)}
+.ds-volume-nav .ds-prev{text-align:left}
+.ds-volume-nav .ds-next{text-align:right}
+.ds-volume-nav span{display:block;font-size:.78rem;color:var(--muted);font-weight:400}
+.provenance-inline{font-size:.82rem;color:var(--faint)}
+pre.ascii{background:#0a0a0a}
+@media (max-width:560px){.mast-line{flex-direction:column;gap:.2rem}}
+
+
+</style>
+</head>
+<body>
+<div class="ds-progress" id="dsProgress"></div>
+<button class="ds-menu-btn" id="dsMenuBtn" aria-label="Open navigation">&#9776;</button>
+<aside class="ds-sidebar" id="dsSidebar" aria-label="Volume navigation">
+<div class="ds-side-head">
+<p class="ds-side-eyebrow">Research-Engineer Curriculum</p>
+<p class="ds-side-title">Volume 27: LLM and Agentic AI: Production Intelligence</p>
+<input class="ds-side-search" id="dsNavSearch" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+</div>
+<nav class="ds-nav" id="dsNav" aria-label="Sections"></nav>
+<div class="ds-side-foot"><span id="dsCompleteCount"></span></div>
+</aside>
+<div class="ds-scrim" id="dsScrim"></div>
+<main class="ds-content" id="dsContent">
+<header class="site-header hero">
+<p class="mast-line"><span>Research-Engineer Curriculum</span><span>Volume 27 of 28</span></p>
+<h1>LLM and Agentic AI: Production Intelligence</h1>
+<p class="s30-hero-lede">Four expert labs on the application layer of large language models: the tool-calling agent loop with guardrails and evals, multi-agent planner, worker and critic systems, inference-time scaling with verifiers, and agents that improve themselves from verified experience.</p>
+<div class="hero-stats"><span class="hero-stat">4 labs</span><span class="hero-stat">25 tasks</span><span class="hero-stat">Difficulty: all Expert</span><span class="hero-stat">Week 15</span></div>
+</header>
+
+<h2>Why this category exists</h2>
+<p>A <dfn>language model</dfn> predicts text. An <dfn>agent</dfn> uses a language
+model inside a loop that perceives, decides, acts through tools, and observes the
+results. That loop is the application layer of everything the earlier volumes
+built: Volume 4 built the transformer, Volume 5 the pretraining, Volume 7 the
+post-training that makes models follow instructions, Volume 8 the serving stack,
+and Volume 9 the retrieval and agent basics. This category is what turns all of
+that into systems that do work: book the ticket, fix the bug, run the analysis.</p>
+<p>What fails without these skills is specific and expensive. An agent without
+<dfn>guardrails</dfn> (explicit limits on what the loop may do) takes irreversible
+actions: deleting data, spending money, sending messages it cannot unsend. An agent
+without an <dfn>evaluation harness</dfn> (a benchmark plus operational metrics) can
+only be judged by vibes, and every prompt change is a gamble. An agent without
+verification trusts its own outputs, and language models are fluent enough to be
+wrong with confidence. The four labs in week 15 attack exactly these failure
+modes, in order: build the loop with guardrails and evals, split it across
+specialized agents with a critic, spend extra inference-time compute with
+verifiers, and close the loop by turning verified successes into memory.</p>
+<p>All four labs carry the Expert rating. They are simulation labs, not toy demos:
+you implement the policies, the guardrails, the samplers, the verifiers, and the
+memory distillation yourself, and you measure operational metrics (success rate,
+cost per task, iterations to completion), not just accuracy. That measurement
+habit is the interview signal this whole volume is tuned for.</p>
+<figure class="diagram"><svg viewBox="0 0 720 350" width="100%" role="img" aria-label="The agent loop that unifies the category: perceive, plan, act, observe, repeat. Each of the four week-15 labs owns one l" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#f0b429" stroke-width="1.6"/></marker></defs>
+<rect x="10" y="10" width="700" height="330" rx="8" fill="#0d0d0d" stroke="#262626"/>
+<text x="30" y="42" fill="#f0b429" font-size="15" font-weight="bold" font-family="sans-serif">The agent loop: the four labs map onto one ring</text>
+<g font-family="sans-serif" font-size="12" fill="#ececec">
+<rect x="30" y="60" width="150" height="64" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="105" y="86" text-anchor="middle" font-weight="bold">Perceive</text>
+<text x="105" y="104" text-anchor="middle" fill="#a8a8a8" font-size="10">prompt + tool results</text>
+<rect x="205" y="60" width="150" height="64" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="280" y="86" text-anchor="middle" font-weight="bold">Plan / decide</text>
+<text x="280" y="104" text-anchor="middle" fill="#a8a8a8" font-size="10">policy picks an action</text>
+<rect x="380" y="60" width="150" height="64" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="455" y="86" text-anchor="middle" font-weight="bold">Act</text>
+<text x="455" y="104" text-anchor="middle" fill="#a8a8a8" font-size="10">call a tool, run code</text>
+<rect x="555" y="60" width="135" height="64" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="622" y="86" text-anchor="middle" font-weight="bold">Observe</text>
+<text x="622" y="104" text-anchor="middle" fill="#a8a8a8" font-size="10">read the result</text>
+<path d="M180 92 L201 92" stroke="#f0b429" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M355 92 L376 92" stroke="#f0b429" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M530 92 L551 92" stroke="#f0b429" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M685 124 L685 170 L40 170 L40 128" stroke="#f0b429" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+<rect x="30" y="190" width="660" height="118" rx="6" fill="#0d0d0d" stroke="#f0b429" stroke-dasharray="6,4"/>
+<text x="360" y="214" text-anchor="middle" fill="#f0b429" font-size="12" font-weight="bold">Around the loop: the four labs</text>
+<g font-size="10" fill="#a8a8a8">
+<text x="60" y="236" fill="#ececec" font-size="11">Lab 1, Agents Intro:</text><text x="200" y="236"> the loop itself, tools with contracts, guardrails, eval harness</text>
+<text x="60" y="256" fill="#ececec" font-size="11">Lab 2, Multi-Agent:</text><text x="200" y="256"> split the loop: planner, worker, critic, orchestrator, shared state</text>
+<text x="60" y="276" fill="#ececec" font-size="11">Lab 3, Inference-Time Scaling:</text><text x="260" y="276"> spend more steps per problem, verify the outputs</text>
+<text x="60" y="296" fill="#ececec" font-size="11">Lab 4, Self-Improving:</text><text x="220" y="296"> verified wins become memory that improves the next loop</text>
+</g>
+</g></svg><figcaption>The agent loop that unifies the category: perceive, plan, act, observe, repeat. Each of the four week-15 labs owns one layer around it. <span class="fig-src">Source: S30 AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The top ring is the minimal agent: a prompt plus tool results come in, a policy picks an action, a tool executes, and the result is observed. Everything in this volume is machinery around this ring.</li><li>The arrow from Observe back to Perceive is the loop. An agent is not a single model call; it is this cycle with a stop condition.</li><li>The dashed box maps the four labs: Lab 1 builds the loop with guardrails and an eval harness; Lab 2 splits it across planner, worker, and critic agents; Lab 3 spends extra loop iterations per problem with verifiers; Lab 4 turns verified successes into memory.</li><li>Volume 9 built RAG and basic agent patterns; Volume 8 built the serving stack agents run on. This volume is the production layer: reliability, evaluation, and improvement.</li></ol></div>
+<p>Read the diagram as the map for the rest of the page. Every concept below is one
+layer of machinery around the same ring, and every lab is that machinery made
+runnable.</p>
+<div class="takeaway"><h4>Key takeaways</h4><ul><li>An agent is a loop (perceive, plan, act, observe) around a language model, not a bigger model.</li><li>Guardrails, evaluation harnesses, and verification are the production difference between a demo and a system.</li><li>All four labs are Expert: you implement the machinery and measure operational metrics, not just accuracy.</li><li>Volume 9 built the agent basics; this volume builds reliability, scaling, and improvement on top.</li></ul></div><div class="ob-board"><h4>On the board</h4><ul><li>What is the difference between a language model and an agent? (The loop: tools, observation, iteration, stop condition.)</li><li>Name three things that can go wrong when an agent acts without guardrails. (Irreversible actions, unbounded cost, untrusted tool outputs.)</li></ul></div><p class="lab-meta">Apply this chapter in: <a href="#lab-w15-d3-agents-intro">Agents Intro</a>.</p>
+<h2>Core ideas, worked end to end</h2>
+<p>Three ideas carry the category, each with the full treatment: what it is, why it
+exists, how it works, concrete numbers, the misunderstanding interviewers exploit,
+a visual, and the interview line.</p>
+
+<h3>Concept 1: the agent loop with guardrails</h3>
+<p><strong>What it is.</strong> A <dfn>tool-calling agent loop</dfn> is a cycle:
+the policy reads the prompt and the conversation, proposes one tool action, the
+executor checks the guardrails, the tool runs, and its typed result is appended as
+an observation. <dfn>Guardrails</dfn> are the explicit limits checked before every
+action: which tools are allowed, whether the arguments are valid, the iteration
+and token budgets, and whether a write needs human confirmation. The week 15 day 3
+lab builds this loop with a tiny heuristic policy standing in for the language
+model, so every piece is visible.</p>
+<p><strong>Why it exists.</strong> A language model alone cannot act: it has no
+hands. Tools are the hands, and hands without rules are dangerous. The production
+failures are all in the loop, not the model: unbounded iteration burning money,
+writes to the wrong system, tool outputs trusted blindly. Guardrails turn the loop
+from a demo into something shippable, and the evaluation harness turns "it seems
+to work" into a number.</p>
+<p><strong>How it works, step by step.</strong> (1) Define tools with explicit
+input and output contracts: name, typed arguments, typed return, and a short
+description of when to use it. Three deterministic tools are enough to learn the
+pattern. (2) Write the policy: given the prompt and history, pick the next action.
+Start heuristic; the shape is identical when a language model fills the slot.
+(3) Build the executor: propose, gate, execute, observe, repeat. The guardrail
+gates run before every action, and the stop conditions are explicit: the policy
+declares done, a budget is exhausted, or a gate fires. (4) Build the evaluation
+harness: a small benchmark of tasks plus operational metrics (success rate,
+iterations per task, cost per task), summarized after every run.</p>
+<p><strong>Concrete numbers.</strong> In the lab harness, a typical small task
+completes in 3 to 6 loop iterations. Set the iteration budget at roughly 3x the
+p95 of your benchmark: generous enough for hard tasks, tight enough to catch a
+looping agent before the bill hurts. Cost per task is the metric that decides
+whether the agent is a product or a demo.</p>
+<p><strong>The misunderstanding.</strong> "The agent is the model." Interviewers at
+the labs that ship agents ask the opposite question: for a fixed frontier model,
+what matters more, the model or the harness? The strong answer is the harness:
+simple composable loops beat frameworks, verification beats cleverness, and the
+highest-leverage piece is the agent running tests and checks after each edit. The
+model is interchangeable; the loop is the product.</p>
+<figure class="diagram"><svg viewBox="0 0 720 380" width="100%" role="img" aria-label="The minimal production agent: typed tools, a policy, an executor loop, an evaluation harness, and guardrail gates checke" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#f0b429" stroke-width="1.6"/></marker></defs>
+<rect x="10" y="10" width="700" height="360" rx="8" fill="#0d0d0d" stroke="#262626"/>
+<text x="30" y="42" fill="#f0b429" font-size="15" font-weight="bold" font-family="sans-serif">Concept 1: the agent loop with guardrail gates</text>
+<g font-family="sans-serif" font-size="11" fill="#ececec">
+<rect x="30" y="60" width="140" height="52" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="100" y="80" text-anchor="middle" font-weight="bold">Tools</text>
+<text x="100" y="98" text-anchor="middle" fill="#a8a8a8" font-size="10">typed contracts</text>
+<rect x="200" y="60" width="140" height="52" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="270" y="80" text-anchor="middle" font-weight="bold">Policy</text>
+<text x="270" y="98" text-anchor="middle" fill="#a8a8a8" font-size="10">prompt -&gt; action</text>
+<rect x="370" y="60" width="140" height="52" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="440" y="80" text-anchor="middle" font-weight="bold">Executor</text>
+<text x="440" y="98" text-anchor="middle" fill="#a8a8a8" font-size="10">runs the loop</text>
+<rect x="540" y="60" width="130" height="52" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="605" y="80" text-anchor="middle" font-weight="bold">Eval harness</text>
+<text x="605" y="98" text-anchor="middle" fill="#a8a8a8" font-size="10">benchmark + metrics</text>
+<path d="M170 86 L196 86" stroke="#f0b429" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M340 86 L366 86" stroke="#f0b429" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M510 86 L536 86" stroke="#f0b429" stroke-width="1.6" marker-end="url(#arr)"/>
+<rect x="30" y="140" width="640" height="60" rx="6" fill="#0d0d0d" stroke="#ff7b8a"/>
+<text x="350" y="162" text-anchor="middle" fill="#ff7b8a" font-size="12" font-weight="bold">Guardrail gates, checked before every action</text>
+<text x="350" y="182" text-anchor="middle" fill="#a8a8a8" font-size="10">allowed-tool list, argument validation, iteration budget, token budget, confirmation for writes</text>
+<rect x="30" y="220" width="640" height="118" rx="6" fill="#0d0d0d" stroke="#f0b429" stroke-dasharray="6,4"/>
+<text x="350" y="242" text-anchor="middle" fill="#f0b429" font-size="12" font-weight="bold">The loop, step by step</text>
+<g font-size="10" fill="#a8a8a8">
+<text x="50" y="264">1. Policy reads the user prompt and the conversation so far, proposes one tool action.</text>
+<text x="50" y="284">2. Executor checks every guardrail gate. A failed gate stops the loop or asks the user.</text>
+<text x="50" y="304">3. The tool runs; its typed result is appended to the conversation as an observation.</text>
+<text x="50" y="324">4. Repeat until the policy declares done, a budget is exhausted, or a gate fires.</text>
+</g>
+</g></svg><figcaption>The minimal production agent: typed tools, a policy, an executor loop, an evaluation harness, and guardrail gates checked before every action. Built in the Agents Intro lab (week 15, day 3). <span class="fig-src">Source: S30 AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The four blue boxes are the components: tools with explicit input and output contracts, a policy that maps a prompt to an action (the lab uses a tiny heuristic policy standing in for the LLM), an executor that runs the loop, and an eval harness.</li><li>The red box is the guardrail layer. Before every action the executor checks: is this tool allowed, are the arguments valid, are we within the iteration and token budgets, and does this write need human confirmation. Any failure stops or escalates.</li><li>The dashed box is the loop itself: propose, gate, execute, observe, repeat. The stop conditions (done, budget exhausted, gate fired) are as important as the tools.</li><li>The eval harness measures operational metrics, not just correctness: success rate, iterations per task, cost per task. You cannot improve what you do not measure.</li></ol></div>
+<p><strong>Interview relevance.</strong> Tool-calling loop design with guardrails is
+a reported system design question at two of the three labs. The graded parts are
+always the same: the stop conditions, the write-action policy, the budgets, and
+how you would measure reliability.</p>
+
+<h3>Concept 2: inference-time scaling and verifiers</h3>
+<p><strong>What it is.</strong> <dfn>Inference-time scaling</dfn> means spending
+more compute when answering instead of when training: sample many candidate
+answers and pick the best one. The picker is a <dfn>verifier</dfn> (a checker that
+knows the right answer, like running unit tests) or a <dfn>judge</dfn> (a scorer
+that estimates quality, like a language model grading outputs). The week 15 day 6
+lab simulates the whole tradeoff space.</p>
+<p><strong>Why it exists.</strong> Some problems yield to more tries plus
+verification: code with tests, math with checkable answers, plans with simulators.
+When the verifier is cheap and reliable, extra samples are the cheapest accuracy
+available, no retraining required. This is also the mechanism behind several
+post-training methods: generate many, keep what verifies.</p>
+<p><strong>How it works, step by step.</strong> (1) Sample N candidates from the
+model at some temperature. (2) Score each with the verifier or judge. (3) Return
+the best (best-of-N). The lab measures the coverage curve: pass@1 versus best-of-N
+as N grows. Then it adds the refinements: temperature trades diversity against
+per-sample accuracy (hotter sampling finds more varied candidates but each is
+weaker); exact verifiers beat noisy judges; and adaptive budgets spend more
+samples on hard problems and fewer on easy ones instead of a flat N.</p>
+<p><strong>Concrete numbers.</strong> If one sample succeeds with probability p
+and samples are independent, N tries succeed with probability 1 - (1-p)^N. With
+p = 0.3, pass@1 is 0.3 and best-of-10 reaches about 0.97, in theory. In practice
+the gains flatten earlier: samples are not independent, and a noisy judge picks
+the wrong candidate part of the time. The lab measures both effects, which is why
+the verifier-quality curve matters more than the sample-count curve.</p>
+<p><strong>The misunderstanding.</strong> "More samples always help." They help
+until the selector becomes the bottleneck: with a noisy judge, extra samples
+mostly add chances to pick confidently wrong answers. The interview follow-up is
+always about the verifier: what verifies the output, how good is it, and what
+happens when it is wrong.</p>
+<figure class="diagram"><svg viewBox="0 0 720 380" width="100%" role="img" aria-label="Inference-time scaling: sampling more candidates per problem raises the success rate, but the verifier quality sets the " xmlns="http://www.w3.org/2000/svg"><defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#f0b429" stroke-width="1.6"/></marker></defs>
+<rect x="10" y="10" width="700" height="360" rx="8" fill="#0d0d0d" stroke="#262626"/>
+<text x="30" y="42" fill="#f0b429" font-size="15" font-weight="bold" font-family="sans-serif">Concept 2: inference-time scaling, coverage vs samples</text>
+<g font-family="sans-serif" font-size="11" fill="#ececec">
+<line x1="70" y1="300" x2="660" y2="300" stroke="#262626" stroke-width="1.5"/>
+<line x1="70" y1="300" x2="70" y2="80" stroke="#262626" stroke-width="1.5"/>
+<text x="365" y="325" text-anchor="middle" fill="#a8a8a8" font-size="11">samples per problem (N)</text>
+<text x="40" y="190" text-anchor="middle" fill="#a8a8a8" font-size="11" transform="rotate(-90 40 190)">success rate</text>
+<path d="M90 250 C 200 180, 320 130, 620 105" stroke="#7fd08a" stroke-width="2.5" fill="none"/>
+<circle cx="90" cy="250" r="5" fill="#7fd08a"/>
+<circle cx="200" cy="185" r="5" fill="#7fd08a"/>
+<circle cx="330" cy="140" r="5" fill="#7fd08a"/>
+<circle cx="480" cy="115" r="5" fill="#7fd08a"/>
+<circle cx="620" cy="105" r="5" fill="#7fd08a"/>
+<text x="480" y="90" fill="#7fd08a" font-size="11">best-of-N with an exact verifier: steep climb, then plateau</text>
+<path d="M90 250 C 200 215, 320 195, 620 180" stroke="#ff9d6b" stroke-width="2.5" fill="none" stroke-dasharray="7,4"/>
+<circle cx="200" cy="218" r="5" fill="#ff9d6b"/>
+<circle cx="330" cy="200" r="5" fill="#ff9d8a" opacity="0"/>
+<circle cx="330" cy="200" r="5" fill="#ff9d6b"/>
+<circle cx="480" cy="188" r="5" fill="#ff9d6b"/>
+<circle cx="620" cy="182" r="5" fill="#ff9d6b"/>
+<text x="480" y="210" fill="#ff9d6b" font-size="11">noisy judge: flatter climb, lower ceiling</text>
+<text x="90" y="270" fill="#a8a8a8" font-size="10">pass@1</text>
+<rect x="30" y="60" width="640" height="1" fill="none" stroke="none"/>
+<g font-size="10" fill="#a8a8a8">
+<text x="365" y="62" text-anchor="middle" fill="#ececec" font-size="11">Why it works: with per-sample success p, N independent tries succeed with probability 1 - (1-p)^N</text>
+</g>
+</g></svg><figcaption>Inference-time scaling: sampling more candidates per problem raises the success rate, but the verifier quality sets the ceiling. Simulated in the week 15 day 6 lab. <span class="fig-src">Source: S30 AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The x-axis is samples per problem N; the y-axis is the success rate. The leftmost point is pass@1: a single sample.</li><li>The green curve is best-of-N with an exact verifier: a checker that knows the right answer (like running unit tests). Coverage climbs steeply because the math 1 - (1-p)^N compounds, then plateaus as the easy wins are exhausted.</li><li>The dashed orange curve is selection by a noisy judge (an LLM scoring its own outputs). It climbs less and ceilings lower: a bad selector wastes samples by picking the wrong candidate. Verifier quality dominates sample count.</li><li>The lab adds two refinements: temperature trades diversity against per-sample accuracy, and adaptive budgets spend more samples on hard problems and fewer on easy ones.</li></ol></div>
+<p><strong>Interview relevance.</strong> Inference-time compute is a first-class
+topic in post-training and serving interviews: best-of-N, verifiers versus
+judges, and the temperature tradeoff. The 1 - (1-p)^N math is the kind of
+on-the-board calculation interviewers ask for cold.</p>
+
+<h3>Concept 3: multi-agent systems and self-improvement</h3>
+<p><strong>What it is.</strong> A <dfn>multi-agent system</dfn> splits the loop
+across specialized roles: a <dfn>planner</dfn> turns the task into a tool plan, a
+<dfn>worker</dfn> executes it under guardrails, a <dfn>critic</dfn> verifies the
+outputs and escalates failures, and an <dfn>orchestrator</dfn> drives the cycle
+over shared state. <dfn>Self-improvement</dfn> closes a second loop: verified
+successful rollouts are distilled into memory that makes the next round of tasks
+easier. The week 15 day 4 lab builds the split; the week 15 day 7 lab builds the
+improvement loop.</p>
+<p><strong>Why it exists.</strong> One big prompt doing everything is hard to
+debug and harder to trust. Narrow roles have narrow contracts, and narrow
+contracts are checkable: the critic cannot take actions, the worker cannot rewrite
+the plan. Self-improvement exists because the cheapest way to get better at a
+repeated task is to remember what worked, but only if the memories are verified:
+unverified memory teaches the agent its own mistakes.</p>
+<p><strong>How it works, step by step.</strong> Multi-agent: (1) the orchestrator
+creates fresh shared state; (2) the planner converts the user task into a short
+sequence of tool calls; (3) the worker executes each step, enforcing allowed tools
+and argument validation; (4) the critic rejects outputs that contradict the plan
+or the evidence and escalates what it cannot verify. Self-improvement: (1) run the
+agent on a task set and collect rollouts; (2) keep only rollouts the verifier
+accepts; (3) distill the successful traces into compact memory (reusable patterns,
+not raw transcripts); (4) give the memory to the planner on the next round;
+(5) evaluate before versus after, and compare the improvement against the cheaper
+alternative of just sampling more.</p>
+<p><strong>Concrete numbers.</strong> The week 15 day 7 lab frames the decision
+as a contest: memory-assisted planning versus extra sampling at equal compute.
+Memory wins when the task distribution repeats (the same patterns recur); extra
+sampling wins on one-off novel tasks. The lab makes you measure which regime you
+are in instead of assuming.</p>
+<p><strong>The misunderstanding.</strong> "More agents are better." Every added
+agent adds coordination overhead and new failure modes: the planner and worker can
+disagree, the critic can be wrong, shared state can go stale. The interview
+question is always "why three agents instead of one good prompt", and the answer
+is verifiability per role, not parallelism for its own sake. The twin mistake is
+"memory always helps": unverified memory compounds errors, which is why the
+verifier gates what enters memory.</p>
+<figure class="diagram"><svg viewBox="0 0 720 380" width="100%" role="img" aria-label="Top: the planner, worker, and critic split with shared state (week 15, day 4 lab). Bottom: the self-improvement loop tha" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#f0b429" stroke-width="1.6"/></marker></defs>
+<rect x="10" y="10" width="700" height="360" rx="8" fill="#0d0d0d" stroke="#262626"/>
+<text x="30" y="42" fill="#f0b429" font-size="15" font-weight="bold" font-family="sans-serif">Concept 3: multi-agent split and the self-improvement loop</text>
+<g font-family="sans-serif" font-size="11" fill="#ececec">
+<rect x="30" y="60" width="150" height="56" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="105" y="82" text-anchor="middle" font-weight="bold">Planner</text>
+<text x="105" y="100" text-anchor="middle" fill="#a8a8a8" font-size="10">task -&gt; tool plan</text>
+<rect x="210" y="60" width="150" height="56" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="285" y="82" text-anchor="middle" font-weight="bold">Worker</text>
+<text x="285" y="100" text-anchor="middle" fill="#a8a8a8" font-size="10">executes + guardrails</text>
+<rect x="390" y="60" width="150" height="56" rx="6" fill="#111111" stroke="#6cb2ff"/>
+<text x="465" y="82" text-anchor="middle" font-weight="bold">Critic</text>
+<text x="465" y="100" text-anchor="middle" fill="#a8a8a8" font-size="10">verify / escalate</text>
+<rect x="570" y="60" width="100" height="56" rx="6" fill="#111111" stroke="#f0b429"/>
+<text x="620" y="82" text-anchor="middle" font-weight="bold">State</text>
+<text x="620" y="100" text-anchor="middle" fill="#a8a8a8" font-size="10">shared</text>
+<path d="M180 88 L206 88" stroke="#f0b429" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M360 88 L386 88" stroke="#f0b429" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M465 116 L465 150 L620 150 L620 120" stroke="#f0b429" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+<text x="105" y="140" fill="#a8a8a8" font-size="10">orchestrator drives: plan, execute, verify, repeat</text>
+<rect x="30" y="160" width="640" height="178" rx="6" fill="#0d0d0d" stroke="#7fd08a" stroke-dasharray="6,4"/>
+<text x="350" y="184" text-anchor="middle" fill="#7fd08a" font-size="12" font-weight="bold">Self-improvement: verified wins become memory</text>
+<g font-size="10" fill="#a8a8a8">
+<text x="50" y="206">1. Run the agent on tasks; keep only rollouts the verifier accepts.</text>
+<text x="50" y="226">2. Distill the successful traces into compact memory (what worked, in reusable form).</text>
+<text x="50" y="246">3. Give the memory to the planner on the next round of tasks.</text>
+<text x="50" y="266">4. Evaluate before vs after: improvement must beat simply sampling more.</text>
+<text x="50" y="286" fill="#ff7b8a">Failure mode: unverified traces teach the agent its own mistakes. The verifier is the gate.</text>
+<text x="50" y="308" fill="#ff7b8a">Failure mode: stale memory. Re-verify memory against new tasks or it rots.</text>
+</g>
+</g></svg><figcaption>Top: the planner, worker, and critic split with shared state (week 15, day 4 lab). Bottom: the self-improvement loop that distills verified rollouts into memory (week 15, day 7 lab). <span class="fig-src">Source: S30 AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The planner turns a user task into a short sequence of tool calls. The worker executes the plan under guardrails. The critic verifies outputs and escalates failures. An orchestrator drives the cycle; all three share one state object so nothing is lost between roles.</li><li>Splitting roles beats one big prompt because each role gets a narrow contract: the critic cannot take actions, the worker cannot change the plan. Narrow contracts are checkable.</li><li>The self-improvement loop (green dashed box) collects rollouts, keeps only the verified successes, distills them into compact memory, and hands that memory to the planner next round.</li><li>The red lines are the two failure modes the lab makes you confront: unverified traces teach the agent its own mistakes (errors compound), and stale memory rots as tasks change. The verifier gates what enters memory.</li></ol></div>
+<p><strong>Interview relevance.</strong> Multi-agent design and agent memory are
+reported system design questions. The graded parts are the role contracts, the
+critic escalation policy, what enters memory and why, and how you evaluate the
+whole system end to end.</p>
+<div class="takeaway"><h4>Key takeaways</h4><ul><li>The agent loop is propose, gate, execute, observe, repeat; guardrails and stop conditions are the shippable parts.</li><li>Inference-time scaling works through verifiers; verifier quality sets the ceiling, not sample count.</li><li>Split agents by verifiable role contracts; let only verified rollouts become memory.</li><li>Measure operational metrics (success rate, cost per task, iterations) for every agent change.</li></ul></div><div class="ob-board"><h4>On the board</h4><ul><li>For a fixed frontier model, what matters more for a coding agent: the model or the harness? Defend your answer. (The harness: loop, tools, verification.)</li><li>When does best-of-10 beat a bigger model, and when does it lose? (Cheap reliable verifier versus novel one-off tasks.)</li><li>Your agent remembers a wrong fact from last week and now repeats it. What broke? (Unverified memory entered the store; no re-verification.)</li></ul></div><p class="lab-meta">Apply this chapter in: <a href="#lab-w15-d4-multi-agent-systems-in-production">Multi-Agent Systems in Production</a>; <a href="#lab-w15-d6-inference-time-scaling-verifiers">Inference-Time Scaling &amp; Verifiers</a>.</p><h2>Lab walkthroughs</h2>
+<p>All four labs in week and day order. Each lab below renders its full task list with starter code, hints, tests, and solutions from the S30 source. Use the tab bar to jump between labs.</p>
+<div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w15-d3-agents-intro">Agents Intro</button><button data-target="lab-w15-d4-multi-agent-systems-in-production">Multi-Agent Systems in Production</button><button data-target="lab-w15-d6-inference-time-scaling-verifiers">Inference-Time Scaling &amp; Verifiers</button><button data-target="lab-w15-d7-self-improving-agents">Self-Improving Agents</button></div>
+<section class="lab" id="lab-w15-d3-agents-intro">
+<h3>Agents Intro <span class="diff diff-expert">Expert</span></h3>
+<p class="lab-meta">Week 15, Day 3 · LLM &amp; Agentic AI · 5 tasks · 5 checks</p>
+
+<p>The foundation lab for the whole category. You define three deterministic tools
+with explicit input and output contracts, write a tiny heuristic policy that maps
+a prompt to a tool action (standing in for the language model so the machinery
+stays visible), build the minimal executor loop with product-grade guardrails
+(allowed tools, budgets, confirmation for writes), and evaluate the agent over a
+small benchmark. The graded habit is the last task: summarize operational
+metrics, not just correctness. Watch for the contract discipline: every tool gets
+a typed interface, because the model can only be as reliable as the tools it
+calls.</p>
+<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1evz9DQM-jWpv-jODrKn2tKrMDuaRLFjU">Colab</a> · <a href="/notes/w15-d3-agents-intro">Notes</a> · <a href="agents_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/VsX1rtSBruc">Video</a></p>
+<h4>Tasks (5)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Agents Intro ,  Student Lab</h3>
+<p>Offline lab: build a minimal agent loop with tool calling + guardrails.</p>
+<h4>0 ,  Define tools</h4><h4>Starter code</h4><pre><code class="lang-python">from dataclasses import dataclass
+from typing import Any, Callable, Dict, List, Optional, Tuple
+import re
+import numpy as np
+
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f"Failed: {name}")
+    print(f"OK: {name}")
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">from dataclasses import dataclass
+from typing import Any, Callable, Dict, List, Optional, Tuple
+import re
+import numpy as np
+
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f"Failed: {name}")
+    print(f"OK: {name}")
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Agents Intro ,  Instructor Lab</h3>
+<p>Offline lab: build a minimal agent loop with tool calling + guardrails.</p>
+<h4>0 ,  Define tools</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Define tools</summary><div class="task-body"><h4>0 ,  Define tools</h4>
+<p>Create three deterministic tools with explicit input/output contracts. The point of this section is to make tool calling concrete before you build any agent loop on top of it.</p>
+<p>Each tool should:</p>
+<ul><li>read a small structured argument dictionary</li><li>return a structured dictionary result</li><li>fail deterministically for bad lookups instead of hallucinating an answer</li></ul><h4>Starter code</h4><pre><code class="lang-python">@dataclass
+class Tool:
+    name: str
+    func: Callable[[Dict[str, Any]], Dict[str, Any]]
+    cost: float
+
+
+def tool_add(args: Dict[str, Any]) -&gt; Dict[str, Any]:
+    # TODO
+    ...
+def tool_lower(args: Dict[str, Any]) -&gt; Dict[str, Any]:
+    # TODO
+    ...
+def tool_lookup_city_country(args: Dict[str, Any]) -&gt; Dict[str, Any]:
+    # TODO
+    ...
+TOOLBOX: Dict[str, Tool] = {
+    'add': Tool('add', tool_add, cost=1.0),
+    'lower': Tool('lower', tool_lower, cost=0.2),
+    'lookup_city_country': Tool('lookup_city_country', tool_lookup_city_country, cost=0.5),
+}
+
+check('toolbox_has_3', len(TOOLBOX) &gt;= 3)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('toolbox_has_3', len(TOOLBOX) &gt;= 3)</code></pre><h4>Checks</h4><ul><li>check('toolbox_has_3', len(TOOLBOX)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">@dataclass
+class Tool:
+    name: str
+    func: Callable[[Dict[str, Any]], Dict[str, Any]]
+    cost: float
+
+
+def tool_add(args: Dict[str, Any]) -&gt; Dict[str, Any]:
+    a = int(args['a'])
+    b = int(args['b'])
+    return {'result': a + b}
+
+
+def tool_lower(args: Dict[str, Any]) -&gt; Dict[str, Any]:
+    s = str(args['s'])
+    return {'result': s.lower()}
+
+
+def tool_lookup_city_country(args: Dict[str, Any]) -&gt; Dict[str, Any]:
+    city = str(args['city']).strip().lower()
+    table = {
+        'paris': 'france',
+        'tokyo': 'japan',
+        'delhi': 'india',
+        'seattle': 'usa',
+    }
+    if city not in table:
+        return {'error': 'unknown_city'}
+    return {'result': table[city]}
+
+
+TOOLBOX: Dict[str, Tool] = {
+    'add': Tool('add', tool_add, cost=1.0),
+    'lower': Tool('lower', tool_lower, cost=0.2),
+    'lookup_city_country': Tool('lookup_city_country', tool_lookup_city_country, cost=0.5),
+}
+
+check('toolbox_has_3', len(TOOLBOX) &gt;= 3)
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 1 ,  A simple policy (mock LLM)</summary><div class="task-body"><h4>1 ,  A simple policy (mock LLM)</h4>
+<p>Implement a tiny heuristic policy that maps a user prompt to a tool action. This stands in for the LLM decision step in a real agent system.</p>
+<p>The policy should recognize:</p>
+<ul><li>arithmetic requests like <code>add 2 and 3</code></li><li>text normalization requests like <code>lower: HeLLo</code></li><li>lookup requests like <code>country of Tokyo</code></li></ul>
+<p>If no valid tool call is needed, return <code>None</code>.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
+class Action:
+    tool_name: str
+    args: Dict[str, Any]
+
+
+def policy(prompt: str) -&gt; Optional[Action]:
+    # TODO
+    ...
+check('policy_add', policy('add 2 and 3').tool_name == 'add')
+check('policy_lower', policy('lower: HeLLo').tool_name == 'lower')</code></pre><h4>Test code</h4><pre><code class="lang-python">check('policy_add', policy('add 2 and 3').tool_name == 'add')
+check('policy_lower', policy('lower: HeLLo').tool_name == 'lower')</code></pre><h4>Checks</h4><ul><li>check('policy_add', policy('add 2 and 3')</li><li>check('policy_lower', policy('lower: HeLLo')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">@dataclass
+class Action:
+    tool_name: str
+    args: Dict[str, Any]
+
+
+def policy(prompt: str) -&gt; Optional[Action]:
+    """Very small heuristic policy.
+
+    Returns an Action, or None if no tool should be called.
+    """
+    p = prompt.strip()
+
+    # arithmetic: "add 2 and 3"
+    m = re.search(r"add\s+(-?\d+)\s+(and|to)\s+(-?\d+)", p, flags=re.IGNORECASE)
+    if m:
+        return Action('add', {'a': int(m.group(1)), 'b': int(m.group(3))})
+
+    # lowercasing: "lower: HeLLo"
+    m = re.search(r"lower\s*:\s*(.+)$", p, flags=re.IGNORECASE)
+    if m:
+        return Action('lower', {'s': m.group(1)})
+
+    # lookup: "country of Tokyo"
+    m = re.search(r"country\s+of\s+([A-Za-z ]+)$", p, flags=re.IGNORECASE)
+    if m:
+        return Action('lookup_city_country', {'city': m.group(1).strip()})
+
+    return None
+
+check('policy_add', policy('add 2 and 3').tool_name == 'add')
+check('policy_lower', policy('lower: HeLLo').tool_name == 'lower')
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Agent loop with guardrails</summary><div class="task-body"><h4>2 ,  Agent loop with guardrails</h4>
+<p>Build the minimal agent executor around the policy and tools.</p>
+<p>Your loop should enforce production-style controls:</p>
+<ul><li>a tool allowlist</li><li>a total cost budget</li><li>a max-step limit</li><li>deterministic failure when the policy chooses no valid action or a tool returns an error</li></ul>
+<p>Return a structured result containing whether the run succeeded, the final answer, the number of steps, total cost, and a short trace.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
+class AgentResult:
+    ok: bool
+    answer: str
+    steps: int
+    cost: float
+    trace: List[str]
+
+
+def run_agent(prompt: str, *, toolbox, allowlist=None, max_steps: int = 3, budget: float = 3.0) -&gt; AgentResult:
+    # TODO
+    ...
+
+r = run_agent(
+    'add 7 and 8',
+    toolbox=TOOLBOX,
+    allowlist=set(TOOLBOX.keys()),
+    max_steps=3,
+    budget=3.0,
+)
+print(r)
+check('agent_add', r.ok and r.answer == '15')</code></pre><h4>Test code</h4><pre><code class="lang-python">check('agent_add', r.ok and r.answer == '15')</code></pre><h4>Checks</h4><ul><li>check('agent_add', r.ok and r.answer == '15')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Evaluation harness</summary><div class="task-body"><h4>3 ,  Evaluation harness</h4>
+<p>Evaluate the agent over a small benchmark and summarize the operational metrics, not just correctness.</p>
+<p>Track at least:</p>
+<ul><li>success rate</li><li>average number of steps</li><li>average tool cost</li></ul>
+<p>This mirrors how real agent systems are judged in production: quality alone is not enough if the workflow is too slow or too expensive.</p><h4>Starter code</h4><pre><code class="lang-python">TASKS = [
+    ('add 2 and 3', '5'),
+    ('lower: HeLLo', 'hello'),
+    ('country of Tokyo', 'japan'),
+    ('country of Paris', 'france'),
+]
+
+
+def evaluate(tasks, *, toolbox, allowlist=None):
+    # TODO
+    ...
+metrics = evaluate(TASKS, toolbox=TOOLBOX, allowlist=set(TOOLBOX.keys()))
+print(metrics)
+check('good_success', metrics['success_rate'] &gt;= 0.75)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('good_success', metrics['success_rate'] &gt;= 0.75)</code></pre><h4>Checks</h4><ul><li>check('good_success', metrics['success_rate'] &gt;= 0.75)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">TASKS = [
+    ('add 2 and 3', '5'),
+    ('lower: HeLLo', 'hello'),
+    ('country of Tokyo', 'japan'),
+    ('country of Paris', 'france'),
+]
+
+
+def evaluate(tasks, *, toolbox, allowlist=None):
+    oks = 0
+    steps = []
+    costs = []
+    for t, expected in tasks:
+        r = run_agent(t, toolbox=toolbox, allowlist=allowlist, max_steps=3, budget=3.0)
+        ok = r.ok and (r.answer == expected)
+        oks += int(ok)
+        steps.append(r.steps)
+        costs.append(r.cost)
+    return {
+        'n': len(tasks),
+        'success_rate': oks / len(tasks),
+        'avg_steps': float(np.mean(steps)),
+        'avg_cost': float(np.mean(costs)),
+    }
+
+metrics = evaluate(TASKS, toolbox=TOOLBOX, allowlist=set(TOOLBOX.keys()))
+print(metrics)
+check('good_success', metrics['success_rate'] &gt;= 0.75)
+</code></pre></details></div></details>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>OpenAI</td><td>high</td><td>tool use, agent loops, handoffs, agent orchestration</td><td>OpenAI Agents SDK; AI agents interview questions</td></tr><tr><td>Anthropic</td><td>high</td><td>agent workflows, context engineering, managed agents</td><td>Anthropic building effective agents; Anthropic managed agents</td></tr><tr><td>Google DeepMind</td><td>medium</td><td>multi-agent design, agent scaling, coordination tradeoffs</td><td>Google research on scaling agent systems</td></tr></tbody></table>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w15-d3-agents-intro">https://ai.thes30.com/problems/w15-d3-agents-intro</a>.</p>
+</section>
+<section class="lab" id="lab-w15-d4-multi-agent-systems-in-production">
+<h3>Multi-Agent Systems in Production <span class="diff diff-expert">Expert</span></h3>
+<p class="lab-meta">Week 15, Day 4 · LLM &amp; Agentic AI · 6 tasks · 5 checks</p>
+
+<p>The decomposition lab. You build a planner, worker, and critic system over
+shared state: the tool layer and state object first, then a deterministic planner
+that converts tasks into short tool-call sequences, a worker that executes under
+guardrails, a critic that verifies outputs and escalates, and an orchestrator
+that drives the whole cycle with evaluation. Watch for the contract lesson: each
+role is narrow on purpose. The critic cannot act, the worker cannot replan, and
+that narrowness is what makes each role checkable and the system debuggable.</p>
+<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1RvfO4XljOhFXIdr0ZcyDSsfLmq6z2q8H">Colab</a> · <a href="/notes/w15-d4-multi-agent-systems-in-production">Notes</a> · <a href="multiagents_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/-5v0-rAfxmw">Video</a></p>
+<h4>Tasks (6)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Multi-Agent Systems in Production ,  Student Lab</h3>
+<p>Offline lab: build a small planner / worker / critic system with shared state, guardrails, and evaluation.</p>
+<p>You will implement:</p>
+<ul><li>a small tool interface</li><li>a planner that turns tasks into tool calls</li><li>a worker that executes the plan under budget + allowlist guardrails</li><li>a critic that verifies the output</li><li>an orchestrator that ties the roles together</li></ul>
+<h4>0 ,  Tools + shared state</h4><h4>Starter code</h4><pre><code class="lang-python">from dataclasses import dataclass
+from typing import Any, Callable, Dict, List, Optional, Tuple
+import numpy as np
+import re
+
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f"Failed: {name}")
+    print(f"OK: {name}")
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">from dataclasses import dataclass
+from typing import Any, Callable, Dict, List, Optional, Tuple
+import numpy as np
+import re
+
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f"Failed: {name}")
+    print(f"OK: {name}")
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Multi-Agent Systems in Production ,  Instructor Lab</h3>
+<p>Offline lab: build a small planner / worker / critic system with shared state, guardrails, and evaluation.</p>
+<h4>0 ,  Tools + shared state</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Tools + shared state</summary><div class="task-body"><h4>0 ,  Tools + shared state</h4>
+<p>Implement the basic tool layer and a shared state object.</p>
+<p>Requirements:</p>
+<ul><li>each tool returns a dictionary like <code>{"result": ...}</code></li><li>the shared state tracks <code>budget</code>, <code>cost</code>, <code>memory</code>, and a <code>trace</code></li><li>every significant event should be logged into the trace</li></ul><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><h4>Test code</h4><pre><code class="lang-python">state = SharedState(budget=2.0, cost=0.0, memory={}, trace=[])
+log(state, 'system', 'boot', ok=True)
+check('toolbox_n', len(TOOLBOX) &gt;= 4)
+check('trace_logs', len(state.trace) == 1)</code></pre><h4>Checks</h4><ul><li>check('toolbox_n', len(TOOLBOX) &gt;= 4)</li><li>check('trace_logs', len(state.trace) == 1)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Planner agent</summary><div class="task-body"><h4>1 ,  Planner agent</h4>
+<p>Implement a deterministic planner that converts the user task into a short sequence of tool calls.</p>
+<p>Handle these patterns:</p>
+<ul><li><code>(a + b) * c</code></li><li><code>country of CITY</code></li><li><code>lower then country of CITY</code></li></ul>
+<p>The planner should output structured <code>ToolCall</code> objects, not the final answer.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
+class ToolCall:
+    tool: str
+    args: Dict[str, Any]
+
+
+def planner(task: str) -&gt; List[ToolCall]:
+    # TODO
+    ...
+
+
+plan_math = planner('(2 + 3) * 4')
+print(plan_math)
+check('plan_len', len(plan_math) == 2)
+check('plan_last_ref', plan_math[1].args['a'] == '$last')</code></pre><h4>Test code</h4><pre><code class="lang-python">plan_math = planner('(2 + 3) * 4')
+check('plan_len', len(plan_math) == 2)
+check('plan_last_ref', plan_math[1].args['a'] == '$last')</code></pre><h4>Checks</h4><ul><li>check('plan_len', len(plan_math) == 2)</li><li>check('plan_last_ref', plan_math[1].args['a'] == '$last')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Worker agent (exec + guardrails)</summary><div class="task-body"><h4>2 ,  Worker agent (exec + guardrails)</h4>
+<p>Implement the worker that executes a plan.</p>
+<p>Guardrails to enforce:</p>
+<ul><li>only allowed tools may run</li><li>tool cost must stay within the remaining budget</li><li><code>$last</code> should resolve to the previous tool result</li><li>each execution step should be logged into shared state</li></ul><h4>Starter code</h4><pre><code class="lang-python">def resolve_arg(value: Any, state: SharedState) -&gt; Any:
+    # TODO
+    ...
+
+
+def run_toolcall(call: ToolCall, state: SharedState, allowed_tools: Optional[List[str]] = None) -&gt; Dict[str, Any]:
+    # TODO
+    ...
+
+
+def worker(plan: List[ToolCall], state: SharedState, allowed_tools: Optional[List[str]] = None) -&gt; Dict[str, Any]:
+    # TODO
+    ...
+
+
+state = SharedState(budget=4.0, cost=0.0, memory={}, trace=[])
+out = worker(planner('(2 + 3) * 4'), state)
+print('worker_out', out, 'cost', state.cost)
+check('worker_math', out.get('result') == 20)
+
+state_tight = SharedState(budget=1.0, cost=0.0, memory={}, trace=[])
+blocked = worker(planner('(2 + 3) * 4'), state_tight)
+print('blocked', blocked)
+check('worker_budget_blocked', 'error' in blocked and blocked['error'] == 'budget_exceeded')</code></pre><h4>Test code</h4><pre><code class="lang-python">state = SharedState(budget=4.0, cost=0.0, memory={}, trace=[])
+out = worker(planner('(2 + 3) * 4'), state)
+check('worker_math', out.get('result') == 20)
+
+state_tight = SharedState(budget=1.0, cost=0.0, memory={}, trace=[])
+blocked = worker(planner('(2 + 3) * 4'), state_tight)
+check('worker_budget_blocked', 'error' in blocked and blocked['error'] == 'budget_exceeded')</code></pre><h4>Checks</h4><ul><li>check('worker_math', out.get('result') == 20)</li><li>check('worker_budget_blocked', 'error' in blocked and blocked['error'] == 'budget_exceeded')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Critic agent (verification / escalation)</summary><div class="task-body"><h4>3 ,  Critic agent (verification / escalation)</h4>
+<p>Implement a deterministic critic.</p>
+<p>The critic should:</p>
+<ul><li>reject outputs that contain an error</li><li>verify arithmetic tasks exactly</li><li>verify <code>country of ...</code> tasks against the known mapping</li><li>return a verdict dictionary such as <code>{'verdict': 'pass'}</code> or <code>{'verdict': 'fail', 'reason': ...}</code></li></ul><h4>Starter code</h4><pre><code class="lang-python">def expected_answer(task: str) -&gt; str:
+    # TODO
+    ...
+
+
+def critic(task: str, out: Dict[str, Any]) -&gt; Dict[str, Any]:
+    # TODO
+    ...
+
+
+check('critic_pass', critic('(2 + 3) * 4', {'result': 20})['verdict'] == 'pass')
+check('critic_fail', critic('country of Tokyo', {'result': 'tokyo'})['verdict'] == 'fail')</code></pre><h4>Test code</h4><pre><code class="lang-python">check('critic_pass', critic('(2 + 3) * 4', {'result': 20})['verdict'] == 'pass')
+check('critic_fail', critic('country of Tokyo', {'result': 'tokyo'})['verdict'] == 'fail')</code></pre><h4>Checks</h4><ul><li>check('critic_pass', critic('(2 + 3) * 4', {'result': 20})['verdict'] == 'pass')</li><li>check('critic_fail', critic('country of Tokyo', {'result': 'tokyo'})['verdict'] == 'fail')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$13</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> 4 ,  Orchestrator + evaluation</summary><div class="task-body"><h4>4 ,  Orchestrator + evaluation</h4>
+<p>Implement the top-level orchestrator.</p>
+<p>It should:</p>
+<ul><li>create fresh shared state</li><li>ask the planner for a plan</li><li>run the worker</li><li>ask the critic to verify the result</li><li>return a compact <code>RunResult</code></li></ul>
+<p>Then evaluate the system on a few tasks and confirm the budget guardrail still works.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
+class RunResult:
+    ok: bool
+    answer: str
+    cost: float
+    trace_len: int
+    reason: str
+
+
+def orchestrate(task: str, *, budget: float = 3.0, allowed_tools: Optional[List[str]] = None) -&gt; RunResult:
+    # TODO
+    ...
+
+
+TASKS = [
+    ('(2 + 3) * 4', '20'),
+    ('country of Tokyo', 'japan'),
+    ('lower then country of PaRiS', 'france'),
+]
+
+oks = 0
+for t, expected in TASKS:
+    r = orchestrate(t, budget=4.0)
+    ok = r.ok and (r.answer == expected)
+    oks += int(ok)
+    print(t, '-&gt;', r, 'expected', expected)
+
+success = oks / len(TASKS)
+print('success_rate', success)
+check('good_success', success == 1.0)
+
+r_budget = orchestrate('(2 + 3) * 4', budget=1.0)
+print('budget_run', r_budget)
+check('budget_fail', not r_budget.ok and r_budget.reason == 'budget_exceeded')</code></pre><h4>Test code</h4><pre><code class="lang-python">oks = 0
+for t, expected in TASKS:
+    r = orchestrate(t, budget=4.0)
+    ok = r.ok and (r.answer == expected)
+    oks += int(ok)
+
+success = oks / len(TASKS)
+check('good_success', success == 1.0)
+
+r_budget = orchestrate('(2 + 3) * 4', budget=1.0)
+check('budget_fail', not r_budget.ok and r_budget.reason == 'budget_exceeded')</code></pre><h4>Checks</h4><ul><li>check('good_success', success == 1.0)</li><li>check('budget_fail', not r_budget.ok and r_budget.reason == 'budget_exceeded')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$14</code></pre></details></div></details>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>OpenAI</td><td>high</td><td>tool use, agent loops, handoffs, agent orchestration</td><td>OpenAI Agents SDK; AI agents interview questions</td></tr><tr><td>Anthropic</td><td>high</td><td>agent workflows, context engineering, managed agents</td><td>Anthropic building effective agents; Anthropic managed agents</td></tr><tr><td>Google DeepMind</td><td>medium</td><td>multi-agent design, agent scaling, coordination tradeoffs</td><td>Google research on scaling agent systems</td></tr></tbody></table>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w15-d4-multi-agent-systems-in-production">https://ai.thes30.com/problems/w15-d4-multi-agent-systems-in-production</a>.</p>
+</section>
+<section class="lab" id="lab-w15-d6-inference-time-scaling-verifiers">
+<h3>Inference-Time Scaling &amp; Verifiers <span class="diff diff-expert">Expert</span></h3>
+<p class="lab-meta">Week 15, Day 6 · LLM &amp; Agentic AI · 7 tasks · 9 checks</p>
+
+<p>The compute-versus-accuracy lab. You sample from a stochastic reasoner, build
+an exact verifier and a best-of-N policy, and measure the pass@1 versus best-of-N
+coverage curve directly. Then you study the temperature tradeoff between diversity
+and per-sample accuracy, compare a noisy judge against the exact verifier, and
+implement adaptive sampling budgets that spend more on hard problems. Watch for
+the ceiling lesson: the verifier, not the sample count, decides how far scaling
+goes. A noisy judge wastes samples.</p>
+<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<div class="callout"><strong>Outcome.</strong> You can simulate repeated sampling, compare pass@1 vs best-of-N, and measure how verifiers change final accuracy.</div>
+<p class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
+<p class="lab-meta">Resources: <a href="/notes/w15-d6-inference-time-scaling-verifiers">Notes</a> · <a href="inference_scaling_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/oX_PeFL9RRE">Video</a></p>
+<h4>Tasks (7)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Inference-Time Scaling &amp; Verifiers ,  Student Lab</h3>
+<p>Offline lab: simulate repeated sampling, exact verification, and noisy judges with a fixed stochastic model.</p>
+<p>This lab studies a core idea in modern reasoning systems: even when model weights are fixed, we can spend more inference-time compute by sampling multiple candidates and selecting among them.</p>
+<p>You will implement:</p>
+<ul><li>temperature-based sampling from a stochastic candidate bank</li><li>exact verification and best-of-N selection</li><li>pass@1 vs coverage comparisons</li><li>diversity / accuracy tradeoffs from temperature</li><li>judge vs verifier selection quality</li><li>adaptive test-time compute allocation by difficulty</li></ul>
+<h4>0 ,  Toy stochastic problem bank</h4><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Inference-Time Scaling &amp; Verifiers ,  Instructor Lab</h3>
+<p>Offline lab: simulate repeated sampling, exact verification, and noisy judges with a fixed stochastic model.</p>
+<h4>0 ,  Toy stochastic problem bank</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Sample from the stochastic reasoner</summary><div class="task-body"><h4>0 ,  Sample from the stochastic reasoner</h4>
+<p>Implement sampling from the toy candidate bank.</p>
+<p>Requirements:</p>
+<ul><li>convert candidate logits into probabilities using temperature</li><li>subtract the maximum logit before exponentiating for numerical stability</li><li>sample one candidate using the provided random generator</li></ul>
+<p>The goal of this section is to show that inference-time scaling depends on stochasticity: if the model can produce different candidates, extra samples can improve coverage.</p><h4>Starter code</h4><pre><code class="lang-python">def sample_candidate(problem: dict, temperature: float, rng: np.random.Generator):
+    # TODO
+    ...
+
+cand = sample_candidate(PROBLEMS[0], temperature=1.0, rng=np.random.default_rng(0))
+print('sample', cand['text'])
+check('cand_has_text', isinstance(cand['text'], str) and len(cand['text']) &gt; 0)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('cand_has_text', isinstance(cand['text'], str) and len(cand['text']) &gt; 0)</code></pre><h4>Checks</h4><ul><li>check('cand_has_text', isinstance(cand['text']</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def sample_candidate(problem: dict, temperature: float, rng: np.random.Generator):
+    logits = np.array([c['logit'] for c in problem['candidates']], dtype=np.float64) / float(temperature)
+    logits = logits - logits.max()
+    probs = np.exp(logits)
+    probs = probs / probs.sum()
+    idx = int(rng.choice(len(problem['candidates']), p=probs))
+    chosen = problem['candidates'][idx]
+    return {k: chosen[k] for k in chosen}
+
+cand = sample_candidate(PROBLEMS[0], temperature=1.0, rng=np.random.default_rng(0))
+print('sample', cand['text'])
+check('cand_has_text', isinstance(cand['text'], str) and len(cand['text']) &gt; 0)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Exact verifier + best-of-N</summary><div class="task-body"><h4>1 ,  Exact verifier + best-of-N</h4>
+<p>Implement an exact verifier and a simple best-of-N policy.</p>
+<p>Requirements:</p>
+<ul><li><code>verify</code> should check whether a sampled candidate exactly matches the gold answer</li><li><code>best_of_n</code> should sample <code>n_samples</code> candidates</li><li>return the first verified-correct candidate if one exists</li><li>otherwise fall back to the first sampled candidate</li></ul>
+<p>This section demonstrates the core best-of-N idea: the model may fail on one sample but succeed across multiple attempts if a strong verifier is available.</p><h4>Starter code</h4><pre><code class="lang-python">def verify(problem: dict, cand: dict) -&gt; bool:
+    # TODO
+    ...
+
+def best_of_n(problem: dict, n_samples: int, temperature: float, rng: np.random.Generator):
+    # TODO
+    ...
+
+chosen, solved, sampled = best_of_n(PROBLEMS[3], n_samples=8, temperature=1.1, rng=np.random.default_rng(0))
+print('chosen', chosen['text'], 'solved', solved)
+check('sample_count', len(sampled) == 8)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('sample_count', len(sampled) == 8)</code></pre><h4>Checks</h4><ul><li>check('sample_count', len(sampled) == 8)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def verify(problem: dict, cand: dict) -&gt; bool:
+    return str(cand['text']).strip() == str(problem['gold']).strip()
+
+def best_of_n(problem: dict, n_samples: int, temperature: float, rng: np.random.Generator):
+    sampled = [sample_candidate(problem, temperature=temperature, rng=rng) for _ in range(n_samples)]
+    chosen = sampled[0]
+    solved = False
+    for cand in sampled:
+        if verify(problem, cand):
+            chosen = cand
+            solved = True
+            break
+    return chosen, solved, sampled
+
+chosen, solved, sampled = best_of_n(PROBLEMS[3], n_samples=8, temperature=1.1, rng=np.random.default_rng(0))
+print('chosen', chosen['text'], 'solved', solved)
+check('sample_count', len(sampled) == 8)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Pass@1 vs best-of-N coverage</summary><div class="task-body"><h4>2 ,  Pass@1 vs best-of-N coverage</h4>
+<p>Measure how success changes as we increase the number of samples.</p>
+<p>Requirements:</p>
+<ul><li>compute a success rate over the whole problem bank</li><li>use repeated random trials for a stable estimate</li><li>compare <code>n_samples</code> in <code>[1, 2, 4, 8]</code></li></ul>
+<p>This section is about <strong>coverage</strong>: as the sample budget grows, the chance that at least one candidate is correct should increase.</p><h4>Starter code</h4><pre><code class="lang-python">def success_rate(problem_bank, n_samples: int, temperature: float, trials: int = 200):
+    # TODO
+    ...
+
+rates = {n: success_rate(PROBLEMS, n_samples=n, temperature=1.1, trials=200) for n in [1, 2, 4, 8]}
+print(rates)
+check('mono', rates[1] &lt;= rates[2] &lt;= rates[4] &lt;= rates[8])</code></pre><h4>Test code</h4><pre><code class="lang-python">check('mono', rates[1] &lt;= rates[2] &lt;= rates[4] &lt;= rates[8])</code></pre><h4>Checks</h4><ul><li>check('mono', rates[1] &lt;= rates[2] &lt;= rates[4] &lt;= rates[8])</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def success_rate(problem_bank, n_samples: int, temperature: float, trials: int = 200):
+    vals = []
+    for seed in range(trials):
+        trial_rng = np.random.default_rng(seed)
+        ok = 0
+        for problem in problem_bank:
+            _, solved, _ = best_of_n(problem, n_samples=n_samples, temperature=temperature, rng=trial_rng)
+            ok += int(solved)
+        vals.append(ok / len(problem_bank))
+    return float(np.mean(vals))
+
+rates = {n: success_rate(PROBLEMS, n_samples=n, temperature=1.1, trials=200) for n in [1, 2, 4, 8]}
+print(rates)
+check('mono', rates[1] &lt;= rates[2] &lt;= rates[4] &lt;= rates[8])</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Temperature tradeoff</summary><div class="task-body"><h4>3 ,  Temperature tradeoff</h4>
+<p>Measure the tradeoff between diversity and accuracy.</p>
+<p>Requirements:</p>
+<ul><li>estimate how many unique candidates appear under repeated sampling</li><li>compare low, medium, and high temperatures</li><li>measure both diversity and downstream success</li></ul>
+<p>This section shows why “sample more” is incomplete advice: extra samples help only if temperature creates useful diversity without making outputs too noisy.</p><h4>Starter code</h4><pre><code class="lang-python">def mean_unique_candidates(problem_bank, temperature: float, n_samples: int = 8, trials: int = 100):
+    # TODO
+    ...
+
+div_low = mean_unique_candidates(PROBLEMS, temperature=0.3)
+div_high = mean_unique_candidates(PROBLEMS, temperature=2.5)
+acc_low = success_rate(PROBLEMS, n_samples=4, temperature=0.3, trials=200)
+acc_mid = success_rate(PROBLEMS, n_samples=4, temperature=1.1, trials=200)
+acc_high1 = success_rate(PROBLEMS, n_samples=1, temperature=2.5, trials=200)
+acc_mid1 = success_rate(PROBLEMS, n_samples=1, temperature=1.1, trials=200)
+print('div_low', div_low, 'div_high', div_high)
+print('acc_low', acc_low, 'acc_mid', acc_mid, 'acc_high1', acc_high1, 'acc_mid1', acc_mid1)
+check('high_more_diverse', div_high &gt; div_low)
+check('mid_beats_low_for_bestofn', acc_mid &gt; acc_low)
+check('mid_beats_high_pass1', acc_mid1 &gt; acc_high1)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('high_more_diverse', div_high &gt; div_low)
+check('mid_beats_low_for_bestofn', acc_mid &gt; acc_low)
+check('mid_beats_high_pass1', acc_mid1 &gt; acc_high1)</code></pre><h4>Checks</h4><ul><li>check('high_more_diverse', div_high &gt; div_low)</li><li>check('mid_beats_low_for_bestofn', acc_mid &gt; acc_low)</li><li>check('mid_beats_high_pass1', acc_mid1 &gt; acc_high1)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> 4 ,  Judge vs verifier</summary><div class="task-body"><h4>4 ,  Judge vs verifier</h4>
+<p>Compare two selection mechanisms.</p>
+<p>Requirements:</p>
+<ul><li><code>judge_select</code> should pick the sample with the highest judge score</li><li><code>compare_selectors</code> should measure final accuracy using both the judge and the exact verifier</li><li>evaluate across many trials on the same problem bank</li></ul>
+<p>This section highlights a key production distinction: an exact verifier is usually much stronger than a plausibility-based judge when exact checking is possible.</p><h4>Starter code</h4><pre><code class="lang-python">def judge_select(samples):
+    # TODO
+    ...
+
+def compare_selectors(problem_bank, n_samples: int, temperature: float, trials: int = 200):
+    # TODO
+    ...
+
+judge_acc, verifier_acc = compare_selectors(PROBLEMS, n_samples=8, temperature=1.1, trials=200)
+print('judge_acc', judge_acc, 'verifier_acc', verifier_acc)
+check('verifier_ge_judge', verifier_acc &gt; judge_acc)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('verifier_ge_judge', verifier_acc &gt; judge_acc)</code></pre><h4>Checks</h4><ul><li>check('verifier_ge_judge', verifier_acc &gt; judge_acc)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 7</span> 5 ,  Adaptive sampling budget</summary><div class="task-body"><h4>5 ,  Adaptive sampling budget</h4>
+<p>Allocate different inference-time compute budgets to easy, medium, and hard problems.</p>
+<p>Requirements:</p>
+<ul><li>implement a policy that uses smaller budgets for easier problems</li><li>compare adaptive allocation against a fixed budget policy</li><li>report both accuracy and average budget used</li></ul>
+<p>This section shows the engineering tradeoff behind reasoning systems: extra compute should be spent where it helps most, not uniformly on every query.</p><h4>Starter code</h4><pre><code class="lang-python">BUDGET_BY_DIFFICULTY = {'easy': 2, 'medium': 4, 'hard': 12}
+
+def allocated_budget(problem: dict, adaptive: bool, fixed_budget: int = 12):
+    # TODO
+    ...
+
+def policy_success_rate(problem_bank, adaptive: bool, temperature: float, trials: int = 200, fixed_budget: int = 12):
+    # TODO
+    ...
+
+acc_adapt, budget_adapt = policy_success_rate(PROBLEMS, adaptive=True, temperature=1.1, trials=200, fixed_budget=12)
+acc_fixed, budget_fixed = policy_success_rate(PROBLEMS, adaptive=False, temperature=1.1, trials=200, fixed_budget=12)
+print('adaptive', acc_adapt, budget_adapt)
+print('fixed', acc_fixed, budget_fixed)
+check('adaptive_uses_less_budget', budget_adapt &lt; budget_fixed)
+check('adaptive_not_too_much_worse', acc_adapt &gt;= acc_fixed - 0.08)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('adaptive_uses_less_budget', budget_adapt &lt; budget_fixed)
+check('adaptive_not_too_much_worse', acc_adapt &gt;= acc_fixed - 0.08)</code></pre><h4>Checks</h4><ul><li>check('adaptive_uses_less_budget', budget_adapt &lt; budget_fixed)</li><li>check('adaptive_not_too_much_worse', acc_adapt &gt;= acc_fixed - 0.08)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$13</code></pre></details></div></details>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w15-d6-inference-time-scaling-verifiers">https://ai.thes30.com/problems/w15-d6-inference-time-scaling-verifiers</a>.</p>
+</section>
+<section class="lab" id="lab-w15-d7-self-improving-agents">
+<h3>Self-Improving Agents <span class="diff diff-expert">Expert</span></h3>
+<p class="lab-meta">Week 15, Day 7 · LLM &amp; Agentic AI · 7 tasks · 8 checks</p>
+
+<p>The closing loop of the category. You run a stochastic planner, execute plans
+and verify outcomes, collect the successful rollouts, distill them into compact
+memory, and evaluate the agent before versus after the memory is installed. The
+final task stages the key contest: improvement from memory versus simply spending
+the same compute on extra sampling. Watch for the gate that makes it safe: only
+verified successes enter memory. Everything unverified stays out, or the agent
+learns its own mistakes.</p>
+<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<div class="callout"><strong>Outcome.</strong> You can simulate a bootstrap loop where verified successful plans become memory that improves future agent behavior.</div>
+<p class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
+<p class="lab-meta">Resources: <a href="self_improving_agents_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/tEaQQtn6E2Q">Video</a></p>
+<h4>Tasks (7)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Self-Improving Agents ,  Student Lab</h3>
+<p>Offline lab: collect verified successful plans, compress them into a simple memory, and compare the agent before and after the update.</p>
+<h4>0 ,  Task families, tools, and templates</h4><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Self-Improving Agents ,  Instructor Lab</h3>
+<p>Offline lab: collect verified successful plans, compress them into a simple memory, and compare the agent before and after the update.</p>
+<h4>0 ,  Task families, tools, and templates</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Stochastic planner</summary><div class="task-body"><h4>0 ,  Stochastic planner</h4><h4>Starter code</h4><pre><code class="lang-python">def propose_template(task: dict, memory: dict, rng: np.random.Generator) -&gt; str:
+    # TODO
+    ...
+
+name = propose_template(TASKS[0], memory={}, rng=np.random.default_rng(0))
+print('template', name)
+check('known_template', name in TEMPLATES[TASKS[0]['signature']])</code></pre><h4>Test code</h4><pre><code class="lang-python">check('known_template', name in TEMPLATES[TASKS[0]['signature']])</code></pre><h4>Checks</h4><ul><li>check('known_template', name in TEMPLATES[TASKS[0]['signature']])</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def propose_template(task: dict, memory: dict, rng: np.random.Generator) -&gt; str:
+    signature = task['signature']
+    if signature in memory:
+        return memory[signature]
+    choices = TEMPLATES[signature]
+    probs = BASE_PROBS[signature]
+    idx = int(rng.choice(len(choices), p=probs))
+    return choices[idx]
+
+name = propose_template(TASKS[0], memory={}, rng=np.random.default_rng(0))
+print('template', name)
+check('known_template', name in TEMPLATES[TASKS[0]['signature']])</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Execute a plan and verify outcome</summary><div class="task-body"><h4>1 ,  Execute a plan and verify outcome</h4><h4>Starter code</h4><pre><code class="lang-python">def resolve_arg(v, last):
+    # TODO
+    ...
+
+def run_template(task: dict, template_name: str):
+    # TODO
+    ...
+
+def verify_answer(task: dict, out: dict) -&gt; bool:
+    # TODO
+    ...
+
+out = run_template(TASKS[0], 'country_lookup')
+print(out)
+check('verify_country', verify_answer(TASKS[0], out))</code></pre><h4>Test code</h4><pre><code class="lang-python">check('verify_country', verify_answer(TASKS[0], out))</code></pre><h4>Checks</h4><ul><li>check('verify_country', verify_answer(TASKS[0], out))</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Collect successful rollouts</summary><div class="task-body"><h4>2 ,  Collect successful rollouts</h4><h4>Starter code</h4><pre><code class="lang-python">def collect_successes(tasks, memory: dict, n_rollouts: int = 20, seed: int = 0):
+    # TODO
+    ...
+
+successes = collect_successes(TASKS, memory={}, n_rollouts=25, seed=0)
+print('n_successes', len(successes), 'sample', successes[:5])
+check('some_successes', len(successes) &gt; 0)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('some_successes', len(successes) &gt; 0)</code></pre><h4>Checks</h4><ul><li>check('some_successes', len(successes) &gt; 0)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def collect_successes(tasks, memory: dict, n_rollouts: int = 20, seed: int = 0):
+    trial_rng = np.random.default_rng(seed)
+    rows = []
+    for task in tasks:
+        for _ in range(n_rollouts):
+            template_name = propose_template(task, memory=memory, rng=trial_rng)
+            out = run_template(task, template_name)
+            if verify_answer(task, out):
+                rows.append({
+                    'task_id': task['id'],
+                    'signature': task['signature'],
+                    'template': template_name,
+                })
+    return rows
+
+successes = collect_successes(TASKS, memory={}, n_rollouts=25, seed=0)
+print('n_successes', len(successes), 'sample', successes[:5])
+check('some_successes', len(successes) &gt; 0)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Distill successful traces into memory</summary><div class="task-body"><h4>3 ,  Distill successful traces into memory</h4><h4>Starter code</h4><pre><code class="lang-python">def update_memory(successes):
+    # TODO
+    ...
+
+learned_memory = update_memory(successes)
+print('learned_memory', learned_memory)
+check('learned_has_country', 'country' in learned_memory)
+check('learned_has_sum', 'sum_then_mul' in learned_memory)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('learned_has_country', 'country' in learned_memory)
+check('learned_has_sum', 'sum_then_mul' in learned_memory)</code></pre><h4>Checks</h4><ul><li>check('learned_has_country', 'country' in learned_memory)</li><li>check('learned_has_sum', 'sum_then_mul' in learned_memory)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def update_memory(successes):
+    by_signature = defaultdict(list)
+    for row in successes:
+        by_signature[row['signature']].append(row['template'])
+    learned = {}
+    for signature, vals in by_signature.items():
+        learned[signature] = Counter(vals).most_common(1)[0][0]
+    return learned
+
+learned_memory = update_memory(successes)
+print('learned_memory', learned_memory)
+check('learned_has_country', 'country' in learned_memory)
+check('learned_has_sum', 'sum_then_mul' in learned_memory)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> 4 ,  Evaluate before vs after self-improvement</summary><div class="task-body"><h4>4 ,  Evaluate before vs after self-improvement</h4><h4>Starter code</h4><pre><code class="lang-python">def evaluate_agent(tasks, memory: dict, tries_per_task: int = 1, seed: int = 0):
+    # TODO
+    ...
+
+before = np.mean([evaluate_agent(TASKS, memory={}, tries_per_task=1, seed=s)['success_rate'] for s in range(200)])
+after = np.mean([evaluate_agent(TASKS, memory=learned_memory, tries_per_task=1, seed=s)['success_rate'] for s in range(200)])
+print('before', before, 'after', after)
+check('improves', after &gt; before + 0.4)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('improves', after &gt; before + 0.4)</code></pre><h4>Checks</h4><ul><li>check('improves', after &gt; before + 0.4)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def evaluate_agent(tasks, memory: dict, tries_per_task: int = 1, seed: int = 0):
+    trial_rng = np.random.default_rng(seed)
+    oks = 0
+    for task in tasks:
+        solved = False
+        for _ in range(tries_per_task):
+            template_name = propose_template(task, memory=memory, rng=trial_rng)
+            out = run_template(task, template_name)
+            if verify_answer(task, out):
+                solved = True
+                break
+        oks += int(solved)
+    return {'success_rate': oks / len(tasks)}
+
+before = np.mean([evaluate_agent(TASKS, memory={}, tries_per_task=1, seed=s)['success_rate'] for s in range(200)])
+after = np.mean([evaluate_agent(TASKS, memory=learned_memory, tries_per_task=1, seed=s)['success_rate'] for s in range(200)])
+print('before', before, 'after', after)
+check('improves', after &gt; before + 0.4)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 7</span> 5 ,  Improvement vs extra sampling</summary><div class="task-body"><h4>5 ,  Improvement vs extra sampling</h4><h4>Starter code</h4><pre><code class="lang-python">before3 = np.mean([evaluate_agent(TASKS, memory={}, tries_per_task=3, seed=s)['success_rate'] for s in range(200)])
+after1 = np.mean([evaluate_agent(TASKS, memory=learned_memory, tries_per_task=1, seed=s)['success_rate'] for s in range(200)])
+print('before3', before3, 'after1', after1)
+check('after1_ge_before3', after1 &gt;= before3)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('after1_ge_before3', after1 &gt;= before3)</code></pre><h4>Checks</h4><ul><li>check('after1_ge_before3', after1 &gt;= before3)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">before3 = np.mean([evaluate_agent(TASKS, memory={}, tries_per_task=3, seed=s)['success_rate'] for s in range(200)])
+after1 = np.mean([evaluate_agent(TASKS, memory=learned_memory, tries_per_task=1, seed=s)['success_rate'] for s in range(200)])
+print('before3', before3, 'after1', after1)
+check('after1_ge_before3', after1 &gt;= before3)</code></pre></details></div></details>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w15-d7-self-improving-agents">https://ai.thes30.com/problems/w15-d7-self-improving-agents</a>.</p>
+</section>
+<div class="takeaway"><h4>Key takeaways</h4><ul><li>The intro lab installs the loop, the guardrails, and the operational-metrics habit; everything else builds on it.</li><li>The multi-agent lab teaches decomposition by verifiable contracts, not by adding agents for their own sake.</li><li>The inference-time scaling lab teaches the ceiling lesson: verifier quality dominates sample count.</li><li>The self-improvement lab teaches the gate lesson: only verified rollouts become memory.</li></ul></div><div class="ob-board"><h4>On the board</h4><ul><li>Sketch the executor loop with its guardrail gates and stop conditions from memory.</li><li>Your critic keeps rejecting good worker outputs. Is the fix a better worker or a better critic? (Measure first: log which rejections were wrong.)</li></ul></div><p class="lab-meta">Apply this chapter in: <a href="#lab-w15-d3-agents-intro">Agents Intro</a>; <a href="#lab-w15-d7-self-improving-agents">Self-Improving Agents</a>.</p>
+<h2>Interview clearance</h2>
+<p>Agent interviews grade the harness, not the model: guardrails, verification,
+evaluation, and the tradeoffs between them. The questions below rehearse the
+reported shapes.</p>
+<div class="ob-board"><h4>On the board: the agent warm-ups</h4><ul><li>Design a tool-calling agent loop for a coding assistant. Name the guardrails before the tools.</li><li>When is best-of-N worth the cost, and what sets its ceiling? (Cheap reliable verifier; the verifier sets the ceiling.)</li><li>Why three agents (planner, worker, critic) instead of one good prompt? (Verifiable role contracts.)</li><li>What may enter the agent memory store, and what must never enter? (Only verified successes; never unverified traces.)</li></ul></div><div class="pq"><p class="pq-q"><strong>Q1.</strong> Your production agent calls tools that can write to customer systems. Which guardrail matters most?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> Irreversible writes are the catastrophic failure mode, so human confirmation on writes dominates every other guardrail in production.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> A larger iteration budget: this makes runaway loops more expensive, not safer.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> A faster policy model: latency is nice but irrelevant to the safety question.</li><li><span class="pq-opt-right"><strong>C, right:</strong></span> Human confirmation for irreversible writes, plus idempotency keys and read-versus-write tool classification, is the production answer.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> More tools: a larger tool surface increases the wrong-tool risk; the reported guidance is fewer, more capable tools.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q2.</strong> You have a fixed inference budget per problem. Do you spend it on best-of-16 with a noisy judge, or on fewer samples with an exact verifier?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> Prefer fewer samples with the exact verifier. The coverage math 1 - (1-p)^N assumes the selector picks the true best; a noisy judge breaks that assumption and wastes samples on confidently wrong picks. The lab comparison shows the judge curve climbing less and ceilinging lower. Spend the budget where the selector is trustworthy: exact verification first, and only scale samples while the selector keeps up. If no exact verifier exists, say so and price the judge error explicitly.</p><p><strong>Trap.</strong> Answering "more samples" without asking about the selector. Sample count is the wrong knob when the judge is the bottleneck.</p></div></div><div class="pq"><p class="pq-q"><strong>Q3.</strong> Your agent solved 40 tasks and you want it to improve on the next 40 similar tasks. What do you do?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Distilling verified successes into memory is the self-improvement loop, but the verifier gate is what keeps it safe.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Feed all 40 raw transcripts into the prompt: unverified traces teach the agent its own mistakes, and raw transcripts waste context.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> Keep only verifier-accepted rollouts, distill them into compact reusable memory, and evaluate before versus after against extra sampling.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Fine-tune the policy on all 40 outcomes: without the verifier gate you bake in the failures too.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> Add a fourth agent: more roles add coordination overhead without addressing the learning question.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q4.</strong> A customer says your RAG-based assistant hallucinates. You have 48 hours. What do you do first?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> Diagnose before tuning. Collect 10 to 20 concrete failing examples with expected answers, then trace each to one of four diseases: retrieval miss (search problem), retrieval hit with wrong synthesis (grounding problem), question outside the corpus (missing abstention path), or expectation mismatch (data problem). Build a tiny harness scoring retrieval recall separately from answer faithfulness, quantify the split, and only then pick the fix: re-ranking, citation-required prompting with an abstention instruction, or a corpus gap to fill. Report the split to the customer; most "hallucination" complaints are retrieval problems wearing a generation costume.</p><p><strong>Trap.</strong> Tuning the prompt or the model first. Without the diagnosis you cannot know whether the disease is retrieval, grounding, abstention, or data.</p></div></div><div class="takeaway"><h4>Key takeaways</h4><ul><li>Name guardrails before tools in every agent design answer; writes need human confirmation.</li><li>Verifier quality sets the inference-time scaling ceiling; price the selector before the sample count.</li><li>Only verified rollouts enter memory; evaluate memory against extra sampling.</li><li>Diagnose agent failures into retrieval, grounding, abstention, or data before tuning anything.</li></ul></div><div class="ob-board"><h4>On the board: final checks</h4><ul><li>State the 1 - (1-p)^N coverage math and when it breaks. (Breaks when the selector is noisy.)</li><li>What are the three roles in the multi-agent lab, and what can each one not do? (Planner cannot act; worker cannot replan; critic cannot act.)</li></ul></div><p class="lab-meta">Apply this chapter in: <a href="#lab-w15-d3-agents-intro">Agents Intro</a>; <a href="#lab-w15-d6-inference-time-scaling-verifiers">Inference-Time Scaling &amp; Verifiers</a>.</p>
+<nav class="ds-volume-nav" aria-label="Volume navigation"><a class="ds-prev" href="26-s30-system-design.html"><span>&uarr; Previous volume</span>Volume 26: System Design</a><a class="ds-next" href="28-s30-interview-clearance.html"><span>Next volume &darr;</span>Volume 28: Interview Clearance</a></nav>
+<div class="provenance"><strong>Last verified: October 2026.</strong> Live-verified: S30 AI Lab site scrape (labs, tasks, solutions). <span class="uv">UNVERIFIED:</span> none.</div>
+</main>
+<script>
+/* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
+   Builds: sidebar nav from h2/h3, scroll-spy, nav search filter, localStorage completion
+   checkmarks, reading progress bar, chapter prev/next footer, copy buttons, practice-question
+   toggles, mobile drawer, keyboard nav. No external dependencies. */
+(function(){
+"use strict";
+var content=document.getElementById('dsContent')||document.querySelector('main')||document.body;
+var sidebar=document.getElementById('dsSidebar');
+if(!sidebar||!content)return;
+
+/* ---------- collect sections: h2 = chapter groups, h3 = items ---------- */
+function slugify(t){return t.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'s';}
+var used={};
+function uniqueId(base){var id=base,n=2;while(used[id]||document.getElementById(id)){id=base+'-'+(n++);}used[id]=1;return id;}
+var chapters=[]; // {h2, id, title, items:[{id,title,el}]}
+var cur=null;
+Array.prototype.forEach.call(content.querySelectorAll('h2,h3'),function(h){
+  if(!h.id){h.id=uniqueId(slugify(h.textContent));}else{used[h.id]=1;}
+  h.setAttribute('tabindex','-1');
+  var t=h.textContent.trim();
+  if(h.tagName==='H2'){cur={id:h.id,title:t,items:[]};chapters.push(cur);}
+  else if(cur){cur.items.push({id:h.id,title:t});}
+  else{cur={id:'intro',title:'Introduction',items:[{id:h.id,title:t}]};chapters.push(cur);}
+});
+
+/* ---------- build sidebar nav ---------- */
+var nav=document.getElementById('dsNav');
+var pageKey='rec-cur-'+(document.title||location.pathname).replace(/[^a-z0-9]+/gi,'-');
+function isDone(id){try{return localStorage.getItem(pageKey+'#'+id)==='1';}catch(e){return false;}}
+function setDone(id,v){try{if(v)localStorage.setItem(pageKey+'#'+id,'1');else localStorage.removeItem(pageKey+'#'+id);}catch(e){}}
+function checkItem(id){var c=document.querySelector('.ds-check[data-sec="'+id+'"]');if(c)c.checked=isDone(id);}
+function updateCount(){
+  var boxes=nav.querySelectorAll('.ds-check'),done=0;
+  boxes.forEach(function(b){if(b.checked)done++;});
+  var el=document.getElementById('dsCompleteCount');
+  if(el)el.textContent=done+' of '+boxes.length+' sections complete';
+}
+function itemRow(sec){
+  var li=document.createElement('li');
+  var a=document.createElement('a');a.href='#'+sec.id;
+  var cb=document.createElement('input');
+  cb.type='checkbox';cb.className='ds-check';cb.checked=isDone(sec.id);
+  cb.setAttribute('data-sec',sec.id);cb.setAttribute('aria-label','Mark complete: '+sec.title);
+  cb.addEventListener('change',function(ev){ev.stopPropagation();setDone(sec.id,cb.checked);updateCount();});
+  cb.addEventListener('click',function(ev){ev.stopPropagation();});
+  var sp=document.createElement('span');sp.textContent=sec.title;
+  a.appendChild(cb);a.appendChild(sp);
+  a.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+  li.appendChild(a);return li;
+}
+chapters.forEach(function(ch,ci){
+  var g=document.createElement('div');g.className='ds-nav-group';g.dataset.title=ch.title.toLowerCase();
+  var btn=document.createElement('button');
+  btn.innerHTML='<span></span><span class="ds-caret">▾</span>';
+  btn.firstChild.textContent=ch.title;
+  btn.setAttribute('aria-expanded','true');
+  var ul=document.createElement('ul');ul.className='ds-nav-items';
+  var headLi=itemRow({id:ch.id,title:ch.title});ul.appendChild(headLi);
+  ch.items.forEach(function(it){ul.appendChild(itemRow(it));});
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!open));
+    ul.style.display=open?'none':'';
+    btn.querySelector('.ds-caret').textContent=open?'▸':'▾';
+  });
+  g.appendChild(btn);g.appendChild(ul);nav.appendChild(g);
+});
+updateCount();
+
+/* ---------- nav search filter ---------- */
+var search=document.getElementById('dsNavSearch');
+if(search){search.addEventListener('input',function(){
+  var q=search.value.trim().toLowerCase(),any=false;
+  nav.querySelectorAll('.ds-nav-group').forEach(function(g){
+    var show=g.dataset.title.indexOf(q)>-1;
+    g.querySelectorAll('.ds-nav-items li').forEach(function(li){
+      var hit=li.textContent.toLowerCase().indexOf(q)>-1;
+      li.style.display=(!q||hit||show)?'':'none';if(!q||hit)show=true;
+    });
+    g.style.display=show?'':'none';if(show)any=true;
+  });
+  var empty=nav.querySelector('.ds-nav-empty');
+  if(!any&&!empty){var d=document.createElement('div');d.className='ds-nav-empty';d.textContent='No sections match.';nav.appendChild(d);}
+  if(any&&empty)empty.remove();
+});}
+
+/* ---------- scroll-spy ---------- */
+var links=Array.prototype.slice.call(nav.querySelectorAll('.ds-nav-items a'));
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.toggle('ds-active',a.getAttribute('href')==='#'+e.target.id);});
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+chapters.forEach(function(ch){
+  var el=document.getElementById(ch.id);if(el)spy.observe(el);
+  ch.items.forEach(function(it){var el2=document.getElementById(it.id);if(el2)spy.observe(el2);});
+});
+
+/* ---------- progress bar ---------- */
+var prog=document.getElementById('dsProgress');
+function onScroll(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- mobile drawer ---------- */
+var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('dsScrim');
+if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
+if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+
+/* ---------- keyboard nav: [ ] sections, / search ---------- */
+document.addEventListener('keydown',function(e){
+  if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  var ids=[];chapters.forEach(function(ch){ids.push(ch.id);ch.items.forEach(function(it){ids.push(it.id);});});
+  function jump(dir){
+    var y=window.scrollY+10,cur=0;
+    ids.forEach(function(id,i){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+y<=y+1)cur=i;});
+    var n=Math.min(ids.length-1,Math.max(0,cur+dir)),el=document.getElementById(ids[n]);
+    if(el){el.scrollIntoView();el.focus({preventScroll:true});}
+  }
+  if(e.key==='[')jump(-1);else if(e.key===']')jump(1);
+  else if(e.key==='/'&&search){e.preventDefault();search.focus();}
+});
+var hint=document.createElement('div');hint.className='ds-kbd-hint';
+hint.textContent='Keyboard: [ and ] move between sections, / focuses section search.';
+var foot=document.querySelector('.ds-side-foot');if(foot)foot.appendChild(hint);
+
+/* ---------- chapter prev/next footers (one after each h2 section) ---------- */
+if(chapters.length>1){
+  var mk=function(ch,cls,label){var a=document.createElement('a');a.href='#'+ch.id;a.className=cls;
+    a.innerHTML='<span style="display:block;font-size:.78rem;color:var(--muted)">'+label+'</span>';a.appendChild(document.createTextNode(ch.title));return a;};
+  chapters.forEach(function(ch,i){
+    var bar=document.createElement('nav');bar.className='ds-chapter-nav';bar.setAttribute('aria-label','Chapter navigation');
+    var left=document.createElement('span'),right=document.createElement('span');
+    if(chapters[i-1])left.appendChild(mk(chapters[i-1],'ds-prev','↑ Previous'));
+    else left.innerHTML='<span style="color:var(--muted);font-size:.85rem">Start of volume</span>';
+    if(chapters[i+1])right.appendChild(mk(chapters[i+1],'ds-next','Next ↓'));
+    else right.innerHTML='<span style="color:var(--muted);font-size:.85rem">End of volume</span>';
+    bar.appendChild(left);bar.appendChild(right);
+    /* insert the bar immediately before the next chapter's heading, using that
+       heading's own parent so <section> wrappers (or any nesting) cannot break it */
+    var nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
+    if(nextH){nextH.parentNode.insertBefore(bar,nextH);}
+    else{var lastH=document.getElementById(ch.id);lastH.parentNode.appendChild(bar);}
+  });
+}
+
+/* ---------- copy buttons on code blocks ---------- */
+document.querySelectorAll('pre').forEach(function(pre){
+  if(pre.querySelector('.ds-copy-btn'))return;
+  var btn=document.createElement('button');btn.className='ds-copy-btn';btn.textContent='Copy';
+  btn.setAttribute('aria-label','Copy code to clipboard');
+  btn.addEventListener('click',function(){
+    var txt=pre.innerText;
+    function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1400);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}
+  });
+  pre.appendChild(btn);
+});
+
+/* ---------- practice-question widgets ---------- */
+document.querySelectorAll('.pq').forEach(function(pq){
+  var btn=pq.querySelector('.pq-reveal'),ans=pq.querySelector('.pq-a');
+  if(!btn||!ans)return;
+  btn.addEventListener('click',function(){
+    var open=ans.hasAttribute('hidden');
+    if(open){ans.removeAttribute('hidden');btn.setAttribute('aria-expanded','true');btn.textContent='Hide answer';}
+    else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
+  });
+});
+})();
+
+</script>
+<script>
+
+/* ==== Experience layer behavior ,  additive ====
+ * Calm, GPU-friendly page motion for study volumes. No-JS safe: every hidden
+ * state in experience.css is gated on `html.xp-js`, which only this script
+ * adds ,  without it the page is fully readable. Respects
+ * prefers-reduced-motion (exits early; CSS keeps everything static).
+ *
+ * Three jobs:
+ *  1. Hero parallax ,  detects the volume hero (.banner/.hero, else wraps the
+ *     h1 + lede block in .xp-hero) and drifts it gently as the reader
+ *     scrolls on. Transform/opacity only, rAF-throttled, passive listener.
+ *  2. Scroll reveals ,  one IntersectionObserver fades+rises figures, key
+ *     callouts and knowledge checks exactly once. Elements already in view
+ *     on load appear immediately (no load flash).
+ *  3. Nothing else: progress bar, scroll-spy, sidebar, quiz toggles are
+ *     owned by ds.js and are left untouched.
+ *
+ * (In the assembly snippet the closing element tags are written literally;
+ * inside this file they are escaped as <\/style> / <\/script> so the file
+ * pastes verbatim without early-terminating its own element.)
+ */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+
+  var reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) { /* matchMedia unavailable: assume motion is fine */ }
+  if (reduceMotion) { return; } /* leave no footprint: no xp-js, CSS stays static */
+
+  /* From here on the reader is fine with calm motion: mark the document so
+     the CSS reveal/parallax states may apply. Without this class (no-JS or
+     reduced-motion) every hidden state stays off and the page is fully
+     readable. */
+  root.classList.add('xp-js');
+
+  /* ---------------- 1. Hero detection + gentle parallax ---------------- */
+  var hero = document.querySelector('.banner, .hero');
+  if (!hero) {
+    /* No banner hero: wrap the volume title (h1) plus its lede paragraphs
+       in a layout-neutral div. Never touches headings ds.js needs. */
+    var main = document.querySelector('main');
+    var h1 = main ? main.querySelector('h1') : null;
+    if (h1 && h1.parentNode) {
+      var wrap = document.createElement('div');
+      wrap.className = 'xp-hero';
+      h1.parentNode.insertBefore(wrap, h1);
+      var node = h1, moved = 0, paras = 0;
+      while (node && moved < 8) {
+        var next = node.nextSibling;
+        if (node.nodeType === 3) { node = next; continue; } /* skip whitespace text nodes */
+        var isPara = node.nodeType === 1 && node.tagName === 'P';
+        if (node !== h1 && !isPara) { break; }
+        wrap.appendChild(node);
+        moved += 1;
+        if (isPara) {
+          paras += 1;
+          if (paras >= 3) { break; }
+        }
+        node = next;
+      }
+      hero = wrap;
+    }
+  }
+
+  var heroH = 0, ticking = false, pxOn = false;
+  function measure() { heroH = hero ? hero.offsetHeight : 0; }
+  function render() {
+    ticking = false;
+    if (!hero || !heroH) { return; }
+    var y = window.pageYOffset || root.scrollTop || 0;
+    if (y <= 0) {
+      if (pxOn) { hero.style.transform = ''; hero.style.opacity = ''; pxOn = false; }
+      return;
+    }
+    var range = heroH * 1.4;
+    if (y < range) {
+      /* Drift up slightly slower than the scroll and fade a whisper , 
+         the title recedes calmly instead of snapping away. */
+      var k = Math.min(y / range, 1);
+      hero.style.transform = 'translate3d(0,' + (-y * 0.06).toFixed(1) + 'px,0)';
+      hero.style.opacity = (1 - k * 0.22).toFixed(3);
+      pxOn = true;
+    } else if (pxOn) {
+      hero.style.transform = '';
+      hero.style.opacity = '';
+      pxOn = false;
+    }
+  }
+  function requestRender() {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(render); }
+  }
+  if (hero) {
+    measure();
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', function () { measure(); requestRender(); });
+  }
+
+  /* ---------------- 2. Scroll-triggered reveals ---------------- */
+  var SELECTOR = [
+    'figure',
+    '.takeaway', '.exam-ask', '.trapbox', '.trap', '.board',
+    '.diagram-walkthrough', '.walkthrough', '.warn', '.callout',
+    '.ob-board', '.nums', '.watch-card', '.lab', '.pq', '.go-deeper-note'
+  ].join(', ');
+
+  var targets = [];
+  Array.prototype.forEach.call(document.querySelectorAll(SELECTOR), function (el) {
+    if (hero && hero.contains(el)) { return; } /* hero has its own motion */
+    targets.push(el);
+  });
+
+  function showAll(list) {
+    list.forEach(function (el) { el.classList.add('xp-reveal', 'xp-in'); });
+  }
+
+  if (!targets.length) { return; }
+
+  if (!('IntersectionObserver' in window)) { showAll(targets); return; }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.classList.add('xp-in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+
+  var vh = window.innerHeight || 800;
+  targets.forEach(function (el) {
+    el.classList.add('xp-reveal');
+    var r = el.getBoundingClientRect();
+    if (r.top < vh && r.bottom > 0) {
+      el.classList.add('xp-in'); /* in view on load: appear, no animation */
+    } else {
+      io.observe(el);
+    }
+  });
+})();
+
+
+</script>
+<script>
+
+/* S30 layer: tabbed lab explorer. Additive, no external deps. */
+(function(){
+"use strict";
+var tabs=document.getElementById('labTabs');
+if(!tabs)return;
+var btns=Array.prototype.slice.call(tabs.querySelectorAll('button[data-target]'));
+btns.forEach(function(b){
+  b.addEventListener('click',function(){
+    btns.forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    var el=document.getElementById(b.getAttribute('data-target'));
+    if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+})();
+
+</script>
+</body>
+</html>
