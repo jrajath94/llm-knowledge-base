@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluation and Debugging: Knowing What Works</title>
+<style>
+
+/* Research-Engineer Curriculum: shared design system (dark, Hallmark discipline)
+   Source of truth. Writers INLINE this file into each volume's <head> inside <style>.
+   Font files live in fonts/ relative to the site root (each HTML is at the root,
+   so the inlined url(fonts/...) resolves correctly from file:// with no network).
+   Tokens (exact, do not improvise): pitch-black dark mode. */
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{
+  --bg:#000000; --surface:#0d0d0d; --border:#262626;
+  --text:#ececec; --muted:#a8a8a8; --faint:#8a8a8a;
+  --accent:#f0b429; --accent-ink:#000000; --link:#6cb2ff; --code-bg:#111111;
+  --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
+p{text-align:justify;hyphens:auto;margin:.85rem 0}
+h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
+h1{font-size:2rem;font-weight:800}
+h2{font-size:1.5rem;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:1.05rem;font-weight:700}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:.2rem}
+ul,ol{margin:.7rem 0;padding-left:1.6rem}
+li{margin:.3rem 0}
+li::marker{color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;display:block;overflow-x:auto}
+thead,tbody,tr{display:table;width:100%;table-layout:fixed}
+th,td{border:1px solid var(--border);padding:.6rem .75rem;text-align:left;vertical-align:top}
+th{background:var(--surface);font-weight:700}
+code{font-family:var(--font-code);background:var(--code-bg);border:1px solid var(--border);padding:.08rem .35rem;border-radius:.3rem;font-size:.88em}
+p code,li code,td code,th code{overflow-wrap:break-word;word-break:break-word}
+pre{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:.6rem;padding:1rem 1.1rem;overflow-x:auto;font-size:.88rem;line-height:1.6;margin:1.1rem 0}
+pre code{background:none;border:none;padding:0;font-size:1em}
+pre.ascii{background:#0a0a0a;color:#d8d8d8}
+figure{margin:1.5rem 0;border:1px solid var(--border);border-radius:.7rem;padding:1rem;background:var(--surface)}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:.3rem}
+.ds-content img{max-width:100%;height:auto} /* bare <img> in <p> must never overflow */
+figcaption{font-size:.9rem;color:var(--muted);margin-top:.7rem;text-align:left}
+details{border:1px solid var(--border);border-radius:.6rem;padding:.75rem 1.05rem;margin:.9rem 0;background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--text)}
+dfn{font-style:normal;font-weight:600;border-bottom:2px dotted var(--accent);cursor:help}
+blockquote{border-left:3px solid var(--accent);margin:1.1rem 0;padding:.6rem 1rem;background:var(--surface);border-radius:0 .5rem .5rem 0}
+blockquote p{margin:.4rem 0}
+
+/* ---- layout: sidebar + content ---- */
+.ds-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60}
+.ds-menu-btn{display:none;position:fixed;top:.7rem;left:.7rem;z-index:55;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:.5rem;font-family:var(--font-ui);font-size:1.2rem;padding:.35rem .7rem;cursor:pointer}
+.ds-sidebar{position:fixed;top:0;left:0;bottom:0;width:19rem;background:var(--surface);border-right:1px solid var(--border);z-index:50;display:flex;flex-direction:column}
+.ds-side-head{padding:1.1rem 1.1rem .8rem;border-bottom:1px solid var(--border)}
+.ds-side-eyebrow{margin:0;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ds-side-title{margin:.3rem 0 .7rem;font-family:var(--font-ui);font-size:1.02rem;font-weight:700;line-height:1.35}
+.ds-side-search{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:400 .88rem/1.4 var(--font-ui);padding:.5rem .7rem}
+.ds-side-search::placeholder{color:var(--muted)}
+.ds-nav{flex:1;overflow-y:auto;padding:.7rem .6rem}
+.ds-nav ul{list-style:none;margin:0;padding:0}
+.ds-nav-group{margin-bottom:.35rem}
+.ds-nav-group>button{width:100%;text-align:left;background:none;border:none;color:var(--text);font:700 .86rem/1.4 var(--font-ui);padding:.45rem .55rem;border-radius:.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+.ds-nav-group>button:hover{background:#161616}
+.ds-nav-group>button .ds-caret{color:var(--muted);font-size:.75rem}
+.ds-nav-items{list-style:none;margin:0;padding:0 0 .3rem .4rem}
+.ds-nav-items a{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:var(--font-ui);font-size:.85rem;line-height:1.45;padding:.32rem .55rem;border-radius:.4rem;border-left:2px solid transparent}
+.ds-nav-items a:hover{color:var(--text);background:#161616}
+.ds-nav-items a.ds-active{color:var(--text);border-left-color:var(--accent);background:#161616}
+.ds-check{flex:none;width:.95rem;height:.95rem;accent-color:var(--accent);cursor:pointer}
+.ds-nav-empty{color:var(--muted);font-size:.85rem;padding:.5rem}
+.ds-side-foot{border-top:1px solid var(--border);padding:.7rem 1.1rem;font-family:var(--font-ui);font-size:.8rem;color:var(--muted)}
+.ds-scrim{display:none}
+.ds-content{margin-left:19rem;padding:0 2rem;max-width:calc(72ch + 4rem)}
+.ds-content>*{max-width:72ch}
+.ds-content table,.ds-content figure,.ds-content pre{max-width:72ch}
+.ds-chapter-nav{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--border);margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-chapter-nav a{text-decoration:none;font-weight:600}
+.ds-chapter-nav .ds-prev{text-align:left}
+.ds-chapter-nav .ds-next{text-align:right}
+.ds-kbd-hint{font-family:var(--font-ui);font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+/* ---- learning components ---- */
+.walkthrough{background:#101010;border:1px solid var(--border);border-radius:.55rem;padding:.85rem 1.05rem;margin-top:.9rem;font-size:.93rem}
+.walkthrough strong{color:var(--text)}
+.walkthrough ol{margin:.45rem 0;padding-left:1.35rem}
+.walkthrough li{margin:.32rem 0}
+.walkthrough p{text-align:left}
+.ob-board{background:#0e0c06;border:1px solid #4a3a12;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.ob-board h4{margin:.1rem 0 .5rem;font-size:1rem;color:var(--accent)}
+.ob-board ul{margin:.4rem 0;padding-left:1.3rem}
+.takeaway{background:#0b0f0b;border:1px solid #1f3a24;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.takeaway h4{margin:.1rem 0 .5rem;font-size:1rem;color:#7fd08a}
+.callout{border-left:4px solid var(--link);background:var(--surface);padding:.85rem 1.1rem;margin:1.15rem 0;border-radius:0 .55rem .55rem 0}
+.callout.warn{border-left-color:var(--accent)}
+.callout p{text-align:left;margin:.45rem 0}
+.provenance{border:1px dashed var(--border);border-radius:.6rem;padding:.8rem 1.05rem;margin:1.2rem 0;font-size:.88rem;color:var(--muted);background:#0a0a0a}
+.provenance strong{color:var(--text)}
+.provenance .uv{color:var(--accent);font-weight:700}
+.pq{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--surface)}
+.pq-q{margin:.1rem 0 .7rem;text-align:left}
+.pq-reveal{background:var(--accent);border:none;color:#000;font:700 .88rem/1 var(--font-ui);padding:.55rem 1rem;border-radius:.45rem;cursor:pointer}
+.pq-reveal:hover{filter:brightness(1.08)}
+.pq-a{margin-top:.9rem;border-top:1px solid var(--border);padding-top:.8rem}
+.pq-a ul{margin:.5rem 0}
+.pq-opt-right{color:#7fd08a}
+.pq-opt-wrong{color:#e08080}
+.ds-copy-btn{position:absolute;top:.5rem;right:.5rem;background:#1c1c1c;border:1px solid var(--border);color:var(--muted);font:600 .75rem/1 var(--font-ui);padding:.4rem .65rem;border-radius:.4rem;cursor:pointer}
+.ds-copy-btn:hover{color:var(--text);border-color:var(--accent)}
+.lab{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.2rem 0;background:#0b0b0b}
+.lab h4{margin:.1rem 0 .5rem;color:var(--accent)}
+
+/* ---- responsive: sidebar becomes drawer ---- */
+@media(max-width:56rem){
+  .ds-sidebar{transform:translateX(-105%);transition:transform .25s ease;width:17.5rem}
+  body.ds-nav-open .ds-sidebar{transform:none;z-index:56} /* above the menu button so it never overlaps the eyebrow */
+  .ds-menu-btn{display:block}
+  .ds-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:45}
+  body.ds-nav-open .ds-scrim{display:block}
+  .ds-content{margin-left:0;padding:0 1.1rem}
+}
+@media(min-width:56.01rem){.ds-scrim{display:none!important}}
+
+
+/* Hallmark · pre-emit critique: P4 H4 E5 S5 R5 V5
+   Hallmark · macrostructure: newspaper-masthead chrome (N6 nav + Ft1 footer)
+   nav: N6 (knobs: issue-line=above, wordmark=left 2xl, rule=double) ·
+   footer: Ft1 (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+   slop: pass (42-45) · contrast: pass (40-41) · honest: pass (46) · chrome: pass (47) ·
+   tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50-57) */
+/* Hallmark · genre: editorial · verb: redesign · scope: chrome-only
+ * nav: N6 Newspaper masthead (knobs: issue-line=above, wordmark=left 2xl, rule=double)
+ * footer: Ft1 Mast-headed (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+ * Tokens preserved: --font-body/--font-ui (Charis SIL), full colour system.
+ * 4pt spacing rhythm; hairline dividers; hand-drawn SVG chevrons; no gradients. */
+
+/* ---- site header: N6 newspaper masthead ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);margin:0 0 2rem;max-width:72ch}
+.mast-line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:0;padding:.75rem 0 .5rem;font:600 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mast-line-right{color:var(--faint);white-space:nowrap}
+.mast-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:.75rem}
+.mast-name{font:800 1.5rem/1.15 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.mast-name:hover{color:var(--accent)}
+.site-prevnext{display:flex;gap:1.5rem;flex:none}
+.site-prevnext-group{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.site-prevnext-next{align-items:flex-end;text-align:right}
+.site-prevnext-kicker{font:600 .68rem/1.3 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.site-prevnext-link{display:inline-flex;align-items:center;gap:.4rem;font:600 .85rem/1.4 var(--font-ui);color:var(--text);text-decoration:none;max-width:15rem;min-height:1.75rem}
+.site-prevnext-link .chev{width:.8rem;height:.8rem;flex:none;color:var(--accent)}
+.site-prevnext-link:hover{color:var(--accent)}
+.site-prevnext-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-prevnext-empty{font:400 .85rem/1.75 var(--font-ui);color:var(--faint)}
+.mast-sub{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.25rem 0 .75rem}
+.breadcrumbs{font:400 .78rem/1.5 var(--font-ui);color:var(--muted);margin:0;min-width:0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.breadcrumbs .bc-sep{margin:0 .4rem;color:var(--faint)}
+.breadcrumbs .bc-current{color:var(--text)}
+.site-nav-toggle{display:inline-flex;align-items:center;gap:.5rem;flex:none;white-space:nowrap;background:none;border:1px solid var(--border);border-radius:.5rem;color:var(--text);font:600 .82rem/1.4 var(--font-ui);padding:.55rem .9rem;cursor:pointer;min-height:2.5rem}
+.site-nav-toggle:active,.site-nav-close:active,.watch-speed:active{transform:translateY(1px)}
+.site-nav-toggle .chev{width:.75rem;height:.75rem;color:var(--accent);transition:transform .25s var(--ease-out)}
+.site-nav-toggle:hover{border-color:var(--accent)}
+.site-nav-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.mast-rule-double{border:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:4px;margin:0}
+
+/* collapsible volume panel (desktop): smooth 0fr/1fr reveal */
+.site-nav-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease-out)}
+.site-nav-panel.is-open{grid-template-rows:1fr}
+.site-nav-panel-inner{overflow:hidden;min-height:0}
+.site-nav-drawer-head{display:none}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:1.25rem;max-height:70vh;overflow-y:auto;padding:1.25rem 0}
+.site-nav-groups h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:0}
+.site-nav-groups a{display:flex;gap:.6rem;align-items:baseline;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0;border-radius:.25rem}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups .site-nav-num{font:600 .72rem/1.6 var(--font-ui);color:var(--faint);min-width:1.75rem;flex:none}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:600}
+.site-nav-groups a.site-nav-current .site-nav-num{color:var(--accent)}
+.site-nav-scrim{display:none}
+
+/* ---- site footer: Ft1 mast-headed + grouped index ---- */
+.site-footer{margin:3.5rem 0 0;padding:0 0 3rem;max-width:72ch}
+.foot-mast{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.75rem 0 1.5rem;margin-bottom:2rem}
+.foot-name{font:800 1.25rem/1.2 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.foot-name:hover{color:var(--accent)}
+.foot-tag{font:400 .88rem/1.6 var(--font-ui);color:var(--muted);max-width:52ch;margin:.6rem 0 0;text-align:left}
+.foot-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.5rem;margin-bottom:2rem}
+.foot-group h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.foot-group ul{list-style:none;margin:0;padding:0}
+.foot-group li{margin:0}
+.foot-group a{display:block;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0}
+.foot-group a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.foot-group a.foot-current{color:var(--accent);font-weight:600}
+.foot-colophon{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;margin:0;padding-top:1.25rem;border-top:1px solid var(--border);font:400 .78rem/1.6 var(--font-ui);color:var(--faint);text-align:left}
+.foot-colophon .foot-sep{color:var(--faint)}
+
+/* ---- mobile: drawer + compact chrome (<=40rem) ---- */
+@media(max-width:40rem){
+  .mast-line-right{display:none}
+  .mast-row{flex-wrap:wrap;row-gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between;gap:.75rem}
+  .site-prevnext-link{max-width:44vw}
+  .site-prevnext-title{display:none}
+  .mast-sub{flex-wrap:wrap}
+  .site-nav-toggle{width:100%;justify-content:center}
+  /* volume nav becomes a fixed drawer: no layout shift, closes on link tap / scrim / Escape */
+  .site-nav-panel{position:fixed;top:0;left:0;bottom:0;width:min(20rem,88vw);z-index:70;display:block;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-104%);transition:transform .3s var(--ease-out)}
+  .site-nav-panel.is-open{transform:none}
+  .site-nav-panel-inner{height:100%;overflow-y:auto;padding:1.25rem 1.25rem 2rem}
+  .site-nav-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .site-nav-drawer-head span{font:600 .75rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+  .site-nav-close{background:none;border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:600 .8rem/1 var(--font-ui);padding:.55rem .85rem;cursor:pointer;min-height:2.75rem}
+  .site-nav-close:hover{border-color:var(--accent)}
+  .site-nav-groups{display:block;max-height:none;overflow:visible;padding:0}
+  .site-nav-groups>div{margin-bottom:1.25rem}
+  .site-nav-scrim{display:block;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .site-nav-scrim.is-open{opacity:1;pointer-events:auto}
+  body.site-nav-open{overflow:clip}
+  .foot-index{gap:1.25rem}
+}
+@media(max-width:56rem){
+  .site-header{padding-left:2.9rem} /* clear the fixed section-drawer menu button */
+}
+@media print{
+  .site-header,.site-footer,.site-nav-scrim{display:none!important}
+  .watch-deeper .watch-frame{display:none}
+}
+
+/* ---- Watch and go deeper (content section skeleton; downstream fills real videos/links) ---- */
+.watch-deeper{margin:3rem 0 0;padding:2rem 0 0;border-top:1px solid var(--border);max-width:72ch}
+.watch-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.watch-deeper-lede{font:400 .95rem/1.6 var(--font-ui);color:var(--muted);margin:0 0 1.25rem;text-align:left}
+.watch-deeper-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem;margin:0 0 1.75rem}
+.watch-card{margin:0;border:1px solid var(--border);border-radius:.6rem;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.watch-frame{aspect-ratio:16/9;background:var(--bg)}
+.watch-frame iframe{width:100%;height:100%;border:0;display:block}
+.watch-card figcaption{padding:.85rem 1rem 1rem;font:400 .85rem/1.55 var(--font-ui);color:var(--muted);text-align:left}
+.watch-card figcaption strong{display:block;color:var(--text);font-weight:700;margin-bottom:.25rem}
+.go-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--text);margin:0 0 .5rem}
+.go-deeper-list{list-style:none;margin:0;padding:0}
+.go-deeper-list li{display:flex;gap:.6rem;align-items:baseline;padding:.5rem 0;border-top:1px solid var(--border)}
+.go-deeper-list li:last-child{border-bottom:1px solid var(--border)}
+.go-deeper-list a{font:600 .9rem/1.5 var(--font-ui);color:var(--text);text-decoration:none;flex:none;display:inline-flex;align-items:center;gap:.35rem}
+.go-deeper-list a:hover{color:var(--accent)}
+.go-deeper-list a:hover .ext-arrow{color:var(--accent)}
+.go-deeper-list .ext-arrow{width:.7rem;height:.7rem;color:var(--muted);flex:none}
+.go-deeper-list .go-deeper-note{font:400 .85rem/1.55 var(--font-ui);color:var(--muted)}
+
+/* speed-control bar (injected by the site script only when the YouTube IFrame
+   Player API loads; the iframe alone keeps working when it does not) */
+.watch-speedbar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;padding:.6rem .9rem;border-top:1px solid var(--border)}
+.watch-speedbar-label{font:600 .68rem/1.4 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.watch-speed{background:none;border:1px solid var(--border);border-radius:.4rem;color:var(--muted);font:600 .78rem/1 var(--font-ui);padding:.45rem .6rem;cursor:pointer;min-height:2rem}
+.watch-speed:hover{color:var(--text);border-color:var(--accent)}
+.watch-speed[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* motion respects the reader: no sliding drawers or expanding panels for reduced-motion users */
+@media (prefers-reduced-motion:reduce){
+  .ds-sidebar,.site-nav-toggle .chev,.site-nav-panel,.site-nav-scrim{transition:none}
+}
+
+/* ---- print ---- */
+@media print{
+  .ds-sidebar,.ds-menu-btn,.ds-progress,.ds-scrim,.ds-chapter-nav,.ds-copy-btn{display:none!important}
+  .ds-content{margin:0;max-width:100%;padding:0}
+  body{background:#fff;color:#000;font-size:12pt;line-height:1.6}
+  p{text-align:left}
+  h1,h2,h3,h4,a{color:#000}
+  pre,figure,details,.lab,.ob-board,.takeaway,.callout,.walkthrough,.pq{background:#fff;border-color:#999;break-inside:avoid}
+  code{background:#f0f0f0;border-color:#999;color:#000}
+}
+
+
+</style>
+<style>
+
+/* S30 integration layer (additive, uses design tokens only) */
+.diff{display:inline-block;font-family:var(--font-ui);font-size:.72rem;font-weight:700;
+  letter-spacing:.04em;padding:.18rem .6rem;border-radius:999px;border:1px solid var(--border);
+  vertical-align:middle;margin-left:.6rem;text-transform:uppercase}
+.diff-easy{color:#7fd08a;border-color:#2c5a34;background:#0f1f13}
+.diff-medium{color:#f0b429;border-color:#6b5518;background:#1f1a0c}
+.diff-hard{color:#ff9d6b;border-color:#6e3d1e;background:#20130c}
+.diff-expert{color:#ff7b8a;border-color:#6e2430;background:#200f13}
+.lab-meta{font-family:var(--font-ui);font-size:.86rem;color:var(--muted)}
+.tags{margin:.8rem 0}
+.tagchip{display:inline-block;font-family:var(--font-ui);font-size:.78rem;color:var(--muted);
+  border:1px solid var(--border);border-radius:999px;padding:.15rem .65rem;margin:.15rem .25rem .15rem 0}
+.tagchip.co{color:var(--accent);border-color:var(--accent)}
+details.task{border:1px solid var(--border);border-radius:.6rem;padding:.7rem 1rem;margin:.7rem 0;background:#0b0b0b}
+details.task>summary{cursor:pointer;font-weight:700}
+details.task>summary .task-n{font-family:var(--font-ui);font-size:.75rem;color:var(--accent);
+  border:1px solid var(--accent);border-radius:.35rem;padding:.1rem .45rem;margin-right:.6rem}
+.task-sec{font-weight:400;color:var(--muted);font-size:.85rem}
+.task-body{padding-top:.6rem}
+details.hints,details.solution{margin:.8rem 0}
+details.hints>summary,details.solution>summary{cursor:pointer;font-weight:600;color:var(--link)}
+.diagram-walkthrough{background:var(--surface);border:1px solid var(--border);border-radius:.6rem;
+  padding:.8rem 1.1rem;margin:0 0 1.6rem}
+.diagram-walkthrough h4{margin:.2rem 0 .5rem}
+.diagram-walkthrough ol{margin:.4rem 0;padding-left:1.5rem}
+figure.diagram svg{max-width:100%;height:auto;display:block;margin:0 auto;background:#0a0a0a;border-radius:.4rem}
+.fig-src{color:var(--faint);font-size:.82rem}
+.site-header{border-bottom:1px solid var(--border);padding:1.2rem 0 .8rem;margin-bottom:1.6rem}
+.mast-line{display:flex;justify-content:space-between;font-family:var(--font-ui);font-size:.78rem;
+  color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin:0 0 1rem;text-align:left}
+.s30-hero-lede{font-size:1.12rem;color:var(--muted);max-width:60ch;text-align:left}
+.hero-stats{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.2rem 0}
+.hero-stat{font-family:var(--font-ui);font-size:.85rem;border:1px solid var(--border);border-radius:.5rem;
+  padding:.45rem .8rem;background:var(--surface)}
+.hero-stat b{color:var(--accent)}
+.lab-tabs{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:.5rem 0;margin:0 0 1.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.lab-tabs button{font-family:var(--font-ui);font-size:.8rem;background:var(--surface);color:var(--text);
+  border:1px solid var(--border);border-radius:999px;padding:.3rem .75rem;cursor:pointer}
+.lab-tabs button:hover,.lab-tabs button.on{border-color:var(--accent);color:var(--accent)}
+section.lab{scroll-margin-top:4.5rem}
+.ds-volume-nav{display:flex;justify-content:space-between;gap:1rem;border-top:2px solid var(--accent);
+  margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-volume-nav a{text-decoration:none;font-weight:700;font-family:var(--font-ui)}
+.ds-volume-nav .ds-prev{text-align:left}
+.ds-volume-nav .ds-next{text-align:right}
+.ds-volume-nav span{display:block;font-size:.78rem;color:var(--muted);font-weight:400}
+.provenance-inline{font-size:.82rem;color:var(--faint)}
+pre.ascii{background:#0a0a0a}
+@media (max-width:560px){.mast-line{flex-direction:column;gap:.2rem}}
+
+
+</style>
+</head>
+<body>
+<div class="ds-progress" id="dsProgress"></div>
+<button class="ds-menu-btn" id="dsMenuBtn" aria-label="Open navigation">&#9776;</button>
+<aside class="ds-sidebar" id="dsSidebar" aria-label="Volume navigation">
+<div class="ds-side-head">
+<p class="ds-side-eyebrow">Research-Engineer Curriculum</p>
+<p class="ds-side-title">Volume 20: Evaluation and Debugging: Knowing What Works</p>
+<input class="ds-side-search" id="dsNavSearch" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+</div>
+<nav class="ds-nav" id="dsNav" aria-label="Sections"></nav>
+<div class="ds-side-foot"><span id="dsCompleteCount"></span></div>
+</aside>
+<div class="ds-scrim" id="dsScrim"></div>
+<main class="ds-content" id="dsContent">
+<header class="site-header hero">
+<p class="mast-line"><span>Research-Engineer Curriculum</span><span>Volume 20 of 28</span></p>
+<h1>Evaluation and Debugging: Knowing What Works</h1>
+<p class="s30-hero-lede">Volume 19 built the models. This volume builds the judgment: measure what matters, stop leaks before they poison your metrics, and debug models with evidence instead of guesses.</p>
+<div class="hero-stats"><span class="hero-stat"><strong>6 labs</strong></span><span class="hero-stat"><strong>42 tasks</strong></span><span class="hero-stat">Difficulty: <strong>Medium</strong>, all six labs</span><span class="hero-stat">Week 5, days 1 through 6</span></div>
+</header>
+
+<h2>Why this category exists</h2>
+<p>Volume 19 built the models: logistic regression, trees, boosting, SVMs, nearest neighbors. This volume answers the question that comes next and never goes away: <strong>does it actually work, and how do you know?</strong> In research and in production, a model is only as trustworthy as the process that measured it. A leaky evaluation can make a useless model look brilliant. A wrong metric can make a brilliant model look useless. Debugging without slice-level evidence is guessing.</p>
+<p>Without these skills, four things fail. First, <dfn>leakage</dfn> (information from the answer sneaking into the features) silently inflates your scores, and you ship a model that collapses on real data. Second, the wrong metric optimizes the wrong behavior: a 95 percent accurate fraud model that catches nothing. Third, uncalibrated probabilities mislead every downstream decision that trusts them. Fourth, aggregate metrics hide cohort failures: the model is fine overall and terrible for one customer group.</p>
+<p>The six labs are all Medium difficulty and run across Week 5, days 1 through 6. They form a tight arc: engineer features safely, measure correctly, understand failure modes, debug with evidence, combine everything on a hard dataset, then compress with <dfn>PCA</dfn> (principal component analysis).</p>
+<figure class="diagram" id="fig-eval-overview"><svg viewBox="0 0 680 260" width="100%" role="img" aria-label="The evaluation workflow this volume drills: data splits, leak-safe features, the model, scores, metrics with cost-aware " xmlns="http://www.w3.org/2000/svg">
+<rect x="20" y="30" width="120" height="56" rx="8" fill="#141414" stroke="#f0b429"/>
+<text x="80" y="54" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Data</text>
+<text x="80" y="72" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">train / valid / test</text>
+<text x="150" y="62" fill="#f0b429" font-size="18" font-family="sans-serif">&#8594;</text>
+<rect x="175" y="30" width="120" height="56" rx="8" fill="#141414" stroke="#f0b429"/>
+<text x="235" y="54" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Features</text>
+<text x="235" y="72" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">encode, impute, scale</text>
+<text x="305" y="62" fill="#f0b429" font-size="18" font-family="sans-serif">&#8594;</text>
+<rect x="330" y="30" width="120" height="56" rx="8" fill="#141414" stroke="#f0b429"/>
+<text x="390" y="54" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Model</text>
+<text x="390" y="72" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">fit on train only</text>
+<text x="460" y="62" fill="#f0b429" font-size="18" font-family="sans-serif">&#8594;</text>
+<rect x="485" y="30" width="120" height="56" rx="8" fill="#141414" stroke="#f0b429"/>
+<text x="545" y="54" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Scores</text>
+<text x="545" y="72" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">probabilities</text>
+<rect x="175" y="150" width="275" height="56" rx="8" fill="#141414" stroke="#f0b429"/>
+<text x="312" y="172" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Metrics + threshold</text>
+<text x="312" y="190" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">precision, recall, cost, ECE</text>
+<rect x="485" y="150" width="120" height="56" rx="8" fill="#141414" stroke="#f0b429"/>
+<text x="545" y="172" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Slice + debug</text>
+<text x="545" y="190" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">cohorts, errors</text>
+<line x1="545" y1="86" x2="545" y2="140" stroke="#f0b429" stroke-width="2"/>
+<text x="556" y="118" fill="#f0b429" font-size="18" font-family="sans-serif">&#8595;</text>
+<line x1="485" y1="178" x2="455" y2="178" stroke="#f0b429" stroke-width="2"/>
+<text x="430" y="184" fill="#f0b429" font-size="18" font-family="sans-serif">&#8592;</text>
+<line x1="175" y1="178" x2="60" y2="178" stroke="#f0b429" stroke-width="2"/>
+<line x1="60" y1="178" x2="60" y2="100" stroke="#f0b429" stroke-width="2"/>
+<text x="48" y="140" fill="#f0b429" font-size="18" font-family="sans-serif">&#8593;</text>
+<text x="70" y="200" fill="#a8a8a8" font-size="13" font-family="sans-serif">fix features, re-train</text>
+</svg><figcaption>The evaluation workflow this volume drills: data splits, leak-safe features, the model, scores, metrics with cost-aware thresholds, and a slice-and-debug loop that feeds back into features. <span class="fig-src">Source: S30 AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>Data is split into train, validation, and test before anything is fit.</li><li>Features are engineered inside pipelines so statistics come from train rows only.</li><li>The model fits on train and emits scores (probabilities) on the rest.</li><li>Metrics plus a cost-aware threshold turn scores into decisions.</li><li>Slice analysis and error inspection find the failing cohorts.</li><li>The loop closes: fixes go back into the features, never into the metric.</li></ol></div>
+<table><thead><tr><th>Day</th><th>Lab</th><th>Tasks</th><th>Focus</th></tr></thead><tbody>
+<tr><td>5.1</td><td>Feature Engineering Strategies</td><td>7</td><td>Leak-safe encoding, transforms, interactions</td></tr>
+<tr><td>5.2</td><td>Model Evaluation Deep Dive</td><td>8</td><td>Metrics, thresholds, calibration, bootstrap CI</td></tr>
+<tr><td>5.3</td><td>Bias, Variance and Regularization</td><td>6</td><td>Capacity sweeps, L1 vs L2, learning curves</td></tr>
+<tr><td>5.4</td><td>Model Debugging and Error Analysis</td><td>7</td><td>Slices, ablations, FP vs FN</td></tr>
+<tr><td>5.5</td><td>Feature + Evaluation Lab</td><td>8</td><td>Full pipeline on imbalanced credit data</td></tr>
+<tr><td>5.6</td><td>PCA Lab</td><td>6</td><td>Variance, components, reconstruction</td></tr>
+</tbody></table>
+<h2>Core ideas, worked end to end</h2>
+<h3>Concept 1: pick the metric that matches the decision</h3>
+<p>A <dfn>metric</dfn> is a number that summarizes model quality. For binary classification, every prediction falls into one of four cells. <dfn>True positives (TP)</dfn>: predicted positive, actually positive. <dfn>False positives (FP)</dfn>: predicted positive, actually negative. <dfn>False negatives (FN)</dfn>: predicted negative, actually positive. <dfn>True negatives (TN)</dfn>: predicted negative, actually negative. From these: <dfn>precision</dfn> = TP / (TP + FP), the fraction of flagged items that are real. <dfn>Recall</dfn> = TP / (TP + FN), the fraction of real items that were flagged. <dfn>Accuracy</dfn> = (TP + TN) / total.</p>
+<p>Accuracy exists because it is the default score in every library. It fails under <dfn>class imbalance</dfn> (one class much rarer than the other), which is the norm in fraud, churn, and medical screening. A model that predicts the majority class every time scores high accuracy and learns nothing. The fix is to measure ranking quality: sort by score and sweep the threshold, then summarize with the <dfn>PR curve</dfn> (precision-recall curve) and its area, <dfn>PR-AUC</dfn> (precision-recall area under the curve). The older <dfn>ROC curve</dfn> (receiver operating characteristic curve) plots true positive rate against false positive rate; it looks flattering when negatives dominate, so report the <dfn>base rate</dfn> (fraction of positives) alongside any curve.</p>
+<p>The mechanics, step by step: score every validation example; sort descending by score; walk down the list treating each score as a candidate threshold; at each step count TP, FP, FN among the items above the line and compute precision and recall; plot precision against recall; the area under that curve is PR-AUC. A perfect ranker has PR-AUC near 1. A random ranker has PR-AUC near the base rate, not 0.5.</p>
+<p>Concrete numbers. 1,000 customers, 50 churn (base rate 5 percent). A majority baseline that always predicts "no churn": accuracy = 950 / 1000 = 95 percent, recall = 0 / 50 = 0, precision undefined. Now a real model at one threshold: TP = 30, FP = 40, FN = 20, TN = 910. Accuracy = 940 / 1000 = 94 percent, worse than the baseline. Precision = 30 / 70 = 43 percent. Recall = 30 / 50 = 60 percent. The baseline wins on accuracy; only the model finds any churners at all.</p>
+<p>The misunderstanding interviewers exploit: "my ROC-AUC is 0.92, so the model is great." Under 1 percent base rate, ROC-AUC can sit at 0.92 while precision at any useful recall is single digits. The correct answer names PR-AUC, states the base rate, and asks what decision the scores feed.</p>
+<figure class="diagram" id="fig-confusion"><svg viewBox="0 0 680 250" width="100%" role="img" aria-label="A confusion matrix for the worked example: 30 true positives, 40 false positives, 20 false negatives, 910 true negatives" xmlns="http://www.w3.org/2000/svg">
+<text x="200" y="28" text-anchor="middle" fill="#ececec" font-size="16" font-family="sans-serif">Predicted</text>
+<text x="24" y="150" fill="#ececec" font-size="16" font-family="sans-serif" transform="rotate(-90 24 150)">Actual</text>
+<rect x="90" y="60" width="110" height="80" fill="#0f2413" stroke="#7fd08a" stroke-width="2"/>
+<text x="145" y="92" text-anchor="middle" fill="#7fd08a" font-size="22" font-family="sans-serif">30</text>
+<text x="145" y="116" text-anchor="middle" fill="#a8a8a8" font-size="14" font-family="sans-serif">TP</text>
+<rect x="210" y="60" width="110" height="80" fill="#241014" stroke="#e08080" stroke-width="2"/>
+<text x="265" y="92" text-anchor="middle" fill="#e08080" font-size="22" font-family="sans-serif">40</text>
+<text x="265" y="116" text-anchor="middle" fill="#a8a8a8" font-size="14" font-family="sans-serif">FP</text>
+<rect x="90" y="150" width="110" height="80" fill="#241014" stroke="#e08080" stroke-width="2"/>
+<text x="145" y="182" text-anchor="middle" fill="#e08080" font-size="22" font-family="sans-serif">20</text>
+<text x="145" y="206" text-anchor="middle" fill="#a8a8a8" font-size="14" font-family="sans-serif">FN</text>
+<rect x="210" y="150" width="110" height="80" fill="#101a24" stroke="#6cb2ff" stroke-width="2"/>
+<text x="265" y="182" text-anchor="middle" fill="#6cb2ff" font-size="22" font-family="sans-serif">910</text>
+<text x="265" y="206" text-anchor="middle" fill="#a8a8a8" font-size="14" font-family="sans-serif">TN</text>
+<text x="145" y="52" text-anchor="middle" fill="#a8a8a8" font-size="14" font-family="sans-serif">churn</text>
+<text x="265" y="52" text-anchor="middle" fill="#a8a8a8" font-size="14" font-family="sans-serif">no churn</text>
+<text x="80" y="106" text-anchor="end" fill="#a8a8a8" font-size="14" font-family="sans-serif">churn</text>
+<text x="80" y="196" text-anchor="end" fill="#a8a8a8" font-size="14" font-family="sans-serif">no churn</text>
+<text x="380" y="100" fill="#ececec" font-size="15" font-family="sans-serif">precision = 30 / 70 = 43%</text>
+<text x="380" y="130" fill="#ececec" font-size="15" font-family="sans-serif">recall = 30 / 50 = 60%</text>
+<text x="380" y="160" fill="#ececec" font-size="15" font-family="sans-serif">accuracy = 940 / 1000 = 94%</text>
+<text x="380" y="190" fill="#ececec" font-size="15" font-family="sans-serif">base rate = 50 / 1000 = 5%</text>
+</svg><figcaption>A confusion matrix for the worked example: 30 true positives, 40 false positives, 20 false negatives, 910 true negatives, with precision, recall, accuracy, and base rate derived on the right. <span class="fig-src">Source: S30 AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>Rows are the actual class, columns are the predicted class.</li><li>The top-left cell (TP = 30) is churn predicted and churn observed.</li><li>The top-right cell (FP = 40) is churn predicted but no churn: the cost of false alarms.</li><li>The bottom-left cell (FN = 20) is missed churners: the cost of silence.</li><li>Precision uses the predicted-positive column: 30 / 70 = 43 percent.</li><li>Recall uses the actual-positive row: 30 / 50 = 60 percent.</li><li>Accuracy mixes all four cells: 94 percent, which still loses to the do-nothing baseline.</li></ol></div>
+<p><strong>Interview relevance.</strong> "When can accuracy be misleading?" is a standing checkpoint in the w5-d2 lab, and Google, Netflix, and Airbnb all list metrics and evaluation as high-confidence interview topics for these labs.</p>
+<div class="takeaway"><h4>Key takeaways</h4><ul><li>Accuracy rewards the majority class; under imbalance it is nearly useless.</li><li>Precision = TP/(TP+FP), recall = TP/(TP+FN); both derive from the four confusion-matrix cells.</li><li>Compare models with PR-AUC under imbalance, and always report the base rate.</li><li>ROC-AUC looks optimistic when negatives dominate; do not trust it alone.</li></ul></div><div class="ob-board"><h4>On the board</h4><ul><li>Compute precision, recall, and F1 for a 3-class problem from a given confusion matrix.</li><li>Why does a random ranker get PR-AUC equal to the base rate, not 0.5?</li><li>Your model has ROC-AUC 0.95 but precision 0.08 at 50 percent recall. Diagnose it.</li></ul></div>
+<p><strong>Lab pointer.</strong> The w5-d2 Model Evaluation Deep Dive lab makes you implement confusion-matrix metrics and ranking metrics by hand and run the bootstrap confidence interval for PR-AUC.</p>
+
+<h3>Concept 2: thresholds, costs, and calibration</h3>
+<p>A model outputs scores; a business needs decisions. The <dfn>decision threshold</dfn> is the score cutoff above which you predict positive. <dfn>Calibration</dfn> means the predicted probabilities match observed frequencies: among cases scored 0.7, about 70 percent are positive. <dfn>ECE</dfn> (expected calibration error) measures this: split predictions into bins, take the absolute gap between average predicted probability and actual fraction positive in each bin, and average those gaps weighted by bin size.</p>
+<p>Thresholds exist because errors have prices, and the prices are rarely equal. Missing a fraudulent transaction (FN) may cost ten times flagging a legitimate one (FP). The threshold that maximizes accuracy ignores that entirely. The fix: choose the threshold that minimizes expected cost = FP_cost * FP + FN_cost * FN on validation data. Calibration exists because downstream systems trust probabilities: a 0.9 that behaves like 0.6 breaks every risk calculation built on it. <dfn>Temperature scaling</dfn> repairs miscalibration after training by dividing logits by a single learned temperature T before the softmax, which softens or sharpens the distribution without changing the ranking.</p>
+<p>Calibration mechanics: bin predictions by score into ten equal bins; per bin compute mean predicted probability and fraction of positives; plot fraction positive against mean probability (the <dfn>reliability curve</dfn>); a perfectly calibrated model hugs the diagonal. The <dfn>reliability diagram</dfn> is that plot; points below the diagonal mean overconfidence.</p>
+<p>Concrete numbers. FN costs $10, FP costs $1. Threshold A: FP = 40, FN = 20, cost = 40 * 1 + 20 * 10 = $240. Threshold B (stricter): FP = 10, FN = 35, cost = 10 + 350 = $360. Threshold C (looser): FP = 90, FN = 8, cost = 90 + 80 = $170. The cheapest threshold is the loosest one, because false negatives are expensive. For ECE: a bin [0.8, 0.9) holds 50 items with 30 positives. Mean confidence 0.85, accuracy 0.60, gap 0.25. Its contribution to ECE is 0.25 * (50 / N) where N is the total count.</p>
+<p>The misunderstanding: "calibration improves accuracy." It does not change a single prediction at a fixed threshold. It fixes trust in the probabilities, which is what the rest of the system consumes. Thresholds fix decisions; calibration fixes confidence.</p>
+<figure class="diagram" id="fig-calibration"><svg viewBox="0 0 680 360" width="100%" role="img" aria-label="A reliability diagram: each dot is a bin of predictions, plotted by mean predicted probability against actual fraction p" xmlns="http://www.w3.org/2000/svg">
+<line x1="80" y1="300" x2="620" y2="300" stroke="#a8a8a8" stroke-width="2"/>
+<line x1="80" y1="300" x2="80" y2="40" stroke="#a8a8a8" stroke-width="2"/>
+<line x1="80" y1="300" x2="620" y2="40" stroke="#7fd08a" stroke-width="1.5" stroke-dasharray="7,6"/>
+<text x="350" y="332" text-anchor="middle" fill="#ececec" font-size="14" font-family="sans-serif">mean predicted probability (bin center)</text>
+<text x="40" y="170" text-anchor="middle" fill="#ececec" font-size="14" font-family="sans-serif" transform="rotate(-90 40 170)">fraction positive</text>
+<circle cx="134" cy="284" r="7" fill="#f0b429"/><text x="134" y="264" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">0.10</text>
+<circle cx="242" cy="252" r="7" fill="#f0b429"/><text x="242" y="232" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">0.30</text>
+<circle cx="350" cy="216" r="7" fill="#f0b429"/><text x="350" y="196" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">0.50</text>
+<circle cx="458" cy="182" r="7" fill="#f0b429"/><text x="458" y="162" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">0.70</text>
+<circle cx="566" cy="148" r="7" fill="#f0b429"/><text x="566" y="128" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">0.90</text>
+<text x="520" y="70" fill="#7fd08a" font-size="14" font-family="sans-serif">perfectly calibrated</text>
+<text x="150" y="330" fill="#e08080" font-size="14" font-family="sans-serif">all bins sit below the diagonal: overconfident</text>
+</svg><figcaption>A reliability diagram: each dot is a bin of predictions, plotted by mean predicted probability against actual fraction positive. All bins sit below the diagonal, so the model is overconfident at every level. <span class="fig-src">Source: S30 AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The x-axis is what the model claimed; the y-axis is what actually happened.</li><li>The dashed diagonal is perfect calibration: claim equals outcome.</li><li>Every bin sits below the diagonal: the model claims 0.7 but delivers about 0.55.</li><li>ECE is the bin-size-weighted average of these vertical gaps.</li><li>Temperature scaling would pull these dots toward the diagonal without changing their order.</li><li>You would then re-pick the threshold by cost, not by accuracy.</li></ol></div>
+<p><strong>Interview relevance.</strong> "How do you pick a threshold if false negatives cost 10x false positives?" is the interview angle on the w5-d2 lab, and it is also the expected-cost calculation above.</p>
+<div class="takeaway"><h4>Key takeaways</h4><ul><li>Pick thresholds by minimizing expected cost on validation, not by maximizing accuracy.</li><li>Calibration means predicted probabilities match observed frequencies; ECE quantifies the gap.</li><li>Reliability curves diagnose overconfidence; temperature scaling fixes it post hoc.</li><li>Ranking quality (PR-AUC) and decision quality (cost at threshold) are separate questions.</li></ul></div><div class="ob-board"><h4>On the board</h4><ul><li>Draw a reliability curve for an underconfident model. Where do the points sit?</li><li>Prove temperature scaling does not change the ranking of predictions.</li><li>Design a threshold policy for a fraud model where each FP costs a $2 review and each FN costs $400.</li></ul></div>
+<p><strong>Lab pointer.</strong> The w5-d2 lab has you implement reliability bins and ECE from scratch, apply temperature scaling, and pick a threshold that minimizes a given cost ratio.</p>
+
+<h3>Concept 3: bias, variance, and regularization</h3>
+<p><dfn>Bias</dfn> is error from the model being too simple to capture the pattern: a straight line fit to a curve. <dfn>Variance</dfn> is error from the model being too sensitive to the particular training sample: it memorizes noise. A <dfn>learning curve</dfn> plots training and validation error against training-set size or against model capacity (depth, number of features, regularization strength). <dfn>Regularization</dfn> is any penalty that discourages complexity; the two workhorses are <dfn>L1</dfn> (lasso) and <dfn>L2</dfn> (ridge) penalties on the weights.</p>
+<p>This exists because "the model is wrong" is not a diagnosis. High bias means the model cannot fit even the training data: get a more expressive model or better features. High variance means training error is low and validation error is high: the model memorized. The cures differ completely, and the labs make you read the signature from curves: depth sweep, C sweep for L2 logistic regression, and training on increasing data sizes. As built in Volume 19, logistic regression is a high-bias, low-variance baseline, which is why it anchors the w5-d3 experiments.</p>
+<p>L1 vs L2 mechanics: L2 adds lambda * sum(w^2) to the loss, which shrinks every weight toward zero smoothly; the gradient of the penalty is proportional to the weight, so small weights shrink slowly and rarely reach exactly zero. L1 adds lambda * sum(|w|), whose penalty gradient has constant magnitude, so it drives weights to exactly zero and performs feature selection. The gotcha the lab plants: L1 zeroes out <em>correlated</em> features arbitrarily, picking one survivor from a redundant group, which makes feature-importance readings unstable.</p>
+<p>Concrete numbers from the depth sweep. Tree depth 1: train error 30 percent, validation 32 percent. Both high: high bias. Depth 12: train error 2 percent, validation 30 percent. Big gap: high variance. Depth 5: train 12 percent, validation 16 percent. The U-shape bottom is the sweet spot. For logistic regression, sweeping C (inverse regularization strength) from 0.001 to 1000 traces the same curve in the other direction.</p>
+<p>The misunderstanding: "more regularization is always safer." Push it too far and bias climbs: the model underfits and both errors rise. And "more data fixes everything": more data shrinks variance, but a biased model stays biased. The interview angle on the lab asks exactly this: how do you know whether to collect more data or regularize harder?</p>
+<figure class="diagram" id="fig-bias-variance"><svg viewBox="0 0 700 360" width="100%" role="img" aria-label="The bias-variance tradeoff: training error falls with capacity while validation error traces a U-shape. The sweet spot s" xmlns="http://www.w3.org/2000/svg">
+<line x1="80" y1="300" x2="640" y2="300" stroke="#a8a8a8" stroke-width="2"/>
+<line x1="80" y1="300" x2="80" y2="40" stroke="#a8a8a8" stroke-width="2"/>
+<text x="360" y="332" text-anchor="middle" fill="#ececec" font-size="14" font-family="sans-serif">model capacity (depth, C, features)</text>
+<text x="40" y="170" text-anchor="middle" fill="#ececec" font-size="14" font-family="sans-serif" transform="rotate(-90 40 170)">error</text>
+<path d="M 100 260 Q 360 250 620 180" fill="none" stroke="#6cb2ff" stroke-width="3"/>
+<text x="560" y="160" fill="#6cb2ff" font-size="14" font-family="sans-serif">train error (falls)</text>
+<path d="M 100 262 Q 300 258 360 250 Q 480 236 620 290" fill="none" stroke="#f0b429" stroke-width="3"/>
+<text x="560" y="310" fill="#f0b429" font-size="14" font-family="sans-serif">validation error (U-shape)</text>
+<line x1="360" y1="60" x2="360" y2="300" stroke="#7fd08a" stroke-width="1.5" stroke-dasharray="7,6"/>
+<text x="360" y="54" text-anchor="middle" fill="#7fd08a" font-size="14" font-family="sans-serif">sweet spot</text>
+<text x="200" y="120" fill="#e08080" font-size="14" font-family="sans-serif">underfit: high bias</text>
+<text x="500" y="120" fill="#e08080" font-size="14" font-family="sans-serif">overfit: high variance</text>
+</svg><figcaption>The bias-variance tradeoff: training error falls with capacity while validation error traces a U-shape. The sweet spot sits at the bottom of the U; left of it is high bias, right of it high variance. <span class="fig-src">Source: S30 AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The x-axis is model capacity: tree depth, inverse regularization strength, feature count.</li><li>The blue curve (training error) falls monotonically: more capacity always fits train better.</li><li>The amber curve (validation error) falls then rises: the classic U-shape.</li><li>Left of the dashed line: both errors high, training and validation close. High bias.</li><li>Right of the dashed line: training error low, validation error climbing. High variance.</li><li>The fix depends on the zone: capacity or features on the left, regularization or data on the right.</li></ol></div>
+<p><strong>Interview relevance.</strong> "How do you know whether to get more data vs regularize more?" is the interview angle attached to the w5-d3 lab. The answer is the learning curve, not a guess.</p>
+<div class="takeaway"><h4>Key takeaways</h4><ul><li>High bias: both errors high and close; fix with capacity or better features.</li><li>High variance: train low, validation high; fix with regularization, more data, or simpler models.</li><li>L2 shrinks weights smoothly; L1 drives them to exactly zero but picks arbitrarily among correlated features.</li><li>Logistic regression is the canonical high-bias, low-variance baseline.</li></ul></div><div class="ob-board"><h4>On the board</h4><ul><li>Your validation error is flat as you add data but far above training error. What is wrong?</li><li>Why does L1 produce sparse weights while L2 does not? Sketch the penalty contours.</li><li>When would you prefer L1 over L2 in a production feature pipeline?</li></ul></div>
+<p><strong>Lab pointer.</strong> The w5-d3 Bias, Variance and Regularization lab runs the depth sweep, the C sweep, the L1 vs L2 comparison, and the learning-curve-by-data-size experiment.</p>
+
+<h3>Concept 4: error analysis, slices, and the leakage discipline</h3>
+<p><dfn>Error analysis</dfn> is the systematic inspection of the examples the model gets wrong, split into false positives and false negatives. A <dfn>slice</dfn> is a subgroup of the data defined by a feature: new vs returning customers, one region, one device type. <dfn>Feature ablation</dfn> removes one feature group, retrains, and measures how much the metric drops: a large drop means the group mattered. <dfn>Label leakage</dfn> is the silent killer: a feature that carries information about the answer that will not exist at prediction time, like an aggregate computed over the future, or a target encoding fit on the whole dataset including the validation rows.</p>
+<p>Aggregate metrics exist to compare models, not to debug them. "Overall accuracy looks fine" can hide severe cohort failures, which is the exact gotcha the w5-d4 lab plants. Slice metrics find the failing cohorts. FP vs FN inspection tells you which error type dominates and whether the cost model in Concept 2 matches reality. Ablation tells you which features earn their place. And leakage discipline exists because a leaky feature is indistinguishable from a brilliant one on your validation set: the metric looks amazing right up until the model meets production.</p>
+<p>The leakage mechanics, step by step: naive <dfn>target encoding</dfn> replaces a categorical value with the mean label of that category, computed on the full dataset. Because the validation labels contributed to those means, the feature smuggles the answer into the validation rows. Cross-validation alone does not save you: the leak happened before the split. The fix is a pipeline: split first, then fit every preprocessing step (imputation, encoding, scaling) inside each fold on train rows only. The w5-d1 lab demonstrates the leak deliberately: naive target encoding shows stellar validation PR-AUC and collapses on the holdout.</p>
+<p>Concrete numbers. Overall accuracy 92 percent; slice "customers joined in the last 30 days" sits at 68 percent. That slice is the debugging target, not the 92 percent. Ablation: dropping the engineered "title" feature group moves validation PR-AUC from 0.81 to 0.75, so the group earns its keep. Leakage demo: naive target encoding gives validation PR-AUC 0.91 and holdout 0.62; the leak-safe version gives 0.79 and 0.77.</p>
+<p>The misunderstanding: "I used cross-validation, so my evaluation is trustworthy." Cross-validation only protects you if nothing outside the fold saw the validation rows. Preprocessing fit before the split, aggregates over the full time window, and target statistics computed globally all leak through cross-validation untouched.</p>
+<figure class="diagram" id="fig-leakage"><svg viewBox="0 0 700 260" width="100%" role="img" aria-label="Leakage discipline: on the left, preprocessing fit on all data before the split leaks validation information into traini" xmlns="http://www.w3.org/2000/svg">
+<text x="180" y="28" text-anchor="middle" fill="#e08080" font-size="16" font-family="sans-serif">WRONG: leaks</text>
+<rect x="60" y="48" width="240" height="46" rx="8" fill="#241014" stroke="#e08080"/>
+<text x="180" y="76" text-anchor="middle" fill="#ececec" font-size="14" font-family="sans-serif">impute + encode on ALL data</text>
+<text x="180" y="108" text-anchor="middle" fill="#e08080" font-size="20" font-family="sans-serif">&#8595;</text>
+<rect x="60" y="128" width="240" height="46" rx="8" fill="#241014" stroke="#e08080"/>
+<text x="180" y="156" text-anchor="middle" fill="#ececec" font-size="14" font-family="sans-serif">then split + cross-validate</text>
+<text x="180" y="200" text-anchor="middle" fill="#e08080" font-size="30" font-family="sans-serif">&#10007;</text>
+<text x="180" y="226" text-anchor="middle" fill="#a8a8a8" font-size="13" font-family="sans-serif">stats saw the validation rows</text>
+<text x="540" y="28" text-anchor="middle" fill="#7fd08a" font-size="16" font-family="sans-serif">RIGHT: leak-safe</text>
+<rect x="420" y="48" width="240" height="46" rx="8" fill="#0f2413" stroke="#7fd08a"/>
+<text x="540" y="76" text-anchor="middle" fill="#ececec" font-size="14" font-family="sans-serif">split first</text>
+<text x="540" y="108" text-anchor="middle" fill="#7fd08a" font-size="20" font-family="sans-serif">&#8595;</text>
+<rect x="420" y="128" width="240" height="46" rx="8" fill="#0f2413" stroke="#7fd08a"/>
+<text x="540" y="150" text-anchor="middle" fill="#ececec" font-size="13" font-family="sans-serif">pipeline: fit imputer inside</text>
+<text x="540" y="168" text-anchor="middle" fill="#ececec" font-size="13" font-family="sans-serif">each fold, train rows only</text>
+<text x="540" y="200" text-anchor="middle" fill="#7fd08a" font-size="30" font-family="sans-serif">&#10003;</text>
+<text x="540" y="226" text-anchor="middle" fill="#a8a8a8" font-size="13" font-family="sans-serif">validation rows never touched</text>
+</svg><figcaption>Leakage discipline: on the left, preprocessing fit on all data before the split leaks validation information into training; on the right, the split happens first and the pipeline fits preprocessing inside each fold on train rows only. <span class="fig-src">Source: S30 AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>Left path: impute and encode on the full dataset, then split. The imputer saw validation rows.</li><li>Validation scores from the left path are optimistic and meaningless.</li><li>Right path: split first, then fit every preprocessing step inside the pipeline.</li><li>Each fold fits the imputer and encoder on train rows only, then transforms the validation rows.</li><li>This is the only arrangement where the validation score estimates production behavior.</li><li>The w5-d1 lab shows the left path failing live: great validation, broken holdout.</li></ol></div>
+<p><strong>Interview relevance.</strong> Google lists feature engineering, error analysis, and model debugging as high-confidence topics for these labs. "Why is a pipeline required for trustworthy debugging?" is the standing checkpoint on the w5-d4 lab.</p>
+<div class="takeaway"><h4>Key takeaways</h4><ul><li>Aggregate metrics compare; slice metrics debug. Always break errors down by cohort and by FP vs FN.</li><li>Feature ablation measures what each feature group earns; drop what does not pay.</li><li>Leakage is invisible in validation scores; only pipeline discipline (split first, fit inside folds) prevents it.</li><li>A metric that looks too good on validation and collapses on holdout is the signature of a leak.</li></ul></div><div class="ob-board"><h4>On the board</h4><ul><li>Walk me through debugging a model whose holdout PR-AUC dropped 15 points versus validation.</li><li>When do interaction features help linear models? (Hint: the w5-d1 interview angle.)</li><li>Your slice analysis shows one cohort at 60 percent accuracy. What are your next three moves?</li></ul></div>
+<p><strong>Lab pointer.</strong> The w5-d4 Model Debugging and Error Analysis lab builds the full workflow: confusion-matrix error types, slice metrics, feature ablation, and cost-based thresholding. The w5-d1 Feature Engineering lab is where the leakage demo lives.</p>
+<h2>Lab walkthroughs</h2><div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w5-d1-feature-engineering">Feature Engineering Strategies</button><button data-target="lab-w5-d2-model-evaluation">Model Evaluation Deep Dive</button><button data-target="lab-w5-d3-bias-variance-regularization">Bias, Variance &amp; Regularization</button><button data-target="lab-w5-d4-model-debugging-error-analysis">Model Debugging &amp; Error Analysis</button><button data-target="lab-w5-d5-feature-evaluation-credit-default">Feature + Evaluation Lab</button><button data-target="lab-w5-d6-pca-lab">PCA Lab</button></div><section class="lab" id="lab-w5-d1-feature-engineering">
+<h3>Feature Engineering Strategies <span class="diff diff-medium">Medium</span></h3>
+<p class="lab-meta">Week 5, Day 1 · Evaluation &amp; Debugging · 7 tasks · 0 checks · Free</p>
+<p>This lab is the feature-engineering playbook for the whole volume: missingness indicators, title extraction with one-hot encoding, log transforms, and interaction features, all inside leakage-safe pipelines. It applies the leakage discipline from Concept 4 directly, and the naive target-encoding task is the single most instructive failure in Week 5. Watch for the moment validation looks amazing and the holdout disagrees.</p>
+<p>Practice the feature engineering moves that win interviews and ship in production: missing data handling, categorical encoding, nonlinear transforms, and interaction features, <em>without leaking labels</em>.</p>
+<div class="callout"><strong>Outcome.</strong> Students can:
+- build leakage-safe feature pipelines with sklearn,
+- choose appropriate encoding strategies,
+- add meaningful interaction features,
+- validate that features help via disciplined evaluation.</div>
+<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Baseline Pipeline</span><span class="tagchip">Missing Data</span><span class="tagchip">Encoding Categorical Variables</span><span class="tagchip">Nonlinear Transforms + Binning</span><span class="tagchip">Interaction Features</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1S-rsC7n3kD5SGC4hrQiHGKKHN2st3zwn">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-20-feature">Notes</a> · <a href="feature_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/TuksCezJF9Y">Video</a></p>
+<h4>Tasks (7)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Feature Engineering Strategies ,  Student Lab (Titanic)</h3>
+<p>Focus: missing data, encoding, nonlinear transforms, and interactions , <strong>leakage-safe</strong>.</p>
+<h4>Section 0 ,  Load Titanic (Kaggle) with fallback</h4>
+<p>Expected: <code>data/titanic/train.csv</code></p>
+<p>If missing, a tiny synthetic dataset is used so the notebook runs.</p><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Feature Engineering Strategies ,  Instructor (Titanic)</h3></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Train a baseline with leakage-safe preprocessing <span class="task-sec">Baseline pipeline</span></summary><div class="task-body"><h4>Section 1 ,  Baseline pipeline</h4>
+<h4>Task 1.1: Train a baseline with leakage-safe preprocessing</h4>
+<p>Use:</p>
+<ul><li>Numeric: Age, Fare, SibSp, Parch</li><li>Categorical: Pclass, Sex, Embarked</li></ul>
+<ul><li>Create X/y</li><li>Build ColumnTransformer (impute + scale numeric, impute + one-hot categorical)</li><li>Evaluate LogisticRegression with StratifiedKFold CV</li></ul>
+<p><strong>Checkpoint:</strong> Why is the pipeline necessary to avoid leakage in CV?</p><h4>Starter code</h4><pre><code class="lang-python">y = df['Survived'].astype(int)
+X = df.drop(columns=['Survived'])
+
+def make_preprocess(numeric_features, categorical_features):
+    # TODO
+    ...
+
+def cv_acc(pipe, X_df, y_s):
+    # TODO
+    ...
+
+numeric_features = ['Age','Fare','SibSp','Parch']
+categorical_features = ['Pclass','Sex','Embarked']
+
+preprocess = make_preprocess(numeric_features, categorical_features)
+pipe = Pipeline(steps=[('preprocess', preprocess), ('model', LogisticRegression(max_iter=5000))])
+scores_base = cv_acc(pipe, X, y)
+print('baseline acc mean', np.mean(scores_base['test_acc']), 'std', np.std(scores_base['test_acc']))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Add missingness indicator features <span class="task-sec">Missing data: indicators</span></summary><div class="task-body"><h4>Section 2 ,  Missing data: indicators</h4>
+<h4>Task 2.1: Add missingness indicator features</h4>
+<p>Add: Age_is_missing, Cabin_is_missing</p>
+<ul><li>Create these columns</li><li>Add them to numeric pipeline</li><li>Re-run CV and compare</li></ul>
+<p><strong>Checkpoint:</strong> Why can missingness itself be predictive?</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+X2 = X.copy()
+X2['Age_is_missing'] = ...
+X2['Cabin_is_missing'] = ...
+numeric_features2 = numeric_features + ['Age_is_missing','Cabin_is_missing']
+preprocess2 = make_preprocess(numeric_features2, categorical_features)
+pipe2 = Pipeline(steps=[('preprocess', preprocess2), ('model', LogisticRegression(max_iter=5000))])
+scores_ind = cv_acc(pipe2, X2, y)
+
+print('with indicators acc mean', np.mean(scores_ind['test_acc']), 'std', np.std(scores_ind['test_acc']))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X2 = X.copy()
+X2['Age_is_missing'] = X2['Age'].isna().astype(int)
+X2['Cabin_is_missing'] = X2['Cabin'].isna().astype(int)
+numeric_features2 = numeric_features + ['Age_is_missing','Cabin_is_missing']
+preprocess2 = make_preprocess(numeric_features2, categorical_features)
+pipe2 = Pipeline(steps=[('preprocess', preprocess2), ('model', LogisticRegression(max_iter=5000))])
+scores_ind = cv_acc(pipe2, X2, y)
+print('with indicators acc mean', np.mean(scores_ind['test_acc']), 'std', np.std(scores_ind['test_acc']))
+
+# Rationale: missingness can be informative (not missing-at-random).</code></pre><h4>Why this works</h4><p>missingness can be informative (not missing-at-random).</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Extract Title from Name and one-hot encode <span class="task-sec">Encoding: One-hot vs Target encoding</span></summary><div class="task-body"><h4>Section 3 ,  Encoding: One-hot vs Target encoding</h4>
+<h4>Task 3.1: Extract Title from Name and one-hot encode</h4>
+<p>Example titles: Mr, Mrs, Miss, Master.</p>
+<ul><li>Extract Title with regex</li><li>Add it as categorical feature</li><li>Re-run CV</li></ul><h4>Starter code</h4><pre><code class="lang-python">def extract_title(name: str):
+    if not isinstance(name, str):
+        return 'Unknown'
+    m = re.search(r',\s*([^\.]*)\.', name)
+    return m.group(1).strip() if m else 'Unknown'
+
+X3 = X2.copy()
+X3['Title'] = X3['Name'].apply(extract_title)
+
+categorical_features3 = categorical_features + ['Title']
+numeric_features3 = numeric_features2
+
+# TODO: preprocess3 + CV
+preprocess3 = ...
+pipe3 = Pipeline(steps=[('preprocess', preprocess3), ('model', LogisticRegression(max_iter=5000))])
+scores3 = ...
+print('with Title acc mean', np.mean(scores3['test_acc']))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def extract_title(name: str):
+    if not isinstance(name, str):
+        return 'Unknown'
+    m = re.search(r',\s*([^\.]*)\.', name)
+    return m.group(1).strip() if m else 'Unknown'
+
+X3 = X2.copy()
+X3['Title'] = X3['Name'].apply(extract_title)
+
+categorical_features3 = categorical_features + ['Title']
+numeric_features3 = numeric_features2
+preprocess3 = make_preprocess(numeric_features3, categorical_features3)
+pipe3 = Pipeline(steps=[('preprocess', preprocess3), ('model', LogisticRegression(max_iter=5000))])
+scores3 = cv_acc(pipe3, X3, y)
+print('with Title acc mean', np.mean(scores3['test_acc']))
+
+# Rationale: Title captures social status correlated with survival.</code></pre><h4>Why this works</h4><p>Title captures social status correlated with survival.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Naive target encoding (demonstrate leakage) <span class="task-sec">Encoding: One-hot vs Target encoding</span></summary><div class="task-body"><h4>Task 3.2: Naive target encoding (demonstrate leakage)</h4>
+<p>We will <em>intentionally</em> do something wrong: compute mean Survived per Title using the full dataset, then map it back.</p>
+<ul><li>Create Title_target_mean using full data (this is leakage)</li><li>Compare CV score and explain why it inflates</li></ul>
+<p><strong>Checkpoint:</strong> How do you fix target encoding correctly?</p><h4>Starter code</h4><pre><code class="lang-python">X4 = X3.copy()
+# TODO (leaky)
+title_mean = ...
+X4['Title_target_mean_leaky'] = X4['Title'].map(title_mean).fillna(y.mean())
+
+numeric_features4 = numeric_features3 + ['Title_target_mean_leaky']
+categorical_features4 = categorical_features  # drop Title to keep it purely numeric encoding
+
+preprocess4 = ...
+pipe4 = Pipeline(steps=[('preprocess', preprocess4), ('model', LogisticRegression(max_iter=5000))])
+scores4 = ...
+print('LEAKY target encoding acc mean', np.mean(scores4['test_acc']))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X4 = X3.copy()
+title_mean = y.groupby(X3['Title']).mean()
+X4['Title_target_mean_leaky'] = X4['Title'].map(title_mean).fillna(y.mean())
+
+numeric_features4 = numeric_features3 + ['Title_target_mean_leaky']
+categorical_features4 = categorical_features  # drop Title to keep it purely numeric encoding
+preprocess4 = make_preprocess(numeric_features4, categorical_features4)
+pipe4 = Pipeline(steps=[('preprocess', preprocess4), ('model', LogisticRegression(max_iter=5000))])
+scores4 = cv_acc(pipe4, X4, y)
+print('LEAKY target encoding acc mean', np.mean(scores4['test_acc']))
+
+# Rationale: leakage occurs because encoding uses labels from validation folds. Fix with out-of-fold encoding.</code></pre><h4>Why this works</h4><p>leakage occurs because encoding uses labels from validation folds. Fix with out-of-fold encoding.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> Log-transform Fare <span class="task-sec">Nonlinear transforms + binning</span></summary><div class="task-body"><h4>Section 4 ,  Nonlinear transforms + binning</h4>
+<h4>Task 4.1: Log-transform Fare</h4><h4>Starter code</h4><pre><code class="lang-python">X5 = X3.copy()
+X5['Fare_log'] = np.log1p(pd.to_numeric(X5['Fare'], errors='coerce'))
+
+numeric_features5 = [c for c in numeric_features3 if c != 'Fare'] + ['Fare_log']
+categorical_features5 = categorical_features3
+
+# TODO preprocess5 + CV
+preprocess5 = ...
+pipe5 = Pipeline(steps=[('preprocess', preprocess5), ('model', LogisticRegression(max_iter=5000))])
+scores5 = ...
+print('with Fare_log acc mean', np.mean(scores5['test_acc']))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X5 = X3.copy()
+X5['Fare_log'] = np.log1p(pd.to_numeric(X5['Fare'], errors='coerce'))
+
+numeric_features5 = [c for c in numeric_features3 if c != 'Fare'] + ['Fare_log']
+categorical_features5 = categorical_features3
+preprocess5 = make_preprocess(numeric_features5, categorical_features5)
+pipe5 = Pipeline(steps=[('preprocess', preprocess5), ('model', LogisticRegression(max_iter=5000))])
+scores5 = cv_acc(pipe5, X5, y)
+print('with Fare_log acc mean', np.mean(scores5['test_acc']))
+
+# Rationale: Fare is heavy-tailed; log reduces scale sensitivity for linear models.</code></pre><h4>Why this works</h4><p>Fare is heavy-tailed; log reduces scale sensitivity for linear models.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 7</span> FamilySize and IsAlone <span class="task-sec">Interaction features</span></summary><div class="task-body"><h4>Section 5 ,  Interaction features</h4>
+<h4>Task 5.1: FamilySize and IsAlone</h4>
+<p>FamilySize = SibSp + Parch + 1 IsAlone = FamilySize == 1</p>
+<h4>Task 5.2: Sex × Pclass cross</h4>
+<p>Create a categorical cross feature like <code>Sex_Pclass</code>.</p><h4>Starter code</h4><pre><code class="lang-python">X6 = X5.copy()
+X6['FamilySize'] = pd.to_numeric(X6['SibSp'], errors='coerce').fillna(0) + pd.to_numeric(X6['Parch'], errors='coerce').fillna(0) + 1
+X6['IsAlone'] = (X6['FamilySize'] == 1).astype(int)
+X6['Sex_Pclass'] = X6['Sex'].astype(str) + '_P' + X6['Pclass'].astype(str)
+
+numeric_features6 = numeric_features5 + ['FamilySize','IsAlone']
+categorical_features6 = categorical_features5 + ['Sex_Pclass']
+
+# TODO preprocess6 + CV
+preprocess6 = ...
+pipe6 = Pipeline(steps=[('preprocess', preprocess6), ('model', LogisticRegression(max_iter=5000))])
+scores6 = ...
+print('with interactions acc mean', np.mean(scores6['test_acc']))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X6 = X5.copy()
+X6['FamilySize'] = pd.to_numeric(X6['SibSp'], errors='coerce').fillna(0) + pd.to_numeric(X6['Parch'], errors='coerce').fillna(0) + 1
+X6['IsAlone'] = (X6['FamilySize'] == 1).astype(int)
+X6['Sex_Pclass'] = X6['Sex'].astype(str) + '_P' + X6['Pclass'].astype(str)
+
+numeric_features6 = numeric_features5 + ['FamilySize','IsAlone']
+categorical_features6 = categorical_features5 + ['Sex_Pclass']
+preprocess6 = make_preprocess(numeric_features6, categorical_features6)
+pipe6 = Pipeline(steps=[('preprocess', preprocess6), ('model', LogisticRegression(max_iter=5000))])
+scores6 = cv_acc(pipe6, X6, y)
+print('with interactions acc mean', np.mean(scores6['test_acc']))
+
+# Rationale: interactions let linear models represent conditional effects (e.g., Sex effect varies by Pclass).</code></pre><h4>Why this works</h4><p>interactions let linear models represent conditional effects (for example, Sex effect varies by Pclass).</p></details></div></details>
+<h4>Checkpoints</h4><ul><li>Why is a baseline necessary before feature engineering?</li><li>Why does naive target encoding leak? How do you fix it?</li></ul>
+<h4>Interview angles</h4><ul><li>When do interaction features help linear models?</li></ul>
+<h4>Gotchas</h4><ul><li>Imputation can hide a strong signal: missingness itself.</li></ul>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w5-d1-feature-engineering">https://ai.thes30.com/problems/w5-d1-feature-engineering</a>.</p>
+</section><section class="lab" id="lab-w5-d2-model-evaluation">
+<h3>Model Evaluation Deep Dive <span class="diff diff-medium">Medium</span></h3>
+<p class="lab-meta">Week 5, Day 2 · Evaluation &amp; Debugging · 8 tasks · 1 checks</p>
+<p>This is the measurement lab: confusion-matrix metrics, ROC vs PR curves, cost-based threshold selection, reliability bins with ECE, temperature scaling, and a bootstrap confidence interval for PR-AUC. It is the hands-on companion to Concepts 1 and 2. Every task here answers a question interviewers ask verbatim.</p>
+<p>Master evaluation choices under class imbalance and costs: ROC vs PR, thresholds, calibration, and confidence intervals.</p>
+<div class="callout"><strong>Outcome.</strong> Students can:
+- compute core metrics correctly,
+- choose metrics aligned with product goals,
+- tune decision thresholds using costs,
+- diagnose calibration and improve it.</div>
+<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Confusion Matrix Metrics</span><span class="tagchip">ROC vs PR</span><span class="tagchip">Thresholding with Costs</span><span class="tagchip">Calibration</span><span class="tagchip">Uncertainty (Bootstrap CI)</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1PPP4XTI_ACj-FbI5YPgBCUshPopiF_AN">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-21-model">Notes</a> · <a href="eval_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/1z2q1pDoemA">Video</a></p>
+<h4>Tasks (8)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Model Evaluation Deep Dive ,  Student Lab</h3>
+<p>You will compute metrics, compare ROC vs PR, do cost-based thresholding, and evaluate calibration.</p>
+<h4>Section 0 ,  Dataset</h4>
+<p>Default: synthetic imbalanced classification. Optional: Titanic for realism.</p>
+<h3>TODO: set <code>use_titanic = False</code> or True</h3><h4>Starter code</h4><pre><code class="lang-python">import os
+import numpy as np
+import pandas as pd
+
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score, average_precision_score
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import os
+import numpy as np
+import pandas as pd
+
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score, average_precision_score
+
+rng = np.random.default_rng(0)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Section 0 ,  Dataset <span class="task-sec">Dataset</span></summary><div class="task-body"><h4>Section 0 ,  Dataset</h4>
+<p>Default: synthetic imbalanced classification. Optional: Titanic for realism.</p><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><h4>Test code</h4><pre><code class="lang-python">check('train_nonempty', len(ytr) &gt; 0)</code></pre><h4>Checks</h4><ul><li>check('train_nonempty', len(ytr)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">use_titanic = False
+
+def load_titanic_or_none():
+    path = os.path.join(os.getcwd(), 'data', 'titanic', 'train.csv')
+    if os.path.exists(path):
+        return pd.read_csv(path)
+    return None
+
+if use_titanic:
+    df = load_titanic_or_none()
+    if df is None:
+        use_titanic = False
+
+if not use_titanic:
+    X, y = make_classification(n_samples=5000, n_features=20, n_informative=6, n_redundant=4, weights=[0.9,0.1], flip_y=0.02, class_sep=1.0, random_state=0)
+    Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)
+else:
+    df = df.dropna(subset=['Survived'])
+    y = df['Survived'].astype(int).values
+    X = pd.get_dummies(df[['Pclass','Sex','Age','Fare']].copy(), columns=['Sex'], drop_first=True)
+    X['Age'] = X['Age'].fillna(X['Age'].median())
+    X['Fare'] = X['Fare'].fillna(X['Fare'].median())
+    Xtr, Xte, ytr, yte = train_test_split(X.values, y, test_size=0.3, random_state=0, stratify=y)
+
+print('base_rate', float(np.mean(ytr)))</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Implement confusion-matrix metrics <span class="task-sec">Metrics from scratch</span></summary><div class="task-body"><h4>Section 1 ,  Metrics from scratch</h4>
+<h4>Task 1.1: Implement confusion-matrix metrics</h4>
+<p>Given <code>y_true</code> and <code>y_pred</code> (0/1), implement:</p>
+<ul><li>TP, FP, TN, FN</li><li>precision, recall, f1</li><li>TPR, FPR</li></ul>
+<p><strong>Checkpoint:</strong> When is accuracy misleading?</p><h4>Starter code</h4><pre><code class="lang-python">def confusion_counts(y_true, y_pred):
+    # TODO
+    tp = ...
+    fp = ...
+    tn = ...
+    fn = ...
+    return int(tp), int(fp), int(tn), int(fn)
+
+def precision_recall_f1(y_true, y_pred):
+    tp, fp, tn, fn = confusion_counts(y_true, y_pred)
+    # TODO
+    precision = ...
+    recall = ...
+    f1 = ...
+    return float(precision), float(recall), float(f1)
+
+def tpr_fpr(y_true, y_pred):
+    tp, fp, tn, fn = confusion_counts(y_true, y_pred)
+    # TODO
+    tpr = ...
+    fpr = ...
+    return float(tpr), float(fpr)
+
+# quick sanity test
+y_true = np.array([1,1,0,0,1,0])
+y_pred = np.array([1,0,0,0,1,1])
+print('counts', confusion_counts(y_true, y_pred))
+print('prf1', precision_recall_f1(y_true, y_pred))
+print('tpr/fpr', tpr_fpr(y_true, y_pred))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Train LogisticRegression and compute ranking metrics <span class="task-sec">Train a model and compare ROC-AUC vs PR-AUC</span></summary><div class="task-body"><h4>Section 2 ,  Train a model and compare ROC-AUC vs PR-AUC</h4>
+<h4>Task 2.1: Train LogisticRegression and compute ranking metrics</h4>
+<ul><li>Fit logistic regression</li><li>Compute ROC-AUC and PR-AUC on test</li><li>Explain why PR-AUC is more informative under imbalance</li></ul><h4>Starter code</h4><pre><code class="lang-python">clf = LogisticRegression(max_iter=5000)
+clf.fit(Xtr, ytr)
+p = clf.predict_proba(Xte)[:, 1]
+
+print('roc_auc', roc_auc_score(yte, p))
+print('pr_auc', average_precision_score(yte, p))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">clf = LogisticRegression(max_iter=5000)
+clf.fit(Xtr, ytr)
+p = clf.predict_proba(Xte)[:, 1]
+print('roc_auc', roc_auc_score(yte, p))
+print('pr_auc', average_precision_score(yte, p))
+
+# Rationale: ROC can look good under severe imbalance; PR reflects precision at useful recall.</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Choose threshold to minimize expected cost <span class="task-sec">Thresholding with costs</span></summary><div class="task-body"><h4>Section 3 ,  Thresholding with costs</h4>
+<h4>Task 3.1: Choose threshold to minimize expected cost</h4>
+<p>Let cost(FN)=10, cost(FP)=1.</p>
+<ul><li>Sweep thresholds</li><li>Compute expected cost</li><li>Report best threshold</li></ul>
+<p><strong>Interview Angle:</strong> how does the best threshold move when FN cost increases?</p><h4>Starter code</h4><pre><code class="lang-python">cost_fp = 1.0
+cost_fn = 10.0
+
+thresholds = np.linspace(0.01, 0.99, 99)
+best = None
+for t in thresholds:
+    yhat = (p &gt;= t).astype(int)
+    tp, fp, tn, fn = confusion_counts(yte, yhat)
+    cost = cost_fp * fp + cost_fn * fn
+    if best is None or cost &lt; best[0]:
+        best = (cost, t, fp, fn)
+
+print('best (cost, thr, fp, fn):', best)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">cost_fp = 1.0
+cost_fn = 10.0
+thresholds = np.linspace(0.01, 0.99, 99)
+best = None
+for t in thresholds:
+    yhat = (p &gt;= t).astype(int)
+    tp, fp, tn, fn = confusion_counts(yte, yhat)
+    cost = cost_fp * fp + cost_fn * fn
+    if best is None or cost &lt; best[0]:
+        best = (cost, float(t), int(fp), int(fn))
+print('best (cost, thr, fp, fn):', best)
+
+# Rationale: higher FN cost pushes threshold lower to catch more positives.</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> Implement reliability bins and ECE <span class="task-sec">Calibration: Reliability + ECE</span></summary><div class="task-body"><h4>Section 4 ,  Calibration: Reliability + ECE</h4>
+<h4>Task 4.1: Implement reliability bins and ECE</h4>
+<p>ECE (Expected Calibration Error) is a weighted avg of |avg_confidence - accuracy| per bin.</p><h4>Starter code</h4><pre><code class="lang-python">def reliability_bins(y_true, prob, n_bins=10):
+    # returns list of (bin_lo, bin_hi, count, avg_conf, acc)
+    # TODO
+    out = []
+    ...
+    return out
+
+def ece(y_true, prob, n_bins=10):
+    bins = reliability_bins(y_true, prob, n_bins=n_bins)
+    # TODO
+    return ...
+
+bins = reliability_bins(yte, p, n_bins=10)
+print('first 3 bins:', bins[:3])
+print('ECE:', ece(yte, p, n_bins=10))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 7</span> Temperature scaling (binary, post-hoc) <span class="task-sec">Calibration: Reliability + ECE</span></summary><div class="task-body"><h4>Task 4.2: Temperature scaling (binary, post-hoc)</h4>
+<p>We will learn a temperature <code>T&gt;0</code> to calibrate logits: sigmoid(logit / T).</p>
+<ul><li>Convert probabilities to logits</li><li>Search over T grid to minimize NLL on a validation split</li><li>Compare ECE before/after</li></ul><h4>Starter code</h4><pre><code class="lang-python"># Make a val split from train for calibration tuning
+Xtr2, Xva2, ytr2, yva2 = train_test_split(Xtr, ytr, test_size=0.3, random_state=0, stratify=ytr)
+clf2 = LogisticRegression(max_iter=5000)
+clf2.fit(Xtr2, ytr2)
+p_va = clf2.predict_proba(Xva2)[:, 1]
+p_te = clf2.predict_proba(Xte)[:, 1]
+
+def to_logits(p):
+   ...
+
+def nll_from_prob(y_true, prob):
+    ...
+
+logits_va = to_logits(p_va)
+logits_te = to_logits(p_te)
+
+Ts = np.linspace(0.5, 5.0, 91)
+best = None
+for T in Ts:
+    prob = 1 / (1 + np.exp(-(logits_va / T)))
+    loss = nll_from_prob(yva2, prob)
+    if best is None or loss &lt; best[0]:
+        best = (loss, T)
+
+print('best (nll, T):', best)
+Tbest = best[1]
+p_te_cal = 1 / (1 + np.exp(-(logits_te / Tbest)))
+print('ECE before:', ece(yte, p_te, n_bins=10))
+print('ECE after :', ece(yte, p_te_cal, n_bins=10))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 8</span> Bootstrap a CI for PR-AUC <span class="task-sec">Bootstrap CI (uncertainty)</span></summary><div class="task-body"><h4>Section 5 ,  Bootstrap CI (uncertainty)</h4>
+<h4>Task 5.1: Bootstrap a CI for PR-AUC</h4>
+<ul><li>Sample indices with replacement</li><li>Compute PR-AUC each bootstrap</li><li>Report 2.5 and 97.5 percentiles</li></ul><h4>Starter code</h4><pre><code class="lang-python">B = 500
+vals = []
+n = len(yte)
+for _ in range(B):
+    idx = rng.integers(0, n, size=n)
+    vals.append(average_precision_score(yte[idx], p[idx]))
+
+lo, hi = np.percentile(vals, [2.5, 97.5])
+print('PR-AUC point:', average_precision_score(yte, p))
+print('95% CI:', (lo, hi))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python"># Bootstrap CI for PR-AUC
+B = 500
+vals = []
+n = len(yte)
+for _ in range(B):
+    idx = rng.integers(0, n, size=n)
+    vals.append(average_precision_score(yte[idx], p[idx]))
+lo, hi = np.percentile(vals, [2.5, 97.5])
+print('PR-AUC point:', average_precision_score(yte, p))
+print('95% CI:', (float(lo), float(hi)))
+
+# Rationale: point estimates hide variance; CI tells you if improvements are meaningful.</code></pre></details></div></details>
+<h4>Checkpoints</h4><ul><li>When can accuracy be misleading?</li></ul>
+<h4>Interview angles</h4><ul><li>How do you pick a threshold if false negatives cost 10x false positives?</li></ul>
+<h4>Gotchas</h4><ul><li>PR curves depend strongly on base rate; always report base rate.</li></ul>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w5-d2-model-evaluation">https://ai.thes30.com/problems/w5-d2-model-evaluation</a>.</p>
+</section><section class="lab" id="lab-w5-d3-bias-variance-regularization">
+<h3>Bias, Variance &amp; Regularization <span class="diff diff-medium">Medium</span></h3>
+<p class="lab-meta">Week 5, Day 3 · Evaluation &amp; Debugging · 6 tasks · 0 checks</p>
+<p>This lab turns the bias-variance diagram into experiments: depth sweeps, C sweeps, L1 vs L2 sparsity, and learning curves by data size. It is Concept 3 with the code attached. Pay attention to the L1 correlated-features gotcha; it breaks naive feature-importance readings in production.</p>
+<p>Build interview-grade intuition for under/overfitting, bias/variance tradeoffs, and regularization (L1/L2, early stopping), grounded in experiments.</p>
+<div class="callout"><strong>Outcome.</strong> Students can:
+- diagnose bias vs variance from learning curves,
+- choose regularization knobs and justify them,
+- explain L1 vs L2 and their effects on weights/features,
+- reason about model capacity and data size.</div>
+<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Setup + Baseline</span><span class="tagchip">Capacity Sweep (Under/Overfitting)</span><span class="tagchip">Regularization (L2 vs L1)</span><span class="tagchip">Learning Curves (Data Size)</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1C_uAfyILzHa0ljqW1qgKsxZVWfxAiyty">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-22-bias">Notes</a> · <a href="biasvar_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/q_KNT017xPw">Video</a></p>
+<h4>Tasks (6)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Bias, Variance &amp; Regularization ,  Student Lab (Breast Cancer)</h3>
+<p>You will diagnose under/overfitting using capacity sweeps and learning curves, then connect that to regularization knobs.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)
+
+data = load_breast_cancer()
+X = data.data
+y = data.target
+
+Xtr, Xva, ytr, yva = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)
+check('shapes', Xtr.shape[0]==ytr.shape[0] and Xva.shape[0]==yva.shape[0])
+print('base_rate', float(y.mean()))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Instructor explanation</h4><h3>Bias, Variance &amp; Regularization ,  Instructor (Breast Cancer)</h3></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Logistic regression baseline <span class="task-sec">Baseline</span></summary><div class="task-body"><h4>Section 1 ,  Baseline</h4>
+<h4>Task 1.1: Logistic regression baseline</h4>
+<ul><li>Fit a logistic regression with standardization</li><li>Report train and val accuracy</li></ul>
+<p><strong>Checkpoint:</strong> Why is logistic regression usually lower-variance than deep trees?</p><h4>Starter code</h4><pre><code class="lang-python"># Baseline logistic regression
+# TODO
+lr = ...
+lr.fit(Xtr, ytr)
+
+
+print('train_acc', accuracy_score(ytr, lr.predict(Xtr)))
+print('val_acc', accuracy_score(yva, lr.predict(Xva)))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python"># Baseline logistic regression
+lr = Pipeline(steps=[('scaler', StandardScaler()), ('model', LogisticRegression(max_iter=5000))])
+lr.fit(Xtr, ytr)
+print('train_acc', accuracy_score(ytr, lr.predict(Xtr)))
+print('val_acc', accuracy_score(yva, lr.predict(Xva)))
+
+# Rationale: linear model is constrained capacity; typically lower variance than deep trees.</code></pre><h4>Why this works</h4><p>linear model is constrained capacity; typically lower variance than deep trees.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Depth sweep <span class="task-sec">Capacity sweep (Decision Tree depth)</span></summary><div class="task-body"><h4>Section 2 ,  Capacity sweep (Decision Tree depth)</h4>
+<h4>Task 2.1: Depth sweep</h4>
+<ul><li>For depths = 1..15, fit a DecisionTreeClassifier(max_depth=d)</li><li>Track train_acc and val_acc</li><li>Print the best depth by val accuracy</li></ul>
+<p><strong>Checkpoint:</strong> Which depths look high-bias? Which look high-variance?</p><h4>Starter code</h4><pre><code class="lang-python">depths = list(range(1, 16))
+train_acc = []
+val_acc = []
+
+for d in depths:
+    clf = DecisionTreeClassifier(max_depth=d, random_state=0)
+    clf.fit(Xtr, ytr)
+    train_acc.append(accuracy_score(ytr, clf.predict(Xtr)))
+    val_acc.append(accuracy_score(yva, clf.predict(Xva)))
+
+best_i = int(np.argmax(val_acc))
+print('best_depth', depths[best_i], 'val_acc', val_acc[best_i])
+print('depth, train, val (first 5)')
+for i in range(5):
+    print(depths[i], train_acc[i], val_acc[i])</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python"># Depth sweep
+depths = list(range(1, 16))
+train_acc = []
+val_acc = []
+for d in depths:
+    clf = DecisionTreeClassifier(max_depth=d, random_state=0)
+    clf.fit(Xtr, ytr)
+    train_acc.append(accuracy_score(ytr, clf.predict(Xtr)))
+    val_acc.append(accuracy_score(yva, clf.predict(Xva)))
+best_i = int(np.argmax(val_acc))
+print('best_depth', depths[best_i], 'val_acc', val_acc[best_i])
+
+# Rationale: as depth increases, bias decreases but variance increases; look for widening train-val gap.</code></pre><h4>Why this works</h4><p>as depth increases, bias decreases but variance increases; look for widening train-val gap.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Sweep C for L2 logistic regression <span class="task-sec">Regularization sweep (LogReg C)</span></summary><div class="task-body"><h4>Section 3 ,  Regularization sweep (LogReg C)</h4>
+<h4>Task 3.1: Sweep C for L2 logistic regression</h4>
+<ul><li>Try C in [0.01, 0.1, 1, 10, 100]</li><li>Compare train vs val accuracy</li></ul>
+<p><strong>Checkpoint:</strong> What does decreasing C do to bias/variance? &lt;img src="/images/w5-d3-bias-variance-accuracy-curves.svg" alt="Bias-variance with train/validation accuracy vs C" width="640" /&gt;</p>
+<p>Visual intuition:</p>
+<ul><li>Left (low C = strong regularization): bias dominates (underfitting risk).</li><li>Middle: best tradeoff region (lowest validation/test error).</li><li>Right (high C = weak regularization): variance dominates (overfitting risk).</li></ul>
+<ul><li>C axis uses log scale: <code>[0.01, 0.1, 1, 10, 100]</code>.</li></ul><h4>Starter code</h4><pre><code class="lang-python">Cs = [0.01, 0.1, 1.0, 10.0, 100.0]
+for C in Cs:
+    lrC = Pipeline(steps=[
+        ('scaler', StandardScaler()),
+        ('model', LogisticRegression(max_iter=5000, C=C, penalty='l2'))
+    ])
+    lrC.fit(Xtr, ytr)
+    tr = accuracy_score(ytr, lrC.predict(Xtr))
+    va = accuracy_score(yva, lrC.predict(Xva))
+    print('C', C, 'train', tr, 'val', va)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python"># C sweep (L2)
+Cs = [0.01, 0.1, 1.0, 10.0, 100.0]
+for C in Cs:
+    lrC = Pipeline(steps=[('scaler', StandardScaler()), ('model', LogisticRegression(max_iter=5000, C=C, penalty='l2'))])
+    lrC.fit(Xtr, ytr)
+    tr = accuracy_score(ytr, lrC.predict(Xtr))
+    va = accuracy_score(yva, lrC.predict(Xva))
+    print('C', C, 'train', tr, 'val', va)
+
+# Rationale: smaller C =&gt; stronger regularization =&gt; higher bias, lower variance.</code></pre><h4>Why this works</h4><p>smaller C =&gt; stronger regularization =&gt; higher bias, lower variance.</p><h4>Instructor explanation</h4><h4>Section 3 - Regularization Strength (C)</h4>
+<ul><li>High C -&gt; less regularization -&gt; model more complex, lower bias, potentially high variance (overfitting).</li><li>Low C -&gt; more regularization -&gt; model simpler, higher bias, potentially lower variance (underfitting).</li></ul></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> L1 vs L2 sparsity <span class="task-sec">Regularization sweep (LogReg C)</span></summary><div class="task-body"><h4>Task 3.2: L1 vs L2 sparsity</h4>
+<ul><li>Fit L1 logistic regression (solver=liblinear)</li><li>Count how many coefficients are exactly 0</li><li>Compare to L2</li></ul>
+<p><strong>FAANG Gotcha:</strong> correlated features can make L1 unstable (it picks one arbitrarily).</p><h4>Starter code</h4><pre><code class="lang-python"># L2 model
+lr_l2 = Pipeline(steps=[('scaler', StandardScaler()), ('model', LogisticRegression(max_iter=5000, C=1.0, penalty='l2'))])
+lr_l2.fit(Xtr, ytr)
+w_l2 = lr_l2.named_steps['model'].coef_.ravel()
+
+# TODO: L1 model
+lr_l1 = ...
+lr_l1.fit(Xtr, ytr)
+w_l1 = lr_l1.named_steps['model'].coef_.ravel()
+
+print('l2 zeros', int(np.sum(np.isclose(w_l2, 0.0))))
+print('l1 zeros', int(np.sum(np.isclose(w_l1, 0.0))))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python"># L1 vs L2 sparsity
+lr_l2 = Pipeline(steps=[('scaler', StandardScaler()), ('model', LogisticRegression(max_iter=5000, C=1.0, penalty='l2'))])
+lr_l2.fit(Xtr, ytr)
+w_l2 = lr_l2.named_steps['model'].coef_.ravel()
+
+lr_l1 = Pipeline(steps=[('scaler', StandardScaler()), ('model', LogisticRegression(max_iter=5000, C=1.0, penalty='l1', solver='liblinear'))])
+lr_l1.fit(Xtr, ytr)
+w_l1 = lr_l1.named_steps['model'].coef_.ravel()
+
+print('l2 zeros', int(np.sum(np.isclose(w_l2, 0.0))))
+print('l1 zeros', int(np.sum(np.isclose(w_l1, 0.0))))
+
+# Rationale: L1 encourages sparsity; correlated features can cause arbitrary selection.</code></pre><h4>Why this works</h4><p>L1 encourages sparsity; correlated features can cause arbitrary selection.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> Train with increasing data sizes <span class="task-sec">Learning curve by subsampling</span></summary><div class="task-body"><h4>Section 4 ,  Learning curve by subsampling</h4>
+<h4>Task 4.1: Train with increasing data sizes</h4>
+<ul><li>For fractions in [0.1, 0.2, 0.4, 0.6, 0.8, 1.0], train logistic regression on that fraction</li><li>Track train vs val accuracy</li></ul>
+<p><strong>Interview Angle:</strong> How do you decide whether to get more data vs regularize more?</p>
+<p>Use this with Section 3 curve intuition for bias/variance diagnosis from train-vs-val gaps.</p><h4>Starter code</h4><pre><code class="lang-python">fracs = [0.1, 0.2, 0.4, 0.6, 0.8, 1.0]
+idx_all = np.arange(len(Xtr))
+
+for f in fracs:
+    k = max(5, int(f * len(Xtr)))
+    idx = rng.choice(idx_all, size=k, replace=False)
+    Xsub, ysub = Xtr[idx], ytr[idx]
+    lr_sub = Pipeline(steps=[('scaler', StandardScaler()), ('model', LogisticRegression(max_iter=5000, C=1.0))])
+    lr_sub.fit(Xsub, ysub)
+    tr = accuracy_score(ysub, lr_sub.predict(Xsub))
+    va = accuracy_score(yva, lr_sub.predict(Xva))
+    print('frac', f, 'n', k, 'train', tr, 'val', va)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python"># Learning curve by subsampling
+fracs = [0.1, 0.2, 0.4, 0.6, 0.8, 1.0]
+idx_all = np.arange(len(Xtr))
+for f in fracs:
+    k = max(5, int(f * len(Xtr)))
+    idx = rng.choice(idx_all, size=k, replace=False)
+    Xsub, ysub = Xtr[idx], ytr[idx]
+    lr_sub = Pipeline(steps=[('scaler', StandardScaler()), ('model', LogisticRegression(max_iter=5000, C=1.0))])
+    lr_sub.fit(Xsub, ysub)
+    tr = accuracy_score(ysub, lr_sub.predict(Xsub))
+    va = accuracy_score(yva, lr_sub.predict(Xva))
+    print('frac', f, 'n', k, 'train', tr, 'val', va)
+
+# Rationale: if both train/val are low -&gt; bias; if train high, val low -&gt; variance; more data helps variance.</code></pre><h4>Why this works</h4><p>if both train/val are low -&gt; bias; if train high, val low -&gt; variance; more data helps variance.</p><h4>Instructor explanation</h4><h4>Section 4 - Learning Curve by Subsampling</h4>
+<blockquote><p>ð¡ If both train/validation are low, suspect <strong>bias</strong>. If train is high and validation is low, suspect <strong>variance</strong>. More data usually helps variance. If validation accuracy flattens or worsens despite more data, increase regularization.</p></blockquote></details></div></details>
+<h4>Checkpoints</h4><ul><li>Why is logistic regression a “high bias / low variance” baseline?</li><li>What pattern indicates high variance?</li><li>What pattern indicates high bias?</li></ul>
+<h4>Interview angles</h4><ul><li>How do you know whether to get more data vs regularize more?</li></ul>
+<h4>Gotchas</h4><ul><li>L1 can zero out correlated features arbitrarily.</li></ul>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w5-d3-bias-variance-regularization">https://ai.thes30.com/problems/w5-d3-bias-variance-regularization</a>.</p>
+</section><section class="lab" id="lab-w5-d4-model-debugging-error-analysis">
+<h3>Model Debugging &amp; Error Analysis <span class="diff diff-medium">Medium</span></h3>
+<p class="lab-meta">Week 5, Day 4 · Evaluation &amp; Debugging · 7 tasks · 0 checks</p>
+<p>This lab is the debugging workflow FAANG expects after the first model exists: slice metrics, FP vs FN inspection, feature ablation, and threshold by cost. It operationalizes Concept 4. The standing checkpoint, "why is a pipeline required for trustworthy debugging," is worth answering in your own words before you look at any hint.</p>
+<p>Learn the workflow FAANG expects after you have a model: diagnose errors, find slices that fail, run feature ablations, and iterate safely.</p>
+<div class="callout"><strong>Outcome.</strong> Students can:
+- build a baseline churn classifier,
+- compute slice metrics and identify failure cohorts,
+- perform error analysis (FP vs FN),
+- run feature ablation and interpret results,
+- tune threshold for business cost.</div>
+<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Baseline + Holdout</span><span class="tagchip">Error Breakdown</span><span class="tagchip">Slice Analysis</span><span class="tagchip">Feature Ablation</span><span class="tagchip">Thresholding with Cost</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1jyKQRS8RHt4k4Low_fVY0umDbzKbPJ0L">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-23-model">Notes</a> · <a href="debug_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/m5_p6uHGLiA">Video</a></p>
+<h4>Tasks (7)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Model Debugging &amp; Error Analysis ,  Student Lab (Customer Churn)</h3>
+<p>You will build a baseline churn model, then debug it via slice analysis and feature ablation.</p>
+<h4>Section 0 ,  Load churn dataset (with fallback)</h4>
+<p>Expected path: <code>data/churn/churn.csv</code></p>
+<p>The target column is commonly <code>Churn</code> (Yes/No) or <code>churn</code> (0/1).</p><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Model Debugging &amp; Error Analysis ,  Instructor (Customer Churn)</h3></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Build `y` robustly <span class="task-sec">Target normalization + holdout split</span></summary><div class="task-body"><h4>Section 1 ,  Target normalization + holdout split</h4>
+<h4>Task 1.1: Build <code>y</code> robustly</h4>
+<ul><li>Support both Yes/No and 0/1 churn targets</li><li>Create X/y</li><li>Train/holdout split (stratify)</li></ul><h4>Starter code</h4><pre><code class="lang-python">target_col = 'Churn' if 'Churn' in df.columns else ('churn' if 'churn' in df.columns else None)
+if target_col is None:
+    raise ValueError('Expected churn target column: Churn or churn')
+y_raw = df[target_col]
+if y_raw.dtype == object:
+    y = y_raw.astype(str).str.lower().map({'yes': 1, 'no': 0})
+else:
+    y = y_raw.astype(int)
+if y.isna().any():
+    raise ValueError('Target contains unexpected values; expected Yes/No or 0/1.')
+X = df.drop(columns=[target_col])
+
+Xtr, Xho, ytr, yho = train_test_split(X, y.values, test_size=0.25, random_state=0, stratify=y.values)
+print('train/holdout', Xtr.shape, Xho.shape)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">target_col = 'Churn' if 'Churn' in df.columns else ('churn' if 'churn' in df.columns else None)
+if target_col is None:
+    raise ValueError('Expected churn target column: Churn or churn')
+y_raw = df[target_col]
+if y_raw.dtype == object:
+    y = y_raw.astype(str).str.lower().map({'yes': 1, 'no': 0})
+else:
+    y = y_raw.astype(int)
+if y.isna().any():
+    raise ValueError('Target contains unexpected values; expected Yes/No or 0/1.')
+X = df.drop(columns=[target_col])
+
+Xtr, Xho, ytr, yho = train_test_split(X, y.values, test_size=0.25, random_state=0, stratify=y.values)
+print('train/holdout', Xtr.shape, Xho.shape)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Build ColumnTransformer + LogisticRegression <span class="task-sec">Baseline pipeline (leakage-safe)</span></summary><div class="task-body"><h4>Section 2 ,  Baseline pipeline (leakage-safe)</h4>
+<h4>Task 2.1: Build ColumnTransformer + LogisticRegression</h4>
+<ul><li>Identify numeric vs categorical columns</li><li>Build preprocess pipeline</li><li>Fit on train</li><li>Report holdout accuracy + ROC-AUC</li></ul><h4>Starter code</h4><pre><code class="lang-python"># TODO
+
+num_cols = ...
+cat_cols =  ...
+
+preprocess = ColumnTransformer(
+    transformers=[
+       ....
+    ]
+)
+
+pipe = ...
+pipe.fit(Xtr, ytr)
+pred =  ...
+proba = pipe.predict_proba(Xho)[:, 1]
+print('holdout_acc', accuracy_score(yho, pred))
+print('holdout_auc', roc_auc_score(yho, proba))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">num_cols = [c for c in Xtr.columns if pd.api.types.is_numeric_dtype(Xtr[c])]
+cat_cols = [c for c in Xtr.columns if c not in num_cols]
+
+preprocess = ColumnTransformer(
+    transformers=[
+        ('num', Pipeline(steps=[('imputer', SimpleImputer(strategy='median')), ('scaler', StandardScaler())]), num_cols),
+        ('cat', Pipeline(steps=[('imputer', SimpleImputer(strategy='most_frequent')), ('onehot', OneHotEncoder(handle_unknown='ignore'))]), cat_cols),
+    ]
+)
+
+pipe = Pipeline(steps=[('preprocess', preprocess), ('model', LogisticRegression(max_iter=5000))])
+pipe.fit(Xtr, ytr)
+pred = pipe.predict(Xho)
+proba = pipe.predict_proba(Xho)[:, 1]
+print('holdout_acc', accuracy_score(yho, pred))
+print('holdout_auc', roc_auc_score(yho, proba))
+
+# Rationale: use pipeline so preprocessing is fit only on training data; avoids leakage and makes debugging trustworthy.</code></pre><h4>Why this works</h4><p>use pipeline so preprocessing is fit only on training data; avoids leakage and makes debugging trustworthy.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Confusion matrix and error types <span class="task-sec">Error breakdown (FP vs FN)</span></summary><div class="task-body"><h4>Section 3 ,  Error breakdown (FP vs FN)</h4>
+<h4>Task 3.1: Confusion matrix and error types</h4>
+<ul><li>Compute confusion matrix</li><li>Count FP/FN</li><li>Identify 5 examples of FP and FN rows from holdout</li></ul><h4>Starter code</h4><pre><code class="lang-python">cm = confusion_matrix(yho, pred)
+# ...
+# ...
+
+ho = Xho.copy()
+ho['y_true'] = yho
+ho['p'] = proba
+ho['y_pred'] = pred
+
+fp = ho[(ho['y_true'] == 0) &amp; (ho['y_pred'] == 1)]
+fn = ho[(ho['y_true'] == 1) &amp; (ho['y_pred'] == 0)]
+print('fp', len(fp), 'fn', len(fn))
+print('FP examples')
+print(fp.head())
+print('FN examples')
+print(fn.head())</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">cm = confusion_matrix(yho, pred)
+print('confusion_matrix\n', cm)
+
+ho = Xho.copy()
+ho['y_true'] = yho
+ho['p'] = proba
+ho['y_pred'] = pred
+
+fp = ho[(ho['y_true'] == 0) &amp; (ho['y_pred'] == 1)]
+fn = ho[(ho['y_true'] == 1) &amp; (ho['y_pred'] == 0)]
+print('fp', len(fp), 'fn', len(fn))
+
+# Rationale: separate FP vs FN; fixes differ (thresholding, features, cohort-specific modeling).</code></pre><h4>Why this works</h4><p>separate FP vs FN; fixes differ (thresholding, features, cohort-specific modeling).</p><h4>Instructor explanation</h4><h4>Figure: ROC Curve (Baseline)</h4>
+<p>![ROC Curve](/images/w5-d4-roc-curve.png)</p>
+<h4>Figure: Confusion Matrix</h4>
+<p>![Confusion Matrix](/images/w5-d4-confusion-matrix.png)</p>
+<h4>Figure: Predicted Probability by Class</h4>
+<p>![Probability Histogram](/images/w5-d4-proba-hist.png)</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Slice metrics by key categorical columns <span class="task-sec">Slice analysis</span></summary><div class="task-body"><h4>Section 4 ,  Slice analysis</h4>
+<h4>Task 4.1: Slice metrics by key categorical columns</h4>
+<ul><li>For each of these (if present): Contract, InternetService, PaymentMethod</li><li>Report: count, churn_rate, accuracy</li></ul>
+<p><strong>Checkpoint:</strong> Why can slice failures happen even if overall metrics are good?</p><h4>Starter code</h4><pre><code class="lang-python">def slice_table(df_holdout, col):
+    def _slice_metrics(d):
+        y_true = d['y_true'].values
+        y_pred = d['y_pred'].values
+        y_prob = d['p'].values
+        auc = float('nan')
+        if len(np.unique(y_true)) &gt;= 2:
+            auc = float(roc_auc_score(y_true, y_prob))
+        return pd.Series({
+            'n': len(d),
+            'churn_rate': float(np.mean(y_true)),
+            'acc': float(np.mean(y_true == y_pred)),
+            'roc_auc': auc,
+        })
+
+    g = df_holdout.groupby(col).apply(_slice_metrics)
+    return g.sort_values('n', ascending=False)
+
+for col in ['Contract','InternetService','PaymentMethod']:
+    if col in ho.columns:
+        print('---', col)
+        print(slice_table(ho, col))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def slice_table(df_holdout, col):
+    def _slice_metrics(d):
+        y_true = d['y_true'].values
+        y_pred = d['y_pred'].values
+        y_prob = d['p'].values
+        auc = float('nan')
+        if len(np.unique(y_true)) &gt;= 2:
+            auc = float(roc_auc_score(y_true, y_prob))
+        return pd.Series({
+            'n': len(d),
+            'churn_rate': float(np.mean(y_true)),
+            'acc': float(np.mean(y_true == y_pred)),
+            'roc_auc': auc,
+        })
+
+    g = df_holdout.groupby(col).apply(_slice_metrics)
+    return g.sort_values('n', ascending=False)
+
+for col in ['Contract','InternetService','PaymentMethod']:
+    if col in ho.columns:
+        print('---', col)
+        print(slice_table(ho, col))
+
+# Rationale: slice analysis reveals systematic errors in cohorts; overall metrics can mask them.</code></pre><h4>Why this works</h4><p>slice analysis reveals systematic errors in cohorts; overall metrics can mask them.</p><h4>Instructor explanation</h4><h4>Figure: Slice Performance</h4>
+<p>![Slice Performance](/images/w5-d4-slice-performance.png)</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> Drop feature groups and re-evaluate <span class="task-sec">Feature ablation</span></summary><div class="task-body"><h4>Section 5 ,  Feature ablation</h4>
+<h4>Task 5.1: Drop feature groups and re-evaluate</h4>
+<ul><li>Define groups by prefix or by a manual list</li><li>Fit the same pipeline after dropping each group</li><li>Report the delta in AUC</li></ul><h4>Starter code</h4><pre><code class="lang-python">$11</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Why this works</h4><p>ablation estimates marginal utility and helps you prioritize feature work.</p><h4>Instructor explanation</h4><h4>Figure: Feature Ablation Impact</h4>
+<p>![Ablation Delta](/images/w5-d4-ablation-delta.png)</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 7</span> Pick threshold for cost ratio <span class="task-sec">Thresholding with costs</span></summary><div class="task-body"><h4>Section 6 ,  Thresholding with costs</h4>
+<h4>Task 6.1: Pick threshold for cost ratio</h4>
+<p>Let cost(FN)=5 and cost(FP)=1.</p>
+<ul><li>Sweep thresholds</li><li>Compute cost on holdout</li><li>Report best threshold</li></ul><h4>Starter code</h4><pre><code class="lang-python">cost_fp = 1.0
+cost_fn = 5.0
+ths = np.linspace(0.05, 0.95, 91)
+best = None
+
+for t in ths:
+    yhat = (proba &gt;= t).astype(int)
+    tn, fp, fn, tp = confusion_matrix(yho, yhat).ravel()
+    cost = cost_fp * fp + cost_fn * fn
+    if best is None or cost &lt; best[0]:
+        best = (float(cost), float(t), int(fp), int(fn))
+
+print('best (cost, thr, fp, fn):', best)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python"># Thresholding with costs
+cost_fp = 1.0
+cost_fn = 5.0
+ths = np.linspace(0.05, 0.95, 91)
+best = None
+for t in ths:
+    yhat = (proba &gt;= t).astype(int)
+    tn, fp, fn, tp = confusion_matrix(yho, yhat).ravel()
+    cost = cost_fp * fp + cost_fn * fn
+    if best is None or cost &lt; best[0]:
+        best = (float(cost), float(t), int(fp), int(fn))
+print('best (cost, thr, fp, fn):', best)
+
+# Rationale: threshold should align with business costs; not necessarily 0.5.</code></pre><h4>Why this works</h4><p>threshold should align with business costs; not necessarily 0.5.</p><h4>Instructor explanation</h4><h4>Figure: Threshold vs Business Cost</h4>
+<p>![Threshold Cost](/images/w5-d4-threshold-cost-v2.png)</p></details></div></details>
+<h4>Checkpoints</h4><ul><li>Why is a pipeline required for trustworthy debugging?</li></ul>
+<h4>Interview angles</h4><ul><li>Which is worse: FP or FN? (Depends on business cost.)</li></ul>
+<h4>Gotchas</h4><ul><li>“Overall accuracy looks fine” can hide severe cohort failures.</li></ul>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w5-d4-model-debugging-error-analysis">https://ai.thes30.com/problems/w5-d4-model-debugging-error-analysis</a>.</p>
+</section><section class="lab" id="lab-w5-d5-feature-evaluation-credit-default">
+<h3>Feature + Evaluation Lab <span class="diff diff-medium">Medium</span></h3>
+<p class="lab-meta">Week 5, Day 5 · Evaluation &amp; Debugging · 8 tasks · 1 checks</p>
+<p>This is the capstone: feature engineering plus evaluation discipline on an imbalanced, cost-sensitive credit-default problem. It combines Concepts 1, 2, and 4 in one pipeline with model comparison under cross-validation. Treat it as a mock take-home: baselines first, then features, then threshold by cost.</p>
+<p>Combine feature engineering + evaluation discipline on an imbalanced, cost-sensitive classification problem.</p>
+<div class="callout"><strong>Outcome.</strong> Students can:
+- build a leakage-safe sklearn pipeline,
+- compare baselines vs stronger models under CV,
+- use PR-AUC / ROC-AUC appropriately,
+- choose a decision threshold using business costs,
+- run slice analysis and error analysis.</div>
+<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Baselines</span><span class="tagchip">Model Comparison (CV)</span><span class="tagchip">Feature Engineering</span><span class="tagchip">Thresholding with Costs</span><span class="tagchip">Error Analysis + Slices</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1J8JHL8NG0auzl6n9biTdWDG0OlxVpLpU">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-24-credit">Notes</a> · <a href="credit_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/-7KVz4OeM_I">Video</a></p>
+<h4>Tasks (8)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Feature + Evaluation Lab ,  Credit Default (Student)</h3>
+<p>This is a capstone-style classical ML lab: baselines -&gt; CV -&gt; thresholding -&gt; slices.</p>
+<h4>Section 0 ,  Load dataset (with fallback)</h4>
+<p>Expected path: <code>data/credit_default/credit.csv</code></p>
+<p>Supported target column names (0/1):</p>
+<ul><li>default / Default</li><li>default.payment.next.month</li><li>DEFAULT_PAY</li><li>default_payment_next_month</li></ul><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Feature + Evaluation Lab ,  Credit Default (Instructor)</h3>
+<h4>Setup ,  Load dataset (with fallback)</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Identify target column robustly <span class="task-sec">Define X/y + holdout split</span></summary><div class="task-body"><h4>Section 1 ,  Define X/y + holdout split</h4>
+<h4>Task 1.1: Identify target column robustly</h4>
+<ul><li>Find the target col from the supported names</li><li>Create X/y</li><li>Split into train/holdout (stratified)</li></ul>
+<p><strong>Checkpoint:</strong> Why do we keep a final holdout set untouched during model selection?</p><h4>Starter code</h4><pre><code class="lang-python">target_candidates = ['default', 'Default', 'default.payment.next.month', 'DEFAULT_PAY', 'default_payment_next_month']
+target_col = next((c for c in target_candidates if c in df.columns), None)
+check('target_found', target_col is not None)
+
+y = df[target_col].astype(int)
+X = df.drop(columns=[target_col])
+
+Xtr, Xho, ytr, yho = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)
+print('base_rate_train', float(ytr.mean()))</code></pre><h4>Test code</h4><pre><code class="lang-python">check('target_found', target_col is not None)</code></pre><h4>Checks</h4><ul><li>check('target_found', target_col is not None)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">target_candidates = ['default', 'Default', 'default.payment.next.month', 'DEFAULT_PAY', 'default_payment_next_month']
+target_col = next((c for c in target_candidates if c in df.columns), None)
+if target_col is None:
+    raise ValueError('Target column not found. Expected one of: ' + ', '.join(target_candidates))
+y = df[target_col].astype(int)
+X = df.drop(columns=[target_col])
+
+Xtr, Xho, ytr, yho = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)
+print('base_rate_train', float(ytr.mean()))
+</code></pre><h4>Instructor explanation</h4><h4>Section 1 ,  Define X/y + holdout split</h4>
+<h4>Task 1.1: Identify target column robustly</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Majority baseline <span class="task-sec">Baselines</span></summary><div class="task-body"><h4>Section 2 ,  Baselines</h4>
+<h4>Task 2.1: Majority baseline</h4><h4>Starter code</h4><pre><code class="lang-python">majority = int(ytr.mean() &gt;= 0.5)
+pred = np.full(len(yho), majority)
+print('majority_acc', accuracy_score(yho, pred))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python"># Majority baseline
+majority = int(ytr.mean() &gt;= 0.5)
+pred = np.full(len(yho), majority)
+print('majority_acc', accuracy_score(yho, pred))
+</code></pre><h4>Instructor explanation</h4><h4>Section 2 ,  Baselines</h4>
+<h4>Task 2.1: Majority baseline</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Baseline pipeline (LogisticRegression) <span class="task-sec">Baselines</span></summary><div class="task-body"><h4>Task 2.2: Baseline pipeline (LogisticRegression)</h4>
+<ul><li>Build preprocess (numeric: impute+scale, categorical: impute+onehot)</li><li>Evaluate with CV on training set (ROC-AUC + PR-AUC)</li></ul><h4>Starter code</h4><pre><code class="lang-python"># TODO:
+# Build preprocess (num: impute+scale, cat: impute+onehot) and evaluate LR with CV.
+num_cols = ...
+cat_cols = ...
+
+preprocess = ...
+cv = ...
+scoring = {'roc_auc': 'roc_auc', 'pr_auc': 'average_precision'}
+
+pipe_lr = Pipeline(steps=[('preprocess', preprocess), ('model', LogisticRegression(max_iter=5000))])
+scores_lr = cross_validate(pipe_lr, Xtr, ytr, cv=cv, scoring=scoring, return_train_score=False)
+
+cv_summary = [('lr', float(np.mean(scores_lr['test_roc_auc'])), float(np.mean(scores_lr['test_pr_auc'])))]
+print('CV summary (name, roc_auc_mean, pr_auc_mean)')
+for row in cv_summary:
+    print(row)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Why this works</h4><p>under imbalance, PR-AUC often matches product utility better than ROC-AUC.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Compare LR vs RF vs GB <span class="task-sec">Model comparison (CV)</span></summary><div class="task-body"><h4>Section 3 ,  Model comparison (CV)</h4>
+<h4>Task 3.1: Compare LR vs RF vs GB</h4>
+<ul><li>Compare under the same CV splits</li><li>Report ROC-AUC and PR-AUC</li></ul>
+<p><strong>FAANG Gotcha:</strong> ROC-AUC can look good even when precision is poor under imbalance.</p><h4>Starter code</h4><pre><code class="lang-python">models = {
+    'lr': LogisticRegression(max_iter=2000),
+    'rf': RandomForestClassifier(n_estimators=100, random_state=0),
+    'gb': GradientBoostingClassifier(n_estimators=120, random_state=0),
+}
+
+for name, model in models.items():
+    pipe = Pipeline(steps=[('preprocess', preprocess), ('model', model)])
+    scores = cross_validate(pipe, Xtr, ytr, cv=cv, scoring=scoring, return_train_score=False)
+    print(name, 'roc_auc', float(np.mean(scores['test_roc_auc'])), 'pr_auc', float(np.mean(scores['test_pr_auc'])))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">models = {
+    'lr': LogisticRegression(max_iter=2000),
+    'rf': RandomForestClassifier(n_estimators=100, random_state=0),
+    'gb': GradientBoostingClassifier(n_estimators=120, random_state=0),
+}
+
+cv_summary = []
+for name, model in models.items():
+    pipe = Pipeline(steps=[('preprocess', preprocess), ('model', model)])
+    scores = cross_validate(pipe, Xtr, ytr, cv=cv, scoring=scoring, return_train_score=False)
+    cv_summary.append((name, float(scores['test_roc_auc'].mean()), float(scores['test_pr_auc'].mean())))
+
+print('CV summary (name, roc_auc_mean, pr_auc_mean)')
+for row in cv_summary:
+    print(row)
+
+# Rationale: compare models under identical CV to avoid unfair selection.
+</code></pre><h4>Why this works</h4><p>compare models under identical CV to avoid unfair selection.</p><h4>Instructor explanation</h4><h4>Section 3 ,  Model comparison (CV)</h4>
+<h4>Task 3.1: Compare LR vs RF vs GB</h4>
+<h4>Figure: CV Model Comparison</h4>
+<p>![CV Model Comparison](/images/w5-d5-model-comparison.png)</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> Add at least one engineered feature <span class="task-sec">Feature engineering (lightweight)</span></summary><div class="task-body"><h4>Section 4 ,  Feature engineering (lightweight)</h4>
+<h4>Task 4.1: Add at least one engineered feature</h4>
+<p>Examples (only if columns exist):</p>
+<ul><li>ratios like PAY_AMT1 / BILL_AMT1 (utilization proxy)</li><li>log1p on skewed amount columns</li></ul><h4>Starter code</h4><pre><code class="lang-python"># TODO: create lightweight engineered features and re-evaluate best model.
+Xtr_fe = Xtr.copy()
+Xho_fe = Xho.copy()
+
+# Example ratio feature when columns exist
+if 'PAY_AMT1' in Xtr_fe.columns and 'BILL_AMT1' in Xtr_fe.columns:
+    eps = 1e-6
+    Xtr_fe['pay_to_bill1'] = Xtr_fe['PAY_AMT1'] / (np.abs(Xtr_fe['BILL_AMT1']) + eps)
+    Xho_fe['pay_to_bill1'] = Xho_fe['PAY_AMT1'] / (np.abs(Xho_fe['BILL_AMT1']) + eps)
+
+num_cols_fe = ...
+cat_cols_fe = ...
+preprocess_fe = ...
+
+best_name = ...
+best_model = ...
+
+pipe_fe = Pipeline(steps=[('preprocess', preprocess_fe), ('model', best_model)])
+scores_fe = cross_validate(pipe_fe, Xtr_fe, ytr, cv=cv, scoring=scoring, return_train_score=False)
+print('FE roc_auc', float(np.mean(scores_fe['test_roc_auc'])), 'pr_auc', float(np.mean(scores_fe['test_pr_auc'])))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Why this works</h4><p>engineered ratios can capture behavioral signals; always validate under CV.</p><h4>Instructor explanation</h4><h4>Section 4 ,  Feature engineering (lightweight)</h4>
+<h4>Task 4.1: Add at least one engineered feature</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 7</span> Fit best pipeline on Xtr_fe and evaluate on holdout <span class="task-sec">Final fit + cost-based threshold</span></summary><div class="task-body"><h4>Section 5 ,  Final fit + cost-based threshold</h4>
+<h4>Task 5.1: Fit best pipeline on Xtr_fe and evaluate on holdout</h4>
+<p>Then pick a threshold using costs (FN cost 5x FP).</p><h4>Starter code</h4><pre><code class="lang-python">$13</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$14</code></pre><h4>Why this works</h4><p>thresholding is a product decision; costs drive the operating point.</p><h4>Instructor explanation</h4><h4>Section 5 ,  Final fit + cost-based threshold</h4>
+<h4>Task 5.1: Fit best pipeline on Xtr_fe and evaluate on holdout</h4>
+<h4>Figure: Threshold vs Cost</h4>
+<p>![Threshold Cost Curve](/images/w5-d5-threshold-cost.png)</p>
+<h4>Figure: Holdout Confusion Matrix</h4>
+<p>![Holdout Confusion Matrix](/images/w5-d5-confusion-matrix.png)</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 8</span> FP/FN examples <span class="task-sec">Error analysis + slices</span></summary><div class="task-body"><h4>Section 6 ,  Error analysis + slices</h4>
+<h4>Task 6.1: FP/FN examples</h4>
+<h4>Task 6.2: Slice analysis (choose a column)</h4>
+<ul><li>Build a holdout dataframe with y_true, p, y_pred</li><li>Show a few FP and FN</li><li>Slice by a bucketed numeric feature (e.g., age bucket / credit limit bucket) if columns exist</li></ul><h4>Starter code</h4><pre><code class="lang-python">ho = Xho_fe.copy()
+ho['y_true'] = yho.values
+ho['p'] = p_ho
+ho['y_pred'] = yhat_ho
+
+fp = ho[(ho['y_true'] == 0) &amp; (ho['y_pred'] == 1)]
+fn = ho[(ho['y_true'] == 1) &amp; (ho['y_pred'] == 0)]
+print('fp', len(fp), 'fn', len(fn))
+print('FP examples')
+print(fp.head())
+print('FN examples')
+print(fn.head())
+
+# Slice example if a useful numeric col exists
+for col in ['AGE', 'LIMIT_BAL', 'age', 'limit_bal']:
+    if col in ho.columns:
+        bins = pd.qcut(pd.to_numeric(ho[col], errors='coerce'), q=4, duplicates='drop')
+        tmp = ho.copy()
+        tmp['bucket'] = bins
+        print('slice by', col)
+        print(tmp.groupby('bucket').apply(lambda d: pd.Series({
+            'n': len(d),
+            'default_rate': float(np.mean(d['y_true'])),
+            'acc': float(np.mean(d['y_true'].values == d['y_pred'].values)),
+        })))
+        break</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python"># Error analysis + slice example (if columns exist)
+ho = Xho_fe.copy()
+ho['y_true'] = yho.values
+ho['p'] = p_ho
+ho['y_pred'] = yhat_ho
+
+fp = ho[(ho['y_true'] == 0) &amp; (ho['y_pred'] == 1)]
+fn = ho[(ho['y_true'] == 1) &amp; (ho['y_pred'] == 0)]
+print('fp', len(fp), 'fn', len(fn))
+
+for col in ['AGE', 'LIMIT_BAL', 'age', 'limit_bal']:
+    if col in ho.columns:
+        bins = pd.qcut(pd.to_numeric(ho[col], errors='coerce'), q=4, duplicates='drop')
+        tmp = ho.copy()
+        tmp['bucket'] = bins
+        print('slice by', col)
+        print(tmp.groupby('bucket').apply(lambda d: pd.Series({
+            'n': len(d),
+            'default_rate': float(np.mean(d['y_true'])),
+            'acc': float(np.mean(d['y_true'].values == d['y_pred'].values)),
+        })))
+        break
+
+# Rationale: slice analysis reveals where the model fails and guides targeted feature work.
+</code></pre><h4>Why this works</h4><p>slice analysis reveals where the model fails and guides targeted feature work.</p><h4>Instructor explanation</h4><h4>Section 6 ,  Error analysis + slices</h4>
+<h4>Task 6.1: FP/FN examples</h4>
+<h4>Figure: FP vs FN Counts</h4>
+<p>![FP vs FN Counts](/images/w5-d5-fp-fn-counts.png)</p></details></div></details>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w5-d5-feature-evaluation-credit-default">https://ai.thes30.com/problems/w5-d5-feature-evaluation-credit-default</a>.</p>
+</section><section class="lab" id="lab-w5-d6-pca-lab">
+<h3>PCA Lab <span class="diff diff-medium">Medium</span></h3>
+<p class="lab-meta">Week 5, Day 6 · Evaluation &amp; Debugging · 6 tasks · 14 checks</p>
+<p>This lab adds the compression move: centering, covariance, eigendecomposition, reconstruction, and choosing the smallest k that keeps enough explained variance. It connects to the linear algebra of Volume 18 (eigendecomposition) and gives you a dimensionality-reduction baseline for every future volume. Compare PCA plus logistic regression against the raw baseline and note what the components cost you in interpretability.</p>
+<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Week 5</span></p>
+<p class="lab-meta">Resources: <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-25-principal">Notes</a> · <a href="pca_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/m8miVc9urvA">Video</a></p>
+<h4>Tasks (6)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>PCA Lab -- Student Notebook</h3>
+<p>Complete each <code># TODO</code> section and run checks.</p>
+<h4>Visual Intuition for PCA</h4>
+<h4>1) Principal axes</h4>
+<p>![PCA principal axes](/images/w5-d6-pca-principal-axes.png)</p>
+<ul><li><code>PC1</code> is the direction of maximum variance.</li><li><code>PC2</code> is orthogonal and captures the next largest remaining variance.</li></ul>
+<h4>2) Projection and reconstruction</h4>
+<p>![PCA projection and reconstruction](/images/w5-d6-pca-projection-reconstruction.png)</p>
+<ul><li>Blue points are original data; orange points are projected points on a 1D PCA subspace.</li><li>Gray segments represent reconstruction error.</li></ul>
+<h4>3) Choosing <code>k</code> with explained variance</h4>
+<p>![Explained variance](/images/w5-d6-pca-explained-variance.png)</p>
+<ul><li>Bars show per-component explained variance ratio.</li><li>Red line is cumulative explained variance (commonly choose the smallest <code>k</code> crossing a target like 95%).</li></ul><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+from sklearn.datasets import load_digits
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import numpy as np
+from sklearn.datasets import load_digits
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>PCA Lab -- Instructor Notebook (Solutions)</h3>
+<p>Complete reference implementation with checks.</p>
+<h4>Visual Intuition for PCA</h4>
+<h4>1) Principal axes</h4>
+<p>![PCA principal axes](/images/w5-d6-pca-principal-axes.png)</p>
+<ul><li><code>PC1</code> is the direction of maximum variance.</li><li><code>PC2</code> is orthogonal and captures the next largest remaining variance.</li></ul>
+<h4>2) Projection and reconstruction</h4>
+<p>![PCA projection and reconstruction](/images/w5-d6-pca-projection-reconstruction.png)</p>
+<ul><li>Blue points are original data; orange points are projected points on a 1D PCA subspace.</li><li>Gray segments represent reconstruction error.</li></ul>
+<h4>3) Choosing <code>k</code> with explained variance</h4>
+<p>![Explained variance](/images/w5-d6-pca-explained-variance.png)</p>
+<ul><li>Bars show per-component explained variance ratio.</li><li>Red line is cumulative explained variance (commonly choose the smallest <code>k</code> crossing a target like 95%).</li></ul></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Implement centering and covariance matrix. <span class="task-sec">- Centering and Covariance</span></summary><div class="task-body"><h4>Section 1 -- Centering and Covariance</h4>
+<h4>Task 1.1: Implement centering and covariance matrix.</h4>
+<p>![Eigen Decomposition Overview](/images/eigen-decomposition-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python">def center(X):
+    # TODO
+    # return X_centered, mean
+    ...
+
+def covariance_matrix(X_centered):
+    # TODO
+    # unbiased covariance: (X^T X)/(n-1)
+    ...
+
+X = rng.standard_normal((200, 20))
+Xc, mu = center(X)
+C = covariance_matrix(Xc)
+
+check('center_shape', Xc.shape == X.shape and mu.shape == (X.shape[1],))
+check('center_mean_zero', np.allclose(Xc.mean(axis=0), 0.0, atol=1e-10))
+check('cov_shape', C.shape == (20, 20))
+check('cov_symmetric', np.allclose(C, C.T, atol=1e-10))</code></pre><h4>Test code</h4><pre><code class="lang-python">check('center_shape', Xc.shape == X.shape and mu.shape == (X.shape[1],))
+check('center_mean_zero', np.allclose(Xc.mean(axis=0), 0.0, atol=1e-10))
+check('cov_shape', C.shape == (20, 20))
+check('cov_symmetric', np.allclose(C, C.T, atol=1e-10))</code></pre><h4>Checks</h4><ul><li>check('center_shape', Xc.shape == X.shape and mu.shape == (X.shape[1],)</li><li>check('center_mean_zero', np.allclose(Xc.mean(axis=0)</li><li>check('cov_shape', C.shape == (20, 20)</li><li>check('cov_symmetric', np.allclose(C, C.T, atol=1e-10)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def center(X):
+    mu = X.mean(axis=0)
+    return X - mu, mu
+
+def covariance_matrix(X_centered):
+    n = X_centered.shape[0]
+    return (X_centered.T @ X_centered) / (n - 1)
+
+X = rng.standard_normal((200, 20))
+Xc, mu = center(X)
+C = covariance_matrix(Xc)
+
+check('center_shape', Xc.shape == X.shape and mu.shape == (X.shape[1],))
+check('center_mean_zero', np.allclose(Xc.mean(axis=0), 0.0, atol=1e-10))
+check('cov_shape', C.shape == (20, 20))
+check('cov_symmetric', np.allclose(C, C.T, atol=1e-10))</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Implement `pca_fit(X, k)` using `np.linalg.eigh`. <span class="task-sec">- PCA Fit</span></summary><div class="task-body"><h4>Section 2 -- PCA Fit</h4>
+<h4>Task 2.1: Implement <code>pca_fit(X, k)</code> using <code>np.linalg.eigh</code>.</h4>
+<p>Return components, explained variance, explained variance ratio, and mean.</p>
+<p>![Singular Value Decomposition (SVD)](/images/svd-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python">def pca_fit(X, k):
+    # TODO
+    # 1) center X
+    # 2) covariance
+    # 3) eigh
+    # 4) sort descending
+    # 5) take top-k
+    # return dict with keys: mean, components, explained_variance, explained_variance_ratio
+    ...
+
+X = rng.standard_normal((500, 30))
+model = pca_fit(X, k=5)
+W = model['components']
+ev = model['explained_variance']
+evr = model['explained_variance_ratio']
+
+check('components_shape', W.shape == (30, 5))
+check('ev_sorted_desc', np.all(np.diff(ev) &lt;= 1e-12))
+check('ratio_positive', np.all(evr &gt; 0))
+check('ratio_sum_le_1', float(np.sum(evr)) &lt;= 1.0 + 1e-10)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('components_shape', W.shape == (30, 5))
+check('ev_sorted_desc', np.all(np.diff(ev) &lt;= 1e-12))
+check('ratio_positive', np.all(evr &gt; 0))
+check('ratio_sum_le_1', float(np.sum(evr)) &lt;= 1.0 + 1e-10)</code></pre><h4>Checks</h4><ul><li>check('components_shape', W.shape == (30, 5)</li><li>check('ev_sorted_desc', np.all(np.diff(ev)</li><li>check('ratio_positive', np.all(evr &gt; 0)</li><li>check('ratio_sum_le_1', float(np.sum(evr)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def pca_fit(X, k):
+    Xc, mu = center(X)
+    C = covariance_matrix(Xc)
+    vals, vecs = np.linalg.eigh(C)
+    idx = np.argsort(vals)[::-1]
+    vals = vals[idx]
+    vecs = vecs[:, idx]
+
+    vals_k = vals[:k]
+    vecs_k = vecs[:, :k]
+    evr = vals_k / np.sum(vals)
+
+    return {
+        'mean': mu,
+        'components': vecs_k,
+        'explained_variance': vals_k,
+        'explained_variance_ratio': evr,
+    }
+
+X = rng.standard_normal((500, 30))
+model = pca_fit(X, k=5)
+W = model['components']
+ev = model['explained_variance']
+evr = model['explained_variance_ratio']
+
+check('components_shape', W.shape == (30, 5))
+check('ev_sorted_desc', np.all(np.diff(ev) &lt;= 1e-12))
+check('ratio_positive', np.all(evr &gt; 0))
+check('ratio_sum_le_1', float(np.sum(evr)) &lt;= 1.0 + 1e-10)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Implement transform/inverse and check reconstruction quality. <span class="task-sec">- Transform and Inverse</span></summary><div class="task-body"><h4>Section 3 -- Transform and Inverse</h4>
+<h4>Task 3.1: Implement transform/inverse and check reconstruction quality.</h4><h4>Starter code</h4><pre><code class="lang-python">def pca_transform(X, model):
+    # TODO
+    ...
+
+def pca_inverse(Z, model):
+    # TODO
+    ...
+
+X = rng.standard_normal((300, 25))
+model = pca_fit(X, k=8)
+Z = pca_transform(X, model)
+Xhat = pca_inverse(Z, model)
+
+recon_rel = np.linalg.norm(X - Xhat) / np.linalg.norm(X)
+print('relative reconstruction error:', recon_rel)
+
+check('Z_shape', Z.shape == (300, 8))
+check('Xhat_shape', Xhat.shape == X.shape)
+check('recon_reasonable', recon_rel &lt; 0.9)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('Z_shape', Z.shape == (300, 8))
+check('Xhat_shape', Xhat.shape == X.shape)
+check('recon_reasonable', recon_rel &lt; 0.9)</code></pre><h4>Checks</h4><ul><li>check('Z_shape', Z.shape == (300, 8)</li><li>check('Xhat_shape', Xhat.shape == X.shape)</li><li>check('recon_reasonable', recon_rel &lt; 0.9)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def pca_transform(X, model):
+    return (X - model['mean']) @ model['components']
+
+def pca_inverse(Z, model):
+    return Z @ model['components'].T + model['mean']
+
+X = rng.standard_normal((300, 25))
+model = pca_fit(X, k=8)
+Z = pca_transform(X, model)
+Xhat = pca_inverse(Z, model)
+
+recon_rel = np.linalg.norm(X - Xhat) / np.linalg.norm(X)
+print('relative reconstruction error:', recon_rel)
+
+check('Z_shape', Z.shape == (300, 8))
+check('Xhat_shape', Xhat.shape == X.shape)
+check('recon_reasonable', recon_rel &lt; 0.9)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Implement function to choose smallest `k` s.t. cumulative explained variance &gt;= threshold. <span class="task-sec">- Pick k from Variance Threshold</span></summary><div class="task-body"><h4>Section 4 -- Pick k from Variance Threshold</h4>
+<h4>Task 4.1: Implement function to choose smallest <code>k</code> s.t. cumulative explained variance &gt;= threshold.</h4><h4>Starter code</h4><pre><code class="lang-python">def choose_k_from_variance(evr, threshold=0.95):
+    # TODO
+    ...
+
+X = rng.standard_normal((600, 40))
+full = pca_fit(X, k=40)
+k95 = choose_k_from_variance(full['explained_variance_ratio'], threshold=0.95)
+print('k for 95% variance:', k95)
+
+check('k_bounds', 1 &lt;= k95 &lt;= 40)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('k_bounds', 1 &lt;= k95 &lt;= 40)</code></pre><h4>Checks</h4><ul><li>check('k_bounds', 1 &lt;= k95 &lt;= 40)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def choose_k_from_variance(evr, threshold=0.95):
+    c = np.cumsum(evr)
+    return int(np.searchsorted(c, threshold) + 1)
+
+X = rng.standard_normal((600, 40))
+full = pca_fit(X, k=40)
+k95 = choose_k_from_variance(full['explained_variance_ratio'], threshold=0.95)
+print('k for 95% variance:', k95)
+
+check('k_bounds', 1 &lt;= k95 &lt;= 40)</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> Compare baseline Logistic Regression vs PCA+Logistic Regression. <span class="task-sec">- PCA in a Real Model Pipeline (Digits)</span></summary><div class="task-body"><h4>Section 5 -- PCA in a Real Model Pipeline (Digits)</h4>
+<h4>Task 5.1: Compare baseline Logistic Regression vs PCA+Logistic Regression.</h4><h4>Starter code</h4><pre><code class="lang-python">digits = load_digits()
+X = digits.data.astype(float)
+y = digits.target.astype(int)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=0, stratify=y
+)
+
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)
+X_test_s = scaler.transform(X_test)
+
+# baseline
+base = LogisticRegression(max_iter=3000)
+base.fit(X_train_s, y_train)
+base_acc = base.score(X_test_s, y_test)
+
+# TODO: PCA + Logistic Regression
+# 1) fit PCA on X_train_s with k=20
+# 2) transform train/test
+# 3) fit logistic on transformed features
+# 4) compute test acc
+pca_model = ...
+X_train_p = ...
+X_test_p = ...
+clf_p = LogisticRegression(max_iter=3000)
+clf_p.fit(X_train_p, y_train)
+pca_acc = clf_p.score(X_test_p, y_test)
+
+print('baseline acc:', round(base_acc, 4))
+print('pca acc     :', round(pca_acc, 4))
+
+check('baseline_good', base_acc &gt; 0.9)
+check('pca_good', pca_acc &gt; 0.85)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('baseline_good', base_acc &gt; 0.9)
+check('pca_good', pca_acc &gt; 0.85)</code></pre><h4>Checks</h4><ul><li>check('baseline_good', base_acc &gt; 0.9)</li><li>check('pca_good', pca_acc &gt; 0.85)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">digits = load_digits()
+X = digits.data.astype(float)
+y = digits.target.astype(int)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=0, stratify=y
+)
+
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)
+X_test_s = scaler.transform(X_test)
+
+base = LogisticRegression(max_iter=3000)
+base.fit(X_train_s, y_train)
+base_acc = base.score(X_test_s, y_test)
+
+pca_model = pca_fit(X_train_s, k=20)
+X_train_p = pca_transform(X_train_s, pca_model)
+X_test_p = pca_transform(X_test_s, pca_model)
+
+clf_p = LogisticRegression(max_iter=3000)
+clf_p.fit(X_train_p, y_train)
+pca_acc = clf_p.score(X_test_p, y_test)
+
+print('baseline acc:', round(base_acc, 4))
+print('pca acc     :', round(pca_acc, 4))
+
+check('baseline_good', base_acc &gt; 0.9)
+check('pca_good', pca_acc &gt; 0.85)</code></pre></details></div></details>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>PCA, SVD intuition, dimensionality reduction</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>medium</td><td>dimensionality reduction, feature compression, modeling tradeoffs</td><td>Amazon MLE interview guide; Amazon central ML applied scientist role</td></tr><tr><td>Microsoft</td><td>medium</td><td>linear algebra for ML, projection geometry, variance retention</td><td>Microsoft MLE interview guide; Microsoft technical interviewing tips</td></tr></tbody></table>
+<p class="provenance-inline">Source: S30 AI Lab, <a href="https://ai.thes30.com/problems/w5-d6-pca-lab">https://ai.thes30.com/problems/w5-d6-pca-lab</a>.</p>
+</section>
+<h2>Interview clearance</h2>
+<div class="ob-board"><h4>On the board</h4><ul><li>Your model reports 97 percent accuracy on a 2 percent positive-rate problem. Is it good? What do you compute next?</li><li>False negatives cost 10x false positives. Derive the optimal threshold rule from expected cost.</li><li>Sketch a reliability diagram for a well-calibrated model, an overconfident one, and an underconfident one.</li><li>Training error 4 percent, validation error 26 percent, and the gap does not shrink with more data. Diagnose and propose two fixes.</li><li>Explain how target encoding can leak, and how you would implement it safely.</li><li>When would you choose PR-AUC over ROC-AUC? When would ROC-AUC be the right call?</li></ul></div>
+<div class="pq">
+  <p class="pq-q"><strong>Q1.</strong> A fraud model flags 200 of 10,000 transactions. 60 are real fraud. The dataset has 100 real frauds total. What are precision and recall?</p>
+  <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
+  <div class="pq-a" hidden>
+    <p><strong>Answer:</strong> precision = 60 / 200 = 30 percent; recall = 60 / 100 = 60 percent.</p>
+    <ul>
+      <li><span class="pq-opt-right"><strong>30% / 60%, right:</strong></span> precision divides by predicted positives (200), recall by actual positives (100).</li>
+      <li><span class="pq-opt-wrong"><strong>60% / 30%, wrong:</strong></span> this swaps the denominators: the classic precision-recall mixup.</li>
+      <li><span class="pq-opt-wrong"><strong>99% accuracy, wrong:</strong></span> accuracy is (60 + 9,800) / 10,000 = 98.6 percent, which says nothing about the 40 missed frauds.</li>
+    </ul>
+  </div>
+</div>
+<div class="pq">
+  <p class="pq-q"><strong>Q2.</strong> Your reliability curve sits entirely below the diagonal. What does this mean, and what is the cheapest fix?</p>
+  <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
+  <div class="pq-a" hidden>
+    <p><strong>Answer:</strong> the model is overconfident at every probability level; apply temperature scaling (learn T on validation, divide logits by T).</p>
+    <ul>
+      <li><span class="pq-opt-right"><strong>Overconfident + temperature scaling, right:</strong></span> below the diagonal means claimed probability exceeds observed frequency; scaling fixes calibration without touching ranking.</li>
+      <li><span class="pq-opt-wrong"><strong>Underconfident, wrong:</strong></span> underconfidence would sit above the diagonal.</li>
+      <li><span class="pq-opt-wrong"><strong>Retrain with more data, wrong:</strong></span> more data does not systematically fix miscalibration, and it is the expensive move.</li>
+    </ul>
+  </div>
+</div>
+<div class="pq">
+  <p class="pq-q"><strong>Q3.</strong> Validation PR-AUC is 0.90 but holdout is 0.63. Name the two most likely causes and the test that distinguishes them.</p>
+  <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
+  <div class="pq-a" hidden>
+    <p><strong>Answer:</strong> label leakage (preprocessing fit before the split) or distribution shift between validation and holdout. Test: rebuild the pipeline leak-safe (split first, fit inside folds) and re-score; if validation drops to about 0.63, it was leakage.</p>
+    <ul>
+      <li><span class="pq-opt-right"><strong>Leakage vs shift + rebuild test, right:</strong></span> the rebuild experiment separates the two cleanly.</li>
+      <li><span class="pq-opt-wrong"><strong>Overfitting to hyperparameters, wrong:</strong></span> tuning on validation moves scores a little, not 27 points.</li>
+      <li><span class="pq-opt-wrong"><strong>Bad luck, wrong:</strong></span> a 27-point gap on a real holdout is never noise; it is a process bug.</li>
+    </ul>
+  </div>
+</div>
+
+<nav class="ds-volume-nav" aria-label="Volume navigation"><a class="ds-prev" href="19-s30-classical-ml.html"><span>&uarr; Previous volume</span>Volume 19: Classical ML</a><a class="ds-next" href="21-s30-deep-learning.html"><span>Next volume &darr;</span>Volume 21: Deep Learning</a></nav>
+<div class="provenance"><strong>Last verified: October 2026.</strong> Live-verified: S30 AI Lab site scrape (labs, tasks, solutions). <span class="uv">UNVERIFIED:</span> none.</div>
+</main>
+<script>
+/* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
+   Builds: sidebar nav from h2/h3, scroll-spy, nav search filter, localStorage completion
+   checkmarks, reading progress bar, chapter prev/next footer, copy buttons, practice-question
+   toggles, mobile drawer, keyboard nav. No external dependencies. */
+(function(){
+"use strict";
+var content=document.getElementById('dsContent')||document.querySelector('main')||document.body;
+var sidebar=document.getElementById('dsSidebar');
+if(!sidebar||!content)return;
+
+/* ---------- collect sections: h2 = chapter groups, h3 = items ---------- */
+function slugify(t){return t.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'s';}
+var used={};
+function uniqueId(base){var id=base,n=2;while(used[id]||document.getElementById(id)){id=base+'-'+(n++);}used[id]=1;return id;}
+var chapters=[]; // {h2, id, title, items:[{id,title,el}]}
+var cur=null;
+Array.prototype.forEach.call(content.querySelectorAll('h2,h3'),function(h){
+  if(!h.id){h.id=uniqueId(slugify(h.textContent));}else{used[h.id]=1;}
+  h.setAttribute('tabindex','-1');
+  var t=h.textContent.trim();
+  if(h.tagName==='H2'){cur={id:h.id,title:t,items:[]};chapters.push(cur);}
+  else if(cur){cur.items.push({id:h.id,title:t});}
+  else{cur={id:'intro',title:'Introduction',items:[{id:h.id,title:t}]};chapters.push(cur);}
+});
+
+/* ---------- build sidebar nav ---------- */
+var nav=document.getElementById('dsNav');
+var pageKey='rec-cur-'+(document.title||location.pathname).replace(/[^a-z0-9]+/gi,'-');
+function isDone(id){try{return localStorage.getItem(pageKey+'#'+id)==='1';}catch(e){return false;}}
+function setDone(id,v){try{if(v)localStorage.setItem(pageKey+'#'+id,'1');else localStorage.removeItem(pageKey+'#'+id);}catch(e){}}
+function checkItem(id){var c=document.querySelector('.ds-check[data-sec="'+id+'"]');if(c)c.checked=isDone(id);}
+function updateCount(){
+  var boxes=nav.querySelectorAll('.ds-check'),done=0;
+  boxes.forEach(function(b){if(b.checked)done++;});
+  var el=document.getElementById('dsCompleteCount');
+  if(el)el.textContent=done+' of '+boxes.length+' sections complete';
+}
+function itemRow(sec){
+  var li=document.createElement('li');
+  var a=document.createElement('a');a.href='#'+sec.id;
+  var cb=document.createElement('input');
+  cb.type='checkbox';cb.className='ds-check';cb.checked=isDone(sec.id);
+  cb.setAttribute('data-sec',sec.id);cb.setAttribute('aria-label','Mark complete: '+sec.title);
+  cb.addEventListener('change',function(ev){ev.stopPropagation();setDone(sec.id,cb.checked);updateCount();});
+  cb.addEventListener('click',function(ev){ev.stopPropagation();});
+  var sp=document.createElement('span');sp.textContent=sec.title;
+  a.appendChild(cb);a.appendChild(sp);
+  a.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+  li.appendChild(a);return li;
+}
+chapters.forEach(function(ch,ci){
+  var g=document.createElement('div');g.className='ds-nav-group';g.dataset.title=ch.title.toLowerCase();
+  var btn=document.createElement('button');
+  btn.innerHTML='<span></span><span class="ds-caret">▾</span>';
+  btn.firstChild.textContent=ch.title;
+  btn.setAttribute('aria-expanded','true');
+  var ul=document.createElement('ul');ul.className='ds-nav-items';
+  var headLi=itemRow({id:ch.id,title:ch.title});ul.appendChild(headLi);
+  ch.items.forEach(function(it){ul.appendChild(itemRow(it));});
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!open));
+    ul.style.display=open?'none':'';
+    btn.querySelector('.ds-caret').textContent=open?'▸':'▾';
+  });
+  g.appendChild(btn);g.appendChild(ul);nav.appendChild(g);
+});
+updateCount();
+
+/* ---------- nav search filter ---------- */
+var search=document.getElementById('dsNavSearch');
+if(search){search.addEventListener('input',function(){
+  var q=search.value.trim().toLowerCase(),any=false;
+  nav.querySelectorAll('.ds-nav-group').forEach(function(g){
+    var show=g.dataset.title.indexOf(q)>-1;
+    g.querySelectorAll('.ds-nav-items li').forEach(function(li){
+      var hit=li.textContent.toLowerCase().indexOf(q)>-1;
+      li.style.display=(!q||hit||show)?'':'none';if(!q||hit)show=true;
+    });
+    g.style.display=show?'':'none';if(show)any=true;
+  });
+  var empty=nav.querySelector('.ds-nav-empty');
+  if(!any&&!empty){var d=document.createElement('div');d.className='ds-nav-empty';d.textContent='No sections match.';nav.appendChild(d);}
+  if(any&&empty)empty.remove();
+});}
+
+/* ---------- scroll-spy ---------- */
+var links=Array.prototype.slice.call(nav.querySelectorAll('.ds-nav-items a'));
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.toggle('ds-active',a.getAttribute('href')==='#'+e.target.id);});
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+chapters.forEach(function(ch){
+  var el=document.getElementById(ch.id);if(el)spy.observe(el);
+  ch.items.forEach(function(it){var el2=document.getElementById(it.id);if(el2)spy.observe(el2);});
+});
+
+/* ---------- progress bar ---------- */
+var prog=document.getElementById('dsProgress');
+function onScroll(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- mobile drawer ---------- */
+var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('dsScrim');
+if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
+if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+
+/* ---------- keyboard nav: [ ] sections, / search ---------- */
+document.addEventListener('keydown',function(e){
+  if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  var ids=[];chapters.forEach(function(ch){ids.push(ch.id);ch.items.forEach(function(it){ids.push(it.id);});});
+  function jump(dir){
+    var y=window.scrollY+10,cur=0;
+    ids.forEach(function(id,i){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+y<=y+1)cur=i;});
+    var n=Math.min(ids.length-1,Math.max(0,cur+dir)),el=document.getElementById(ids[n]);
+    if(el){el.scrollIntoView();el.focus({preventScroll:true});}
+  }
+  if(e.key==='[')jump(-1);else if(e.key===']')jump(1);
+  else if(e.key==='/'&&search){e.preventDefault();search.focus();}
+});
+var hint=document.createElement('div');hint.className='ds-kbd-hint';
+hint.textContent='Keyboard: [ and ] move between sections, / focuses section search.';
+var foot=document.querySelector('.ds-side-foot');if(foot)foot.appendChild(hint);
+
+/* ---------- chapter prev/next footers (one after each h2 section) ---------- */
+if(chapters.length>1){
+  var mk=function(ch,cls,label){var a=document.createElement('a');a.href='#'+ch.id;a.className=cls;
+    a.innerHTML='<span style="display:block;font-size:.78rem;color:var(--muted)">'+label+'</span>';a.appendChild(document.createTextNode(ch.title));return a;};
+  chapters.forEach(function(ch,i){
+    var bar=document.createElement('nav');bar.className='ds-chapter-nav';bar.setAttribute('aria-label','Chapter navigation');
+    var left=document.createElement('span'),right=document.createElement('span');
+    if(chapters[i-1])left.appendChild(mk(chapters[i-1],'ds-prev','↑ Previous'));
+    else left.innerHTML='<span style="color:var(--muted);font-size:.85rem">Start of volume</span>';
+    if(chapters[i+1])right.appendChild(mk(chapters[i+1],'ds-next','Next ↓'));
+    else right.innerHTML='<span style="color:var(--muted);font-size:.85rem">End of volume</span>';
+    bar.appendChild(left);bar.appendChild(right);
+    /* insert the bar immediately before the next chapter's heading, using that
+       heading's own parent so <section> wrappers (or any nesting) cannot break it */
+    var nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
+    if(nextH){nextH.parentNode.insertBefore(bar,nextH);}
+    else{var lastH=document.getElementById(ch.id);lastH.parentNode.appendChild(bar);}
+  });
+}
+
+/* ---------- copy buttons on code blocks ---------- */
+document.querySelectorAll('pre').forEach(function(pre){
+  if(pre.querySelector('.ds-copy-btn'))return;
+  var btn=document.createElement('button');btn.className='ds-copy-btn';btn.textContent='Copy';
+  btn.setAttribute('aria-label','Copy code to clipboard');
+  btn.addEventListener('click',function(){
+    var txt=pre.innerText;
+    function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1400);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}
+  });
+  pre.appendChild(btn);
+});
+
+/* ---------- practice-question widgets ---------- */
+document.querySelectorAll('.pq').forEach(function(pq){
+  var btn=pq.querySelector('.pq-reveal'),ans=pq.querySelector('.pq-a');
+  if(!btn||!ans)return;
+  btn.addEventListener('click',function(){
+    var open=ans.hasAttribute('hidden');
+    if(open){ans.removeAttribute('hidden');btn.setAttribute('aria-expanded','true');btn.textContent='Hide answer';}
+    else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
+  });
+});
+})();
+
+</script>
+<script>
+
+/* ==== Experience layer behavior ,  additive ====
+ * Calm, GPU-friendly page motion for study volumes. No-JS safe: every hidden
+ * state in experience.css is gated on `html.xp-js`, which only this script
+ * adds ,  without it the page is fully readable. Respects
+ * prefers-reduced-motion (exits early; CSS keeps everything static).
+ *
+ * Three jobs:
+ *  1. Hero parallax ,  detects the volume hero (.banner/.hero, else wraps the
+ *     h1 + lede block in .xp-hero) and drifts it gently as the reader
+ *     scrolls on. Transform/opacity only, rAF-throttled, passive listener.
+ *  2. Scroll reveals ,  one IntersectionObserver fades+rises figures, key
+ *     callouts and knowledge checks exactly once. Elements already in view
+ *     on load appear immediately (no load flash).
+ *  3. Nothing else: progress bar, scroll-spy, sidebar, quiz toggles are
+ *     owned by ds.js and are left untouched.
+ *
+ * (In the assembly snippet the closing element tags are written literally;
+ * inside this file they are escaped as <\/style> / <\/script> so the file
+ * pastes verbatim without early-terminating its own element.)
+ */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+
+  var reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) { /* matchMedia unavailable: assume motion is fine */ }
+  if (reduceMotion) { return; } /* leave no footprint: no xp-js, CSS stays static */
+
+  /* From here on the reader is fine with calm motion: mark the document so
+     the CSS reveal/parallax states may apply. Without this class (no-JS or
+     reduced-motion) every hidden state stays off and the page is fully
+     readable. */
+  root.classList.add('xp-js');
+
+  /* ---------------- 1. Hero detection + gentle parallax ---------------- */
+  var hero = document.querySelector('.banner, .hero');
+  if (!hero) {
+    /* No banner hero: wrap the volume title (h1) plus its lede paragraphs
+       in a layout-neutral div. Never touches headings ds.js needs. */
+    var main = document.querySelector('main');
+    var h1 = main ? main.querySelector('h1') : null;
+    if (h1 && h1.parentNode) {
+      var wrap = document.createElement('div');
+      wrap.className = 'xp-hero';
+      h1.parentNode.insertBefore(wrap, h1);
+      var node = h1, moved = 0, paras = 0;
+      while (node && moved < 8) {
+        var next = node.nextSibling;
+        if (node.nodeType === 3) { node = next; continue; } /* skip whitespace text nodes */
+        var isPara = node.nodeType === 1 && node.tagName === 'P';
+        if (node !== h1 && !isPara) { break; }
+        wrap.appendChild(node);
+        moved += 1;
+        if (isPara) {
+          paras += 1;
+          if (paras >= 3) { break; }
+        }
+        node = next;
+      }
+      hero = wrap;
+    }
+  }
+
+  var heroH = 0, ticking = false, pxOn = false;
+  function measure() { heroH = hero ? hero.offsetHeight : 0; }
+  function render() {
+    ticking = false;
+    if (!hero || !heroH) { return; }
+    var y = window.pageYOffset || root.scrollTop || 0;
+    if (y <= 0) {
+      if (pxOn) { hero.style.transform = ''; hero.style.opacity = ''; pxOn = false; }
+      return;
+    }
+    var range = heroH * 1.4;
+    if (y < range) {
+      /* Drift up slightly slower than the scroll and fade a whisper , 
+         the title recedes calmly instead of snapping away. */
+      var k = Math.min(y / range, 1);
+      hero.style.transform = 'translate3d(0,' + (-y * 0.06).toFixed(1) + 'px,0)';
+      hero.style.opacity = (1 - k * 0.22).toFixed(3);
+      pxOn = true;
+    } else if (pxOn) {
+      hero.style.transform = '';
+      hero.style.opacity = '';
+      pxOn = false;
+    }
+  }
+  function requestRender() {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(render); }
+  }
+  if (hero) {
+    measure();
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', function () { measure(); requestRender(); });
+  }
+
+  /* ---------------- 2. Scroll-triggered reveals ---------------- */
+  var SELECTOR = [
+    'figure',
+    '.takeaway', '.exam-ask', '.trapbox', '.trap', '.board',
+    '.diagram-walkthrough', '.walkthrough', '.warn', '.callout',
+    '.ob-board', '.nums', '.watch-card', '.lab', '.pq', '.go-deeper-note'
+  ].join(', ');
+
+  var targets = [];
+  Array.prototype.forEach.call(document.querySelectorAll(SELECTOR), function (el) {
+    if (hero && hero.contains(el)) { return; } /* hero has its own motion */
+    targets.push(el);
+  });
+
+  function showAll(list) {
+    list.forEach(function (el) { el.classList.add('xp-reveal', 'xp-in'); });
+  }
+
+  if (!targets.length) { return; }
+
+  if (!('IntersectionObserver' in window)) { showAll(targets); return; }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.classList.add('xp-in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+
+  var vh = window.innerHeight || 800;
+  targets.forEach(function (el) {
+    el.classList.add('xp-reveal');
+    var r = el.getBoundingClientRect();
+    if (r.top < vh && r.bottom > 0) {
+      el.classList.add('xp-in'); /* in view on load: appear, no animation */
+    } else {
+      io.observe(el);
+    }
+  });
+})();
+
+
+</script>
+<script>
+
+/* S30 layer: tabbed lab explorer. Additive, no external deps. */
+(function(){
+"use strict";
+var tabs=document.getElementById('labTabs');
+if(!tabs)return;
+var btns=Array.prototype.slice.call(tabs.querySelectorAll('button[data-target]'));
+btns.forEach(function(b){
+  b.addEventListener('click',function(){
+    btns.forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    var el=document.getElementById(b.getAttribute('data-target'));
+    if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+})();
+
+</script>
+</body>
+</html>
