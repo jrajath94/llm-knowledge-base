@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math for ML: The Machinery Underneath</title>
+<style>
+
+/* Research-Engineer Curriculum: shared design system (dark, Hallmark discipline)
+   Source of truth. Writers INLINE this file into each volume's <head> inside <style>.
+   Font files live in fonts/ relative to the site root (each HTML is at the root,
+   so the inlined url(fonts/...) resolves correctly from file:// with no network).
+   Tokens (exact, do not improvise): pitch-black dark mode. */
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{
+  --bg:#000000; --surface:#0d0d0d; --border:#262626;
+  --text:#ececec; --muted:#a8a8a8; --faint:#8a8a8a;
+  --accent:#f0b429; --accent-ink:#000000; --link:#6cb2ff; --code-bg:#111111;
+  --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
+p{text-align:justify;hyphens:auto;margin:.85rem 0}
+h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
+h1{font-size:2rem;font-weight:800}
+h2{font-size:1.5rem;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:1.05rem;font-weight:700}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:.2rem}
+ul,ol{margin:.7rem 0;padding-left:1.6rem}
+li{margin:.3rem 0}
+li::marker{color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;display:block;overflow-x:auto}
+thead,tbody,tr{display:table;width:100%;table-layout:fixed}
+th,td{border:1px solid var(--border);padding:.6rem .75rem;text-align:left;vertical-align:top}
+th{background:var(--surface);font-weight:700}
+code{font-family:var(--font-code);background:var(--code-bg);border:1px solid var(--border);padding:.08rem .35rem;border-radius:.3rem;font-size:.88em}
+p code,li code,td code,th code{overflow-wrap:break-word;word-break:break-word}
+pre{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:.6rem;padding:1rem 1.1rem;overflow-x:auto;font-size:.88rem;line-height:1.6;margin:1.1rem 0}
+pre code{background:none;border:none;padding:0;font-size:1em}
+pre.ascii{background:#0a0a0a;color:#d8d8d8}
+figure{margin:1.5rem 0;border:1px solid var(--border);border-radius:.7rem;padding:1rem;background:var(--surface)}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:.3rem}
+.ds-content img{max-width:100%;height:auto} /* bare <img> in <p> must never overflow */
+figcaption{font-size:.9rem;color:var(--muted);margin-top:.7rem;text-align:left}
+details{border:1px solid var(--border);border-radius:.6rem;padding:.75rem 1.05rem;margin:.9rem 0;background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--text)}
+dfn{font-style:normal;font-weight:600;border-bottom:2px dotted var(--accent);cursor:help}
+blockquote{border-left:3px solid var(--accent);margin:1.1rem 0;padding:.6rem 1rem;background:var(--surface);border-radius:0 .5rem .5rem 0}
+blockquote p{margin:.4rem 0}
+
+/* ---- layout: sidebar + content ---- */
+.ds-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60}
+.ds-menu-btn{display:none;position:fixed;top:.7rem;left:.7rem;z-index:55;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:.5rem;font-family:var(--font-ui);font-size:1.2rem;padding:.35rem .7rem;cursor:pointer}
+.ds-sidebar{position:fixed;top:0;left:0;bottom:0;width:19rem;background:var(--surface);border-right:1px solid var(--border);z-index:50;display:flex;flex-direction:column}
+.ds-side-head{padding:1.1rem 1.1rem .8rem;border-bottom:1px solid var(--border)}
+.ds-side-eyebrow{margin:0;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ds-side-title{margin:.3rem 0 .7rem;font-family:var(--font-ui);font-size:1.02rem;font-weight:700;line-height:1.35}
+.ds-side-search{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:400 .88rem/1.4 var(--font-ui);padding:.5rem .7rem}
+.ds-side-search::placeholder{color:var(--muted)}
+.ds-nav{flex:1;overflow-y:auto;padding:.7rem .6rem}
+.ds-nav ul{list-style:none;margin:0;padding:0}
+.ds-nav-group{margin-bottom:.35rem}
+.ds-nav-group>button{width:100%;text-align:left;background:none;border:none;color:var(--text);font:700 .86rem/1.4 var(--font-ui);padding:.45rem .55rem;border-radius:.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+.ds-nav-group>button:hover{background:#161616}
+.ds-nav-group>button .ds-caret{color:var(--muted);font-size:.75rem}
+.ds-nav-items{list-style:none;margin:0;padding:0 0 .3rem .4rem}
+.ds-nav-items a{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:var(--font-ui);font-size:.85rem;line-height:1.45;padding:.32rem .55rem;border-radius:.4rem;border-left:2px solid transparent}
+.ds-nav-items a:hover{color:var(--text);background:#161616}
+.ds-nav-items a.ds-active{color:var(--text);border-left-color:var(--accent);background:#161616}
+.ds-check{flex:none;width:.95rem;height:.95rem;accent-color:var(--accent);cursor:pointer}
+.ds-nav-empty{color:var(--muted);font-size:.85rem;padding:.5rem}
+.ds-side-foot{border-top:1px solid var(--border);padding:.7rem 1.1rem;font-family:var(--font-ui);font-size:.8rem;color:var(--muted)}
+.ds-scrim{display:none}
+.ds-content{margin-left:19rem;padding:0 2rem;max-width:calc(72ch + 4rem)}
+.ds-content>*{max-width:72ch}
+.ds-content table,.ds-content figure,.ds-content pre{max-width:72ch}
+.ds-chapter-nav{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--border);margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-chapter-nav a{text-decoration:none;font-weight:600}
+.ds-chapter-nav .ds-prev{text-align:left}
+.ds-chapter-nav .ds-next{text-align:right}
+.ds-kbd-hint{font-family:var(--font-ui);font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+/* ---- learning components ---- */
+.walkthrough{background:#101010;border:1px solid var(--border);border-radius:.55rem;padding:.85rem 1.05rem;margin-top:.9rem;font-size:.93rem}
+.walkthrough strong{color:var(--text)}
+.walkthrough ol{margin:.45rem 0;padding-left:1.35rem}
+.walkthrough li{margin:.32rem 0}
+.walkthrough p{text-align:left}
+.ob-board{background:#0e0c06;border:1px solid #4a3a12;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.ob-board h4{margin:.1rem 0 .5rem;font-size:1rem;color:var(--accent)}
+.ob-board ul{margin:.4rem 0;padding-left:1.3rem}
+.takeaway{background:#0b0f0b;border:1px solid #1f3a24;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.takeaway h4{margin:.1rem 0 .5rem;font-size:1rem;color:#7fd08a}
+.callout{border-left:4px solid var(--link);background:var(--surface);padding:.85rem 1.1rem;margin:1.15rem 0;border-radius:0 .55rem .55rem 0}
+.callout.warn{border-left-color:var(--accent)}
+.callout p{text-align:left;margin:.45rem 0}
+.provenance{border:1px dashed var(--border);border-radius:.6rem;padding:.8rem 1.05rem;margin:1.2rem 0;font-size:.88rem;color:var(--muted);background:#0a0a0a}
+.provenance strong{color:var(--text)}
+.provenance .uv{color:var(--accent);font-weight:700}
+.pq{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--surface)}
+.pq-q{margin:.1rem 0 .7rem;text-align:left}
+.pq-reveal{background:var(--accent);border:none;color:#000;font:700 .88rem/1 var(--font-ui);padding:.55rem 1rem;border-radius:.45rem;cursor:pointer}
+.pq-reveal:hover{filter:brightness(1.08)}
+.pq-a{margin-top:.9rem;border-top:1px solid var(--border);padding-top:.8rem}
+.pq-a ul{margin:.5rem 0}
+.pq-opt-right{color:#7fd08a}
+.pq-opt-wrong{color:#e08080}
+.ds-copy-btn{position:absolute;top:.5rem;right:.5rem;background:#1c1c1c;border:1px solid var(--border);color:var(--muted);font:600 .75rem/1 var(--font-ui);padding:.4rem .65rem;border-radius:.4rem;cursor:pointer}
+.ds-copy-btn:hover{color:var(--text);border-color:var(--accent)}
+.lab{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.2rem 0;background:#0b0b0b}
+.lab h4{margin:.1rem 0 .5rem;color:var(--accent)}
+
+/* ---- responsive: sidebar becomes drawer ---- */
+@media(max-width:56rem){
+  .ds-sidebar{transform:translateX(-105%);transition:transform .25s ease;width:17.5rem}
+  body.ds-nav-open .ds-sidebar{transform:none;z-index:56} /* above the menu button so it never overlaps the eyebrow */
+  .ds-menu-btn{display:block}
+  .ds-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:45}
+  body.ds-nav-open .ds-scrim{display:block}
+  .ds-content{margin-left:0;padding:0 1.1rem}
+}
+@media(min-width:56.01rem){.ds-scrim{display:none!important}}
+
+
+/* Hallmark · pre-emit critique: P4 H4 E5 S5 R5 V5
+   Hallmark · macrostructure: newspaper-masthead chrome (N6 nav + Ft1 footer)
+   nav: N6 (knobs: issue-line=above, wordmark=left 2xl, rule=double) ·
+   footer: Ft1 (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+   slop: pass (42-45) · contrast: pass (40-41) · honest: pass (46) · chrome: pass (47) ·
+   tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50-57) */
+/* Hallmark · genre: editorial · verb: redesign · scope: chrome-only
+ * nav: N6 Newspaper masthead (knobs: issue-line=above, wordmark=left 2xl, rule=double)
+ * footer: Ft1 Mast-headed (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+ * Tokens preserved: --font-body/--font-ui (Charis SIL), full colour system.
+ * 4pt spacing rhythm; hairline dividers; hand-drawn SVG chevrons; no gradients. */
+
+/* ---- site header: N6 newspaper masthead ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);margin:0 0 2rem;max-width:72ch}
+.mast-line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:0;padding:.75rem 0 .5rem;font:600 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mast-line-right{color:var(--faint);white-space:nowrap}
+.mast-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:.75rem}
+.mast-name{font:800 1.5rem/1.15 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.mast-name:hover{color:var(--accent)}
+.site-prevnext{display:flex;gap:1.5rem;flex:none}
+.site-prevnext-group{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.site-prevnext-next{align-items:flex-end;text-align:right}
+.site-prevnext-kicker{font:600 .68rem/1.3 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.site-prevnext-link{display:inline-flex;align-items:center;gap:.4rem;font:600 .85rem/1.4 var(--font-ui);color:var(--text);text-decoration:none;max-width:15rem;min-height:1.75rem}
+.site-prevnext-link .chev{width:.8rem;height:.8rem;flex:none;color:var(--accent)}
+.site-prevnext-link:hover{color:var(--accent)}
+.site-prevnext-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-prevnext-empty{font:400 .85rem/1.75 var(--font-ui);color:var(--faint)}
+.mast-sub{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.25rem 0 .75rem}
+.breadcrumbs{font:400 .78rem/1.5 var(--font-ui);color:var(--muted);margin:0;min-width:0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.breadcrumbs .bc-sep{margin:0 .4rem;color:var(--faint)}
+.breadcrumbs .bc-current{color:var(--text)}
+.site-nav-toggle{display:inline-flex;align-items:center;gap:.5rem;flex:none;white-space:nowrap;background:none;border:1px solid var(--border);border-radius:.5rem;color:var(--text);font:600 .82rem/1.4 var(--font-ui);padding:.55rem .9rem;cursor:pointer;min-height:2.5rem}
+.site-nav-toggle:active,.site-nav-close:active,.watch-speed:active{transform:translateY(1px)}
+.site-nav-toggle .chev{width:.75rem;height:.75rem;color:var(--accent);transition:transform .25s var(--ease-out)}
+.site-nav-toggle:hover{border-color:var(--accent)}
+.site-nav-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.mast-rule-double{border:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:4px;margin:0}
+
+/* collapsible volume panel (desktop): smooth 0fr/1fr reveal */
+.site-nav-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease-out)}
+.site-nav-panel.is-open{grid-template-rows:1fr}
+.site-nav-panel-inner{overflow:hidden;min-height:0}
+.site-nav-drawer-head{display:none}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:1.25rem;max-height:70vh;overflow-y:auto;padding:1.25rem 0}
+.site-nav-groups h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:0}
+.site-nav-groups a{display:flex;gap:.6rem;align-items:baseline;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0;border-radius:.25rem}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups .site-nav-num{font:600 .72rem/1.6 var(--font-ui);color:var(--faint);min-width:1.75rem;flex:none}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:600}
+.site-nav-groups a.site-nav-current .site-nav-num{color:var(--accent)}
+.site-nav-scrim{display:none}
+
+/* ---- site footer: Ft1 mast-headed + grouped index ---- */
+.site-footer{margin:3.5rem 0 0;padding:0 0 3rem;max-width:72ch}
+.foot-mast{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.75rem 0 1.5rem;margin-bottom:2rem}
+.foot-name{font:800 1.25rem/1.2 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.foot-name:hover{color:var(--accent)}
+.foot-tag{font:400 .88rem/1.6 var(--font-ui);color:var(--muted);max-width:52ch;margin:.6rem 0 0;text-align:left}
+.foot-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.5rem;margin-bottom:2rem}
+.foot-group h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.foot-group ul{list-style:none;margin:0;padding:0}
+.foot-group li{margin:0}
+.foot-group a{display:block;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0}
+.foot-group a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.foot-group a.foot-current{color:var(--accent);font-weight:600}
+.foot-colophon{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;margin:0;padding-top:1.25rem;border-top:1px solid var(--border);font:400 .78rem/1.6 var(--font-ui);color:var(--faint);text-align:left}
+.foot-colophon .foot-sep{color:var(--faint)}
+
+/* ---- mobile: drawer + compact chrome (<=40rem) ---- */
+@media(max-width:40rem){
+  .mast-line-right{display:none}
+  .mast-row{flex-wrap:wrap;row-gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between;gap:.75rem}
+  .site-prevnext-link{max-width:44vw}
+  .site-prevnext-title{display:none}
+  .mast-sub{flex-wrap:wrap}
+  .site-nav-toggle{width:100%;justify-content:center}
+  /* volume nav becomes a fixed drawer: no layout shift, closes on link tap / scrim / Escape */
+  .site-nav-panel{position:fixed;top:0;left:0;bottom:0;width:min(20rem,88vw);z-index:70;display:block;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-104%);transition:transform .3s var(--ease-out)}
+  .site-nav-panel.is-open{transform:none}
+  .site-nav-panel-inner{height:100%;overflow-y:auto;padding:1.25rem 1.25rem 2rem}
+  .site-nav-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .site-nav-drawer-head span{font:600 .75rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+  .site-nav-close{background:none;border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:600 .8rem/1 var(--font-ui);padding:.55rem .85rem;cursor:pointer;min-height:2.75rem}
+  .site-nav-close:hover{border-color:var(--accent)}
+  .site-nav-groups{display:block;max-height:none;overflow:visible;padding:0}
+  .site-nav-groups>div{margin-bottom:1.25rem}
+  .site-nav-scrim{display:block;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .site-nav-scrim.is-open{opacity:1;pointer-events:auto}
+  body.site-nav-open{overflow:clip}
+  .foot-index{gap:1.25rem}
+}
+@media(max-width:56rem){
+  .site-header{padding-left:2.9rem} /* clear the fixed section-drawer menu button */
+}
+@media print{
+  .site-header,.site-footer,.site-nav-scrim{display:none!important}
+  .watch-deeper .watch-frame{display:none}
+}
+
+/* ---- Watch and go deeper (content section skeleton; downstream fills real videos/links) ---- */
+.watch-deeper{margin:3rem 0 0;padding:2rem 0 0;border-top:1px solid var(--border);max-width:72ch}
+.watch-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.watch-deeper-lede{font:400 .95rem/1.6 var(--font-ui);color:var(--muted);margin:0 0 1.25rem;text-align:left}
+.watch-deeper-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem;margin:0 0 1.75rem}
+.watch-card{margin:0;border:1px solid var(--border);border-radius:.6rem;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.watch-frame{aspect-ratio:16/9;background:var(--bg)}
+.watch-frame iframe{width:100%;height:100%;border:0;display:block}
+.watch-card figcaption{padding:.85rem 1rem 1rem;font:400 .85rem/1.55 var(--font-ui);color:var(--muted);text-align:left}
+.watch-card figcaption strong{display:block;color:var(--text);font-weight:700;margin-bottom:.25rem}
+.go-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--text);margin:0 0 .5rem}
+.go-deeper-list{list-style:none;margin:0;padding:0}
+.go-deeper-list li{display:flex;gap:.6rem;align-items:baseline;padding:.5rem 0;border-top:1px solid var(--border)}
+.go-deeper-list li:last-child{border-bottom:1px solid var(--border)}
+.go-deeper-list a{font:600 .9rem/1.5 var(--font-ui);color:var(--text);text-decoration:none;flex:none;display:inline-flex;align-items:center;gap:.35rem}
+.go-deeper-list a:hover{color:var(--accent)}
+.go-deeper-list a:hover .ext-arrow{color:var(--accent)}
+.go-deeper-list .ext-arrow{width:.7rem;height:.7rem;color:var(--muted);flex:none}
+.go-deeper-list .go-deeper-note{font:400 .85rem/1.55 var(--font-ui);color:var(--muted)}
+
+/* speed-control bar (injected by the site script only when the YouTube IFrame
+   Player API loads; the iframe alone keeps working when it does not) */
+.watch-speedbar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;padding:.6rem .9rem;border-top:1px solid var(--border)}
+.watch-speedbar-label{font:600 .68rem/1.4 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.watch-speed{background:none;border:1px solid var(--border);border-radius:.4rem;color:var(--muted);font:600 .78rem/1 var(--font-ui);padding:.45rem .6rem;cursor:pointer;min-height:2rem}
+.watch-speed:hover{color:var(--text);border-color:var(--accent)}
+.watch-speed[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* motion respects the reader: no sliding drawers or expanding panels for reduced-motion users */
+@media (prefers-reduced-motion:reduce){
+  .ds-sidebar,.site-nav-toggle .chev,.site-nav-panel,.site-nav-scrim{transition:none}
+}
+
+/* ---- print ---- */
+@media print{
+  .ds-sidebar,.ds-menu-btn,.ds-progress,.ds-scrim,.ds-chapter-nav,.ds-copy-btn{display:none!important}
+  .ds-content{margin:0;max-width:100%;padding:0}
+  body{background:#fff;color:#000;font-size:12pt;line-height:1.6}
+  p{text-align:left}
+  h1,h2,h3,h4,a{color:#000}
+  pre,figure,details,.lab,.ob-board,.takeaway,.callout,.walkthrough,.pq{background:#fff;border-color:#999;break-inside:avoid}
+  code{background:#f0f0f0;border-color:#999;color:#000}
+}
+
+
+</style>
+<style>
+
+/* AI Lab integration layer (additive, uses design tokens only) */
+.diff{display:inline-block;font-family:var(--font-ui);font-size:.72rem;font-weight:700;
+  letter-spacing:.04em;padding:.18rem .6rem;border-radius:999px;border:1px solid var(--border);
+  vertical-align:middle;margin-left:.6rem;text-transform:uppercase}
+.diff-easy{color:#7fd08a;border-color:#2c5a34;background:#0f1f13}
+.diff-medium{color:#f0b429;border-color:#6b5518;background:#1f1a0c}
+.diff-hard{color:#ff9d6b;border-color:#6e3d1e;background:#20130c}
+.diff-expert{color:#ff7b8a;border-color:#6e2430;background:#200f13}
+.lab-meta{font-family:var(--font-ui);font-size:.86rem;color:var(--muted)}
+.tags{margin:.8rem 0}
+.tagchip{display:inline-block;font-family:var(--font-ui);font-size:.78rem;color:var(--muted);
+  border:1px solid var(--border);border-radius:999px;padding:.15rem .65rem;margin:.15rem .25rem .15rem 0}
+.tagchip.co{color:var(--accent);border-color:var(--accent)}
+details.task{border:1px solid var(--border);border-radius:.6rem;padding:.7rem 1rem;margin:.7rem 0;background:#0b0b0b}
+details.task>summary{cursor:pointer;font-weight:700}
+details.task>summary .task-n{font-family:var(--font-ui);font-size:.75rem;color:var(--accent);
+  border:1px solid var(--accent);border-radius:.35rem;padding:.1rem .45rem;margin-right:.6rem}
+.task-sec{font-weight:400;color:var(--muted);font-size:.85rem}
+.task-body{padding-top:.6rem}
+details.hints,details.solution{margin:.8rem 0}
+details.hints>summary,details.solution>summary{cursor:pointer;font-weight:600;color:var(--link)}
+.diagram-walkthrough{background:var(--surface);border:1px solid var(--border);border-radius:.6rem;
+  padding:.8rem 1.1rem;margin:0 0 1.6rem}
+.diagram-walkthrough h4{margin:.2rem 0 .5rem}
+.diagram-walkthrough ol{margin:.4rem 0;padding-left:1.5rem}
+figure.diagram svg{max-width:100%;height:auto;display:block;margin:0 auto;background:#0a0a0a;border-radius:.4rem}
+.fig-src{color:var(--faint);font-size:.82rem}
+.site-header{border-bottom:1px solid var(--border);padding:1.2rem 0 .8rem;margin-bottom:1.6rem}
+.mast-line{display:flex;justify-content:space-between;font-family:var(--font-ui);font-size:.78rem;
+  color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin:0 0 1rem;text-align:left}
+.ai-lab-hero-lede{font-size:1.12rem;color:var(--muted);max-width:60ch;text-align:left}
+.hero-stats{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.2rem 0}
+.hero-stat{font-family:var(--font-ui);font-size:.85rem;border:1px solid var(--border);border-radius:.5rem;
+  padding:.45rem .8rem;background:var(--surface)}
+.hero-stat b{color:var(--accent)}
+.lab-tabs{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:.5rem 0;margin:0 0 1.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.lab-tabs button{font-family:var(--font-ui);font-size:.8rem;background:var(--surface);color:var(--text);
+  border:1px solid var(--border);border-radius:999px;padding:.3rem .75rem;cursor:pointer}
+.lab-tabs button:hover,.lab-tabs button.on{border-color:var(--accent);color:var(--accent)}
+section.lab{scroll-margin-top:4.5rem}
+.ds-volume-nav{display:flex;justify-content:space-between;gap:1rem;border-top:2px solid var(--accent);
+  margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-volume-nav a{text-decoration:none;font-weight:700;font-family:var(--font-ui)}
+.ds-volume-nav .ds-prev{text-align:left}
+.ds-volume-nav .ds-next{text-align:right}
+.ds-volume-nav span{display:block;font-size:.78rem;color:var(--muted);font-weight:400}
+.provenance-inline{font-size:.82rem;color:var(--faint)}
+pre.ascii{background:#0a0a0a}
+@media (max-width:560px){.mast-line{flex-direction:column;gap:.2rem}}
+
+
+</style>
+<!-- experience-layer:css -->
+<style>
+/* Hallmark · pre-emit critique: P5 H4 E5 S4 R5 V5
+ * World-class upgrade v2 (2026-10-05): adds reading measure (§7), figure
+ * parallax (§8), volume pager footer (§9). Additive only — never edits
+ * content markup or DS chrome; references DS tokens only (--accent,
+ * --border, --text, --muted). No new colors, no gradients, no filler.
+ *
+ * Motion stance: calm delight. Opacity/translate only (GPU-friendly),
+ * one IntersectionObserver, one rAF-throttled scroll listener, zero layout
+ * shift, prefers-reduced-motion respected, fully usable with JS disabled
+ * (every hidden state is gated on html.xp-js, which only this layer's
+ * companion script adds).
+ *
+ * Wiring (final assembly, per volume — same model as ds.css/ds.js):
+ *   1. In <head>, AFTER the DS style block, add:
+ *        <!-- experience-layer:css -->
+ *        <style>
+ *        …this file verbatim…
+ *        [close the style element]
+ *   2. Immediately before the document's LAST closing body tag (the real
+ *      one at the end of the file — some volumes mention a literal closing
+ *      body tag inside their docs prose; ignore those), AFTER the ds.js
+ *      script block, add:
+ *        <!-- experience-layer:js -->
+ *        <script>
+ *        …experience.js verbatim…
+ *        [close the script element]
+ * (Closing tags are written out in the assembly snippet, not here, so this
+ * file can be pasted verbatim without early-terminating its own element.)
+ * ========================================================================== */
+
+/* ---------- 1. Smooth anchor scrolling (motion-safe readers only) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ---------- 2. Scroll-triggered reveals ----------
+   Hidden state exists ONLY under html.xp-js. No-JS readers, print, and
+   reduced-motion users always see full content. Uses the independent
+   `translate` property (not `transform`) so hover feedback below composes
+   without specificity fights. Opacity + translate only: zero layout shift. */
+html.xp-js .xp-reveal {
+  opacity: 0;
+  translate: 0 14px;
+}
+html.xp-js .xp-reveal.xp-in {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 0.55s ease,
+    translate 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------- 3. Hero ---------- */
+/* Layout-neutral wrapper the script may add around a volume's title block.
+   Parallax itself is applied inline by the script (transform only). */
+.xp-hero {
+  position: relative;
+}
+
+/* ---------- 4. Calm hover feedback: cards + knowledge checks only ----------
+   translateY(-1px) + accent border. transform composes with the reveal's
+   independent `translate` property — no conflicts. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .pq,
+  .watch-card,
+  .ob-board,
+  .lab {
+    transition: transform 0.18s ease, border-color 0.18s ease;
+  }
+  .pq:hover,
+  .watch-card:hover,
+  .ob-board:hover,
+  .lab:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+  }
+  .pq:focus-within,
+  .watch-card:focus-within,
+  .ob-board:focus-within,
+  .lab:focus-within {
+    border-color: var(--accent);
+  }
+}
+
+/* ---------- 5. Reduced motion: everything static and visible ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.xp-js .xp-reveal {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+  .xp-hero {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  html.xp-js figure.xp-px img {
+    transform: none !important;
+  }
+  .pq,
+  .watch-card,
+  .ob-board,
+  .lab {
+    transition: none;
+  }
+}
+
+/* ---------- 6. Print: never hide content ---------- */
+@media print {
+  html.xp-js .xp-reveal {
+    opacity: 1 !important;
+    translate: 0 0 !important;
+    transition: none;
+  }
+  html.xp-js figure.xp-px img {
+    transform: none !important;
+  }
+  .xp-hero {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ---------- 7. Reading: justified prose, comfortable measure ----------
+   Additive: the DS already constrains the column to a 72ch measure.
+   Justification applies to content paragraphs only — chrome text (mast
+   lines, hero ledes, footers, nav, sidebars) keeps its own alignment. */
+#ds-content p,
+.ds-content p {
+  text-align: justify;
+  hyphens: auto;
+  line-height: 1.7;
+}
+.site-header p,
+.ai-lab-hero-lede,
+.hero-stats,
+.hero-stat,
+footer p,
+.site-nav-panel p,
+.ds-sidebar p,
+figcaption p,
+.breadcrumbs {
+  text-align: left;
+}
+
+/* ---------- 8. Figure parallax: gentle drift, images only ----------
+   The script sets --px on each figure img from its viewport position;
+   the figure clips the drift so nothing ever overflows or shifts layout.
+   Gated on html.xp-js like the reveals (no-JS = no transform at all). */
+html.xp-js figure.xp-px {
+  overflow: hidden;
+}
+html.xp-js figure.xp-px img {
+  transform: translateY(var(--px, 0px));
+  transition: transform 0.12s linear;
+  will-change: transform;
+}
+
+/* ---------- 9. Volume pager footer ----------
+   Shared pager used at the end of every volume (prev/next links).
+   Pages whose own stylesheet never defined it get this quiet default. */
+.vol-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 2.5rem 0 0;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+}
+.vol-foot a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+.vol-foot a:hover {
+  color: var(--accent);
+}
+@media (max-width: 40rem) {
+  .vol-foot {
+    flex-direction: column;
+  }
+}
+
+</style>
+</head>
+<body>
+<div class="ds-progress" id="dsProgress"></div>
+<button class="ds-menu-btn" id="dsMenuBtn" aria-label="Open navigation">&#9776;</button>
+<aside class="ds-sidebar" id="dsSidebar" aria-label="Volume navigation">
+<div class="ds-side-head">
+<p class="ds-side-eyebrow">Research-Engineer Curriculum</p>
+<p class="ds-side-title">Volume 18: Math for ML: The Machinery Underneath</p>
+<input class="ds-side-search" id="dsNavSearch" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+</div>
+<nav class="ds-nav" id="dsNav" aria-label="Sections"></nav>
+<div class="ds-side-foot"><span id="dsCompleteCount"></span></div>
+</aside>
+<div class="ds-scrim" id="dsScrim"></div>
+<main class="ds-content" id="dsContent">
+<header class="site-header hero">
+<p class="mast-line"><span>Research-Engineer Curriculum</span><span>Volume 18 of 28</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a><nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span><a class="site-prevnext-link" href="17-ai-lab-python-data.html" aria-label="Previous volume: Python and Data Tools"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">Python and Data Tools</span></a></div><div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span><a class="site-prevnext-link" href="19-ai-lab-classical-ml.html" aria-label="Next volume: Classical ML"><span class="site-prevnext-title">Classical ML</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></nav></div>
+<div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep" aria-hidden="true">/</span><span>AI Lab</span><span class="bc-sep" aria-hidden="true">/</span><span class="bc-current" aria-current="page">Math for ML (AI Lab)</span></nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Browse all volumes</span></button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span><button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul></div><div><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html"><span class="site-nav-num">40</span><span class="site-nav-title">AI Lab Atlas: 15-Week Lab Map</span></a></li><li><a href="17-ai-lab-python-data.html"><span class="site-nav-num">41</span><span class="site-nav-title">Python and Data Tools</span></a></li><li><a href="18-ai-lab-math-for-ml.html" class="site-nav-current"><span class="site-nav-num">42</span><span class="site-nav-title">Math for ML (AI Lab)</span></a></li><li><a href="19-ai-lab-classical-ml.html"><span class="site-nav-num">43</span><span class="site-nav-title">Classical ML</span></a></li><li><a href="20-ai-lab-evaluation-debugging.html"><span class="site-nav-num">44</span><span class="site-nav-title">Evaluation and Debugging</span></a></li><li><a href="21-ai-lab-deep-learning.html"><span class="site-nav-num">45</span><span class="site-nav-title">Deep Learning (AI Lab)</span></a></li><li><a href="22-ai-lab-cv-nlp-basics.html"><span class="site-nav-num">46</span><span class="site-nav-title">CV and NLP Basics</span></a></li><li><a href="23-ai-lab-transformers.html"><span class="site-nav-num">47</span><span class="site-nav-title">Transformers</span></a></li><li><a href="24-ai-lab-rag-retrieval.html"><span class="site-nav-num">48</span><span class="site-nav-title">RAG and Retrieval</span></a></li><li><a href="25-ai-lab-mlops-systems.html"><span class="site-nav-num">49</span><span class="site-nav-title">MLOps and Systems</span></a></li><li><a href="26-ai-lab-system-design.html"><span class="site-nav-num">50</span><span class="site-nav-title">System Design (AI Lab)</span></a></li><li><a href="27-ai-lab-llm-agentic.html"><span class="site-nav-num">51</span><span class="site-nav-title">LLM and Agentic AI</span></a></li><li><a href="28-ai-lab-interview-clearance.html"><span class="site-nav-num">52</span><span class="site-nav-title">Interview Clearance</span></a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div><script>(function(){var t=document.getElementById("siteNavToggle"),p=document.getElementById("siteNavPanel"),sc=document.getElementById("siteNavScrim"),c=document.getElementById("siteNavClose");function dm(){return window.matchMedia&&window.matchMedia("(max-width:40rem)").matches;}function open(){if(!p||!t)return;p.classList.add("is-open");t.setAttribute("aria-expanded","true");if(dm()){document.body.classList.add("site-nav-open");if(sc)sc.classList.add("is-open");}}function close(){if(!p||!t)return;p.classList.remove("is-open");t.setAttribute("aria-expanded","false");document.body.classList.remove("site-nav-open");if(sc)sc.classList.remove("is-open");}if(t)t.addEventListener("click",function(){if(p.classList.contains("is-open"))close();else open();});if(c)c.addEventListener("click",close);if(sc)sc.addEventListener("click",close);if(p)p.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("keydown",function(e){if(e.key==="Escape"&&p&&p.classList.contains("is-open")){close();if(t)t.focus();}});})();</script>
+<h1>Math for ML: The Machinery Underneath</h1>
+<p class="ai-lab-hero-lede">Turn mathematical fluency into working code: projections and least squares you can derive, gradients you can check, Bayes updates you can simulate, and statistics you can defend in an interview.</p>
+<div class="hero-stats"><span class="hero-stat"><strong>5</strong> labs</span><span class="hero-stat"><strong>29</strong> tasks</span><span class="hero-stat">All <strong>Easy</strong></span><span class="hero-stat">Week 2, Days 1 to 5</span></div>
+</header>
+<h2>Why this category exists</h2><p>Volume 1 built the mathematical foundations: vectors, derivatives, probability, and statistics as ideas. This volume is where those ideas become code you can run, numbers you can check, and derivations you can defend out loud. An interviewer does not ask whether you have heard of least squares. They ask you to derive the normal equations on the board, or to explain why your gradient is right, or to compute a posterior without flinching. This volume is the practice ground for exactly that.</p><p>Without these skills, the rest of the curriculum is cargo cult. You can call <code>np.linalg.lstsq</code> without knowing what a projection is, and you will, right up until a shape bug or a singular matrix gives you nonsense with no error message. You can write a loss function without ever gradient-checking it, and you will, right up until the model does not learn and you cannot tell whether the bug is in the math or the code. You can quote a p-value without understanding coverage, and you will, right up until someone asks what it means.</p><p>The five labs are all rated Easy, and the rating refers to the mechanics: the NumPy is elementary, the simulations are short. The difficulty is in the reasoning. The Linear Algebra lab drills the FAANG gotchas explicitly: assert shapes, never form the explicit inverse. The Calculus lab makes finite differences the arbiter of every gradient you write. The Probability lab centers the classic disease-test interview question and the log-space habit. The Statistics lab attacks p-value misreadings head on. The Math Lab is the capstone: five derivation problems, each paired with a computational check.</p><figure class="diagram" id="fig-18-overview"><svg viewBox="0 0 720 320" width="100%" role="img" aria-label="The four pillars of Week 2: linear algebra, calculus, probability, and statistics, each with its own lab, converging on " xmlns="http://www.w3.org/2000/svg"><text x="360" y="40" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Week 2: four pillars, five labs</text><text x="360" y="62" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">Volume 1 built the theory; these labs turn it into code you can run and defend</text><rect x="10" y="90" width="164" height="130" rx="8" fill="#0d0d0d" stroke="#f0b429"/><text x="92" y="125" text-anchor="middle" fill="#f0b429" font-size="13" font-family="sans-serif">Linear algebra</text><text x="92" y="150" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">shapes, projections,</text><text x="92" y="168" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">least squares, SVD</text><text x="92" y="196" text-anchor="middle" fill="#6cb2ff" font-size="11" font-family="sans-serif">Lab: LinAlg for ML</text><rect x="188" y="90" width="164" height="130" rx="8" fill="#0d0d0d" stroke="#6cb2ff"/><text x="270" y="125" text-anchor="middle" fill="#6cb2ff" font-size="13" font-family="sans-serif">Calculus</text><text x="270" y="150" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">chain rule, gradients,</text><text x="270" y="168" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">finite differences</text><text x="270" y="196" text-anchor="middle" fill="#6cb2ff" font-size="11" font-family="sans-serif">Lab: Gradients</text><rect x="366" y="90" width="164" height="130" rx="8" fill="#0d0d0d" stroke="#7fd08a"/><text x="448" y="125" text-anchor="middle" fill="#7fd08a" font-size="13" font-family="sans-serif">Probability</text><text x="448" y="150" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">Bayes, expectation,</text><text x="448" y="168" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">log-space, simulation</text><text x="448" y="196" text-anchor="middle" fill="#6cb2ff" font-size="11" font-family="sans-serif">Lab: Probability</text><rect x="544" y="90" width="164" height="130" rx="8" fill="#0d0d0d" stroke="#ff9d6b"/><text x="626" y="125" text-anchor="middle" fill="#ff9d6b" font-size="13" font-family="sans-serif">Statistics</text><text x="626" y="150" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">CI, permutation,</text><text x="626" y="168" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">p-values, Bonferroni</text><text x="626" y="196" text-anchor="middle" fill="#6cb2ff" font-size="11" font-family="sans-serif">Lab: Statistics</text><rect x="250" y="245" width="220" height="60" rx="8" fill="#1a1408" stroke="#f0b429"/><text x="360" y="270" text-anchor="middle" fill="#f0b429" font-size="13" font-family="sans-serif">Math Lab: the capstone</text><text x="360" y="292" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">derivations plus verification</text><g stroke="#f0b429" stroke-width="1.5"><line x1="92" y1="220" x2="300" y2="243"/><line x1="270" y1="220" x2="330" y2="243"/><line x1="448" y1="220" x2="390" y2="243"/><line x1="626" y1="220" x2="420" y2="243"/></g></svg><figcaption>The four pillars of Week 2: linear algebra, calculus, probability, and statistics, each with its own lab, converging on the Math Lab capstone. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>Four pillars across the top: linear algebra, calculus, probability, statistics, each with its day lab named below.</li><li>Each pillar lists the objects the lab makes you implement: projections and SVD, chain rule and finite differences, Bayes and log-space, confidence intervals and p-values.</li><li>The Math Lab box at the bottom collects all four: it is a derivation-plus-verification problem set, the interview-style consolidation.</li><li>The connecting lines show the intended flow: the first four labs build the pieces, the fifth makes you combine and defend them.</li></ol></div><div class="takeaway"><h4>Key takeaways</h4><ul><li>Volume 1 built the theory; this volume converts it into verified code and board-ready derivations.</li><li>Linear algebra is shape discipline: projections, least squares, and SVD, with solve instead of inverse.</li><li>Calculus is gradient discipline: chain rule in code, finite differences as the ground truth.</li><li>Probability is update discipline: Bayes with the base rate, log-space to avoid underflow.</li><li>Statistics is uncertainty discipline: confidence intervals as a procedure, p-values read literally.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Derive the normal equations for least squares from the orthogonality condition.</li><li>Your analytic gradient disagrees with finite differences. Where do you look first?</li><li>A test is 99% sensitive with a 5% false positive rate, and 1% of people are sick. A patient tests positive. Now what?</li><li>What does a p-value of 0.04 actually claim, in one careful sentence?</li></ul></div><p class="lab-pointer">The labs below follow the pillar order: <a href="#lab-w2-d1-linear-algebra-for-ml">Linear Algebra</a>, <a href="#lab-w2-d2-calculus-gradients">Calculus and Gradients</a>, <a href="#lab-w2-d3-probability-essentials">Probability</a>, <a href="#lab-w2-d4-statistics-for-ml">Statistics</a>, and the <a href="#lab-w2-d5-math-lab">Math Lab</a> capstone.</p><h2>Core ideas, worked end to end</h2><h3>Concept 1: Projections, least squares, and PSD matrices</h3><p><strong>1. What it is, in plain words.</strong> A <dfn>projection</dfn> finds the closest point to a vector v inside a subspace, for example the line spanned by a vector u. <dfn>Least squares</dfn> chooses the weights w that minimize the squared error ||Xw - y||^2. A matrix A is <dfn>positive semidefinite</dfn> (PSD) when v^T A v is never negative for any vector v. <dfn>SVD</dfn> (singular value decomposition) factors a matrix as X = U S V^T, revealing its principal directions.</p><p><strong>2. Why it exists.</strong> Least squares is the workhorse fit behind linear regression, and the lab shows it is nothing but projection: Xw must be the projection of y onto the column space of X. The PSD concept matters because covariance matrices and X^T X are PSD, and PSD is what guarantees that a quadratic objective has a single global minimum instead of saddle-shaped traps. SVD is the engine inside PCA, which the lab implements from scratch.</p><p><strong>3. How it works, step by step.</strong> Step one: the projection of v onto u is (u^T v / u^T u) u, the component of v along u. Step two: the residual v minus the projection is orthogonal to u; orthogonality is the defining property. Step three: for least squares, demand that the residual y - Xw be orthogonal to every column of X, which gives the <dfn>normal equations</dfn> X^T X w = X^T y. Step four: solve with <code>np.linalg.solve</code> or <code>lstsq</code>, never by forming the explicit inverse, which is slower and numerically worse. Step five: for PCA, center X, take its SVD, and keep the top-k columns of V as the principal directions.</p><p><strong>4. Concrete numbers.</strong> Fitting 10 features on 1,000 rows: <code>np.linalg.solve(X.T @ X, X.T @ y)</code> returns w in milliseconds. Forming <code>np.linalg.inv(X.T @ X)</code> first costs roughly 3x the flops and squares the condition number, so a mildly collinear feature set that solve handles fine can make the inverse path return garbage. The lab has you verify X^T X is PSD by testing v^T A v over many random vectors, turning an abstract definition into a check you can run.</p><p><strong>5. The common misunderstanding.</strong> Beginners think the normal equations say "multiply by the inverse". The equations say the residual is orthogonal to the column space; the inverse is just one (bad) way to compute the answer. The second misunderstanding is treating SVD as a black box: the lab shows the singular vectors of centered X are exactly the eigenvectors of the covariance matrix, which is why PCA via SVD and PCA via eigendecomposition agree.</p><figure class="diagram" id="fig-18-projection"><svg viewBox="0 0 720 360" width="100%" role="img" aria-label="Orthogonal projection of v onto the span of u: the projection is the closest point in the subspace, and the residual is " xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#f0b429" stroke-width="1.5"/></marker></defs><text x="360" y="34" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Projection: the closest point in the subspace</text><line x1="120" y1="280" x2="600" y2="280" stroke="#262626" stroke-width="2"/><text x="610" y="285" fill="#a8a8a8" font-size="12" font-family="sans-serif">span(u)</text><line x1="160" y1="280" x2="430" y2="110" stroke="#6cb2ff" stroke-width="3"/><text x="440" y="105" fill="#6cb2ff" font-size="13" font-family="sans-serif">v (target)</text><line x1="160" y1="280" x2="330" y2="280" stroke="#f0b429" stroke-width="3" marker-end="url(#ah5)"/><text x="245" y="305" text-anchor="middle" fill="#f0b429" font-size="13" font-family="sans-serif">proj_u(v)</text><line x1="330" y1="280" x2="430" y2="110" stroke="#ff7b8a" stroke-width="2" stroke-dasharray="6,4"/><text x="400" y="200" fill="#ff7b8a" font-size="12" font-family="sans-serif">residual r</text><text x="400" y="218" fill="#ff7b8a" font-size="12" font-family="sans-serif">(orthogonal to u)</text><rect x="318" y="268" width="12" height="12" fill="none" stroke="#a8a8a8"/><text x="120" y="330" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">Least squares picks w so that Xw is this projection: the residual is orthogonal to every column of X.</text></svg><figcaption>Orthogonal projection of v onto the span of u: the projection is the closest point in the subspace, and the residual is orthogonal to u. Least squares is this picture with many columns. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The horizontal line is span(u), the set of all multiples of the vector u.</li><li>The blue arrow v is the target we want to reach, but it does not lie in the subspace.</li><li>The gold arrow proj_u(v) is the closest point to v inside the subspace, computed as (u^T v / u^T u) u.</li><li>The dashed red residual r = v - proj_u(v) is orthogonal to u (note the right-angle marker). Orthogonality is the whole game.</li><li>Least squares generalizes this: with a matrix X, the best Xw is the projection of y onto the column space of X, so the residual is orthogonal to every column. That orthogonality condition is the normal equations.</li></ol></div><p><strong>7. Interview relevance.</strong> "Why does projection show up in linear regression?" and "where does PSD show up in ML?" are listed as interview angles in the labs themselves. The expected answer is the picture above: least squares is projection, and PSD (covariance, kernels, Hessians) is what makes minima well-behaved.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>Projection is the closest point in a subspace; least squares is projection of y onto the column space of X.</li><li>The normal equations come from orthogonality of the residual, not from "multiplying by the inverse".</li><li>Use solve or lstsq, never the explicit inverse: faster and numerically stabler.</li><li>X^T X is always PSD; PCA directions are the top singular vectors of centered X.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Prove that for any X, the matrix X^T X is positive semidefinite.</li><li>Why is <code>np.linalg.solve</code> preferred over <code>np.linalg.inv</code> for the normal equations?</li><li>Explain why the SVD of centered X gives the PCA directions.</li></ul></div><p class="lab-pointer">Practice this in the <a href="#lab-w2-d1-linear-algebra-for-ml">Linear Algebra Lab</a> (projections, least squares, PCA via SVD) and the <a href="#lab-w2-d5-math-lab">Math Lab</a> problems 1 through 3 and 5.</p><h3>Concept 2: Gradients, the chain rule, and numerical checking</h3><p><strong>1. What it is, in plain words.</strong> A <dfn>gradient</dfn> is the vector of partial derivatives of a scalar loss with respect to each parameter; it points in the direction of steepest increase. The <dfn>chain rule</dfn> computes derivatives of composed functions by multiplying the derivatives of the pieces. <dfn>Finite differences</dfn> approximate a derivative numerically as (f(w+e) - f(w-e)) / 2e. The <dfn>Hessian</dfn> is the matrix of second derivatives; it describes curvature.</p><p><strong>2. Why it exists.</strong> Every model in this curriculum is trained by following gradients downhill. If your gradient code is wrong, training silently optimizes the wrong objective: loss decreases, nothing learns, and no error is raised. Finite differences exist as the independent arbiter. They are too slow for training but perfect for verification, because they use only function evaluations and cannot share your derivation bug.</p><p><strong>3. How it works, step by step.</strong> Step one: write the forward computation as a chain of simple ops (affine transform, sigmoid, loss). Step two: differentiate each op and multiply them in reverse order; that is backpropagation by hand. Step three: implement the gradient in vectorized NumPy, watching the two classic bug sites: missing constants like 2/n, and broadcasting shape mismatches. Step four: check it. Perturb each parameter by a small e in both directions, compute the central difference, and compare against your analytic gradient. Step five: for curvature questions, build the Hessian numerically the same way and inspect its eigenvalues; all non-negative means a local minimum.</p><p><strong>4. Concrete numbers.</strong> For MSE loss L(w) = (1/n) sum (Xw - y)^2, the gradient is (2/n) X^T (Xw - y). Forget the 2/n and your gradient is off by a constant factor; with n = 10,000 that is a 20,000x error in step size, and gradient descent either crawls or explodes. The lab's central-difference check typically agrees with a correct analytic gradient to about 1e-5 relative error with e around 1e-5; agreement worse than 1e-3 means a bug.</p><p><strong>5. The common misunderstanding.</strong> Beginners trust the analytic gradient because the math "looked right". The lab's position is blunt: most gradient bugs are shape bugs or missing constants, and neither is visible in the derivation. The second misunderstanding is using a one-sided difference (f(w+e) - f(w)) / e, which has error proportional to e, instead of the central difference, whose error is proportional to e squared and is therefore far more accurate for the same e.</p><figure class="diagram" id="fig-18-gradcheck"><svg viewBox="0 0 720 360" width="100%" role="img" aria-label="Gradient checking compares the slope from your chain-rule code against a finite-difference slope through two nearby poin" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#f0b429" stroke-width="1.5"/></marker></defs><text x="360" y="34" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Gradient checking: analytic slope vs finite-difference slope</text><line x1="80" y1="300" x2="640" y2="300" stroke="#262626" stroke-width="2"/><line x1="80" y1="300" x2="80" y2="60" stroke="#262626" stroke-width="2"/><path d="M100,280 Q360,260 620,90" fill="none" stroke="#6cb2ff" stroke-width="3"/><text x="600" y="75" fill="#6cb2ff" font-size="12" font-family="sans-serif">f(w)</text><circle cx="360" cy="200" r="6" fill="#f0b429"/><text x="372" y="195" fill="#f0b429" font-size="12" font-family="sans-serif">w</text><line x1="280" y1="228" x2="440" y2="172" stroke="#7fd08a" stroke-width="2.5" marker-end="url(#ah6)"/><text x="450" y="170" fill="#7fd08a" font-size="12" font-family="sans-serif">finite-difference slope</text><text x="450" y="188" fill="#7fd08a" font-size="11" font-family="sans-serif">(f(w+e) - f(w-e)) / 2e</text><line x1="300" y1="222" x2="420" y2="178" stroke="#ff7b8a" stroke-width="2" stroke-dasharray="6,4"/><text x="450" y="215" fill="#ff7b8a" font-size="12" font-family="sans-serif">analytic slope</text><text x="450" y="233" fill="#ff7b8a" font-size="11" font-family="sans-serif">your chain-rule code</text><text x="360" y="335" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">If the two slopes agree to ~1e-5, your gradient is right. If not, the bug is in the analytic code.</text></svg><figcaption>Gradient checking compares the slope from your chain-rule code against a finite-difference slope through two nearby points; agreement means the analytic gradient is trustworthy. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The blue curve is the loss f(w); the gold dot marks the point w where you check.</li><li>The solid green secant line is the finite-difference slope: evaluate f at w+e and w-e, divide the difference by 2e.</li><li>The dashed red tangent is the slope your analytic chain-rule code claims.</li><li>If they agree to about 1e-5, the analytic gradient is correct. If they disagree, the finite-difference version is the ground truth and the bug is in your derivation or code.</li><li>The lab mantra, quoted from the lab itself: if you cannot gradient-check it, you do not really trust it.</li></ol></div><p><strong>7. Interview relevance.</strong> The binary cross-entropy gradient (sigmoid(Xw), loss, gradient X^T(p - y)/n) is flagged as the core interview gradient in the lab. "How would you debug an autodiff bug in production?" expects exactly this answer: isolate the op, finite-difference it, binary search the chain.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>The gradient points uphill; training steps go the opposite way. Chain rule multiplies the pieces in reverse.</li><li>The two classic gradient bugs: missing constants (2/n) and broadcasting shape mismatches.</li><li>Central finite differences are the ground truth for verification; agreement to ~1e-5 means the code is right.</li><li>The Hessian's eigenvalues describe curvature; the lab builds it numerically to make that concrete.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Derive the gradient of binary cross-entropy with a sigmoid output, from scratch.</li><li>Why is the central difference more accurate than the one-sided difference?</li><li>Your loss decreases but accuracy never moves. How do you check whether the gradient is the problem?</li></ul></div><p class="lab-pointer">Practice this in the <a href="#lab-w2-d2-calculus-gradients">Calculus and Gradients Lab</a>: finite differences, the MSE and cross-entropy gradients, and the numerical Hessian.</p><h3>Concept 3: Bayes' rule, base rates, and log-space computation</h3><p><strong>1. What it is, in plain words.</strong> <dfn>Bayes' rule</dfn> updates a belief with evidence: P(D|+) = P(+|D) P(D) / P(+). The <dfn>prior</dfn> P(D) is what you believed before the evidence; the <dfn>posterior</dfn> P(D|+) is what you believe after. <dfn>Expectation</dfn> is the probability-weighted average of a random variable; <dfn>variance</dfn> measures its spread. Computing in <dfn>log-space</dfn> means working with log probabilities so products become sums.</p><p><strong>2. Why it exists.</strong> ML is applied belief updating: spam filters, medical tests, and recommendation scores are all posteriors. The base rate matters because rare events stay rare even after positive evidence, and engineers who ignore the prior ship systems that cry wolf. Log-space exists because multiplying hundreds of small probabilities underflows to zero in floating point; adding their logs does not.</p><p><strong>3. How it works, step by step.</strong> Step one: write down the prior, for example disease prevalence 1%. Step two: write the likelihoods, sensitivity P(+|D) and false positive rate P(+|healthy). Step three: compute the total probability of a positive test across both groups. Step four: divide the true-positive mass by the total positive mass; that ratio is the posterior. Step five: sanity-check by simulation. Sample many synthetic patients, apply the test probabilistically, and confirm the empirical fraction matches the analytic answer. Step six: when chaining many likelihoods (as in Naive Bayes), sum log probabilities instead of multiplying raw ones.</p><p><strong>4. Concrete numbers.</strong> The lab's disease-test example: prevalence 0.01, sensitivity 0.99, false positive rate 0.05. True positives per 10,000 people: 99. False positives: 495. Posterior: 99 / 594 = 16.7%. A "99% accurate test" leaves a positive patient still 83% likely to be healthy. The simulation check in the lab reproduces 16.7% empirically, which is how you learn to trust both the math and the code.</p><p><strong>5. The common misunderstanding.</strong> Beginners read "99% sensitive" as "99% chance I am sick if I test positive". That confuses P(+|D) with P(D|+), the exact reversal Bayes' rule exists to fix. The second misunderstanding is multiplying probabilities in a long chain and wondering why everything becomes zero; the lab's gotcha names underflow explicitly and the Naive Bayes mini-task moves to log-odds.</p><figure class="diagram" id="fig-18-bayes"><svg viewBox="0 0 720 360" width="100%" role="img" aria-label="The base-rate fallacy made visible: with 1% prevalence, the 495 false positives from the healthy majority swamp the 99 t" xmlns="http://www.w3.org/2000/svg"><text x="360" y="34" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">Why a 99% accurate test can still be mostly wrong: the base rate</text><rect x="60" y="60" width="600" height="70" rx="8" fill="#0d0d0d" stroke="#262626"/><text x="360" y="88" text-anchor="middle" fill="#ececec" font-size="13" font-family="sans-serif">10,000 people, disease prevalence 1%</text><text x="360" y="112" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">100 sick, 9,900 healthy</text><rect x="60" y="160" width="120" height="90" rx="8" fill="#200f13" stroke="#ff7b8a"/><text x="120" y="190" text-anchor="middle" fill="#ff7b8a" font-size="13" font-family="sans-serif">sick: 100</text><text x="120" y="212" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">99 test positive</text><text x="120" y="230" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">(99% sensitivity)</text><rect x="300" y="160" width="360" height="90" rx="8" fill="#0f1f13" stroke="#7fd08a"/><text x="480" y="190" text-anchor="middle" fill="#7fd08a" font-size="13" font-family="sans-serif">healthy: 9,900</text><text x="480" y="212" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">495 test positive</text><text x="480" y="230" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">(5% false positive rate)</text><rect x="200" y="280" width="320" height="60" rx="8" fill="#1a1408" stroke="#f0b429"/><text x="360" y="305" text-anchor="middle" fill="#f0b429" font-size="14" font-family="sans-serif">P(sick | positive) = 99 / (99 + 495) = 16.7%</text><text x="360" y="328" text-anchor="middle" fill="#a8a8a8" font-size="11" font-family="sans-serif">the healthy majority dominates the positives</text></svg><figcaption>The base-rate fallacy made visible: with 1% prevalence, the 495 false positives from the healthy majority swamp the 99 true positives, so a positive test means only a 16.7% chance of disease. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>Start with 10,000 people and 1% prevalence: 100 sick, 9,900 healthy.</li><li>The sick group (red box): 99% sensitivity means 99 test positive.</li><li>The healthy group (green box): a 5% false positive rate on 9,900 people yields 495 positive tests, five times more than the true positives.</li><li>Bayes rule combines them: P(sick | positive) = 99 / (99 + 495) = 16.7%.</li><li>The lesson: the posterior depends on the base rate, not just the test quality. Interviewers ask this to check whether you update on evidence correctly.</li></ol></div><p><strong>7. Interview relevance.</strong> The disease-test question is one of the most asked probability questions in ML interviews, and the lab lists "why can a 99% accurate test still have low P(D|+)?" as an interview angle. The expected answer is the base-rate arithmetic above, delivered without hesitation, plus the log-space habit for real implementations.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>Bayes' rule: posterior = likelihood times prior, divided by total evidence. Never skip the prior.</li><li>A rare disease plus a good test still yields mostly false positives; the healthy majority dominates.</li><li>Verify analytic posteriors with simulation; the two should agree.</li><li>Multiply many probabilities in log-space; raw products underflow to zero.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Compute P(D|+) for prevalence 1%, sensitivity 99%, false positive rate 5%. Show every step.</li><li>Why do we standardize features to z-scores, and what breaks if we do not?</li><li>Explain why Naive Bayes implementations work in log-space.</li></ul></div><p class="lab-pointer">Practice this in the <a href="#lab-w2-d3-probability-essentials">Probability Lab</a> (expectation, Bayes, simulation checks, z-scores, log-odds) and <a href="#lab-w2-d5-math-lab">Math Lab</a> problem 4.</p><h3>Concept 4: Confidence intervals, p-values, and the multiple-comparisons trap</h3><p><strong>1. What it is, in plain words.</strong> A <dfn>confidence interval</dfn> (CI) is a range computed from data that captures the true parameter in a stated fraction of repeated experiments. A <dfn>p-value</dfn> is the probability of seeing data this extreme if the null hypothesis were true. A <dfn>permutation test</dfn> builds the null distribution by shuffling labels instead of assuming a formula. The <dfn>Bonferroni correction</dfn> divides the significance threshold by the number of tests run.</p><p><strong>2. Why it exists.</strong> ML engineers constantly ask "is B really better than A": model comparisons, A/B tests, feature selection. Without uncertainty quantification, every lucky fluctuation looks like a breakthrough and every dashboard slice becomes a false discovery. The lab's coverage simulation exists to make the CI definition visceral, and the permutation test exists because real data rarely satisfies textbook assumptions.</p><p><strong>3. How it works, step by step.</strong> Step one: estimate from data, for example the sample mean and the unbiased sample variance (dividing by n-1, not n, which corrects the downward bias). Step two: form the interval as mean +/- z times s/sqrt(n), with z about 1.96 for 95%. Step three: verify coverage by simulation: repeat the whole procedure thousands of times on known data and count how often the interval contains the truth. Step four: for comparing two groups, run a permutation test: shuffle the group labels many times, recompute the difference each time, and see where the observed difference falls in that shuffled distribution. Step five: if you ran m tests, compare each p-value against alpha/m, not alpha.</p><p><strong>4. Concrete numbers.</strong> With n = 100 samples from a standard normal, the 95% CI is roughly mean +/- 0.196. The lab's coverage simulation shows about 95% of such intervals contain the true mean 0, not exactly 95% in any finite run, which teaches that coverage is a long-run property. With m = 20 tests at alpha = 0.05, Bonferroni uses 0.0025 per test; without it, the chance of at least one false positive across 20 tests is about 64%.</p><p><strong>5. The common misunderstanding.</strong> The lab names the two big ones as gotchas: a CI is for the mean, not for individual outcomes, and a p-value is not P(H0 is true). "95% confident the mean is in here" is wrong; the correct reading is "this procedure captures the true mean 95% of the time". The second trap is p-hacking by slicing: every dashboard slice is a test, and uncorrected slicing manufactures discoveries, which is why the lab pairs the permutation test with Bonferroni.</p><figure class="diagram" id="fig-18-ci"><svg viewBox="0 0 720 360" width="100%" role="img" aria-label="Coverage simulation: twenty 95% confidence intervals from twenty experiments; nineteen capture the true mean and one mis" xmlns="http://www.w3.org/2000/svg"><text x="360" y="34" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">95% confidence intervals: about 19 of 20 capture the true mean</text><line x1="360" y1="60" x2="360" y2="300" stroke="#f0b429" stroke-width="2" stroke-dasharray="8,5"/><text x="372" y="70" fill="#f0b429" font-size="12" font-family="sans-serif">true mean</text><line x1="300" y1="80" x2="370" y2="80" stroke="#7fd08a" stroke-width="4"/><circle cx="335" cy="80" r="4" fill="#7fd08a"/><line x1="337" y1="91" x2="407" y2="91" stroke="#7fd08a" stroke-width="4"/><circle cx="372" cy="91" r="4" fill="#7fd08a"/><line x1="374" y1="102" x2="444" y2="102" stroke="#7fd08a" stroke-width="4"/><circle cx="409" cy="102" r="4" fill="#7fd08a"/><line x1="411" y1="113" x2="481" y2="113" stroke="#7fd08a" stroke-width="4"/><circle cx="446" cy="113" r="4" fill="#7fd08a"/><line x1="328" y1="124" x2="398" y2="124" stroke="#7fd08a" stroke-width="4"/><circle cx="363" cy="124" r="4" fill="#7fd08a"/><line x1="365" y1="135" x2="435" y2="135" stroke="#7fd08a" stroke-width="4"/><circle cx="400" cy="135" r="4" fill="#7fd08a"/><line x1="402" y1="146" x2="472" y2="146" stroke="#7fd08a" stroke-width="4"/><circle cx="437" cy="146" r="4" fill="#7fd08a"/><line x1="319" y1="157" x2="329" y2="157" stroke="#ff7b8a" stroke-width="4"/><circle cx="329" cy="157" r="4" fill="#ff7b8a"/><line x1="356" y1="168" x2="426" y2="168" stroke="#7fd08a" stroke-width="4"/><circle cx="391" cy="168" r="4" fill="#7fd08a"/><line x1="393" y1="179" x2="463" y2="179" stroke="#7fd08a" stroke-width="4"/><circle cx="428" cy="179" r="4" fill="#7fd08a"/><line x1="310" y1="190" x2="380" y2="190" stroke="#7fd08a" stroke-width="4"/><circle cx="345" cy="190" r="4" fill="#7fd08a"/><line x1="347" y1="201" x2="417" y2="201" stroke="#7fd08a" stroke-width="4"/><circle cx="382" cy="201" r="4" fill="#7fd08a"/><line x1="384" y1="212" x2="454" y2="212" stroke="#7fd08a" stroke-width="4"/><circle cx="419" cy="212" r="4" fill="#7fd08a"/><line x1="301" y1="223" x2="371" y2="223" stroke="#7fd08a" stroke-width="4"/><circle cx="336" cy="223" r="4" fill="#7fd08a"/><line x1="338" y1="234" x2="408" y2="234" stroke="#7fd08a" stroke-width="4"/><circle cx="373" cy="234" r="4" fill="#7fd08a"/><line x1="375" y1="245" x2="445" y2="245" stroke="#7fd08a" stroke-width="4"/><circle cx="410" cy="245" r="4" fill="#7fd08a"/><line x1="412" y1="256" x2="482" y2="256" stroke="#7fd08a" stroke-width="4"/><circle cx="447" cy="256" r="4" fill="#7fd08a"/><line x1="329" y1="267" x2="399" y2="267" stroke="#7fd08a" stroke-width="4"/><circle cx="364" cy="267" r="4" fill="#7fd08a"/><line x1="366" y1="278" x2="436" y2="278" stroke="#7fd08a" stroke-width="4"/><circle cx="401" cy="278" r="4" fill="#7fd08a"/><line x1="403" y1="289" x2="473" y2="289" stroke="#7fd08a" stroke-width="4"/><circle cx="438" cy="289" r="4" fill="#7fd08a"/><text x="360" y="330" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">each row: one experiment, one interval (line) and its sample mean (dot). 19 of 20 cross the dashed line.</text></svg><figcaption>Coverage simulation: twenty 95% confidence intervals from twenty experiments; nineteen capture the true mean and one misses, which is exactly what 95% coverage means. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>Each horizontal line is one 95% confidence interval from one simulated experiment; the dot is that experiment's sample mean.</li><li>The dashed vertical line is the true mean, which the experimenter does not know.</li><li>Nineteen of the twenty intervals cross the dashed line; one (red) misses. That is the meaning of 95% coverage: a property of the procedure over repetitions, not a 95% probability about any single interval.</li><li>The lab has you run this simulation yourself so the definition becomes a picture, not a sentence.</li><li>The trap to avoid: "there is a 95% chance the true mean is in this interval" is wrong. The interval either contains it or not; 95% describes the method.</li></ol></div><p><strong>7. Interview relevance.</strong> "Why does a CI have ~95% coverage by design?" and "slicing dashboards can create accidental p-hacking" are the lab's own interview angles. The expected answers are the simulation picture above and the Bonferroni arithmetic, stated in plain sentences.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>Use the unbiased variance (divide by n-1); the CI is mean +/- 1.96 s/sqrt(n) for large n.</li><li>Coverage is a property of the procedure over repetitions, verified by simulation.</li><li>A p-value is P(data this extreme | H0), not P(H0 is true); it says nothing about practical importance.</li><li>Divide alpha by the number of tests (Bonferroni) or your dashboard will manufacture discoveries.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Your A/B test has p = 0.04 with 10,000 users per arm. Ship it? What else do you want to know?</li><li>You tested 20 features and one has p = 0.03. Is it significant? Show the correction.</li><li>Explain the permutation test to someone who has never seen a t-test.</li></ul></div><p class="lab-pointer">Practice this in the <a href="#lab-w2-d4-statistics-for-ml">Statistics Lab</a>: unbiased variance, the CI and its coverage simulation, the permutation A/B test, and Bonferroni.</p><h2>Lab walkthroughs</h2><div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w2-d1-linear-algebra-for-ml">Linear Algebra for ML</button><button data-target="lab-w2-d2-calculus-gradients">Calculus &amp; Gradients</button><button data-target="lab-w2-d3-probability-essentials">Probability Essentials</button><button data-target="lab-w2-d4-statistics-for-ml">Statistics for ML</button><button data-target="lab-w2-d5-math-lab">Math Lab (Linear Algebra + Probability)</button></div><section class="lab" id="lab-w2-d1-linear-algebra-for-ml">
+<h3>Linear Algebra for ML <span class="diff diff-easy">Easy</span></h3>
+<p class="lab-meta">Week 2, Day 1 · Math for ML · 6 tasks · 6 checks · Free</p>
+<p>This lab is the shape-discipline pillar. It moves from vectors, dot products, and norms through matrix multiplication with explicit shape assertions, into projections as the geometric heart of least squares, then the closed-form fit via the normal equations, and finally PCA implemented through SVD. It is the practice ground for Concept 1. Watch for the two FAANG gotchas the lab names: most bugs are silent shape bugs, so assert shapes, and never form the explicit inverse when solve or lstsq exists. If you can explain why X^T X is PSD and why the SVD directions match the covariance eigenvectors, you have the interview-level picture.</p>
+<p>Build interview-grade intuition for vectors/matrices, norms, projections, eigenvalues, and SVD , and connect them to ML (least squares, PCA, embeddings).</p>
+<div class="callout"><strong>Outcome.</strong> Students can compute linear algebra quantities in NumPy, reason about shapes, and explain <em>why</em> each concept matters in ML systems.</div>
+<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Vectors, Dot Product, Norms</span><span class="tagchip">Matrix Multiplication + Shapes</span><span class="tagchip">Projections</span><span class="tagchip">Least Squares (Closed Form)</span><span class="tagchip">Eigenvalues &amp; SVD (PCA)</span><span class="tagchip">Week 2</span><span class="tagchip co">Square</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1Afs69OjrR1sTGtJMB3BkHx5fNiGKbfqt">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-5-linear">Notes</a> · <a href="linalg_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/UXg3jgt36dI">Video</a></p>
+<h4>Tasks (6)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Linear Algebra for ML ,  FAANG-Level Lab</h3>
+<p><strong>Goal:</strong> Build shape intuition + compute core linear algebra objects used in ML.</p>
+<p><strong>Outcome:</strong> You can implement least squares, projections, eigen decomposition intuition, and SVD-based PCA.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Linear Algebra for ML ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Implement dot + L2 norm (no np.linalg.norm) <span class="task-sec">Vectors, Dot Product, Norms</span></summary><div class="task-body"><h4>Section 1 ,  Vectors, Dot Product, Norms</h4>
+<h4>Task 1.1: Implement dot + L2 norm (no np.linalg.norm)</h4>
+<ul><li>dot(x,y) = sum(x_i * y_i)</li><li>||x||_2 = sqrt(dot(x,x))</li></ul>
+<p><strong>Explain:</strong> What does dot product measure geometrically?</p><h4>Starter code</h4><pre><code class="lang-python">def dot(x, y):
+    # TODO
+    ...
+def l2_norm(x):
+    # TODO
+    ...
+x = np.array([1.,2.,3.]); y=np.array([4.,5.,6.])
+check('dot', abs(dot(x,y) - 32.0) &lt; 1e-9)
+check('norm', abs(l2_norm(x) - np.sqrt(14.0)) &lt; 1e-9)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>dot(x,y) = sum(x_i * y_i)
+||x||_2 = sqrt(dot(x,x))</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('dot', abs(dot(x,y) - 32.0) &lt; 1e-9)
+check('norm', abs(l2_norm(x) - np.sqrt(14.0)) &lt; 1e-9)</code></pre><h4>Checks</h4><ul><li>check('dot', abs(dot(x,y)</li><li>check('norm', abs(l2_norm(x)</li></ul><div class="callout"><strong>Explain prompt.</strong> What does dot product measure geometrically?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def dot(x, y):
+    return float(np.sum(x * y))
+
+def l2_norm(x):
+    return float(np.sqrt(dot(x, x)))
+
+x = np.array([1.,2.,3.]); y=np.array([4.,5.,6.])
+check('dot', abs(dot(x,y) - 32.0) &lt; 1e-9)
+check('norm', abs(l2_norm(x) - np.sqrt(14.0)) &lt; 1e-9)
+
+# Rationale: dot measures alignment (||x|| ||y|| cosÎ¸). Norm is vector magnitude.</code></pre><h4>Why this works</h4><p>dot measures alignment (||x|| ||y|| cosÎ¸). Norm is vector magnitude.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Validate shapes and compute A@B <span class="task-sec">Matrix Multiplication + Shapes</span></summary><div class="task-body"><h4>Section 2 ,  Matrix Multiplication + Shapes</h4>
+<h4>Task 2.1: Validate shapes and compute A@B</h4>
+<p>Given A (n,d) and B (d,k) compute C (n,k).</p>
+<p><strong>FAANG gotcha:</strong> Many bugs are shape bugs. Always assert shapes.</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+...
+
+check('C_shape', C.shape == (5,2))</code></pre><h4>Test code</h4><pre><code class="lang-python">check('C_shape', C.shape == (5,2))</code></pre><h4>Checks</h4><ul><li>check('C_shape', C.shape == (5,2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">A = rng.standard_normal((5,3)); B=rng.standard_normal((3,2))
+C = A @ B
+check('C_shape', C.shape == (5,2))
+# Rationale: (n,d)@(d,k) -&gt; (n,k); most ML models are sequences of matmuls.</code></pre><h4>Why this works</h4><p>(n,d)@(d,k) -&gt; (n,k); most ML models are sequences of matmuls.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Project vector v onto vector u <span class="task-sec">Projections (Least Squares Intuition)</span></summary><div class="task-body"><h4>Section 3 ,  Projections (Least Squares Intuition)</h4>
+<h4>Task 3.1: Project vector v onto vector u</h4>
+<p>proj_u(v) = (u^T v / u^T u) * u</p>
+<ul><li>Use your dot()</li></ul>
+<p><strong>Explain:</strong> Why does projection show up in linear regression?</p><h4>Starter code</h4><pre><code class="lang-python">def proj(u, v):
+    # TODO
+    ...
+u=np.array([1.,0.,0.]); v=np.array([2.,3.,4.])
+check('proj', np.allclose(proj(u,v), np.array([2.,0.,0.])))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use your dot()</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('proj', np.allclose(proj(u,v), np.array([2.,0.,0.])))</code></pre><h4>Checks</h4><ul><li>check('proj', np.allclose(proj(u,v)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why does projection show up in linear regression?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def proj(u, v):
+    denom = dot(u, u)
+    if denom == 0:
+        raise ValueError('u must be non-zero')
+    return (dot(u, v) / denom) * u
+
+u=np.array([1.,0.,0.]); v=np.array([2.,3.,4.])
+check('proj', np.allclose(proj(u,v), np.array([2.,0.,0.])))
+# Rationale: projection is the building block of least squares (closest point in a subspace).</code></pre><h4>Why this works</h4><p>projection is the building block of least squares (closest point in a subspace).</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Solve min_w ||Xw - y||^2 <span class="task-sec">Least Squares (Closed Form)</span></summary><div class="task-body"><h4>Section 4 ,  Least Squares (Closed Form)</h4>
+<h4>Task 4.1: Solve min_w ||Xw - y||^2</h4>
+<p>Use normal equation: w = (X^T X)^{-1} X^T y</p>
+<ul><li>Use <code>np.linalg.solve</code> (more stable than explicit inverse)</li></ul>
+<p><strong>FAANG gotcha:</strong> Don’t compute matrix inverse unless you must.</p>
+<p>![LU Decomposition Overview](/images/lu-decomposition-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+...
+
+print('err', err)
+check('close', err &lt; 0.2)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use <code>np.linalg.solve</code> (more stable than explicit inverse)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', err &lt; 0.2)</code></pre><h4>Checks</h4><ul><li>check('close', err &lt; 0.2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">n,d=50,3
+X=rng.standard_normal((n,d))
+w_true=np.array([1.5,-2.0,0.7])
+y=X@w_true + 0.01*rng.standard_normal(n)
+
+XtX = X.T @ X
+Xty = X.T @ y
+w_hat = np.linalg.solve(XtX, Xty)
+err = np.linalg.norm(w_hat - w_true)
+print('err', err)
+check('close', err &lt; 0.2)
+
+# Rationale: solve is more stable than explicit inverse; inverse is slower + numerically worse.</code></pre><h4>Why this works</h4><p>solve is more stable than explicit inverse; inverse is slower + numerically worse.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> PCA via SVD <span class="task-sec">Eigenvalues &amp; SVD Intuition</span></summary><div class="task-body"><h4>Section 5 ,  Eigenvalues &amp; SVD Intuition</h4>
+<h4>Task 5.1: PCA via SVD</h4>
+<p>Steps:</p>
+<ol><li>Center X</li><li>Compute SVD: X = U S V^T</li><li>Take top-k components from V</li></ol>
+<ul><li><code>U, S, Vt = np.linalg.svd(X_centered, full_matrices=False)</code></li></ul>
+<p><strong>Explain:</strong> Why does SVD show up in embeddings and dimensionality reduction?</p>
+<p>![Eigen Decomposition Overview](/images/eigen-decomposition-overview.png)</p>
+<p>![Singular Value Decomposition (SVD)](/images/svd-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+...
+
+print('relative recon error', recon_err)
+check('shapes', W.shape == (10,k) and Z.shape == (200,k))
+
+# In ML, low-rank structure appears in embeddings, recommender matrices, and compression.</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li><code>U, S, Vt = np.linalg.svd(X_centered, full_matrices=False)</code></li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('shapes', W.shape == (10,k) and Z.shape == (200,k))</code></pre><h4>Checks</h4><ul><li>check('shapes', W.shape == (10,k)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why does SVD show up in embeddings and dimensionality reduction?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X = rng.standard_normal((200,10))
+Xc = X - X.mean(axis=0, keepdims=True)
+U,S,Vt = np.linalg.svd(Xc, full_matrices=False)
+k=3
+W = Vt.T[:, :k]
+Z = Xc @ W
+X_recon = Z @ W.T
+recon_err = np.linalg.norm(Xc - X_recon) / np.linalg.norm(Xc)
+print('relative recon error', recon_err)
+check('shapes', W.shape == (10,k) and Z.shape == (200,k))
+
+# Rationale: SVD gives orthonormal directions capturing maximal variance (PCA).
+# In ML, low-rank structure appears in embeddings, recommender matrices, and compression.</code></pre><h4>Why this works</h4><p>SVD gives orthonormal directions capturing maximal variance (PCA).</p></details></div></details>
+<h4>Checkpoints</h4><ul><li>What does dot product represent geometrically?</li><li>Why is L2 norm used in least squares?</li><li>Why does SVD show up in embeddings and compression?</li><li>What does reconstruction error measure?</li></ul>
+<h4>Interview angles</h4><ul><li>Projection is “closest point in a subspace” → least squares intuition.</li></ul>
+<h4>Gotchas</h4><ul><li>Most ML bugs are silent shape bugs, assert shapes.</li><li>Avoid explicit inverse; solve is more stable and faster.</li></ul>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d1-linear-algebra-for-ml">https://ai.thes30.com/problems/w2-d1-linear-algebra-for-ml</a>.</p>
+</section><section class="lab" id="lab-w2-d2-calculus-gradients">
+<h3>Calculus &amp; Gradients <span class="diff diff-easy">Easy</span></h3>
+<p class="lab-meta">Week 2, Day 2 · Math for ML · 5 tasks · 5 checks · Free</p>
+<p>This lab is the gradient-discipline pillar. It starts with finite differences as the arbiter, implements the MSE gradient via the chain rule, then takes on the core interview gradient (binary cross-entropy with sigmoid), and closes with a numerical Hessian. It is the practice ground for Concept 2. Watch for the classic bug sites the lab flags: missing constants and broadcasting shape mistakes. The lab's mantra is the standard to internalize: if you cannot gradient-check it, you do not really trust it. Carry that standard into every later volume where you write a loss.</p>
+<p>Become fluent with derivatives/gradients used in ML: chain rule, Jacobians, Hessians, and checking gradients numerically.</p>
+<div class="callout"><strong>Outcome.</strong> Students can derive and implement gradients for common losses, and debug gradient bugs using finite differences.</div>
+<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Finite Differences (Gradient Checking)</span><span class="tagchip">Chain Rule in Code</span><span class="tagchip">Logistic Regression Gradient (Core Interview)</span><span class="tagchip">Jacobian/Hessian Intuition</span><span class="tagchip">Week 2</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/17RCbp8kWhk0rI4YPg4AH26JUYUqxmkac">Colab</a> · <a href="https://jaspinders30.substack.com/p/calculus-for-machine-learning?r=2dpc7y">Notes</a> · <a href="calculus_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/8HJfbi7nkYk?si=cBu3FEXCRrP1UTQI">Video</a></p>
+<h4>Tasks (5)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Calculus &amp; Gradients ,  FAANG-Level Lab</h3>
+<p><strong>Goal:</strong> Implement and verify gradients like an ML engineer.</p>
+<p>Key idea: <em>If you can’t gradient-check it, you don’t really trust it.</em></p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Calculus &amp; Gradients ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Implement numerical gradient for scalar f(w) <span class="task-sec">Finite Differences (Gradient Checking)</span></summary><div class="task-body"><h4>Section 1 ,  Finite Differences (Gradient Checking)</h4>
+<h4>Task 1.1: Implement numerical gradient for scalar f(w)</h4>
+<ul><li>Use central difference: (f(w+eps e_i) - f(w-eps e_i)) / (2 eps)</li></ul>
+<p><strong>Explain:</strong> Why is central difference more accurate than forward difference?</p><h4>Starter code</h4><pre><code class="lang-python">def numerical_grad(f, w, eps=1e-5):
+    # TODO
+    ...
+w = rng.standard_normal(5)
+f = lambda v: float(np.sum(v*v))
+g_num = numerical_grad(f, w)
+check('grad_close', np.allclose(g_num, 2*w, atol=1e-6))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use central difference: (f(w+eps e_i) - f(w-eps e_i)) / (2 eps)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('grad_close', np.allclose(g_num, 2*w, atol=1e-6))</code></pre><h4>Checks</h4><ul><li>check('grad_close', np.allclose(g_num, 2*w, atol=1e-6)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why is central difference more accurate than forward difference?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def numerical_grad(f, w, eps=1e-5):
+    w = np.asarray(w, dtype=float)
+    g = np.zeros_like(w)
+    for i in range(w.size):
+        e = np.zeros_like(w)
+        e[i] = 1.0
+        g[i] = (f(w + eps*e) - f(w - eps*e)) / (2*eps)
+    return g
+
+w = rng.standard_normal(5)
+f = lambda v: float(np.sum(v*v))
+g_num = numerical_grad(f, w)
+check('grad_close', np.allclose(g_num, 2*w, atol=1e-6))
+
+# Rationale: central difference cancels first-order error terms =&gt; more accurate than forward diff.</code></pre><h4>Why this works</h4><p>central difference cancels first-order error terms =&gt; more accurate than forward diff.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Gradient of MSE for linear model <span class="task-sec">Chain Rule in Code</span></summary><div class="task-body"><h4>Section 2 ,  Chain Rule in Code</h4>
+<h4>Task 2.1: Gradient of MSE for linear model</h4>
+<p>Model: y_hat = Xw Loss: L(w) = (1/n) * sum_i (y_hat_i - y_i)^2</p>
+<ul><li>Let r = Xw - y</li><li>grad = (2/n) * X^T r</li></ul>
+<p><strong>FAANG gotcha:</strong> shape mismatches; keep w as (d,) and X as (n,d).</p><h4>Starter code</h4><pre><code class="lang-python">def mse_loss_and_grad(X, y, w):
+    # TODO: return (loss, grad)
+    ...
+n,d = 20,4
+X = rng.standard_normal((n,d))
+w = rng.standard_normal(d)
+y = rng.standard_normal(n)
+loss, grad = mse_loss_and_grad(X,y,w)
+f = lambda v: mse_loss_and_grad(X,y,v)[0]
+g_num = numerical_grad(f, w)
+check('mse_grad', np.allclose(grad, g_num, atol=1e-5))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Let r = Xw - y
+grad = (2/n) * X^T r</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('mse_grad', np.allclose(grad, g_num, atol=1e-5))</code></pre><h4>Checks</h4><ul><li>check('mse_grad', np.allclose(grad, g_num, atol=1e-5)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def mse_loss_and_grad(X, y, w):
+    r = X @ w - y
+    n = X.shape[0]
+    loss = float(np.mean(r*r))
+    grad = (2.0/n) * (X.T @ r)
+    return loss, grad
+
+n,d = 20,4
+X = rng.standard_normal((n,d))
+w = rng.standard_normal(d)
+y = rng.standard_normal(n)
+loss, grad = mse_loss_and_grad(X,y,w)
+f = lambda v: mse_loss_and_grad(X,y,v)[0]
+g_num = numerical_grad(f, w)
+check('mse_grad', np.allclose(grad, g_num, atol=1e-5))
+
+# Rationale: chain rule + linearity =&gt; grad is X^T residual. Shapes: X^T (d,n) @ r (n,) =&gt; (d,)</code></pre><h4>Why this works</h4><p>chain rule + linearity =&gt; grad is X^T residual. Shapes: X^T (d,n) @ r (n,) =&gt; (d,)</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Binary cross-entropy gradient <span class="task-sec">Logistic Regression (Core Interview Gradient)</span></summary><div class="task-body"><h4>Section 3 ,  Logistic Regression (Core Interview Gradient)</h4>
+<h4>Task 3.1: Binary cross-entropy gradient</h4>
+<p>Given labels y in {0,1}. p = sigmoid(Xw) Loss = -(1/n) * sum(y log p + (1-y) log(1-p))</p>
+<ul><li>sigmoid(z)=1/(1+exp(-z))</li><li>grad = (1/n) * X^T (p - y)</li><li>add numerical stability for logs (clip p)</li></ul><h4>Starter code</h4><pre><code class="lang-python">def sigmoid(z):
+    # TODO
+    ...
+def logreg_loss_and_grad(X, y, w):
+    # TODO
+    ...
+n,d = 50,3
+X = rng.standard_normal((n,d))
+w = rng.standard_normal(d)
+y = rng.integers(0,2,size=n)
+loss, grad = logreg_loss_and_grad(X,y,w)
+f = lambda v: logreg_loss_and_grad(X,y,v)[0]
+g_num = numerical_grad(f, w)
+check('logreg_grad', np.allclose(grad, g_num, atol=1e-5))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>sigmoid(z)=1/(1+exp(-z))
+grad = (1/n) * X^T (p - y)
+add numerical stability for logs (clip p)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('logreg_grad', np.allclose(grad, g_num, atol=1e-5))</code></pre><h4>Checks</h4><ul><li>check('logreg_grad', np.allclose(grad, g_num, atol=1e-5)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def sigmoid(z):
+    # stable-ish sigmoid
+    return 1.0 / (1.0 + np.exp(-z))
+
+def logreg_loss_and_grad(X, y, w):
+    z = X @ w
+    p = sigmoid(z)
+    eps = 1e-12
+    p_clip = np.clip(p, eps, 1.0 - eps)
+    loss = float(-np.mean(y*np.log(p_clip) + (1-y)*np.log(1-p_clip)))
+    grad = (X.T @ (p - y)) / X.shape[0]
+    return loss, grad
+
+n,d = 50,3
+X = rng.standard_normal((n,d))
+w = rng.standard_normal(d)
+y = rng.integers(0,2,size=n)
+loss, grad = logreg_loss_and_grad(X,y,w)
+f = lambda v: logreg_loss_and_grad(X,y,v)[0]
+g_num = numerical_grad(f, w)
+check('logreg_grad', np.allclose(grad, g_num, atol=1e-5))
+
+# Rationale: derivative of BCE w.r.t logits gives (p-y); then chain through z=Xw =&gt; X^T(p-y).</code></pre><h4>Why this works</h4><p>derivative of BCE w.r.t logits gives (p-y); then chain through z=Xw =&gt; X^T(p-y).</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Compute Hessian of f(w)=sum(w^2) numerically <span class="task-sec">Jacobian/Hessian Intuition</span></summary><div class="task-body"><h4>Section 4 ,  Jacobian/Hessian Intuition</h4>
+<h4>Task 4.1: Compute Hessian of f(w)=sum(w^2) numerically</h4>
+<p>![Hessian matrix formula with second partial derivatives](/images/w2-d2-hessian-matrix-formula.png)</p>
+<ul><li>Hessian of sum(w^2) is 2I</li><li>Use numerical_grad on each component of grad</li></ul>
+<p>This is mainly about <em>shape thinking</em>: Hessian is (d,d).</p><h4>Starter code</h4><pre><code class="lang-python">def numerical_hessian(f, w, eps=1e-4):
+    # TODO
+    ...
+w = rng.standard_normal(4)
+f = lambda v: float(np.sum(v*v))
+H = numerical_hessian(f, w)
+check('H_shape', H.shape == (4,4))
+check('H_close', np.allclose(H, 2*np.eye(4), atol=1e-3))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Hessian of sum(w^2) is 2I
+Use numerical_grad on each component of grad</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('H_shape', H.shape == (4,4))
+check('H_close', np.allclose(H, 2*np.eye(4), atol=1e-3))</code></pre><h4>Checks</h4><ul><li>check('H_shape', H.shape == (4,4)</li><li>check('H_close', np.allclose(H, 2*np.eye(4)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def numerical_hessian(f, w, eps=1e-4):
+    w = np.asarray(w, dtype=float)
+    d = w.size
+    H = np.zeros((d,d))
+    # grad_i = d f / d w_i
+    for i in range(d):
+        def fi(v):
+            # partial derivative approx for component i
+            e = np.zeros(d); e[i]=1.0
+            return (f(v + eps*e) - f(v - eps*e)) / (2*eps)
+        H[i,:] = numerical_grad(fi, w, eps=eps)
+    return H
+
+w = rng.standard_normal(4)
+f = lambda v: float(np.sum(v*v))
+H = numerical_hessian(f, w)
+check('H_shape', H.shape == (4,4))
+check('H_close', np.allclose(H, 2*np.eye(4), atol=1e-3))
+
+# Rationale: Hessian captures curvature; in optimization it affects step sizes and convergence.</code></pre><h4>Why this works</h4><p>Hessian captures curvature; in optimization it affects step sizes and convergence.</p><h4>Instructor explanation</h4><p>![Hessian matrix formula with second partial derivatives](/images/w2-d2-hessian-matrix-formula.png)</p></details></div></details>
+<h4>Checkpoints</h4><ul><li>Why is central difference more accurate than forward difference?</li><li>What happens if <code>eps</code> is too small or too large?</li><li>Why does the gradient simplify to <code>X^T(p-y)/n</code>?</li><li>Why must you clip probabilities for numerical stability?</li></ul>
+<h4>Interview angles</h4><ul><li>How would you debug an autodiff bug in production?</li><li>What does the Hessian tell you about optimization and curvature?</li></ul>
+<h4>Gotchas</h4><ul><li>Most gradient bugs are shape bugs (broadcasting) or missing constants.</li></ul>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d2-calculus-gradients">https://ai.thes30.com/problems/w2-d2-calculus-gradients</a>.</p>
+</section><section class="lab" id="lab-w2-d3-probability-essentials">
+<h3>Probability Essentials <span class="diff diff-easy">Easy</span></h3>
+<p class="lab-meta">Week 2, Day 3 · Math for ML · 6 tasks · 7 checks · Free</p>
+<p>This lab is the belief-updating pillar. It builds expectation and variance from a PMF, works the classic disease-test Bayes question analytically and then verifies it by simulation, connects standardization to the normal distribution, and finishes with a log-odds Naive Bayes mini-task. It is the practice ground for Concept 3. Watch for the underflow gotcha: multiplying many small probabilities collapses to zero, which is why the log-space habit starts here. The simulation check is the deeper lesson: whenever you can, verify a closed form with a quick Monte Carlo.</p>
+<p>Build ML-relevant probability intuition: random variables, expectations, variance, Bayes’ rule, common distributions, and sampling.</p>
+<div class="callout"><strong>Outcome.</strong> Students can compute probabilities/expectations, implement small simulations, and explain how probability maps to ML (calibration, Naive Bayes, uncertainty).</div>
+<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Discrete Random Variables</span><span class="tagchip">Conditional Probability &amp; Bayes</span><span class="tagchip">Continuous Distributions</span><span class="tagchip">Naive Bayes Thinking (Optional)</span><span class="tagchip">Week 2</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1LMWYMwgeCBilCgol6hfCUT2rji0KJJJT">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-7-probability">Notes</a> · <a href="probability_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/rJbpbbdJKkQ">Video</a></p>
+<h4>Tasks (6)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Probability Essentials ,  FAANG-Level Lab</h3>
+<p><strong>Goal:</strong> ML-relevant probability: expectation, variance, Bayes, and simulation checks.</p>
+<p><strong>Outcome:</strong> You can reason about uncertainty, distributions, and Bayes updates (interview-ready).</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Probability Essentials ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Expectation &amp; variance from a PMF <span class="task-sec">Discrete Random Variables</span></summary><div class="task-body"><h4>Section 1 ,  Discrete Random Variables</h4>
+<h4>Task 1.1: Expectation &amp; variance from a PMF</h4>
+<p>Given values x and probabilities p (sum to 1):</p>
+<ul><li>implement E[X] and Var(X)</li></ul>
+<ul><li>E[X] = sum p_i x_i</li><li>Var(X) = E[X^2] - (E[X])^2</li></ul>
+<p><strong>Explain:</strong> Why is variance not linear, but expectation is?</p><h4>Starter code</h4><pre><code class="lang-python">def expectation(x, p):
+    # TODO
+    ...
+def variance(x, p):
+    # TODO
+    ...
+x = np.array([0,1,2]); p = np.array([0.2,0.5,0.3])
+mu = expectation(x,p); var = variance(x,p)
+check('mu', abs(mu - 1.1) &lt; 1e-9)
+check('var', abs(var - (0.2*0 + 0.5*1 + 0.3*4 - 1.1**2)) &lt; 1e-9)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>E[X] = sum p_i x_i
+Var(X) = E[X^2] - (E[X])^2</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('mu', abs(mu - 1.1) &lt; 1e-9)
+check('var', abs(var - (0.2*0 + 0.5*1 + 0.3*4 - 1.1**2)) &lt; 1e-9)</code></pre><h4>Checks</h4><ul><li>check('mu', abs(mu - 1.1)</li><li>check('var', abs(var - (0.2<em>0 + 0.5</em>1 + 0.3*4 - 1.1**2)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why is variance not linear, but expectation is?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def expectation(x, p):
+    x = np.asarray(x, dtype=float)
+    p = np.asarray(p, dtype=float)
+    return float(np.sum(p * x))
+
+def variance(x, p):
+    x = np.asarray(x, dtype=float)
+    p = np.asarray(p, dtype=float)
+    ex = np.sum(p * x)
+    ex2 = np.sum(p * x * x)
+    return float(ex2 - ex*ex)
+
+x = np.array([0,1,2]); p = np.array([0.2,0.5,0.3])
+mu = expectation(x,p); var = variance(x,p)
+check('mu', abs(mu - 1.1) &lt; 1e-9)
+check('var', abs(var - (0.2*0 + 0.5*1 + 0.3*4 - 1.1**2)) &lt; 1e-9)
+
+# Rationale: expectation is linear (E[aX+bY]=aE[X]+bE[Y]); variance depends on second moment and covariance.</code></pre><h4>Why this works</h4><p>expectation is linear (E[aX+bY]=aE[X]+bE[Y]); variance depends on second moment and covariance.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Bayes theorem (classic interview) <span class="task-sec">Conditional Probability &amp; Bayes</span></summary><div class="task-body"><h4>Section 2 ,  Conditional Probability &amp; Bayes</h4>
+<h4>Task 2.1: Bayes theorem (classic interview)</h4>
+<p>Disease test example:</p>
+<ul><li>prevalence P(D)=0.01</li><li>sensitivity P(+|D)=0.99</li><li>false positive rate P(+|~D)=0.05</li></ul>
+<p>Compute P(D|+)</p>
+<p>P(D|+) = P(+|D)P(D) / (P(+|D)P(D) + P(+|~D)P(~D))</p>
+<p><strong>FAANG gotcha:</strong> base-rate fallacy.</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+P_D = 0.01
+...
+P_pos_given_D = 0.99
+P_pos_given_notD  = 0.05
+...
+...
+P_D_given_pos = ...
+
+print('P(D|+)=', P_D_given_pos)
+check('range', 0 &lt;= P_D_given_pos &lt;= 1)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>P(D|+) = P(+|D)P(D) / (P(+|D)P(D) + P(+|~D)P(~D))</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('range', 0 &lt;= P_D_given_pos &lt;= 1)</code></pre><h4>Checks</h4><ul><li>check('range', 0 &lt;= P_D_given_pos &lt;= 1)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">P_D = 0.01
+P_pos_given_D = 0.99
+P_pos_given_notD = 0.05
+P_notD = 1 - P_D
+P_pos = P_pos_given_D*P_D + P_pos_given_notD*P_notD
+P_D_given_pos = (P_pos_given_D*P_D) / P_pos
+print('P(D|+)=', P_D_given_pos)
+check('range', 0 &lt;= P_D_given_pos &lt;= 1)
+
+# Rationale: base rate matters; even a good test can have low PPV when prevalence is low.</code></pre><h4>Why this works</h4><p>base rate matters; even a good test can have low PPV when prevalence is low.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Simulation check (sanity) <span class="task-sec">Conditional Probability &amp; Bayes</span></summary><div class="task-body"><h4>Task 2.2: Simulation check (sanity)</h4>
+<p>Simulate N people and estimate P(D|+) empirically.</p>
+<ul><li>sample disease ~ Bernoulli(P_D)</li><li>sample test result conditional on disease</li></ul>
+<p><strong>Explain:</strong> Why does simulation converge to the analytic value?</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+N = 200000
+disease = ...
+# conditional test
+test_pos = ...
+# print(test_pos.shape)
+...
+...
+# disease[pos]
+est = disease[test_pos].mean()
+print('estimate', est)
+check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>sample disease ~ Bernoulli(P_D)
+sample test result conditional on disease</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><h4>Checks</h4><ul><li>check('close', abs(est - P_D_given_pos)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why does simulation converge to the analytic value?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">N = 200000
+disease = rng.random(N) &lt; P_D
+# conditional test
+test_pos = np.empty(N, dtype=bool)
+test_pos[disease] = rng.random(disease.sum()) &lt; P_pos_given_D
+test_pos[~disease] = rng.random((~disease).sum()) &lt; P_pos_given_notD
+est = disease[test_pos].mean()
+print('estimate', est)
+check('close', abs(est - P_D_given_pos) &lt; 0.01)
+
+# Rationale: law of large numbers -&gt; empirical frequencies converge to true probabilities.</code></pre><h4>Why this works</h4><p>law of large numbers -&gt; empirical frequencies converge to true probabilities.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Standardization (z-score) <span class="task-sec">Continuous Distributions (Normal)</span></summary><div class="task-body"><h4>Section 3 ,  Continuous Distributions (Normal)</h4>
+<h4>Task 3.1: Standardization (z-score)</h4>
+<p>Given X ~ Normal(mu, sigma^2). Compute standardized Z=(X-mu)/sigma.</p>
+<ul><li>simulate X and check Z mean ~0, std ~1</li></ul>
+<p><strong>ML link:</strong> standardization shows up in preprocessing and SGD stability.</p><h4>Starter code</h4><pre><code class="lang-python">mu, sigma = 5.0, 2.0
+X = ...
+Z =  ...
+print('Z mean', Z.mean(), 'Z std', Z.std())
+check('mean0', abs(Z.mean()) &lt; 0.02)
+check('std1', abs(Z.std() - 1.0) &lt; 0.02)
+
+# Rationale: standardization makes features comparable scale; improves conditioning and SGD behavior.</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>simulate X and check Z mean ~0, std ~1</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('mean0', abs(Z.mean()) &lt; 0.02)
+check('std1', abs(Z.std() - 1.0) &lt; 0.02)</code></pre><h4>Checks</h4><ul><li>check('mean0', abs(Z.mean()</li><li>check('std1', abs(Z.std()</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">mu, sigma = 5.0, 2.0
+X = rng.normal(mu, sigma, size=200000)
+Z = (X - mu) / sigma
+print('Z mean', Z.mean(), 'Z std', Z.std())
+check('mean0', abs(Z.mean()) &lt; 0.02)
+check('std1', abs(Z.std() - 1.0) &lt; 0.02)
+
+# Rationale: standardization makes features comparable scale; improves conditioning and SGD behavior.</code></pre><h4>Why this works</h4><p>standardization makes features comparable scale; improves conditioning and SGD behavior.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> Compute log-odds for a toy Naive Bayes <span class="task-sec">Naive Bayes Thinking (Optional Mini)</span></summary><div class="task-body"><h4>Section 4 ,  Naive Bayes Thinking (Optional Mini)</h4>
+<h4>Task 4.1: Compute log-odds for a toy Naive Bayes</h4>
+<p>Given word likelihoods for spam vs ham, compute posterior odds for a message.</p>
+<ul><li>work in log space (sum logs)</li></ul>
+<p><strong>FAANG gotcha:</strong> multiplying small probabilities underflows; use logs.</p><h4>Starter code</h4><pre><code class="lang-python">prior_spam = 0.2
+prior_ham = 0.8
+P_word_given_spam = {'free': 0.08, 'win': 0.05, 'meeting': 0.001}
+P_word_given_ham  = {'free': 0.002, 'win': 0.001, 'meeting': 0.03}
+message = ['free', 'win']
+
+log_ratio = ...
+for w in message:
+    ...
+print('log_ratio', log_ratio)
+check('finite', np.isfinite(log_ratio))
+
+# Rationale: multiply probabilities =&gt; underflow; log turns products into sums.</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>work in log space (sum logs)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('finite', np.isfinite(log_ratio))</code></pre><h4>Checks</h4><ul><li>check('finite', np.isfinite(log_ratio)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">prior_spam = 0.2
+prior_ham = 0.8
+P_word_given_spam = {'free': 0.08, 'win': 0.05, 'meeting': 0.001}
+P_word_given_ham  = {'free': 0.002, 'win': 0.001, 'meeting': 0.03}
+message = ['free', 'win']
+
+log_ratio = np.log(prior_spam) - np.log(prior_ham)
+for w in message:
+    log_ratio += np.log(P_word_given_spam[w]) - np.log(P_word_given_ham[w])
+print('log_ratio', log_ratio)
+check('finite', np.isfinite(log_ratio))
+
+# Rationale: multiply probabilities =&gt; underflow; log turns products into sums.</code></pre><h4>Why this works</h4><p>multiply probabilities =&gt; underflow; log turns products into sums.</p></details></div></details>
+<h4>Checkpoints</h4><ul><li>Why is expectation linear?</li><li>When do you need covariance?</li><li>Why does simulation converge (law of large numbers)?</li></ul>
+<h4>Interview angles</h4><ul><li>Why can a “99% accurate test” still have low P(D|+)?</li></ul>
+<h4>Gotchas</h4><ul><li>Underflow from multiplying tiny probabilities; use logs.</li></ul>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d3-probability-essentials">https://ai.thes30.com/problems/w2-d3-probability-essentials</a>.</p>
+</section><section class="lab" id="lab-w2-d4-statistics-for-ml">
+<h3>Statistics for ML <span class="diff diff-easy">Easy</span></h3>
+<p class="lab-meta">Week 2, Day 4 · Math for ML · 6 tasks · 6 checks · Free</p>
+<p>This lab is the uncertainty pillar. It implements the unbiased sample variance, builds a 95% confidence interval and then simulates its coverage, runs a permutation test for A/B comparison without scipy, and applies the Bonferroni correction. It is the practice ground for Concept 4. Watch for the two misreadings the lab flags as gotchas: the CI covers the mean, not individual outcomes, and the p-value is not the probability that the null is true. The accidental p-hacking angle (slicing dashboards) is the one that transfers most directly to production work.</p>
+<p>Master ML-relevant statistics: estimators, confidence intervals, hypothesis tests, p-values, multiple comparisons, and common gotchas.</p>
+<div class="callout"><strong>Outcome.</strong> Students can compute and interpret confidence intervals and tests, understand failure modes (p-hacking, confounding), and connect stats to ML evaluation.</div>
+<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Estimators</span><span class="tagchip">Confidence Intervals</span><span class="tagchip">Hypothesis Testing</span><span class="tagchip">Multiple Comparisons</span><span class="tagchip">Week 2</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1kZ88_BPcZ-_Ukr0z5M_76MmBa36K0iWN">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-8-statistics">Notes</a> · <a href="stats_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/dDSiJg4LkVs">Video</a></p>
+<h4>Tasks (6)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Statistics for ML ,  FAANG-Level Lab</h3>
+<p><strong>Goal:</strong> Confidence intervals, hypothesis testing, and interpretation for ML engineering.</p>
+<p><strong>Outcome:</strong> You can quantify uncertainty and avoid p-value traps.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Statistics for ML ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Unbiased sample variance <span class="task-sec">Estimators (Mean/Variance)</span></summary><div class="task-body"><h4>Section 1 ,  Estimators (Mean/Variance)</h4>
+<h4>Task 1.1: Unbiased sample variance</h4>
+<p>Implement sample mean and unbiased sample variance (ddof=1) without calling np.var(..., ddof=1).</p>
+<ul><li>mean = sum(x)/n</li><li>unbiased var = sum((x-mean)^2)/(n-1)</li></ul>
+<p><strong>Explain:</strong> Why divide by (n-1) instead of n?</p><h4>Starter code</h4><pre><code class="lang-python">def sample_mean(x):
+    # TODO
+    ...
+def sample_var_unbiased(x):
+    # TODO
+    ...
+x = rng.standard_normal(1000)
+check('mean_close', abs(sample_mean(x) - x.mean()) &lt; 1e-10)
+check('var_close', abs(sample_var_unbiased(x) - x.var(ddof=1)) &lt; 1e-8)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>mean = sum(x)/n
+unbiased var = sum((x-mean)^2)/(n-1)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('mean_close', abs(sample_mean(x) - x.mean()) &lt; 1e-10)
+check('var_close', abs(sample_var_unbiased(x) - x.var(ddof=1)) &lt; 1e-8)</code></pre><h4>Checks</h4><ul><li>check('mean_close', abs(sample_mean(x)</li><li>check('var_close', abs(sample_var_unbiased(x)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why divide by (n-1) instead of n?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def sample_mean(x):
+    x = np.asarray(x, dtype=float)
+    return float(np.sum(x) / x.size)
+
+def sample_var_unbiased(x):
+    x = np.asarray(x, dtype=float)
+    n = x.size
+    m = sample_mean(x)
+    return float(np.sum((x - m)**2) / (n - 1))
+
+x = rng.standard_normal(1000)
+check('mean_close', abs(sample_mean(x) - x.mean()) &lt; 1e-10)
+check('var_close', abs(sample_var_unbiased(x) - x.var(ddof=1)) &lt; 1e-8)
+
+# Rationale: dividing by (n-1) corrects bias because mean is estimated from data (loss of 1 DOF).</code></pre><h4>Why this works</h4><p>dividing by (n-1) corrects bias because mean is estimated from data (loss of 1 DOF).</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 95% CI for mean <span class="task-sec">Confidence Interval for Mean (Normal approx)</span></summary><div class="task-body"><h4>Section 2 ,  Confidence Interval for Mean (Normal approx)</h4>
+<h4>Task 2.1: 95% CI for mean</h4>
+<p>Compute a 95% CI for mean using normal approximation: CI = mean ± z * s/sqrt(n), where z≈1.96.</p>
+<ul><li>Use unbiased sample std</li></ul>
+<p><strong>FAANG gotcha:</strong> CI is about the mean, not individual outcomes.</p><h4>Starter code</h4><pre><code class="lang-python">def mean_ci_normal(x, alpha=0.05):
+    # TODO: return (lo, hi)
+    ...
+x = rng.normal(2.0, 3.0, size=500)
+lo, hi = mean_ci_normal(x)
+check('order', lo &lt; x.mean() &lt; hi)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use unbiased sample std</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('order', lo &lt; x.mean() &lt; hi)</code></pre><h4>Checks</h4><ul><li>check('order', lo &lt; x.mean() &lt; hi)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def mean_ci_normal(x, alpha=0.05):
+    x = np.asarray(x, dtype=float)
+    n = x.size
+    m = x.mean()
+    s = x.std(ddof=1)
+    z = 1.96  # approx for 95%
+    half = z * s / np.sqrt(n)
+    return float(m - half), float(m + half)
+
+x = rng.normal(2.0, 3.0, size=500)
+lo, hi = mean_ci_normal(x)
+check('order', lo &lt; x.mean() &lt; hi)
+
+# Rationale: CI estimates plausible range for population mean around sample mean.</code></pre><h4>Why this works</h4><p>CI estimates plausible range for population mean around sample mean.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Coverage simulation <span class="task-sec">Confidence Interval for Mean (Normal approx)</span></summary><div class="task-body"><h4>Task 2.2: Coverage simulation</h4>
+<p>Simulate repeated sampling from Normal(mu=0, sigma=1). Estimate how often 95% CI contains true mean.</p>
+<ul><li>Run many trials</li><li>Count coverage</li></ul>
+<p><strong>Explain:</strong> Why isn't coverage exactly 0.95 in finite simulation?</p><h4>Starter code</h4><pre><code class="lang-python">def estimate_ci_coverage(trials=2000, n=50):
+    # TODO
+    ...
+
+cov = estimate_ci_coverage(trials=2000, n=50)
+print('coverage', cov)
+check('reasonable', 0.92 &lt; cov &lt; 0.98)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Run many trials
+Count coverage</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('reasonable', 0.92 &lt; cov &lt; 0.98)</code></pre><h4>Checks</h4><ul><li>check('reasonable', 0.92 &lt; cov &lt; 0.98)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why isn't coverage exactly 0.95 in finite simulation?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def estimate_ci_coverage(trials=2000, n=50):
+    mu = 0.0
+    covered = 0
+    for _ in range(trials):
+        s = rng.normal(mu, 1.0, size=n)
+        lo, hi = mean_ci_normal(s)
+        covered += int(lo &lt;= mu &lt;= hi)
+    return covered / trials
+
+cov = estimate_ci_coverage(trials=2000, n=50)
+print('coverage', cov)
+check('reasonable', 0.92 &lt; cov &lt; 0.98)
+
+# Rationale: coverage is ~0.95 by construction; simulation error causes small deviation.</code></pre><h4>Why this works</h4><p>coverage is ~0.95 by construction; simulation error causes small deviation.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Permutation test for A/B (no scipy) <span class="task-sec">Hypothesis Testing (Two-sample test intuition)</span></summary><div class="task-body"><h4>Section 3 ,  Hypothesis Testing (Two-sample test intuition)</h4>
+<h4>Task 3.1: Permutation test for A/B (no scipy)</h4>
+<p>Given samples A and B, test whether mean(B) - mean(A) is significant via permutation.</p>
+<ul><li>Combine samples</li><li>Shuffle and split</li><li>Compute diff distribution</li><li>p-value = fraction of diffs &gt;= observed (two-sided if needed)</li></ul>
+<p><strong>FAANG gotcha:</strong> p-value is not P(H0 true).</p><h4>Starter code</h4><pre><code class="lang-python">def permutation_pvalue(A, B, n_perm=5000, two_sided=True):
+    # TODO
+    ...
+A = rng.normal(0.0, 1.0, size=200)
+B = rng.normal(0.2, 1.0, size=200)
+p = permutation_pvalue(A, B, n_perm=2000)
+print('p-value', p)
+check('p_range', 0 &lt;= p &lt;= 1)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Combine samples
+Shuffle and split
+Compute diff distribution
+p-value = fraction of diffs &gt;= observed (two-sided if needed)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('p_range', 0 &lt;= p &lt;= 1)</code></pre><h4>Checks</h4><ul><li>check('p_range', 0 &lt;= p &lt;= 1)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def permutation_pvalue(A, B, n_perm=5000, two_sided=True):
+    A = np.asarray(A, dtype=float)
+    B = np.asarray(B, dtype=float)
+    obs = B.mean() - A.mean()
+    pooled = np.concatenate([A, B])
+    nA = A.size
+    diffs = np.empty(n_perm)
+    for i in range(n_perm):
+        perm = rng.permutation(pooled)
+        diffs[i] = perm[nA:].mean() - perm[:nA].mean()
+    if two_sided:
+        p = np.mean(np.abs(diffs) &gt;= abs(obs))
+    else:
+        p = np.mean(diffs &gt;= obs)
+    return float(p)
+
+A = rng.normal(0.0, 1.0, size=200)
+B = rng.normal(0.2, 1.0, size=200)
+p = permutation_pvalue(A, B, n_perm=2000)
+print('p-value', p)
+check('p_range', 0 &lt;= p &lt;= 1)
+
+# Rationale: permutation test is nonparametric; it uses the null distribution induced by exchangeability.</code></pre><h4>Why this works</h4><p>permutation test is nonparametric; it uses the null distribution induced by exchangeability.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> Bonferroni correction <span class="task-sec">Multiple Comparisons (Gotcha)</span></summary><div class="task-body"><h4>Section 4 ,  Multiple Comparisons (Gotcha)</h4>
+<h4>Task 4.1: Bonferroni correction</h4>
+<p>If you run m tests at alpha=0.05, Bonferroni uses alpha/m per test.</p>
+<p>Compute adjusted alpha for m=20 and explain why this matters in feature slicing / metric dashboards.</p><h4>Starter code</h4><pre><code class="lang-python">m = 20
+alpha = 0.05
+# TODO
+alpha_adj = ...
+print('alpha_adj', alpha_adj)
+check('alpha_adj', abs(alpha_adj - 0.0025) &lt; 1e-12)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('alpha_adj', abs(alpha_adj - 0.0025) &lt; 1e-12)</code></pre><h4>Checks</h4><ul><li>check('alpha_adj', abs(alpha_adj - 0.0025)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">m = 20; alpha=0.05
+alpha_adj = alpha / m
+print('alpha_adj', alpha_adj)
+check('alpha_adj', abs(alpha_adj - 0.0025) &lt; 1e-12)
+
+# Rationale: multiple comparisons inflate false positives; dashboards/slicing can create p-hacking unintentionally.</code></pre><h4>Why this works</h4><p>multiple comparisons inflate false positives; dashboards/slicing can create p-hacking unintentionally.</p></details></div></details>
+<h4>Checkpoints</h4><ul><li>Why does ddof=1 reduce bias?</li></ul>
+<h4>Interview angles</h4><ul><li>Why does CI have ~95% coverage by design?</li><li>Slicing dashboards can create accidental p-hacking.</li></ul>
+<h4>Gotchas</h4><ul><li>CI is for the mean, not individual outcomes.</li><li>p-value is not P(H0 true).</li></ul>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d4-statistics-for-ml">https://ai.thes30.com/problems/w2-d4-statistics-for-ml</a>.</p>
+</section><section class="lab" id="lab-w2-d5-math-lab">
+<h3>Math Lab (Linear Algebra + Probability) <span class="diff diff-easy">Easy</span></h3>
+<p class="lab-meta">Week 2, Day 5 · Math for ML · 6 tasks · 6 checks · Free</p>
+<p>This lab is the capstone problem set for the week: five derivation problems, each paired with a computational verification. Projection matrix properties, the PSD check on X^T X, normal equations versus lstsq, the Bayes base-rate derivation with simulation, and the covariance-eigenvector versus SVD-directions link. It draws on Concepts 1 through 3 and the coverage intuition of Concept 4. Treat it as a mock interview round: derive on paper first, then verify in code, then explain out loud. The outcome the lab promises (derive key results, verify with small experiments, communicate clearly) is exactly the interview bar.</p>
+<p>Consolidate Week 2 with derivations + short computational checks.</p>
+<div class="callout"><strong>Outcome.</strong> Students can derive key results, verify with small code experiments, and communicate clearly under interview constraints.</div>
+<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Projection Matrices</span><span class="tagchip">Positive Semidefinite (PSD) Matrices</span><span class="tagchip">Least Squares</span><span class="tagchip">Bayes + Base Rate</span><span class="tagchip">PCA Link</span><span class="tagchip">Week 2</span><span class="tagchip co">Square</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1c3uvCDuOE_5bBZH8fM878rhGin_70aPO">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-9-math-for">Notes</a> · <a href="math_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/X8UpPH3lYyU">Video</a></p>
+<h4>Tasks (6)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Math Lab ,  FAANG-Level Mixed Problems</h3>
+<p>This lab is a <em>problem set + mini-verification</em> notebook covering projection matrices, PSD checks, least squares, Bayes intuition, and PCA links.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Math Lab ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> Construct projection and verify properties <span class="task-sec">Projection Matrix Properties</span></summary><div class="task-body"><h4>Problem 1 ,  Projection Matrix Properties</h4>
+<p>Let P be a projection matrix onto a subspace.</p>
+<ol><li>Show that P^2 = P (idempotent).</li><li>For orthogonal projection, show P = P^T.</li></ol>
+<h4>Task 1.1</h4>
+<p>Construct projection onto span(u) and verify both properties.</p><h4>Starter code</h4><pre><code class="lang-python">u = rng.standard_normal(5)
+# TODO
+P = ...
+check('idempotent', np.allclose(P @ P, P, atol=1e-8))
+check('symmetric', np.allclose(P, P.T, atol=1e-8))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>P = u u^T / (u^T u)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('idempotent', np.allclose(P @ P, P, atol=1e-8))
+check('symmetric', np.allclose(P, P.T, atol=1e-8))</code></pre><h4>Checks</h4><ul><li>check('idempotent'</li><li>check('symmetric'</li></ul><div class="callout"><strong>Explain prompt.</strong> What does idempotent mean geometrically for projections?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">u = rng.standard_normal(5)
+P = np.outer(u, u) / (u @ u)
+check('idempotent', np.allclose(P @ P, P, atol=1e-8))
+check('symmetric', np.allclose(P, P.T, atol=1e-8))
+
+# Rationale: orthogonal projection matrices are exactly symmetric idempotent operators.</code></pre><h4>Why this works</h4><p>orthogonal projection matrices are symmetric and idempotent.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> Verify X^T X is PSD <span class="task-sec">PSD Matrix Check</span></summary><div class="task-body"><h4>Problem 2 ,  PSD Matrix Check</h4>
+<p>Show that for any matrix X, A = X^T X is positive semidefinite (PSD).</p>
+<h4>Task 2.1</h4>
+<p>Sample random X, build A, and verify v^T A v &gt;= 0 for many random vectors v.</p><h4>Starter code</h4><pre><code class="lang-python">X = rng.standard_normal((10, 4))
+A = X.T @ X
+# TODO
+min_val = np.inf
+for _ in range(100):
+    v = rng.standard_normal(4)
+    val = float(v.T @ A @ v)
+    min_val = min(min_val, val)
+print('min quadratic form', min_val)
+check('psd_nonneg', min_val &gt;= -1e-8)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>v^T X^T X v = ||Xv||^2 &gt;= 0</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('psd_nonneg', min_val &gt;= -1e-8)</code></pre><h4>Checks</h4><ul><li>check('psd_nonneg'</li></ul><div class="callout"><strong>Explain prompt.</strong> Why does v^T X^T X v equal ||Xv||^2?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X = rng.standard_normal((10, 4))
+A = X.T @ X
+min_val = np.inf
+for _ in range(100):
+    v = rng.standard_normal(4)
+    val = float(v.T @ A @ v)
+    min_val = min(min_val, val)
+print('min quadratic form', min_val)
+check('psd_nonneg', min_val &gt;= -1e-8)
+
+# Rationale: A = X^T X is PSD because every quadratic form is a squared norm.</code></pre><h4>Why this works</h4><p>A = X^T X is PSD since v^TAv = ||Xv||^2.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> Normal equation vs lstsq <span class="task-sec">Least Squares Derivation</span></summary><div class="task-body"><h4>Problem 3 ,  Least Squares Derivation</h4>
+<p>Derive the normal equations for minimizing ||Xw - y||^2.</p>
+<h4>Task 3.1</h4>
+<p>Compare w_hat from solve vs np.linalg.lstsq.</p><h4>Starter code</h4><pre><code class="lang-python">n, d = 200, 5
+X = rng.standard_normal((n, d))
+w_true = rng.standard_normal(d)
+y = X @ w_true + 0.1 * rng.standard_normal(n)
+
+# TODO
+w_hat = ...
+w_lstsq, *_ = np.linalg.lstsq(X, y, rcond=None)
+check('close', np.allclose(w_hat, w_lstsq, atol=1e-6))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>w = (X^T X)^{-1} X^T y</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', np.allclose(w_hat, w_lstsq, atol=1e-6))</code></pre><h4>Checks</h4><ul><li>check('close'</li></ul><div class="callout"><strong>Explain prompt.</strong> Why is solve/lstsq preferred over explicit matrix inverse?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">n, d = 200, 5
+X = rng.standard_normal((n, d))
+w_true = rng.standard_normal(d)
+y = X @ w_true + 0.1 * rng.standard_normal(n)
+
+w_hat = np.linalg.solve(X.T @ X, X.T @ y)
+w_lstsq, *_ = np.linalg.lstsq(X, y, rcond=None)
+check('close', np.allclose(w_hat, w_lstsq, atol=1e-6))
+
+# Rationale: direct inverse is numerically less stable; solve/lstsq is preferred.</code></pre><h4>Why this works</h4><p>solve/lstsq are numerically safer than explicit inverse.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> Analytic vs simulated P(D|+) <span class="task-sec">Bayes + Base Rate</span></summary><div class="task-body"><h4>Problem 4 ,  Bayes + Base Rate (Derivation)</h4>
+<p>Re-derive P(D|+) for the disease test scenario and explain the base-rate fallacy.</p>
+<h4>Task 4.1</h4>
+<p>Compute analytic posterior and verify with simulation.</p><h4>Starter code</h4><pre><code class="lang-python">P_D = 0.01
+P_pos_given_D = 0.99
+P_pos_given_notD = 0.05
+# TODO
+P_D_given_pos = ...
+
+N = 200000
+disease = rng.random(N) &lt; P_D
+test_pos = np.empty(N, dtype=bool)
+test_pos[disease] = rng.random(disease.sum()) &lt; P_pos_given_D
+test_pos[~disease] = rng.random((~disease).sum()) &lt; P_pos_given_notD
+est = disease[test_pos].mean()
+print('analytic', P_D_given_pos, 'sim', est)
+check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use Bayes theorem and then Monte Carlo simulation.</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><h4>Checks</h4><ul><li>check('close'</li></ul><div class="callout"><strong>Explain prompt.</strong> Why can P(D|+) still be low when test sensitivity is high?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">P_D = 0.01
+P_pos_given_D = 0.99
+P_pos_given_notD = 0.05
+P_D_given_pos = (P_pos_given_D * P_D) / (P_pos_given_D * P_D + P_pos_given_notD * (1 - P_D))
+
+N = 200000
+disease = rng.random(N) &lt; P_D
+test_pos = np.empty(N, dtype=bool)
+test_pos[disease] = rng.random(disease.sum()) &lt; P_pos_given_D
+test_pos[~disease] = rng.random((~disease).sum()) &lt; P_pos_given_notD
+est = disease[test_pos].mean()
+print('analytic', P_D_given_pos, 'sim', est)
+check('close', abs(est - P_D_given_pos) &lt; 0.01)
+
+# Rationale: low base rate dominates posterior even with good sensitivity/specificity.</code></pre><h4>Why this works</h4><p>base rate strongly affects posterior probability.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> Covariance eigenvectors vs SVD directions <span class="task-sec">PCA Link</span></summary><div class="task-body"><h4>Problem 5 ,  PCA Link</h4>
+<p>Explain why PCA components are eigenvectors of the covariance matrix.</p>
+<h4>Task 5.1</h4>
+<p>Compute covariance eigenvectors and compare with SVD directions.</p><h4>Starter code</h4><pre><code class="lang-python">X = rng.standard_normal((500, 20))
+Xc = X - X.mean(axis=0, keepdims=True)
+Cov = (Xc.T @ Xc) / (Xc.shape[0] - 1)
+
+# TODO
+eigvals, eigvecs = ...
+idx = np.argsort(eigvals)[::-1]
+eigvecs = eigvecs[:, idx]
+
+U, S, Vt = np.linalg.svd(Xc, full_matrices=False)
+V = Vt.T
+
+k = 5
+C = np.abs(eigvecs[:, :k].T @ V[:, :k])
+print('abs alignment matrix (should be near diagonal)', C)
+check('alignment', np.all(np.max(C, axis=1) &gt; 0.9))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Center X; Cov = X^T X/(n-1); compare eigvecs with V from SVD.</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('alignment', np.all(np.max(C, axis=1) &gt; 0.9))</code></pre><h4>Checks</h4><ul><li>check('alignment'</li></ul><div class="callout"><strong>Explain prompt.</strong> Why do right singular vectors align with covariance eigenvectors?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X = rng.standard_normal((500, 20))
+Xc = X - X.mean(axis=0, keepdims=True)
+Cov = (Xc.T @ Xc) / (Xc.shape[0] - 1)
+
+eigvals, eigvecs = np.linalg.eigh(Cov)
+idx = np.argsort(eigvals)[::-1]
+eigvecs = eigvecs[:, idx]
+
+U, S, Vt = np.linalg.svd(Xc, full_matrices=False)
+V = Vt.T
+
+k = 5
+C = np.abs(eigvecs[:, :k].T @ V[:, :k])
+print('abs alignment matrix (should be near diagonal)', C)
+check('alignment', np.all(np.max(C, axis=1) &gt; 0.9))
+
+# Rationale: covariance eigendecomposition and SVD of centered data recover the same principal directions.</code></pre><h4>Why this works</h4><p>PCA directions equal eigenvectors of covariance, same as right singular vectors of centered X.</p></details></div></details>
+<h4>Checkpoints</h4><ul><li>What does idempotent mean?</li><li>Why is orthogonal projection symmetric?</li><li>Why does base rate dominate when prevalence is low?</li></ul>
+<h4>Interview angles</h4><ul><li>Where does PSD show up in ML (covariance, kernels)?</li><li>How does PCA relate to embeddings and compression?</li></ul>
+<h4>Gotchas</h4><ul><li>Avoid matrix inverse; use solve/lstsq.</li></ul>
+<h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d5-math-lab">https://ai.thes30.com/problems/w2-d5-math-lab</a>.</p>
+</section><h2>Interview clearance</h2><div class="ob-board"><h4>Design prompt</h4><ul><li>Derive the normal equations and explain why solve beats the explicit inverse.</li><li>Write the gradient of binary cross-entropy and describe how you would verify it numerically.</li><li>Prevalence 1%, sensitivity 99%, false positive rate 5%: compute the posterior and explain the intuition.</li><li>State what a 95% confidence interval actually guarantees, and what it does not.</li><li>Where does PSD show up in ML? Name three places and why it matters in each.</li></ul></div><div class="pq"><p class="pq-q"><strong>Q1.</strong> Which statement about the normal equations is correct? A: They require forming the matrix inverse explicitly. B: They state that the residual is orthogonal to the column space of X. C: They only apply when X is square. D: They minimize the L1 error.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The normal equations X^T X w = X^T y are the algebraic form of "the residual y - Xw is orthogonal to every column of X".</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> the inverse is one way to solve them, and the numerically worst one; solve or lstsq is preferred.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> orthogonality of the residual is the geometric content; everything else is algebra.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> X is typically tall (n rows, d columns); squareness is not required.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> least squares minimizes squared (L2) error, not L1.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q2.</strong> Your analytic gradient and your central-difference check disagree by 0.5 on one parameter. List the two most likely bug sites, in the order you would check them.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> first, a missing constant (like 2/n or 1/n) in the analytic gradient; second, a broadcasting shape bug where two arrays aligned on the wrong axis. Both are named as the classic gradient bugs in the lab. Check the constant by comparing magnitudes (a clean ratio like exactly n or 2 suggests the missing factor), then print shapes at every step of the chain.</p></div></div><div class="pq"><p class="pq-q"><strong>Q3.</strong> A startup claims its model "detects disease with 99% accuracy" on a condition affecting 1 in 1,000 people. What is wrong with this claim?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> a model that always predicts "healthy" scores 99.9% accuracy on this population while detecting nothing. Accuracy without the base rate is meaningless under imbalance. The right questions: what are the sensitivity and false positive rate, and what is P(disease | positive)? With a 5% false positive rate, the posterior is roughly 2%, so 98 of 100 alarms are false.</p></div></div><div class="pq"><p class="pq-q"><strong>Q4.</strong> You run 20 experiments, one per feature, and the best p-value is 0.03. Your colleague wants to ship that feature. What do you say, with numbers?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> with 20 tests at alpha 0.05, you expect about one false positive by chance alone; the chance of at least one is 1 - 0.95^20, about 64%. Bonferroni requires 0.05/20 = 0.0025 per test, and 0.03 does not clear it. The result is consistent with noise. Ship nothing on this evidence; re-test the feature alone on fresh data if you believe in it.</p></div></div><script>(function(){document.querySelectorAll(".pq-reveal").forEach(function(b){b.addEventListener("click",function(){var a=b.parentElement.querySelector(".pq-a");var opening=a.hasAttribute("hidden");if(opening){a.removeAttribute("hidden");b.setAttribute("aria-expanded","true");b.textContent="Hide answer";}else{a.setAttribute("hidden","");b.setAttribute("aria-expanded","false");b.textContent="Reveal answer";}});});})();</script>
+<nav class="ds-volume-nav" aria-label="Volume navigation"><a class="ds-prev" href="17-ai-lab-python-data.html"><span>&uarr; Previous volume</span>Volume 17: Python and Data</a><a class="ds-next" href="19-ai-lab-classical-ml.html"><span>Next volume &darr;</span>Volume 19: Classical ML</a></nav>
+<div class="provenance"><strong>Last verified: October 2026.</strong> Live-verified: AI Lab site scrape (labs, tasks, solutions). <span class="uv">UNVERIFIED:</span> none.</div>
+<footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html">AI Lab Atlas: 15-Week Lab Map</a></li><li><a href="17-ai-lab-python-data.html">Python and Data Tools</a></li><li><a href="18-ai-lab-math-for-ml.html" class="foot-current">Math for ML (AI Lab)</a></li><li><a href="19-ai-lab-classical-ml.html">Classical ML</a></li><li><a href="20-ai-lab-evaluation-debugging.html">Evaluation and Debugging</a></li><li><a href="21-ai-lab-deep-learning.html">Deep Learning (AI Lab)</a></li><li><a href="22-ai-lab-cv-nlp-basics.html">CV and NLP Basics</a></li><li><a href="23-ai-lab-transformers.html">Transformers</a></li><li><a href="24-ai-lab-rag-retrieval.html">RAG and Retrieval</a></li><li><a href="25-ai-lab-mlops-systems.html">MLOps and Systems</a></li><li><a href="26-ai-lab-system-design.html">System Design (AI Lab)</a></li><li><a href="27-ai-lab-llm-agentic.html">LLM and Agentic AI</a></li><li><a href="28-ai-lab-interview-clearance.html">Interview Clearance</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav></footer>
+</main>
+<script>
+/* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
+   Builds: sidebar nav from h2/h3, scroll-spy, nav search filter, localStorage completion
+   checkmarks, reading progress bar, chapter prev/next footer, copy buttons, practice-question
+   toggles, mobile drawer, keyboard nav. No external dependencies. */
+(function(){
+"use strict";
+var content=document.getElementById('dsContent')||document.querySelector('main')||document.body;
+var sidebar=document.getElementById('dsSidebar');
+if(!sidebar||!content)return;
+
+/* ---------- collect sections: h2 = chapter groups, h3 = items ---------- */
+function slugify(t){return t.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'s';}
+var used={};
+function uniqueId(base){var id=base,n=2;while(used[id]||document.getElementById(id)){id=base+'-'+(n++);}used[id]=1;return id;}
+var chapters=[]; // {h2, id, title, items:[{id,title,el}]}
+var cur=null;
+Array.prototype.forEach.call(content.querySelectorAll('h2,h3'),function(h){
+  if(!h.id){h.id=uniqueId(slugify(h.textContent));}else{used[h.id]=1;}
+  h.setAttribute('tabindex','-1');
+  var t=h.textContent.trim();
+  if(h.tagName==='H2'){cur={id:h.id,title:t,items:[]};chapters.push(cur);}
+  else if(cur){cur.items.push({id:h.id,title:t});}
+  else{cur={id:'intro',title:'Introduction',items:[{id:h.id,title:t}]};chapters.push(cur);}
+});
+
+/* ---------- build sidebar nav ---------- */
+var nav=document.getElementById('dsNav');
+var pageKey='rec-cur-'+(document.title||location.pathname).replace(/[^a-z0-9]+/gi,'-');
+function isDone(id){try{return localStorage.getItem(pageKey+'#'+id)==='1';}catch(e){return false;}}
+function setDone(id,v){try{if(v)localStorage.setItem(pageKey+'#'+id,'1');else localStorage.removeItem(pageKey+'#'+id);}catch(e){}}
+function checkItem(id){var c=document.querySelector('.ds-check[data-sec="'+id+'"]');if(c)c.checked=isDone(id);}
+function updateCount(){
+  var boxes=nav.querySelectorAll('.ds-check'),done=0;
+  boxes.forEach(function(b){if(b.checked)done++;});
+  var el=document.getElementById('dsCompleteCount');
+  if(el)el.textContent=done+' of '+boxes.length+' sections complete';
+}
+function itemRow(sec){
+  var li=document.createElement('li');
+  var a=document.createElement('a');a.href='#'+sec.id;
+  var cb=document.createElement('input');
+  cb.type='checkbox';cb.className='ds-check';cb.checked=isDone(sec.id);
+  cb.setAttribute('data-sec',sec.id);cb.setAttribute('aria-label','Mark complete: '+sec.title);
+  cb.addEventListener('change',function(ev){ev.stopPropagation();setDone(sec.id,cb.checked);updateCount();});
+  cb.addEventListener('click',function(ev){ev.stopPropagation();});
+  var sp=document.createElement('span');sp.textContent=sec.title;
+  a.appendChild(cb);a.appendChild(sp);
+  a.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+  li.appendChild(a);return li;
+}
+chapters.forEach(function(ch,ci){
+  var g=document.createElement('div');g.className='ds-nav-group';g.dataset.title=ch.title.toLowerCase();
+  var btn=document.createElement('button');
+  btn.innerHTML='<span></span><span class="ds-caret">▾</span>';
+  btn.firstChild.textContent=ch.title;
+  btn.setAttribute('aria-expanded','true');
+  var ul=document.createElement('ul');ul.className='ds-nav-items';
+  var headLi=itemRow({id:ch.id,title:ch.title});ul.appendChild(headLi);
+  ch.items.forEach(function(it){ul.appendChild(itemRow(it));});
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!open));
+    ul.style.display=open?'none':'';
+    btn.querySelector('.ds-caret').textContent=open?'▸':'▾';
+  });
+  g.appendChild(btn);g.appendChild(ul);nav.appendChild(g);
+});
+updateCount();
+
+/* ---------- nav search filter ---------- */
+var search=document.getElementById('dsNavSearch');
+if(search){search.addEventListener('input',function(){
+  var q=search.value.trim().toLowerCase(),any=false;
+  nav.querySelectorAll('.ds-nav-group').forEach(function(g){
+    var show=g.dataset.title.indexOf(q)>-1;
+    g.querySelectorAll('.ds-nav-items li').forEach(function(li){
+      var hit=li.textContent.toLowerCase().indexOf(q)>-1;
+      li.style.display=(!q||hit||show)?'':'none';if(!q||hit)show=true;
+    });
+    g.style.display=show?'':'none';if(show)any=true;
+  });
+  var empty=nav.querySelector('.ds-nav-empty');
+  if(!any&&!empty){var d=document.createElement('div');d.className='ds-nav-empty';d.textContent='No sections match.';nav.appendChild(d);}
+  if(any&&empty)empty.remove();
+});}
+
+/* ---------- scroll-spy ---------- */
+var links=Array.prototype.slice.call(nav.querySelectorAll('.ds-nav-items a'));
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.toggle('ds-active',a.getAttribute('href')==='#'+e.target.id);});
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+chapters.forEach(function(ch){
+  var el=document.getElementById(ch.id);if(el)spy.observe(el);
+  ch.items.forEach(function(it){var el2=document.getElementById(it.id);if(el2)spy.observe(el2);});
+});
+
+/* ---------- progress bar ---------- */
+var prog=document.getElementById('dsProgress');
+function onScroll(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- mobile drawer ---------- */
+var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('dsScrim');
+if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
+if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+
+/* ---------- keyboard nav: [ ] sections, / search ---------- */
+document.addEventListener('keydown',function(e){
+  if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  var ids=[];chapters.forEach(function(ch){ids.push(ch.id);ch.items.forEach(function(it){ids.push(it.id);});});
+  function jump(dir){
+    var y=window.scrollY+10,cur=0;
+    ids.forEach(function(id,i){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+y<=y+1)cur=i;});
+    var n=Math.min(ids.length-1,Math.max(0,cur+dir)),el=document.getElementById(ids[n]);
+    if(el){el.scrollIntoView();el.focus({preventScroll:true});}
+  }
+  if(e.key==='[')jump(-1);else if(e.key===']')jump(1);
+  else if(e.key==='/'&&search){e.preventDefault();search.focus();}
+});
+var hint=document.createElement('div');hint.className='ds-kbd-hint';
+hint.textContent='Keyboard: [ and ] move between sections, / focuses section search.';
+var foot=document.querySelector('.ds-side-foot');if(foot)foot.appendChild(hint);
+
+/* ---------- chapter prev/next footers (one after each h2 section) ---------- */
+if(chapters.length>1){
+  var mk=function(ch,cls,label){var a=document.createElement('a');a.href='#'+ch.id;a.className=cls;
+    a.innerHTML='<span style="display:block;font-size:.78rem;color:var(--muted)">'+label+'</span>';a.appendChild(document.createTextNode(ch.title));return a;};
+  chapters.forEach(function(ch,i){
+    var bar=document.createElement('nav');bar.className='ds-chapter-nav';bar.setAttribute('aria-label','Chapter navigation');
+    var left=document.createElement('span'),right=document.createElement('span');
+    if(chapters[i-1])left.appendChild(mk(chapters[i-1],'ds-prev','↑ Previous'));
+    else left.innerHTML='<span style="color:var(--muted);font-size:.85rem">Start of volume</span>';
+    if(chapters[i+1])right.appendChild(mk(chapters[i+1],'ds-next','Next ↓'));
+    else right.innerHTML='<span style="color:var(--muted);font-size:.85rem">End of volume</span>';
+    bar.appendChild(left);bar.appendChild(right);
+    /* insert the bar immediately before the next chapter's heading, using that
+       heading's own parent so <section> wrappers (or any nesting) cannot break it */
+    var nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
+    if(nextH){nextH.parentNode.insertBefore(bar,nextH);}
+    else{var lastH=document.getElementById(ch.id);lastH.parentNode.appendChild(bar);}
+  });
+}
+
+/* ---------- copy buttons on code blocks ---------- */
+document.querySelectorAll('pre').forEach(function(pre){
+  if(pre.querySelector('.ds-copy-btn'))return;
+  var btn=document.createElement('button');btn.className='ds-copy-btn';btn.textContent='Copy';
+  btn.setAttribute('aria-label','Copy code to clipboard');
+  btn.addEventListener('click',function(){
+    var txt=pre.innerText;
+    function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1400);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}
+  });
+  pre.appendChild(btn);
+});
+
+/* ---------- practice-question widgets ---------- */
+document.querySelectorAll('.pq').forEach(function(pq){
+  var btn=pq.querySelector('.pq-reveal'),ans=pq.querySelector('.pq-a');
+  if(!btn||!ans)return;
+  btn.addEventListener('click',function(){
+    var open=ans.hasAttribute('hidden');
+    if(open){ans.removeAttribute('hidden');btn.setAttribute('aria-expanded','true');btn.textContent='Hide answer';}
+    else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
+  });
+});
+})();
+
+</script>
+<script>
+
+/* ==== Experience layer behavior ,  additive ====
+ * Calm, GPU-friendly page motion for study volumes. No-JS safe: every hidden
+ * state in experience.css is gated on `html.xp-js`, which only this script
+ * adds ,  without it the page is fully readable. Respects
+ * prefers-reduced-motion (exits early; CSS keeps everything static).
+ *
+ * Three jobs:
+ *  1. Hero parallax ,  detects the volume hero (.banner/.hero, else wraps the
+ *     h1 + lede block in .xp-hero) and drifts it gently as the reader
+ *     scrolls on. Transform/opacity only, rAF-throttled, passive listener.
+ *  2. Scroll reveals ,  one IntersectionObserver fades+rises figures, key
+ *     callouts and knowledge checks exactly once. Elements already in view
+ *     on load appear immediately (no load flash).
+ *  3. Nothing else: progress bar, scroll-spy, sidebar, quiz toggles are
+ *     owned by ds.js and are left untouched.
+ *
+ * (In the assembly snippet the closing element tags are written literally;
+ * inside this file they are escaped as <\/style> / <\/script> so the file
+ * pastes verbatim without early-terminating its own element.)
+ */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+
+  var reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) { /* matchMedia unavailable: assume motion is fine */ }
+  if (reduceMotion) { return; } /* leave no footprint: no xp-js, CSS stays static */
+
+  /* From here on the reader is fine with calm motion: mark the document so
+     the CSS reveal/parallax states may apply. Without this class (no-JS or
+     reduced-motion) every hidden state stays off and the page is fully
+     readable. */
+  root.classList.add('xp-js');
+
+  /* ---------------- 1. Hero detection + gentle parallax ---------------- */
+  var hero = document.querySelector('.banner, .hero');
+  if (!hero) {
+    /* No banner hero: wrap the volume title (h1) plus its lede paragraphs
+       in a layout-neutral div. Never touches headings ds.js needs. */
+    var main = document.querySelector('main');
+    var h1 = main ? main.querySelector('h1') : null;
+    if (h1 && h1.parentNode) {
+      var wrap = document.createElement('div');
+      wrap.className = 'xp-hero';
+      h1.parentNode.insertBefore(wrap, h1);
+      var node = h1, moved = 0, paras = 0;
+      while (node && moved < 8) {
+        var next = node.nextSibling;
+        if (node.nodeType === 3) { node = next; continue; } /* skip whitespace text nodes */
+        var isPara = node.nodeType === 1 && node.tagName === 'P';
+        if (node !== h1 && !isPara) { break; }
+        wrap.appendChild(node);
+        moved += 1;
+        if (isPara) {
+          paras += 1;
+          if (paras >= 3) { break; }
+        }
+        node = next;
+      }
+      hero = wrap;
+    }
+  }
+
+  var heroH = 0, ticking = false, pxOn = false;
+  function measure() { heroH = hero ? hero.offsetHeight : 0; }
+  function render() {
+    ticking = false;
+    if (!hero || !heroH) { return; }
+    var y = window.pageYOffset || root.scrollTop || 0;
+    if (y <= 0) {
+      if (pxOn) { hero.style.transform = ''; hero.style.opacity = ''; pxOn = false; }
+      return;
+    }
+    var range = heroH * 1.4;
+    if (y < range) {
+      /* Drift up slightly slower than the scroll and fade a whisper , 
+         the title recedes calmly instead of snapping away. */
+      var k = Math.min(y / range, 1);
+      hero.style.transform = 'translate3d(0,' + (-y * 0.06).toFixed(1) + 'px,0)';
+      hero.style.opacity = (1 - k * 0.22).toFixed(3);
+      pxOn = true;
+    } else if (pxOn) {
+      hero.style.transform = '';
+      hero.style.opacity = '';
+      pxOn = false;
+    }
+  }
+  function requestRender() {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(render); }
+  }
+  if (hero) {
+    measure();
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', function () { measure(); requestRender(); });
+  }
+
+  /* ---------------- 2. Scroll-triggered reveals ---------------- */
+  var SELECTOR = [
+    'figure',
+    '.takeaway', '.exam-ask', '.trapbox', '.trap', '.board',
+    '.diagram-walkthrough', '.walkthrough', '.warn', '.callout',
+    '.ob-board', '.nums', '.watch-card', '.lab', '.pq', '.go-deeper-note'
+  ].join(', ');
+
+  var targets = [];
+  Array.prototype.forEach.call(document.querySelectorAll(SELECTOR), function (el) {
+    if (hero && hero.contains(el)) { return; } /* hero has its own motion */
+    targets.push(el);
+  });
+
+  function showAll(list) {
+    list.forEach(function (el) { el.classList.add('xp-reveal', 'xp-in'); });
+  }
+
+  if (!targets.length) { return; }
+
+  if (!('IntersectionObserver' in window)) { showAll(targets); return; }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.classList.add('xp-in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+
+  var vh = window.innerHeight || 800;
+  targets.forEach(function (el) {
+    el.classList.add('xp-reveal');
+    var r = el.getBoundingClientRect();
+    if (r.top < vh && r.bottom > 0) {
+      el.classList.add('xp-in'); /* in view on load: appear, no animation */
+    } else {
+      io.observe(el);
+    }
+  });
+})();
+
+
+</script>
+<script>
+
+/* AI Lab layer: tabbed lab explorer. Additive, no external deps. */
+(function(){
+"use strict";
+var tabs=document.getElementById('labTabs');
+if(!tabs)return;
+var btns=Array.prototype.slice.call(tabs.querySelectorAll('button[data-target]'));
+btns.forEach(function(b){
+  b.addEventListener('click',function(){
+    btns.forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    var el=document.getElementById(b.getAttribute('data-target'));
+    if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+})();
+
+</script>
+<!-- experience-layer:js -->
+<script>
+/* ==== Experience layer behavior — additive ==== (v2, 2026-10-05)
+ * Calm, GPU-friendly page motion for study volumes. No-JS safe: every hidden
+ * state in experience.css is gated on `html.xp-js`, which only this script
+ * adds — without it the page is fully readable. Respects
+ * prefers-reduced-motion (exits early; CSS keeps everything static).
+ *
+ * Three jobs:
+ *  1. Hero parallax — detects the volume hero (.banner/.hero, else wraps the
+ *     h1 + lede block in .xp-hero) and drifts it gently as the reader
+ *     scrolls on. Transform/opacity only, rAF-throttled, passive listener.
+ *  2. Figure parallax — gentle --px drift on `figure img` (images only),
+ *     proportional to each image's distance from the viewport center.
+ *     The CSS clips the drift inside the figure: zero layout shift.
+ *  3. Scroll reveals — one IntersectionObserver fades+rises figures, key
+ *     callouts and knowledge checks exactly once. Elements already in view
+ *     on load appear immediately (no load flash).
+ * Jobs 1+2 share one rAF-throttled scroll listener. Nothing else:
+ * progress bar, scroll-spy, sidebar, quiz toggles are owned by ds.js and
+ * are left untouched.
+ *
+ * (In the assembly snippet the closing element tags are written literally;
+ * inside this file they are escaped as <\/style> / <\/script> so the file
+ * pastes verbatim without early-terminating its own element.)
+ */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+
+  var reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) { /* matchMedia unavailable: assume motion is fine */ }
+  if (reduceMotion) { return; } /* leave no footprint: no xp-js, CSS stays static */
+
+  /* From here on the reader is fine with calm motion: mark the document so
+     the CSS reveal/parallax states may apply. Without this class (no-JS or
+     reduced-motion) every hidden state stays off and the page is fully
+     readable. */
+  root.classList.add('xp-js');
+
+  /* ---------------- 1. Hero detection ---------------- */
+  var hero = document.querySelector('.banner, .hero');
+  if (!hero) {
+    /* No banner hero: wrap the volume title (h1) plus its lede paragraphs
+       in a layout-neutral div. Never touches headings ds.js needs. */
+    var main = document.querySelector('main');
+    var h1 = main ? main.querySelector('h1') : null;
+    if (h1 && h1.parentNode) {
+      var wrap = document.createElement('div');
+      wrap.className = 'xp-hero';
+      h1.parentNode.insertBefore(wrap, h1);
+      var node = h1, moved = 0, paras = 0;
+      while (node && moved < 8) {
+        var next = node.nextSibling;
+        if (node.nodeType === 3) { node = next; continue; } /* skip whitespace text nodes */
+        var isPara = node.nodeType === 1 && node.tagName === 'P';
+        if (node !== h1 && !isPara) { break; }
+        wrap.appendChild(node);
+        moved += 1;
+        if (isPara) {
+          paras += 1;
+          if (paras >= 3) { break; }
+        }
+        node = next;
+      }
+      hero = wrap;
+    }
+  }
+
+  /* ---------------- 2. Figure parallax targets ---------------- */
+  var pxImgs = [];
+  Array.prototype.forEach.call(document.querySelectorAll('figure img'), function (img) {
+    var fig = img.closest ? img.closest('figure') : null;
+    if (fig) {
+      fig.classList.add('xp-px'); /* CSS clips the drift: no layout shift */
+      pxImgs.push(img);
+    }
+  });
+
+  /* ---------------- shared rAF-throttled scroll renderer ---------------- */
+  var heroH = 0, ticking = false, heroPxOn = false;
+  function measure() { heroH = hero ? hero.offsetHeight : 0; }
+
+  function renderHero(y) {
+    if (!hero || !heroH) { return; }
+    if (y <= 0) {
+      if (heroPxOn) { hero.style.transform = ''; hero.style.opacity = ''; heroPxOn = false; }
+      return;
+    }
+    var range = heroH * 1.4;
+    if (y < range) {
+      /* Drift up slightly slower than the scroll and fade a whisper —
+         the title recedes calmly instead of snapping away. */
+      var k = Math.min(y / range, 1);
+      hero.style.transform = 'translate3d(0,' + (-y * 0.06).toFixed(1) + 'px,0)';
+      hero.style.opacity = (1 - k * 0.22).toFixed(3);
+      heroPxOn = true;
+    } else if (heroPxOn) {
+      hero.style.transform = '';
+      hero.style.opacity = '';
+      heroPxOn = false;
+    }
+  }
+
+  function renderFigures() {
+    if (!pxImgs.length) { return; }
+    var vh = window.innerHeight || 800;
+    for (var i = 0; i < pxImgs.length; i++) {
+      var img = pxImgs[i];
+      var r = img.getBoundingClientRect();
+      if (r.bottom < -80 || r.top > vh + 80) { continue; } /* off-screen: skip */
+      var center = (r.top + r.height / 2) - vh / 2;
+      img.style.setProperty('--px', (center * -0.04).toFixed(1) + 'px');
+    }
+  }
+
+  function render() {
+    ticking = false;
+    var y = window.pageYOffset || root.scrollTop || 0;
+    renderHero(y);
+    renderFigures();
+  }
+  function requestRender() {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(render); }
+  }
+  if (hero || pxImgs.length) {
+    measure();
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', function () { measure(); requestRender(); });
+  }
+
+  /* ---------------- 3. Scroll-triggered reveals ---------------- */
+  var SELECTOR = [
+    'figure',
+    '.takeaway', '.exam-ask', '.trapbox', '.trap', '.board',
+    '.diagram-walkthrough', '.walkthrough', '.warn', '.callout',
+    '.ob-board', '.nums', '.watch-card', '.lab', '.pq', '.go-deeper-note'
+  ].join(', ');
+
+  var targets = [];
+  Array.prototype.forEach.call(document.querySelectorAll(SELECTOR), function (el) {
+    if (hero && hero.contains(el)) { return; } /* hero has its own motion */
+    targets.push(el);
+  });
+
+  function showAll(list) {
+    list.forEach(function (el) { el.classList.add('xp-reveal', 'xp-in'); });
+  }
+
+  if (!targets.length) { return; }
+
+  if (!('IntersectionObserver' in window)) { showAll(targets); return; }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.classList.add('xp-in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+
+  var vh = window.innerHeight || 800;
+  targets.forEach(function (el) {
+    el.classList.add('xp-reveal');
+    var r = el.getBoundingClientRect();
+    if (r.top < vh && r.bottom > 0) {
+      el.classList.add('xp-in'); /* in view on load: appear, no animation */
+    } else {
+      io.observe(el);
+    }
+  });
+})();
+
+</script>
+</body>
+</html>
