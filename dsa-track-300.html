@@ -9,6 +9,17 @@
 .display-eq,.eq{text-align:center;margin:1.15rem 0;font-size:1.12em;line-height:1.7}
 .eq-where{margin:.1rem 0 1rem 1.25rem;font-size:.93em;opacity:.92}
 .eq-worked{border:1px solid #8a8f98;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:8px;padding:.7rem 1rem;margin:1rem 0;background:rgba(128,128,128,.06)}
+
+/* Exam-clearing packs (fu-fg, 2026-10-05). */
+.exam-pack{border:1px solid #2a3a2a;border-radius:.65rem;padding:1rem 1.3rem;margin:1.6rem 0;background:#0b0e0b}
+.exam-pack h3{margin-top:1.25rem}
+.exam-pack>h3:first-of-type{margin-top:.2rem}
+table.picker,table.cheatsheet{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem}
+table.picker th,table.cheatsheet th,table.picker td,table.cheatsheet td{border:1px solid var(--border);padding:.5rem .7rem;text-align:left;vertical-align:top}
+table.picker th,table.cheatsheet th{background:var(--surface)}
+.exam-pack details{border:1px solid var(--border);border-radius:.5rem;margin:.6rem 0;padding:.6rem .9rem;background:var(--surface)}
+.exam-pack summary{cursor:pointer;font-weight:600}
+.exam-pack summary::-webkit-details-marker{display:none}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Top-300 LeetCode Mastery Path: DSA Track (Research-Engineer Curriculum)</title>
@@ -450,7 +461,7 @@ html.xp-js .xp-reveal.xp-in {
   line-height: 1.7;
 }
 .site-header p,
-.s30-hero-lede,
+.ai-lab-hero-lede,
 .hero-stats,
 .hero-stat,
 footer p,
@@ -516,7 +527,7 @@ html.xp-js figure.xp-px img {
 </aside>
 <div class="ds-scrim" id="dsScrim"></div>
 <main class="ds-content" id="dsContent">
-<header class="site-header"><p class="mast-line"><span>Research-Engineer Curriculum</span> <span class="mast-line-right">No. 28 of 39 &middot; Sept 2026 edition</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a> <nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"> <span class="site-prevnext-kicker">Previous volume</span> <a class="site-prevnext-link" href="track-10-software-engineer.html" aria-label="Previous volume: SWE / Backend Systems"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">SWE / Backend Systems</span></a> </div><div class="site-prevnext-group site-prevnext-next"> <span class="site-prevnext-kicker">Next volume</span> <a class="site-prevnext-link" href="crash-base.html" aria-label="Next volume: Crash Pack: Base Curriculum"><span class="site-prevnext-title">Crash Pack: Base Curriculum</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a> </div></nav></div><div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="index.html">Home</a> <span class="bc-sep" aria-hidden="true">/</span> <span>DSA track</span> <span class="bc-sep" aria-hidden="true">/</span> <span class="bc-current" aria-current="page">DSA Track: Top-300</span> </nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> <span>Browse all volumes</span> </button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span> <button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul><div><h4>S30 AI Lab</h4><ul><li><a href="16-s30-atlas.html"><span class="site-nav-num">40</span><span class="site-nav-title">S30 Atlas: 15-Week Lab Map</span></a></li><li><a href="17-s30-python-data.html"><span class="site-nav-num">41</span><span class="site-nav-title">Python and Data Tools</span></a></li><li><a href="18-s30-math-for-ml.html"><span class="site-nav-num">42</span><span class="site-nav-title">Math for ML (S30)</span></a></li><li><a href="19-s30-classical-ml.html"><span class="site-nav-num">43</span><span class="site-nav-title">Classical ML</span></a></li><li><a href="20-s30-evaluation-debugging.html"><span class="site-nav-num">44</span><span class="site-nav-title">Evaluation and Debugging</span></a></li><li><a href="21-s30-deep-learning.html"><span class="site-nav-num">45</span><span class="site-nav-title">Deep Learning (S30)</span></a></li><li><a href="22-s30-cv-nlp-basics.html"><span class="site-nav-num">46</span><span class="site-nav-title">CV and NLP Basics</span></a></li><li><a href="23-s30-transformers.html"><span class="site-nav-num">47</span><span class="site-nav-title">Transformers</span></a></li><li><a href="24-s30-rag-retrieval.html"><span class="site-nav-num">48</span><span class="site-nav-title">RAG and Retrieval</span></a></li><li><a href="25-s30-mlops-systems.html"><span class="site-nav-num">49</span><span class="site-nav-title">MLOps and Systems</span></a></li><li><a href="26-s30-system-design.html"><span class="site-nav-num">50</span><span class="site-nav-title">System Design (S30)</span></a></li><li><a href="27-s30-llm-agentic.html"><span class="site-nav-num">51</span><span class="site-nav-title">LLM and Agentic AI</span></a></li><li><a href="28-s30-interview-clearance.html"><span class="site-nav-num">52</span><span class="site-nav-title">Interview Clearance</span></a></li></ul></div></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html" class="site-nav-current"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div></header>
+<header class="site-header"><p class="mast-line"><span>Research-Engineer Curriculum</span> <span class="mast-line-right">No. 28 of 39 &middot; Sept 2026 edition</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a> <nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"> <span class="site-prevnext-kicker">Previous volume</span> <a class="site-prevnext-link" href="track-10-software-engineer.html" aria-label="Previous volume: SWE / Backend Systems"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">SWE / Backend Systems</span></a> </div><div class="site-prevnext-group site-prevnext-next"> <span class="site-prevnext-kicker">Next volume</span> <a class="site-prevnext-link" href="crash-base.html" aria-label="Next volume: Crash Pack: Base Curriculum"><span class="site-prevnext-title">Crash Pack: Base Curriculum</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a> </div></nav></div><div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"> <a href="index.html">Home</a> <span class="bc-sep" aria-hidden="true">/</span> <span>DSA track</span> <span class="bc-sep" aria-hidden="true">/</span> <span class="bc-current" aria-current="page">DSA Track: Top-300</span> </nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> <span>Browse all volumes</span> </button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span> <button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul><div><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html"><span class="site-nav-num">40</span><span class="site-nav-title">AI Lab Atlas: 15-Week Lab Map</span></a></li><li><a href="17-ai-lab-python-data.html"><span class="site-nav-num">41</span><span class="site-nav-title">Python and Data Tools</span></a></li><li><a href="18-ai-lab-math-for-ml.html"><span class="site-nav-num">42</span><span class="site-nav-title">Math for ML (AI Lab)</span></a></li><li><a href="19-ai-lab-classical-ml.html"><span class="site-nav-num">43</span><span class="site-nav-title">Classical ML</span></a></li><li><a href="20-ai-lab-evaluation-debugging.html"><span class="site-nav-num">44</span><span class="site-nav-title">Evaluation and Debugging</span></a></li><li><a href="21-ai-lab-deep-learning.html"><span class="site-nav-num">45</span><span class="site-nav-title">Deep Learning (AI Lab)</span></a></li><li><a href="22-ai-lab-cv-nlp-basics.html"><span class="site-nav-num">46</span><span class="site-nav-title">CV and NLP Basics</span></a></li><li><a href="23-ai-lab-transformers.html"><span class="site-nav-num">47</span><span class="site-nav-title">Transformers</span></a></li><li><a href="24-ai-lab-rag-retrieval.html"><span class="site-nav-num">48</span><span class="site-nav-title">RAG and Retrieval</span></a></li><li><a href="25-ai-lab-mlops-systems.html"><span class="site-nav-num">49</span><span class="site-nav-title">MLOps and Systems</span></a></li><li><a href="26-ai-lab-system-design.html"><span class="site-nav-num">50</span><span class="site-nav-title">System Design (AI Lab)</span></a></li><li><a href="27-ai-lab-llm-agentic.html"><span class="site-nav-num">51</span><span class="site-nav-title">LLM and Agentic AI</span></a></li><li><a href="28-ai-lab-interview-clearance.html"><span class="site-nav-num">52</span><span class="site-nav-title">Interview Clearance</span></a></li></ul></div></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html" class="site-nav-current"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div></header>
 <div class="ds-intro">
 <p class="kicker">Research-Engineer Curriculum · Parallel DSA Track</p>
 <h1>Top-300 LeetCode Mastery Path</h1>
@@ -552,7 +563,7 @@ html.xp-js figure.xp-px img {
 </ol>
 </div>
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>Before each chapter, say these things out loud. (1) What is the one-sentence recognition signal for this pattern? (2) What is the template? Write it from memory. (3) What is the classic trap? If you cannot answer all three, you are not done with the chapter.</p>
 </div>
 <figure class="diagram" id="fig-big-o-chart">
@@ -567,6 +578,77 @@ html.xp-js figure.xp-px img {
 
 
 <p><strong>Next:</strong> These are the foundations. They are recursion, the call stack, and in-place work. We teach them one time. Every pattern assumes them.</p>
+<h2 id="exam-master-reference">Exam-clearing master reference</h2>
+<p>Read this section first. It holds the whole track on two tables. The chapters teach each pattern. This section teaches which pattern to pick, and it gives you the one-glance sheet you review the night before the interview.</p>
+<h3>The pattern picker: if the prompt says this, reach for that</h3>
+<p>Pattern recognition is the first 30 seconds of every interview problem. Match the signal to the pattern. Then open the chapter.</p>
+<table class="picker">
+<thead><tr><th>If the prompt says</th><th>Reach for</th><th>Why it fits</th></tr></thead>
+<tbody>
+<tr><td>pair, complement, duplicate, frequency, in unsorted data</td><td>Arrays and Hashing</td><td>lookup replaces the nested scan</td></tr>
+<tr><td>sorted array, pair or triplet, in place</td><td>Two Pointers</td><td>order tells you which side to move</td></tr>
+<tr><td>contiguous subarray or substring, longest or shortest, with a condition</td><td>Sliding Window</td><td>the window keeps one valid block</td></tr>
+<tr><td>next greater or smaller, nested brackets, undo history</td><td>Stacks</td><td>LIFO matches nesting and recency</td></tr>
+<tr><td>sorted data and a threshold, or minimize the maximum feasible value</td><td>Binary Search</td><td>halving needs a monotone decision</td></tr>
+<tr><td>list surgery in place, cycle, middle of a list</td><td>Linked Lists</td><td>two speeds find structure without an index</td></tr>
+<tr><td>hierarchy, root-to-leaf paths, validate a shape</td><td>Trees</td><td>recursion mirrors the structure</td></tr>
+<tr><td>many words, prefix queries, autocomplete</td><td>Tries</td><td>shared prefixes share nodes</td></tr>
+<tr><td>k-th largest, top k in a stream, merge sorted streams</td><td>Heaps</td><td>the top of the heap is always the extreme</td></tr>
+<tr><td>overlapping ranges, merge, rooms, calendars</td><td>Intervals</td><td>sort by start turns overlap into a sweep</td></tr>
+<tr><td>all subsets, all permutations, all combinations</td><td>Backtracking</td><td>the decision tree is the output</td></tr>
+<tr><td>grid, islands, dependencies, shortest path</td><td>Graphs</td><td>vertices and edges model the connections</td></tr>
+<tr><td>min, max, or count of ways, with overlapping subproblems</td><td>Dynamic Programming</td><td>memory turns recomputation into lookup</td></tr>
+<tr><td>a local choice that never needs revision</td><td>Greedy</td><td>the exchange argument proves one choice safe</td></tr>
+<tr><td>bits, powers of two, parity, in-place number tricks</td><td>Bit Manipulation</td><td>one operation acts on all bits at once</td></tr>
+<tr><td>build a structure with operation guarantees</td><td>Design</td><td>combine two structures for two guarantees</td></tr>
+</tbody>
+</table>
+<h3>One-glance cheat sheet</h3>
+<table class="cheatsheet">
+<thead><tr><th>Pattern</th><th>Core template</th><th>Time</th><th>Space</th><th>Classic trap</th></tr></thead>
+<tbody>
+<tr><td>Arrays and Hashing</td><td>check the map, then insert</td><td>O(n)</td><td>O(n)</td><td>using the same element twice</td></tr>
+<tr><td>Two Pointers</td><td>ends move inward by a rule</td><td>O(n)</td><td>O(1)</td><td>skipping duplicates wrong in 3Sum</td></tr>
+<tr><td>Sliding Window</td><td>grow right, shrink left while invalid</td><td>O(n)</td><td>O(k)</td><td>shrinking past the answer</td></tr>
+<tr><td>Stacks</td><td>push, then pop while the top breaks the invariant</td><td>O(n)</td><td>O(n)</td><td>wrong monotonic direction</td></tr>
+<tr><td>Binary Search</td><td>keep the invariant, halve the range</td><td>O(log n)</td><td>O(1)</td><td>off-by-one on the boundary</td></tr>
+<tr><td>Linked Lists</td><td>save next, rewire, advance</td><td>O(n)</td><td>O(1)</td><td>losing the next pointer</td></tr>
+<tr><td>Trees</td><td>recurse: solve children, combine at parent</td><td>O(n)</td><td>O(h)</td><td>confusing height with depth</td></tr>
+<tr><td>Tries</td><td>walk one node per character</td><td>O(L)</td><td>O(total chars)</td><td>forgetting the end-of-word flag</td></tr>
+<tr><td>Heaps</td><td>push, pop the extreme, rebalance</td><td>O(n log k)</td><td>O(k)</td><td>max-heap when you need k smallest</td></tr>
+<tr><td>Intervals</td><td>sort by start, sweep and merge</td><td>O(n log n)</td><td>O(n)</td><td>sorting by end when merging</td></tr>
+<tr><td>Backtracking</td><td>choose, explore, unchoose</td><td>O(2^n) / O(n!)</td><td>O(n)</td><td>forgetting to unchoose</td></tr>
+<tr><td>Graphs</td><td>BFS queue / DFS stack / union-find</td><td>O(V + E)</td><td>O(V)</td><td>marking visited on pop, not push</td></tr>
+<tr><td>Dynamic Programming</td><td>define the cell, write the transition, fill in order</td><td>states &times; transition</td><td>states</td><td>wrong fill order</td></tr>
+<tr><td>Greedy</td><td>sort by the key, take if it fits</td><td>O(n log n)</td><td>O(1)</td><td>greedy without an exchange proof</td></tr>
+<tr><td>Bit Manipulation</td><td>mask, shift, XOR away pairs</td><td>O(1) / O(log n)</td><td>O(1)</td><td>arithmetic vs logical shift</td></tr>
+<tr><td>Design</td><td>pair structures: map for find, list or heap for order</td><td>O(1) / O(log n)</td><td>O(n)</td><td>one structure for two guarantees</td></tr>
+</tbody>
+</table>
+<h3>Memory aids: mnemonics</h3>
+<ul>
+<li><strong>Two Sum:</strong> check before you insert. The map holds only the past.</li>
+<li><strong>Sliding window:</strong> grow right, shrink left. The left edge never moves back.</li>
+<li><strong>Binary search:</strong> lo is never the answer yet. hi is never wrong yet. Keep that true.</li>
+<li><strong>Backtracking:</strong> choose, explore, unchoose. Three words, in that order.</li>
+<li><strong>DP:</strong> define the cell in one English sentence before you write any code.</li>
+<li><strong>Union-Find:</strong> find the root, attach the shorter tree. Flat trees stay fast.</li>
+<li><strong>Monotonic stack:</strong> the popper answers the popped. The day that ends the wait is the answer.</li>
+<li><strong>BFS:</strong> the queue is a wavefront. First visit is the shortest path.</li>
+<li><strong>Top k:</strong> keep a heap of size k. The heap holds the answer set, nothing more.</li>
+<li><strong>Intervals:</strong> sort by start to merge, sort by end to schedule.</li>
+</ul>
+<h3>Memory aids: never-confuse pairs</h3>
+<ul>
+<li><strong>Sliding window vs two pointers.</strong> A window is one contiguous block with a condition. Two pointers are two positions with a rule. A window never has a gap.</li>
+<li><strong>BFS vs DFS.</strong> BFS finds the shortest path in an unweighted graph. DFS counts connected parts and explores one road to its end. Pick by the question asked.</li>
+<li><strong>DP vs greedy.</strong> Use DP when a local choice can be wrong and you need memory of subproblems. Use greedy only when an exchange argument proves the local choice safe.</li>
+<li><strong>Backtracking vs DP.</strong> Backtracking enumerates every answer. DP counts or optimizes without enumerating. If the prompt asks for all, enumerate. If it asks for how many or the best, use DP.</li>
+<li><strong>Binary search on index vs on answer.</strong> On index: the array is sorted. On answer: the predicate feasible(x) is monotone. Different invariant, same halving.</li>
+<li><strong>Heap vs full sort.</strong> Use a heap when you need only the top k from a stream. Sort when you need the full order.</li>
+<li><strong>Trie vs hash set.</strong> Use a trie for prefix queries. Use a hash set for exact membership. Prefix sharing is the trie's only advantage.</li>
+</ul>
+<div class="takeaway"><h4>How to use this section in the interview</h4><p>When the interviewer finishes the prompt, run the picker silently. Name the pattern out loud. Name the template move out loud. Then write the invariant as a comment before the code. Interviewers score the 30 seconds of recognition as highly as the code.</p></div>
 <h2 id="foundations">Foundations: recursion, the call stack, and in-place work</h2>
 <p>Three ideas appear in almost every chapter of this track. We teach them here one time. We do not assume them. If you can explain all three ideas, skim this section. Then move on.</p>
 <figure><img src="img/dsa-track-300-recursion-stack.svg" alt="The call stack while factorial(4) runs. Each call waits for the call below it. The base case answers first, then results flow back up."><figcaption>The call stack while factorial(4) runs. Each call waits for the call below it, and results flow back up.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -618,7 +700,7 @@ html.xp-js figure.xp-px img {
 </details>
 
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>"I need to find this element's partner quickly. How do you avoid the nested loop?" Then: "Why is a hash map lookup O(1) on average? When does that claim break?" Then the follow-up: "What if you must do it with O(1) extra space?"</p>
 </div>
 <figure>
@@ -737,6 +819,26 @@ answer = 4</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 2 adds motion. Two pointers walk the array with a rule.</p>
+<div class="exam-pack" id="exam-1">
+<h3>Exam clearing: under the hood</h3>
+<p>A hash map is an array with a smart index. The hash function turns a key into a number. The map takes that number modulo the bucket count and stores the pair in that bucket. Two keys can land in one bucket. The chain in the bucket holds both. Lookup hashes the key, jumps to the bucket, and walks a short chain.</p>
+<p>The O(1) claim rests on one assumption: the hash spreads keys evenly. Then the average chain length equals the load factor, the number of pairs divided by the number of buckets. The map doubles the bucket count when the load factor passes a threshold. That doubling keeps chains short forever.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> A bad hash puts every key in one bucket, and lookup degrades to O(n). An attacker can craft such keys on purpose. This is hash flooding. Real systems use randomized hashing to stop it. A second break: the map needs hashable keys. Lists cannot be keys. A third break: iteration order is not sorted order. Never assume it.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Average lookup: with n pairs in m buckets and a uniform hash, the expected chain length is n / m. The map keeps n / m below a constant by doubling m when needed. So the expected work is O(1).</p>
+<p>Amortized insert: doubling the table costs O(n) once, then the next n inserts each cost O(1). Spread the doubling cost over the inserts that forced it. Each insert pays for itself and a share of one future doubling. Total: O(1) amortized per insert.</p>
+<p>Prefix sums: build the prefix array in one pass, O(n) time and O(n) space. Then any range sum is prefix[r] - prefix[l], which is O(1). Problem #560 uses this: the map counts prefix values, so each position asks "have I seen prefix - k?" in one lookup.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: the array is sorted. Do you still use a hash map? (#1, #167)</summary><p>No. Sort the array once, then use two pointers from both ends. If the sum is too small, move the left pointer right. If too big, move the right pointer left. Sorted order tells you which side to move, so the map is unnecessary. Time stays O(n), and extra space drops to O(1). The lesson: hashing buys speed when there is no order. When order exists, use it.</p></details>
+<details><summary>Curveball 2: O(1) extra space, values are 1 to n. (#442, #41)</summary><p>Use the array itself as the map. For value v, look at index v - 1 and mark it visited by negating it. A second pass finds the unmarked indices. Those are the missing or duplicated values. This is the index-as-hash trick. It works because the value range matches the index range. It breaks the moment values leave that range.</p></details>
+<details><summary>Curveball 3: the stream never ends and you must find duplicates. (#217)</summary><p>An exact answer needs memory for every distinct value seen, which is unbounded for an endless stream. Say this out loud. It is the honest answer. Then offer the trade: a Bloom filter answers "seen before" with no false negatives and a tunable false-positive rate, in fixed memory. Interviewers ask this to test whether you state the memory limit before reaching for tricks.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>set vs dict.</strong> A set answers "have I seen this?" A dict answers "what goes with this?" Problem #217 needs a set. Problem #1 needs a dict.</li>
+<li><strong>Counter vs manual dict.</strong> Counter builds frequencies in one line. For "check before insert" logic like #1, a manual dict is clearer because insertion order matters to the logic.</li>
+</ul>
+</div>
+
 <h2 id="pattern-2">2. Two Pointers</h2>
 <p>Pattern 1 gave you storage and lookup. The array stays sorted. A nested loop removes this information. This is an open problem. Two pointers add motion. Two indices walk with a rule for who moves.</p>
 <figure><img src="img/dsa-track-300-two-pointers.svg" alt="Two pointers search a sorted array for the pair that sums to 9. The sum at each step tells you which pointer moves."><figcaption>Two pointers search a sorted array for the pair that sums to 9. The sum at each step tells you which pointer moves.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -751,7 +853,7 @@ answer = 4</pre>
 </details>
 
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>"The array stays sorted. How do you find the pair? Do not check every combination." Then: "Prove you never skip the answer when you move a pointer."</p><p>Then the follow-up: "What changes if duplicates are allowed? You must return unique triplets."</p>
 </div>
 <figure>
@@ -881,10 +983,29 @@ final water = 6</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 3 keeps the two pointers adjacent. It grows or shrinks the window. This is for subarrays. It is not for pairs.</p>
+<div class="exam-pack" id="exam-2">
+<h3>Exam clearing: under the hood</h3>
+<p>Two pointers work because sorted order gives direction. In #11, Container With Most Water, the area is width times the shorter side. Move the pointer at the shorter side inward. Here is why that move is safe: the current pair's area is limited by the shorter side. Any pair that keeps the shorter side and moves the other side inward is narrower, so its area cannot beat the current one. The only way to beat it is to find a taller short side, which means moving the short pointer. One move is forced. That is the whole proof.</p>
+<p>The same logic drives #167: if the sum is too small, only moving the left pointer up can fix it. Moving the right pointer down makes the sum smaller. Sorted order turns a choice into a deduction.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> Two pointers need order. On unsorted data they guess blindly. On a rotated array like in #33 they break too, because "too small, move left" assumes the sorted direction. Either sort first (O(n log n)) or switch patterns.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Each pointer moves at most n steps and never moves back. Total moves are at most 2n. Time is O(n). Space is O(1) besides the input.</p>
+<p>#15, 3Sum: sort once, O(n log n). Fix each index i as the first element, then run two pointers on the rest in O(n). The outer loop runs n times. Total: n &times; O(n) = O(n&sup2;), plus the sort. The sort term is smaller, so the answer is O(n&sup2;).</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: 3Sum with duplicates in the input. (#15)</summary><p>Sort first. After you move a pointer, skip over equal values before the next check. Also skip equal values of the fixed index i. Each distinct triplet is then found once, because the skip logic makes the scan visit each distinct value once per position. The common bug: skipping before recording the first triplet. Skip after you move, not before you check.</p></details>
+<details><summary>Curveball 2: the array is rotated. (#33, #153)</summary><p>Two pointers assume the whole array is sorted. A rotation breaks that. Switch to binary search: one half of any rotated array is always sorted. Check which half is sorted, then decide whether the target can be in it. The pointer rule "move the small side" has no meaning when sortedness is local, not global.</p></details>
+<details><summary>Curveball 3: count the triplets instead of listing them. (#611)</summary><p>When the inner two-pointer scan finds a valid pair at (l, r), every index between l and r also forms a valid triplet with the fixed i and r, because the array is sorted. Add (r - l) to the count and move r down. This turns an O(n&sup2;) enumeration into an O(n&sup2;) count with a smaller constant, and it is the standard follow-up to "now do not list them."</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Opposite ends vs same direction.</strong> Opposite ends converge on a sum or area in sorted data (#167, #11). Same-direction fast/slow pointers find cycles and middles in linked lists. Different geometry, different chapter.</li>
+<li><strong>3Sum vs 3Sum Closest (#16).</strong> Closest keeps the best answer seen so far and never skips early. The duplicate skipping of #15 still applies, but the loop cannot stop at the first hit.</li>
+</ul>
+</div>
+
 <h2 id="pattern-3">3. Sliding Window</h2>
 <p>Two pointers move with a rule. A sliding window is a special case. It stays adjacent. It is one window. It grows and shrinks over contiguous subarrays.</p>
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>Find the longest or shortest contiguous subarray. It must satisfy a condition. Why is the two-pointer window O(n)? Why is it not O(n squared)? When does the left pointer not move monotonically? The window breaks then.</p>
 </div>
 <figure>
@@ -1020,6 +1141,27 @@ answer = [3,3,5,5,6,7]</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 4 looks backward. It does not look forward. Stacks remember what you have seen. They remember it in order.</p>
+<div class="exam-pack" id="exam-3">
+<figure><img src="img/dsa-track-300-sliding-window.svg" alt="The left edge never moves back, so each index enters and leaves the window once."><figcaption>Figure 44. Research Engineer Curriculum, DSA Track: The left edge never moves back, so each index enters and leaves the window once. Source: original.</figcaption></figure>
+
+<h3>Exam clearing: under the hood</h3>
+<p>A sliding window keeps one contiguous block that satisfies a condition. The right edge only moves forward. The left edge only moves forward. The invariant: after each step, the window is the longest (or shortest) valid block ending at the current right edge. When the window becomes invalid, move the left edge until it is valid again. Never move the left edge back.</p>
+<p>This works only when extending the right edge cannot fix an invalid window by itself. Adding elements must be monotone with respect to the condition: for "at most k distinct" (#3), adding a character never reduces the distinct count. So if the window is invalid, the right edge alone cannot save it. The left edge must move. That monotonicity is the hidden contract of every sliding window.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> Problem #560, Subarray Sum Equals K, allows negative numbers. Adding an element can shrink the sum, so an invalid window might become valid by growing right. The monotone contract fails. The fix is prefix sums with a hash map, not a window. State this break explicitly in interviews. It is a favorite follow-up.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>The right edge moves n steps. The left edge moves at most n steps, because it never moves back. Total pointer moves: at most 2n. Each step does O(1) map work. Time is O(n). The map holds at most the alphabet or k distinct items: O(k) space.</p>
+<p>#239, Sliding Window Maximum, keeps a deque of candidates in decreasing order. Each element enters once and leaves once. The front is always the window maximum. Time is O(n), not O(nk), because no element is compared twice.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: count subarrays with exactly k distinct characters. (#930 pattern)</summary><p>A window cannot directly enforce "exactly k" because shrinking past k loses the count. Use the at-most trick: exactly(k) = atMost(k) - atMost(k-1). Each atMost call is a standard window that counts, for each right edge, how many valid left edges exist. The subtraction cancels the overlap. This is the canonical "exactly" follow-up.</p></details>
+<details><summary>Curveball 2: the window needs the maximum, not a count. (#239)</summary><p>Counts do not help. You need order statistics over a moving block. Keep a monotonic decreasing deque of indices. Drop indices that fall out of the window from the front. Drop smaller values from the back before pushing, because a new larger value makes them useless forever. The front is the maximum. Each element is pushed and popped once: O(n).</p></details>
+<details><summary>Curveball 3: minimum window containing all characters of t. (#76)</summary><p>This is the shrink-to-minimal template. Expand right until the window contains t. Then shrink left as far as possible while it still contains t, recording the smallest window. Then expand right again. The "have/need" counters make the validity check O(1). The trap: shrinking one step too far and losing validity without recording. Record before the shrink breaks the condition.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Fixed window vs variable window.</strong> Fixed (#643) compares equal-size blocks. The window slides by one each step. Variable (#3, #209) grows and shrinks. The left edge moves only to restore validity.</li>
+<li><strong>Longest valid vs shortest valid.</strong> For longest, expand and record before shrinking (#3). For shortest, shrink aggressively and record the minimal valid window (#209, #76).</li>
+</ul>
+</div>
+
 <h2 id="pattern-4">4. Stacks and Monotonic Stacks</h2>
 <p>Windows scan forward. Some problems need you to look backward. You look at what you have seen. You look at it in order. This is a stack.</p>
 <figure><img src="img/dsa-track-300-monotonic-stack.svg" alt="A monotonic stack keeps bar heights increasing from bottom to top. Each new bar pops taller bars before it."><figcaption>A monotonic stack keeps bar heights increasing from bottom to top. Each new bar pops taller bars before it.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -1174,6 +1316,25 @@ stack empty -&gt; True</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 5 uses order. It discards half the search space per step. This is binary search.</p>
+<div class="exam-pack" id="exam-4">
+<h3>Exam clearing: under the hood</h3>
+<p>A stack is memory of the recent past: the last thing pushed is the first thing popped. A monotonic stack adds an invariant: the stack stays sorted (increasing or decreasing) from bottom to top. Before pushing x, pop every element that breaks the order. Each popped element has found its answer: the element that popped it is its next greater (or smaller) element. That is the whole trick of #739: the day that ends the wait pops the waiting days, and each popped day learns its answer.</p>
+<p>The stack never holds a useless element. If a new arrival is greater than the top, the top can never be anyone's "next greater" again, because the new arrival is closer and greater. So it leaves. Every element is pushed once and popped once.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> The direction must match the question. "Next greater" needs a decreasing stack. "Next smaller" needs an increasing stack. Pick the wrong direction and the popper answers the wrong question. Also, equal values need a policy: strict vs non-strict comparison changes which equal element survives. Decide from the problem's tie rule.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Each of the n elements is pushed at most once and popped at most once. Total stack operations: at most 2n. Time is O(n) amortized. Space is O(n) in the worst case (a strictly decreasing input keeps everything).</p>
+<p>#84, Largest Rectangle in Histogram, adds sentinels: a zero bar at each end. When a bar is popped, its height is the limiting height, and the width is the distance between the current index and the new top. The sentinels guarantee every bar gets popped. Without them, leftover bars need a cleanup pass.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: minimum stack with duplicate minimums. (#155)</summary><p>Keep a second stack of minimums. Push x onto it when x &lt;= current minimum, not just &lt;. The equality matters: with duplicates, popping one copy must leave the other copy's minimum intact. On pop, remove from the min stack only if the popped value equals its top. The &lt;= is the entire difference between correct and subtly wrong.</p></details>
+<details><summary>Curveball 2: the input is circular. (Next greater, wrap-around)</summary><p>Iterate the array twice (2n steps) with indices modulo n. The stack logic is unchanged. The second pass lets late elements answer early ones. Elements still pop at most once, so time stays O(n). Say the modulo out loud. Interviewers check that you handle the wrap without duplicating the array.</p></details>
+<details><summary>Curveball 3: evaluate with variables, not just numbers. (#150)</summary><p>The RPN template is unchanged: push operands, apply operators to the top two. The follow-up tests whether the stack discipline survives a symbol table. Look up the variable, push its value. The trap: popping in the wrong order for subtraction and division. The first pop is the right operand.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Stack vs queue for implementation (#225, #232).</strong> A stack from queues: push to the back, then rotate so the new element is front. A queue from stacks: push to inbox, pour inbox into outbox only when outbox is empty. The pour is amortized O(1).</li>
+<li><strong>Monotonic increasing vs decreasing.</strong> Decreasing stack answers "next greater." Increasing stack answers "next smaller." Name the question first, then pick the direction.</li>
+</ul>
+</div>
+
 <h2 id="pattern-5">5. Binary Search (including Binary Search on Answer)</h2>
 <p>Stacks use recency. Binary search uses order. Each comparison discards half of the remaining search space.</p>
 <figure><img src="img/dsa-track-300-binary-search-halving.svg" alt="Binary search for 13 in 15 sorted numbers. Each step throws away the half that cannot hold the target."><figcaption>Binary search for 13 in 15 sorted numbers. Each step throws away the half that cannot hold the target.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -1188,7 +1349,7 @@ stack empty -&gt; True</pre>
 </details>
 
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>Find the minimum eating speed. She finishes in h hours. The array is not sorted. Where is the binary search? Write the loop. Make sure it cannot loop forever.</p><p>What is your invariant?</p>
 </div>
 <figure>
@@ -1314,6 +1475,25 @@ answer = 2.0</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 6 trades away random access. It uses linked lists, cheap splicing, and pointers meeting pointers.</p>
+<div class="exam-pack" id="exam-5">
+<h3>Exam clearing: under the hood</h3>
+<p>Binary search keeps one invariant: the answer is inside [lo, hi]. Each step picks mid and discards the half that cannot hold the answer. The discard rule is the whole algorithm. For #704 the rule is "target &lt; nums[mid] discards the right half." For #875, Koko Eating Bananas, the rule is about a predicate: feasible(speed) means "she finishes in h hours." If feasible(mid) is true, any faster speed also works, so the answer is at mid or left. If false, the answer is right of mid. The predicate is monotone: false, false, ..., true, true. Binary search finds the first true.</p>
+<p>"Binary search on answer" is this idea generalized: the array is not sorted, but the predicate over the answer range is monotone. The search space is the range of possible answers, not an array.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> The predicate must be monotone. If feasible(x) can flip true-false-true, halving discards the answer. Also, integer overflow in (lo + hi) // 2 matters in languages with fixed-width ints. Write lo + (hi - lo) // 2. In Python the overflow cannot happen, but interviewers still ask.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Each step halves the range: T(n) = T(n/2) + O(1). After k steps the range is n / 2^k. It reaches 1 when 2^k = n, so k = log2(n). Time is O(log n). Space is O(1).</p>
+<p>#875: the answer range is 1 to max(piles). That range has size M. Binary search needs O(log M) predicate calls. Each call scans the piles: O(n). Total: O(n log M). The log is over the answer range, not the input size. Say that distinction out loud.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: rotated array, find the minimum. (#153)</summary><p>One half is always sorted. Compare nums[mid] with nums[hi]. If nums[mid] &gt; nums[hi], the minimum is right of mid. Else it is at mid or left of mid. The invariant becomes "the minimum is in [lo, hi]" and the discard rule uses the sorted half. The trap: using nums[lo] for the comparison, which fails when the rotation point sits at lo.</p></details>
+<details><summary>Curveball 2: duplicates in the rotated array.</summary><p>When nums[mid] == nums[hi], neither half is provably sorted. Shrink hi by one and continue. This degrades to O(n) in the worst case (all equal). The honest answer: duplicates remove the information that halving needs. No comparison-based method beats O(n) here.</p></details>
+<details><summary>Curveball 3: the predicate is expensive, so minimize calls.</summary><p>Binary search already minimizes calls to O(log M). The follow-up is really about caching: if feasible(x) is called on overlapping subproblems, memoize. Or narrow the answer range first with exponential search: double hi until feasible(hi) is true, then binary search within. That handles an unbounded answer range.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Search on index vs on answer.</strong> On index (#704, #153): the input array is sorted or rotated. On answer (#875): you invent the sorted range and define feasible(x). The loop looks identical. The invariant sentence is different.</li>
+<li><strong>lo &lt; hi vs lo &lt;= hi.</strong> Use lo &lt; hi when the loop maintains "answer in [lo, hi)" and you return lo. Use lo &lt;= hi for classic exact search with early return. Mixing them causes infinite loops or missed answers.</li>
+</ul>
+</div>
+
 <h2 id="pattern-6">6. Linked Lists</h2>
 <p>Arrays give random access. Linked lists give the opposite trade. They have no indices. They have cheap splicing anywhere. The pointer skills from the foundations chapter meet a structure built from pointers.</p>
 <figure><img src="img/dsa-track-300-linked-list-anatomy.svg" alt="Top: one node holds a value and a next pointer. Bottom: reversing 1, 2, 3 rewires one pointer per step."><figcaption>One node holds a value and a next pointer. Reversing 1, 2, 3 rewires one pointer per step.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -1328,7 +1508,7 @@ answer = 2.0</pre>
 </details>
 
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>"Reverse this list in place. Where do you keep your place while rewiring?" Then: "Detect a cycle without extra memory."</p><p>Then: "Why does the fast pointer move two times as fast? What does the meeting point prove?"</p>
 </div>
 <figure>
@@ -1459,6 +1639,25 @@ unweave:   restore A-&gt;B-&gt;C and extract A'-&gt;B'-&gt;C'</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 7 has branches. Trees, hierarchies, and traversals are the universal tool.</p>
+<div class="exam-pack" id="exam-6">
+<h3>Exam clearing: under the hood</h3>
+<p>A linked list has no indices, so every algorithm is pointer surgery. The golden rule: save next before you rewire. In #206, Reverse Linked List, the loop holds prev and curr. Each step saves nxt = curr.next, sets curr.next = prev, then advances. If you rewire before saving, the rest of the list is lost. Three pointers, in that order, every time.</p>
+<p>Slow/fast pointers exploit relative speed. The fast pointer moves two steps per round, so it gains one node per round on the slow pointer. On a cycle of length c, the fast pointer closes any gap within c rounds. That is why #141 detection is O(n): the gap closes at speed 1, and the gap is at most the cycle length.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> Surgery order is everything. Rewiring curr.next before reading curr.next orphans the tail. In merge (#21), advancing a pointer before linking drops nodes. Draw the three-pointer state before writing the line. Also: the empty list and the single-node list are separate cases. Handle them first.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Reversal visits each node once: O(n) time, O(1) extra space. Cycle detection: the fast pointer gains one node per step on the slow pointer. If the cycle has length c and the slow pointer enters it after m steps, they meet within c more steps. Total O(n) time, O(1) space.</p>
+<p>Finding the cycle start: after they meet, reset one pointer to the head and move both at speed 1. They meet at the cycle start. Why: the meeting point is k steps into the cycle, and the head is also k steps before the start along the cycle. The distances match.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: reverse in groups of k.</summary><p>Reverse each group of k with the standard three-pointer loop, then link the groups. Count k nodes first. If fewer remain, leave them. The linking step is the new part: the previous group's tail connects to the new group's head. The trap: losing the connection between groups. Keep a group-tail pointer.</p></details>
+<details><summary>Curveball 2: merge k sorted lists. (#23)</summary><p>Pairwise merging is O(k) passes. Instead, push all heads into a min-heap: O(k) to build. Pop the smallest, push its next. Each pop/push is O(log k), and there are n total nodes: O(n log k). The heap turns k-way merge into repeated 2-way choice.</p></details>
+<details><summary>Curveball 3: deep copy with random pointers.</summary><p>Interleave: for each node, insert its copy right after it. Then copy.random = node.random.next, because the copy of any node sits right after the original. Finally, unweave the two lists. Three passes, O(1) extra space besides the copies. The interleave is the trick that avoids a map.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Dummy head vs no dummy.</strong> A dummy head removes the "first node" special case in merges and deletions. Reversal does not need one. Merge (#21) benefits from one.</li>
+<li><strong>Fast/slow for middle vs for cycle.</strong> Same two speeds, different stop rule. Middle: stop when fast hits the end. Cycle: stop when fast meets slow. State the stop rule before the loop.</li>
+</ul>
+</div>
+
 <h2 id="pattern-7">7. Trees and Traversals</h2>
 <p>Linked lists are chains. Trees are the first branching structure. Traversals are the universal tool to read trees.</p>
 <figure><img src="img/dsa-track-300-tree-traversals.svg" alt="The same tree read three ways. Preorder records the node first. Inorder records it between its children. Postorder records it last."><figcaption>The same tree read three ways. Preorder records the node first, inorder between its children, postorder last.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -1472,7 +1671,7 @@ unweave:   restore A-&gt;B-&gt;C and extract A'-&gt;B'-&gt;C'</pre>
 </details>
 
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>Solve it for the children. Combine at the parent. Which traversal is that? Then: Validate this BST. Why does checking each node against its parent not work?</p>
 </div>
 <figure>
@@ -1626,6 +1825,25 @@ answer = 42  (path 15-20-7)</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 8 specializes trees for strings. These are tries. Prefixes are paths.</p>
+<div class="exam-pack" id="exam-7">
+<h3>Exam clearing: under the hood</h3>
+<p>Tree recursion mirrors the tree: solve the children, combine at the parent. The call stack is the path from the root to the current node. Postorder is the workhorse: it returns information upward. In #124, Binary Tree Maximum Path Sum, each call returns the best downward path through that node, while a global tracks the best path that passes through the node. Two values, two roles: the return value feeds the parent, the global records the answer.</p>
+<p>BST validation (#98) needs bounds, not just local checks. Each node must lie within (low, high) inherited from its ancestors. A node can satisfy its parent and still violate a grandparent. Pass the bounds down.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> Recursion depth equals tree height. A skewed tree of 10^5 nodes overflows the call stack in most languages. The iterative fix uses an explicit stack. Also, #98 breaks if you only compare with the parent. The counterexample is a right grandchild smaller than the root but larger than its parent.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Every traversal visits each node once: O(n) time. Space is the call stack: O(h) where h is the height. Balanced: h = log n. Skewed: h = n. #102 level order uses a queue: each node enters and leaves once, O(n) time, and the queue holds at most one level: O(w) where w is the max width.</p>
+<p>#236, LCA: the recursion returns the node itself when it finds p or q, and passes up the non-null child result. If both children return non-null, the current node is the split point: the answer. Each node is visited once: O(n).</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: kth smallest in a BST, streaming queries.</summary><p>One query: inorder traversal, stop at k, O(h + k). Many queries: augment each node with its subtree size, then walk down choosing left or right by comparing k with the left size: O(h) per query. The follow-up tests whether you move from traversal to augmentation.</p></details>
+<details><summary>Curveball 2: serialize and deserialize.</summary><p>Preorder with null markers captures the full structure: serialize by writing values and # for nulls, deserialize by reading in the same order. The marker is essential. Without it, two different trees share one preorder sequence. BFS order with nulls also works.</p></details>
+<details><summary>Curveball 3: the tree is huge and recursion is banned.</summary><p>Morris traversal threads the tree: for each node, link its inorder predecessor's right pointer back to it, then restore. It achieves O(1) extra space by borrowing null pointers as breadcrumbs. Mention it as the known answer. Few interviewers ask you to write it fully.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Height vs depth.</strong> Depth counts edges from the root down. Height counts edges from the node down to its deepest leaf. #104 asks for max depth, which equals the root's height. Keep the direction straight.</li>
+<li><strong>Path through vs path from.</strong> #124 tracks paths through each node (left + node + right). A simple root-to-leaf max tracks paths from the node down. The return value and the recorded answer are different quantities.</li>
+</ul>
+</div>
+
 <h2 id="pattern-8">8. Tries</h2>
 <p>Trees branch by value. Tries are trees. Tries specialize in strings. Every prefix is a path. A million prefix queries do not stay expensive.</p>
 <figure><img src="img/dsa-track-300-trie.svg" alt="One trie holds car, card, and cat. Shared prefixes share nodes. A gold ring marks the end of a word."><figcaption>One trie holds car, card, and cat. Shared prefixes share nodes, and a gold ring marks the end of a word.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -1640,7 +1858,7 @@ answer = 42  (path 15-20-7)</pre>
 </details>
 
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>"There are a million words. There are a million prefix queries. A hash set answers 'is this a word'. A hash set does not answer 'which words start with pre'. What structure shares the work across queries?"</p>
 </div>
 <figure>
@@ -1787,6 +2005,24 @@ answer = 28</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 9 organizes by priority. It uses heaps instead of prefixes.</p>
+<div class="exam-pack" id="exam-8">
+<h3>Exam clearing: under the hood</h3>
+<p>A trie shares prefixes by sharing nodes. Inserting "cat" and "car" creates c -&gt; a, then splits into t and r. Each node holds up to 26 children and one end-of-word flag. Search walks one node per character: the cost depends on the word length, never on the number of words. That is the trie's advantage over a hash set: prefix queries cost O(L) regardless of dictionary size.</p>
+<p>In #212, Word Search II, the trie prunes the grid DFS. The search walks the trie as it walks the grid. When the trie walk hits a missing child, the whole grid branch dies immediately. Without the trie, every grid path would be checked against every word.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> The 26-child array assumes lowercase English. Unicode input needs hashmap children, which costs a lookup per step. Also, a trie of a few long words with no shared prefixes is just an expensive linked list: every node has one child. Know when the structure earns its keep.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Insert and search each touch one node per character: O(L) time where L is the word length. Space is one node per character of every inserted word, minus shared prefixes: O(total characters). For #212 with W words of average length L on an m&times;n board, the DFS explores at most 4^L paths per start cell in the worst case, but trie pruning cuts branches the moment the prefix dies.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: count words with a given prefix.</summary><p>Store a count at each node: increment on every insert that passes through. Then prefixCount walks to the prefix node and reads its count: O(L). The trade is memory for the counters and insert-time work. The follow-up tests whether you augment nodes instead of re-walking.</p></details>
+<details><summary>Curveball 2: the dictionary updates between queries.</summary><p>Add delete: walk to the word node, clear the end flag, then prune childless non-terminal nodes on the way back up. Pruning matters. Without it, deleted words leave dead branches that waste memory. Reference counting per node makes prune decisions O(1).</p></details>
+<details><summary>Curveball 3: find the shortest unique prefix of each word.</summary><p>Insert all words, counting pass-throughs per node. Then for each word, walk until a node with count 1: that prefix is unique to the word. The counts turn a quadratic pairwise comparison into two linear passes.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>End-of-word flag vs node existence.</strong> The path "cat" exists inside "cats". Without the flag, search cannot tell a prefix from a word. Every trie bug of this class is a missing flag check.</li>
+<li><strong>Trie vs sorted list with binary search.</strong> A sorted word list answers prefix queries with binary search in O(L log W). The trie answers in O(L). The trie wins when W is large and queries are many.</li>
+</ul>
+</div>
+
 <h2 id="pattern-9">9. Heaps</h2>
 <p>Tries organize by prefix. Heaps organize by priority. The minimum or maximum is always at the top. This is what streaming problems need.</p>
 <figure><img src="img/dsa-track-300-heap-array.svg" alt="A min-heap drawn as a tree and as the array that stores it. Index math replaces pointers."><figcaption>A min-heap drawn as a tree and as the array that stores it. Index math replaces pointers.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -1801,7 +2037,7 @@ answer = 28</pre>
 </details>
 
 <div class="ob-board">
-<h4>On the board:</h4>
+<h4>Design prompt:</h4>
 <p>Keep the k largest elements. A stream arrives. Sorting each time takes O(n log n) per element. What is cheaper? Then: Find the median of a stream. Use one heap or two heaps?</p>
 </div>
 <figure>
@@ -1930,10 +2166,29 @@ answer = [1,1,2,3,4,4,5,6]</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 10 orders by position on a line. This includes intervals, merging, and sweeping.</p>
+<div class="exam-pack" id="exam-9">
+<h3>Exam clearing: under the hood</h3>
+<p>A heap is a complete binary tree stored in an array. The root is the extreme: smallest in a min-heap. Children of index i sit at 2i+1 and 2i+2. The parent sits at (i-1)//2. Push adds at the end and sifts up. Pop takes the root, moves the last element to the root, and sifts down. Each sift walks one root-to-leaf path: O(log n).</p>
+<p>Heapify builds a heap in O(n), not O(n log n). Most nodes are near the leaves, where sifting is cheap. Level by level: n/2 nodes sift at most 1 step, n/4 nodes at most 2 steps, and so on. The sum n/2 + 2(n/4) + 3(n/8) + ... converges to 2n. The expensive long sifts happen only near the root, where there are few nodes.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> A heap gives you the extreme only. Asking for the k-th arbitrary element or a sorted list costs extra. Python's heapq is a min-heap. Simulate a max-heap by pushing negated values. Forgetting the negation is the most common heap bug in Python interviews.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Push and pop: O(log n), one root-to-leaf path. Peek: O(1). Heapify: O(n) by the level sum above. Top-k (#215): push each of n elements into a heap capped at size k. Each operation is O(log k). Total O(n log k). When k is near n, this approaches sorting. Quickselect averages O(n) and is the right follow-up answer.</p>
+<p>#621, Task Scheduler: count frequencies, then simulate. The heap always runs the most frequent remaining task. Idle slots appear when the heap empties before the cooldown passes. The formula (maxFreq - 1) * (n + 1) + countMax gives the answer without simulation.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: median of a stream. (#295)</summary><p>Keep two heaps: a max-heap for the lower half, a min-heap for the upper half. Every new number goes to one heap, then rebalance so the sizes differ by at most one. The median is the top of the larger heap, or the average of both tops. Insert is O(log n), query is O(1). The invariant "all of lower &lt;= all of upper" is what you maintain and what the interviewer checks.</p></details>
+<details><summary>Curveball 2: k is half of n. (#215)</summary><p>A heap of size n/2 costs O(n log n), no better than sorting. Switch to quickselect: partition around a pivot like quicksort, then recurse only into the side containing k. Average O(n), worst O(n&sup2;) without randomization. Name both and state the trade.</p></details>
+<details><summary>Curveball 3: task priorities change over time. (#621)</summary><p>A heap cannot update a key in place. The standard workaround is lazy deletion: push the new priority and mark the old entry stale. Skip stale entries on pop. Each update costs a push. State the memory growth honestly: stale entries accumulate until popped.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>K largest vs k smallest.</strong> For k largest, keep a min-heap of size k: the top is the smallest of the kept, and anything smaller gets dropped. For k smallest, keep a max-heap of size k. The heap top is always the eviction candidate.</li>
+<li><strong>Heapify vs repeated push.</strong> Building from an existing array: heapify in O(n). Pushing n items one by one: O(n log n). Pick by whether the data already exists.</li>
+</ul>
+</div>
+
 <h2 id="pattern-10">10. Intervals</h2>
 <p>Heaps order by value. Intervals order by position on a line. This includes meetings, ranges, and overlaps. Sorting by start makes the rest simple.</p>
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>Merge all overlapping meetings. What is the first step? Why does it make the rest simple? What is the minimum number of rooms needed? Why does sorting by start work? Why does a heap of end times work?</p>
 </div>
 <figure>
@@ -2069,6 +2324,26 @@ rooms = 2</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 11 handles problems. No shortcut covers these problems. This pattern uses backtracking. This pattern uses systematic search. This pattern uses undo.</p>
+<div class="exam-pack" id="exam-10">
+<figure><img src="img/dsa-track-300-intervals.svg" alt="After sorting by start, one comparison per interval decides every merge."><figcaption>Figure 45. Research Engineer Curriculum, DSA Track: After sorting by start, one comparison per interval decides every merge. Source: original.</figcaption></figure>
+
+<h3>Exam clearing: under the hood</h3>
+<p>Intervals are two-dimensional: each has a start and an end. Sorting by start projects them onto one axis. After the sort, overlap becomes a local question: interval i overlaps the running merge exactly when intervals[i].start &lt;= current.end. No later interval can overlap an earlier closed merge, because starts only increase. The sort converts a pairwise problem into a single sweep.</p>
+<p>Meeting Rooms II (#253) asks a different question: the maximum overlap, not the merged union. Sweep events instead: +1 at each start, -1 at each end, process ends before starts at ties. The running count is the number of concurrent meetings. Its peak is the answer. Same sort, different sweep.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> Sorting by the wrong key breaks the sweep. Merging needs sort by start. Scheduling the maximum number of non-overlapping intervals (#435) needs sort by end. Also, touching intervals ([1,2],[2,3]) merge or not depending on the problem's definition of overlap. Read the statement. State your choice.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Sorting dominates: O(n log n). The sweep is one pass: O(n). Total O(n log n) time, O(n) space for the output (O(1) if merging in place). #57, Insert Interval, exploits the existing order: find the insertion point and merge neighbors in O(n), no re-sort.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: intervals arrive as a stream.</summary><p>The sweep needs the full sort, so a stream breaks it. Use an interval tree (or a balanced BST keyed by start): insert in O(log n), query overlaps in O(log n + k). The honest trade: you lose the one-pass simplicity and gain online updates. Name the structure. Few interviewers ask you to implement it.</p></details>
+<details><summary>Curveball 2: minimum rooms, but meetings have setup time.</summary><p>Pad each end by the setup time before the event sweep (#253). The sweep logic is unchanged. Only the event times move. The trap: padding starts instead of ends, which double counts. Setup happens after a meeting, so it extends the end.</p></details>
+<details><summary>Curveball 3: intervals on a 24-hour clock that wrap midnight.</summary><p>Split each wrapping interval into two: [start, 24h) and [0, end). Then run the standard sweep. Alternatively duplicate the timeline. The wrap breaks the "starts only increase" property, so normalize first, sweep second.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Merge (#56) vs erase overlap (#435).</strong> Merge unions everything overlapping. Erase overlap keeps the maximum non-overlapping set by sorting on end time and greedily keeping. Different goal, different sort key.</li>
+<li><strong>Sort by start vs sort by end.</strong> Start for merging and room counting. End for scheduling the most intervals. Say the key before the sort.</li>
+</ul>
+</div>
+
 <h2 id="pattern-11">11. Backtracking</h2>
 <p>Every pattern before this had a clear structure. The structure was a sorted input. The structure was a window. The structure was a heap. Backtracking is for other problems. Backtracking uses systematic search.</p><p>Backtracking uses choose. Backtracking uses explore. Backtracking uses undo.</p>
 <figure><img src="img/dsa-track-300-backtracking-tree.svg" alt="Every subset of [1, 2, 3] is one root-to-leaf path. Each level decides: take the number or skip it."><figcaption>Every subset of [1, 2, 3] is one root-to-leaf path. Each level decides: take the number or skip it.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -2083,7 +2358,7 @@ rooms = 2</pre>
 </details>
 
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>"Generate all subsets. What is the recursive structure? What do you choose? What do you undo?" Then ask: "Your output has duplicates. Where do you skip? Why does sorting make it legal?"</p>
 </div>
 <figure>
@@ -2232,6 +2507,24 @@ A D E E               (0,2) C ok -&gt; (1,2) C ok -&gt; (2,2) E ok -&gt; (2,1) D
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 12 makes the search space explicit. This includes graphs. This includes BFS/DFS. This includes shortest paths.</p>
+<div class="exam-pack" id="exam-11">
+<h3>Exam clearing: under the hood</h3>
+<p>Backtracking explores a decision tree. Each level makes one choice. Each leaf is one answer. The code has three moves: choose (add the candidate), explore (recurse), unchoose (remove the candidate). The unchoose step is what makes it backtracking instead of plain recursion: the shared path must be restored for the next branch. Forgetting it is the number-one backtracking bug.</p>
+<p>Duplicates need ordering. Sort the input, then skip a candidate if it equals the previous candidate at the same tree level. This prunes duplicate subtrees without missing distinct answers. The skip condition must compare with the previous index at the same level, not globally.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> The decision tree is the output size. Subsets of 30 elements means 2^30 leaves: no pruning saves you. When n grows past ~20 for subsets or ~10 for permutations, enumeration is impossible and the problem must really be asking for a count or an optimum. Recognize the size wall before coding.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>#78, Subsets: each of n elements is in or out. The tree has 2^n leaves, and each leaf costs O(n) to copy: O(n &middot; 2^n). #46, Permutations: n choices, then n-1, then n-2: n! leaves. #22, Generate Parentheses: the Catalan number C(n) = (2n)! / ((n+1)! n!) valid strings, roughly 4^n / n^1.5. The recursion tree size always matches the output size. There is no faster enumeration.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: only the count is needed, not the list.</summary><p>Do not enumerate. Count with DP or combinatorics. Subsets count is 2^n by formula. Valid parentheses count is the Catalan recurrence. The follow-up tests whether you notice that enumeration was never required. Say "the output size is the lower bound" out loud.</p></details>
+<details><summary>Curveball 2: each candidate can be reused unlimited times. (#39)</summary><p>Pass the same start index (not start + 1) into the recursion, so the current candidate stays available. The termination is the target sum, not the index. The trap: infinite recursion when a candidate is 0 or negative. The problem guarantees positives. State the assumption.</p></details>
+<details><summary>Curveball 3: find one valid arrangement, not all. (N-Queens style)</summary><p>Return True up the recursion the moment a leaf succeeds, and stop exploring. The worst case is unchanged, but the average case collapses. Add the early-exit return to the template. Without it you enumerate everything after finding the answer.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Combinations vs permutations.</strong> Combinations (#78, #39) pass a start index so order does not repeat. Permutations (#46) try every remaining position. The start index is the entire difference.</li>
+<li><strong>Backtracking vs graph DFS.</strong> Backtracking unchooses to explore all branches. The path is the answer. Graph DFS marks visited to avoid revisiting. The visited set is the memory. Different purpose, different cleanup.</li>
+</ul>
+</div>
+
 <h2 id="pattern-12">12. Graphs (BFS/DFS, Topological Sort, Union-Find, Shortest Paths)</h2>
 <p>Backtracking searches implicitly. It builds the space as it goes. Graphs make the space explicit. Graphs have nodes, edges, and traversals over all of the graph.</p>
 <figure><img src="img/dsa-track-300-bfs-dfs.svg" alt="BFS visits in layers from A. DFS dives down one path first. Same graph, different order."><figcaption>BFS visits in layers from A, while DFS dives down one path first. Same graph, different order.</figcaption></figure><details class="howtoread"><summary><strong>How to read this diagram.</strong></summary>
@@ -2246,7 +2539,7 @@ A D E E               (0,2) C ok -&gt; (1,2) C ok -&gt; (2,2) E ok -&gt; (2,1) D
 </details>
 
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>Count the islands in this grid. Why is a grid a graph? Order these courses by prerequisite. How do you find the cycle? Are these two nodes connected? Edges arrive over time.</p><p>Do BFS each time. Or use a more simple method. Shortest path has weighted edges. Why does BFS stop working?</p>
 </div>
 <figure>
@@ -2483,10 +2776,30 @@ answer = max(dist) = 2</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 13 uses overlapping subproblems. This is dynamic programming in one dimension.</p>
+<div class="exam-pack" id="exam-12">
+<h3>Exam clearing: under the hood</h3>
+<p>BFS expands in waves: all nodes at distance 1, then distance 2, then 3. The first time BFS visits a node, it arrives via the shortest path. Proof sketch: the queue holds nodes in nondecreasing distance order, so any later arrival is longer. This is why #994 (Rotting Oranges) and #127 (Word Ladder) use BFS: the question is "fewest steps," and the wavefront answers it directly.</p>
+<p>Union-Find answers "are these connected?" under merges. Each set is a tree. Find follows parent pointers to the root. Two optimizations make it nearly constant: path compression (point every visited node at the root) and union by rank (attach the shorter tree under the taller one). Together, the amortized cost per operation is the inverse Ackermann function, below 5 for any realistic input.</p>
+<p>Dijkstra grows a frontier of tentative distances and always settles the smallest unsettled node with a heap. Settling is safe because any alternative path would go through an unsettled node with distance at least as large. Edge weights must be non-negative. A negative edge breaks the "smallest first is final" logic.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> Mark visited when you push, not when you pop. Pushing the same node twice from two neighbors explodes the queue. Dijkstra with a negative edge can settle a node too early and never correct it. Topological sort (#207) needs a DAG. A cycle means no valid order exists, which is itself the answer for #207.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>BFS/DFS: each vertex enters the structure once, each edge is examined once from each endpoint: O(V + E). Dijkstra with a binary heap: each edge can trigger a decrease-key, each costing O(log V): O((V + E) log V). Union-Find: m operations on n elements cost O(m &alpha;(n)), effectively linear. #200, Number of Islands: the grid has V = mn cells and each cell has up to 4 edges. DFS marks each cell once: O(mn).</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: negative edge weights.</summary><p>Dijkstra is wrong here. Use Bellman-Ford: relax every edge V-1 times. If the V-th pass still relaxes, a negative cycle exists. Cost is O(VE). The follow-up tests whether you know why Dijkstra breaks, not just the replacement name. Say the reason: the settled-node argument needs non-negative edges.</p></details>
+<details><summary>Curveball 2: bidirectional search. (#127)</summary><p>Run BFS from both the start word and the end word, alternating. They meet in the middle. Each side explores to depth d/2 instead of d. With branching factor b, that is 2&middot;b^(d/2) instead of b^d. The meeting check needs a visited map per side. This is the standard Word Ladder optimization.</p></details>
+<details><summary>Curveball 3: edges are added over time, and queries ask "connected?"</summary><p>Re-running BFS per query costs O(V + E) each time. Union-Find processes each added edge once in near-constant time and answers queries in near-constant time. This is the "dynamic connectivity" follow-up, and it is the reason Union-Find exists as a separate structure from BFS.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>BFS vs Dijkstra.</strong> BFS is for unweighted shortest paths. Dijkstra is for non-negative weighted. Running Dijkstra on an unweighted graph works but wastes the log factor.</li>
+<li><strong>Topological sort vs DFS order.</strong> Topo sort (#207, #210) orders vertices so every edge points forward. It needs indegree counting (Kahn) or postorder reversal. Plain DFS order is not a valid schedule.</li>
+<li><strong>Visited on push vs on pop.</strong> On push: each node enters once, queue stays small. On pop: duplicates flood the queue. Always mark on push.</li>
+</ul>
+</div>
+
 <h2 id="pattern-13">13. Dynamic Programming 1D</h2>
 <p>Graphs explored every path. DP 1D uses the opposite property. DP 1D uses overlapping subproblems. Solve each subproblem one time. Reuse the solution forever. This is in one dimension.</p>
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>"Define dp[i] in one English sentence before you write any code." Then ask: "When do you pick top-down with memoization? When do you pick a bottom-up table?" Then ask: "Your recurrence is correct. But the answer is wrong. What did you forget?" (Base cases.)</p>
 </div>
 <figure>
@@ -2622,10 +2935,30 @@ answer = True</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 14 adds the second dimension. This is DP over grids and pairs of strings.</p>
+<div class="exam-pack" id="exam-13">
+<figure><img src="img/dsa-track-300-dp1d.svg" alt="Each cell reads exactly two earlier cells, so two variables replace the whole table."><figcaption>Figure 46. Research Engineer Curriculum, DSA Track: Each cell reads exactly two earlier cells, so two variables replace the whole table. Source: original.</figcaption></figure>
+
+<h3>Exam clearing: under the hood</h3>
+<p>One-dimensional DP solves a line of subproblems in order. The state is dp[i]: the answer for the prefix ending at i. The transition answers "how does the answer at i use smaller answers?" For #198, House Robber: dp[i] = max(dp[i-1], dp[i-2] + nums[i]). Either skip house i, or rob it and add the best up to i-2. Every future state only needs these two numbers, so the full array compresses to two variables.</p>
+<p>The two questions that define any DP: what does the state mean (one English sentence), and which smaller states does the transition read? If you cannot answer both before coding, you are not ready. #139, Word Break: dp[i] means "prefix of length i splits into words." The transition tries every split j: dp[j] and s[j:i] in the word set.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> The transition must read only already-computed states. Filling i from 0 upward while reading dp[i+1] reads garbage. Draw the dependency arrows before the loop. Also, optimal substructure must hold: the best answer at i must be built from best answers of smaller states. If a suboptimal sub-answer could lead to a better global answer, DP is the wrong tool.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Time = number of states &times; cost per transition. #198: n states, O(1) transition: O(n) time, O(1) space with two variables. #300, Longest Increasing Subsequence: n states, each scanning all previous: O(n&sup2;). The O(n log n) version replaces the scan with binary search on the tails array. #322, Coin Change: amount &times; coins states-transitions: O(amount &middot; coins).</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: O(1) space for House Robber. (#198)</summary><p>Keep only prev2 and prev1. Each step computes cur = max(prev1, prev2 + nums[i]), then shifts. The full dp array is never needed because the transition looks back exactly two steps. Generalize: the space you need equals the transition's lookback window.</p></details>
+<details><summary>Curveball 2: reconstruct the choices, not just the value.</summary><p>Store a parent pointer per state: which transition won. After filling, walk the pointers back from the final state. For #198, record whether dp[i] came from dp[i-1] or dp[i-2] + nums[i]. The value table answers "how much." The parent table answers "which houses."</p></details>
+<details><summary>Curveball 3: the input is circular.</summary><p>The first and last houses are now adjacent, which breaks the linear transition. Run the linear DP twice: once excluding the first house, once excluding the last. Take the max. The circle becomes two lines. This case-split is the standard circular-array follow-up.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Memo recursion vs tabulation.</strong> Same states, same transitions, same complexity. Memo is top-down and skips unreachable states. Tabulation is bottom-up and fills all. Pick by which is easier to get the order right.</li>
+<li><strong>#300 O(n&sup2;) vs O(n log n).</strong> The quadratic version is the honest DP. The n log n version maintains "smallest tail of an increasing subsequence of length k" and binary searches it. Know both. Write the quadratic first.</li>
+</ul>
+</div>
+
 <h2 id="pattern-14">14. Dynamic Programming 2D</h2>
 <p>1D DP handles linear structure. Two-dimensional DP handles two dimensions of choice. This includes grids and pairs of strings. Edit distance is an example.</p>
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>Ask: "You have two strings and one table. What does dp[i][j] mean?" Then ask: "This is edit distance. Name the three operations as table moves." Then ask: "Interval DP fills by length. It does not fill by row. Why?"</p>
 </div>
 <figure>
@@ -2778,10 +3111,30 @@ answer = 167</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 15 is for a simpler structure. It is greedy. It has one local choice. This is provably enough.</p>
+<div class="exam-pack" id="exam-14">
+<figure><img src="img/dsa-track-300-dp2d.svg" alt="One cell reads three neighbors. The grid is shared by LCS and Edit Distance."><figcaption>Figure 47. Research Engineer Curriculum, DSA Track: One cell reads three neighbors. The grid is shared by LCS and Edit Distance. Source: original.</figcaption></figure>
+
+<h3>Exam clearing: under the hood</h3>
+<p>Two-dimensional DP handles pairs: two strings, a grid, an interval. The state is dp[i][j]: the answer for the first i of A and the first j of B. The transition compares the current elements. In #1143, LCS: if the characters match, dp[i][j] = dp[i-1][j-1] + 1. If not, dp[i][j] = max(dp[i-1][j], dp[i][j-1]). Each cell reads three neighbors: top, left, diagonal. Fill row by row so those neighbors exist.</p>
+<p>In #72, Edit Distance, the same three neighbors carry different costs: dp[i-1][j] + 1 is a deletion, dp[i][j-1] + 1 is an insertion, dp[i-1][j-1] + cost is a substitution (cost 0 if the characters match). The grid is the same. The meaning of each arrow changes. Learn the grid once, reuse it across problems.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> Fill order must respect dependencies. A cell that reads dp[i+1][j] needs bottom-up filling, not top-down. The 1-indexed padding (dp has an extra row and column of base cases) prevents most off-by-one errors. 0-indexed grids invite them. Also, subsequence is not substring: #5, Longest Palindromic Substring, needs contiguity, so its transition resets on mismatch instead of taking the max.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>States: (n+1) &times; (m+1). Transition: O(1). Time O(nm), space O(nm), compressible to O(min(n,m)) with two rows when the transition reads only the previous row. #62, Unique Paths: dp[i][j] = dp[i-1][j] + dp[i][j-1], O(mn) time. #312, Burst Balloons: the state is an interval (i, j), and the transition tries every last-burst k: O(n) per state, O(n&sup3;) total.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: strings of length 10^5. (#1143)</summary><p>The O(nm) table needs 10^10 cells: impossible. If you only need the length, two rows give O(min(n,m)) space, but time is still O(nm). For truly huge inputs, the honest answer is that classic LCS does not scale. Banded DP or Hirschberg's divide-and-conquer (O(nm) time, O(n+m) space with reconstruction) are the real tools. Say the wall before proposing the workaround.</p></details>
+<details><summary>Curveball 2: list all longest common subsequences, not just the length.</summary><p>The number of distinct LCS strings can be exponential. Build the DAG of optimal transitions from the filled table, then enumerate paths. The table fill is polynomial. The enumeration is exponential because the output is exponential. Separate the two costs when you state complexity.</p></details>
+<details><summary>Curveball 3: wildcard matching with *. (#10)</summary><p>Star matches any sequence, including empty. The transition: dp[i][j] is true if dp[i][j-1] (star matches empty) or dp[i-1][j] (star consumes one more character). The star's two options are the entire algorithm. Draw the two arrows before coding.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Subsequence vs substring.</strong> Subsequence (#1143) skips characters. Mismatch takes the max of neighbors. Substring (#5) is contiguous. Mismatch resets. One word changes the transition.</li>
+<li><strong>Edit Distance vs LCS.</strong> Edit Distance (#72) counts operations with costs on three arrows. LCS (#1143) counts matches with a max on mismatch. Same grid, different arrow meanings.</li>
+</ul>
+</div>
+
 <h2 id="pattern-15">15. Greedy</h2>
 <p>DP solved all problems with structure. Greedy is the next step. Greedy solves problems where one locally best choice is provably enough. No table is necessary.</p>
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>You make the best local choice at each step. You do not change this choice. When is this choice safe? Prove the Jump Game greedy algorithm. Why do you not need to step back?</p>
 </div>
 <figure>
@@ -2920,10 +3273,30 @@ answer = 6  ([4,-1,2,1])</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 16 is the bit-level and number-theoretic toolbox. The other patterns use this toolbox.</p>
+<div class="exam-pack" id="exam-15">
+<figure><img src="img/dsa-track-300-greedy.svg" alt="The earliest finish leaves the most room. The exchange argument proves the pick safe."><figcaption>Figure 48. Research Engineer Curriculum, DSA Track: The earliest finish leaves the most room. The exchange argument proves the pick safe. Source: original.</figcaption></figure>
+
+<h3>Exam clearing: under the hood</h3>
+<p>Greedy makes one local choice and never revisits it. It works only when the greedy choice is provably safe: there exists an optimal solution that includes it. The proof is the exchange argument. For interval scheduling (#435 style): pick the interval with the earliest end time. Take any optimal solution. If it does not include that interval, swap its first interval for the earliest-ending one. The swap cannot hurt feasibility (it ends no later) and keeps the count. Repeat. The greedy solution is optimal.</p>
+<p>#55, Jump Game: track the farthest reachable index. At each position within reach, extend the reach. If the reach ever stalls before the end, the answer is false. The greedy choice "always extend as far as possible" is safe because extra reach never hurts.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> Weights break greedy. With weighted intervals, the earliest-ending interval might be worth 1 while a later one is worth 1000. The exchange argument fails because swapping changes the total value. Weighted interval scheduling needs DP. If you cannot sketch the exchange argument, do not use greedy.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>Greedy is usually dominated by the sort: O(n log n). The scan itself is O(n). #53, Maximum Subarray (Kadane): no sort needed. Keep the best subarray ending at i: either extend the previous or start fresh at i. One pass: O(n) time, O(1) space. #45, Jump Game II: greedy by levels. Each jump extends the reach as far as possible. Count the jumps: O(n).</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: intervals have profits, so maximize profit.</summary><p>Greedy by end time is wrong now. A short low-profit interval can block a high-profit one. Sort by end time and use DP: dp[i] = max(dp[i-1], profit[i] + dp[p(i)]), where p(i) is the last non-overlapping interval, found by binary search. The exchange argument died with the weights. The DP is the honest replacement.</p></details>
+<details><summary>Curveball 2: gas station on a circle. (#134)</summary><p>Total gas must cover total cost, or no start works. If it does, start at the station after the minimum prefix of (gas - cost). Why: the minimum prefix is the hardest deficit. Starting right after it means the tank never goes negative. One pass to check the total, one pass to find the minimum prefix: O(n).</p></details>
+<details><summary>Curveball 3: jumps have costs, so minimize total cost.</summary><p>Greedy "jump farthest" minimizes jumps, not cost. A far jump might be expensive. This is now a shortest-path problem on a DAG: DP or Dijkstra. Name the transformation. It is the standard "greedy was for the unweighted version" follow-up.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Greedy vs DP.</strong> Greedy commits with no memory. DP remembers subproblem answers. If a local choice might need revision later, you need DP. The exchange argument is the test.</li>
+<li><strong>Kadane (#53) vs divide and conquer.</strong> Kadane is the O(n) greedy-ish scan. Divide and conquer also solves it in O(n log n). Know Kadane. Mention the other only if asked.</li>
+</ul>
+</div>
+
 <h2 id="pattern-16">16. Bit Manipulation and Math</h2>
 <p>The algorithms are complete. The bit-level and number-theoretic toolbox remains. This toolbox includes XOR tricks, counting, and math. The other sixteen patterns quietly use this math.</p>
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>"Every number appears two times except one. Find it in O(n) time and O(1) space." Then: "Now every number appears three times except one. Does XOR still work?" Then: "Add two integers without + or -."</p>
 </div>
 <figure>
@@ -3085,10 +3458,30 @@ primes: 2,3,5,7 -&gt; answer = 4</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> Pattern 17 asks you to build the structures. These are design problems. They combine all sixteen patterns.</p>
+<div class="exam-pack" id="exam-16">
+<figure><img src="img/dsa-track-300-bit.svg" alt="Pairs cancel wherever they sit. The survivor is the XOR of the whole array."><figcaption>Figure 49. Research Engineer Curriculum, DSA Track: Pairs cancel wherever they sit. The survivor is the XOR of the whole array. Source: original.</figcaption></figure>
+
+<h3>Exam clearing: under the hood</h3>
+<p>Bit operations act on all bits at once. XOR is the workhorse: x ^ x = 0, x ^ 0 = x, and XOR is commutative and associative. In #136, Single Number, XOR-ing the whole array cancels every pair: each value appearing twice contributes x ^ x = 0, and the survivor remains. One pass, O(1) space, no map.</p>
+<p>Two idioms carry the chapter. n &amp; (n - 1) clears the lowest set bit: counting set bits becomes one step per 1-bit, not per bit. The mask 1 &lt;&lt; k isolates bit k. Fast exponentiation (#50) halves the exponent each step: x^n = (x^(n/2))^2, with one extra multiply when n is odd. The recursion depth is log n.</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> Right shift on negative numbers is arithmetic in most languages (sign extends) but logical in Java's &gt;&gt;&gt;. Know your language. The XOR trick needs exactly the pairing structure. Three copies of a number break it (that needs bit counting per position instead). Overflow in (a + b) // 2 style midpoints applies to bit problems too.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>#50, Pow(x, n): each step halves n: O(log n) time, O(log n) stack or O(1) iterative. #204, Count Primes (sieve): for each prime p, cross out multiples starting at p&sup2;. The total work is n &middot; (1/2 + 1/3 + 1/5 + ...) = O(n log log n) by the prime harmonic series. #371, Sum of Two Integers: a ^ b adds without carry, (a &amp; b) &lt;&lt; 1 is the carry. Repeat until no carry: O(1) for fixed width.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: two numbers appear once, the rest appear twice.</summary><p>XOR everything: you get a ^ b, which is nonzero. Take any set bit of that value. It differs between a and b. Partition the array by that bit and XOR each group. Each group cancels its pairs, leaving a in one group and b in the other. The differing bit is the splitter.</p></details>
+<details><summary>Curveball 2: compute x^n mod m for huge n.</summary><p>Fast exponentiation with a mod at every multiply: result = (result * x) % m. The mod keeps every intermediate value below m&sup2;, so nothing overflows. Same halving, one extra operation per step. This is modular exponentiation, the core of RSA-style problems.</p></details>
+<details><summary>Curveball 3: count primes up to 10^12.</summary><p>The sieve needs an array of size n: impossible. Use a segmented sieve: sieve blocks of manageable size using the primes up to sqrt(n) (found by a small sieve). Memory is O(sqrt(n)). State the wall first: the plain sieve's memory is the problem, not its time.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>Arithmetic vs logical shift.</strong> &gt;&gt; on negatives sign-extends in Python and Java. &gt;&gt;&gt; in Java zero-fills. Bit problems on negatives need the distinction stated.</li>
+<li><strong>n &amp; (n-1) vs n &gt;&gt; 1.</strong> The first clears the lowest set bit (counts 1-bits fast). The second drops the lowest bit regardless. Different operations, different uses.</li>
+</ul>
+</div>
+
 <h2 id="pattern-17">17. Design Problems</h2>
 <p>Every pattern so far solved a fixed problem. It used a given structure. Design problems reverse this. You build the structure. LRU caches, stacks with minimum, and time maps combine all the patterns above.</p>
 <div class="ob-board">
-<h4>On the board</h4>
+<h4>Design prompt</h4>
 <p>Design an LRU cache. It must have O(1) get and put operations. What two structures do you combine? What does each structure provide? Then, your LFU eviction needs the least-frequently-used key. Break ties by recency.</p><p>Sketch the buckets.</p>
 </div>
 <div class="callout warn">
@@ -3255,6 +3648,26 @@ answer = 10 most recent across followees</pre>
 </ol>
 </div>
 <p><strong>Next:</strong> The 10-week study schedule makes a daily plan. It uses the 17 patterns.</p>
+<div class="exam-pack" id="exam-17">
+<figure><img src="img/dsa-track-300-lru.svg" alt="The map finds the node and the list orders it. Each structure gives one guarantee."><figcaption>Figure 50. Research Engineer Curriculum, DSA Track: The map finds the node and the list orders it. Each structure gives one guarantee. Source: original.</figcaption></figure>
+
+<h3>Exam clearing: under the hood</h3>
+<p>Design problems pair structures so each guarantee comes from the right one. #146, LRU Cache: the hash map gives O(1) key lookup. The doubly linked list gives O(1) move-to-front and evict-from-back. Neither structure alone gives both. Every get and put touches both: the map finds the node, the list reorders it. The list needs dummy head and tail so edge insertions need no special cases.</p>
+<p>#380, Insert Delete GetRandom O(1): an array gives O(1) random access. A map gives O(1) lookup of each value's index. Delete swaps the target with the last element, pops the last, and updates the moved element's index in the map. The swap-with-last is the trick that makes array deletion O(1).</p>
+<div class="callout warn"><p><strong>When it breaks.</strong> One structure for two guarantees always fails. A map alone cannot track recency. A list alone cannot find keys. In #981, Time Based Key-Value Store, timestamps are sorted per key, so binary search finds the floor timestamp: O(log n). If timestamps arrived unsorted, the binary search breaks and you sort first or use a tree.</p></div>
+<h3>Exam clearing: complexity, derived</h3>
+<p>LRU: map lookup O(1), list splice O(1) with node pointers. Every operation is O(1) worst case. Space O(capacity). #295, Find Median from Data Stream: insert into a heap O(log n), rebalance O(log n), median query O(1). #355, Design Twitter: pull model. getNewsFeed merges the k followed users' tweet lists with a heap: O(k log k) per feed read, O(1) per tweet post.</p>
+<h3>Exam clearing: curveballs with worked answers</h3>
+<details><summary>Curveball 1: the LRU cache must be thread-safe.</summary><p>A single lock around get/put is correct but serializes everything. The honest scaling answer is sharding: N independent LRU caches by key hash, each with its own lock. Eviction becomes per-shard approximate, not global exact. State the trade: correctness of the LRU order weakens, throughput scales.</p></details>
+<details><summary>Curveball 2: getRandom must stay uniform as the set changes. (#380)</summary><p>The array-plus-map design already does this: the array always holds exactly the current elements contiguously, so a random index is uniform. The trap is deleting by shifting (O(n)) or leaving holes (breaks uniformity). Swap-with-last keeps both properties.</p></details>
+<details><summary>Curveball 3: Twitter at scale, pull vs push. (#355)</summary><p>Pull (merge on read) breaks for users with millions of followers: every tweet would need millions of pushes. Push (fan-out on write) breaks for users who follow thousands: every feed read merges thousands of lists. Real systems mix: push for normal users, pull for celebrities. Name the two failure modes. That is the expected answer.</p></details>
+<h3>Exam clearing: never-confuse pairs</h3>
+<ul>
+<li><strong>LRU vs LFU.</strong> LRU evicts the least recently used. Recency is the only signal. LFU evicts the least frequently used. It needs frequency buckets. Different signal, different structure.</li>
+<li><strong>Min Stack (#155) vs Min Heap.</strong> Min Stack tracks the minimum of a LIFO sequence in O(1). A heap tracks the global extreme of a set. Sequence vs set: pick by the access pattern.</li>
+</ul>
+</div>
+
 <h2 id="schedule">10-week study schedule (1 to 2 hours per day, with the main spine)</h2>
 <p>The spine in CURRICULUM-MAP.md takes about 9 to 10 weeks. It needs more than 4 hours per day. This track runs at the same time. It needs 1 to 2 hours per day. Each week, learn the pattern chapter. The chapter has intuition and a template.</p><p>Write the template from memory. Solve the problems from easy to hard. Finish the week with the review protocol below. You must do the must-do problems. Use the remaining time for other problems.</p>
 <figure>
@@ -3296,7 +3709,7 @@ answer = 10 most recent across followees</pre>
 <ol class="tight">
 <li><strong>Cold-write (10 min).</strong> Use a blank page. Do not use a book. Write each template you learned. Write its invariant in one comment line. If you cannot write something, add it to next week's warm-up list.</li>
 <li><p><strong>Error log (10 min).</strong> Write one line for every problem you failed. Write one line for every problem that needed a hint. Write the problem. Write the pattern. Write the <em>exact</em> mistake.</p><p>For example, write "compared against previous end instead of running merged end". Or write "moved l backward in last-seen jump". Read the log before each session. Most errors happen again.</p></li>
-<li><p><strong>Recall questions (10 min).</strong> Answer from memory. State the recognition signal for each pattern. State the complexity for each template.</p><p>State one trap for each pattern. Use the "On the board" questions at each chapter head. These questions are the deck.</p></li>
+<li><p><strong>Recall questions (10 min).</strong> Answer from memory. State the recognition signal for each pattern. State the complexity for each template.</p><p>State one trap for each pattern. Use the "Design prompt" questions at each chapter head. These questions are the deck.</p></li>
 </ol>
 <div class="callout">
 <span class="tag">Interview relevance</span>
@@ -3318,7 +3731,7 @@ answer = 10 most recent across followees</pre>
 <details class="howtoread"><summary><strong>How to read this diagram</strong></summary><ol><li>Each row is one week. New patterns are on the left. The cold-write set is on the right.</li><li>The set becomes larger. You re-test old patterns from memory every week.</li><li>If you miss something, add it to next week's warm-up list. This means you cannot write it.</li></ol></details>
 </figure>
 <p><strong>Next:</strong> Do on-the-board drills. Use 20 pattern-recognition prompts. Test yourself.</p>
-<h2 id="drills">On-the-board pattern-recognition drills</h2>
+<h2 id="drills">Design-prompt pattern-recognition drills</h2>
 <p>Read each prompt. Name the pattern. Name the template move. Do this in less than 30 seconds. Then show the answer. The speed of recognition is the trained skill.</p><p>The code comes after this skill.</p>
 <figure class="diagram" id="fig-drill-card">
 <pre class="ascii">How a drill round works: 30 seconds, out loud
@@ -3527,7 +3940,7 @@ answer = 10 most recent across followees</pre>
 </ul>
 </section>
 
-<footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">This is a research engineer curriculum. It has 39 self-contained volumes. Every page works offline from file://. Every page links back here. The system does not use personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul><div class="foot-group"><h4>S30 AI Lab</h4><ul><li><a href="16-s30-atlas.html">S30 Atlas: 15-Week Lab Map</a></li><li><a href="17-s30-python-data.html">Python and Data Tools</a></li><li><a href="18-s30-math-for-ml.html">Math for ML (S30)</a></li><li><a href="19-s30-classical-ml.html">Classical ML</a></li><li><a href="20-s30-evaluation-debugging.html">Evaluation and Debugging</a></li><li><a href="21-s30-deep-learning.html">Deep Learning (S30)</a></li><li><a href="22-s30-cv-nlp-basics.html">CV and NLP Basics</a></li><li><a href="23-s30-transformers.html">Transformers</a></li><li><a href="24-s30-rag-retrieval.html">RAG and Retrieval</a></li><li><a href="25-s30-mlops-systems.html">MLOps and Systems</a></li><li><a href="26-s30-system-design.html">System Design (S30)</a></li><li><a href="27-s30-llm-agentic.html">LLM and Agentic AI</a></li><li><a href="28-s30-interview-clearance.html">Interview Clearance</a></li></ul></div></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html" class="foot-current">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav><p class="foot-colophon"><span>LLM Knowledge Base</span> <span class="foot-sep" aria-hidden="true">/</span> <span>Sept 2026 edition</span> <span class="foot-sep" aria-hidden="true">/</span> <span>Set in Charis SIL</span></p></footer>
+<footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">This is a research engineer curriculum. It has 39 self-contained volumes. Every page works offline from file://. Every page links back here. The system does not use personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul><div class="foot-group"><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html">AI Lab Atlas: 15-Week Lab Map</a></li><li><a href="17-ai-lab-python-data.html">Python and Data Tools</a></li><li><a href="18-ai-lab-math-for-ml.html">Math for ML (AI Lab)</a></li><li><a href="19-ai-lab-classical-ml.html">Classical ML</a></li><li><a href="20-ai-lab-evaluation-debugging.html">Evaluation and Debugging</a></li><li><a href="21-ai-lab-deep-learning.html">Deep Learning (AI Lab)</a></li><li><a href="22-ai-lab-cv-nlp-basics.html">CV and NLP Basics</a></li><li><a href="23-ai-lab-transformers.html">Transformers</a></li><li><a href="24-ai-lab-rag-retrieval.html">RAG and Retrieval</a></li><li><a href="25-ai-lab-mlops-systems.html">MLOps and Systems</a></li><li><a href="26-ai-lab-system-design.html">System Design (AI Lab)</a></li><li><a href="27-ai-lab-llm-agentic.html">LLM and Agentic AI</a></li><li><a href="28-ai-lab-interview-clearance.html">Interview Clearance</a></li></ul></div></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html" class="foot-current">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav><p class="foot-colophon"><span>LLM Knowledge Base</span> <span class="foot-sep" aria-hidden="true">/</span> <span>Sept 2026 edition</span> <span class="foot-sep" aria-hidden="true">/</span> <span>Set in Charis SIL</span></p></footer>
 </main>
 <script>
 /* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
