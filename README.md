@@ -31,25 +31,25 @@ The spine. Read in order; each volume builds on the earlier ones.
 | 14 | `14-communicating-research.html` | Communicating research: research narratives, failure and conflict stories, practice reps, calibration |
 | 15 | `15-gpu-kernels.html` | GPU architecture and kernel programming |
 
-### S30 AI Lab (13)
+### AI Lab (13)
 
 Hands-on lab pages. Each one pairs with the base volumes: short theory, then guided labs with concrete tasks. Read a lab after its matching base volume.
 
 | Lab | File | Topic |
 |-----|------|-------|
-| 16 | `16-s30-atlas.html` | Lab map: the full 15-week plan, week by week |
-| 17 | `17-s30-python-data.html` | Python and data tooling for ML work |
-| 18 | `18-s30-math-for-ml.html` | Math for ML, taught through labs |
-| 19 | `19-s30-classical-ml.html` | Classical ML: regression, trees, ensembles, validation |
-| 20 | `20-s30-evaluation-debugging.html` | Evaluation and debugging: metrics, error analysis, ablations |
-| 21 | `21-s30-deep-learning.html` | Deep learning labs: training loops, regularization, tuning |
-| 22 | `22-s30-cv-nlp-basics.html` | Computer vision and NLP foundations |
-| 23 | `23-s30-transformers.html` | Transformers, built step by step |
-| 24 | `24-s30-rag-retrieval.html` | RAG and retrieval: chunking, embeddings, reranking |
-| 25 | `25-s30-mlops-systems.html` | MLOps and systems: deployment, monitoring, pipelines |
-| 26 | `26-s30-system-design.html` | ML system design drills |
-| 27 | `27-s30-llm-agentic.html` | LLM and agentic AI: prompting, tools, agents |
-| 28 | `28-s30-interview-clearance.html` | Interview clearance: full loop preparation, round by round |
+| 16 | `16-ai-lab-atlas.html` | Lab map: the full 15-week plan, week by week |
+| 17 | `17-ai-lab-python-data.html` | Python and data tooling for ML work |
+| 18 | `18-ai-lab-math-for-ml.html` | Math for ML, taught through labs |
+| 19 | `19-ai-lab-classical-ml.html` | Classical ML: regression, trees, ensembles, validation |
+| 20 | `20-ai-lab-evaluation-debugging.html` | Evaluation and debugging: metrics, error analysis, ablations |
+| 21 | `21-ai-lab-deep-learning.html` | Deep learning labs: training loops, regularization, tuning |
+| 22 | `22-ai-lab-cv-nlp-basics.html` | Computer vision and NLP foundations |
+| 23 | `23-ai-lab-transformers.html` | Transformers, built step by step |
+| 24 | `24-ai-lab-rag-retrieval.html` | RAG and retrieval: chunking, embeddings, reranking |
+| 25 | `25-ai-lab-mlops-systems.html` | MLOps and systems: deployment, monitoring, pipelines |
+| 26 | `26-ai-lab-system-design.html` | ML system design drills |
+| 27 | `27-ai-lab-llm-agentic.html` | LLM and agentic AI: prompting, tools, agents |
+| 28 | `28-ai-lab-interview-clearance.html` | Interview clearance: full loop preparation, round by round |
 
 ### Role tracks (10)
 
