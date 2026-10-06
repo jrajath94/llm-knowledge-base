@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 500" role="img" aria-label="Figure 47. One cell, three neighbors">
+<rect width="900" height="500" fill="#0d0d0d"/>
+<text x="450.0" y="26" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Figure 47. One cell, three neighbors</text>
+<text x="450.0" y="50" text-anchor="middle" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">LCS grid: match reads the diagonal, mismatch reads the max of top and left</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker></defs>
+<text x="160" y="260" fill="#8a8a8a" font-size="12" font-family="Charis SIL, Georgia, serif">A \ B</text>
+<text x="358" y="98" text-anchor="middle" fill="#6aa8ff" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">a</text>
+<text x="430" y="98" text-anchor="middle" fill="#6aa8ff" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">c</text>
+<text x="234" y="226" text-anchor="middle" fill="#7fd08a" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">a</text>
+<text x="234" y="298" text-anchor="middle" fill="#7fd08a" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">b</text>
+<text x="234" y="370" text-anchor="middle" fill="#7fd08a" font-size="13" font-family="Charis SIL, Georgia, serif" font-weight="bold">c</text>
+<rect x="250" y="110" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="286.0" y="151.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">0</text>
+<rect x="322" y="110" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="358.0" y="151.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">0</text>
+<rect x="394" y="110" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="430.0" y="151.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">0</text>
+<rect x="466" y="110" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="502.0" y="151.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">0</text>
+<rect x="250" y="182" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="286.0" y="223.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">0</text>
+<rect x="322" y="182" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="358.0" y="223.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">0</text>
+<rect x="394" y="182" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="430.0" y="223.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">1</text>
+<rect x="466" y="182" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="502.0" y="223.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">1</text>
+<rect x="250" y="254" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="286.0" y="295.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">0</text>
+<rect x="322" y="254" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="358.0" y="295.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">1</text>
+<rect x="394" y="254" width="72" height="72" rx="6" fill="#1a1a1a" stroke="#f0b429"/>
+<text x="430.0" y="295.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif" font-weight="bold">1</text>
+<rect x="466" y="254" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="502.0" y="295.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">2</text>
+<rect x="250" y="326" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="286.0" y="367.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">0</text>
+<rect x="322" y="326" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="358.0" y="367.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">1</text>
+<rect x="394" y="326" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="430.0" y="367.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">1</text>
+<rect x="466" y="326" width="72" height="72" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="502.0" y="367.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">2</text>
+<line x1="358" y1="182" x2="430" y2="250" stroke="#6aa8ff" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="470" y="130" text-anchor="middle" fill="#6aa8ff" font-size="11" font-family="Charis SIL, Georgia, serif">diag +1 on match</text>
+<line x1="430" y1="182" x2="430" y2="250" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="560" y="180" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">top</text>
+<line x1="358" y1="274" x2="390" y2="290" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="200" y="300" text-anchor="middle" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif">left</text>
+<text x="700" y="330" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif">cell(2,2): &#39;b&#39; vs &#39;c&#39;</text>
+<text x="700" y="354" fill="#ececec" font-size="13" font-family="Charis SIL, Georgia, serif">mismatch: max(1, 1) = 1</text>
+<text x="450.0" y="486" text-anchor="middle" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">Research Engineer Curriculum, DSA Track: the grid is the same for LCS and Edit Distance; only the arrow costs change. Source: original.</text>
+</svg>
