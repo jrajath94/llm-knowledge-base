@@ -111,8 +111,8 @@ no render dependency). Never add `@import`/webfont links.
 ## QA gates (run `--check` on every built file)
 
 - Zero em dashes anywhere in shipped content, zero CSS gradients, zero external stylesheet/script/img
-- Humanizer gate (from `~/workspace/skills/humanizer/SKILL.md`, user standing order): hard FAIL on banned AI tells - delve, furthermore, moreover, additionally/overall as sentence starters, tapestry, seamless, game-changer, supercharge, "deep dive", "it's worth noting", "it's important to note", "in conclusion", "as an AI", elevate, "in today's". WARN (human judges) on robust / leverage-as-verb / unlock, throat-clearing openers ("in this section we will…", "let's talk about…"), and sentences over ~30 words (count + samples reported)
-- Code standard (user hard rule): ALL code samples are Python - hard FAIL on any fenced block tagged with another programming language; WARN on low comment density in Python samples over 15 lines (<8% comment lines) and on suspicious untagged blocks. Manual checklist per volume: every code sample has what/why/what-breaks comments and complexity notes where relevant; non-trivial samples get a plain-English walkthrough; key flows (attention, backprop, collectives, RL loops, inference batching, RAG/agent flows) pair code with a visual (generated image / Mermaid / ASCII) accurate to the code
+- Humanizer gate (from `~/workspace/skills/humanizer/SKILL.md`, user standing order): hard FAIL on banned AI tells — delve, furthermore, moreover, additionally/overall as sentence starters, tapestry, seamless, game-changer, supercharge, "deep dive", "it's worth noting", "it's important to note", "in conclusion", "as an AI", elevate, "in today's". WARN (human judges) on robust / leverage-as-verb / unlock, throat-clearing openers ("in this section we will…", "let's talk about…"), and sentences over ~30 words (count + samples reported)
+- Code standard (user hard rule): ALL code samples are Python — hard FAIL on any fenced block tagged with another programming language; WARN on low comment density in Python samples over 15 lines (<8% comment lines) and on suspicious untagged blocks. Manual checklist per volume: every code sample has what/why/what-breaks comments and complexity notes where relevant; non-trivial samples get a plain-English walkthrough; key flows (attention, backprop, collectives, RL loops, inference batching, RAG/agent flows) pair code with a visual (generated image / Mermaid / ASCII) accurate to the code
 - Balanced tags, unique ids, no TODO/FIXME/lorem, no personal identifiers
 - Then screenshot-verify in headless Chromium at 1440 / 768 / 390 px and fix
   every visual defect (sidebar, drawer, tables/pre internal scroll only, images).
@@ -121,4 +121,4 @@ no render dependency). Never add `@import`/webfont links.
 
 Bulk mechanical work (conversions, QA scripts, re-skins) goes to the cheapest
 capable runner available on this VM (wrappers: `zclade`, `clade-mini`,
-`codex-mini`, `zcodexx` - see ~/.bashrc). Never sacrifice quality for tokens.
+`codex-mini`, `zcodexx` — see ~/.bashrc). Never sacrifice quality for tokens.
