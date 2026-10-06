@@ -313,10 +313,10 @@ blockquote p{margin:.4rem 0}
 <!-- experience-layer:css -->
 <style>
 /* Hallmark · pre-emit critique: P5 H4 E5 S4 R5 V5
- * ==========================================================================
- * Experience layer for study volumes — ADDITIVE ONLY.
- * Never edits content markup or DS chrome; references DS tokens only
- * (--accent, --border). No new colors, no gradients, no decorative filler.
+ * World-class upgrade v2 (2026-10-05): adds reading measure (§7), figure
+ * parallax (§8), volume pager footer (§9). Additive only — never edits
+ * content markup or DS chrome; references DS tokens only (--accent,
+ * --border, --text, --muted). No new colors, no gradients, no filler.
  *
  * Motion stance: calm delight. Opacity/translate only (GPU-friendly),
  * one IntersectionObserver, one rAF-throttled scroll listener, zero layout
@@ -326,16 +326,16 @@ blockquote p{margin:.4rem 0}
  *
  * Wiring (final assembly, per volume — same model as ds.css/ds.js):
  *   1. In <head>, AFTER the DS style block, add:
+ *        <!-- experience-layer:css -->
  *        <style>
- *        /* ==== Experience layer — additive, do not edit per-file ==== */
  *        …this file verbatim…
  *        [close the style element]
  *   2. Immediately before the document's LAST closing body tag (the real
  *      one at the end of the file — some volumes mention a literal closing
  *      body tag inside their docs prose; ignore those), AFTER the ds.js
  *      script block, add:
+ *        <!-- experience-layer:js -->
  *        <script>
- *        /* ==== Experience layer behavior — additive ==== */
  *        …experience.js verbatim…
  *        [close the script element]
  * (Closing tags are written out in the assembly snippet, not here, so this
@@ -412,6 +412,9 @@ html.xp-js .xp-reveal.xp-in {
     transform: none !important;
     opacity: 1 !important;
   }
+  html.xp-js figure.xp-px img {
+    transform: none !important;
+  }
   .pq,
   .watch-card,
   .ob-board,
@@ -427,9 +430,73 @@ html.xp-js .xp-reveal.xp-in {
     translate: 0 0 !important;
     transition: none;
   }
+  html.xp-js figure.xp-px img {
+    transform: none !important;
+  }
   .xp-hero {
     transform: none !important;
     opacity: 1 !important;
+  }
+}
+
+/* ---------- 7. Reading: justified prose, comfortable measure ----------
+   Additive: the DS already constrains the column to a 72ch measure.
+   Justification applies to content paragraphs only — chrome text (mast
+   lines, hero ledes, footers, nav, sidebars) keeps its own alignment. */
+#ds-content p,
+.ds-content p {
+  text-align: justify;
+  hyphens: auto;
+  line-height: 1.7;
+}
+.site-header p,
+.s30-hero-lede,
+.hero-stats,
+.hero-stat,
+footer p,
+.site-nav-panel p,
+.ds-sidebar p,
+figcaption p,
+.breadcrumbs {
+  text-align: left;
+}
+
+/* ---------- 8. Figure parallax: gentle drift, images only ----------
+   The script sets --px on each figure img from its viewport position;
+   the figure clips the drift so nothing ever overflows or shifts layout.
+   Gated on html.xp-js like the reveals (no-JS = no transform at all). */
+html.xp-js figure.xp-px {
+  overflow: hidden;
+}
+html.xp-js figure.xp-px img {
+  transform: translateY(var(--px, 0px));
+  transition: transform 0.12s linear;
+  will-change: transform;
+}
+
+/* ---------- 9. Volume pager footer ----------
+   Shared pager used at the end of every volume (prev/next links).
+   Pages whose own stylesheet never defined it get this quiet default. */
+.vol-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 2.5rem 0 0;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+}
+.vol-foot a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+.vol-foot a:hover {
+  color: var(--accent);
+}
+@media (max-width: 40rem) {
+  .vol-foot {
+    flex-direction: column;
   }
 }
 
@@ -449,7 +516,7 @@ html.xp-js .xp-reveal.xp-in {
 </aside>
 <div class="ds-scrim" id="dsScrim"></div>
 <main class="ds-content" id="dsContent">
-<header class="site-header"><p class="mast-line"><span>Research-Engineer Curriculum</span><span class="mast-line-right">No. 34 of 39 &middot; Sept 2026 edition</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a><nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span><a class="site-prevnext-link" href="crash-track-04.html" aria-label="Previous volume: Crash: Distributed Training"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">Crash: Distributed Training</span></a></div><div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span><a class="site-prevnext-link" href="crash-track-06.html" aria-label="Next volume: Crash: Agent Systems"><span class="site-prevnext-title">Crash: Agent Systems</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></nav></div><div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep" aria-hidden="true">/</span><span>Crash packs</span><span class="bc-sep" aria-hidden="true">/</span><span class="bc-current" aria-current="page">Crash: Evals and Safety</span></nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Browse all volumes</span></button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span><button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html" class="site-nav-current"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div></header>
+<header class="site-header"><p class="mast-line"><span>Research-Engineer Curriculum</span><span class="mast-line-right">No. 34 of 39 &middot; Sept 2026 edition</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a><nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span><a class="site-prevnext-link" href="crash-track-04.html" aria-label="Previous volume: Crash: Distributed Training"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">Crash: Distributed Training</span></a></div><div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span><a class="site-prevnext-link" href="crash-track-06.html" aria-label="Next volume: Crash: Agent Systems"><span class="site-prevnext-title">Crash: Agent Systems</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></nav></div><div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep" aria-hidden="true">/</span><span>Crash packs</span><span class="bc-sep" aria-hidden="true">/</span><span class="bc-current" aria-current="page">Crash: Evals and Safety</span></nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Browse all volumes</span></button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span><button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul><div><h4>S30 AI Lab</h4><ul><li><a href="16-s30-atlas.html"><span class="site-nav-num">40</span><span class="site-nav-title">S30 Atlas: 15-Week Lab Map</span></a></li><li><a href="17-s30-python-data.html"><span class="site-nav-num">41</span><span class="site-nav-title">Python and Data Tools</span></a></li><li><a href="18-s30-math-for-ml.html"><span class="site-nav-num">42</span><span class="site-nav-title">Math for ML (S30)</span></a></li><li><a href="19-s30-classical-ml.html"><span class="site-nav-num">43</span><span class="site-nav-title">Classical ML</span></a></li><li><a href="20-s30-evaluation-debugging.html"><span class="site-nav-num">44</span><span class="site-nav-title">Evaluation and Debugging</span></a></li><li><a href="21-s30-deep-learning.html"><span class="site-nav-num">45</span><span class="site-nav-title">Deep Learning (S30)</span></a></li><li><a href="22-s30-cv-nlp-basics.html"><span class="site-nav-num">46</span><span class="site-nav-title">CV and NLP Basics</span></a></li><li><a href="23-s30-transformers.html"><span class="site-nav-num">47</span><span class="site-nav-title">Transformers</span></a></li><li><a href="24-s30-rag-retrieval.html"><span class="site-nav-num">48</span><span class="site-nav-title">RAG and Retrieval</span></a></li><li><a href="25-s30-mlops-systems.html"><span class="site-nav-num">49</span><span class="site-nav-title">MLOps and Systems</span></a></li><li><a href="26-s30-system-design.html"><span class="site-nav-num">50</span><span class="site-nav-title">System Design (S30)</span></a></li><li><a href="27-s30-llm-agentic.html"><span class="site-nav-num">51</span><span class="site-nav-title">LLM and Agentic AI</span></a></li><li><a href="28-s30-interview-clearance.html"><span class="site-nav-num">52</span><span class="site-nav-title">Interview Clearance</span></a></li></ul></div></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html" class="site-nav-current"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div></header>
 <h1 id="evals-and-safety-engineering-the-crash-pack">Evals and Safety Engineering: The Crash Pack</h1>
 <p>One volume. Zero fluff. Everything in this pack is a job decision, a number you must recall cold, or a trap that burned real teams. It compresses Role Track 5 (eval suite architecture,
 autorater science, red-teaming, mitigations, measurement, incident response)
@@ -1476,7 +1543,7 @@ instrument failure, not model failure. Do not block the release on a broken inst
     <li><a href="https://genai.owasp.org">OWASP GenAI Top 10 <svg class="ext-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="go-deeper-note">The standard catalog of LLM application risks: what the red-team loop in this pack hunts for.</span></li>
   </ul>
 </section>
-<div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html" class="foot-current">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav><p class="foot-colophon"><span>LLM Knowledge Base</span><span class="foot-sep" aria-hidden="true">/</span><span>Sept 2026 edition</span><span class="foot-sep" aria-hidden="true">/</span><span>Set in Charis SIL</span></p></footer>
+<div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul><div class="foot-group"><h4>S30 AI Lab</h4><ul><li><a href="16-s30-atlas.html">S30 Atlas: 15-Week Lab Map</a></li><li><a href="17-s30-python-data.html">Python and Data Tools</a></li><li><a href="18-s30-math-for-ml.html">Math for ML (S30)</a></li><li><a href="19-s30-classical-ml.html">Classical ML</a></li><li><a href="20-s30-evaluation-debugging.html">Evaluation and Debugging</a></li><li><a href="21-s30-deep-learning.html">Deep Learning (S30)</a></li><li><a href="22-s30-cv-nlp-basics.html">CV and NLP Basics</a></li><li><a href="23-s30-transformers.html">Transformers</a></li><li><a href="24-s30-rag-retrieval.html">RAG and Retrieval</a></li><li><a href="25-s30-mlops-systems.html">MLOps and Systems</a></li><li><a href="26-s30-system-design.html">System Design (S30)</a></li><li><a href="27-s30-llm-agentic.html">LLM and Agentic AI</a></li><li><a href="28-s30-interview-clearance.html">Interview Clearance</a></li></ul></div></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html" class="foot-current">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav><p class="foot-colophon"><span>LLM Knowledge Base</span><span class="foot-sep" aria-hidden="true">/</span><span>Sept 2026 edition</span><span class="foot-sep" aria-hidden="true">/</span><span>Set in Charis SIL</span></p></footer>
 </main>
 <script>
 /* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
@@ -1747,7 +1814,7 @@ document.querySelectorAll('.pq').forEach(function(pq){
 
 <!-- experience-layer:js -->
 <script>
-/* ==== Experience layer behavior — additive ====
+/* ==== Experience layer behavior — additive ==== (v2, 2026-10-05)
  * Calm, GPU-friendly page motion for study volumes. No-JS safe: every hidden
  * state in experience.css is gated on `html.xp-js`, which only this script
  * adds — without it the page is fully readable. Respects
@@ -1757,11 +1824,15 @@ document.querySelectorAll('.pq').forEach(function(pq){
  *  1. Hero parallax — detects the volume hero (.banner/.hero, else wraps the
  *     h1 + lede block in .xp-hero) and drifts it gently as the reader
  *     scrolls on. Transform/opacity only, rAF-throttled, passive listener.
- *  2. Scroll reveals — one IntersectionObserver fades+rises figures, key
+ *  2. Figure parallax — gentle --px drift on `figure img` (images only),
+ *     proportional to each image's distance from the viewport center.
+ *     The CSS clips the drift inside the figure: zero layout shift.
+ *  3. Scroll reveals — one IntersectionObserver fades+rises figures, key
  *     callouts and knowledge checks exactly once. Elements already in view
  *     on load appear immediately (no load flash).
- *  3. Nothing else: progress bar, scroll-spy, sidebar, quiz toggles are
- *     owned by ds.js and are left untouched.
+ * Jobs 1+2 share one rAF-throttled scroll listener. Nothing else:
+ * progress bar, scroll-spy, sidebar, quiz toggles are owned by ds.js and
+ * are left untouched.
  *
  * (In the assembly snippet the closing element tags are written literally;
  * inside this file they are escaped as <\/style> / <\/script> so the file
@@ -1784,7 +1855,7 @@ document.querySelectorAll('.pq').forEach(function(pq){
      readable. */
   root.classList.add('xp-js');
 
-  /* ---------------- 1. Hero detection + gentle parallax ---------------- */
+  /* ---------------- 1. Hero detection ---------------- */
   var hero = document.querySelector('.banner, .hero');
   if (!hero) {
     /* No banner hero: wrap the volume title (h1) plus its lede paragraphs
@@ -1813,14 +1884,24 @@ document.querySelectorAll('.pq').forEach(function(pq){
     }
   }
 
-  var heroH = 0, ticking = false, pxOn = false;
+  /* ---------------- 2. Figure parallax targets ---------------- */
+  var pxImgs = [];
+  Array.prototype.forEach.call(document.querySelectorAll('figure img'), function (img) {
+    var fig = img.closest ? img.closest('figure') : null;
+    if (fig) {
+      fig.classList.add('xp-px'); /* CSS clips the drift: no layout shift */
+      pxImgs.push(img);
+    }
+  });
+
+  /* ---------------- shared rAF-throttled scroll renderer ---------------- */
+  var heroH = 0, ticking = false, heroPxOn = false;
   function measure() { heroH = hero ? hero.offsetHeight : 0; }
-  function render() {
-    ticking = false;
+
+  function renderHero(y) {
     if (!hero || !heroH) { return; }
-    var y = window.pageYOffset || root.scrollTop || 0;
     if (y <= 0) {
-      if (pxOn) { hero.style.transform = ''; hero.style.opacity = ''; pxOn = false; }
+      if (heroPxOn) { hero.style.transform = ''; hero.style.opacity = ''; heroPxOn = false; }
       return;
     }
     var range = heroH * 1.4;
@@ -1830,24 +1911,43 @@ document.querySelectorAll('.pq').forEach(function(pq){
       var k = Math.min(y / range, 1);
       hero.style.transform = 'translate3d(0,' + (-y * 0.06).toFixed(1) + 'px,0)';
       hero.style.opacity = (1 - k * 0.22).toFixed(3);
-      pxOn = true;
-    } else if (pxOn) {
+      heroPxOn = true;
+    } else if (heroPxOn) {
       hero.style.transform = '';
       hero.style.opacity = '';
-      pxOn = false;
+      heroPxOn = false;
     }
+  }
+
+  function renderFigures() {
+    if (!pxImgs.length) { return; }
+    var vh = window.innerHeight || 800;
+    for (var i = 0; i < pxImgs.length; i++) {
+      var img = pxImgs[i];
+      var r = img.getBoundingClientRect();
+      if (r.bottom < -80 || r.top > vh + 80) { continue; } /* off-screen: skip */
+      var center = (r.top + r.height / 2) - vh / 2;
+      img.style.setProperty('--px', (center * -0.04).toFixed(1) + 'px');
+    }
+  }
+
+  function render() {
+    ticking = false;
+    var y = window.pageYOffset || root.scrollTop || 0;
+    renderHero(y);
+    renderFigures();
   }
   function requestRender() {
     if (!ticking) { ticking = true; window.requestAnimationFrame(render); }
   }
-  if (hero) {
+  if (hero || pxImgs.length) {
     measure();
     render();
     window.addEventListener('scroll', requestRender, { passive: true });
     window.addEventListener('resize', function () { measure(); requestRender(); });
   }
 
-  /* ---------------- 2. Scroll-triggered reveals ---------------- */
+  /* ---------------- 3. Scroll-triggered reveals ---------------- */
   var SELECTOR = [
     'figure',
     '.takeaway', '.exam-ask', '.trapbox', '.trap', '.board',
