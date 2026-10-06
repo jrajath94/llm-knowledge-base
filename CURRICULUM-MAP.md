@@ -34,7 +34,8 @@ Most demanded across the index: Python, distributed training, experiment design,
 | 11 | Research methods | `11-research-methods.html` | NEW |
 | 12 | Guided paper spine | `12-paper-spine.html` | NEW |
 | 13 | ML system design | `13-ml-system-design.html` | NEW |
-| 14 | Behavioral for research roles | `14-behavioral-research.html` | NEW |
+| 14 | Communicating research | `14-communicating-research.html` | NEW (renamed from `14-behavioral-research.html`, Sept 2026) |
+| 15 | GPU kernels | `15-gpu-kernels.html` | NEW |
 | 16 | S30 Atlas: the 15-week lab map | `16-s30-atlas.html` | NEW (S30 integration) |
 | 17 | Python and Data: the research engineer's toolkit | `17-s30-python-data.html` | NEW (S30 integration) |
 | 18 | Math for ML: the machinery underneath | `18-s30-math-for-ml.html` | NEW (S30 integration) |
