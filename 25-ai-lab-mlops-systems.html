@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLOps and Systems: From Notebook to Production</title>
+<style>
+
+/* Research-Engineer Curriculum: shared design system (dark, Hallmark discipline)
+   Source of truth. Writers INLINE this file into each volume's <head> inside <style>.
+   Font files live in fonts/ relative to the site root (each HTML is at the root,
+   so the inlined url(fonts/...) resolves correctly from file:// with no network).
+   Tokens (exact, do not improvise): pitch-black dark mode. */
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:400;font-display:swap;
+  src:url(fonts/charis-sil-400italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:normal;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Charis SIL";font-style:italic;font-weight:700;font-display:swap;
+  src:url(fonts/charis-sil-700italic-latext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{
+  --bg:#000000; --surface:#0d0d0d; --border:#262626;
+  --text:#ececec; --muted:#a8a8a8; --faint:#8a8a8a;
+  --accent:#f0b429; --accent-ink:#000000; --link:#6cb2ff; --code-bg:#111111;
+  --font-body:"Charis SIL",Georgia,"Times New Roman",serif;
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-code:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.75 var(--font-body);-webkit-font-smoothing:antialiased}
+p{text-align:justify;hyphens:auto;margin:.85rem 0}
+h1,h2,h3,h4{font-style:normal;line-height:1.3;letter-spacing:-.01em;margin:2.2rem 0 .8rem;color:var(--text)}
+h1{font-size:2rem;font-weight:800}
+h2{font-size:1.5rem;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+h3{font-size:1.2rem;font-weight:700}
+h4{font-size:1.05rem;font-weight:700}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:.2rem}
+ul,ol{margin:.7rem 0;padding-left:1.6rem}
+li{margin:.3rem 0}
+li::marker{color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;display:block;overflow-x:auto}
+thead,tbody,tr{display:table;width:100%;table-layout:fixed}
+th,td{border:1px solid var(--border);padding:.6rem .75rem;text-align:left;vertical-align:top}
+th{background:var(--surface);font-weight:700}
+code{font-family:var(--font-code);background:var(--code-bg);border:1px solid var(--border);padding:.08rem .35rem;border-radius:.3rem;font-size:.88em}
+p code,li code,td code,th code{overflow-wrap:break-word;word-break:break-word}
+pre{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:.6rem;padding:1rem 1.1rem;overflow-x:auto;font-size:.88rem;line-height:1.6;margin:1.1rem 0}
+pre code{background:none;border:none;padding:0;font-size:1em}
+pre.ascii{background:#0a0a0a;color:#d8d8d8}
+figure{margin:1.5rem 0;border:1px solid var(--border);border-radius:.7rem;padding:1rem;background:var(--surface)}
+figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:.3rem}
+.ds-content img{max-width:100%;height:auto} /* bare <img> in <p> must never overflow */
+figcaption{font-size:.9rem;color:var(--muted);margin-top:.7rem;text-align:left}
+details{border:1px solid var(--border);border-radius:.6rem;padding:.75rem 1.05rem;margin:.9rem 0;background:var(--surface)}
+summary{cursor:pointer;font-weight:600;color:var(--text)}
+dfn{font-style:normal;font-weight:600;border-bottom:2px dotted var(--accent);cursor:help}
+blockquote{border-left:3px solid var(--accent);margin:1.1rem 0;padding:.6rem 1rem;background:var(--surface);border-radius:0 .5rem .5rem 0}
+blockquote p{margin:.4rem 0}
+
+/* ---- layout: sidebar + content ---- */
+.ds-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60}
+.ds-menu-btn{display:none;position:fixed;top:.7rem;left:.7rem;z-index:55;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:.5rem;font-family:var(--font-ui);font-size:1.2rem;padding:.35rem .7rem;cursor:pointer}
+.ds-sidebar{position:fixed;top:0;left:0;bottom:0;width:19rem;background:var(--surface);border-right:1px solid var(--border);z-index:50;display:flex;flex-direction:column}
+.ds-side-head{padding:1.1rem 1.1rem .8rem;border-bottom:1px solid var(--border)}
+.ds-side-eyebrow{margin:0;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ds-side-title{margin:.3rem 0 .7rem;font-family:var(--font-ui);font-size:1.02rem;font-weight:700;line-height:1.35}
+.ds-side-search{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:400 .88rem/1.4 var(--font-ui);padding:.5rem .7rem}
+.ds-side-search::placeholder{color:var(--muted)}
+.ds-nav{flex:1;overflow-y:auto;padding:.7rem .6rem}
+.ds-nav ul{list-style:none;margin:0;padding:0}
+.ds-nav-group{margin-bottom:.35rem}
+.ds-nav-group>button{width:100%;text-align:left;background:none;border:none;color:var(--text);font:700 .86rem/1.4 var(--font-ui);padding:.45rem .55rem;border-radius:.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+.ds-nav-group>button:hover{background:#161616}
+.ds-nav-group>button .ds-caret{color:var(--muted);font-size:.75rem}
+.ds-nav-items{list-style:none;margin:0;padding:0 0 .3rem .4rem}
+.ds-nav-items a{display:flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-family:var(--font-ui);font-size:.85rem;line-height:1.45;padding:.32rem .55rem;border-radius:.4rem;border-left:2px solid transparent}
+.ds-nav-items a:hover{color:var(--text);background:#161616}
+.ds-nav-items a.ds-active{color:var(--text);border-left-color:var(--accent);background:#161616}
+.ds-check{flex:none;width:.95rem;height:.95rem;accent-color:var(--accent);cursor:pointer}
+.ds-nav-empty{color:var(--muted);font-size:.85rem;padding:.5rem}
+.ds-side-foot{border-top:1px solid var(--border);padding:.7rem 1.1rem;font-family:var(--font-ui);font-size:.8rem;color:var(--muted)}
+.ds-scrim{display:none}
+.ds-content{margin-left:19rem;padding:0 2rem;max-width:calc(72ch + 4rem)}
+.ds-content>*{max-width:72ch}
+.ds-content table,.ds-content figure,.ds-content pre{max-width:72ch}
+.ds-chapter-nav{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid var(--border);margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-chapter-nav a{text-decoration:none;font-weight:600}
+.ds-chapter-nav .ds-prev{text-align:left}
+.ds-chapter-nav .ds-next{text-align:right}
+.ds-kbd-hint{font-family:var(--font-ui);font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+/* ---- learning components ---- */
+.walkthrough{background:#101010;border:1px solid var(--border);border-radius:.55rem;padding:.85rem 1.05rem;margin-top:.9rem;font-size:.93rem}
+.walkthrough strong{color:var(--text)}
+.walkthrough ol{margin:.45rem 0;padding-left:1.35rem}
+.walkthrough li{margin:.32rem 0}
+.walkthrough p{text-align:left}
+.ob-board{background:#0e0c06;border:1px solid #4a3a12;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.ob-board h4{margin:.1rem 0 .5rem;font-size:1rem;color:var(--accent)}
+.ob-board ul{margin:.4rem 0;padding-left:1.3rem}
+.takeaway{background:#0b0f0b;border:1px solid #1f3a24;border-radius:.65rem;padding:1rem 1.2rem;margin:1.3rem 0}
+.takeaway h4{margin:.1rem 0 .5rem;font-size:1rem;color:#7fd08a}
+.callout{border-left:4px solid var(--link);background:var(--surface);padding:.85rem 1.1rem;margin:1.15rem 0;border-radius:0 .55rem .55rem 0}
+.callout.warn{border-left-color:var(--accent)}
+.callout p{text-align:left;margin:.45rem 0}
+.provenance{border:1px dashed var(--border);border-radius:.6rem;padding:.8rem 1.05rem;margin:1.2rem 0;font-size:.88rem;color:var(--muted);background:#0a0a0a}
+.provenance strong{color:var(--text)}
+.provenance .uv{color:var(--accent);font-weight:700}
+.pq{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--surface)}
+.pq-q{margin:.1rem 0 .7rem;text-align:left}
+.pq-reveal{background:var(--accent);border:none;color:#000;font:700 .88rem/1 var(--font-ui);padding:.55rem 1rem;border-radius:.45rem;cursor:pointer}
+.pq-reveal:hover{filter:brightness(1.08)}
+.pq-a{margin-top:.9rem;border-top:1px solid var(--border);padding-top:.8rem}
+.pq-a ul{margin:.5rem 0}
+.pq-opt-right{color:#7fd08a}
+.pq-opt-wrong{color:#e08080}
+.ds-copy-btn{position:absolute;top:.5rem;right:.5rem;background:#1c1c1c;border:1px solid var(--border);color:var(--muted);font:600 .75rem/1 var(--font-ui);padding:.4rem .65rem;border-radius:.4rem;cursor:pointer}
+.ds-copy-btn:hover{color:var(--text);border-color:var(--accent)}
+.lab{border:1px solid var(--border);border-radius:.65rem;padding:1rem 1.15rem;margin:1.2rem 0;background:#0b0b0b}
+.lab h4{margin:.1rem 0 .5rem;color:var(--accent)}
+
+/* ---- responsive: sidebar becomes drawer ---- */
+@media(max-width:56rem){
+  .ds-sidebar{transform:translateX(-105%);transition:transform .25s ease;width:17.5rem}
+  body.ds-nav-open .ds-sidebar{transform:none;z-index:56} /* above the menu button so it never overlaps the eyebrow */
+  .ds-menu-btn{display:block}
+  .ds-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:45}
+  body.ds-nav-open .ds-scrim{display:block}
+  .ds-content{margin-left:0;padding:0 1.1rem}
+}
+@media(min-width:56.01rem){.ds-scrim{display:none!important}}
+
+
+/* Hallmark · pre-emit critique: P4 H4 E5 S5 R5 V5
+   Hallmark · macrostructure: newspaper-masthead chrome (N6 nav + Ft1 footer)
+   nav: N6 (knobs: issue-line=above, wordmark=left 2xl, rule=double) ·
+   footer: Ft1 (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+   slop: pass (42-45) · contrast: pass (40-41) · honest: pass (46) · chrome: pass (47) ·
+   tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50-57) */
+/* Hallmark · genre: editorial · verb: redesign · scope: chrome-only
+ * nav: N6 Newspaper masthead (knobs: issue-line=above, wordmark=left 2xl, rule=double)
+ * footer: Ft1 Mast-headed (knobs: wordmark=xl, tagline=roman, index=grouped hierarchy)
+ * Tokens preserved: --font-body/--font-ui (Charis SIL), full colour system.
+ * 4pt spacing rhythm; hairline dividers; hand-drawn SVG chevrons; no gradients. */
+
+/* ---- site header: N6 newspaper masthead ---- */
+.site-header{position:sticky;top:0;z-index:40;background:var(--bg);margin:0 0 2rem;max-width:72ch}
+.mast-line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:0;padding:.75rem 0 .5rem;font:600 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mast-line-right{color:var(--faint);white-space:nowrap}
+.mast-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:.75rem}
+.mast-name{font:800 1.5rem/1.15 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.mast-name:hover{color:var(--accent)}
+.site-prevnext{display:flex;gap:1.5rem;flex:none}
+.site-prevnext-group{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.site-prevnext-next{align-items:flex-end;text-align:right}
+.site-prevnext-kicker{font:600 .68rem/1.3 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.site-prevnext-link{display:inline-flex;align-items:center;gap:.4rem;font:600 .85rem/1.4 var(--font-ui);color:var(--text);text-decoration:none;max-width:15rem;min-height:1.75rem}
+.site-prevnext-link .chev{width:.8rem;height:.8rem;flex:none;color:var(--accent)}
+.site-prevnext-link:hover{color:var(--accent)}
+.site-prevnext-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-prevnext-empty{font:400 .85rem/1.75 var(--font-ui);color:var(--faint)}
+.mast-sub{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.25rem 0 .75rem}
+.breadcrumbs{font:400 .78rem/1.5 var(--font-ui);color:var(--muted);margin:0;min-width:0}
+.breadcrumbs a{color:var(--muted);text-decoration:none}
+.breadcrumbs a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.breadcrumbs .bc-sep{margin:0 .4rem;color:var(--faint)}
+.breadcrumbs .bc-current{color:var(--text)}
+.site-nav-toggle{display:inline-flex;align-items:center;gap:.5rem;flex:none;white-space:nowrap;background:none;border:1px solid var(--border);border-radius:.5rem;color:var(--text);font:600 .82rem/1.4 var(--font-ui);padding:.55rem .9rem;cursor:pointer;min-height:2.5rem}
+.site-nav-toggle:active,.site-nav-close:active,.watch-speed:active{transform:translateY(1px)}
+.site-nav-toggle .chev{width:.75rem;height:.75rem;color:var(--accent);transition:transform .25s var(--ease-out)}
+.site-nav-toggle:hover{border-color:var(--accent)}
+.site-nav-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.mast-rule-double{border:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:4px;margin:0}
+
+/* collapsible volume panel (desktop): smooth 0fr/1fr reveal */
+.site-nav-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease-out)}
+.site-nav-panel.is-open{grid-template-rows:1fr}
+.site-nav-panel-inner{overflow:hidden;min-height:0}
+.site-nav-drawer-head{display:none}
+.site-nav-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:1.25rem;max-height:70vh;overflow-y:auto;padding:1.25rem 0}
+.site-nav-groups h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.site-nav-groups ul{list-style:none;margin:0;padding:0}
+.site-nav-groups li{margin:0}
+.site-nav-groups a{display:flex;gap:.6rem;align-items:baseline;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0;border-radius:.25rem}
+.site-nav-groups a:hover{color:var(--text)}
+.site-nav-groups .site-nav-num{font:600 .72rem/1.6 var(--font-ui);color:var(--faint);min-width:1.75rem;flex:none}
+.site-nav-groups a.site-nav-current{color:var(--accent);font-weight:600}
+.site-nav-groups a.site-nav-current .site-nav-num{color:var(--accent)}
+.site-nav-scrim{display:none}
+
+/* ---- site footer: Ft1 mast-headed + grouped index ---- */
+.site-footer{margin:3.5rem 0 0;padding:0 0 3rem;max-width:72ch}
+.foot-mast{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.75rem 0 1.5rem;margin-bottom:2rem}
+.foot-name{font:800 1.25rem/1.2 var(--font-body);letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.foot-name:hover{color:var(--accent)}
+.foot-tag{font:400 .88rem/1.6 var(--font-ui);color:var(--muted);max-width:52ch;margin:.6rem 0 0;text-align:left}
+.foot-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.5rem;margin-bottom:2rem}
+.foot-group h4{font:700 .72rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.foot-group ul{list-style:none;margin:0;padding:0}
+.foot-group li{margin:0}
+.foot-group a{display:block;font:400 .85rem/1.5 var(--font-ui);color:var(--muted);text-decoration:none;padding:.28rem 0}
+.foot-group a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.foot-group a.foot-current{color:var(--accent);font-weight:600}
+.foot-colophon{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;margin:0;padding-top:1.25rem;border-top:1px solid var(--border);font:400 .78rem/1.6 var(--font-ui);color:var(--faint);text-align:left}
+.foot-colophon .foot-sep{color:var(--faint)}
+
+/* ---- mobile: drawer + compact chrome (<=40rem) ---- */
+@media(max-width:40rem){
+  .mast-line-right{display:none}
+  .mast-row{flex-wrap:wrap;row-gap:.5rem}
+  .site-prevnext{width:100%;justify-content:space-between;gap:.75rem}
+  .site-prevnext-link{max-width:44vw}
+  .site-prevnext-title{display:none}
+  .mast-sub{flex-wrap:wrap}
+  .site-nav-toggle{width:100%;justify-content:center}
+  /* volume nav becomes a fixed drawer: no layout shift, closes on link tap / scrim / Escape */
+  .site-nav-panel{position:fixed;top:0;left:0;bottom:0;width:min(20rem,88vw);z-index:70;display:block;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-104%);transition:transform .3s var(--ease-out)}
+  .site-nav-panel.is-open{transform:none}
+  .site-nav-panel-inner{height:100%;overflow-y:auto;padding:1.25rem 1.25rem 2rem}
+  .site-nav-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+  .site-nav-drawer-head span{font:600 .75rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+  .site-nav-close{background:none;border:1px solid var(--border);border-radius:.45rem;color:var(--text);font:600 .8rem/1 var(--font-ui);padding:.55rem .85rem;cursor:pointer;min-height:2.75rem}
+  .site-nav-close:hover{border-color:var(--accent)}
+  .site-nav-groups{display:block;max-height:none;overflow:visible;padding:0}
+  .site-nav-groups>div{margin-bottom:1.25rem}
+  .site-nav-scrim{display:block;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .site-nav-scrim.is-open{opacity:1;pointer-events:auto}
+  body.site-nav-open{overflow:clip}
+  .foot-index{gap:1.25rem}
+}
+@media(max-width:56rem){
+  .site-header{padding-left:2.9rem} /* clear the fixed section-drawer menu button */
+}
+@media print{
+  .site-header,.site-footer,.site-nav-scrim{display:none!important}
+  .watch-deeper .watch-frame{display:none}
+}
+
+/* ---- Watch and go deeper (content section skeleton; downstream fills real videos/links) ---- */
+.watch-deeper{margin:3rem 0 0;padding:2rem 0 0;border-top:1px solid var(--border);max-width:72ch}
+.watch-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem}
+.watch-deeper-lede{font:400 .95rem/1.6 var(--font-ui);color:var(--muted);margin:0 0 1.25rem;text-align:left}
+.watch-deeper-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem;margin:0 0 1.75rem}
+.watch-card{margin:0;border:1px solid var(--border);border-radius:.6rem;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.watch-frame{aspect-ratio:16/9;background:var(--bg)}
+.watch-frame iframe{width:100%;height:100%;border:0;display:block}
+.watch-card figcaption{padding:.85rem 1rem 1rem;font:400 .85rem/1.55 var(--font-ui);color:var(--muted);text-align:left}
+.watch-card figcaption strong{display:block;color:var(--text);font-weight:700;margin-bottom:.25rem}
+.go-deeper-kicker{font:700 .78rem/1.4 var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--text);margin:0 0 .5rem}
+.go-deeper-list{list-style:none;margin:0;padding:0}
+.go-deeper-list li{display:flex;gap:.6rem;align-items:baseline;padding:.5rem 0;border-top:1px solid var(--border)}
+.go-deeper-list li:last-child{border-bottom:1px solid var(--border)}
+.go-deeper-list a{font:600 .9rem/1.5 var(--font-ui);color:var(--text);text-decoration:none;flex:none;display:inline-flex;align-items:center;gap:.35rem}
+.go-deeper-list a:hover{color:var(--accent)}
+.go-deeper-list a:hover .ext-arrow{color:var(--accent)}
+.go-deeper-list .ext-arrow{width:.7rem;height:.7rem;color:var(--muted);flex:none}
+.go-deeper-list .go-deeper-note{font:400 .85rem/1.55 var(--font-ui);color:var(--muted)}
+
+/* speed-control bar (injected by the site script only when the YouTube IFrame
+   Player API loads; the iframe alone keeps working when it does not) */
+.watch-speedbar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;padding:.6rem .9rem;border-top:1px solid var(--border)}
+.watch-speedbar-label{font:600 .68rem/1.4 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.watch-speed{background:none;border:1px solid var(--border);border-radius:.4rem;color:var(--muted);font:600 .78rem/1 var(--font-ui);padding:.45rem .6rem;cursor:pointer;min-height:2rem}
+.watch-speed:hover{color:var(--text);border-color:var(--accent)}
+.watch-speed[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* motion respects the reader: no sliding drawers or expanding panels for reduced-motion users */
+@media (prefers-reduced-motion:reduce){
+  .ds-sidebar,.site-nav-toggle .chev,.site-nav-panel,.site-nav-scrim{transition:none}
+}
+
+/* ---- print ---- */
+@media print{
+  .ds-sidebar,.ds-menu-btn,.ds-progress,.ds-scrim,.ds-chapter-nav,.ds-copy-btn{display:none!important}
+  .ds-content{margin:0;max-width:100%;padding:0}
+  body{background:#fff;color:#000;font-size:12pt;line-height:1.6}
+  p{text-align:left}
+  h1,h2,h3,h4,a{color:#000}
+  pre,figure,details,.lab,.ob-board,.takeaway,.callout,.walkthrough,.pq{background:#fff;border-color:#999;break-inside:avoid}
+  code{background:#f0f0f0;border-color:#999;color:#000}
+}
+
+
+</style>
+<style>
+
+/* AI Lab integration layer (additive, uses design tokens only) */
+.diff{display:inline-block;font-family:var(--font-ui);font-size:.72rem;font-weight:700;
+  letter-spacing:.04em;padding:.18rem .6rem;border-radius:999px;border:1px solid var(--border);
+  vertical-align:middle;margin-left:.6rem;text-transform:uppercase}
+.diff-easy{color:#7fd08a;border-color:#2c5a34;background:#0f1f13}
+.diff-medium{color:#f0b429;border-color:#6b5518;background:#1f1a0c}
+.diff-hard{color:#ff9d6b;border-color:#6e3d1e;background:#20130c}
+.diff-expert{color:#ff7b8a;border-color:#6e2430;background:#200f13}
+.lab-meta{font-family:var(--font-ui);font-size:.86rem;color:var(--muted)}
+.tags{margin:.8rem 0}
+.tagchip{display:inline-block;font-family:var(--font-ui);font-size:.78rem;color:var(--muted);
+  border:1px solid var(--border);border-radius:999px;padding:.15rem .65rem;margin:.15rem .25rem .15rem 0}
+.tagchip.co{color:var(--accent);border-color:var(--accent)}
+details.task{border:1px solid var(--border);border-radius:.6rem;padding:.7rem 1rem;margin:.7rem 0;background:#0b0b0b}
+details.task>summary{cursor:pointer;font-weight:700}
+details.task>summary .task-n{font-family:var(--font-ui);font-size:.75rem;color:var(--accent);
+  border:1px solid var(--accent);border-radius:.35rem;padding:.1rem .45rem;margin-right:.6rem}
+.task-sec{font-weight:400;color:var(--muted);font-size:.85rem}
+.task-body{padding-top:.6rem}
+details.hints,details.solution{margin:.8rem 0}
+details.hints>summary,details.solution>summary{cursor:pointer;font-weight:600;color:var(--link)}
+.diagram-walkthrough{background:var(--surface);border:1px solid var(--border);border-radius:.6rem;
+  padding:.8rem 1.1rem;margin:0 0 1.6rem}
+.diagram-walkthrough h4{margin:.2rem 0 .5rem}
+.diagram-walkthrough ol{margin:.4rem 0;padding-left:1.5rem}
+figure.diagram svg{max-width:100%;height:auto;display:block;margin:0 auto;background:#0a0a0a;border-radius:.4rem}
+.fig-src{color:var(--faint);font-size:.82rem}
+.site-header{border-bottom:1px solid var(--border);padding:1.2rem 0 .8rem;margin-bottom:1.6rem}
+.mast-line{display:flex;justify-content:space-between;font-family:var(--font-ui);font-size:.78rem;
+  color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin:0 0 1rem;text-align:left}
+.ai-lab-hero-lede{font-size:1.12rem;color:var(--muted);max-width:60ch;text-align:left}
+.hero-stats{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.2rem 0}
+.hero-stat{font-family:var(--font-ui);font-size:.85rem;border:1px solid var(--border);border-radius:.5rem;
+  padding:.45rem .8rem;background:var(--surface)}
+.hero-stat b{color:var(--accent)}
+.lab-tabs{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:.5rem 0;margin:0 0 1.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.lab-tabs button{font-family:var(--font-ui);font-size:.8rem;background:var(--surface);color:var(--text);
+  border:1px solid var(--border);border-radius:999px;padding:.3rem .75rem;cursor:pointer}
+.lab-tabs button:hover,.lab-tabs button.on{border-color:var(--accent);color:var(--accent)}
+section.lab{scroll-margin-top:4.5rem}
+.ds-volume-nav{display:flex;justify-content:space-between;gap:1rem;border-top:2px solid var(--accent);
+  margin:3rem 0 0;padding:1.4rem 0;max-width:72ch}
+.ds-volume-nav a{text-decoration:none;font-weight:700;font-family:var(--font-ui)}
+.ds-volume-nav .ds-prev{text-align:left}
+.ds-volume-nav .ds-next{text-align:right}
+.ds-volume-nav span{display:block;font-size:.78rem;color:var(--muted);font-weight:400}
+.provenance-inline{font-size:.82rem;color:var(--faint)}
+pre.ascii{background:#0a0a0a}
+@media (max-width:560px){.mast-line{flex-direction:column;gap:.2rem}}
+
+
+</style>
+<!-- experience-layer:css -->
+<style>
+/* Hallmark · pre-emit critique: P5 H4 E5 S4 R5 V5
+ * World-class upgrade v2 (2026-10-05): adds reading measure (§7), figure
+ * parallax (§8), volume pager footer (§9). Additive only — never edits
+ * content markup or DS chrome; references DS tokens only (--accent,
+ * --border, --text, --muted). No new colors, no gradients, no filler.
+ *
+ * Motion stance: calm delight. Opacity/translate only (GPU-friendly),
+ * one IntersectionObserver, one rAF-throttled scroll listener, zero layout
+ * shift, prefers-reduced-motion respected, fully usable with JS disabled
+ * (every hidden state is gated on html.xp-js, which only this layer's
+ * companion script adds).
+ *
+ * Wiring (final assembly, per volume — same model as ds.css/ds.js):
+ *   1. In <head>, AFTER the DS style block, add:
+ *        <!-- experience-layer:css -->
+ *        <style>
+ *        …this file verbatim…
+ *        [close the style element]
+ *   2. Immediately before the document's LAST closing body tag (the real
+ *      one at the end of the file — some volumes mention a literal closing
+ *      body tag inside their docs prose; ignore those), AFTER the ds.js
+ *      script block, add:
+ *        <!-- experience-layer:js -->
+ *        <script>
+ *        …experience.js verbatim…
+ *        [close the script element]
+ * (Closing tags are written out in the assembly snippet, not here, so this
+ * file can be pasted verbatim without early-terminating its own element.)
+ * ========================================================================== */
+
+/* ---------- 1. Smooth anchor scrolling (motion-safe readers only) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ---------- 2. Scroll-triggered reveals ----------
+   Hidden state exists ONLY under html.xp-js. No-JS readers, print, and
+   reduced-motion users always see full content. Uses the independent
+   `translate` property (not `transform`) so hover feedback below composes
+   without specificity fights. Opacity + translate only: zero layout shift. */
+html.xp-js .xp-reveal {
+  opacity: 0;
+  translate: 0 14px;
+}
+html.xp-js .xp-reveal.xp-in {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 0.55s ease,
+    translate 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------- 3. Hero ---------- */
+/* Layout-neutral wrapper the script may add around a volume's title block.
+   Parallax itself is applied inline by the script (transform only). */
+.xp-hero {
+  position: relative;
+}
+
+/* ---------- 4. Calm hover feedback: cards + knowledge checks only ----------
+   translateY(-1px) + accent border. transform composes with the reveal's
+   independent `translate` property — no conflicts. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .pq,
+  .watch-card,
+  .ob-board,
+  .lab {
+    transition: transform 0.18s ease, border-color 0.18s ease;
+  }
+  .pq:hover,
+  .watch-card:hover,
+  .ob-board:hover,
+  .lab:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+  }
+  .pq:focus-within,
+  .watch-card:focus-within,
+  .ob-board:focus-within,
+  .lab:focus-within {
+    border-color: var(--accent);
+  }
+}
+
+/* ---------- 5. Reduced motion: everything static and visible ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.xp-js .xp-reveal {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+  .xp-hero {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  html.xp-js figure.xp-px img {
+    transform: none !important;
+  }
+  .pq,
+  .watch-card,
+  .ob-board,
+  .lab {
+    transition: none;
+  }
+}
+
+/* ---------- 6. Print: never hide content ---------- */
+@media print {
+  html.xp-js .xp-reveal {
+    opacity: 1 !important;
+    translate: 0 0 !important;
+    transition: none;
+  }
+  html.xp-js figure.xp-px img {
+    transform: none !important;
+  }
+  .xp-hero {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ---------- 7. Reading: justified prose, comfortable measure ----------
+   Additive: the DS already constrains the column to a 72ch measure.
+   Justification applies to content paragraphs only — chrome text (mast
+   lines, hero ledes, footers, nav, sidebars) keeps its own alignment. */
+#ds-content p,
+.ds-content p {
+  text-align: justify;
+  hyphens: auto;
+  line-height: 1.7;
+}
+.site-header p,
+.ai-lab-hero-lede,
+.hero-stats,
+.hero-stat,
+footer p,
+.site-nav-panel p,
+.ds-sidebar p,
+figcaption p,
+.breadcrumbs {
+  text-align: left;
+}
+
+/* ---------- 8. Figure parallax: gentle drift, images only ----------
+   The script sets --px on each figure img from its viewport position;
+   the figure clips the drift so nothing ever overflows or shifts layout.
+   Gated on html.xp-js like the reveals (no-JS = no transform at all). */
+html.xp-js figure.xp-px {
+  overflow: hidden;
+}
+html.xp-js figure.xp-px img {
+  transform: translateY(var(--px, 0px));
+  transition: transform 0.12s linear;
+  will-change: transform;
+}
+
+/* ---------- 9. Volume pager footer ----------
+   Shared pager used at the end of every volume (prev/next links).
+   Pages whose own stylesheet never defined it get this quiet default. */
+.vol-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 2.5rem 0 0;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+}
+.vol-foot a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+.vol-foot a:hover {
+  color: var(--accent);
+}
+@media (max-width: 40rem) {
+  .vol-foot {
+    flex-direction: column;
+  }
+}
+
+</style>
+</head>
+<body>
+<div class="ds-progress" id="dsProgress"></div>
+<button class="ds-menu-btn" id="dsMenuBtn" aria-label="Open navigation">&#9776;</button>
+<aside class="ds-sidebar" id="dsSidebar" aria-label="Volume navigation">
+<div class="ds-side-head">
+<p class="ds-side-eyebrow">Research-Engineer Curriculum</p>
+<p class="ds-side-title">Volume 25: MLOps and Systems: From Notebook to Production</p>
+<input class="ds-side-search" id="dsNavSearch" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+</div>
+<nav class="ds-nav" id="dsNav" aria-label="Sections"></nav>
+<div class="ds-side-foot"><span id="dsCompleteCount"></span></div>
+</aside>
+<div class="ds-scrim" id="dsScrim"></div>
+<main class="ds-content" id="dsContent">
+<header class="site-header hero">
+<p class="mast-line"><span>Research-Engineer Curriculum</span><span>Volume 25 of 28</span></p><div class="mast-row"><a class="mast-name" href="index.html">LLM Knowledge Base</a><nav class="site-prevnext" aria-label="Volume sequence"><div class="site-prevnext-group"><span class="site-prevnext-kicker">Previous volume</span><a class="site-prevnext-link" href="24-ai-lab-rag-retrieval.html" aria-label="Previous volume: RAG and Retrieval"><svg class="chev chev-l" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M7.6 2.4 4 6l3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="site-prevnext-title">RAG and Retrieval</span></a></div><div class="site-prevnext-group site-prevnext-next"><span class="site-prevnext-kicker">Next volume</span><a class="site-prevnext-link" href="26-ai-lab-system-design.html" aria-label="Next volume: System Design (AI Lab)"><span class="site-prevnext-title">System Design (AI Lab)</span><svg class="chev chev-r" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M4.4 2.4 8 6l-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></nav></div>
+<div class="mast-sub"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="bc-sep" aria-hidden="true">/</span><span>AI Lab</span><span class="bc-sep" aria-hidden="true">/</span><span class="bc-current" aria-current="page">MLOps and Systems</span></nav><button class="site-nav-toggle" id="siteNavToggle" aria-expanded="false" aria-controls="siteNavPanel"><svg class="chev chev-d" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.4 4.4 6 8l3.6-3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Browse all volumes</span></button></div><div class="site-nav-panel" id="siteNavPanel"><div class="site-nav-panel-inner"><div class="site-nav-drawer-head"><span>All volumes</span><button class="site-nav-close" id="siteNavClose">Close</button></div><div class="site-nav-groups"><div><h4>Start here</h4><ul><li><a href="index.html"><span class="site-nav-num">01</span><span class="site-nav-title">Home</span></a></li><li><a href="00-how-to-use.html"><span class="site-nav-num">02</span><span class="site-nav-title">How to Use This Curriculum</span></a></li></ul></div><div><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html"><span class="site-nav-num">03</span><span class="site-nav-title">Math for ML</span></a></li><li><a href="02-ml-foundations-bridge.html"><span class="site-nav-num">04</span><span class="site-nav-title">ML Foundations</span></a></li><li><a href="03-deep-learning-for-researchers.html"><span class="site-nav-num">05</span><span class="site-nav-title">Deep Learning for Researchers</span></a></li><li><a href="04-llm-internals.html"><span class="site-nav-num">06</span><span class="site-nav-title">LLM Internals</span></a></li><li><a href="05-pretraining.html"><span class="site-nav-num">07</span><span class="site-nav-title">Pre-training</span></a></li><li><a href="06-distributed-training.html"><span class="site-nav-num">08</span><span class="site-nav-title">Distributed Training</span></a></li><li><a href="07-post-training-rl.html"><span class="site-nav-num">09</span><span class="site-nav-title">Post-training and RL</span></a></li><li><a href="08-inference-serving-bridge.html"><span class="site-nav-num">10</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="09-agents-rag-guide.html"><span class="site-nav-num">11</span><span class="site-nav-title">Agents and RAG</span></a></li><li><a href="10-productionizing-mlops.html"><span class="site-nav-num">12</span><span class="site-nav-title">Productionizing and MLOps</span></a></li><li><a href="11-research-methods.html"><span class="site-nav-num">13</span><span class="site-nav-title">Research Methods</span></a></li><li><a href="12-paper-spine.html"><span class="site-nav-num">14</span><span class="site-nav-title">Guided Paper Spine</span></a></li><li><a href="13-ml-system-design.html"><span class="site-nav-num">15</span><span class="site-nav-title">ML System Design</span></a></li><li><a href="14-communicating-research.html"><span class="site-nav-num">16</span><span class="site-nav-title">Communicating Research</span></a></li><li><a href="15-gpu-kernels.html"><span class="site-nav-num">17</span><span class="site-nav-title">GPU Kernels</span></a></li></ul></div><div><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html"><span class="site-nav-num">40</span><span class="site-nav-title">AI Lab Atlas: 15-Week Lab Map</span></a></li><li><a href="17-ai-lab-python-data.html"><span class="site-nav-num">41</span><span class="site-nav-title">Python and Data Tools</span></a></li><li><a href="18-ai-lab-math-for-ml.html"><span class="site-nav-num">42</span><span class="site-nav-title">Math for ML (AI Lab)</span></a></li><li><a href="19-ai-lab-classical-ml.html"><span class="site-nav-num">43</span><span class="site-nav-title">Classical ML</span></a></li><li><a href="20-ai-lab-evaluation-debugging.html"><span class="site-nav-num">44</span><span class="site-nav-title">Evaluation and Debugging</span></a></li><li><a href="21-ai-lab-deep-learning.html"><span class="site-nav-num">45</span><span class="site-nav-title">Deep Learning (AI Lab)</span></a></li><li><a href="22-ai-lab-cv-nlp-basics.html"><span class="site-nav-num">46</span><span class="site-nav-title">CV and NLP Basics</span></a></li><li><a href="23-ai-lab-transformers.html"><span class="site-nav-num">47</span><span class="site-nav-title">Transformers</span></a></li><li><a href="24-ai-lab-rag-retrieval.html"><span class="site-nav-num">48</span><span class="site-nav-title">RAG and Retrieval</span></a></li><li><a href="25-ai-lab-mlops-systems.html" class="site-nav-current"><span class="site-nav-num">49</span><span class="site-nav-title">MLOps and Systems</span></a></li><li><a href="26-ai-lab-system-design.html"><span class="site-nav-num">50</span><span class="site-nav-title">System Design (AI Lab)</span></a></li><li><a href="27-ai-lab-llm-agentic.html"><span class="site-nav-num">51</span><span class="site-nav-title">LLM and Agentic AI</span></a></li><li><a href="28-ai-lab-interview-clearance.html"><span class="site-nav-num">52</span><span class="site-nav-title">Interview Clearance</span></a></li></ul></div><div><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html"><span class="site-nav-num">18</span><span class="site-nav-title">LLM Research Engineer</span></a></li><li><a href="track-02-post-training-alignment.html"><span class="site-nav-num">19</span><span class="site-nav-title">Post-training / Alignment</span></a></li><li><a href="track-03-inference-serving.html"><span class="site-nav-num">20</span><span class="site-nav-title">Inference and Serving</span></a></li><li><a href="track-04-distributed-training-systems.html"><span class="site-nav-num">21</span><span class="site-nav-title">Distributed Training Systems</span></a></li><li><a href="track-05-evals-safety.html"><span class="site-nav-num">22</span><span class="site-nav-title">Evals and Safety</span></a></li><li><a href="track-06-agent-systems.html"><span class="site-nav-num">23</span><span class="site-nav-title">Agent Systems</span></a></li><li><a href="track-07-forward-deployed-engineer.html"><span class="site-nav-num">24</span><span class="site-nav-title">Forward Deployed Engineer</span></a></li><li><a href="track-08-ai-engineer.html"><span class="site-nav-num">25</span><span class="site-nav-title">AI Engineer</span></a></li><li><a href="track-09-ml-engineer.html"><span class="site-nav-num">26</span><span class="site-nav-title">ML Engineer</span></a></li><li><a href="track-10-software-engineer.html"><span class="site-nav-num">27</span><span class="site-nav-title">SWE / Backend Systems</span></a></li></ul></div><div><h4>DSA track</h4><ul><li><a href="dsa-track-300.html"><span class="site-nav-num">28</span><span class="site-nav-title">DSA Track: Top-300</span></a></li></ul></div><div><h4>Crash packs</h4><ul><li><a href="crash-base.html"><span class="site-nav-num">29</span><span class="site-nav-title">Crash Pack: Base Curriculum</span></a></li><li><a href="crash-track-01.html"><span class="site-nav-num">30</span><span class="site-nav-title">Crash: LLM Research Engineer</span></a></li><li><a href="crash-track-02.html"><span class="site-nav-num">31</span><span class="site-nav-title">Crash: Post-training / Alignment</span></a></li><li><a href="crash-track-03.html"><span class="site-nav-num">32</span><span class="site-nav-title">Crash: Inference and Serving</span></a></li><li><a href="crash-track-04.html"><span class="site-nav-num">33</span><span class="site-nav-title">Crash: Distributed Training</span></a></li><li><a href="crash-track-05.html"><span class="site-nav-num">34</span><span class="site-nav-title">Crash: Evals and Safety</span></a></li><li><a href="crash-track-06.html"><span class="site-nav-num">35</span><span class="site-nav-title">Crash: Agent Systems</span></a></li><li><a href="crash-track-07.html"><span class="site-nav-num">36</span><span class="site-nav-title">Crash: Forward Deployed Eng.</span></a></li><li><a href="crash-track-08.html"><span class="site-nav-num">37</span><span class="site-nav-title">Crash: AI Engineer</span></a></li><li><a href="crash-track-09.html"><span class="site-nav-num">38</span><span class="site-nav-title">Crash: ML Engineer</span></a></li><li><a href="crash-track-10.html"><span class="site-nav-num">39</span><span class="site-nav-title">Crash: SWE / Backend</span></a></li></ul></div></div></div></div><hr class="mast-rule-double" aria-hidden="true"><div class="site-nav-scrim" id="siteNavScrim"></div><script>(function(){var t=document.getElementById("siteNavToggle"),p=document.getElementById("siteNavPanel"),sc=document.getElementById("siteNavScrim"),c=document.getElementById("siteNavClose");function dm(){return window.matchMedia&&window.matchMedia("(max-width:40rem)").matches;}function open(){if(!p||!t)return;p.classList.add("is-open");t.setAttribute("aria-expanded","true");if(dm()){document.body.classList.add("site-nav-open");if(sc)sc.classList.add("is-open");}}function close(){if(!p||!t)return;p.classList.remove("is-open");t.setAttribute("aria-expanded","false");document.body.classList.remove("site-nav-open");if(sc)sc.classList.remove("is-open");}if(t)t.addEventListener("click",function(){if(p.classList.contains("is-open"))close();else open();});if(c)c.addEventListener("click",close);if(sc)sc.addEventListener("click",close);if(p)p.querySelectorAll("a").forEach(function(a){a.addEventListener("click",close);});document.addEventListener("keydown",function(e){if(e.key==="Escape"&&p&&p.classList.contains("is-open")){close();if(t)t.focus();}});})();</script>
+<h1>MLOps and Systems: From Notebook to Production</h1>
+<p class="ai-lab-hero-lede">Five expert labs move a model from a notebook into production: versioned pipelines with quality gates, a model registry with staged promotion, drift detection and alerting, and serving with the scaling math that decides throughput and latency.</p>
+<div class="hero-stats"><span class="hero-stat">5 labs</span><span class="hero-stat">28 tasks</span><span class="hero-stat">Week 12</span><span class="hero-stat">Difficulty: all Expert</span></div>
+</header>
+
+<h2>Why this category exists</h2>
+<p>A model in a notebook is a hypothesis. A model in production is a system: it retrains on a
+schedule, versions every artifact, passes quality gates before promotion, serves traffic
+behind a contract, and pages someone when the world changes under it. The category exists
+because the gap between those two states is where most ML value dies. The failure modes are
+concrete: a retrain that is not reproducible, a "production" model nobody can identify, a
+silent data drift that rots accuracy for weeks, a deploy that breaks the client contract, a
+service that falls over at 10x traffic.</p>
+<p>Week 12 walks the production loop in order. Day 1 builds ML pipelines as code with CI-style
+checks: config-driven entrypoints, schema checks on data, training, evaluation with quality
+gates, saved artifacts, and a determinism check that proves the pipeline reproduces itself.
+Day 2 adds the model registry: deterministic version ids, registration with metadata, stage
+pointers (staging versus production), promotion gates, and audit. Day 3 watches the model in
+the wild: drift metrics (PSI, KS, mean and variance shift), performance monitoring, and
+alerting rules. Day 4 does the scaling math: a simulator with a single worker,
+micro-batching, and caching, then experiments that separate what batching buys from what
+caching buys. Day 5 ships: a model behind an HTTP service contract with health and
+prediction endpoints, verified by contract tests from a client.</p>
+<p>All five labs are rated Expert, the highest difficulty in the AI Lab program. They assume the
+modeling volumes are behind you; what is new here is systems thinking applied to models.
+Volume 26 (System Design) will zoom out from these mechanics to full architecture; this
+volume is the machinery it assumes.</p>
+<figure class="diagram" id="fig-catmap"><svg viewBox="0 0 720 350" width="100%" role="img" aria-label="Week 12 lab map: five Expert labs follow the production loop from pipeline to deployment." xmlns="http://www.w3.org/2000/svg">
+<rect x="10" y="10" width="700" height="330" rx="8" fill="#0d0d0d" stroke="#262626"/>
+<text x="30" y="40" fill="#f0b429" font-size="15" font-weight="bold" font-family="sans-serif">Week 12: the production loop, one lab per stage</text>
+<g font-family="sans-serif" font-size="12" fill="#ececec" text-anchor="middle">
+<rect x="20" y="60" width="124" height="90" rx="6" fill="#0d0d0d" stroke="#ff7b8a"/>
+<text x="82" y="86">Pipelines</text><text x="82" y="102">&amp; CI/CD</text><text x="82" y="124" fill="#a8a8a8" font-size="10">d1, 8 tasks</text><text x="82" y="138" fill="#a8a8a8" font-size="10">Expert</text>
+<rect x="154" y="60" width="124" height="90" rx="6" fill="#0d0d0d" stroke="#ff7b8a"/>
+<text x="216" y="86">Registry &amp;</text><text x="216" y="102">versioning</text><text x="216" y="124" fill="#a8a8a8" font-size="10">d2, 7 tasks</text><text x="216" y="138" fill="#a8a8a8" font-size="10">Expert</text>
+<rect x="288" y="60" width="124" height="90" rx="6" fill="#0d0d0d" stroke="#ff7b8a"/>
+<text x="350" y="86">Monitoring</text><text x="350" y="102">&amp; drift</text><text x="350" y="124" fill="#a8a8a8" font-size="10">d3, 5 tasks</text><text x="350" y="138" fill="#a8a8a8" font-size="10">Expert</text>
+<rect x="422" y="60" width="124" height="90" rx="6" fill="#0d0d0d" stroke="#ff7b8a"/>
+<text x="484" y="86">Scaling</text><text x="484" y="102">ML systems</text><text x="484" y="124" fill="#a8a8a8" font-size="10">d4, 3 tasks</text><text x="484" y="138" fill="#a8a8a8" font-size="10">Expert</text>
+<rect x="556" y="60" width="124" height="90" rx="6" fill="#0d0d0d" stroke="#ff7b8a"/>
+<text x="618" y="86">Deployment</text><text x="618" y="102">lab</text><text x="618" y="124" fill="#a8a8a8" font-size="10">d5, 5 tasks</text><text x="618" y="138" fill="#a8a8a8" font-size="10">Expert</text>
+<text x="146" y="108" fill="#a8a8a8">-&gt;</text><text x="280" y="108" fill="#a8a8a8">-&gt;</text>
+<text x="414" y="108" fill="#a8a8a8">-&gt;</text><text x="548" y="108" fill="#a8a8a8">-&gt;</text>
+</g>
+<g font-family="sans-serif" font-size="11" fill="#a8a8a8" text-anchor="middle">
+<rect x="20" y="170" width="660" height="140" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="360" y="196" fill="#ececec" font-size="12">train -&gt; version -&gt; promote -&gt; serve -&gt; monitor -&gt; detect drift -&gt; retrain</text>
+<text x="360" y="220" fill="#ececec" font-size="12">The loop never ends: production data drifts, models decay, and the pipeline</text>
+<text x="360" y="240" fill="#ececec" font-size="12">is the only thing standing between a good model and a stale one.</text>
+<text x="360" y="272" fill="#ff7b8a" font-size="12">Red border = Expert difficulty. All five labs are Expert: the hardest in the program.</text>
+</g>
+</svg><figcaption>Week 12 lab map: five Expert labs follow the production loop from pipeline to deployment. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The five tiles run left to right in day order: pipelines and CI/CD, registry and versioning, monitoring and drift, scaling, and the deployment lab.</li><li>The bottom panel shows the loop the week teaches: train, version, promote, serve, monitor, detect drift, retrain. It never ends.</li><li>The red border marks Expert difficulty on all five tiles, with task counts 8, 7, 5, 3, 5.</li><li>Volume 26 will design systems at the architecture level; this volume builds the machinery those designs assume.</li></ol></div><div class="takeaway"><h4>Key takeaways</h4><ul><li>A production model is a system: pipelines, versions, gates, contracts, monitoring, and a retrain loop.</li><li>The five labs follow the loop: build reproducibly, version explicitly, watch continuously, scale deliberately, serve contractually.</li><li>All five labs are Expert: systems thinking applied to models, the machinery Volume 26 assumes.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Draw the production loop and name the lab that owns each transition, plus the failure each lab prevents.</li></ul></div><p class="lab-meta">Lab pointer: start with <strong>MLOps: Pipelines &amp; CI/CD</strong> (Week 12, Day 1); determinism and gates are the foundation everything else stands on.</p><h2>Core ideas, worked end to end</h2>
+<h3>1. Pipelines as code: CI/CD for machine learning</h3>
+<p><strong>What it is, in plain words.</strong> An <dfn>ML pipeline</dfn> is the training
+workflow expressed as code with one entrypoint: config in, artifacts out. <dfn>CI/CD
+(continuous integration, continuous delivery)</dfn> for ML extends software CI with
+ML-specific checks: data <dfn>schema validation</dfn>, <dfn>determinism</dfn> (the same
+inputs produce byte-identical outputs), <dfn>quality gates</dfn> (metrics must clear a
+threshold before promotion), and <dfn>artifact lineage</dfn> (every saved model records the
+code version, data version, config, and seed that produced it).</p>
+<p><strong>Why it exists.</strong> Notebook training is stateful: cells run out of order,
+variables linger, and "it worked yesterday" is unverifiable. The Day 1 lab makes the failure
+concrete: without a seeded, config-driven entrypoint, two runs of the same code produce
+different models and nobody can say which one is in production. Schema checks catch the
+other classic: the upstream data changed shape and training silently consumed garbage.
+Quality gates catch the third: a retrain that is worse than the current model must not
+promote itself.</p>
+<p><strong>How it works, step by step.</strong> (1) A config file plus a single
+<code>run_pipeline</code> entrypoint; every random choice flows from a recorded seed.
+(2) Data generation or loading, then schema checks: column names, types, ranges, no silent
+nulls. (3) Training with versioned code and data. (4) Evaluation that computes metrics and
+applies the quality gate: promote only if the new metrics beat the baseline by a margin.
+(5) Artifact saving: model weights, metrics, and the config, all with lineage. (6) CI
+simulation: run the pipeline twice and assert identical outputs (determinism check), and
+assert the regression gate blocks a deliberately worsened model.</p>
+<p><strong>Worked example.</strong> The lab's pipeline trains logistic regression on
+generated data. Run one with seed 42 produces accuracy 0.87 and a fixed artifact hash. Run
+two with seed 42 must produce accuracy 0.87 and the same hash; if it does not, the pipeline
+has an unseeded random source or an ordering bug, and the CI check fails loudly. The
+regression gate is set at baseline plus a margin: a candidate at 0.85 does not promote, no
+matter how fresh it is.</p>
+<p><strong>The misunderstanding interviewers exploit.</strong> "CI for ML is just running
+pytest on training code." Unit tests are necessary but miss the ML-specific failures:
+unvalidated data, nondeterministic runs, and silent metric regressions. The follow-up trap:
+determinism does not mean the model is good, it means the process is honest. A
+deterministic bad model is debuggable; a nondeterministic good model is luck.</p>
+<figure class="diagram" id="fig-pipeline"><svg viewBox="0 0 720 490" width="100%" role="img" aria-label="The ML pipeline: config to artifacts, with determinism and quality gates as CI checks." xmlns="http://www.w3.org/2000/svg">
+<rect x="10" y="10" width="700" height="470" rx="8" fill="#0d0d0d" stroke="#262626"/>
+<text x="30" y="40" fill="#f0b429" font-size="15" font-weight="bold" font-family="sans-serif">The ML pipeline: every run reproducible, every promotion gated</text>
+<g font-family="sans-serif" font-size="12" fill="#ececec" text-anchor="middle">
+<rect x="30" y="60" width="118" height="70" rx="6" fill="#0d0d0d" stroke="#6cb2ff"/>
+<text x="89" y="86">config</text><text x="89" y="104" fill="#a8a8a8" font-size="10">one entrypoint</text><text x="89" y="120" fill="#a8a8a8" font-size="10">seeded, logged</text>
+<rect x="158" y="60" width="118" height="70" rx="6" fill="#0d0d0d" stroke="#6cb2ff"/>
+<text x="217" y="86">data +</text><text x="217" y="104">schema</text><text x="217" y="120" fill="#a8a8a8" font-size="10">checks</text>
+<rect x="286" y="60" width="118" height="70" rx="6" fill="#0d0d0d" stroke="#6cb2ff"/>
+<text x="345" y="86">train</text><text x="345" y="104" fill="#a8a8a8" font-size="10">versioned code</text><text x="345" y="120" fill="#a8a8a8" font-size="10">+ data</text>
+<rect x="414" y="60" width="118" height="70" rx="6" fill="#0d0d0d" stroke="#f0b429"/>
+<text x="473" y="86">evaluate</text><text x="473" y="104" fill="#a8a8a8" font-size="10">quality gate</text><text x="473" y="120" fill="#a8a8a8" font-size="10">pass / block</text>
+<rect x="542" y="60" width="128" height="70" rx="6" fill="#0d0d0d" stroke="#7fd08a"/>
+<text x="606" y="86">artifacts</text><text x="606" y="104" fill="#a8a8a8" font-size="10">model + metrics</text><text x="606" y="120" fill="#a8a8a8" font-size="10">+ config</text>
+<text x="153" y="98" fill="#a8a8a8">-&gt;</text><text x="281" y="98" fill="#a8a8a8">-&gt;</text>
+<text x="409" y="98" fill="#a8a8a8">-&gt;</text><text x="537" y="98" fill="#a8a8a8">-&gt;</text>
+<rect x="30" y="160" width="640" height="130" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="350" y="184" fill="#f0b429" font-weight="bold">Determinism: the CI check that matters most</text>
+<text x="350" y="206" font-size="11" text-anchor="start"><tspan x="60" dy="0">run_pipeline(seed=42) twice -&gt; byte-identical metrics and artifacts, or the pipeline is broken</tspan><tspan x="60" dy="18">sources of nondeterminism: unseeded RNG, unordered file reads, parallel race in aggregation</tspan><tspan x="60" dy="18">regression gate: new metrics must beat the baseline by a margin, else promotion is blocked</tspan></text>
+<rect x="30" y="320" width="640" height="120" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="350" y="344" fill="#f0b429" font-weight="bold">What CI means for ML (beyond software CI)</text>
+<text x="350" y="366" font-size="11" text-anchor="start"><tspan x="60" dy="0">software CI: does it build, do unit tests pass. ML CI adds: does data validate,</tspan><tspan x="60" dy="18">is the run reproducible, did metrics clear the gate, are artifacts stored with lineage.</tspan><tspan x="60" dy="18">lineage: every artifact records the code version, data version, config, and seed that made it.</tspan></text>
+</g>
+</svg><figcaption>The ML pipeline: config to artifacts, with determinism and quality gates as CI checks. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The pipeline flows left to right: a seeded config entrypoint, data with schema checks, training on versioned code and data, evaluation behind a quality gate, and saved artifacts carrying lineage.</li><li>The determinism panel states the key CI check: run_pipeline with the same seed twice must yield byte-identical metrics and artifacts.</li><li>The bottom panel contrasts software CI with ML CI: data validation, reproducibility, metric gates, and artifact lineage are the ML additions.</li></ol></div><p><strong>Interview relevance.</strong> "Your nightly retrain produced a worse model and it is live. What broke?" The complete answer walks the missing pieces: no determinism check, no regression gate, no artifact lineage to identify the bad version.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>ML pipelines: config in, artifacts out, every random choice seeded and recorded.</li><li>ML CI adds data validation, determinism checks, and metric regression gates to software CI.</li><li>Lineage (code, data, config, seed per artifact) is what makes a bad deploy debuggable.</li></ul></div><p class="lab-meta">Lab pointer: <strong>MLOps: Pipelines &amp; CI/CD</strong> (Week 12, Day 1) implements run_pipeline with determinism and regression-gate CI checks.</p>
+<h3>2. The model registry: versions are facts, stages are pointers</h3>
+<p><strong>What it is, in plain words.</strong> A <dfn>model registry</dfn> is the database
+of record for trained models. Each <dfn>version</dfn> is immutable: artifacts (weights),
+metadata (metrics, config, lineage), and a deterministic version id derived from content.
+<dfn>Stages</dfn> (staging, production, archived) are movable pointers to versions.
+<dfn>Promotion</dfn> moves a pointer after <dfn>gates</dfn> pass; <dfn>rollback</dfn> moves
+the pointer back. <dfn>Audit</dfn> is the ability to answer, at any moment, which version is
+live, what trained it, and how it differs from its neighbors.</p>
+<p><strong>Why it exists.</strong> Without a registry, "the production model" is a file on
+someone's laptop or an S3 path in a chat log. When it misbehaves, you cannot identify it,
+compare it, or roll it back with confidence. The Day 2 lab builds the registry from scratch
+precisely so the concepts are not product names but mechanics: deterministic ids so the
+same content always gets the same version, stage pointers so promotion is explicit, gates
+so promotion is earned, audit so the whole thing is inspectable.</p>
+<p><strong>How it works, step by step.</strong> (1) Define the artifact bundle and compute a
+deterministic version id (a hash of content, not a counter). (2) Register: store artifacts
+plus metadata. (3) List versions and resolve stage pointers: "production" currently means
+v3. (4) Promote with gates: v4 moves from staging to production only when metric gates and
+checks pass. (5) Audit: load the production artifacts and diff v4 against v3, metrics and
+config side by side. The critical invariant: versions never change; only pointers move.
+That is what makes rollback a one-line, trustworthy operation instead of a scramble.</p>
+<p><strong>Worked example.</strong> v3 is in production with accuracy 0.87. v4 registers with
+accuracy 0.89 and a new feature set. The promotion gate requires accuracy above 0.88 on the
+held-out set plus all contract checks green. v4 passes; the production pointer moves v3 to
+v4. Two days later a data bug is found in v4's training set: rollback moves the pointer back
+to v3 in seconds, and the audit trail shows exactly what v4 changed. No files are deleted;
+no one re-trains in a panic.</p>
+<p><strong>The misunderstanding interviewers exploit.</strong> "Versioning is just naming
+files v1, v2." Names are not identity: a deterministic content-derived id guarantees the
+same artifacts always map to the same version, which is what makes comparisons and rollbacks
+trustworthy. The second trap: treating promotion as deployment. Promotion changes which
+version the stage pointer names; deployment (Day 5) is the separate act of serving it.
+Conflating them is how teams "roll back" and discover the old artifacts are gone.</p>
+<figure class="diagram" id="fig-registry"><svg viewBox="0 0 720 480" width="100%" role="img" aria-label="Registry mechanics: immutable versions, movable stage pointers, gated promotion, instant rollback." xmlns="http://www.w3.org/2000/svg">
+<rect x="10" y="10" width="700" height="460" rx="8" fill="#0d0d0d" stroke="#262626"/>
+<text x="30" y="40" fill="#f0b429" font-size="15" font-weight="bold" font-family="sans-serif">The model registry: versions are facts, stages are pointers</text>
+<g font-family="sans-serif" font-size="12" fill="#ececec" text-anchor="middle">
+<rect x="30" y="60" width="200" height="70" rx="6" fill="#0d0d0d" stroke="#6cb2ff"/>
+<text x="130" y="84">version v3</text><text x="130" y="104" fill="#a8a8a8" font-size="10">artifacts + metadata</text><text x="130" y="120" fill="#a8a8a8" font-size="10">deterministic id</text>
+<rect x="250" y="60" width="200" height="70" rx="6" fill="#0d0d0d" stroke="#6cb2ff"/>
+<text x="350" y="84">version v4</text><text x="350" y="104" fill="#a8a8a8" font-size="10">artifacts + metadata</text><text x="350" y="120" fill="#a8a8a8" font-size="10">deterministic id</text>
+<rect x="470" y="60" width="200" height="70" rx="6" fill="#0d0d0d" stroke="#6cb2ff"/>
+<text x="570" y="84">version v5</text><text x="570" y="104" fill="#a8a8a8" font-size="10">artifacts + metadata</text><text x="570" y="120" fill="#a8a8a8" font-size="10">deterministic id</text>
+<rect x="120" y="160" width="160" height="50" rx="6" fill="#0d0d0d" stroke="#f0b429"/>
+<text x="200" y="182">staging -&gt; v4</text><text x="200" y="200" fill="#a8a8a8" font-size="10">pointer, movable</text>
+<rect x="420" y="160" width="160" height="50" rx="6" fill="#0d0d0d" stroke="#7fd08a"/>
+<text x="500" y="182">production -&gt; v3</text><text x="500" y="200" fill="#a8a8a8" font-size="10">pointer, movable</text>
+<rect x="30" y="240" width="640" height="90" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="350" y="264" fill="#f0b429" font-weight="bold">Promotion is gated, never automatic</text>
+<text x="350" y="286" font-size="11" fill="#a8a8a8">v4 moves staging -&gt; production only if: metrics clear the gate, checks pass, human or policy approves</text>
+<text x="350" y="308" font-size="11" fill="#a8a8a8">rollback = move the pointer back to v3. Versions are immutable; pointers move.</text>
+<rect x="30" y="360" width="640" height="70" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="350" y="384" fill="#f0b429" font-weight="bold">Audit: load production artifacts, compare versions</text>
+<text x="350" y="406" font-size="11" fill="#a8a8a8">"which model is live, what data trained it, how does v4 differ from v3" must be answerable in minutes</text>
+</g>
+</svg><figcaption>Registry mechanics: immutable versions, movable stage pointers, gated promotion, instant rollback. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>Three immutable versions sit at the top, each with artifacts, metadata, and a deterministic content-derived id.</li><li>Stages are pointers, not copies: staging names v4, production names v3, and either pointer can move.</li><li>Promotion is gated: v4 reaches production only after metric gates and checks pass; rollback is moving the pointer back to v3.</li><li>The audit panel states the payoff: which model is live, what trained it, and how versions differ must be answerable in minutes.</li></ol></div><p><strong>Interview relevance.</strong> "Design model versioning for a team of twenty" tests whether you reach for content-derived ids, stage pointers, and promotion gates, or just say "we use MLflow". Mechanics first, product names second.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>Versions are immutable facts with content-derived ids; stages are movable pointers.</li><li>Promotion is gated and explicit; rollback is moving a pointer, not a rescue operation.</li><li>Audit answers "what is live, what trained it, what changed" in minutes.</li></ul></div><p class="lab-meta">Lab pointer: <strong>Model Registry &amp; Versioning</strong> (Week 12, Day 2) builds registration, stage pointers, gated promotion, and audit from scratch.</p>
+<h3>3. Monitoring and drift detection: noticing when the world moves</h3>
+<p><strong>What it is, in plain words.</strong> <dfn>Drift detection</dfn> compares the data
+your model sees in production against the data it trained on, and raises the alarm when the
+two diverge. <dfn>PSI (population stability index)</dfn> measures how much a feature's
+distribution shifted across bins. The <dfn>KS (Kolmogorov-Smirnov) test</dfn> measures the
+largest gap between two cumulative distributions without assuming any shape. <dfn>Performance
+monitoring</dfn> tracks live model metrics (accuracy where labels exist, latency, error
+rate) against their baselines. <dfn>Alerting rules</dfn> turn those signals into pages:
+drift over threshold, or a sustained metric drop, summons a human.</p>
+<p><strong>Why it exists.</strong> Models decay silently. The training distribution is a
+photograph; production is a moving scene: user behavior changes, upstream pipelines change,
+seasons change. The Day 3 lab generates a baseline batch and a drifting production batch so
+you can watch the metrics move before any model output looks wrong. Without this layer, the
+first sign of drift is a customer complaint weeks later, and the debugging starts from
+"when did it break", a question the monitoring should have answered.</p>
+<p><strong>How it works, step by step.</strong> (1) Fix the baseline: the training-time
+feature distributions and metric values. (2) For each production batch, compute PSI per
+feature across matching bins, the KS statistic, and mean and variance shifts. (3) Track
+model performance metrics on whatever labeled or proxy signal exists. (4) Apply alerting
+rules: for example, page when PSI exceeds 0.25 on a key feature, or when accuracy drops
+more than two points for three consecutive batches. (5) The alert triggers the retrain
+decision, which runs the Day 1 pipeline and the Day 2 promotion gates: monitoring closes
+the loop back to training.</p>
+<p><strong>Worked example.</strong> A feature "session length" has baseline bin shares
+[0.2, 0.5, 0.3] and this week's shares [0.35, 0.4, 0.25]. PSI = sum over bins of
+(actual - expected) x ln(actual / expected) = 0.15 x ln(1.75) + (-0.10) x ln(0.8) + (-0.05)
+x ln(0.833) = 0.084 + 0.022 + 0.009 = 0.115. That lands in the 0.1 to 0.25 watch band: not a
+page, but a ticket. If next week it crosses 0.25 on a revenue-driving feature, the alert
+fires and the retrain loop starts.</p>
+<p><strong>The misunderstanding interviewers exploit.</strong> "Drift detection means
+watching accuracy." Accuracy needs labels, which often arrive weeks late or never; input
+drift metrics like PSI and KS are the early warning system, and they work with no labels at
+all. The second trap: alerting on every wiggle. Thresholds plus sustain rules (three bad
+batches, not one) are what keep the on-call rotation sane; the lab's alerting section is
+really about that discipline.</p>
+<figure class="diagram" id="fig-drift"><svg viewBox="0 0 720 500" width="100%" role="img" aria-label="Drift detection: baseline versus production distributions, three metrics, performance tracking, alerting." xmlns="http://www.w3.org/2000/svg">
+<rect x="10" y="10" width="700" height="480" rx="8" fill="#0d0d0d" stroke="#262626"/>
+<text x="30" y="40" fill="#f0b429" font-size="15" font-weight="bold" font-family="sans-serif">Monitoring: compare production against the baseline you trained on</text>
+<g font-family="sans-serif" font-size="12" fill="#ececec" text-anchor="middle">
+<rect x="30" y="60" width="200" height="70" rx="6" fill="#0d0d0d" stroke="#6cb2ff"/>
+<text x="130" y="84">baseline batch</text><text x="130" y="104" fill="#a8a8a8" font-size="10">training-time</text><text x="130" y="120" fill="#a8a8a8" font-size="10">distribution</text>
+<rect x="470" y="60" width="200" height="70" rx="6" fill="#0d0d0d" stroke="#ff7b8a"/>
+<text x="570" y="84">production batch</text><text x="570" y="104" fill="#a8a8a8" font-size="10">this week</text><text x="570" y="120" fill="#a8a8a8" font-size="10">distribution</text>
+<rect x="250" y="60" width="200" height="70" rx="6" fill="#0d0d0d" stroke="#f0b429"/>
+<text x="350" y="84">drift metrics</text><text x="350" y="104" fill="#a8a8a8" font-size="10">PSI, KS,</text><text x="350" y="120" fill="#a8a8a8" font-size="10">mean/var shift</text>
+<text x="245" y="98" fill="#a8a8a8">-&gt;</text><text x="465" y="98" fill="#a8a8a8">&lt;-</text>
+<rect x="30" y="160" width="640" height="140" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="350" y="184" fill="#f0b429" font-weight="bold">The three drift measures (Day 3 lab)</text>
+<text x="350" y="206" font-size="11" text-anchor="start"><tspan x="60" dy="0">PSI (population stability index): sum over bins of (act% - exp%) x ln(act% / exp%).</tspan><tspan x="60" dy="18">Rule of thumb: PSI &lt; 0.1 no shift; 0.1-0.25 watch; &gt; 0.25 significant shift.</tspan><tspan x="60" dy="18">KS test: largest gap between the two cumulative distributions; distribution-free.</tspan><tspan x="60" dy="18">Mean / variance shift: the cheap first check that catches gross changes fast.</tspan></text>
+<rect x="30" y="330" width="310" height="120" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="185" y="354" fill="#f0b429" font-weight="bold">Performance monitoring</text>
+<text x="185" y="376" font-size="11" fill="#a8a8a8">track live metrics against</text>
+<text x="185" y="394" font-size="11" fill="#a8a8a8">the baseline: accuracy,</text>
+<text x="185" y="412" font-size="11" fill="#a8a8a8">latency, error rate</text>
+<rect x="360" y="330" width="310" height="120" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="515" y="354" fill="#f0b429" font-weight="bold">Alerting rules</text>
+<text x="515" y="376" font-size="11" fill="#a8a8a8">drift score over threshold</text>
+<text x="515" y="394" font-size="11" fill="#a8a8a8">OR metric drop sustained</text>
+<text x="515" y="412" font-size="11" fill="#a8a8a8">-&gt; page a human</text>
+</g>
+</svg><figcaption>Drift detection: baseline versus production distributions, three metrics, performance tracking, alerting. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The baseline batch (blue, training-time distribution) and the production batch (red, this week) both feed the drift metrics box (amber): PSI, KS, and mean/variance shift.</li><li>The middle panel defines the three measures and the PSI rule of thumb: under 0.1 no shift, 0.1 to 0.25 watch, over 0.25 significant.</li><li>Performance monitoring tracks live model metrics against baseline: accuracy, latency, error rate.</li><li>Alerting rules page a human when drift crosses threshold or a metric drop sustains; the alert closes the loop back to the Day 1 pipeline.</li></ol></div><p><strong>Interview relevance.</strong> "How do you know your model is still good in production?" The senior answer leads with label-free input drift (PSI, KS), then performance metrics, then alerting discipline, and never claims accuracy alone is enough.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>PSI, KS, and mean/variance shift detect input drift with no labels: the early warning system.</li><li>Performance monitoring tracks live metrics; alerting rules (threshold plus sustain) keep pages meaningful.</li><li>A drift alert triggers the retrain loop: monitoring closes back to the Day 1 pipeline.</li></ul></div><p class="lab-meta">Lab pointer: <strong>Monitoring &amp; Drift Detection</strong> (Week 12, Day 3) generates drifting batches and implements PSI, KS, performance tracking, and alerts.</p>
+<h3>4. Deployment and scaling: the contract and the math behind it</h3>
+<p><strong>What it is, in plain words.</strong> <dfn>Deployment</dfn> is exposing a model as
+a service behind a <dfn>service contract</dfn>: named endpoints (<dfn>/health</dfn> for
+liveness, <dfn>/predict</dfn> for inference), JSON request and response shapes, status
+codes, and a latency budget. <dfn>Contract tests</dfn> verify that contract from a client,
+CI-style, so a deploy that breaks clients never ships. <dfn>Scaling</dfn> is the math of
+serving more: <dfn>throughput</dfn> (requests per second) versus <dfn>latency</dfn> (seconds
+per request), moved by three levers: <dfn>micro-batching</dfn> (group requests to amortize
+fixed cost), <dfn>caching</dfn> (skip recomputation on repeats), and workers
+(parallelism).</p>
+<p><strong>Why it exists.</strong> A model without a contract is a rumor: clients guess at
+shapes, break on upgrades, and cannot tell a model error from a network error. The Day 5
+lab makes the contract executable: a tiny deterministic model behind HTTP, with health and
+prediction endpoints, verified by a client test suite. Scaling exists because the naive
+service falls over: one request at a time means the fixed per-request cost dominates, and
+the Day 4 simulator shows you exactly where the time goes before you spend money on more
+machines.</p>
+<p><strong>How it works, step by step.</strong> Deployment: (1) Wrap the model in an HTTP
+service with /health and /predict. (2) Freeze the JSON shapes for requests and responses.
+(3) Write client-side contract tests: correct predictions, correct shapes, correct error
+codes on bad input, health endpoint alive. (4) Deploy only when the tests pass. Scaling:
+(1) Model one worker with a fixed cost per batch plus a per-request cost. (2) Experiment:
+vary the batch size and measure throughput versus latency; add a cache and vary the hit
+rate; add workers and watch the bottleneck move. (3) Choose the operating point the
+latency budget allows. The lab's key separation: batching buys throughput at the price of
+latency, caching buys both when the hit rate justifies it.</p>
+<p><strong>Worked example.</strong> A single worker costs 20 ms fixed plus 5 ms per request.
+One request takes 25 ms. A batch of 8 takes 20 + 40 = 60 ms total, which is 7.5 ms amortized
+per request: 3.3x the throughput at 2.4x the latency of a single request. Whether that trade
+is good depends on the budget: at a 100 ms latency target it is pure win; at a 30 ms target
+it is forbidden. Add a cache with an 80 percent hit rate at 1 ms per hit, and most requests
+skip the 25 ms path entirely: caching is the only lever that improves both metrics at once.</p>
+<p><strong>The misunderstanding interviewers exploit.</strong> "Just add more workers."
+Workers help until the bottleneck moves: to the batching logic, the cache, the network, or
+the database behind the model. The simulator's lesson is to find the bottleneck by
+measurement, not by purchasing. The second trap: optimizing throughput when the product
+needs latency. A batch of 64 looks heroic on requests per second and terrible on the
+p99 latency the users actually feel; always name which metric the product pays for.</p>
+<figure class="diagram" id="fig-serving"><svg viewBox="0 0 720 500" width="100%" role="img" aria-label="Serving: client and service bound by a contract; batching, caching, and workers move throughput and latency." xmlns="http://www.w3.org/2000/svg">
+<rect x="10" y="10" width="700" height="480" rx="8" fill="#0d0d0d" stroke="#262626"/>
+<text x="30" y="40" fill="#f0b429" font-size="15" font-weight="bold" font-family="sans-serif">Serving: the contract, and the scaling math behind it</text>
+<g font-family="sans-serif" font-size="12" fill="#ececec" text-anchor="middle">
+<rect x="30" y="60" width="200" height="70" rx="6" fill="#0d0d0d" stroke="#6cb2ff"/>
+<text x="130" y="84">client</text><text x="130" y="104" fill="#a8a8a8" font-size="10">contract tests</text><text x="130" y="120" fill="#a8a8a8" font-size="10">CI-style</text>
+<rect x="470" y="60" width="200" height="70" rx="6" fill="#0d0d0d" stroke="#7fd08a"/>
+<text x="570" y="84">HTTP service</text><text x="570" y="104" fill="#a8a8a8" font-size="10">/health /predict</text><text x="570" y="120" fill="#a8a8a8" font-size="10">JSON in/out</text>
+<rect x="250" y="60" width="200" height="70" rx="6" fill="#0d0d0d" stroke="#f0b429"/>
+<text x="350" y="84">the contract</text><text x="350" y="104" fill="#a8a8a8" font-size="10">shapes, codes,</text><text x="350" y="120" fill="#a8a8a8" font-size="10">latency budget</text>
+<text x="245" y="98" fill="#a8a8a8">-&gt;</text><text x="465" y="98" fill="#a8a8a8">&lt;-</text>
+<rect x="30" y="160" width="640" height="150" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="350" y="184" fill="#f0b429" font-weight="bold">Scaling levers (Day 4 simulator)</text>
+<text x="350" y="206" font-size="11" text-anchor="start"><tspan x="60" dy="0">micro-batching: group requests, pay the fixed cost once; raises throughput, adds latency</tspan><tspan x="60" dy="18">caching: skip recomputation for repeated inputs; pure win when hit rate is high</tspan><tspan x="60" dy="18">workers: parallelize, until the bottleneck moves elsewhere (Amdahl-style ceiling)</tspan><tspan x="60" dy="18">throughput = requests / second; latency = seconds / request. Batching trades one for the other.</tspan></text>
+<rect x="30" y="340" width="640" height="110" rx="6" fill="#0d0d0d" stroke="#262626"/>
+<text x="350" y="364" fill="#f0b429" font-weight="bold">Worked numbers</text>
+<text x="350" y="386" font-size="11" fill="#a8a8a8">single worker: 20 ms fixed cost + 5 ms per request. 1 request: 25 ms. Batch of 8: 20 + 40 = 60 ms total,</text>
+<text x="350" y="408" font-size="11" fill="#a8a8a8">7.5 ms amortized per request: 3.3x the throughput at 2.4x the latency of one request.</text>
+<text x="350" y="430" font-size="11" fill="#a8a8a8">cache with 80% hit rate at 1 ms per hit: most requests skip the 25 ms path entirely.</text>
+</g>
+</svg><figcaption>Serving: client and service bound by a contract; batching, caching, and workers move throughput and latency. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The client (blue) and the HTTP service (green) are bound by the contract (amber): endpoint names, JSON shapes, status codes, latency budget. Contract tests verify it from the client side.</li><li>The scaling panel names the three levers: micro-batching amortizes fixed cost, caching skips recomputation, workers parallelize until the bottleneck moves.</li><li>The worked numbers show the batching trade: 8 requests in 60 ms is 3.3x the throughput at 2.4x the latency of one request; caching at 80 percent hit rate beats both.</li></ol></div><p><strong>Interview relevance.</strong> "Design model serving for 10k requests per second at p99 under 100ms" is a systems interview in ML clothing. The answer that names the contract first and then does the batching arithmetic beats the answer that reaches for Kubernetes.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>The service contract (/health, /predict, JSON shapes, latency budget) is verified by client-side contract tests.</li><li>Batching trades latency for throughput; caching is the only lever that improves both; workers help until the bottleneck moves.</li><li>Name the metric the product pays for (throughput or p99 latency) before choosing the operating point.</li></ul></div><p class="lab-meta">Lab pointer: <strong>Deployment Lab</strong> (Week 12, Day 5) serves a model over HTTP with contract tests; <strong>Scaling ML Systems</strong> (Week 12, Day 4) measures the batching-versus-caching trade.</p><h2>Lab walkthroughs</h2><div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w12-d1-mlops-pipelines-cicd">MLOps ,  Pipelines &amp; CI/CD</button><button data-target="lab-w12-d2-model-registry-versioning">Model Registry &amp; Versioning</button><button data-target="lab-w12-d3-monitoring-drift-detection">Monitoring &amp; Drift Detection</button><button data-target="lab-w12-d4-scaling-ml-systems">Scaling ML Systems</button><button data-target="lab-w12-d5-deployment-lab">Deployment Lab</button></div><section class="lab" id="lab-w12-d1-mlops-pipelines-cicd">
+<h3>MLOps ,  Pipelines &amp; CI/CD <span class="diff diff-expert">Expert</span></h3>
+<p class="lab-meta">Week 12, Day 1 · MLOps &amp; Systems · 8 tasks · 3 checks · Free</p>
+<p>The foundation lab for the whole week. You build a config-driven pipeline entrypoint, add data generation with schema checks, train logistic regression in NumPy, evaluate behind a quality gate, save artifacts with lineage, and then simulate CI: determinism checks plus a regression gate. Treat the determinism check as the lab's soul: a pipeline that cannot reproduce itself cannot be trusted with anything downstream.</p>
+<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">GitHub</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1MVpasWA3pKKteUMMlwza1Fg41XPFsd1N">Colab</a> · <a href="mlopsci_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/x32zd3-gMPw">Video</a></p>
+<h4>Tasks (8)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>MLOps ,  Pipelines &amp; CI/CD ,  Student Lab</h3>
+<p>Offline lab: build a tiny reproducible ML pipeline and add CI-style checks.</p>
+<h4>0 ,  Config + pipeline entrypoint</h4><h4>Starter code</h4><pre><code class="lang-python">import json
+from pathlib import Path
+import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import json
+from pathlib import Path
+import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>MLOps ,  Pipelines &amp; CI/CD ,  Instructor Lab</h3>
+<p>Offline lab: build a tiny reproducible ML pipeline and add CI-style checks.</p>
+<h4>0 ,  Config + pipeline entrypoint</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Config + pipeline entrypoint</summary><div class="task-body"><h4>0 ,  Config + pipeline entrypoint</h4><h4>Starter code</h4><pre><code class="lang-python">CONFIG = {
+    "seed": 0,
+    "n": 3000,
+    "d": 12,
+    "train_frac": 0.8,
+    "lr": 0.2,
+    "steps": 400,
+    "l2": 1e-2,
+    "acc_gate": 0.80,
+    "artifacts_dir": "artifacts",
+}
+
+def run_pipeline(cfg: dict):
+    # TODO
+    ...</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">CONFIG = {
+    "seed": 0,
+    "n": 3000,
+    "d": 12,
+    "train_frac": 0.8,
+    "lr": 0.2,
+    "steps": 400,
+    "l2": 1e-2,
+    "acc_gate": 0.80,
+    "artifacts_dir": "artifacts",
+}
+
+def run_pipeline(cfg: dict):
+    # Will be completed after the helper functions are implemented below.
+    raise NotImplementedError("Implement helper steps first, then wire them together in Task 5.")
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Data generation + schema checks</summary><div class="task-body"><h4>1 ,  Data generation + schema checks</h4><h4>Starter code</h4><pre><code class="lang-python">def make_synthetic(n: int, d: int, seed: int):
+    # TODO
+    ...
+def train_test_split(X, y, train_frac: float, seed: int):
+    # TODO
+    ...
+def schema_checks(X, y):
+    # TODO
+    ...</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def make_synthetic(n: int, d: int, seed: int):
+    rng = np.random.default_rng(seed)
+    X = rng.standard_normal((n, d))
+    w_true = rng.standard_normal((d,))
+    b_true = 0.2
+    logits = X @ w_true + b_true
+    p = 1.0 / (1.0 + np.exp(-logits))
+    y = (p &gt; 0.5).astype(np.int64)
+    return X.astype(np.float64), y
+
+def train_test_split(X, y, train_frac: float, seed: int):
+    rng = np.random.default_rng(seed)
+    n = X.shape[0]
+    idx = rng.permutation(n)
+    nt = int(train_frac * n)
+    tr, te = idx[:nt], idx[nt:]
+    return X[tr], y[tr], X[te], y[te]
+
+def schema_checks(X, y):
+    check("X_2d", X.ndim == 2)
+    check("y_1d", y.ndim == 1)
+    check("n_match", X.shape[0] == y.shape[0])
+    check("no_nan", np.isfinite(X).all() and np.isfinite(y).all())
+    check("binary_y", set(np.unique(y).tolist()) &lt;= {0,1})
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Logistic regression (NumPy)</summary><div class="task-body"><h4>2 ,  Logistic regression (NumPy)</h4><h4>Starter code</h4><pre><code class="lang-python">def sigmoid(z):
+    # TODO
+    ...
+def log_loss(y, p, eps: float = 1e-12):
+    # TODO
+    ...
+def fit_logreg(X, y, lr: float, steps: int, l2: float, seed: int):
+    # TODO
+    ...
+def predict_proba(model, X):
+    # TODO
+    ...
+def predict(model, X):
+    # TODO
+    ...</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def sigmoid(z):
+    return 1.0 / (1.0 + np.exp(-z))
+
+def log_loss(y, p, eps: float = 1e-12):
+    p = np.clip(p, eps, 1.0 - eps)
+    return float(-np.mean(y * np.log(p) + (1-y) * np.log(1-p)))
+
+def fit_logreg(X, y, lr: float, steps: int, l2: float, seed: int):
+    rng = np.random.default_rng(seed)
+    n, d = X.shape
+    w = 0.01 * rng.standard_normal((d,))
+    b = 0.0
+    for _ in range(steps):
+        z = X @ w + b
+        p = sigmoid(z)
+        # gradients
+        gw = (X.T @ (p - y)) / n + l2 * w
+        gb = float(np.mean(p - y))
+        w -= lr * gw
+        b -= lr * gb
+    return {"w": w, "b": b}
+
+def predict_proba(model, X):
+    return sigmoid(X @ model["w"] + model["b"])
+
+def predict(model, X):
+    return (predict_proba(model, X) &gt;= 0.5).astype(np.int64)
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Evaluation + quality gate</summary><div class="task-body"><h4>3 ,  Evaluation + quality gate</h4><h4>Starter code</h4><pre><code class="lang-python">def accuracy(y_true, y_pred):
+    # TODO
+    ...
+def eval_model(model, X, y):
+    # TODO
+    ...
+def quality_gate(metrics: dict, acc_gate: float):
+    # TODO
+    ...</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def accuracy(y_true, y_pred):
+    return float(np.mean(y_true == y_pred))
+
+def eval_model(model, X, y):
+    p = predict_proba(model, X)
+    yhat = (p &gt;= 0.5).astype(np.int64)
+    return {
+        "acc": accuracy(y, yhat),
+        "log_loss": log_loss(y, p),
+    }
+
+def quality_gate(metrics: dict, acc_gate: float):
+    check("acc_gate", metrics["acc"] &gt;= acc_gate)
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> 4 ,  Artifacts (model + metrics)</summary><div class="task-body"><h4>4 ,  Artifacts (model + metrics)</h4><h4>Starter code</h4><pre><code class="lang-python">def save_artifacts(cfg: dict, model: dict, metrics: dict):
+    # TODO
+    ...</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def save_artifacts(cfg: dict, model: dict, metrics: dict):
+    outdir = Path(cfg["artifacts_dir"])
+    outdir.mkdir(parents=True, exist_ok=True)
+    # Save weights (numpy) + metadata (json)
+    np.save(outdir / "weights.npy", model["w"])
+    (outdir / "bias.txt").write_text(str(float(model["b"])), encoding="utf-8")
+    (outdir / "metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+    (outdir / "config.json").write_text(json.dumps(cfg, indent=2), encoding="utf-8")
+    return str(outdir)
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 7</span> 5 ,  Implement `run_pipeline` + CI-style checks</summary><div class="task-body"><h4>5 ,  Implement <code>run_pipeline</code> + CI-style checks</h4><h4>Starter code</h4><pre><code class="lang-python">def run_pipeline(cfg: dict):
+    # TODO
+    ...
+model, metrics = run_pipeline(CONFIG)
+print(metrics)
+check('artifacts_dir_exists', Path(metrics['artifacts_dir']).exists())</code></pre><h4>Test code</h4><pre><code class="lang-python">check('artifacts_dir_exists', Path(metrics['artifacts_dir']).exists())</code></pre><h4>Checks</h4><ul><li>check('artifacts_dir_exists', Path(metrics['artifacts_dir']).exists())</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def run_pipeline(cfg: dict):
+    X, y = make_synthetic(cfg["n"], cfg["d"], seed=cfg["seed"])
+    schema_checks(X, y)
+    Xtr, ytr, Xte, yte = train_test_split(X, y, cfg["train_frac"], seed=cfg["seed"])
+    model = fit_logreg(Xtr, ytr, lr=cfg["lr"], steps=cfg["steps"], l2=cfg["l2"], seed=cfg["seed"])
+    metrics = eval_model(model, Xte, yte)
+    quality_gate(metrics, acc_gate=cfg["acc_gate"])
+    path = save_artifacts(cfg, model, metrics)
+    metrics = {**metrics, "artifacts_dir": path}
+    return model, metrics
+
+model, metrics = run_pipeline(CONFIG)
+print(metrics)
+check('artifacts_dir_exists', Path(metrics['artifacts_dir']).exists())
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 8</span> 6 ,  CI simulation: determinism + regression gate</summary><div class="task-body"><h4>6 ,  CI simulation: determinism + regression gate</h4><h4>Starter code</h4><pre><code class="lang-python">def almost_equal(a, b, tol=1e-12):
+    # TODO
+    ...
+# Determinism check: same config should yield same metrics
+_, m1 = run_pipeline(CONFIG)
+_, m2 = run_pipeline(CONFIG)
+check('deterministic_acc', almost_equal(m1['acc'], m2['acc']))
+check('deterministic_loss', almost_equal(m1['log_loss'], m2['log_loss']))
+
+# Regression simulation: tighten gate until it fails
+bad = dict(CONFIG)
+bad["acc_gate"] = 0.99
+try:
+    run_pipeline(bad)
+    raise AssertionError("expected gate to fail")
+except AssertionError as e:
+    check('regression_gate_blocks_bad_run', 'acc_gate' in str(e))
+    print('Expected regression gate block triggered on acc_gate')</code></pre><h4>Test code</h4><pre><code class="lang-python">check('deterministic_acc', almost_equal(m1['acc'], m2['acc']))
+check('deterministic_loss', almost_equal(m1['log_loss'], m2['log_loss']))</code></pre><h4>Checks</h4><ul><li>check('deterministic_acc', almost_equal(m1['acc'], m2['acc']))</li><li>check('deterministic_loss', almost_equal(m1['log_loss'], m2['log_loss']))</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def almost_equal(a, b, tol=1e-12):
+    return abs(float(a) - float(b)) &lt;= tol
+
+# Determinism check: same config should yield same metrics
+_, m1 = run_pipeline(CONFIG)
+_, m2 = run_pipeline(CONFIG)
+check('deterministic_acc', almost_equal(m1['acc'], m2['acc']))
+check('deterministic_loss', almost_equal(m1['log_loss'], m2['log_loss']))
+
+# Regression simulation: tighten gate until it fails
+bad = dict(CONFIG)
+bad["acc_gate"] = 0.99
+try:
+    run_pipeline(bad)
+    raise AssertionError("expected gate to fail")
+except AssertionError as e:
+    check('regression_gate_blocks_bad_run', 'acc_gate' in str(e))
+    print('Expected regression gate block triggered on acc_gate')
+</code></pre></details></div></details>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d1-mlops-pipelines-cicd">https://ai.thes30.com/problems/w12-d1-mlops-pipelines-cicd</a>.</p>
+</section><section class="lab" id="lab-w12-d2-model-registry-versioning">
+<h3>Model Registry &amp; Versioning <span class="diff diff-expert">Expert</span></h3>
+<p class="lab-meta">Week 12, Day 2 · MLOps &amp; Systems · 7 tasks · 6 checks</p>
+<p>Identity for models. You define a tiny model artifact with a deterministic version id, register versions with metadata, resolve stage pointers, promote from staging to production through gates, and audit by loading production artifacts and comparing versions. The invariant to internalize: versions are immutable, pointers move, and that is what makes rollback boring instead of terrifying.</p>
+<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">Meta</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1krNUGCA05XExdQN5snRea-p_7tKOGIvh">Colab</a> · <a href="registry_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/D7fUMC2IVlc">Video</a></p>
+<h4>Tasks (7)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Model Registry &amp; Versioning ,  Student Lab</h3>
+<p>Offline lab: implement a filesystem-backed model registry with versioning and stage promotion.</p>
+<h4>0 ,  Registry layout + helpers</h4><h4>Starter code</h4><pre><code class="lang-python">import json
+import hashlib
+from pathlib import Path
+import numpy as np
+import time
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import json
+import hashlib
+from pathlib import Path
+import numpy as np
+import time
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Model Registry &amp; Versioning ,  Instructor Lab</h3>
+<p>Offline lab: implement a filesystem-backed model registry with versioning and stage promotion.</p>
+<h4>0 ,  Registry layout + helpers</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Registry layout + helpers</summary><div class="task-body"><h4>0 ,  Registry layout + helpers</h4><h4>Starter code</h4><pre><code class="lang-python">REGISTRY_ROOT = Path("registry")
+MODEL_NAME = "toy_logreg"
+
+def model_root(model_name: str) -&gt; Path:
+    # TODO
+    ...
+def versions_root(model_name: str) -&gt; Path:
+    # TODO
+    ...
+def stages_root(model_name: str) -&gt; Path:
+    # TODO
+    ...
+def ensure_layout(model_name: str):
+    # TODO
+    ...</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">REGISTRY_ROOT = Path("registry")
+MODEL_NAME = "toy_logreg"
+
+def model_root(model_name: str) -&gt; Path:
+    return REGISTRY_ROOT / "models" / model_name
+
+def versions_root(model_name: str) -&gt; Path:
+    return model_root(model_name) / "versions"
+
+def stages_root(model_name: str) -&gt; Path:
+    return model_root(model_name) / "stages"
+
+def ensure_layout(model_name: str):
+    versions_root(model_name).mkdir(parents=True, exist_ok=True)
+    stages_root(model_name).mkdir(parents=True, exist_ok=True)
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Define a tiny model artifact + deterministic version id</summary><div class="task-body"><h4>1 ,  Define a tiny model artifact + deterministic version id</h4><h4>Starter code</h4><pre><code class="lang-python">def make_toy_model(seed: int = 0, d: int = 8):
+    # TODO
+    ...
+def stable_hash_bytes(parts: list[bytes]) -&gt; str:
+    # TODO
+    ...
+def version_id(model: dict, cfg: dict, metrics: dict) -&gt; str:
+    # TODO
+    ...
+cfg = {"seed": 0, "d": 8}
+metrics = {"acc": 0.82, "log_loss": 0.42}
+model = make_toy_model(seed=cfg["seed"], d=cfg["d"])
+vid = version_id(model, cfg, metrics)
+print('version_id', vid)
+check('vid_len', len(vid) == 16)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('vid_len', len(vid) == 16)</code></pre><h4>Checks</h4><ul><li>check('vid_len', len(vid)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def make_toy_model(seed: int = 0, d: int = 8):
+    rng = np.random.default_rng(seed)
+    w = rng.standard_normal((d,)).astype(np.float64)
+    b = float(rng.standard_normal())
+    return {"w": w, "b": b}
+
+def stable_hash_bytes(parts: list[bytes]) -&gt; str:
+    h = hashlib.sha256()
+    for p in parts:
+        h.update(p)
+    return h.hexdigest()[:16]
+
+def version_id(model: dict, cfg: dict, metrics: dict) -&gt; str:
+    # stable: same (weights+cfg+metrics) =&gt; same id
+    w_bytes = model["w"].tobytes()
+    b_bytes = np.float64(model["b"]).tobytes()
+    cfg_bytes = json.dumps(cfg, sort_keys=True).encode("utf-8")
+    met_bytes = json.dumps(metrics, sort_keys=True).encode("utf-8")
+    return stable_hash_bytes([w_bytes, b_bytes, cfg_bytes, met_bytes])
+
+cfg = {"seed": 0, "d": 8}
+metrics = {"acc": 0.82, "log_loss": 0.42}
+model = make_toy_model(seed=cfg["seed"], d=cfg["d"])
+vid = version_id(model, cfg, metrics)
+print('version_id', vid)
+check('vid_len', len(vid) == 16)
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Register a model version (artifacts + metadata)</summary><div class="task-body"><h4>2 ,  Register a model version (artifacts + metadata)</h4><h4>Starter code</h4><pre><code class="lang-python">def save_version(model_name: str, vid: str, model: dict, cfg: dict, metrics: dict, extra = None):
+    # TODO
+    ...
+def register_model(model_name: str, model: dict, cfg: dict, metrics: dict, extra = None):
+    # TODO
+    ...
+vid1, vdir1 = register_model(MODEL_NAME, model, cfg, metrics, extra={"notes": "baseline"})
+print('registered', vid1, vdir1)
+check('metadata_exists', (vdir1 / 'metadata.json').exists())</code></pre><h4>Test code</h4><pre><code class="lang-python">check('metadata_exists', (vdir1 / 'metadata.json').exists())</code></pre><h4>Checks</h4><ul><li>check('metadata_exists', (vdir1 / 'metadata.json')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> 3 ,  List versions + resolve stage pointers</summary><div class="task-body"><h4>3 ,  List versions + resolve stage pointers</h4><h4>Starter code</h4><pre><code class="lang-python">def load_metadata(model_name: str, vid: str) -&gt; dict:
+    # TODO
+    ...
+def list_versions(model_name: str):
+    # TODO
+    ...
+def stage_path(model_name: str, stage: str) -&gt; Path:
+    # TODO
+    ...
+def get_stage(model_name: str, stage: str):
+    # TODO
+    ...
+vers = list_versions(MODEL_NAME)
+print('n_versions', len(vers))
+check('listed', len(vers) &gt;= 1)
+print('production pointer', get_stage(MODEL_NAME, 'production'))</code></pre><h4>Test code</h4><pre><code class="lang-python">check('listed', len(vers) &gt;= 1)</code></pre><h4>Checks</h4><ul><li>check('listed', len(vers)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def load_metadata(model_name: str, vid: str) -&gt; dict:
+    p = versions_root(model_name) / vid / "metadata.json"
+    return json.loads(p.read_text(encoding="utf-8"))
+
+def list_versions(model_name: str):
+    ensure_layout(model_name)
+    out = []
+    for v in sorted(versions_root(model_name).iterdir()):
+        if not v.is_dir():
+            continue
+        meta = json.loads((v / "metadata.json").read_text(encoding="utf-8"))
+        out.append(meta)
+    return out
+
+def stage_path(model_name: str, stage: str) -&gt; Path:
+    return stages_root(model_name) / f"{stage}.txt"
+
+def get_stage(model_name: str, stage: str):
+    p = stage_path(model_name, stage)
+    return p.read_text(encoding="utf-8").strip() if p.exists() else None
+
+vers = list_versions(MODEL_NAME)
+print('n_versions', len(vers))
+check('listed', len(vers) &gt;= 1)
+print('production pointer', get_stage(MODEL_NAME, 'production'))
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 6</span> 4 ,  Promote with gates (staging → production)</summary><div class="task-body"><h4>4 ,  Promote with gates (staging → production)</h4><h4>Starter code</h4><pre><code class="lang-python">$10</code></pre><h4>Test code</h4><pre><code class="lang-python">check('staging_points_good', get_stage(MODEL_NAME, 'staging') == vid1)
+check('production_points_good', get_stage(MODEL_NAME, 'production') == vid1)</code></pre><h4>Checks</h4><ul><li>check('staging_points_good', get_stage(MODEL_NAME, 'staging') == vid1)</li><li>check('production_points_good', get_stage(MODEL_NAME, 'production') == vid1)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 7</span> 5 ,  Audit: load production artifacts + compare versions</summary><div class="task-body"><h4>5 ,  Audit: load production artifacts + compare versions</h4><h4>Starter code</h4><pre><code class="lang-python">def load_artifacts(model_name: str, vid: str):
+    # TODO
+    ...
+prod_vid = get_stage(MODEL_NAME, "production")
+model_prod, meta_prod = load_artifacts(MODEL_NAME, prod_vid)
+print('prod_vid', prod_vid)
+print('prod_metrics', meta_prod['metrics'])
+check('prod_acc_ok', float(meta_prod['metrics']['acc']) &gt;= 0.80)
+
+m1 = load_metadata(MODEL_NAME, vid1)
+m2 = load_metadata(MODEL_NAME, vid2)
+print('acc diff', float(m1['metrics']['acc']) - float(m2['metrics']['acc']))</code></pre><h4>Test code</h4><pre><code class="lang-python">check('prod_acc_ok', float(meta_prod['metrics']['acc']) &gt;= 0.80)</code></pre><h4>Checks</h4><ul><li>check('prod_acc_ok', float(meta_prod['metrics']['acc'])</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def load_artifacts(model_name: str, vid: str):
+    vdir = versions_root(model_name) / vid
+    w = np.load(vdir / "weights.npy")
+    b = float((vdir / "bias.txt").read_text(encoding="utf-8").strip())
+    meta = json.loads((vdir / "metadata.json").read_text(encoding="utf-8"))
+    return {"w": w, "b": b}, meta
+
+prod_vid = get_stage(MODEL_NAME, "production")
+model_prod, meta_prod = load_artifacts(MODEL_NAME, prod_vid)
+print('prod_vid', prod_vid)
+print('prod_metrics', meta_prod['metrics'])
+check('prod_acc_ok', float(meta_prod['metrics']['acc']) &gt;= 0.80)
+
+m1 = load_metadata(MODEL_NAME, vid1)
+m2 = load_metadata(MODEL_NAME, vid2)
+print('acc diff', float(m1['metrics']['acc']) - float(m2['metrics']['acc']))
+</code></pre></details></div></details>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d2-model-registry-versioning">https://ai.thes30.com/problems/w12-d2-model-registry-versioning</a>.</p>
+</section><section class="lab" id="lab-w12-d3-monitoring-drift-detection">
+<h3>Monitoring &amp; Drift Detection <span class="diff diff-expert">Expert</span></h3>
+<p class="lab-meta">Week 12, Day 3 · MLOps &amp; Systems · 5 tasks · 6 checks</p>
+<p>The watchtower lab. You generate a baseline batch and drifting production batches, then implement PSI, the KS statistic, and mean/variance shift, add model and performance monitoring, and write alerting rules. Notice the ordering: label-free drift metrics come first because labels are late; the alert is what closes the loop back to retraining.</p>
+<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/14bbAkUgEcYFqVQ22NXpw3-PLXiOTb-mx">Colab</a> · <a href="drift_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/G4ccWJ2RyRM">Video</a></p>
+<h4>Tasks (5)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Monitoring &amp; Drift Detection ,  Student Lab</h3>
+<h4>Task 0.0 ,  Setup</h4>
+<p>Load NumPy and the small <code>check(...)</code> helper used across the notebook. All later sections build on this setup.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)
+</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)
+</code></pre><h4>Instructor explanation</h4><h3>Monitoring &amp; Drift Detection ,  Instructor Lab</h3>
+<p>Offline lab: detect feature drift and performance drift across simulated production batches.</p>
+<h4>0 ,  Generate baseline + drifting production batches</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Generate baseline + drifting production batches</summary><div class="task-body"><h4>Section 0 ,  Generate baseline + drifting production batches</h4>
+<h4>Task 0.1</h4>
+<p>Implement the synthetic batch generator used throughout the lab.</p>
+<ul><li><code>sigmoid(z)</code>: logistic link</li><li><code>make_batch(...)</code>: create one batch of features and labels</li><li>inject drift into the first <code>k = d//4</code> features using <code>mean_shift</code> and <code>scale_shift</code></li><li>return <code>X</code> with shape <code>(n, d)</code> and binary labels <code>y</code> with shape <code>(n,)</code></li></ul>
+<p>Then create one reference batch <code>X0, y0</code> and six production batches in <code>BATCHES</code>.</p><h4>Starter code</h4><pre><code class="lang-python">def sigmoid(z):
+    # TODO
+    ...
+def make_batch(n: int, d: int, seed: int, mean_shift: float = 0.0, scale_shift: float = 0.0, label_shift: float = 0.0):
+    # TODO
+    ...
+N, D = 5000, 12
+X0, y0 = make_batch(N, D, seed=0)
+BATCHES = []
+for t in range(6):
+    Xb, yb = make_batch(N, D, seed=10+t, mean_shift=0.05*t, scale_shift=0.03*t)
+    BATCHES.append((Xb, yb))
+
+check('shapes', X0.shape == (N, D) and y0.shape == (N,))</code></pre><h4>Test code</h4><pre><code class="lang-python">check('shapes', X0.shape == (N, D) and y0.shape == (N,))</code></pre><h4>Checks</h4><ul><li>check('shapes', X0.shape == (N, D) and y0.shape == (N,))</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def sigmoid(z):
+    return 1.0 / (1.0 + np.exp(-z))
+
+def make_batch(n: int, d: int, seed: int, mean_shift: float = 0.0, scale_shift: float = 0.0, label_shift: float = 0.0):
+    rng = np.random.default_rng(seed)
+    X = rng.standard_normal((n, d)).astype(np.float64)
+    k = max(1, d // 4)
+    X[:, :k] = (1.0 + scale_shift) * X[:, :k] + mean_shift
+    w_true = np.linspace(-1.0, 1.0, d)
+    b_true = 0.0
+    p = sigmoid(X @ w_true + b_true)
+    p = np.clip(p + label_shift, 0.0, 1.0)
+    y = (p &gt;= 0.5).astype(np.int64)
+    return X, y
+
+N, D = 5000, 12
+X0, y0 = make_batch(N, D, seed=0)
+BATCHES = []
+for t in range(6):
+    Xb, yb = make_batch(N, D, seed=10+t, mean_shift=0.05*t, scale_shift=0.03*t)
+    BATCHES.append((Xb, yb))
+
+check('shapes', X0.shape == (N, D) and y0.shape == (N,))
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Drift metrics (PSI + KS + mean/variance shift)</summary><div class="task-body"><h4>Section 1 ,  Drift metrics (PSI + KS + mean/variance shift)</h4>
+<h4>Task 1.1</h4>
+<p>Implement feature-level drift metrics between a reference batch and a production batch.</p>
+<ul><li><code>psi_1d(base, prod)</code>: quantile-binned PSI for one feature</li><li><code>ks_statistic(base, prod)</code>: two-sample KS statistic without SciPy</li><li><code>mean_var_shift(base, prod)</code>: return mean shift, absolute mean shift, and variance ratio</li><li><code>drift_report(X_base, X_prod)</code>: compute one record per feature and sort by strongest drift</li></ul>
+<p>Print the top three most drifted features for the first production batch.</p><h4>Starter code</h4><pre><code class="lang-python">def psi_1d(base: np.ndarray, prod: np.ndarray, bins: int = 10, eps: float = 1e-12):
+    # TODO
+    ...
+def ks_statistic(base: np.ndarray, prod: np.ndarray):
+    # TODO
+    ...
+def mean_var_shift(base: np.ndarray, prod: np.ndarray):
+    # TODO
+    ...
+def drift_report(X_base: np.ndarray, X_prod: np.ndarray):
+    # TODO
+    ...
+rep0 = drift_report(X0, BATCHES[0][0])
+print('top3', rep0[:3])
+check('rep_len', len(rep0) == D)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('rep_len', len(rep0) == D)</code></pre><h4>Checks</h4><ul><li>check('rep_len', len(rep0) == D)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Model + performance monitoring</summary><div class="task-body"><h4>Section 2 ,  Model + performance monitoring</h4>
+<h4>Task 2.1</h4>
+<p>Build a deterministic batch-level monitoring loop for model performance.</p>
+<ul><li><code>fit_fixed_model(d)</code>: create one fixed linear model</li><li><code>predict_proba(model, X)</code>: convert logits to probabilities</li><li><code>accuracy(y, yhat)</code>: classification accuracy</li><li><code>log_loss(y, p)</code>: binary cross-entropy</li><li><code>eval_batch(model, X, y)</code>: return a metrics dictionary with <code>acc</code> and <code>log_loss</code></li></ul>
+<p>Then evaluate the reference batch and every production batch and store the metrics in <code>series</code>.</p><h4>Starter code</h4><pre><code class="lang-python">def fit_fixed_model(d: int):
+    # TODO
+    ...
+def predict_proba(model, X):
+    # TODO
+    ...
+def accuracy(y, yhat):
+    # TODO
+    ...
+def log_loss(y, p, eps: float = 1e-12):
+    # TODO
+    ...
+def eval_batch(model, X, y):
+    # TODO
+    ...
+model = fit_fixed_model(D)
+base_metrics = eval_batch(model, X0, y0)
+print('base', base_metrics)
+
+series = []
+for t, (Xb, yb) in enumerate(BATCHES):
+    m = eval_batch(model, Xb, yb)
+    series.append(m)
+print('series', series)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('series_len', len(series) == len(BATCHES))
+check('metrics_finite', all(np.isfinite(m['acc']) and np.isfinite(m['log_loss']) for m in [base_metrics] + series))
+check('acc_unit_interval', all(0.0 &lt;= m['acc'] &lt;= 1.0 for m in [base_metrics] + series))
+</code></pre><h4>Checks</h4><ul><li>check('series_len', len(series) == len(BATCHES))</li><li>check('metrics_finite', all(np.isfinite(m['acc']) and np.isfinite(m['log_loss']) for m in [base_metrics] + series))</li><li>check('acc_unit_interval', all(0.0 &lt;= m['acc'] &lt;= 1.0 for m in [base_metrics] + series))</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def fit_fixed_model(d: int):
+    w = np.linspace(-0.8, 0.8, d)
+    b = 0.0
+    return {"w": w, "b": b}
+
+def predict_proba(model, X):
+    return sigmoid(X @ model["w"] + model["b"])
+
+def accuracy(y, yhat):
+    return float(np.mean(y == yhat))
+
+def log_loss(y, p, eps: float = 1e-12):
+    p = np.clip(p, eps, 1.0 - eps)
+    return float(-np.mean(y*np.log(p) + (1-y)*np.log(1-p)))
+
+def eval_batch(model, X, y):
+    p = predict_proba(model, X)
+    yhat = (p &gt;= 0.5).astype(np.int64)
+    return {"acc": accuracy(y, yhat), "log_loss": log_loss(y, p)}
+
+model = fit_fixed_model(D)
+base_metrics = eval_batch(model, X0, y0)
+print('base', base_metrics)
+
+series = []
+for t, (Xb, yb) in enumerate(BATCHES):
+    m = eval_batch(model, Xb, yb)
+    series.append(m)
+print('series', series)
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Alerting rules (drift + performance)</summary><div class="task-body"><h4>Section 3 ,  Alerting rules (drift + performance)</h4>
+<h4>Task 3.1</h4>
+<p>Combine input-drift monitoring and outcome monitoring into one alert object.</p>
+<ul><li>compute the ranked drift report for the current batch</li><li>use the top feature to decide whether drift exceeds <code>psi_thresh</code> or <code>ks_thresh</code></li><li>trigger <code>perf_alert</code> when accuracy drops enough relative to baseline</li><li>return a compact alert dictionary for logging or paging</li></ul>
+<p>Finally compare an early batch with a late batch and confirm that the later batch shows stronger PSI drift.</p><h4>Starter code</h4><pre><code class="lang-python">def alerts_for_batch(X_base, X_prod, base_metrics, prod_metrics, psi_thresh=0.2, ks_thresh=0.15, acc_drop=0.05):
+    # TODO
+    ...
+for t, (Xb, yb) in enumerate(BATCHES):
+    m = eval_batch(model, Xb, yb)
+    a = alerts_for_batch(X0, Xb, base_metrics, m, psi_thresh=0.2, ks_thresh=0.15, acc_drop=0.05)
+    print('t', t, a)
+
+# Sanity check: later batch should drift more than early batch
+a0 = alerts_for_batch(X0, BATCHES[0][0], base_metrics, eval_batch(model, BATCHES[0][0], BATCHES[0][1]))
+a5 = alerts_for_batch(X0, BATCHES[5][0], base_metrics, eval_batch(model, BATCHES[5][0], BATCHES[5][1]))
+print('early_vs_late_top_psi', a0['top_psi'], a5['top_psi'])
+check('psi_increases', a5['top_psi'] &gt;= a0['top_psi'])</code></pre><h4>Test code</h4><pre><code class="lang-python">check('psi_increases', a5['top_psi'] &gt;= a0['top_psi'])</code></pre><h4>Checks</h4><ul><li>check('psi_increases', a5['top_psi'] &gt;= a0['top_psi'])</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre></details></div></details>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d3-monitoring-drift-detection">https://ai.thes30.com/problems/w12-d3-monitoring-drift-detection</a>.</p>
+</section><section class="lab" id="lab-w12-d4-scaling-ml-systems">
+<h3>Scaling ML Systems <span class="diff diff-expert">Expert</span></h3>
+<p class="lab-meta">Week 12, Day 4 · MLOps &amp; Systems · 3 tasks · 7 checks</p>
+<p>The math before the money. You build a simulator with a single worker, micro-batching, and caching, then run experiments that separate what batching buys from what caching buys. Short lab, lasting lesson: measure the bottleneck before scaling anything, and never confuse throughput wins with latency wins.</p>
+<p>Simulate serving load and study how queueing, micro-batching, and caching change latency and throughput.</p>
+<div class="callout"><strong>Outcome.</strong> Students can reason about p95/p99 latency, throughput, batching windows, cache hit rates, and scaling tradeoffs in ML serving systems.</div>
+<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">Uber</span><span class="tagchip co">Kubernetes</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1rTO0tYaH9AXaw_7HxLOpPBz3kF7qIB2L">Colab</a> · <a href="scaling_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/WL1FIXGhHyk">Video</a></p>
+<h4>Tasks (3)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h4>Section 0 ,  Workload (Poisson arrivals)</h4>
+<h4>Task 0.1</h4>
+<p>Generate an arrival stream for a loaded serving system.</p>
+<ul><li>use exponential inter-arrival times drawn from an exponential distribution to simulate Poisson arrivals</li><li>do not confuse this with exponential growth over time; these are random gaps between requests</li><li>accumulate them into monotonic arrival timestamps in seconds</li><li>create random query vectors so later sections have a synthetic request payload</li></ul>
+<p>This section defines the workload that the serving simulator will process.</p><h4>Starter code</h4><pre><code class="lang-python">N_REQ = 2000
+ARRIVAL_RATE = 220.0  # req/s
+D = 128
+
+def poisson_arrivals(n: int, rate: float, seed: int = 0):
+    rng = np.random.default_rng(seed)
+    inter = rng.exponential(1.0 / rate, size=(n,))
+    return np.cumsum(inter)
+
+arrivals_s = poisson_arrivals(N_REQ, ARRIVAL_RATE, seed=0)
+queries = rng.standard_normal((N_REQ, D)).astype(np.float64)
+check('monotonic_arrivals', np.all(np.diff(arrivals_s) &gt;= 0.0))
+</code></pre><h4>Test code</h4><pre><code class="lang-python">check('monotonic_arrivals', np.all(np.diff(arrivals_s) &gt;= 0.0))</code></pre><h4>Checks</h4><ul><li>check('monotonic_arrivals', np.all(np.diff(arrivals_s) &gt;= 0.0))</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">N_REQ = 2000
+ARRIVAL_RATE = 220.0  # req/s
+D = 128
+
+def poisson_arrivals(n: int, rate: float, seed: int = 0):
+    rng = np.random.default_rng(seed)
+    inter = rng.exponential(1.0 / rate, size=(n,))
+    return np.cumsum(inter)
+
+arrivals_s = poisson_arrivals(N_REQ, ARRIVAL_RATE, seed=0)
+queries = rng.standard_normal((N_REQ, D)).astype(np.float64)
+check('monotonic_arrivals', np.all(np.diff(arrivals_s) &gt;= 0.0))
+</code></pre><h4>Instructor explanation</h4><h3>Scaling ML Systems ,  Instructor Lab</h3>
+<p>Offline lab: simulate serving load to study latency/throughput tradeoffs (queueing, batching, caching).</p>
+<h4>0 ,  Workload (Poisson arrivals)</h4>
+<h4>1 ,  Simulator (single worker, micro-batching, caching)</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> 1 ,  Simulator (single worker, micro-batching, caching)</summary><div class="task-body"><h4>Section 1 ,  Simulator (single worker, micro-batching, caching)</h4>
+<h4>Task 1.1</h4>
+<p>Implement a simple single-worker serving simulator.</p>
+<ul><li><code>service_time_ms(batch_size)</code>: batch service-time model</li><li><code>simulate(...)</code>: process requests in arrival order</li><li>support <code>max_batch</code> and <code>max_wait_ms</code> for micro-batching</li><li>support <code>cache_hit_rate</code> so some requests bypass expensive inference</li><li>return latency percentiles, throughput, cache-hit count, and mean batch size</li></ul>
+<p>Then run a no-batching, no-cache baseline and inspect its latency profile.</p><h4>Starter code</h4><pre><code class="lang-python">def service_time_ms(batch_size: int, base_ms: float = 6.0, per_item_ms: float = 0.10):
+    # TODO
+    ...
+
+def simulate(arrival_times_s: np.ndarray, max_batch: int = 1, max_wait_ms: float = 0.0, cache_hit_rate: float = 0.0, seed: int = 0):
+    # TODO
+    ...
+
+baseline = simulate(arrivals_s, max_batch=1, max_wait_ms=0.0, cache_hit_rate=0.0, seed=0)
+print('baseline', baseline)
+check('p95_ge_p50', baseline['p95_ms'] &gt;= baseline['p50_ms'])
+check('thr_positive', baseline['throughput_rps'] &gt; 0.0)
+check('cache_count_nonneg', baseline['n_cache_hits'] &gt;= 0)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('p95_ge_p50', baseline['p95_ms'] &gt;= baseline['p50_ms'])
+check('thr_positive', baseline['throughput_rps'] &gt; 0.0)
+check('cache_count_nonneg', baseline['n_cache_hits'] &gt;= 0)
+</code></pre><h4>Checks</h4><ul><li>check('p95_ge_p50', baseline['p95_ms'] &gt;= baseline['p50_ms'])</li><li>check('thr_positive', baseline['throughput_rps'] &gt; 0.0)</li><li>check('cache_count_nonneg', baseline['n_cache_hits'] &gt;= 0)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 2 ,  Experiments: batching vs caching</summary><div class="task-body"><h4>Section 2 ,  Experiments: batching vs caching</h4>
+<h4>Task 2.1</h4>
+<p>Compare several serving configurations on the same arrival stream.</p>
+<ul><li>no batching / no cache baseline</li><li>batching only</li><li>caching only</li><li>batching plus caching</li></ul>
+<p>Report p95 latency, p99 latency, and throughput for each setting, then check that scaling knobs actually change the system behavior.</p><h4>Starter code</h4><pre><code class="lang-python">def run_settings():
+    # TODO
+    ...
+results = run_settings()
+for r in results:
+    print(r['name'], 'p95', round(r['p95_ms'], 1), 'p99', round(r['p99_ms'], 1), 'thr', round(r['throughput_rps'], 1))
+check('got_results', len(results) &gt;= 3)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('got_results', len(results) &gt;= 3)
+check('batching_or_cache_helps_thr', max(r['throughput_rps'] for r in results) &gt;= results[0]['throughput_rps'])
+check('cache_not_worse_than_baseline', results_by_name['no_batch_cache30']['p95_ms'] &lt;= results_by_name['no_batch_no_cache']['p95_ms'])
+</code></pre><h4>Checks</h4><ul><li>check('got_results', len(results) &gt;= 3)</li><li>check('batching_or_cache_helps_thr', max(r['throughput_rps'] for r in results) &gt;= results[0]['throughput_rps'])</li><li>check('cache_not_worse_than_baseline', results_by_name['no_batch_cache30']['p95_ms'] &lt;= results_by_name['no_batch_no_cache']['p95_ms'])</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre></details></div></details>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d4-scaling-ml-systems">https://ai.thes30.com/problems/w12-d4-scaling-ml-systems</a>.</p>
+</section><section class="lab" id="lab-w12-d5-deployment-lab">
+<h3>Deployment Lab <span class="diff diff-expert">Expert</span></h3>
+<p class="lab-meta">Week 12, Day 5 · MLOps &amp; Systems · 5 tasks · 9 checks</p>
+<p>Shipping day. You serve a tiny deterministic model over HTTP using only the standard library, implement the health and prediction endpoints that form the service contract, write client helpers, and verify everything with CI-style contract tests. The lab is deliberately small: the contract discipline is the point, and it transfers unchanged to any model at any scale.</p>
+<p>Serve a tiny deterministic model over HTTP, then validate the service contract from a client.</p>
+<div class="callout"><strong>Outcome.</strong> Students can expose a model as a minimal JSON API, implement health and prediction endpoints, and verify deployment behavior with contract tests.</div>
+<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">Meta</span><span class="tagchip co">Docker</span></p>
+<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1fB8gOecWuoVAkYQE3m8mnzfPfZUtMUQZ">Colab</a> · <a href="deploy_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/S_E6LCFttyA">Video</a></p>
+<h4>Tasks (5)</h4>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Deployment Lab ,  Student</h3>
+<p>Offline lab: serve a tiny model via HTTP and write contract tests.</p>
+<h4>Task 0.0 ,  Setup</h4>
+<p>Import the stdlib HTTP tools, NumPy, and the shared <code>check(...)</code> helper. Later sections use this setup to run both the server and the client in one notebook.</p><h4>Starter code</h4><pre><code class="lang-python">import json
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
+import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">import json
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
+import numpy as np
+
+def check(name: str, cond: bool):
+    if not cond:
+        raise AssertionError(f'Failed: {name}')
+    print(f'OK: {name}')
+
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Deployment Lab ,  Instructor</h3>
+<p>Offline lab: serve a tiny model via HTTP and write contract tests.</p>
+<h4>0 ,  Deterministic model stub</h4></details></div></details>
+<details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Deterministic model stub</summary><div class="task-body"><h4>0 ,  Deterministic model stub</h4>
+<p>Implement a tiny offline model with a stable contract.</p>
+<ul><li><code>sigmoid(z)</code>: convert logits to probabilities</li><li><code>predict_one(x)</code>: validate input shape, compute probability, and threshold to a label</li></ul>
+<p>This model stub becomes the logic behind the HTTP service in the next section.</p><h4>Starter code</h4><pre><code class="lang-python">D = 8
+W = np.linspace(-1.0, 1.0, D).astype(np.float64)
+B = 0.1
+
+def sigmoid(z):
+    # TODO
+    ...
+def predict_one(x: np.ndarray):
+    # TODO
+    ...
+x_demo = rng.standard_normal((D,))
+p_demo, y_demo = predict_one(x_demo)
+print('demo', p_demo, y_demo)
+check('p_range', 0.0 &lt;= p_demo &lt;= 1.0)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('p_range', 0.0 &lt;= p_demo &lt;= 1.0)</code></pre><h4>Checks</h4><ul><li>check('p_range', 0.0 &lt;= p_demo &lt;= 1.0)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">D = 8
+W = np.linspace(-1.0, 1.0, D).astype(np.float64)
+B = 0.1
+
+def sigmoid(z):
+    return 1.0 / (1.0 + np.exp(-z))
+
+def predict_one(x: np.ndarray):
+    x = np.asarray(x, dtype=np.float64)
+    if x.shape != (D,):
+        raise ValueError(f"expected shape ({D},) got {x.shape}")
+    p = float(sigmoid(float(x @ W + B)))
+    y = int(p &gt;= 0.5)
+    return p, y
+
+x_demo = rng.standard_normal((D,))
+p_demo, y_demo = predict_one(x_demo)
+print('demo', p_demo, y_demo)
+check('p_range', 0.0 &lt;= p_demo &lt;= 1.0)
+</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 3</span> 1 ,  HTTP service contract (browser-safe stdlib)</summary><div class="task-body"><h4>1 ,  HTTP service contract (browser-safe stdlib)</h4>
+<p>Expose the deterministic model through a minimal JSON API using only the Python standard library.</p>
+<ul><li>implement a browser-safe local service with <code>GET /health</code> and <code>POST /predict</code></li><li>return JSON for both success and error cases</li><li>in the platform runtime, simulate the HTTP contract locally instead of opening a listening socket</li></ul>
+<p>At the end of the cell, print the base URL and verify that the health endpoint responds.</p><h4>Starter code</h4><pre><code class="lang-python">HOST = 'local.service'
+
+class LocalService:
+    def __init__(self, handler, host: str = HOST):
+        self._handler = handler
+        self.base_url = f'http://{host}'
+
+    def request(self, method: str, path: str, obj=None):
+        return self._handler(method, path, obj or {})
+
+    def shutdown(self):
+        return None
+
+    def server_close(self):
+        return None
+
+
+def make_handler():
+    # TODO: return a callable (method, path, obj) -&gt; (status_code, json_obj)
+    ...
+
+
+def start_server(host: str = HOST):
+    # TODO
+    ...
+
+
+SERVER, SERVER_THREAD, BASE_URL = start_server()
+print('serving at', BASE_URL)
+health_code, health_obj = SERVER.request('GET', '/health')
+check('base_url_http', BASE_URL.startswith('http://'))
+check('server_health_200', health_code == 200)
+check('server_health_ok', health_obj.get('status') == 'ok')</code></pre><h4>Test code</h4><pre><code class="lang-python">check('base_url_http', BASE_URL.startswith('http://'))
+check('server_health_200', health_code == 200)
+check('server_health_ok', health_obj.get('status') == 'ok')
+</code></pre><h4>Checks</h4><ul><li>check('base_url_http', BASE_URL.startswith('http://'))</li><li>check('server_health_200', health_code == 200)</li><li>check('server_health_ok', health_obj.get('status') == 'ok')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Client helpers</summary><div class="task-body"><h4>2 ,  Client helpers</h4>
+<p>Implement thin client helpers for JSON GET and POST requests.</p>
+<ul><li><code>http_get_json(url)</code>: return <code>(status_code, parsed_json)</code></li><li><code>http_post_json(url, obj)</code>: send JSON and return <code>(status_code, parsed_json)</code></li><li>support the notebook's local service contract first, then fall back to real URL requests when available</li><li>on HTTP errors, return the status code together with the parsed error payload</li></ul>
+<p>These helpers are then reused by the contract tests.</p><h4>Starter code</h4><pre><code class="lang-python">def _split_local_url(url: str):
+    # TODO
+    ...
+
+def http_get_json(url: str):
+    # TODO
+    ...
+
+def http_post_json(url: str, obj: dict):
+    # TODO
+    ...</code></pre><h4>Test code</h4><pre><code class="lang-python">check('helper_health', http_get_json(BASE_URL + '/health')[0] == 200)
+check('helper_bad_request', http_post_json(BASE_URL + '/predict', {'x': [1,2,3]})[0] == 400)
+</code></pre><h4>Checks</h4><ul><li>check('helper_health', http_get_json(BASE_URL + '/health')[0] == 200)</li><li>check('helper_bad_request', http_post_json(BASE_URL + '/predict', {'x': [1,2,3]})[0] == 400)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre></details></div></details>
+<details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Contract tests (CI-style)</summary><div class="task-body"><h4>3 ,  Contract tests (CI-style)</h4>
+<p>Write the deployment-facing tests that validate the service contract.</p>
+<ul><li>health endpoint returns 200 with the expected schema</li><li>valid prediction requests return probability and binary label</li><li>malformed requests return a controlled 400 error</li></ul>
+<p>Run all three tests as if they were CI checks against a deployed service.</p><h4>Starter code</h4><pre><code class="lang-python">def test_health():
+    # TODO
+    ...
+def test_predict_ok():
+    # TODO
+    ...
+def test_predict_bad_request():
+    # TODO
+    ...
+test_health()
+test_predict_ok()
+test_predict_bad_request()
+print('all tests passed')</code></pre><h4>Test code</h4><pre><code class="lang-python">check('contract_tests_ran', True)</code></pre><h4>Checks</h4><ul><li>check('contract_tests_ran', True)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def test_health():
+    code, obj = http_get_json(BASE_URL + "/health")
+    check("health_200", code == 200)
+    check("health_schema", obj.get("status") == "ok")
+
+def test_predict_ok():
+    x = rng.standard_normal((D,)).tolist()
+    code, obj = http_post_json(BASE_URL + "/predict", {"x": x})
+    check("predict_200", code == 200)
+    check("predict_has_proba", "proba" in obj)
+    check("predict_has_label", "label" in obj)
+    check("proba_range", 0.0 &lt;= float(obj["proba"]) &lt;= 1.0)
+    check("label_binary", int(obj["label"]) in (0, 1))
+
+def test_predict_bad_request():
+    code, obj = http_post_json(BASE_URL + "/predict", {"x": [1,2,3]})
+    check("bad_400", code == 400)
+    check("bad_has_error", "error" in obj)
+
+test_health()
+test_predict_ok()
+test_predict_bad_request()
+print('all tests passed')
+
+check('contract_tests_ran', True)
+</code></pre></details></div></details>
+<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d5-deployment-lab">https://ai.thes30.com/problems/w12-d5-deployment-lab</a>.</p>
+</section><h2>Interview clearance</h2><div class="ob-board"><h4>Design prompt</h4><ul><li>Your nightly retrain shipped a worse model. Walk the postmortem: which of the five labs' mechanisms would have caught it, in order?</li><li>Design model versioning for a team of twenty: version ids, stages, promotion gates, rollback. No product names until the mechanics are done.</li><li>A key feature's PSI crossed 0.25 but accuracy has not moved. Page or ticket? Defend your alerting rule.</li><li>Size a serving tier: 10k requests per second, p99 under 100ms, 20ms fixed cost plus 5ms per request. Show the batching arithmetic.</li><li>Draw the full production loop on one whiteboard and mark every handoff where this week's labs add a check.</li></ul></div><div class="pq"><p class="pq-q"><strong>Q1.</strong> Two runs of your pipeline with the same seed produce different metrics. What is the most likely class of cause?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Nondeterminism in the pipeline: an unseeded random source, unordered file reads, or a race in parallel aggregation.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> The quality gate is miscalibrated. The gate judges metrics; it does not change them between identical runs.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> An unseeded RNG, nondeterministic ordering, or a parallel race: the determinism CI check exists for exactly this.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> The model architecture is wrong. Architecture affects metric values, not run-to-run reproducibility.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> The registry version id collided. Content-derived ids do not collide; and the metrics differ before any registry is involved.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q2.</strong> Version v4 is in staging with better metrics than production v3. What must happen before the production pointer moves?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> The promotion gates must pass: metric thresholds, contract checks, and whatever approval the policy requires.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Nothing; better metrics mean it should go live immediately. Metrics are necessary but not sufficient; gates exist for the rest.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Delete v3 to save space. Versions are immutable; deleting the rollback target is exactly the failure mode.</li><li><span class="pq-opt-right"><strong>C, right:</strong></span> Gated promotion: metrics, checks, and approval. Only then does the pointer move.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> Retrain v4 with a new seed for safety. That creates a new version with new lineage, not a safer v4.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q3.</strong> Production labels arrive six weeks late. How do you watch model health this week?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: A.</strong> Label-free input drift metrics (PSI, KS, mean/variance shift) plus serving metrics like latency and error rate.</p><ul><li><span class="pq-opt-right"><strong>A, right:</strong></span> Input drift metrics need no labels; serving metrics catch system failures. Accuracy joins when labels arrive.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Wait for labels; accuracy is the only real signal. Six weeks of blindness is the failure the lab prevents.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Retrain weekly regardless of signals. Scheduled retrains without monitoring waste compute and can ship regressions.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> Watch the loss on the training set. Training loss says nothing about production data.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q4.</strong> Your service handles 8 requests per batch in 60ms total (20ms fixed + 5ms each). The product needs p99 latency under 40ms. What do you do?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: D.</strong> Batching is forbidden by the latency budget here; reach for caching or more workers, and verify by measurement.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Increase the batch to 16 for more throughput. That raises latency further past the budget.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Keep the batch of 8; 60ms amortized is fine. 60ms exceeds the 40ms budget; amortized math does not pay the user's latency.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Remove the fixed cost by deleting health checks. The fixed cost is in the serving path, not the health endpoint.</li><li><span class="pq-opt-right"><strong>D, right:</strong></span> The latency budget rules out this batch size; use caching or parallelism and measure the p99.</li></ul></div></div><div class="takeaway"><h4>Key takeaways</h4><ul><li>MLOps interviews test the loop: determinism, versioning, gates, drift, contracts, scaling math.</li><li>Answer in mechanics before product names: content-derived ids, stage pointers, PSI thresholds, batching arithmetic.</li><li>Every production decision is a measured tradeoff with a named metric and an owner.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Connect Volumes 23, 24, and 25 in one architecture sketch: where does the transformer train, where does the index live, and what watches both in production?</li></ul></div><p class="lab-meta">Lab pointer: <strong>MLOps: Pipelines &amp; CI/CD</strong> (Week 12, Day 1) plus <strong>Deployment Lab</strong> (Week 12, Day 5) together make the strongest interview artifact: a reproducible pipeline that ends in a tested service.</p>
+<nav class="ds-volume-nav" aria-label="Volume navigation"><a class="ds-prev" href="24-ai-lab-rag-retrieval.html"><span>&uarr; Previous volume</span>Volume 24: RAG and Retrieval</a><a class="ds-next" href="26-ai-lab-system-design.html"><span>Next volume &darr;</span>Volume 26: System Design</a></nav>
+<div class="provenance"><strong>Last verified: October 2026.</strong> Live-verified: AI Lab site scrape (labs, tasks, solutions). <span class="uv">UNVERIFIED:</span> none.</div>
+<footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html">AI Lab Atlas: 15-Week Lab Map</a></li><li><a href="17-ai-lab-python-data.html">Python and Data Tools</a></li><li><a href="18-ai-lab-math-for-ml.html">Math for ML (AI Lab)</a></li><li><a href="19-ai-lab-classical-ml.html">Classical ML</a></li><li><a href="20-ai-lab-evaluation-debugging.html">Evaluation and Debugging</a></li><li><a href="21-ai-lab-deep-learning.html">Deep Learning (AI Lab)</a></li><li><a href="22-ai-lab-cv-nlp-basics.html">CV and NLP Basics</a></li><li><a href="23-ai-lab-transformers.html">Transformers</a></li><li><a href="24-ai-lab-rag-retrieval.html">RAG and Retrieval</a></li><li><a href="25-ai-lab-mlops-systems.html" class="foot-current">MLOps and Systems</a></li><li><a href="26-ai-lab-system-design.html">System Design (AI Lab)</a></li><li><a href="27-ai-lab-llm-agentic.html">LLM and Agentic AI</a></li><li><a href="28-ai-lab-interview-clearance.html">Interview Clearance</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav></footer>
+</main>
+<script>
+/* Research-Engineer Curriculum: shared behavior. Writers INLINE this file at end of <body>.
+   Builds: sidebar nav from h2/h3, scroll-spy, nav search filter, localStorage completion
+   checkmarks, reading progress bar, chapter prev/next footer, copy buttons, practice-question
+   toggles, mobile drawer, keyboard nav. No external dependencies. */
+(function(){
+"use strict";
+var content=document.getElementById('dsContent')||document.querySelector('main')||document.body;
+var sidebar=document.getElementById('dsSidebar');
+if(!sidebar||!content)return;
+
+/* ---------- collect sections: h2 = chapter groups, h3 = items ---------- */
+function slugify(t){return t.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'s';}
+var used={};
+function uniqueId(base){var id=base,n=2;while(used[id]||document.getElementById(id)){id=base+'-'+(n++);}used[id]=1;return id;}
+var chapters=[]; // {h2, id, title, items:[{id,title,el}]}
+var cur=null;
+Array.prototype.forEach.call(content.querySelectorAll('h2,h3'),function(h){
+  if(!h.id){h.id=uniqueId(slugify(h.textContent));}else{used[h.id]=1;}
+  h.setAttribute('tabindex','-1');
+  var t=h.textContent.trim();
+  if(h.tagName==='H2'){cur={id:h.id,title:t,items:[]};chapters.push(cur);}
+  else if(cur){cur.items.push({id:h.id,title:t});}
+  else{cur={id:'intro',title:'Introduction',items:[{id:h.id,title:t}]};chapters.push(cur);}
+});
+
+/* ---------- build sidebar nav ---------- */
+var nav=document.getElementById('dsNav');
+var pageKey='rec-cur-'+(document.title||location.pathname).replace(/[^a-z0-9]+/gi,'-');
+function isDone(id){try{return localStorage.getItem(pageKey+'#'+id)==='1';}catch(e){return false;}}
+function setDone(id,v){try{if(v)localStorage.setItem(pageKey+'#'+id,'1');else localStorage.removeItem(pageKey+'#'+id);}catch(e){}}
+function checkItem(id){var c=document.querySelector('.ds-check[data-sec="'+id+'"]');if(c)c.checked=isDone(id);}
+function updateCount(){
+  var boxes=nav.querySelectorAll('.ds-check'),done=0;
+  boxes.forEach(function(b){if(b.checked)done++;});
+  var el=document.getElementById('dsCompleteCount');
+  if(el)el.textContent=done+' of '+boxes.length+' sections complete';
+}
+function itemRow(sec){
+  var li=document.createElement('li');
+  var a=document.createElement('a');a.href='#'+sec.id;
+  var cb=document.createElement('input');
+  cb.type='checkbox';cb.className='ds-check';cb.checked=isDone(sec.id);
+  cb.setAttribute('data-sec',sec.id);cb.setAttribute('aria-label','Mark complete: '+sec.title);
+  cb.addEventListener('change',function(ev){ev.stopPropagation();setDone(sec.id,cb.checked);updateCount();});
+  cb.addEventListener('click',function(ev){ev.stopPropagation();});
+  var sp=document.createElement('span');sp.textContent=sec.title;
+  a.appendChild(cb);a.appendChild(sp);
+  a.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+  li.appendChild(a);return li;
+}
+chapters.forEach(function(ch,ci){
+  var g=document.createElement('div');g.className='ds-nav-group';g.dataset.title=ch.title.toLowerCase();
+  var btn=document.createElement('button');
+  btn.innerHTML='<span></span><span class="ds-caret">▾</span>';
+  btn.firstChild.textContent=ch.title;
+  btn.setAttribute('aria-expanded','true');
+  var ul=document.createElement('ul');ul.className='ds-nav-items';
+  var headLi=itemRow({id:ch.id,title:ch.title});ul.appendChild(headLi);
+  ch.items.forEach(function(it){ul.appendChild(itemRow(it));});
+  btn.addEventListener('click',function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!open));
+    ul.style.display=open?'none':'';
+    btn.querySelector('.ds-caret').textContent=open?'▸':'▾';
+  });
+  g.appendChild(btn);g.appendChild(ul);nav.appendChild(g);
+});
+updateCount();
+
+/* ---------- nav search filter ---------- */
+var search=document.getElementById('dsNavSearch');
+if(search){search.addEventListener('input',function(){
+  var q=search.value.trim().toLowerCase(),any=false;
+  nav.querySelectorAll('.ds-nav-group').forEach(function(g){
+    var show=g.dataset.title.indexOf(q)>-1;
+    g.querySelectorAll('.ds-nav-items li').forEach(function(li){
+      var hit=li.textContent.toLowerCase().indexOf(q)>-1;
+      li.style.display=(!q||hit||show)?'':'none';if(!q||hit)show=true;
+    });
+    g.style.display=show?'':'none';if(show)any=true;
+  });
+  var empty=nav.querySelector('.ds-nav-empty');
+  if(!any&&!empty){var d=document.createElement('div');d.className='ds-nav-empty';d.textContent='No sections match.';nav.appendChild(d);}
+  if(any&&empty)empty.remove();
+});}
+
+/* ---------- scroll-spy ---------- */
+var links=Array.prototype.slice.call(nav.querySelectorAll('.ds-nav-items a'));
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.toggle('ds-active',a.getAttribute('href')==='#'+e.target.id);});
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+chapters.forEach(function(ch){
+  var el=document.getElementById(ch.id);if(el)spy.observe(el);
+  ch.items.forEach(function(it){var el2=document.getElementById(it.id);if(el2)spy.observe(el2);});
+});
+
+/* ---------- progress bar ---------- */
+var prog=document.getElementById('dsProgress');
+function onScroll(){
+  var h=document.documentElement;
+  var max=h.scrollHeight-h.clientHeight;
+  prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- mobile drawer ---------- */
+var menuBtn=document.getElementById('dsMenuBtn'),scrim=document.getElementById('dsScrim');
+if(menuBtn)menuBtn.addEventListener('click',function(){document.body.classList.toggle('ds-nav-open');});
+if(scrim)scrim.addEventListener('click',function(){document.body.classList.remove('ds-nav-open');});
+
+/* ---------- keyboard nav: [ ] sections, / search ---------- */
+document.addEventListener('keydown',function(e){
+  if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  var ids=[];chapters.forEach(function(ch){ids.push(ch.id);ch.items.forEach(function(it){ids.push(it.id);});});
+  function jump(dir){
+    var y=window.scrollY+10,cur=0;
+    ids.forEach(function(id,i){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+y<=y+1)cur=i;});
+    var n=Math.min(ids.length-1,Math.max(0,cur+dir)),el=document.getElementById(ids[n]);
+    if(el){el.scrollIntoView();el.focus({preventScroll:true});}
+  }
+  if(e.key==='[')jump(-1);else if(e.key===']')jump(1);
+  else if(e.key==='/'&&search){e.preventDefault();search.focus();}
+});
+var hint=document.createElement('div');hint.className='ds-kbd-hint';
+hint.textContent='Keyboard: [ and ] move between sections, / focuses section search.';
+var foot=document.querySelector('.ds-side-foot');if(foot)foot.appendChild(hint);
+
+/* ---------- chapter prev/next footers (one after each h2 section) ---------- */
+if(chapters.length>1){
+  var mk=function(ch,cls,label){var a=document.createElement('a');a.href='#'+ch.id;a.className=cls;
+    a.innerHTML='<span style="display:block;font-size:.78rem;color:var(--muted)">'+label+'</span>';a.appendChild(document.createTextNode(ch.title));return a;};
+  chapters.forEach(function(ch,i){
+    var bar=document.createElement('nav');bar.className='ds-chapter-nav';bar.setAttribute('aria-label','Chapter navigation');
+    var left=document.createElement('span'),right=document.createElement('span');
+    if(chapters[i-1])left.appendChild(mk(chapters[i-1],'ds-prev','↑ Previous'));
+    else left.innerHTML='<span style="color:var(--muted);font-size:.85rem">Start of volume</span>';
+    if(chapters[i+1])right.appendChild(mk(chapters[i+1],'ds-next','Next ↓'));
+    else right.innerHTML='<span style="color:var(--muted);font-size:.85rem">End of volume</span>';
+    bar.appendChild(left);bar.appendChild(right);
+    /* insert the bar immediately before the next chapter's heading, using that
+       heading's own parent so <section> wrappers (or any nesting) cannot break it */
+    var nextH=i+1<chapters.length?document.getElementById(chapters[i+1].id):null;
+    if(nextH){nextH.parentNode.insertBefore(bar,nextH);}
+    else{var lastH=document.getElementById(ch.id);lastH.parentNode.appendChild(bar);}
+  });
+}
+
+/* ---------- copy buttons on code blocks ---------- */
+document.querySelectorAll('pre').forEach(function(pre){
+  if(pre.querySelector('.ds-copy-btn'))return;
+  var btn=document.createElement('button');btn.className='ds-copy-btn';btn.textContent='Copy';
+  btn.setAttribute('aria-label','Copy code to clipboard');
+  btn.addEventListener('click',function(){
+    var txt=pre.innerText;
+    function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1400);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+    else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}
+  });
+  pre.appendChild(btn);
+});
+
+/* ---------- practice-question widgets ---------- */
+document.querySelectorAll('.pq').forEach(function(pq){
+  var btn=pq.querySelector('.pq-reveal'),ans=pq.querySelector('.pq-a');
+  if(!btn||!ans)return;
+  btn.addEventListener('click',function(){
+    var open=ans.hasAttribute('hidden');
+    if(open){ans.removeAttribute('hidden');btn.setAttribute('aria-expanded','true');btn.textContent='Hide answer';}
+    else{ans.setAttribute('hidden','');btn.setAttribute('aria-expanded','false');btn.textContent='Reveal answer';}
+  });
+});
+})();
+
+</script>
+<script>
+
+/* ==== Experience layer behavior ,  additive ====
+ * Calm, GPU-friendly page motion for study volumes. No-JS safe: every hidden
+ * state in experience.css is gated on `html.xp-js`, which only this script
+ * adds ,  without it the page is fully readable. Respects
+ * prefers-reduced-motion (exits early; CSS keeps everything static).
+ *
+ * Three jobs:
+ *  1. Hero parallax ,  detects the volume hero (.banner/.hero, else wraps the
+ *     h1 + lede block in .xp-hero) and drifts it gently as the reader
+ *     scrolls on. Transform/opacity only, rAF-throttled, passive listener.
+ *  2. Scroll reveals ,  one IntersectionObserver fades+rises figures, key
+ *     callouts and knowledge checks exactly once. Elements already in view
+ *     on load appear immediately (no load flash).
+ *  3. Nothing else: progress bar, scroll-spy, sidebar, quiz toggles are
+ *     owned by ds.js and are left untouched.
+ *
+ * (In the assembly snippet the closing element tags are written literally;
+ * inside this file they are escaped as <\/style> / <\/script> so the file
+ * pastes verbatim without early-terminating its own element.)
+ */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+
+  var reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) { /* matchMedia unavailable: assume motion is fine */ }
+  if (reduceMotion) { return; } /* leave no footprint: no xp-js, CSS stays static */
+
+  /* From here on the reader is fine with calm motion: mark the document so
+     the CSS reveal/parallax states may apply. Without this class (no-JS or
+     reduced-motion) every hidden state stays off and the page is fully
+     readable. */
+  root.classList.add('xp-js');
+
+  /* ---------------- 1. Hero detection + gentle parallax ---------------- */
+  var hero = document.querySelector('.banner, .hero');
+  if (!hero) {
+    /* No banner hero: wrap the volume title (h1) plus its lede paragraphs
+       in a layout-neutral div. Never touches headings ds.js needs. */
+    var main = document.querySelector('main');
+    var h1 = main ? main.querySelector('h1') : null;
+    if (h1 && h1.parentNode) {
+      var wrap = document.createElement('div');
+      wrap.className = 'xp-hero';
+      h1.parentNode.insertBefore(wrap, h1);
+      var node = h1, moved = 0, paras = 0;
+      while (node && moved < 8) {
+        var next = node.nextSibling;
+        if (node.nodeType === 3) { node = next; continue; } /* skip whitespace text nodes */
+        var isPara = node.nodeType === 1 && node.tagName === 'P';
+        if (node !== h1 && !isPara) { break; }
+        wrap.appendChild(node);
+        moved += 1;
+        if (isPara) {
+          paras += 1;
+          if (paras >= 3) { break; }
+        }
+        node = next;
+      }
+      hero = wrap;
+    }
+  }
+
+  var heroH = 0, ticking = false, pxOn = false;
+  function measure() { heroH = hero ? hero.offsetHeight : 0; }
+  function render() {
+    ticking = false;
+    if (!hero || !heroH) { return; }
+    var y = window.pageYOffset || root.scrollTop || 0;
+    if (y <= 0) {
+      if (pxOn) { hero.style.transform = ''; hero.style.opacity = ''; pxOn = false; }
+      return;
+    }
+    var range = heroH * 1.4;
+    if (y < range) {
+      /* Drift up slightly slower than the scroll and fade a whisper , 
+         the title recedes calmly instead of snapping away. */
+      var k = Math.min(y / range, 1);
+      hero.style.transform = 'translate3d(0,' + (-y * 0.06).toFixed(1) + 'px,0)';
+      hero.style.opacity = (1 - k * 0.22).toFixed(3);
+      pxOn = true;
+    } else if (pxOn) {
+      hero.style.transform = '';
+      hero.style.opacity = '';
+      pxOn = false;
+    }
+  }
+  function requestRender() {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(render); }
+  }
+  if (hero) {
+    measure();
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', function () { measure(); requestRender(); });
+  }
+
+  /* ---------------- 2. Scroll-triggered reveals ---------------- */
+  var SELECTOR = [
+    'figure',
+    '.takeaway', '.exam-ask', '.trapbox', '.trap', '.board',
+    '.diagram-walkthrough', '.walkthrough', '.warn', '.callout',
+    '.ob-board', '.nums', '.watch-card', '.lab', '.pq', '.go-deeper-note'
+  ].join(', ');
+
+  var targets = [];
+  Array.prototype.forEach.call(document.querySelectorAll(SELECTOR), function (el) {
+    if (hero && hero.contains(el)) { return; } /* hero has its own motion */
+    targets.push(el);
+  });
+
+  function showAll(list) {
+    list.forEach(function (el) { el.classList.add('xp-reveal', 'xp-in'); });
+  }
+
+  if (!targets.length) { return; }
+
+  if (!('IntersectionObserver' in window)) { showAll(targets); return; }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.classList.add('xp-in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+
+  var vh = window.innerHeight || 800;
+  targets.forEach(function (el) {
+    el.classList.add('xp-reveal');
+    var r = el.getBoundingClientRect();
+    if (r.top < vh && r.bottom > 0) {
+      el.classList.add('xp-in'); /* in view on load: appear, no animation */
+    } else {
+      io.observe(el);
+    }
+  });
+})();
+
+
+</script>
+<script>
+
+/* AI Lab layer: tabbed lab explorer. Additive, no external deps. */
+(function(){
+"use strict";
+var tabs=document.getElementById('labTabs');
+if(!tabs)return;
+var btns=Array.prototype.slice.call(tabs.querySelectorAll('button[data-target]'));
+btns.forEach(function(b){
+  b.addEventListener('click',function(){
+    btns.forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    var el=document.getElementById(b.getAttribute('data-target'));
+    if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+})();
+
+</script>
+<!-- experience-layer:js -->
+<script>
+/* ==== Experience layer behavior — additive ==== (v2, 2026-10-05)
+ * Calm, GPU-friendly page motion for study volumes. No-JS safe: every hidden
+ * state in experience.css is gated on `html.xp-js`, which only this script
+ * adds — without it the page is fully readable. Respects
+ * prefers-reduced-motion (exits early; CSS keeps everything static).
+ *
+ * Three jobs:
+ *  1. Hero parallax — detects the volume hero (.banner/.hero, else wraps the
+ *     h1 + lede block in .xp-hero) and drifts it gently as the reader
+ *     scrolls on. Transform/opacity only, rAF-throttled, passive listener.
+ *  2. Figure parallax — gentle --px drift on `figure img` (images only),
+ *     proportional to each image's distance from the viewport center.
+ *     The CSS clips the drift inside the figure: zero layout shift.
+ *  3. Scroll reveals — one IntersectionObserver fades+rises figures, key
+ *     callouts and knowledge checks exactly once. Elements already in view
+ *     on load appear immediately (no load flash).
+ * Jobs 1+2 share one rAF-throttled scroll listener. Nothing else:
+ * progress bar, scroll-spy, sidebar, quiz toggles are owned by ds.js and
+ * are left untouched.
+ *
+ * (In the assembly snippet the closing element tags are written literally;
+ * inside this file they are escaped as <\/style> / <\/script> so the file
+ * pastes verbatim without early-terminating its own element.)
+ */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+
+  var reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) { /* matchMedia unavailable: assume motion is fine */ }
+  if (reduceMotion) { return; } /* leave no footprint: no xp-js, CSS stays static */
+
+  /* From here on the reader is fine with calm motion: mark the document so
+     the CSS reveal/parallax states may apply. Without this class (no-JS or
+     reduced-motion) every hidden state stays off and the page is fully
+     readable. */
+  root.classList.add('xp-js');
+
+  /* ---------------- 1. Hero detection ---------------- */
+  var hero = document.querySelector('.banner, .hero');
+  if (!hero) {
+    /* No banner hero: wrap the volume title (h1) plus its lede paragraphs
+       in a layout-neutral div. Never touches headings ds.js needs. */
+    var main = document.querySelector('main');
+    var h1 = main ? main.querySelector('h1') : null;
+    if (h1 && h1.parentNode) {
+      var wrap = document.createElement('div');
+      wrap.className = 'xp-hero';
+      h1.parentNode.insertBefore(wrap, h1);
+      var node = h1, moved = 0, paras = 0;
+      while (node && moved < 8) {
+        var next = node.nextSibling;
+        if (node.nodeType === 3) { node = next; continue; } /* skip whitespace text nodes */
+        var isPara = node.nodeType === 1 && node.tagName === 'P';
+        if (node !== h1 && !isPara) { break; }
+        wrap.appendChild(node);
+        moved += 1;
+        if (isPara) {
+          paras += 1;
+          if (paras >= 3) { break; }
+        }
+        node = next;
+      }
+      hero = wrap;
+    }
+  }
+
+  /* ---------------- 2. Figure parallax targets ---------------- */
+  var pxImgs = [];
+  Array.prototype.forEach.call(document.querySelectorAll('figure img'), function (img) {
+    var fig = img.closest ? img.closest('figure') : null;
+    if (fig) {
+      fig.classList.add('xp-px'); /* CSS clips the drift: no layout shift */
+      pxImgs.push(img);
+    }
+  });
+
+  /* ---------------- shared rAF-throttled scroll renderer ---------------- */
+  var heroH = 0, ticking = false, heroPxOn = false;
+  function measure() { heroH = hero ? hero.offsetHeight : 0; }
+
+  function renderHero(y) {
+    if (!hero || !heroH) { return; }
+    if (y <= 0) {
+      if (heroPxOn) { hero.style.transform = ''; hero.style.opacity = ''; heroPxOn = false; }
+      return;
+    }
+    var range = heroH * 1.4;
+    if (y < range) {
+      /* Drift up slightly slower than the scroll and fade a whisper —
+         the title recedes calmly instead of snapping away. */
+      var k = Math.min(y / range, 1);
+      hero.style.transform = 'translate3d(0,' + (-y * 0.06).toFixed(1) + 'px,0)';
+      hero.style.opacity = (1 - k * 0.22).toFixed(3);
+      heroPxOn = true;
+    } else if (heroPxOn) {
+      hero.style.transform = '';
+      hero.style.opacity = '';
+      heroPxOn = false;
+    }
+  }
+
+  function renderFigures() {
+    if (!pxImgs.length) { return; }
+    var vh = window.innerHeight || 800;
+    for (var i = 0; i < pxImgs.length; i++) {
+      var img = pxImgs[i];
+      var r = img.getBoundingClientRect();
+      if (r.bottom < -80 || r.top > vh + 80) { continue; } /* off-screen: skip */
+      var center = (r.top + r.height / 2) - vh / 2;
+      img.style.setProperty('--px', (center * -0.04).toFixed(1) + 'px');
+    }
+  }
+
+  function render() {
+    ticking = false;
+    var y = window.pageYOffset || root.scrollTop || 0;
+    renderHero(y);
+    renderFigures();
+  }
+  function requestRender() {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(render); }
+  }
+  if (hero || pxImgs.length) {
+    measure();
+    render();
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', function () { measure(); requestRender(); });
+  }
+
+  /* ---------------- 3. Scroll-triggered reveals ---------------- */
+  var SELECTOR = [
+    'figure',
+    '.takeaway', '.exam-ask', '.trapbox', '.trap', '.board',
+    '.diagram-walkthrough', '.walkthrough', '.warn', '.callout',
+    '.ob-board', '.nums', '.watch-card', '.lab', '.pq', '.go-deeper-note'
+  ].join(', ');
+
+  var targets = [];
+  Array.prototype.forEach.call(document.querySelectorAll(SELECTOR), function (el) {
+    if (hero && hero.contains(el)) { return; } /* hero has its own motion */
+    targets.push(el);
+  });
+
+  function showAll(list) {
+    list.forEach(function (el) { el.classList.add('xp-reveal', 'xp-in'); });
+  }
+
+  if (!targets.length) { return; }
+
+  if (!('IntersectionObserver' in window)) { showAll(targets); return; }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.classList.add('xp-in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+
+  var vh = window.innerHeight || 800;
+  targets.forEach(function (el) {
+    el.classList.add('xp-reveal');
+    var r = el.getBoundingClientRect();
+    if (r.top < vh && r.bottom > 0) {
+      el.classList.add('xp-in'); /* in view on load: appear, no animation */
+    } else {
+      io.observe(el);
+    }
+  });
+})();
+
+</script>
+</body>
+</html>
