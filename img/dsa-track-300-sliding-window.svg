@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" viewBox="0 0 900 470" role="img" aria-label="Figure 44. The left edge never moves back">
+<rect width="900" height="470" fill="#0d0d0d"/>
+<text x="450.0" y="26" text-anchor="middle" fill="#ececec" font-size="17" font-family="Charis SIL, Georgia, serif" font-weight="bold">Figure 44. The left edge never moves back</text>
+<text x="450.0" y="50" text-anchor="middle" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">window [l..r] on a b c a b c b b; condition: at most 2 distinct</text>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#8a8a8a" stroke-width="1.5"/></marker></defs>
+<text x="32" y="150" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 1: invalid</text>
+<rect x="130" y="110" width="64" height="64" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="162.0" y="147.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">a</text>
+<rect x="202" y="110" width="64" height="64" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="234.0" y="147.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">b</text>
+<rect x="274" y="110" width="64" height="64" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="306.0" y="147.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">c</text>
+<rect x="346" y="110" width="64" height="64" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="378.0" y="147.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">a</text>
+<rect x="418" y="110" width="64" height="64" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="450.0" y="147.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">b</text>
+<rect x="490" y="110" width="64" height="64" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="522.0" y="147.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">c</text>
+<rect x="562" y="110" width="64" height="64" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="594.0" y="147.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">b</text>
+<rect x="634" y="110" width="64" height="64" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="666.0" y="147.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">b</text>
+<text x="234" y="202" text-anchor="middle" fill="#7fd08a" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">l=1</text>
+<text x="450" y="202" text-anchor="middle" fill="#f0b429" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">r=4</text>
+<text x="32" y="280" text-anchor="start" fill="#8a8a8a" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">step 2: valid</text>
+<rect x="130" y="240" width="64" height="64" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="162.0" y="277.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">a</text>
+<rect x="202" y="240" width="64" height="64" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="234.0" y="277.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">b</text>
+<rect x="274" y="240" width="64" height="64" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="306.0" y="277.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">c</text>
+<rect x="346" y="240" width="64" height="64" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="378.0" y="277.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">a</text>
+<rect x="418" y="240" width="64" height="64" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="450.0" y="277.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">b</text>
+<rect x="490" y="240" width="64" height="64" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="522.0" y="277.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">c</text>
+<rect x="562" y="240" width="64" height="64" rx="6" fill="#1a1a1a" stroke="#6aa8ff"/>
+<text x="594.0" y="277.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">b</text>
+<rect x="634" y="240" width="64" height="64" rx="6" fill="#141414" stroke="#2a2a2a"/>
+<text x="666.0" y="277.0" text-anchor="middle" fill="#ececec" font-size="14" font-family="Charis SIL, Georgia, serif">b</text>
+<text x="378" y="332" text-anchor="middle" fill="#7fd08a" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">l=3</text>
+<text x="594" y="332" text-anchor="middle" fill="#f0b429" font-size="11" font-family="Charis SIL, Georgia, serif" font-weight="bold">r=6</text>
+<line x1="234" y1="372" x2="378" y2="372" stroke="#7fd08a" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="450" y="364" text-anchor="middle" fill="#7fd08a" font-size="11" font-family="Charis SIL, Georgia, serif">l only moves forward</text>
+<text x="450.0" y="456" text-anchor="middle" fill="#8a8a8a" font-size="11.5" font-family="Charis SIL, Georgia, serif">Research Engineer Curriculum, DSA Track: each index enters once and leaves once, so the scan is O(n). Source: original.</text>
+</svg>
