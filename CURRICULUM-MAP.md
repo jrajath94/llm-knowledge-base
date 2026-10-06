@@ -36,19 +36,19 @@ Most demanded across the index: Python, distributed training, experiment design,
 | 13 | ML system design | `13-ml-system-design.html` | NEW |
 | 14 | Communicating research | `14-communicating-research.html` | NEW (renamed from `14-behavioral-research.html`, Sept 2026) |
 | 15 | GPU kernels | `15-gpu-kernels.html` | NEW |
-| 16 | S30 Atlas: the 15-week lab map | `16-s30-atlas.html` | NEW (S30 integration) |
-| 17 | Python and Data: the research engineer's toolkit | `17-s30-python-data.html` | NEW (S30 integration) |
-| 18 | Math for ML: the machinery underneath | `18-s30-math-for-ml.html` | NEW (S30 integration) |
-| 19 | Classical ML: models that still win | `19-s30-classical-ml.html` | NEW (S30 integration) |
-| 20 | Evaluation and Debugging: knowing what works | `20-s30-evaluation-debugging.html` | NEW (S30 integration) |
-| 21 | Deep Learning: networks that learn representations | `21-s30-deep-learning.html` | NEW (S30 integration) |
-| 22 | CV and NLP Basics: seeing and reading | `22-s30-cv-nlp-basics.html` | NEW (S30 integration) |
-| 23 | NLP and Transformers: the attention era | `23-s30-transformers.html` | NEW (S30 integration) |
-| 24 | RAG and Retrieval: knowledge on demand | `24-s30-rag-retrieval.html` | NEW (S30 integration) |
-| 25 | MLOps and Systems: from notebook to production | `25-s30-mlops-systems.html` | NEW (S30 integration) |
-| 26 | System Design: designing ML systems | `26-s30-system-design.html` | NEW (S30 integration) |
-| 27 | LLM and Agentic AI: production intelligence | `27-s30-llm-agentic.html` | NEW (S30 integration) |
-| 28 | Interview Clearance: research-engineer loops | `28-s30-interview-clearance.html` | NEW (S30 integration) |
+| 16 | AI Lab Atlas: the 15-week lab map | `16-ai-lab-atlas.html` | NEW (AI Lab integration) |
+| 17 | Python and Data: the research engineer's toolkit | `17-ai-lab-python-data.html` | NEW (AI Lab integration) |
+| 18 | Math for ML: the machinery underneath | `18-ai-lab-math-for-ml.html` | NEW (AI Lab integration) |
+| 19 | Classical ML: models that still win | `19-ai-lab-classical-ml.html` | NEW (AI Lab integration) |
+| 20 | Evaluation and Debugging: knowing what works | `20-ai-lab-evaluation-debugging.html` | NEW (AI Lab integration) |
+| 21 | Deep Learning: networks that learn representations | `21-ai-lab-deep-learning.html` | NEW (AI Lab integration) |
+| 22 | CV and NLP Basics: seeing and reading | `22-ai-lab-cv-nlp-basics.html` | NEW (AI Lab integration) |
+| 23 | NLP and Transformers: the attention era | `23-ai-lab-transformers.html` | NEW (AI Lab integration) |
+| 24 | RAG and Retrieval: knowledge on demand | `24-ai-lab-rag-retrieval.html` | NEW (AI Lab integration) |
+| 25 | MLOps and Systems: from notebook to production | `25-ai-lab-mlops-systems.html` | NEW (AI Lab integration) |
+| 26 | System Design: designing ML systems | `26-ai-lab-system-design.html` | NEW (AI Lab integration) |
+| 27 | LLM and Agentic AI: production intelligence | `27-ai-lab-llm-agentic.html` | NEW (AI Lab integration) |
+| 28 | Interview Clearance: research-engineer loops | `28-ai-lab-interview-clearance.html` | NEW (AI Lab integration) |
 
 **Parallel track:** `dsa-track-300.html` ,  patterns-based top-300 LeetCode mastery path, deep-linking into the existing 500 atlas for full treatments. Studied alongside the spine, not inside it.
 
@@ -68,7 +68,7 @@ Vol 0 (how to use)
                     └─ Vol 9 (agents/RAG → RRK) ── Vol 10 (productionizing/MLOps)
                           └─ Vol 11 (research methods) ── Vol 12 (paper spine)
                                 └─ Vol 13 (system design) ── Vol 14 (behavioral) ── Vol 15 (GPU kernels)
-                                      └─ Vol 16 (S30 atlas) ── Vols 17-27 (lab volumes, week order) ── Vol 28 (interview clearance)
+                                      └─ Vol 16 (AI Lab atlas) ── Vols 17-27 (lab volumes, week order) ── Vol 28 (interview clearance)
 DSA track runs parallel to all of the above.
 ```
 
@@ -95,17 +95,17 @@ DSA track runs parallel to all of the above.
 Total: roughly 9-10 weeks at 4+ hours/day, DSA running in parallel throughout.
 
 
-## S30 AI Lab integration (volumes 16-28, October 2026)
+## AI Lab integration (volumes 16-28, October 2026)
 
-Source: S30 AI Lab (https://ai.thes30.com), "LeetCode for AI/ML": 73 labs, 474 coding
+Source: AI Lab (https://ai.thes30.com), "LeetCode for AI/ML": 73 labs, 474 coding
 tasks, 527 tests, 15-week curriculum, scraped October 2026 into
-`~/workspace/s30-build/labs/` (raw JSON), indexed in `~/workspace/s30-build/index.json`,
-week structure in `~/workspace/s30-build/atlas.json`. Every lab's tasks, starter code,
+`~/workspace/ai-lab-build/labs/` (raw JSON), indexed in `~/workspace/ai-lab-build/index.json`,
+week structure in `~/workspace/ai-lab-build/atlas.json`. Every lab's tasks, starter code,
 hints, solutions, checkpoints, interview angles, gotchas, and interview signals are
 preserved verbatim in volumes 17-27. Volume 16 is the 15-week atlas with difficulty
 progression and day-by-day links into the lab volumes. Volume 28 maps every interview
 round at Anthropic, Google DeepMind, and OpenAI research-engineer loops (consolidated
-from seven public guides in `~/workspace/s30-build/roles/`) to the labs and to spine
+from seven public guides in `~/workspace/ai-lab-build/roles/`) to the labs and to spine
 volumes, with worked whiteboard-ready answers. Raw site category "ML System Design"
 was normalized into "System Design" (11 category volumes). All 13 pages follow the
 design-system retrofit, use inline SVG figures only, carry zero external dependencies,
