@@ -1,0 +1,32 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='420' viewBox='0 0 720 420' font-family='DejaVu Sans'>
+<rect width='720' height='420' fill='#0a0a0a'/>
+<text x='360' y='34' font-size='14' fill='#e8e8e8' text-anchor='middle' font-weight='bold'>The permutation test: shuffle labels, rebuild the null, locate the observed</text>
+<rect x='50' y='80' width='180' height='90' rx='8' fill='none' stroke='#8fc7ff' stroke-width='1.5'/>
+<text x='140' y='108' font-size='12' fill='#8fc7ff' text-anchor='middle' font-weight='bold'>observed diff</text>
+<text x='140' y='132' font-size='12' fill='#e8e8e8' text-anchor='middle'>mean(A) - mean(B)</text>
+<line x1='230' y1='125' x2='290' y2='125' stroke='#e8e8e8' stroke-width='2'/>
+<polygon points='290,125 282,121.5 282,128.5' fill='#e8e8e8'/>
+<rect x='290' y='80' width='140' height='90' rx='8' fill='none' stroke='#f0b429' stroke-width='1.5'/>
+<text x='360' y='108' font-size='12' fill='#f0b429' text-anchor='middle' font-weight='bold'>shuffle labels</text>
+<text x='360' y='132' font-size='12' fill='#e8e8e8' text-anchor='middle'>many times</text>
+<line x1='430' y1='125' x2='490' y2='125' stroke='#e8e8e8' stroke-width='2'/>
+<polygon points='490,125 482,121.5 482,128.5' fill='#e8e8e8'/>
+<rect x='490' y='80' width='180' height='90' rx='8' fill='none' stroke='#7fd08a' stroke-width='1.5'/>
+<text x='580' y='108' font-size='12' fill='#7fd08a' text-anchor='middle' font-weight='bold'>null distribution</text>
+<text x='580' y='132' font-size='12' fill='#e8e8e8' text-anchor='middle'>of diffs</text>
+<rect x='126' y='282' width='28' height='18' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<rect x='162' y='260' width='36' height='40' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<rect x='198' y='238' width='44' height='62' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<rect x='234' y='220' width='52' height='80' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<rect x='270' y='205' width='60' height='95' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<rect x='310' y='200' width='60' height='100' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<rect x='354' y='208' width='52' height='92' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<rect x='398' y='230' width='44' height='70' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<rect x='442' y='255' width='36' height='45' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<rect x='486' y='278' width='28' height='22' fill='#7fd08a' opacity='0.35' stroke='#7fd08a'/>
+<line x1='100' y1='300' x2='540' y2='300' stroke='#e8e8e8' stroke-width='2'/>
+<line x1='505' y1='170' x2='505' y2='300' stroke='#ff7b8a' stroke-width='3'/>
+<text x='505' y='325' font-size='12' fill='#ff7b8a' text-anchor='middle'>observed diff</text>
+<text x='320' y='325' font-size='12' fill='#9a9a9a' text-anchor='middle'>shuffled diffs (the null world)</text>
+<text x='360' y='385' font-size='12' fill='#9a9a9a' text-anchor='middle'>If the observed diff sits far out, the effect is real. No scipy needed.</text>
+</svg>
