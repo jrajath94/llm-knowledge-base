@@ -1,0 +1,40 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='780' height='460' viewBox='0 0 780 460' font-family='DejaVu Sans'>
+<rect width='780' height='460' fill='#0a0a0a'/>
+<text x='390' y='34' font-size='14' fill='#e8e8e8' text-anchor='middle' font-weight='bold'>The honest pipeline: split, baseline, pipeline, compare, fit, evaluate, slice</text>
+<rect x='30' y='100' width='110' height='120' rx='8' fill='none' stroke='#8fc7ff' stroke-width='1.5'/>
+<text x='85' y='128' font-size='11' fill='#8fc7ff' text-anchor='middle' font-weight='bold'>locked holdout</text>
+<text x='85' y='156' font-size='10' fill='#e8e8e8' text-anchor='middle'>split first</text>
+<rect x='155' y='100' width='110' height='120' rx='8' fill='none' stroke='#8fc7ff' stroke-width='1.5'/>
+<text x='210' y='128' font-size='11' fill='#8fc7ff' text-anchor='middle' font-weight='bold'>baseline</text>
+<text x='210' y='156' font-size='10' fill='#e8e8e8' text-anchor='middle'>majority class</text>
+<rect x='280' y='100' width='110' height='120' rx='8' fill='none' stroke='#8fc7ff' stroke-width='1.5'/>
+<text x='335' y='128' font-size='11' fill='#8fc7ff' text-anchor='middle' font-weight='bold'>pipeline</text>
+<text x='335' y='156' font-size='10' fill='#e8e8e8' text-anchor='middle'>preprocess inside</text>
+<text x='335' y='174' font-size='10' fill='#e8e8e8' text-anchor='middle'>ColumnTransformer</text>
+<rect x='405' y='100' width='110' height='120' rx='8' fill='none' stroke='#8fc7ff' stroke-width='1.5'/>
+<text x='460' y='128' font-size='11' fill='#8fc7ff' text-anchor='middle' font-weight='bold'>compare</text>
+<text x='460' y='156' font-size='10' fill='#e8e8e8' text-anchor='middle'>StratifiedKFold</text>
+<text x='460' y='174' font-size='10' fill='#e8e8e8' text-anchor='middle'>logreg / RF / GBM</text>
+<rect x='530' y='100' width='110' height='120' rx='8' fill='none' stroke='#8fc7ff' stroke-width='1.5'/>
+<text x='585' y='128' font-size='11' fill='#8fc7ff' text-anchor='middle' font-weight='bold'>fit + evaluate</text>
+<text x='585' y='156' font-size='10' fill='#e8e8e8' text-anchor='middle'>final fit</text>
+<text x='585' y='174' font-size='10' fill='#e8e8e8' text-anchor='middle'>on holdout</text>
+<rect x='655' y='100' width='110' height='120' rx='8' fill='none' stroke='#8fc7ff' stroke-width='1.5'/>
+<text x='710' y='128' font-size='11' fill='#8fc7ff' text-anchor='middle' font-weight='bold'>slice analysis</text>
+<text x='710' y='156' font-size='10' fill='#e8e8e8' text-anchor='middle'>by Sex</text>
+<text x='710' y='174' font-size='10' fill='#e8e8e8' text-anchor='middle'>by Pclass</text>
+<line x1='140' y1='160' x2='155' y2='160' stroke='#e8e8e8' stroke-width='2'/>
+<polygon points='155,160 147,156.5 147,163.5' fill='#e8e8e8'/>
+<line x1='265' y1='160' x2='280' y2='160' stroke='#e8e8e8' stroke-width='2'/>
+<polygon points='280,160 272,156.5 272,163.5' fill='#e8e8e8'/>
+<line x1='390' y1='160' x2='405' y2='160' stroke='#e8e8e8' stroke-width='2'/>
+<polygon points='405,160 397,156.5 397,163.5' fill='#e8e8e8'/>
+<line x1='515' y1='160' x2='530' y2='160' stroke='#e8e8e8' stroke-width='2'/>
+<polygon points='530,160 522,156.5 522,163.5' fill='#e8e8e8'/>
+<line x1='640' y1='160' x2='655' y2='160' stroke='#e8e8e8' stroke-width='2'/>
+<polygon points='655,160 647,156.5 647,163.5' fill='#e8e8e8'/>
+<rect x='30' y='270' width='725' height='80' rx='8' fill='none' stroke='#ff7b8a' stroke-width='1.5'/>
+<text x='390' y='298' font-size='13' fill='#ff7b8a' text-anchor='middle' font-weight='bold'>NEVER: fit preprocessing on full data before splitting</text>
+<text x='390' y='322' font-size='11' fill='#9a9a9a' text-anchor='middle'>the single most common production bug in junior ML code</text>
+<text x='390' y='400' font-size='12' fill='#9a9a9a' text-anchor='middle'>Tuning repeatedly on the validation set overfits to it. The holdout stays locked until the end.</text>
+</svg>
