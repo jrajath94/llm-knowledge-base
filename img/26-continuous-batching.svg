@@ -1,0 +1,25 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='560' viewBox='0 0 800 560' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>
+<rect x='0' y='0' width='800' height='560' rx='0' fill='#F7F4EE'/>
+<text x='400' y='56' font-size='30' fill='#1B2838' text-anchor='middle' font-weight='600' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>Continuous batching</text>
+<text x='400' y='88' font-size='16' fill='#5C6B7A' text-anchor='middle' font-weight='450' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>Finished sequences leave, new ones join at every decode step.</text>
+<rect x='24' y='112' width='312' height='320' rx='12' fill='#FFFDF8' stroke='#D9D3C7' stroke-width='2'/>
+<text x='40' y='144' font-size='13' fill='#5C6B7A' text-anchor='start' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>before</text>
+<rect x='464' y='112' width='312' height='320' rx='12' fill='#FFFDF8' stroke='#D9D3C7' stroke-width='2'/>
+<text x='480' y='144' font-size='13' fill='#5C6B7A' text-anchor='start' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>after</text>
+<line x1='352' y1='272' x2='352.0' y2='272' stroke='#1B2838' stroke-width='2'/>
+<line x1='448.0' y1='272' x2='448' y2='272' stroke='#1B2838' stroke-width='2'/>
+<polygon points='448,272 436,266 436,278' fill='#1B2838'/>
+<rect x='352.0' y='244.0' width='96' height='56' rx='8' fill='#F7F4EE' stroke='#D9D3C7' stroke-width='2'/>
+<text x='400' y='264.0' font-size='14' fill='#1B2838' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>keep it</text>
+<text x='400' y='292.0' font-size='14' fill='#1B2838' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>saturated</text>
+<rect x='64' y='208' width='232' height='88' rx='12' fill='#F4E6D4'/>
+<text x='180' y='238' font-size='16' fill='#1B2838' text-anchor='middle' font-weight='600' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>static batching</text>
+<text x='180' y='266' font-size='14' fill='#C46B2C' text-anchor='middle' font-weight='600' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>wait for slowest</text>
+<text x='180' y='336' font-size='14' fill='#5C6B7A' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>slots idle</text>
+<rect x='512' y='208' width='216' height='88' rx='12' fill='#E7F4EF'/>
+<text x='620' y='238' font-size='16' fill='#1B2838' text-anchor='middle' font-weight='600' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>continuous batching</text>
+<text x='620' y='268' font-size='14' fill='#1F7A72' text-anchor='middle' font-weight='600' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>join every step</text>
+<text x='620' y='336' font-size='14' fill='#5C6B7A' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>GPU never idles</text>
+<text x='400' y='480' font-size='15' fill='#1B2838' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>Dynamic batching wins because the GPU never idles.</text>
+<text x='776' y='536' font-size='12' fill='#5C6B7A' text-anchor='end' font-weight='400' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>Source: original</text>
+</svg>
