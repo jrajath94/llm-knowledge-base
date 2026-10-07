@@ -1,0 +1,15 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='700' height='420' viewBox='0 0 700 420' font-family='DejaVu Sans'>
+<rect width='700' height='420' fill='#0a0a0a'/>
+<text x='350' y='34' font-size='14' fill='#e8e8e8' text-anchor='middle' font-weight='bold'>Bias vs variance: test error is U-shaped in model complexity</text>
+<line x1='90' y1='340' x2='640' y2='340' stroke='#e8e8e8' stroke-width='2'/>
+<line x1='90' y1='340' x2='90' y2='80' stroke='#e8e8e8' stroke-width='2'/>
+<text x='365' y='368' font-size='12' fill='#9a9a9a' text-anchor='middle'>model complexity (depth, 1/lambda, estimators)</text>
+<text x='40' y='210' font-size='12' fill='#9a9a9a' text-anchor='middle'>error</text>
+<path d='M110,290 L600,150' fill='none' stroke='#8fc7ff' stroke-width='2.5'/>
+<text x='560' y='135' font-size='11' fill='#8fc7ff' text-anchor='start'>train error</text>
+<path d='M110,240 Q350,400 600,240' fill='none' stroke='#ff7b8a' stroke-width='2.5'/>
+<text x='560' y='225' font-size='11' fill='#ff7b8a' text-anchor='start'>test error</text>
+<line x1='350' y1='340' x2='350' y2='290' stroke='#f0b429' stroke-width='2' stroke-dasharray='5,4'/>
+<text x='350' y='390' font-size='12' fill='#f0b429' text-anchor='middle'>sweet spot: variance controlled, bias not yet dominant</text>
+<text x='350' y='70' font-size='12' fill='#9a9a9a' text-anchor='middle'>Ridge demo: as lambda grows, test error first falls, then rises.</text>
+</svg>
