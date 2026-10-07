@@ -1,0 +1,18 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='700' height='380' viewBox='0 0 700 380' font-family='DejaVu Sans'>
+<rect width='700' height='380' fill='#0a0a0a'/>
+<text x='350' y='34' font-size='14' fill='#e8e8e8' text-anchor='middle' font-weight='bold'>From orthogonality to the normal equations</text>
+<rect x='60' y='70' width='580' height='64' rx='8' fill='none' stroke='#f0b429' stroke-width='1.5'/>
+<text x='350' y='97' font-size='13' fill='#f0b429' text-anchor='middle'>Demand: residual y - Xw orthogonal to every column of X</text>
+<text x='350' y='118' font-size='11' fill='#9a9a9a' text-anchor='middle'>orthogonality is the defining property of projection</text>
+<line x1='350' y1='134' x2='350' y2='158' stroke='#e8e8e8' stroke-width='2'/>
+<polygon points='350,158 342,154.5 342,161.5' fill='#e8e8e8'/>
+<rect x='60' y='160' width='580' height='64' rx='8' fill='none' stroke='#8fc7ff' stroke-width='1.5'/>
+<text x='350' y='187' font-size='13' fill='#8fc7ff' text-anchor='middle'>X^T (y - Xw) = 0  (dot product with each column is zero)</text>
+<text x='350' y='208' font-size='11' fill='#9a9a9a' text-anchor='middle'>multiply out</text>
+<line x1='350' y1='224' x2='350' y2='248' stroke='#e8e8e8' stroke-width='2'/>
+<polygon points='350,248 342,244.5 342,251.5' fill='#e8e8e8'/>
+<rect x='60' y='250' width='580' height='64' rx='8' fill='none' stroke='#7fd08a' stroke-width='1.5'/>
+<text x='350' y='277' font-size='15' fill='#7fd08a' text-anchor='middle' font-weight='bold'>X^T X w = X^T y</text>
+<text x='350' y='298' font-size='11' fill='#9a9a9a' text-anchor='middle'>the normal equations; solve with solve or lstsq, never inv</text>
+<text x='350' y='350' font-size='12' fill='#9a9a9a' text-anchor='middle'>One line of geometry becomes the formula every linear fit solves.</text>
+</svg>
