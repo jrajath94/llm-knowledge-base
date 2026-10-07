@@ -1,0 +1,34 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='560' viewBox='0 0 800 560' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>
+<rect x='0' y='0' width='800' height='560' rx='0' fill='#F7F4EE'/>
+<text x='400' y='56' font-size='30' fill='#1B2838' text-anchor='middle' font-weight='600' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>ECE: one number from many bins</text>
+<text x='400' y='88' font-size='16' fill='#5C6B7A' text-anchor='middle' font-weight='450' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>Each bin contributes its gap, weighted by its size.</text>
+<rect x='24' y='112' width='312' height='320' rx='12' fill='#FFFDF8' stroke='#D9D3C7' stroke-width='2'/>
+<text x='40' y='144' font-size='13' fill='#5C6B7A' text-anchor='start' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>before</text>
+<rect x='464' y='112' width='312' height='320' rx='12' fill='#FFFDF8' stroke='#D9D3C7' stroke-width='2'/>
+<text x='480' y='144' font-size='13' fill='#5C6B7A' text-anchor='start' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>after</text>
+<line x1='352' y1='272' x2='352.0' y2='272' stroke='#1B2838' stroke-width='2'/>
+<line x1='448.0' y1='272' x2='448' y2='272' stroke='#1B2838' stroke-width='2'/>
+<polygon points='448,272 436,266 436,278' fill='#1B2838'/>
+<rect x='352.0' y='244.0' width='96' height='56' rx='8' fill='#F7F4EE' stroke='#D9D3C7' stroke-width='2'/>
+<text x='400' y='264.0' font-size='14' fill='#1B2838' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>weight by</text>
+<text x='400' y='292.0' font-size='14' fill='#1B2838' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>bin size</text>
+<line x1='56' y1='384' x2='312' y2='384' stroke='#1B2838' stroke-width='2'/>
+<line x1='56' y1='384' x2='56' y2='192' stroke='#1B2838' stroke-width='2'/>
+<line x1='56' y1='384' x2='304' y2='192' stroke='#5C6B7A' stroke-width='2' stroke-dasharray='6,5'/>
+<text x='184' y='408' font-size='12' fill='#5C6B7A' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>mean predicted</text>
+<rect x='76' y='349.44' width='40' height='34.56' rx='4' fill='#1E4D8C'/>
+<line x1='96' y1='349' x2='96' y2='336' stroke='#C46B2C' stroke-width='4'/>
+<rect x='140' y='316.8' width='40' height='67.19999999999999' rx='4' fill='#1E4D8C'/>
+<line x1='160' y1='317' x2='160' y2='298' stroke='#C46B2C' stroke-width='4'/>
+<rect x='204' y='264.96000000000004' width='40' height='119.03999999999996' rx='4' fill='#1E4D8C'/>
+<line x1='224' y1='265' x2='224' y2='269' stroke='#C46B2C' stroke-width='4'/>
+<rect x='260' y='278.4' width='40' height='105.60000000000002' rx='4' fill='#1E4D8C'/>
+<line x1='280' y1='278' x2='280' y2='221' stroke='#C46B2C' stroke-width='4'/>
+<text x='296' y='200' font-size='12' fill='#5C6B7A' text-anchor='start' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>diagonal</text>
+<rect x='520' y='208' width='200' height='96' rx='8' fill='#E7F1F8'/>
+<text x='620' y='258' font-size='24' fill='#1B2838' text-anchor='middle' font-weight='600' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>ECE = 0.11</text>
+<text x='620' y='288' font-size='14' fill='#5C6B7A' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>one number</text>
+<text x='620' y='352' font-size='14' fill='#1B2838' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>to compare models</text>
+<text x='400' y='480' font-size='15' fill='#1B2838' text-anchor='middle' font-weight='500' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>A perfectly calibrated model hugs the diagonal.</text>
+<text x='776' y='536' font-size='12' fill='#5C6B7A' text-anchor='end' font-weight='400' font-family='Anthropic Sans Web, Anthropic Sans, Inter, Source Sans 3, IBM Plex Sans'>Source: original</text>
+</svg>
