@@ -1,0 +1,14 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='700' height='420' viewBox='0 0 700 420' font-family='DejaVu Sans'>
+<rect width='700' height='420' fill='#0a0a0a'/>
+<text x='350' y='34' font-size='14' fill='#e8e8e8' text-anchor='middle' font-weight='bold'>Pick the threshold by cost, not by habit</text>
+<line x1='90' y1='330' x2='640' y2='330' stroke='#e8e8e8' stroke-width='2'/>
+<line x1='90' y1='330' x2='90' y2='90' stroke='#e8e8e8' stroke-width='2'/>
+<text x='365' y='358' font-size='12' fill='#9a9a9a' text-anchor='middle'>threshold</text>
+<text x='45' y='210' font-size='12' fill='#9a9a9a' text-anchor='middle'>cost</text>
+<path d='M110,260 Q350,380 600,260' fill='none' stroke='#f0b429' stroke-width='2.5'/>
+<line x1='350' y1='330' x2='350' y2='280' stroke='#7fd08a' stroke-width='2' stroke-dasharray='5,4'/>
+<text x='330' y='390' font-size='12' fill='#7fd08a' text-anchor='middle'>minimum cost: missed fraud = 100x false alarm</text>
+<text x='150' y='310' font-size='11' fill='#9a9a9a' text-anchor='start'>0.5 default</text>
+<text x='150' y='320' font-size='11' fill='#9a9a9a' text-anchor='start'>(rarely right)</text>
+<text x='350' y='70' font-size='12' fill='#9a9a9a' text-anchor='middle'>Under imbalance, 0.5 is almost never the right operating point.</text>
+</svg>
