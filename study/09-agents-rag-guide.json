@@ -1,0 +1,1287 @@
+{
+ "schemaVersion": 1,
+ "itemId": "09-agents-rag-guide",
+ "itemKind": "lesson",
+ "revision": "df9b368118a8a11b5611d156cdea87668938dae9ce2191fce5c3f31a032210d5",
+ "sections": [
+  {
+   "anchor": "09-agents-rag-guide-intro",
+   "title": "09-agents-rag-guide-intro",
+   "minutes": 1,
+   "endAnchor": "09-agents-rag-guide-intro-end",
+   "blocks": [],
+   "keyTerms": [
+    {
+     "term": "foundations",
+     "definition": "From zero: LLM limits, retrieval, chunks, embeddings, vector search, RAG, agents.",
+     "anchor": "09-agents-rag-guide-intro-p02"
+    },
+    {
+     "term": "RRK Agentic AI v2",
+     "definition": "The books this volume guides you through.",
+     "anchor": "09-agents-rag-guide-intro-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "09-agents-rag-guide-intro-r1",
+     "question": "What is the structure?",
+     "answer": "Foundations from zero, then a guided reading path through the RRK v2 books, connected to Volumes 1-8.",
+     "anchor": "09-agents-rag-guide-intro-p02"
+    },
+    {
+     "id": "09-agents-rag-guide-intro-r2",
+     "question": "What is verified versus unverified?",
+     "answer": "Chapter numbers and question codes were live-verified; RRK summaries are faithful to the v2 text only.",
+     "anchor": "09-agents-rag-guide-intro-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "howto",
+   "title": "How to use this guide",
+   "minutes": 3,
+   "endAnchor": "howto-end",
+   "blocks": [
+    {
+     "anchor": "howto-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "howto-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "howto-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "RRK Agentic AI Textbook v2",
+     "definition": "16 chapters: whiteboard method, system design, agentic design, FDE playbook, GCP stack, agents, RAG, chunking, embeddings, eval, guardrails, GPUs, board sessions.",
+     "anchor": "howto-p01"
+    },
+    {
+     "term": "RRK Interview Q&A Bank v2",
+     "definition": "Hundreds of questions across discovery, coding, system design, agentic design, RAG, guardrails, production.",
+     "anchor": "howto-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "howto-r1",
+     "question": "What is this volume?",
+     "answer": "A guided reading path through two books you already own.",
+     "anchor": "howto-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "fp-llm-limits",
+   "title": "What an LLM cannot do alone",
+   "minutes": 2,
+   "endAnchor": "fp-llm-limits-end",
+   "blocks": [
+    {
+     "anchor": "fp-llm-limits-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "fp-llm-limits-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "fp-llm-limits-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "next-token predictor",
+     "definition": "What a language model is; knowledge frozen the day training finished.",
+     "anchor": "fp-llm-limits-p01"
+    },
+    {
+     "term": "weights",
+     "definition": "The numbers learned during training; where knowledge lives.",
+     "anchor": "fp-llm-limits-p01"
+    },
+    {
+     "term": "three limits",
+     "definition": "A bare model fails in three ways; everything follows from one fact.",
+     "anchor": "fp-llm-limits-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "fp-llm-limits-r1",
+     "question": "What is the one fact?",
+     "answer": "A language model is a next-token predictor trained on a pile of text; its knowledge is frozen weights.",
+     "anchor": "fp-llm-limits-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "fp-retrieval-idea",
+   "title": "Retrieval: the simplest answer to stale knowledge",
+   "minutes": 2,
+   "endAnchor": "fp-retrieval-idea-end",
+   "blocks": [
+    {
+     "anchor": "fp-retrieval-idea-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "fp-retrieval-idea-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "fp-retrieval-idea-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "retrieval",
+     "definition": "Finding the pieces of a collection relevant to a question.",
+     "anchor": "fp-retrieval-idea-p01"
+    },
+    {
+     "term": "corpus",
+     "definition": "The collection of documents you search.",
+     "anchor": "fp-retrieval-idea-p02"
+    },
+    {
+     "term": "frozen weights",
+     "definition": "The problem; keep knowledge outside the model instead.",
+     "anchor": "fp-retrieval-idea-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "fp-retrieval-idea-r1",
+     "question": "What is the simplest fix?",
+     "answer": "Do not retrain; keep knowledge in documents you control, find the relevant pieces, paste them into the prompt.",
+     "anchor": "fp-retrieval-idea-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "fp-chunks-embeddings-search",
+   "title": "Chunks, embeddings, and vector search",
+   "minutes": 5,
+   "endAnchor": "fp-chunks-embeddings-search-end",
+   "blocks": [
+    {
+     "anchor": "fp-chunks-embeddings-search-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "fp-chunks-embeddings-search-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "fp-chunks-embeddings-search-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "chunks",
+     "definition": "Short passages, each about one idea; documents are long, the window is finite.",
+     "anchor": "fp-chunks-embeddings-search-p02"
+    },
+    {
+     "term": "embeddings",
+     "definition": "How to measure relevance.",
+     "anchor": "fp-chunks-embeddings-search-p04"
+    },
+    {
+     "term": "vector search",
+     "definition": "How to search fast.",
+     "anchor": "fp-chunks-embeddings-search-p08"
+    }
+   ],
+   "recall": [
+    {
+     "id": "fp-chunks-embeddings-search-r1",
+     "question": "Why cut documents into chunks?",
+     "answer": "You cannot paste a whole manual per question; the relevant paragraph would drown.",
+     "anchor": "fp-chunks-embeddings-search-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "fp-rag-pipeline",
+   "title": "The RAG pipeline, end to end",
+   "minutes": 3,
+   "endAnchor": "fp-rag-pipeline-end",
+   "blocks": [
+    {
+     "anchor": "fp-rag-pipeline-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "fp-rag-pipeline-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "fp-rag-pipeline-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "RAG",
+     "definition": "Retrieval-augmented generation: retriever plus machinery, wired to a generator.",
+     "anchor": "fp-rag-pipeline-p01"
+    },
+    {
+     "term": "index path",
+     "definition": "Offline, once: documents to chunks to embeddings to index.",
+     "anchor": "fp-rag-pipeline-p02"
+    },
+    {
+     "term": "query path",
+     "definition": "Online, per question: embed, search, build prompt, generate.",
+     "anchor": "fp-rag-pipeline-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "fp-rag-pipeline-r1",
+     "question": "What are the two paths?",
+     "answer": "Index path runs offline once; query path runs online per question.",
+     "anchor": "fp-rag-pipeline-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "fp-rag-failure-modes",
+   "title": "Where naive RAG breaks",
+   "minutes": 2,
+   "endAnchor": "fp-rag-failure-modes-end",
+   "blocks": [
+    {
+     "anchor": "fp-rag-failure-modes-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "fp-rag-failure-modes-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "fp-rag-failure-modes-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "four failures",
+     "definition": "Missed retrieval and three more; every advanced technique fixes one.",
+     "anchor": "fp-rag-failure-modes-takeaway"
+    },
+    {
+     "term": "missed retrieval",
+     "definition": "The right page exists but ranks 47th.",
+     "anchor": "fp-rag-failure-modes-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "fp-rag-failure-modes-r1",
+     "question": "What is the felt problem?",
+     "answer": "The naive baseline works on demos and breaks in production, in the same four ways everywhere.",
+     "anchor": "fp-rag-failure-modes-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "fp-agents-next-step",
+   "title": "Agents: when retrieval is not enough",
+   "minutes": 3,
+   "endAnchor": "fp-agents-next-step-end",
+   "blocks": [
+    {
+     "anchor": "fp-agents-next-step-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "fp-agents-next-step-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "fp-agents-next-step-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "agent",
+     "definition": "A system giving a language model hands and the judgment to use them.",
+     "anchor": "fp-agents-next-step-p01"
+    },
+    {
+     "term": "tool",
+     "definition": "Defined here; what the agent calls.",
+     "anchor": "fp-agents-next-step-p02"
+    },
+    {
+     "term": "hands",
+     "definition": "Retrieval gives knowledge; agents give hands.",
+     "anchor": "fp-agents-next-step-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "fp-agents-next-step-r1",
+     "question": "What does an agent do?",
+     "answer": "Plans, calls tools, reads results, repeats until the job is done.",
+     "anchor": "fp-agents-next-step-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "path-agents",
+   "title": "Path A: Agents (RRK chapters 3 and 8)",
+   "minutes": 6,
+   "endAnchor": "path-agents-end",
+   "blocks": [
+    {
+     "anchor": "path-agents-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "path-agents-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "path-agents-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Path A",
+     "definition": "Agents: RRK chapters 3 and 8.",
+     "anchor": "path-agents-fig01"
+    },
+    {
+     "term": "perceive-reason-act",
+     "definition": "The loop; with three stop conditions.",
+     "anchor": "path-agents-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "path-agents-r1",
+     "question": "Why do the paths start here?",
+     "answer": "Every other path is a component of the agent: RAG is senses, evals are exams, guardrails are seatbelts.",
+     "anchor": "path-agents-p01"
+    },
+    {
+     "id": "path-agents-r2",
+     "question": "What is the reading order?",
+     "answer": "Chapter 3 (Agentic Design Basics) first, then Chapter 8 (Agents, deeply).",
+     "anchor": "path-agents-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "path-rag",
+   "title": "Path B: RAG (RRK chapters 9, 10, 11)",
+   "minutes": 5,
+   "endAnchor": "path-rag-end",
+   "blocks": [
+    {
+     "anchor": "path-rag-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "path-rag-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "path-rag-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Path B",
+     "definition": "RAG: RRK chapters 9, 10, 11.",
+     "anchor": "path-rag-p01"
+    },
+    {
+     "term": "modular router",
+     "definition": "The idea; agentic RAG as retrieval-as-a-tool.",
+     "anchor": "path-rag-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "path-rag-r1",
+     "question": "What is the reading order?",
+     "answer": "Chapter 9 (RAG types), then 10 (chunking), then 11 (embeddings, vector search, reranking).",
+     "anchor": "path-rag-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "path-evals",
+   "title": "Path C: Evals (RRK chapter 12)",
+   "minutes": 4,
+   "endAnchor": "path-evals-end",
+   "blocks": [
+    {
+     "anchor": "path-evals-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "path-evals-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "path-evals-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "study ROI",
+     "definition": "Chapter 12 is the best chapter in the book for it.",
+     "anchor": "path-evals-p01"
+    },
+    {
+     "term": "golden set",
+     "definition": "For construction; LLM-as-judge rubrics and pitfalls.",
+     "anchor": "path-evals-p05"
+    }
+   ],
+   "recall": [
+    {
+     "id": "path-evals-r1",
+     "question": "What is the one idea?",
+     "answer": "Eval is how you stop guessing.",
+     "anchor": "path-evals-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "path-guardrails",
+   "title": "Path D: Guardrails, security, tenancy (RRK chapter 13)",
+   "minutes": 4,
+   "endAnchor": "path-guardrails-end",
+   "blocks": [
+    {
+     "anchor": "path-guardrails-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "path-guardrails-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "path-guardrails-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "input screening",
+     "definition": "First filter on the prompt.",
+     "anchor": "path-guardrails-fig01"
+    },
+    {
+     "term": "layers",
+     "definition": "Every layer fails, so stack them.",
+     "anchor": "path-guardrails-p01"
+    },
+    {
+     "term": "PII redaction",
+     "definition": "Remove personal data before it spreads.",
+     "anchor": "path-guardrails-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "path-guardrails-r1",
+     "question": "What is the defense philosophy?",
+     "answer": "Layer defenses because every single layer fails.",
+     "anchor": "path-guardrails-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "path-fde",
+   "title": "Path E: The FDE playbook (RRK chapter 4)",
+   "minutes": 4,
+   "endAnchor": "path-fde-end",
+   "blocks": [
+    {
+     "anchor": "path-fde-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "path-fde-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "path-fde-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "think like an L6",
+     "definition": "Discovery, SLOs, evals, unit economics, build vs buy.",
+     "anchor": "path-fde-p01"
+    },
+    {
+     "term": "unit economics",
+     "definition": "The worked support-agent example.",
+     "anchor": "path-fde-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "path-fde-r1",
+     "question": "What does the chapter teach?",
+     "answer": "Discovery, SLOs, evals, unit economics, build vs buy.",
+     "anchor": "path-fde-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "path-infra",
+   "title": "Path F: GPUs, serving, and the GCP stack (RRK chapters 14 and 5)",
+   "minutes": 4,
+   "endAnchor": "path-infra-end",
+   "blocks": [
+    {
+     "anchor": "path-infra-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "path-infra-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "path-infra-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Path F",
+     "definition": "GPUs, serving, GCP stack: RRK chapters 14 and 5.",
+     "anchor": "path-infra-p07"
+    },
+    {
+     "term": "cost",
+     "definition": "A design constraint; the one idea of chapter 14.",
+     "anchor": "path-infra-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "path-infra-r1",
+     "question": "What is the reading order?",
+     "answer": "Chapter 14 (GPUs, serving, cost math) first, then Chapter 5 (GCP end to end).",
+     "anchor": "path-infra-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "gaps",
+   "title": "What the RRK books do not cover: the forward map",
+   "minutes": 3,
+   "endAnchor": "gaps-end",
+   "blocks": [
+    {
+     "anchor": "gaps-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "gaps-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "gaps-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "do not teach",
+     "definition": "What the books miss; each gap names its spine volume.",
+     "anchor": "gaps-p01"
+    },
+    {
+     "term": "honest inventory",
+     "definition": "Of the gaps a design review demands.",
+     "anchor": "gaps-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "gaps-r1",
+     "question": "Why the honest inventory?",
+     "answer": "No book covers everything; the map keeps you from discovering a gap on review day.",
+     "anchor": "gaps-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "appendix",
+   "title": "Appendix: schedule, question map, sentence bank",
+   "minutes": 2,
+   "endAnchor": "appendix-end",
+   "blocks": [
+    {
+     "anchor": "appendix-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "appendix-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "two-week schedule",
+     "definition": "About 2 hours a day: paths A-F across days 1-14.",
+     "anchor": "appendix-p01"
+    },
+    {
+     "term": "sentence bank",
+     "definition": "For drills; with the question map.",
+     "anchor": "appendix-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "appendix-r1",
+     "question": "What is the appendix?",
+     "answer": "The when: a schedule, a question map, a sentence bank.",
+     "anchor": "appendix-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09a-appendix-9a-agent-evals",
+   "title": "Appendix 9A: Agent Evals",
+   "minutes": 1,
+   "endAnchor": "a09a-appendix-9a-agent-evals-end",
+   "blocks": [
+    {
+     "anchor": "a09a-appendix-9a-agent-evals-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "machinery",
+     "definition": "The harness, the graders, the calibration, the patches.",
+     "anchor": "a09a-appendix-9a-agent-evals-p01"
+    },
+    {
+     "term": "harness",
+     "definition": "Runs agents.",
+     "anchor": "a09a-appendix-9a-agent-evals-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09a-appendix-9a-agent-evals-r1",
+     "question": "What does it build?",
+     "answer": "The machinery: harness that runs agents, graders that score, calibration that keeps judges honest.",
+     "anchor": "a09a-appendix-9a-agent-evals-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09a-chapter-1-task-harnesses",
+   "title": "Chapter 1: Task harnesses",
+   "minutes": 9,
+   "endAnchor": "a09a-chapter-1-task-harnesses-end",
+   "blocks": [
+    {
+     "anchor": "a09a-chapter-1-task-harnesses-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09a-chapter-1-task-harnesses-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "task harness",
+     "definition": "The examiner, the route, and the dashcam; built before any grader scores.",
+     "anchor": "a09a-chapter-1-task-harnesses-p03"
+    },
+    {
+     "term": "driving test",
+     "definition": "The analogy: same route for every student.",
+     "anchor": "a09a-chapter-1-task-harnesses-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09a-chapter-1-task-harnesses-r1",
+     "question": "Why build the harness first?",
+     "answer": "It is where eval starts; the examiner, route, and notebook before any scoring.",
+     "anchor": "a09a-chapter-1-task-harnesses-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09a-chapter-2-graders-and-rubrics",
+   "title": "Chapter 2: Graders and rubrics",
+   "minutes": 9,
+   "endAnchor": "a09a-chapter-2-graders-and-rubrics-end",
+   "blocks": [
+    {
+     "anchor": "a09a-chapter-2-graders-and-rubrics-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09a-chapter-2-graders-and-rubrics-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "grader",
+     "definition": "A function: trajectory plus final state in, score out.",
+     "anchor": "a09a-chapter-2-graders-and-rubrics-p01"
+    },
+    {
+     "term": "outcome grader",
+     "definition": "Looks only at the final state.",
+     "anchor": "a09a-chapter-2-graders-and-rubrics-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09a-chapter-2-graders-and-rubrics-r1",
+     "question": "What are the two families?",
+     "answer": "Outcome graders (final state only) and the other family the chapter names.",
+     "anchor": "a09a-chapter-2-graders-and-rubrics-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "a09a-chapter-3-judge-calibration-against-humans",
+   "title": "Chapter 3: Judge calibration against humans",
+   "minutes": 7,
+   "endAnchor": "a09a-chapter-3-judge-calibration-against-humans-end",
+   "blocks": [
+    {
+     "anchor": "a09a-chapter-3-judge-calibration-against-humans-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09a-chapter-3-judge-calibration-against-humans-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "calibration",
+     "definition": "Measure the judge against human experts on a golden set.",
+     "anchor": "a09a-chapter-3-judge-calibration-against-humans-p01"
+    },
+    {
+     "term": "golden set",
+     "definition": "A few dozen to a few hundred outputs, each labeled by human experts.",
+     "anchor": "a09a-chapter-3-judge-calibration-against-humans-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09a-chapter-3-judge-calibration-against-humans-r1",
+     "question": "Why calibrate?",
+     "answer": "An uncalibrated judge is a guess with extra steps.",
+     "anchor": "a09a-chapter-3-judge-calibration-against-humans-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09a-chapter-4-lucky-passes-trajectory-checks-and-auto-generated-evals",
+   "title": "Chapter 4: Lucky passes, trajectory checks, and auto-generated evals",
+   "minutes": 11,
+   "endAnchor": "a09a-chapter-4-lucky-passes-trajectory-checks-and-auto-generated-evals-end",
+   "blocks": [
+    {
+     "anchor": "a09a-chapter-4-lucky-passes-trajectory-checks-and-auto-generated-evals-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09a-chapter-4-lucky-passes-trajectory-checks-and-auto-generated-evals-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "lucky pass",
+     "definition": "Right answer for the wrong reason; three flavors.",
+     "anchor": "a09a-chapter-4-lucky-passes-trajectory-checks-and-auto-generated-evals-p02"
+    },
+    {
+     "term": "trajectory checks",
+     "definition": "Catch what outcome graders miss.",
+     "anchor": "a09a-chapter-4-lucky-passes-trajectory-checks-and-auto-generated-evals-p09"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09a-chapter-4-lucky-passes-trajectory-checks-and-auto-generated-evals-r1",
+     "question": "What is the problem?",
+     "answer": "Graders say pass when the agent guessed right for the wrong reason; the dashboard lies.",
+     "anchor": "a09a-chapter-4-lucky-passes-trajectory-checks-and-auto-generated-evals-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "a09a-patch-1-long-horizon-evals-and-drift",
+   "title": "Patch 1: Long-horizon evals and drift",
+   "minutes": 6,
+   "endAnchor": "a09a-patch-1-long-horizon-evals-and-drift-end",
+   "blocks": [
+    {
+     "anchor": "a09a-patch-1-long-horizon-evals-and-drift-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09a-patch-1-long-horizon-evals-and-drift-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "context rot",
+     "definition": "The window fills with old outputs; the goal slides out of attention.",
+     "anchor": "a09a-patch-1-long-horizon-evals-and-drift-p03"
+    },
+    {
+     "term": "long-horizon",
+     "definition": "50 or 500 steps: migrate a codebase, reconcile expenses, research a market.",
+     "anchor": "a09a-patch-1-long-horizon-evals-and-drift-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09a-patch-1-long-horizon-evals-and-drift-r1",
+     "question": "What goes wrong as steps accumulate?",
+     "answer": "Context rot and two more; the agent optimizes a subgoal instead of the goal.",
+     "anchor": "a09a-patch-1-long-horizon-evals-and-drift-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "a09a-patch-2-agent-cicd-with-eval-gates",
+   "title": "Patch 2: Agent CI/CD with eval gates",
+   "minutes": 7,
+   "endAnchor": "a09a-patch-2-agent-cicd-with-eval-gates-end",
+   "blocks": [
+    {
+     "anchor": "a09a-patch-2-agent-cicd-with-eval-gates-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09a-patch-2-agent-cicd-with-eval-gates-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "eval gates",
+     "definition": "Evals become regression tests; golden sets become gates.",
+     "anchor": "a09a-patch-2-agent-cicd-with-eval-gates-fig01"
+    },
+    {
+     "term": "nondeterminism",
+     "definition": "What makes naive CI fail.",
+     "anchor": "a09a-patch-2-agent-cicd-with-eval-gates-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09a-patch-2-agent-cicd-with-eval-gates-r1",
+     "question": "What enters the pipeline?",
+     "answer": "Every change: model, prompt, tools, code; each stage is a gate.",
+     "anchor": "a09a-patch-2-agent-cicd-with-eval-gates-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09b-appendix-9b-agent-security",
+   "title": "Appendix 9B: Agent Security",
+   "minutes": 1,
+   "endAnchor": "a09b-appendix-9b-agent-security-end",
+   "blocks": [
+    {
+     "anchor": "a09b-appendix-9b-agent-security-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "attack surface",
+     "definition": "A passing agent is still one; this appendix hardens it.",
+     "anchor": "a09b-appendix-9b-agent-security-p01"
+    },
+    {
+     "term": "hardens",
+     "definition": "A passing agent against attackers.",
+     "anchor": "a09b-appendix-9b-agent-security-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09b-appendix-9b-agent-security-r1",
+     "question": "Why harden a passing agent?",
+     "answer": "It is still an attack surface.",
+     "anchor": "a09b-appendix-9b-agent-security-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09b-chapter-1-capability-level-security",
+   "title": "Chapter 1: Capability-level security",
+   "minutes": 7,
+   "endAnchor": "a09b-chapter-1-capability-level-security-end",
+   "blocks": [
+    {
+     "anchor": "a09b-chapter-1-capability-level-security-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09b-chapter-1-capability-level-security-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "capability layer",
+     "definition": "Enforces whatever the prompt says; fix there, not in the prompt.",
+     "anchor": "a09b-chapter-1-capability-level-security-p01"
+    },
+    {
+     "term": "red-teaming loop",
+     "definition": "Probe, detect, fix at the capability layer, regression in CI.",
+     "anchor": "a09b-chapter-1-capability-level-security-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09b-chapter-1-capability-level-security-r1",
+     "question": "Where do you fix?",
+     "answer": "At the capability layer, not the prompt.",
+     "anchor": "a09b-chapter-1-capability-level-security-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09b-chapter-2-red-teaming-practice",
+   "title": "Chapter 2: Red-teaming practice",
+   "minutes": 9,
+   "endAnchor": "a09b-chapter-2-red-teaming-practice-end",
+   "blocks": [
+    {
+     "anchor": "a09b-chapter-2-red-teaming-practice-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09b-chapter-2-red-teaming-practice-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "red-teaming",
+     "definition": "Attack your own system on purpose, before someone else does it for real.",
+     "anchor": "a09b-chapter-2-red-teaming-practice-p01"
+    },
+    {
+     "term": "two modes",
+     "definition": "Manual probing and automated campaigns.",
+     "anchor": "a09b-chapter-2-red-teaming-practice-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09b-chapter-2-red-teaming-practice-r1",
+     "question": "What do you probe?",
+     "answer": "The full loop: the model, the tools, the harness around them.",
+     "anchor": "a09b-chapter-2-red-teaming-practice-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "a09b-chapter-3-pii-handling-in-prompts-logs-and-training-data",
+   "title": "Chapter 3: PII handling in prompts, logs, and training data",
+   "minutes": 8,
+   "endAnchor": "a09b-chapter-3-pii-handling-in-prompts-logs-and-training-data-end",
+   "blocks": [
+    {
+     "anchor": "a09b-chapter-3-pii-handling-in-prompts-logs-and-training-data-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09b-chapter-3-pii-handling-in-prompts-logs-and-training-data-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "PII",
+     "definition": "Any data identifying a person: names, emails, phones, addresses, account numbers.",
+     "anchor": "a09b-chapter-3-pii-handling-in-prompts-logs-and-training-data-p01"
+    },
+    {
+     "term": "quasi-identifiers",
+     "definition": "Facts identifying someone in combination, like zip plus birth date.",
+     "anchor": "a09b-chapter-3-pii-handling-in-prompts-logs-and-training-data-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09b-chapter-3-pii-handling-in-prompts-logs-and-training-data-r1",
+     "question": "Why is PII different from attacks?",
+     "answer": "Attacks get headlines; data leaks get fines.",
+     "anchor": "a09b-chapter-3-pii-handling-in-prompts-logs-and-training-data-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09b-patch-1-mcp-server-building-mechanics",
+   "title": "Patch 1: MCP server-building mechanics",
+   "minutes": 7,
+   "endAnchor": "a09b-patch-1-mcp-server-building-mechanics-end",
+   "blocks": [
+    {
+     "anchor": "a09b-patch-1-mcp-server-building-mechanics-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09b-patch-1-mcp-server-building-mechanics-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "MCP",
+     "definition": "The protocol standardizing tool use; USB-for-tools.",
+     "anchor": "a09b-patch-1-mcp-server-building-mechanics-p01"
+    },
+    {
+     "term": "host",
+     "definition": "The AI application holding the model.",
+     "anchor": "a09b-patch-1-mcp-server-building-mechanics-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09b-patch-1-mcp-server-building-mechanics-r1",
+     "question": "What do servers expose?",
+     "answer": "Tools, resources, and prompts: filesystem, data, and more.",
+     "anchor": "a09b-patch-1-mcp-server-building-mechanics-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09b-patch-2-a2a-agent-to-agent-patterns",
+   "title": "Patch 2: A2A agent-to-agent patterns",
+   "minutes": 6,
+   "endAnchor": "a09b-patch-2-a2a-agent-to-agent-patterns-end",
+   "blocks": [
+    {
+     "anchor": "a09b-patch-2-a2a-agent-to-agent-patterns-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09b-patch-2-a2a-agent-to-agent-patterns-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "A2A",
+     "definition": "Agent-to-agent protocol; MCP is agents-to-tools, A2A is agents-to-agents.",
+     "anchor": "a09b-patch-2-a2a-agent-to-agent-patterns-p01"
+    },
+    {
+     "term": "supervisor",
+     "definition": "One boss delegates to specialists and merges results.",
+     "anchor": "a09b-patch-2-a2a-agent-to-agent-patterns-fig01"
+    },
+    {
+     "term": "handoff",
+     "definition": "Each agent owns one stage, like an assembly line.",
+     "anchor": "a09b-patch-2-a2a-agent-to-agent-patterns-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09b-patch-2-a2a-agent-to-agent-patterns-r1",
+     "question": "What are the collaboration shapes?",
+     "answer": "Supervisor, handoff, swarm.",
+     "anchor": "a09b-patch-2-a2a-agent-to-agent-patterns-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "a09b-patch-3-langgraph-style-framework-depth",
+   "title": "Patch 3: LangGraph-style framework depth",
+   "minutes": 9,
+   "endAnchor": "a09b-patch-3-langgraph-style-framework-depth-end",
+   "blocks": [
+    {
+     "anchor": "a09b-patch-3-langgraph-style-framework-depth-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a09b-patch-3-langgraph-style-framework-depth-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "LangGraph",
+     "definition": "Graph-based framework: explicit state, cycles, checkpointing, human-in-the-loop.",
+     "anchor": "a09b-patch-3-langgraph-style-framework-depth-p01"
+    },
+    {
+     "term": "while loop",
+     "definition": "What most agent code is, until it is not enough.",
+     "anchor": "a09b-patch-3-langgraph-style-framework-depth-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a09b-patch-3-langgraph-style-framework-depth-r1",
+     "question": "When does the while loop break?",
+     "answer": "When you need pause-for-approval, crash survival, or rewind to a step.",
+     "anchor": "a09b-patch-3-langgraph-style-framework-depth-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "09-agents-rag-guide-watch-deeper",
+   "title": "09-agents-rag-guide-watch-deeper",
+   "minutes": 3,
+   "endAnchor": "09-agents-rag-guide-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "09-agents-rag-guide-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "09-agents-rag-guide-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "09-agents-rag-guide-watch-deeper-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Barry Zhang",
+     "definition": "Anthropic: How We Build Effective Agents; the source of this page's framing.",
+     "anchor": "09-agents-rag-guide-watch-deeper-fig01"
+    },
+    {
+     "term": "LangGraph",
+     "definition": "Building effective agents with it.",
+     "anchor": "09-agents-rag-guide-watch-deeper-fig02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "09-agents-rag-guide-watch-deeper-r1",
+     "question": "What is the framing?",
+     "answer": "Do not build agents for everything; keep it simple; think like your agent.",
+     "anchor": "09-agents-rag-guide-watch-deeper-p02"
+    }
+   ]
+  }
+ ]
+}

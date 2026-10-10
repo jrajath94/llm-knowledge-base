@@ -1,0 +1,509 @@
+{
+ "schemaVersion": 1,
+ "itemId": "19-ai-lab-classical-ml",
+ "itemKind": "lesson",
+ "revision": "910dfc16453c6b11796d40bf143919666559b96074c332b52b4daa73a633de7a",
+ "sections": [
+  {
+   "anchor": "lab-w3-d1-logreg-gradient-convexity",
+   "title": "Logistic Regression Gradient &amp; Convexity Medium",
+   "minutes": 9,
+   "endAnchor": "lab-w3-d1-logreg-gradient-convexity-end",
+   "blocks": [
+    {
+     "anchor": "lab-w3-d1-logreg-gradient-convexity-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "binary cross-entropy",
+     "definition": "Loss implemented in numerically stable form with the sigmoid.",
+     "anchor": "lab-w3-d1-logreg-gradient-convexity-p02"
+    },
+    {
+     "term": "convexity",
+     "definition": "Attacked directly: Hessian-vector products without forming H, plus empirical PSD check.",
+     "anchor": "lab-w3-d1-logreg-gradient-convexity-p02"
+    },
+    {
+     "term": "separable data",
+     "definition": "Perfectly separable data pushes weights toward infinity; a named interview trap.",
+     "anchor": "lab-w3-d1-logreg-gradient-convexity-p03"
+    },
+    {
+     "term": "stable log",
+     "definition": "Use log(1+exp(z)); a named interview trap.",
+     "anchor": "lab-w3-d1-logreg-gradient-convexity-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w3-d1-logreg-gradient-convexity-r1",
+     "question": "What are the two named bug sites?",
+     "answer": "Missing 1/n constants, and shape and broadcast mistakes.",
+     "anchor": "lab-w3-d1-logreg-gradient-convexity-p03"
+    },
+    {
+     "id": "lab-w3-d1-logreg-gradient-convexity-r2",
+     "question": "What are the two named interview traps?",
+     "answer": "Stable log(1+exp(z)), and perfectly separable data pushing weights toward infinity.",
+     "anchor": "lab-w3-d1-logreg-gradient-convexity-p03"
+    },
+    {
+     "id": "lab-w3-d1-logreg-gradient-convexity-r3",
+     "question": "What does the closing GD-versus-Newton comparison set up?",
+     "answer": "The optimization thinking for later volumes.",
+     "anchor": "lab-w3-d1-logreg-gradient-convexity-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w3-d2-linear-regression-glms",
+   "title": "Linear Regression &amp; GLMs Medium",
+   "minutes": 8,
+   "endAnchor": "lab-w3-d2-linear-regression-glms-end",
+   "blocks": [
+    {
+     "anchor": "lab-w3-d2-linear-regression-glms-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "OLS",
+     "definition": "Ordinary least squares fit in closed form with solve, never the explicit inverse.",
+     "anchor": "lab-w3-d2-linear-regression-glms-p02"
+    },
+    {
+     "term": "ridge",
+     "definition": "Added in both forms; shows the bias-variance trade on train/test.",
+     "anchor": "lab-w3-d2-linear-regression-glms-p02"
+    },
+    {
+     "term": "collinearity",
+     "definition": "Built into the synthetic data so ridge has something to fix.",
+     "anchor": "lab-w3-d2-linear-regression-glms-p03"
+    },
+    {
+     "term": "GLM",
+     "definition": "Generalized linear model; the intuition table maps distribution plus link per task.",
+     "anchor": "lab-w3-d2-linear-regression-glms-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w3-d2-linear-regression-glms-r1",
+     "question": "Why does ridge help with collinearity?",
+     "answer": "That is the payoff angle: the lab builds collinearity in so ridge has something to fix, shown on a train/test split.",
+     "anchor": "lab-w3-d2-linear-regression-glms-p03"
+    },
+    {
+     "id": "lab-w3-d2-linear-regression-glms-r2",
+     "question": "How should you inspect residuals?",
+     "answer": "The way an interviewer expects; the lab fits OLS then inspects residuals before comparing MSE gradient descent against the closed form.",
+     "anchor": "lab-w3-d2-linear-regression-glms-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w3-d3-logreg-calibration",
+   "title": "Logistic Regression &amp; Calibration Medium",
+   "minutes": 7,
+   "endAnchor": "lab-w3-d3-logreg-calibration-end",
+   "blocks": [
+    {
+     "anchor": "lab-w3-d3-logreg-calibration-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "calibration",
+     "definition": "Probabilities as first-class outputs; reliability curves, ECE, temperature scaling.",
+     "anchor": "lab-w3-d3-logreg-calibration-p02"
+    },
+    {
+     "term": "ECE",
+     "definition": "Expected calibration error; the summary number.",
+     "anchor": "lab-w3-d3-logreg-calibration-p03"
+    },
+    {
+     "term": "temperature scaling",
+     "definition": "Fitted on a validation split to fix calibration.",
+     "anchor": "lab-w3-d3-logreg-calibration-p03"
+    },
+    {
+     "term": "PR-AUC",
+     "definition": "Approximated alongside confusion-matrix metrics at a threshold.",
+     "anchor": "lab-w3-d3-logreg-calibration-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w3-d3-logreg-calibration-r1",
+     "question": "What is the headline gotcha?",
+     "answer": "A good ROC-AUC model can be poorly calibrated.",
+     "anchor": "lab-w3-d3-logreg-calibration-p04"
+    },
+    {
+     "id": "lab-w3-d3-logreg-calibration-r2",
+     "question": "What is the interview angle to internalize?",
+     "answer": "Translation: model outputs become decisions only through costs and thresholds.",
+     "anchor": "lab-w3-d3-logreg-calibration-p04"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w3-d4-knn-distance-based-learning",
+   "title": "kNN &amp; Distance-Based Learning Medium",
+   "minutes": 7,
+   "endAnchor": "lab-w3-d4-knn-distance-based-learning-end",
+   "blocks": [
+    {
+     "anchor": "lab-w3-d4-knn-distance-based-learning-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w3-d4-knn-distance-based-learning-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "kNN",
+     "definition": "Distance-based contrast to linear models; majority vote with deterministic tie-breaking.",
+     "anchor": "lab-w3-d4-knn-distance-based-learning-p02"
+    },
+    {
+     "term": "distance concentration",
+     "definition": "Shown in high dimensions; why kNN degrades as dimension grows.",
+     "anchor": "lab-w3-d4-knn-distance-based-learning-p02"
+    },
+    {
+     "term": "vectorized expansion",
+     "definition": "The L2 distance matrix trick; never the (m,n,d) broadcast tensor.",
+     "anchor": "lab-w3-d4-knn-distance-based-learning-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w3-d4-knn-distance-based-learning-r1",
+     "question": "What are the interview angles the lab names?",
+     "answer": "When L1 beats L2, and why kNN degrades as dimension grows.",
+     "anchor": "lab-w3-d4-knn-distance-based-learning-p03"
+    },
+    {
+     "id": "lab-w3-d4-knn-distance-based-learning-r2",
+     "question": "What breaks kNN before the fix?",
+     "answer": "Unscaled features; standardization fixes it.",
+     "anchor": "lab-w3-d4-knn-distance-based-learning-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w3-d5-naive-bayes",
+   "title": "Probabilistic ML Thinking (Naive Bayes) Medium",
+   "minutes": 7,
+   "endAnchor": "lab-w3-d5-naive-bayes-end",
+   "blocks": [
+    {
+     "anchor": "lab-w3-d5-naive-bayes-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w3-d5-naive-bayes-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "multinomial Naive Bayes",
+     "definition": "Fitted with Laplace smoothing; predicts in log-space.",
+     "anchor": "lab-w3-d5-naive-bayes-p02"
+    },
+    {
+     "term": "Laplace smoothing",
+     "definition": "Handles unseen tokens in Naive Bayes.",
+     "anchor": "lab-w3-d5-naive-bayes-p02"
+    },
+    {
+     "term": "log-space",
+     "definition": "Not optional: raw probability products underflow.",
+     "anchor": "lab-w3-d5-naive-bayes-p02"
+    },
+    {
+     "term": "generative",
+     "definition": "The generative contrast to everything discriminative so far.",
+     "anchor": "lab-w3-d5-naive-bayes-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w3-d5-naive-bayes-r1",
+     "question": "What are the FAANG gotchas?",
+     "answer": "Tokenization edge cases (case, punctuation) silently change the vocabulary; raw probability products underflow, so log-space is not optional.",
+     "anchor": "lab-w3-d5-naive-bayes-p05"
+    },
+    {
+     "id": "lab-w3-d5-naive-bayes-r2",
+     "question": "What is the error analysis move?",
+     "answer": "Inspect the most influential tokens per class.",
+     "anchor": "lab-w3-d5-naive-bayes-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w4-d1-decision-trees",
+   "title": "Decision Trees Medium",
+   "minutes": 8,
+   "endAnchor": "lab-w4-d1-decision-trees-end",
+   "blocks": [
+    {
+     "anchor": "lab-w4-d1-decision-trees-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Gini",
+     "definition": "Impurity computed by hand, with entropy, before candidate splits.",
+     "anchor": "lab-w4-d1-decision-trees-p02"
+    },
+    {
+     "term": "stump",
+     "definition": "A one-level tree, trained and evaluated.",
+     "anchor": "lab-w4-d1-decision-trees-p02"
+    },
+    {
+     "term": "max_depth",
+     "definition": "Swept over sklearn trees to show overfitting.",
+     "anchor": "lab-w4-d1-decision-trees-p03"
+    },
+    {
+     "term": "leaky feature",
+     "definition": "Deliberately included; trees exploit leakage aggressively.",
+     "anchor": "lab-w4-d1-decision-trees-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w4-d1-decision-trees-r1",
+     "question": "What are the gotchas the lab names?",
+     "answer": "Thresholds must come from sorted unique values, skip empty children, and trees exploit leakage aggressively.",
+     "anchor": "lab-w4-d1-decision-trees-p04"
+    },
+    {
+     "id": "lab-w4-d1-decision-trees-r2",
+     "question": "What is the leaky-feature task really?",
+     "answer": "A diagnostics lesson disguised as a modeling task.",
+     "anchor": "lab-w4-d1-decision-trees-p04"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w4-d2-svm",
+   "title": "Support Vector Machines (Interview Level) Medium",
+   "minutes": 6,
+   "endAnchor": "lab-w4-d2-svm-end",
+   "blocks": [
+    {
+     "anchor": "lab-w4-d2-svm-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w4-d2-svm-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "hinge loss",
+     "definition": "Implemented for labels in {-1,+1}.",
+     "anchor": "lab-w4-d2-svm-p02"
+    },
+    {
+     "term": "C",
+     "definition": "The knob: large C means low regularization and can overfit; small C means wider margin with more bias.",
+     "anchor": "lab-w4-d2-svm-p02"
+    },
+    {
+     "term": "RBF kernel",
+     "definition": "Succeeds on XOR where the linear model fails.",
+     "anchor": "lab-w4-d2-svm-p02"
+    },
+    {
+     "term": "implicit feature map",
+     "definition": "The kernel interview angle to explain cold.",
+     "anchor": "lab-w4-d2-svm-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w4-d2-svm-r1",
+     "question": "What is the gotcha on C?",
+     "answer": "Large C means low regularization and can overfit; small C means a wider margin with more bias.",
+     "anchor": "lab-w4-d2-svm-p03"
+    },
+    {
+     "id": "lab-w4-d2-svm-r2",
+     "question": "What shows scaling sensitivity?",
+     "answer": "Multiplying one feature by 1000.",
+     "anchor": "lab-w4-d2-svm-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w4-d3-ensembles-boosting",
+   "title": "Ensemble Methods &amp; Boosting Medium",
+   "minutes": 6,
+   "endAnchor": "lab-w4-d3-ensembles-boosting-end",
+   "blocks": [
+    {
+     "anchor": "lab-w4-d3-ensembles-boosting-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "random forest",
+     "definition": "Trained against a baseline tree, with OOB scoring.",
+     "anchor": "lab-w4-d3-ensembles-boosting-p02"
+    },
+    {
+     "term": "OOB scoring",
+     "definition": "Out-of-bag scoring for the forest.",
+     "anchor": "lab-w4-d3-ensembles-boosting-p02"
+    },
+    {
+     "term": "correlated features",
+     "definition": "They distort feature_importances_; a named trap.",
+     "anchor": "lab-w4-d3-ensembles-boosting-p02"
+    },
+    {
+     "term": "weak learners",
+     "definition": "Why shallow trees: the interview question this lab exists to answer.",
+     "anchor": "lab-w4-d3-ensembles-boosting-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w4-d3-ensembles-boosting-r1",
+     "question": "What are the two traps?",
+     "answer": "Correlated features distort importances, and boosting overfits with too many estimators.",
+     "anchor": "lab-w4-d3-ensembles-boosting-p03"
+    },
+    {
+     "id": "lab-w4-d3-ensembles-boosting-r2",
+     "question": "What must you explain in your own words?",
+     "answer": "Each XGBoost-style knob: subsample, colsample, learning rate, max_depth.",
+     "anchor": "lab-w4-d3-ensembles-boosting-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w4-d4-classical-ml-failure-modes",
+   "title": "Classical ML Failure Modes Medium",
+   "minutes": 8,
+   "endAnchor": "lab-w4-d4-classical-ml-failure-modes-end",
+   "blocks": [
+    {
+     "anchor": "lab-w4-d4-classical-ml-failure-modes-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "leakage",
+     "definition": "An intentionally leaky feature with metric inflation.",
+     "anchor": "lab-w4-d4-classical-ml-failure-modes-p05"
+    },
+    {
+     "term": "slice analysis",
+     "definition": "Exposes spurious correlations the overall metric hides.",
+     "anchor": "lab-w4-d4-classical-ml-failure-modes-p03"
+    },
+    {
+     "term": "imbalance trap",
+     "definition": "Downsampling positives to 5% keeps accuracy high while recall collapses.",
+     "anchor": "lab-w4-d4-classical-ml-failure-modes-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w4-d4-classical-ml-failure-modes-r1",
+     "question": "What is the gotcha on validation?",
+     "answer": "Tuning repeatedly on the validation set overfits to it.",
+     "anchor": "lab-w4-d4-classical-ml-failure-modes-p04"
+    },
+    {
+     "id": "lab-w4-d4-classical-ml-failure-modes-r2",
+     "question": "What interview questions does this lab rehearse?",
+     "answer": "'95% accuracy on fraud, is it good?' and 'why do slices fail when overall looks fine?'",
+     "anchor": "lab-w4-d4-classical-ml-failure-modes-p04"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w4-d5-classical-ml-lab",
+   "title": "Classical ML Lab Medium",
+   "minutes": 6,
+   "endAnchor": "lab-w4-d5-classical-ml-lab-end",
+   "blocks": [
+    {
+     "anchor": "lab-w4-d5-classical-ml-lab-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w4-d5-classical-ml-lab-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "holdout",
+     "definition": "Locked split first; final fit and holdout evaluation at the end.",
+     "anchor": "lab-w4-d5-classical-ml-lab-p02"
+    },
+    {
+     "term": "ColumnTransformer",
+     "definition": "Leakage-safe preprocessing fitted inside the pipeline.",
+     "anchor": "lab-w4-d5-classical-ml-lab-p03"
+    },
+    {
+     "term": "StratifiedKFold",
+     "definition": "Model comparison under stratified cross-validation.",
+     "anchor": "lab-w4-d5-classical-ml-lab-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w4-d5-classical-ml-lab-r1",
+     "question": "What is the full honest pipeline?",
+     "answer": "Locked holdout split first, majority-class baseline, leakage-safe preprocessing in a ColumnTransformer, model comparison under StratifiedKFold, final fit, holdout evaluation, slice error analysis.",
+     "anchor": "lab-w4-d5-classical-ml-lab-p02"
+    },
+    {
+     "id": "lab-w4-d5-classical-ml-lab-r2",
+     "question": "What is the single most common production bug in junior work?",
+     "answer": "Fitting preprocessing on full data before splitting, instead of inside the pipeline.",
+     "anchor": "lab-w4-d5-classical-ml-lab-p04"
+    }
+   ]
+  }
+ ]
+}

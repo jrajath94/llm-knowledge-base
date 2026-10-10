@@ -595,18 +595,18 @@ html.xp-js figure.xp-px img {
 <p>With m = 20 tests at alpha = 0.05, Bonferroni uses 0.0025 per test. Without it, the chance of at least one false positive across 20 tests is about 64%.</p><p><strong>5. The common misunderstanding.</strong> The lab names the two big ones as gotchas. A CI is for the mean, not for individual outcomes. A p-value is not P(H0 is true). "95% confident the mean is in here" is wrong; the correct reading is "this procedure captures the true mean 95% of the time".</p>
 <p>The second trap: p-hacking by slicing. Every dashboard slice is a test. Uncorrected slicing manufactures discoveries. That is why the lab pairs the permutation test with Bonferroni.</p>
 <figure class="diagram"><img src="img/18-permutation-test.svg" alt="Flow from observed diff to shuffle-labels to a null-distribution histogram, with a red line marking the observed diff far in the tail."><figcaption>The permutation test. Shuffle the labels many times, rebuild the null distribution of diffs, and locate the observed diff.</figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>Start with the observed diff: mean(A) minus mean(B).</li><li>Shuffle the group labels many times. Each shuffle breaks any real group effect.</li><li>Recompute the diff for every shuffle. The histogram is the null world: diffs when nothing is real.</li><li>The red line is your observed diff. If it sits far out in the tail, the effect is real.</li><li>No scipy needed. The shuffled distribution is the test.</li></ol></div><figure class="diagram"><img src="img/18-bonferroni.svg" alt="Twenty p-value circles in two rows of ten, one highlighted red as the chance false positive, with the Bonferroni rule below."><figcaption>Bonferroni. With 20 tests at alpha 0.05, expect about one false positive by chance. Compare each p-value against 0.0025, not 0.05.</figcaption></figure><figure class="diagram"><img src="img/18-estimators.svg" alt="Two panels: dividing by n uses the true mean you do not have and biases variance down, versus dividing by n-1 which corrects the bias, one degree of freedom spent on xbar."><figcaption>Why n-1. The sample mean xbar hugs the data, so dividing by n biases variance down. Dividing by n-1 corrects it.</figcaption></figure><figure class="diagram" id="fig-18-ci"><svg viewBox="0 0 720 360" width="100%" role="img" aria-label="Coverage simulation: twenty 95% confidence intervals from twenty experiments; nineteen capture the true mean and one mis" xmlns="http://www.w3.org/2000/svg"><text x="360" y="34" text-anchor="middle" fill="#ececec" font-size="15" font-family="sans-serif">95% confidence intervals: about 19 of 20 capture the true mean</text><line x1="360" y1="60" x2="360" y2="300" stroke="#f0b429" stroke-width="2" stroke-dasharray="8,5"/><text x="372" y="70" fill="#f0b429" font-size="12" font-family="sans-serif">true mean</text><line x1="300" y1="80" x2="370" y2="80" stroke="#7fd08a" stroke-width="4"/><circle cx="335" cy="80" r="4" fill="#7fd08a"/><line x1="337" y1="91" x2="407" y2="91" stroke="#7fd08a" stroke-width="4"/><circle cx="372" cy="91" r="4" fill="#7fd08a"/><line x1="374" y1="102" x2="444" y2="102" stroke="#7fd08a" stroke-width="4"/><circle cx="409" cy="102" r="4" fill="#7fd08a"/><line x1="411" y1="113" x2="481" y2="113" stroke="#7fd08a" stroke-width="4"/><circle cx="446" cy="113" r="4" fill="#7fd08a"/><line x1="328" y1="124" x2="398" y2="124" stroke="#7fd08a" stroke-width="4"/><circle cx="363" cy="124" r="4" fill="#7fd08a"/><line x1="365" y1="135" x2="435" y2="135" stroke="#7fd08a" stroke-width="4"/><circle cx="400" cy="135" r="4" fill="#7fd08a"/><line x1="402" y1="146" x2="472" y2="146" stroke="#7fd08a" stroke-width="4"/><circle cx="437" cy="146" r="4" fill="#7fd08a"/><line x1="319" y1="157" x2="329" y2="157" stroke="#ff7b8a" stroke-width="4"/><circle cx="329" cy="157" r="4" fill="#ff7b8a"/><line x1="356" y1="168" x2="426" y2="168" stroke="#7fd08a" stroke-width="4"/><circle cx="391" cy="168" r="4" fill="#7fd08a"/><line x1="393" y1="179" x2="463" y2="179" stroke="#7fd08a" stroke-width="4"/><circle cx="428" cy="179" r="4" fill="#7fd08a"/><line x1="310" y1="190" x2="380" y2="190" stroke="#7fd08a" stroke-width="4"/><circle cx="345" cy="190" r="4" fill="#7fd08a"/><line x1="347" y1="201" x2="417" y2="201" stroke="#7fd08a" stroke-width="4"/><circle cx="382" cy="201" r="4" fill="#7fd08a"/><line x1="384" y1="212" x2="454" y2="212" stroke="#7fd08a" stroke-width="4"/><circle cx="419" cy="212" r="4" fill="#7fd08a"/><line x1="301" y1="223" x2="371" y2="223" stroke="#7fd08a" stroke-width="4"/><circle cx="336" cy="223" r="4" fill="#7fd08a"/><line x1="338" y1="234" x2="408" y2="234" stroke="#7fd08a" stroke-width="4"/><circle cx="373" cy="234" r="4" fill="#7fd08a"/><line x1="375" y1="245" x2="445" y2="245" stroke="#7fd08a" stroke-width="4"/><circle cx="410" cy="245" r="4" fill="#7fd08a"/><line x1="412" y1="256" x2="482" y2="256" stroke="#7fd08a" stroke-width="4"/><circle cx="447" cy="256" r="4" fill="#7fd08a"/><line x1="329" y1="267" x2="399" y2="267" stroke="#7fd08a" stroke-width="4"/><circle cx="364" cy="267" r="4" fill="#7fd08a"/><line x1="366" y1="278" x2="436" y2="278" stroke="#7fd08a" stroke-width="4"/><circle cx="401" cy="278" r="4" fill="#7fd08a"/><line x1="403" y1="289" x2="473" y2="289" stroke="#7fd08a" stroke-width="4"/><circle cx="438" cy="289" r="4" fill="#7fd08a"/><text x="360" y="330" text-anchor="middle" fill="#a8a8a8" font-size="12" font-family="sans-serif">each row: one experiment, one interval (line) and its sample mean (dot). 19 of 20 cross the dashed line.</text></svg><figcaption>Coverage simulation: twenty 95% confidence intervals from twenty experiments; nineteen capture the true mean and one misses, which is exactly what 95% coverage means. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>Each horizontal line is one 95% confidence interval from one simulated experiment; the dot is that experiment's sample mean.</li><li>The dashed vertical line is the true mean, which the experimenter does not know.</li><li>Nineteen of the twenty intervals cross the dashed line; one (red) misses. That is the meaning of 95% coverage: a property of the procedure over repetitions, not a 95% probability about any single interval.</li><li>The lab has you run this simulation yourself so the definition becomes a picture, not a sentence.</li><li>The trap to avoid: "there is a 95% chance the true mean is in this interval" is wrong. The interval either contains it or not; 95% describes the method.</li></ol></div><p><strong>7. Interview relevance.</strong> "Why does a CI have ~95% coverage by design?" and "slicing dashboards can create accidental p-hacking" are the lab's own interview angles. The expected answers are the simulation picture above and the Bonferroni arithmetic, stated in plain sentences.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>Use the unbiased variance (divide by n-1); the CI is mean +/- 1.96 s/sqrt(n) for large n.</li><li>Coverage is a property of the procedure over repetitions, verified by simulation.</li><li>A p-value is P(data this extreme | H0), not P(H0 is true); it says nothing about practical importance.</li><li>Divide alpha by the number of tests (Bonferroni) or your dashboard will manufacture discoveries.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Your A/B test has p = 0.04 with 10,000 users per arm. Ship it? What else do you want to know?</li><li>You tested 20 features and one has p = 0.03. Is it significant? Show the correction.</li><li>Explain the permutation test to someone who has never seen a t-test.</li></ul></div><p class="lab-pointer">Practice this in the <a href="#lab-w2-d4-statistics-for-ml">Statistics Lab</a>: unbiased variance, the CI and its coverage simulation, the permutation A/B test, and Bonferroni.</p><h2>Lab walkthroughs</h2><div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w2-d1-linear-algebra-for-ml">Linear Algebra for ML</button><button data-target="lab-w2-d2-calculus-gradients">Calculus &amp; Gradients</button><button data-target="lab-w2-d3-probability-essentials">Probability Essentials</button><button data-target="lab-w2-d4-statistics-for-ml">Statistics for ML</button><button data-target="lab-w2-d5-math-lab">Math Lab (Linear Algebra + Probability)</button></div><section class="lab" id="lab-w2-d1-linear-algebra-for-ml">
-<h3>Linear Algebra for ML <span class="diff diff-easy">Easy</span></h3>
-<p class="lab-meta">Week 2, Day 1 · Math for ML · 6 tasks · 6 checks · Free</p>
-<p>This lab is the shape-discipline pillar. It moves from vectors, dot products, and norms through matrix multiplication with explicit shape assertions. Then into projections as the geometric heart of least squares. Then the closed-form fit via the normal equations. Finally PCA implemented through SVD. It is the practice ground for Concept 1.</p>
-<p>Watch for the two FAANG gotchas the lab names. Most bugs are silent shape bugs, so assert shapes. Never form the explicit inverse when solve or lstsq exists. If you can explain why X^T X is PSD and why the SVD directions match the covariance eigenvectors, you have the interview-level picture.</p>
-<p>Build interview-grade intuition for vectors/matrices, norms, projections, eigenvalues, and SVD , and connect them to ML (least squares, PCA, embeddings).</p>
-<div class="callout"><strong>Outcome.</strong> Students can compute linear algebra quantities in NumPy, reason about shapes, and explain <em>why</em> each concept matters in ML systems.</div>
-<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Vectors, Dot Product, Norms</span><span class="tagchip">Matrix Multiplication + Shapes</span><span class="tagchip">Projections</span><span class="tagchip">Least Squares (Closed Form)</span><span class="tagchip">Eigenvalues &amp; SVD (PCA)</span><span class="tagchip">Week 2</span><span class="tagchip co">Square</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1Afs69OjrR1sTGtJMB3BkHx5fNiGKbfqt">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-5-linear">Notes</a> · <a href="linalg_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/UXg3jgt36dI">Video</a></p>
+<h3 id="linear-algebra-for-ml-easy">Linear Algebra for ML <span class="diff diff-easy">Easy</span></h3>
+<p id="lab-w2-d1-linear-algebra-for-ml-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 2, Day 1 · Math for ML · 6 tasks · 6 checks · Free</p>
+<p data-term="shape-discipline" id="lab-w2-d1-linear-algebra-for-ml-p02" data-kind="prose">This lab is the shape-discipline pillar. It moves from vectors, dot products, and norms through matrix multiplication with explicit shape assertions. Then into projections as the geometric heart of least squares. Then the closed-form fit via the normal equations. Finally PCA implemented through SVD. It is the practice ground for Concept 1.</p>
+<p data-term="PSD" id="lab-w2-d1-linear-algebra-for-ml-p03" data-kind="prose">Watch for the two FAANG gotchas the lab names. Most bugs are silent shape bugs, so assert shapes. Never form the explicit inverse when solve or lstsq exists. If you can explain why X^T X is PSD and why the SVD directions match the covariance eigenvectors, you have the interview-level picture.</p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p04" data-kind="prose">Build interview-grade intuition for vectors/matrices, norms, projections, eigenvalues, and SVD , and connect them to ML (least squares, PCA, embeddings).</p>
+<div id="lab-w2-d1-linear-algebra-for-ml-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can compute linear algebra quantities in NumPy, reason about shapes, and explain <em>why</em> each concept matters in ML systems.</div>
+<p id="lab-w2-d1-linear-algebra-for-ml-p05" data-kind="prose" class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Vectors, Dot Product, Norms</span><span class="tagchip">Matrix Multiplication + Shapes</span><span class="tagchip">Projections</span><span class="tagchip">Least Squares (Closed Form)</span><span class="tagchip">Eigenvalues &amp; SVD (PCA)</span><span class="tagchip">Week 2</span><span class="tagchip co">Square</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1Afs69OjrR1sTGtJMB3BkHx5fNiGKbfqt">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-5-linear">Notes</a> · <a href="linalg_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/UXg3jgt36dI">Video</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Linear Algebra for ML ,  FAANG-Level Lab</h3>
-<p><strong>Goal:</strong> Build shape intuition + compute core linear algebra objects used in ML.</p>
-<p><strong>Outcome:</strong> You can implement least squares, projections, eigen decomposition intuition, and SVD-based PCA.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="linear-algebra-for-ml-faang-level-lab">Linear Algebra for ML ,  FAANG-Level Lab</h3>
+<p id="lab-w2-d1-linear-algebra-for-ml-p07" data-kind="prose"><strong>Goal:</strong> Build shape intuition + compute core linear algebra objects used in ML.</p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p08" data-kind="prose"><strong>Outcome:</strong> You can implement least squares, projections, eigen decomposition intuition, and SVD-based PCA.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 
 def check(name: str, cond: bool):
     if not cond:
@@ -620,11 +620,11 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Linear Algebra for ML ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="linear-algebra-for-ml-instructor-solutions-rationale">Linear Algebra for ML ,  Instructor (Solutions + Rationale)</h3></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Implement dot + L2 norm (no np.linalg.norm) <span class="task-sec">Vectors, Dot Product, Norms</span></summary><div class="task-body"><h4>Section 1 ,  Vectors, Dot Product, Norms</h4>
 <h4>Task 1.1: Implement dot + L2 norm (no np.linalg.norm)</h4>
 <ul><li>dot(x,y) = sum(x_i * y_i)</li><li>||x||_2 = sqrt(dot(x,x))</li></ul>
-<p><strong>Explain:</strong> What does dot product measure geometrically?</p><h4>Starter code</h4><pre><code class="lang-python">def dot(x, y):
+<p id="lab-w2-d1-linear-algebra-for-ml-p09" data-kind="prose"><strong>Explain:</strong> What does dot product measure geometrically?</p><h4>Starter code</h4><pre><code class="lang-python">def dot(x, y):
     # TODO
     ...
 def l2_norm(x):
@@ -634,7 +634,7 @@ x = np.array([1.,2.,3.]); y=np.array([4.,5.,6.])
 check('dot', abs(dot(x,y) - 32.0) &lt; 1e-9)
 check('norm', abs(l2_norm(x) - np.sqrt(14.0)) &lt; 1e-9)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>dot(x,y) = sum(x_i * y_i)
 ||x||_2 = sqrt(dot(x,x))</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('dot', abs(dot(x,y) - 32.0) &lt; 1e-9)
-check('norm', abs(l2_norm(x) - np.sqrt(14.0)) &lt; 1e-9)</code></pre><h4>Checks</h4><ul><li>check('dot', abs(dot(x,y)</li><li>check('norm', abs(l2_norm(x)</li></ul><div class="callout"><strong>Explain prompt.</strong> What does dot product measure geometrically?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def dot(x, y):
+check('norm', abs(l2_norm(x) - np.sqrt(14.0)) &lt; 1e-9)</code></pre><h4>Checks</h4><ul><li>check('dot', abs(dot(x,y)</li><li>check('norm', abs(l2_norm(x)</li></ul><div id="lab-w2-d1-linear-algebra-for-ml-aside02" data-kind="aside" class="callout"><strong>Explain prompt.</strong> What does dot product measure geometrically?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def dot(x, y):
     return float(np.sum(x * y))
 
 def l2_norm(x):
@@ -644,26 +644,26 @@ x = np.array([1.,2.,3.]); y=np.array([4.,5.,6.])
 check('dot', abs(dot(x,y) - 32.0) &lt; 1e-9)
 check('norm', abs(l2_norm(x) - np.sqrt(14.0)) &lt; 1e-9)
 
-# Rationale: dot measures alignment (||x|| ||y|| cosÎ¸). Norm is vector magnitude.</code></pre><h4>Why this works</h4><p>dot measures alignment (||x|| ||y|| cosÎ¸). Norm is vector magnitude.</p></details></div></details>
+# Rationale: dot measures alignment (||x|| ||y|| cosÎ¸). Norm is vector magnitude.</code></pre><h4>Why this works</h4><p id="lab-w2-d1-linear-algebra-for-ml-p10" data-kind="prose">dot measures alignment (||x|| ||y|| cosÎ¸). Norm is vector magnitude.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Validate shapes and compute A@B <span class="task-sec">Matrix Multiplication + Shapes</span></summary><div class="task-body"><h4>Section 2 ,  Matrix Multiplication + Shapes</h4>
 <h4>Task 2.1: Validate shapes and compute A@B</h4>
-<p>Given A (n,d) and B (d,k) compute C (n,k).</p>
-<p><strong>FAANG gotcha:</strong> Many bugs are shape bugs. Always assert shapes.</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+<p id="lab-w2-d1-linear-algebra-for-ml-p11" data-kind="prose">Given A (n,d) and B (d,k) compute C (n,k).</p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p12" data-kind="prose"><strong>FAANG gotcha:</strong> Many bugs are shape bugs. Always assert shapes.</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
 ...
 
 check('C_shape', C.shape == (5,2))</code></pre><h4>Test code</h4><pre><code class="lang-python">check('C_shape', C.shape == (5,2))</code></pre><h4>Checks</h4><ul><li>check('C_shape', C.shape == (5,2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">A = rng.standard_normal((5,3)); B=rng.standard_normal((3,2))
 C = A @ B
 check('C_shape', C.shape == (5,2))
-# Rationale: (n,d)@(d,k) -&gt; (n,k); most ML models are sequences of matmuls.</code></pre><h4>Why this works</h4><p>(n,d)@(d,k) -&gt; (n,k); most ML models are sequences of matmuls.</p></details></div></details>
+# Rationale: (n,d)@(d,k) -&gt; (n,k); most ML models are sequences of matmuls.</code></pre><h4>Why this works</h4><p id="lab-w2-d1-linear-algebra-for-ml-p13" data-kind="prose">(n,d)@(d,k) -&gt; (n,k); most ML models are sequences of matmuls.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Project vector v onto vector u <span class="task-sec">Projections (Least Squares Intuition)</span></summary><div class="task-body"><h4>Section 3 ,  Projections (Least Squares Intuition)</h4>
 <h4>Task 3.1: Project vector v onto vector u</h4>
-<p>proj_u(v) = (u^T v / u^T u) * u</p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p14" data-kind="prose">proj_u(v) = (u^T v / u^T u) * u</p>
 <ul><li>Use your dot()</li></ul>
-<p><strong>Explain:</strong> Why does projection show up in linear regression?</p><h4>Starter code</h4><pre><code class="lang-python">def proj(u, v):
+<p data-term="projection" id="lab-w2-d1-linear-algebra-for-ml-p15" data-kind="prose"><strong>Explain:</strong> Why does projection show up in linear regression?</p><h4>Starter code</h4><pre><code class="lang-python">def proj(u, v):
     # TODO
     ...
 u=np.array([1.,0.,0.]); v=np.array([2.,3.,4.])
-check('proj', np.allclose(proj(u,v), np.array([2.,0.,0.])))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use your dot()</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('proj', np.allclose(proj(u,v), np.array([2.,0.,0.])))</code></pre><h4>Checks</h4><ul><li>check('proj', np.allclose(proj(u,v)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why does projection show up in linear regression?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def proj(u, v):
+check('proj', np.allclose(proj(u,v), np.array([2.,0.,0.])))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use your dot()</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('proj', np.allclose(proj(u,v), np.array([2.,0.,0.])))</code></pre><h4>Checks</h4><ul><li>check('proj', np.allclose(proj(u,v)</li></ul><div id="lab-w2-d1-linear-algebra-for-ml-aside03" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why does projection show up in linear regression?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def proj(u, v):
     denom = dot(u, u)
     if denom == 0:
         raise ValueError('u must be non-zero')
@@ -671,13 +671,13 @@ check('proj', np.allclose(proj(u,v), np.array([2.,0.,0.])))</code></pre><details
 
 u=np.array([1.,0.,0.]); v=np.array([2.,3.,4.])
 check('proj', np.allclose(proj(u,v), np.array([2.,0.,0.])))
-# Rationale: projection is the building block of least squares (closest point in a subspace).</code></pre><h4>Why this works</h4><p>projection is the building block of least squares (closest point in a subspace).</p></details></div></details>
+# Rationale: projection is the building block of least squares (closest point in a subspace).</code></pre><h4>Why this works</h4><p id="lab-w2-d1-linear-algebra-for-ml-p16" data-kind="prose">projection is the building block of least squares (closest point in a subspace).</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Solve min_w ||Xw - y||^2 <span class="task-sec">Least Squares (Closed Form)</span></summary><div class="task-body"><h4>Section 4 ,  Least Squares (Closed Form)</h4>
 <h4>Task 4.1: Solve min_w ||Xw - y||^2</h4>
-<p>Use normal equation: w = (X^T X)^{-1} X^T y</p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p17" data-kind="prose">Use normal equation: w = (X^T X)^{-1} X^T y</p>
 <ul><li>Use <code>np.linalg.solve</code> (more stable than explicit inverse)</li></ul>
-<p><strong>FAANG gotcha:</strong> Don’t compute matrix inverse unless you must.</p>
-<p>![LU Decomposition Overview](/images/lu-decomposition-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+<p id="lab-w2-d1-linear-algebra-for-ml-p18" data-kind="prose"><strong>FAANG gotcha:</strong> Don’t compute matrix inverse unless you must.</p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p19" data-kind="prose">![LU Decomposition Overview](/images/lu-decomposition-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
 ...
 
 print('err', err)
@@ -693,21 +693,21 @@ err = np.linalg.norm(w_hat - w_true)
 print('err', err)
 check('close', err &lt; 0.2)
 
-# Rationale: solve is more stable than explicit inverse; inverse is slower + numerically worse.</code></pre><h4>Why this works</h4><p>solve is more stable than explicit inverse; inverse is slower + numerically worse.</p></details></div></details>
+# Rationale: solve is more stable than explicit inverse; inverse is slower + numerically worse.</code></pre><h4>Why this works</h4><p id="lab-w2-d1-linear-algebra-for-ml-p20" data-kind="prose">solve is more stable than explicit inverse; inverse is slower + numerically worse.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> PCA via SVD <span class="task-sec">Eigenvalues &amp; SVD Intuition</span></summary><div class="task-body"><h4>Section 5 ,  Eigenvalues &amp; SVD Intuition</h4>
 <h4>Task 5.1: PCA via SVD</h4>
-<p>Steps:</p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p21" data-kind="prose">Steps:</p>
 <ol><li>Center X</li><li>Compute SVD: X = U S V^T</li><li>Take top-k components from V</li></ol>
 <ul><li><code>U, S, Vt = np.linalg.svd(X_centered, full_matrices=False)</code></li></ul>
-<p><strong>Explain:</strong> Why does SVD show up in embeddings and dimensionality reduction?</p>
-<p>![Eigen Decomposition Overview](/images/eigen-decomposition-overview.png)</p>
-<p>![Singular Value Decomposition (SVD)](/images/svd-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+<p id="lab-w2-d1-linear-algebra-for-ml-p22" data-kind="prose"><strong>Explain:</strong> Why does SVD show up in embeddings and dimensionality reduction?</p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p23" data-kind="prose">![Eigen Decomposition Overview](/images/eigen-decomposition-overview.png)</p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p24" data-kind="prose">![Singular Value Decomposition (SVD)](/images/svd-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
 ...
 
 print('relative recon error', recon_err)
 check('shapes', W.shape == (10,k) and Z.shape == (200,k))
 
-# In ML, low-rank structure appears in embeddings, recommender matrices, and compression.</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li><code>U, S, Vt = np.linalg.svd(X_centered, full_matrices=False)</code></li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('shapes', W.shape == (10,k) and Z.shape == (200,k))</code></pre><h4>Checks</h4><ul><li>check('shapes', W.shape == (10,k)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why does SVD show up in embeddings and dimensionality reduction?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X = rng.standard_normal((200,10))
+# In ML, low-rank structure appears in embeddings, recommender matrices, and compression.</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li><code>U, S, Vt = np.linalg.svd(X_centered, full_matrices=False)</code></li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('shapes', W.shape == (10,k) and Z.shape == (200,k))</code></pre><h4>Checks</h4><ul><li>check('shapes', W.shape == (10,k)</li></ul><div id="lab-w2-d1-linear-algebra-for-ml-aside04" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why does SVD show up in embeddings and dimensionality reduction?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X = rng.standard_normal((200,10))
 Xc = X - X.mean(axis=0, keepdims=True)
 U,S,Vt = np.linalg.svd(Xc, full_matrices=False)
 k=3
@@ -719,25 +719,25 @@ print('relative recon error', recon_err)
 check('shapes', W.shape == (10,k) and Z.shape == (200,k))
 
 # Rationale: SVD gives orthonormal directions capturing maximal variance (PCA).
-# In ML, low-rank structure appears in embeddings, recommender matrices, and compression.</code></pre><h4>Why this works</h4><p>SVD gives orthonormal directions capturing maximal variance (PCA).</p></details></div></details>
+# In ML, low-rank structure appears in embeddings, recommender matrices, and compression.</code></pre><h4>Why this works</h4><p id="lab-w2-d1-linear-algebra-for-ml-p25" data-kind="prose">SVD gives orthonormal directions capturing maximal variance (PCA).</p></details></div></details>
 <h4>Checkpoints</h4><ul><li>What does dot product represent geometrically?</li><li>Why is L2 norm used in least squares?</li><li>Why does SVD show up in embeddings and compression?</li><li>What does reconstruction error measure?</li></ul>
 <h4>Interview angles</h4><ul><li>Projection is “closest point in a subspace” → least squares intuition.</li></ul>
 <h4>Gotchas</h4><ul><li>Most ML bugs are silent shape bugs, assert shapes.</li><li>Avoid explicit inverse; solve is more stable and faster.</li></ul>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d1-linear-algebra-for-ml">https://ai.thes30.com/problems/w2-d1-linear-algebra-for-ml</a>.</p>
-</section><section class="lab" id="lab-w2-d2-calculus-gradients">
-<h3>Calculus &amp; Gradients <span class="diff diff-easy">Easy</span></h3>
-<p class="lab-meta">Week 2, Day 2 · Math for ML · 5 tasks · 5 checks · Free</p>
-<p>This lab is the gradient-discipline pillar. It starts with finite differences as the arbiter. It implements the MSE gradient via the chain rule. Then it takes on the core interview gradient (binary cross-entropy with sigmoid). It closes with a numerical Hessian. It is the practice ground for Concept 2.</p>
-<p>Watch for the classic bug sites the lab flags: missing constants and broadcasting shape mistakes. The lab's mantra is the standard to internalize: if you cannot gradient-check it, you do not really trust it. Carry that standard into every later volume where you write a loss.</p>
-<p>Become fluent with derivatives/gradients used in ML: chain rule, Jacobians, Hessians, and checking gradients numerically.</p>
-<div class="callout"><strong>Outcome.</strong> Students can derive and implement gradients for common losses, and debug gradient bugs using finite differences.</div>
-<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Finite Differences (Gradient Checking)</span><span class="tagchip">Chain Rule in Code</span><span class="tagchip">Logistic Regression Gradient (Core Interview)</span><span class="tagchip">Jacobian/Hessian Intuition</span><span class="tagchip">Week 2</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/17RCbp8kWhk0rI4YPg4AH26JUYUqxmkac">Colab</a> · <a href="https://jaspinders30.substack.com/p/calculus-for-machine-learning?r=2dpc7y">Notes</a> · <a href="calculus_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/8HJfbi7nkYk?si=cBu3FEXCRrP1UTQI">Video</a></p>
+<p id="lab-w2-d1-linear-algebra-for-ml-p26" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d1-linear-algebra-for-ml">https://ai.thes30.com/problems/w2-d1-linear-algebra-for-ml</a>.</p>
+<span id="lab-w2-d1-linear-algebra-for-ml-end" data-end></span></section><section class="lab" id="lab-w2-d2-calculus-gradients">
+<h3 id="calculus-amp-gradients-easy">Calculus &amp; Gradients <span class="diff diff-easy">Easy</span></h3>
+<p id="lab-w2-d2-calculus-gradients-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 2, Day 2 · Math for ML · 5 tasks · 5 checks · Free</p>
+<p data-term="finite differences" id="lab-w2-d2-calculus-gradients-p02" data-kind="prose">This lab is the gradient-discipline pillar. It starts with finite differences as the arbiter. It implements the MSE gradient via the chain rule. Then it takes on the core interview gradient (binary cross-entropy with sigmoid). It closes with a numerical Hessian. It is the practice ground for Concept 2.</p>
+<p data-term="gradient-check" id="lab-w2-d2-calculus-gradients-p03" data-kind="prose">Watch for the classic bug sites the lab flags: missing constants and broadcasting shape mistakes. The lab's mantra is the standard to internalize: if you cannot gradient-check it, you do not really trust it. Carry that standard into every later volume where you write a loss.</p>
+<p id="lab-w2-d2-calculus-gradients-p04" data-kind="prose">Become fluent with derivatives/gradients used in ML: chain rule, Jacobians, Hessians, and checking gradients numerically.</p>
+<div id="lab-w2-d2-calculus-gradients-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can derive and implement gradients for common losses, and debug gradient bugs using finite differences.</div>
+<p id="lab-w2-d2-calculus-gradients-p05" data-kind="prose" class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Finite Differences (Gradient Checking)</span><span class="tagchip">Chain Rule in Code</span><span class="tagchip">Logistic Regression Gradient (Core Interview)</span><span class="tagchip">Jacobian/Hessian Intuition</span><span class="tagchip">Week 2</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w2-d2-calculus-gradients-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/17RCbp8kWhk0rI4YPg4AH26JUYUqxmkac">Colab</a> · <a href="https://jaspinders30.substack.com/p/calculus-for-machine-learning?r=2dpc7y">Notes</a> · <a href="calculus_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/8HJfbi7nkYk?si=cBu3FEXCRrP1UTQI">Video</a></p>
 <h4>Tasks (5)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Calculus &amp; Gradients ,  FAANG-Level Lab</h3>
-<p><strong>Goal:</strong> Implement and verify gradients like an ML engineer.</p>
-<p>Key idea: <em>If you can’t gradient-check it, you don’t really trust it.</em></p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="calculus-amp-gradients-faang-level-lab">Calculus &amp; Gradients ,  FAANG-Level Lab</h3>
+<p id="lab-w2-d2-calculus-gradients-p07" data-kind="prose"><strong>Goal:</strong> Implement and verify gradients like an ML engineer.</p>
+<p id="lab-w2-d2-calculus-gradients-p08" data-kind="prose">Key idea: <em>If you can’t gradient-check it, you don’t really trust it.</em></p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 
 def check(name: str, cond: bool):
     if not cond:
@@ -751,17 +751,17 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Calculus &amp; Gradients ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="calculus-amp-gradients-instructor-solutions-rationale">Calculus &amp; Gradients ,  Instructor (Solutions + Rationale)</h3></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Implement numerical gradient for scalar f(w) <span class="task-sec">Finite Differences (Gradient Checking)</span></summary><div class="task-body"><h4>Section 1 ,  Finite Differences (Gradient Checking)</h4>
 <h4>Task 1.1: Implement numerical gradient for scalar f(w)</h4>
 <ul><li>Use central difference: (f(w+eps e_i) - f(w-eps e_i)) / (2 eps)</li></ul>
-<p><strong>Explain:</strong> Why is central difference more accurate than forward difference?</p><h4>Starter code</h4><pre><code class="lang-python">def numerical_grad(f, w, eps=1e-5):
+<p id="lab-w2-d2-calculus-gradients-p09" data-kind="prose"><strong>Explain:</strong> Why is central difference more accurate than forward difference?</p><h4>Starter code</h4><pre><code class="lang-python">def numerical_grad(f, w, eps=1e-5):
     # TODO
     ...
 w = rng.standard_normal(5)
 f = lambda v: float(np.sum(v*v))
 g_num = numerical_grad(f, w)
-check('grad_close', np.allclose(g_num, 2*w, atol=1e-6))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use central difference: (f(w+eps e_i) - f(w-eps e_i)) / (2 eps)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('grad_close', np.allclose(g_num, 2*w, atol=1e-6))</code></pre><h4>Checks</h4><ul><li>check('grad_close', np.allclose(g_num, 2*w, atol=1e-6)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why is central difference more accurate than forward difference?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def numerical_grad(f, w, eps=1e-5):
+check('grad_close', np.allclose(g_num, 2*w, atol=1e-6))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use central difference: (f(w+eps e_i) - f(w-eps e_i)) / (2 eps)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('grad_close', np.allclose(g_num, 2*w, atol=1e-6))</code></pre><h4>Checks</h4><ul><li>check('grad_close', np.allclose(g_num, 2*w, atol=1e-6)</li></ul><div id="lab-w2-d2-calculus-gradients-aside02" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why is central difference more accurate than forward difference?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def numerical_grad(f, w, eps=1e-5):
     w = np.asarray(w, dtype=float)
     g = np.zeros_like(w)
     for i in range(w.size):
@@ -775,12 +775,12 @@ f = lambda v: float(np.sum(v*v))
 g_num = numerical_grad(f, w)
 check('grad_close', np.allclose(g_num, 2*w, atol=1e-6))
 
-# Rationale: central difference cancels first-order error terms =&gt; more accurate than forward diff.</code></pre><h4>Why this works</h4><p>central difference cancels first-order error terms =&gt; more accurate than forward diff.</p></details></div></details>
+# Rationale: central difference cancels first-order error terms =&gt; more accurate than forward diff.</code></pre><h4>Why this works</h4><p id="lab-w2-d2-calculus-gradients-p10" data-kind="prose">central difference cancels first-order error terms =&gt; more accurate than forward diff.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Gradient of MSE for linear model <span class="task-sec">Chain Rule in Code</span></summary><div class="task-body"><h4>Section 2 ,  Chain Rule in Code</h4>
 <h4>Task 2.1: Gradient of MSE for linear model</h4>
-<p>Model: y_hat = Xw Loss: L(w) = (1/n) * sum_i (y_hat_i - y_i)^2</p>
+<p id="lab-w2-d2-calculus-gradients-p11" data-kind="prose">Model: y_hat = Xw Loss: L(w) = (1/n) * sum_i (y_hat_i - y_i)^2</p>
 <ul><li>Let r = Xw - y</li><li>grad = (2/n) * X^T r</li></ul>
-<p><strong>FAANG gotcha:</strong> shape mismatches; keep w as (d,) and X as (n,d).</p><h4>Starter code</h4><pre><code class="lang-python">def mse_loss_and_grad(X, y, w):
+<p id="lab-w2-d2-calculus-gradients-p12" data-kind="prose"><strong>FAANG gotcha:</strong> shape mismatches; keep w as (d,) and X as (n,d).</p><h4>Starter code</h4><pre><code class="lang-python">def mse_loss_and_grad(X, y, w):
     # TODO: return (loss, grad)
     ...
 n,d = 20,4
@@ -807,10 +807,10 @@ f = lambda v: mse_loss_and_grad(X,y,v)[0]
 g_num = numerical_grad(f, w)
 check('mse_grad', np.allclose(grad, g_num, atol=1e-5))
 
-# Rationale: chain rule + linearity =&gt; grad is X^T residual. Shapes: X^T (d,n) @ r (n,) =&gt; (d,)</code></pre><h4>Why this works</h4><p>chain rule + linearity =&gt; grad is X^T residual. Shapes: X^T (d,n) @ r (n,) =&gt; (d,)</p></details></div></details>
+# Rationale: chain rule + linearity =&gt; grad is X^T residual. Shapes: X^T (d,n) @ r (n,) =&gt; (d,)</code></pre><h4>Why this works</h4><p id="lab-w2-d2-calculus-gradients-p13" data-kind="prose">chain rule + linearity =&gt; grad is X^T residual. Shapes: X^T (d,n) @ r (n,) =&gt; (d,)</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Binary cross-entropy gradient <span class="task-sec">Logistic Regression (Core Interview Gradient)</span></summary><div class="task-body"><h4>Section 3 ,  Logistic Regression (Core Interview Gradient)</h4>
 <h4>Task 3.1: Binary cross-entropy gradient</h4>
-<p>Given labels y in {0,1}. p = sigmoid(Xw) Loss = -(1/n) * sum(y log p + (1-y) log(1-p))</p>
+<p id="lab-w2-d2-calculus-gradients-p14" data-kind="prose">Given labels y in {0,1}. p = sigmoid(Xw) Loss = -(1/n) * sum(y log p + (1-y) log(1-p))</p>
 <ul><li>sigmoid(z)=1/(1+exp(-z))</li><li>grad = (1/n) * X^T (p - y)</li><li>add numerical stability for logs (clip p)</li></ul><h4>Starter code</h4><pre><code class="lang-python">def sigmoid(z):
     # TODO
     ...
@@ -848,12 +848,12 @@ f = lambda v: logreg_loss_and_grad(X,y,v)[0]
 g_num = numerical_grad(f, w)
 check('logreg_grad', np.allclose(grad, g_num, atol=1e-5))
 
-# Rationale: derivative of BCE w.r.t logits gives (p-y); then chain through z=Xw =&gt; X^T(p-y).</code></pre><h4>Why this works</h4><p>derivative of BCE w.r.t logits gives (p-y); then chain through z=Xw =&gt; X^T(p-y).</p></details></div></details>
+# Rationale: derivative of BCE w.r.t logits gives (p-y); then chain through z=Xw =&gt; X^T(p-y).</code></pre><h4>Why this works</h4><p id="lab-w2-d2-calculus-gradients-p15" data-kind="prose">derivative of BCE w.r.t logits gives (p-y); then chain through z=Xw =&gt; X^T(p-y).</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Compute Hessian of f(w)=sum(w^2) numerically <span class="task-sec">Jacobian/Hessian Intuition</span></summary><div class="task-body"><h4>Section 4 ,  Jacobian/Hessian Intuition</h4>
 <h4>Task 4.1: Compute Hessian of f(w)=sum(w^2) numerically</h4>
-<p>![Hessian matrix formula with second partial derivatives](/images/w2-d2-hessian-matrix-formula.png)</p>
+<p id="lab-w2-d2-calculus-gradients-p16" data-kind="prose">![Hessian matrix formula with second partial derivatives](/images/w2-d2-hessian-matrix-formula.png)</p>
 <ul><li>Hessian of sum(w^2) is 2I</li><li>Use numerical_grad on each component of grad</li></ul>
-<p>This is mainly about <em>shape thinking</em>: Hessian is (d,d).</p><h4>Starter code</h4><pre><code class="lang-python">def numerical_hessian(f, w, eps=1e-4):
+<p id="lab-w2-d2-calculus-gradients-p17" data-kind="prose">This is mainly about <em>shape thinking</em>: Hessian is (d,d).</p><h4>Starter code</h4><pre><code class="lang-python">def numerical_hessian(f, w, eps=1e-4):
     # TODO
     ...
 w = rng.standard_normal(4)
@@ -881,25 +881,25 @@ H = numerical_hessian(f, w)
 check('H_shape', H.shape == (4,4))
 check('H_close', np.allclose(H, 2*np.eye(4), atol=1e-3))
 
-# Rationale: Hessian captures curvature; in optimization it affects step sizes and convergence.</code></pre><h4>Why this works</h4><p>Hessian captures curvature; in optimization it affects step sizes and convergence.</p><h4>Instructor explanation</h4><p>![Hessian matrix formula with second partial derivatives](/images/w2-d2-hessian-matrix-formula.png)</p></details></div></details>
+# Rationale: Hessian captures curvature; in optimization it affects step sizes and convergence.</code></pre><h4>Why this works</h4><p id="lab-w2-d2-calculus-gradients-p18" data-kind="prose">Hessian captures curvature; in optimization it affects step sizes and convergence.</p><h4>Instructor explanation</h4><p id="lab-w2-d2-calculus-gradients-p19" data-kind="prose">![Hessian matrix formula with second partial derivatives](/images/w2-d2-hessian-matrix-formula.png)</p></details></div></details>
 <h4>Checkpoints</h4><ul><li>Why is central difference more accurate than forward difference?</li><li>What happens if <code>eps</code> is too small or too large?</li><li>Why does the gradient simplify to <code>X^T(p-y)/n</code>?</li><li>Why must you clip probabilities for numerical stability?</li></ul>
 <h4>Interview angles</h4><ul><li>How would you debug an autodiff bug in production?</li><li>What does the Hessian tell you about optimization and curvature?</li></ul>
 <h4>Gotchas</h4><ul><li>Most gradient bugs are shape bugs (broadcasting) or missing constants.</li></ul>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d2-calculus-gradients">https://ai.thes30.com/problems/w2-d2-calculus-gradients</a>.</p>
-</section><section class="lab" id="lab-w2-d3-probability-essentials">
-<h3>Probability Essentials <span class="diff diff-easy">Easy</span></h3>
-<p class="lab-meta">Week 2, Day 3 · Math for ML · 6 tasks · 7 checks · Free</p>
-<p>This lab is the belief-updating pillar. It builds expectation and variance from a PMF. It works the classic disease-test Bayes question analytically and then verifies it by simulation. It connects standardization to the normal distribution. It finishes with a log-odds Naive Bayes mini-task. It is the practice ground for Concept 3.</p>
-<p>Watch for the underflow gotcha: multiplying many small probabilities collapses to zero, which is why the log-space habit starts here. The simulation check is the deeper lesson: whenever you can, verify a closed form with a quick Monte Carlo.</p>
-<p>Build ML-relevant probability intuition: random variables, expectations, variance, Bayes’ rule, common distributions, and sampling.</p>
-<div class="callout"><strong>Outcome.</strong> Students can compute probabilities/expectations, implement small simulations, and explain how probability maps to ML (calibration, Naive Bayes, uncertainty).</div>
-<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Discrete Random Variables</span><span class="tagchip">Conditional Probability &amp; Bayes</span><span class="tagchip">Continuous Distributions</span><span class="tagchip">Naive Bayes Thinking (Optional)</span><span class="tagchip">Week 2</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1LMWYMwgeCBilCgol6hfCUT2rji0KJJJT">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-7-probability">Notes</a> · <a href="probability_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/rJbpbbdJKkQ">Video</a></p>
+<p id="lab-w2-d2-calculus-gradients-p20" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d2-calculus-gradients">https://ai.thes30.com/problems/w2-d2-calculus-gradients</a>.</p>
+<span id="lab-w2-d2-calculus-gradients-end" data-end></span></section><section class="lab" id="lab-w2-d3-probability-essentials">
+<h3 id="probability-essentials-easy">Probability Essentials <span class="diff diff-easy">Easy</span></h3>
+<p id="lab-w2-d3-probability-essentials-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 2, Day 3 · Math for ML · 6 tasks · 7 checks · Free</p>
+<p data-term="expectation" id="lab-w2-d3-probability-essentials-p02" data-kind="prose">This lab is the belief-updating pillar. It builds expectation and variance from a PMF. It works the classic disease-test Bayes question analytically and then verifies it by simulation. It connects standardization to the normal distribution. It finishes with a log-odds Naive Bayes mini-task. It is the practice ground for Concept 3.</p>
+<p data-term="Monte Carlo" id="lab-w2-d3-probability-essentials-p03" data-kind="prose">Watch for the underflow gotcha: multiplying many small probabilities collapses to zero, which is why the log-space habit starts here. The simulation check is the deeper lesson: whenever you can, verify a closed form with a quick Monte Carlo.</p>
+<p id="lab-w2-d3-probability-essentials-p04" data-kind="prose">Build ML-relevant probability intuition: random variables, expectations, variance, Bayes’ rule, common distributions, and sampling.</p>
+<div id="lab-w2-d3-probability-essentials-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can compute probabilities/expectations, implement small simulations, and explain how probability maps to ML (calibration, Naive Bayes, uncertainty).</div>
+<p id="lab-w2-d3-probability-essentials-p05" data-kind="prose" class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Discrete Random Variables</span><span class="tagchip">Conditional Probability &amp; Bayes</span><span class="tagchip">Continuous Distributions</span><span class="tagchip">Naive Bayes Thinking (Optional)</span><span class="tagchip">Week 2</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w2-d3-probability-essentials-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1LMWYMwgeCBilCgol6hfCUT2rji0KJJJT">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-7-probability">Notes</a> · <a href="probability_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/rJbpbbdJKkQ">Video</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Probability Essentials ,  FAANG-Level Lab</h3>
-<p><strong>Goal:</strong> ML-relevant probability: expectation, variance, Bayes, and simulation checks.</p>
-<p><strong>Outcome:</strong> You can reason about uncertainty, distributions, and Bayes updates (interview-ready).</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="probability-essentials-faang-level-lab">Probability Essentials ,  FAANG-Level Lab</h3>
+<p id="lab-w2-d3-probability-essentials-p07" data-kind="prose"><strong>Goal:</strong> ML-relevant probability: expectation, variance, Bayes, and simulation checks.</p>
+<p id="lab-w2-d3-probability-essentials-p08" data-kind="prose"><strong>Outcome:</strong> You can reason about uncertainty, distributions, and Bayes updates (interview-ready).</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 
 def check(name: str, cond: bool):
     if not cond:
@@ -913,13 +913,13 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Probability Essentials ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="probability-essentials-instructor-solutions-rationale">Probability Essentials ,  Instructor (Solutions + Rationale)</h3></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Expectation &amp; variance from a PMF <span class="task-sec">Discrete Random Variables</span></summary><div class="task-body"><h4>Section 1 ,  Discrete Random Variables</h4>
 <h4>Task 1.1: Expectation &amp; variance from a PMF</h4>
-<p>Given values x and probabilities p (sum to 1):</p>
+<p id="lab-w2-d3-probability-essentials-p09" data-kind="prose">Given values x and probabilities p (sum to 1):</p>
 <ul><li>implement E[X] and Var(X)</li></ul>
 <ul><li>E[X] = sum p_i x_i</li><li>Var(X) = E[X^2] - (E[X])^2</li></ul>
-<p><strong>Explain:</strong> Why is variance not linear, but expectation is?</p><h4>Starter code</h4><pre><code class="lang-python">def expectation(x, p):
+<p id="lab-w2-d3-probability-essentials-p10" data-kind="prose"><strong>Explain:</strong> Why is variance not linear, but expectation is?</p><h4>Starter code</h4><pre><code class="lang-python">def expectation(x, p):
     # TODO
     ...
 def variance(x, p):
@@ -930,7 +930,7 @@ mu = expectation(x,p); var = variance(x,p)
 check('mu', abs(mu - 1.1) &lt; 1e-9)
 check('var', abs(var - (0.2*0 + 0.5*1 + 0.3*4 - 1.1**2)) &lt; 1e-9)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>E[X] = sum p_i x_i
 Var(X) = E[X^2] - (E[X])^2</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('mu', abs(mu - 1.1) &lt; 1e-9)
-check('var', abs(var - (0.2*0 + 0.5*1 + 0.3*4 - 1.1**2)) &lt; 1e-9)</code></pre><h4>Checks</h4><ul><li>check('mu', abs(mu - 1.1)</li><li>check('var', abs(var - (0.2<em>0 + 0.5</em>1 + 0.3*4 - 1.1**2)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why is variance not linear, but expectation is?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def expectation(x, p):
+check('var', abs(var - (0.2*0 + 0.5*1 + 0.3*4 - 1.1**2)) &lt; 1e-9)</code></pre><h4>Checks</h4><ul><li>check('mu', abs(mu - 1.1)</li><li>check('var', abs(var - (0.2<em>0 + 0.5</em>1 + 0.3*4 - 1.1**2)</li></ul><div id="lab-w2-d3-probability-essentials-aside02" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why is variance not linear, but expectation is?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def expectation(x, p):
     x = np.asarray(x, dtype=float)
     p = np.asarray(p, dtype=float)
     return float(np.sum(p * x))
@@ -947,14 +947,14 @@ mu = expectation(x,p); var = variance(x,p)
 check('mu', abs(mu - 1.1) &lt; 1e-9)
 check('var', abs(var - (0.2*0 + 0.5*1 + 0.3*4 - 1.1**2)) &lt; 1e-9)
 
-# Rationale: expectation is linear (E[aX+bY]=aE[X]+bE[Y]); variance depends on second moment and covariance.</code></pre><h4>Why this works</h4><p>expectation is linear (E[aX+bY]=aE[X]+bE[Y]); variance depends on second moment and covariance.</p></details></div></details>
+# Rationale: expectation is linear (E[aX+bY]=aE[X]+bE[Y]); variance depends on second moment and covariance.</code></pre><h4>Why this works</h4><p data-term="Bayes theorem" id="lab-w2-d3-probability-essentials-p11" data-kind="prose">expectation is linear (E[aX+bY]=aE[X]+bE[Y]); variance depends on second moment and covariance.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Bayes theorem (classic interview) <span class="task-sec">Conditional Probability &amp; Bayes</span></summary><div class="task-body"><h4>Section 2 ,  Conditional Probability &amp; Bayes</h4>
 <h4>Task 2.1: Bayes theorem (classic interview)</h4>
-<p>Disease test example:</p>
+<p id="lab-w2-d3-probability-essentials-p12" data-kind="prose">Disease test example:</p>
 <ul><li>prevalence P(D)=0.01</li><li>sensitivity P(+|D)=0.99</li><li>false positive rate P(+|~D)=0.05</li></ul>
-<p>Compute P(D|+)</p>
-<p>P(D|+) = P(+|D)P(D) / (P(+|D)P(D) + P(+|~D)P(~D))</p>
-<p><strong>FAANG gotcha:</strong> base-rate fallacy.</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+<p id="lab-w2-d3-probability-essentials-p13" data-kind="prose">Compute P(D|+)</p>
+<p id="lab-w2-d3-probability-essentials-p14" data-kind="prose">P(D|+) = P(+|D)P(D) / (P(+|D)P(D) + P(+|~D)P(~D))</p>
+<p data-term="base-rate fallacy" id="lab-w2-d3-probability-essentials-p15" data-kind="prose"><strong>FAANG gotcha:</strong> base-rate fallacy.</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
 P_D = 0.01
 ...
 P_pos_given_D = 0.99
@@ -973,11 +973,11 @@ P_D_given_pos = (P_pos_given_D*P_D) / P_pos
 print('P(D|+)=', P_D_given_pos)
 check('range', 0 &lt;= P_D_given_pos &lt;= 1)
 
-# Rationale: base rate matters; even a good test can have low PPV when prevalence is low.</code></pre><h4>Why this works</h4><p>base rate matters; even a good test can have low PPV when prevalence is low.</p></details></div></details>
+# Rationale: base rate matters; even a good test can have low PPV when prevalence is low.</code></pre><h4>Why this works</h4><p id="lab-w2-d3-probability-essentials-p16" data-kind="prose">base rate matters; even a good test can have low PPV when prevalence is low.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Simulation check (sanity) <span class="task-sec">Conditional Probability &amp; Bayes</span></summary><div class="task-body"><h4>Task 2.2: Simulation check (sanity)</h4>
-<p>Simulate N people and estimate P(D|+) empirically.</p>
+<p id="lab-w2-d3-probability-essentials-p17" data-kind="prose">Simulate N people and estimate P(D|+) empirically.</p>
 <ul><li>sample disease ~ Bernoulli(P_D)</li><li>sample test result conditional on disease</li></ul>
-<p><strong>Explain:</strong> Why does simulation converge to the analytic value?</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+<p id="lab-w2-d3-probability-essentials-p18" data-kind="prose"><strong>Explain:</strong> Why does simulation converge to the analytic value?</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
 N = 200000
 disease = ...
 # conditional test
@@ -989,7 +989,7 @@ test_pos = ...
 est = disease[test_pos].mean()
 print('estimate', est)
 check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>sample disease ~ Bernoulli(P_D)
-sample test result conditional on disease</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><h4>Checks</h4><ul><li>check('close', abs(est - P_D_given_pos)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why does simulation converge to the analytic value?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">N = 200000
+sample test result conditional on disease</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><h4>Checks</h4><ul><li>check('close', abs(est - P_D_given_pos)</li></ul><div id="lab-w2-d3-probability-essentials-aside03" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why does simulation converge to the analytic value?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">N = 200000
 disease = rng.random(N) &lt; P_D
 # conditional test
 test_pos = np.empty(N, dtype=bool)
@@ -999,12 +999,12 @@ est = disease[test_pos].mean()
 print('estimate', est)
 check('close', abs(est - P_D_given_pos) &lt; 0.01)
 
-# Rationale: law of large numbers -&gt; empirical frequencies converge to true probabilities.</code></pre><h4>Why this works</h4><p>law of large numbers -&gt; empirical frequencies converge to true probabilities.</p></details></div></details>
+# Rationale: law of large numbers -&gt; empirical frequencies converge to true probabilities.</code></pre><h4>Why this works</h4><p id="lab-w2-d3-probability-essentials-p19" data-kind="prose">law of large numbers -&gt; empirical frequencies converge to true probabilities.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Standardization (z-score) <span class="task-sec">Continuous Distributions (Normal)</span></summary><div class="task-body"><h4>Section 3 ,  Continuous Distributions (Normal)</h4>
 <h4>Task 3.1: Standardization (z-score)</h4>
-<p>Given X ~ Normal(mu, sigma^2). Compute standardized Z=(X-mu)/sigma.</p>
+<p id="lab-w2-d3-probability-essentials-p20" data-kind="prose">Given X ~ Normal(mu, sigma^2). Compute standardized Z=(X-mu)/sigma.</p>
 <ul><li>simulate X and check Z mean ~0, std ~1</li></ul>
-<p><strong>ML link:</strong> standardization shows up in preprocessing and SGD stability.</p><h4>Starter code</h4><pre><code class="lang-python">mu, sigma = 5.0, 2.0
+<p id="lab-w2-d3-probability-essentials-p21" data-kind="prose"><strong>ML link:</strong> standardization shows up in preprocessing and SGD stability.</p><h4>Starter code</h4><pre><code class="lang-python">mu, sigma = 5.0, 2.0
 X = ...
 Z =  ...
 print('Z mean', Z.mean(), 'Z std', Z.std())
@@ -1019,12 +1019,12 @@ print('Z mean', Z.mean(), 'Z std', Z.std())
 check('mean0', abs(Z.mean()) &lt; 0.02)
 check('std1', abs(Z.std() - 1.0) &lt; 0.02)
 
-# Rationale: standardization makes features comparable scale; improves conditioning and SGD behavior.</code></pre><h4>Why this works</h4><p>standardization makes features comparable scale; improves conditioning and SGD behavior.</p></details></div></details>
+# Rationale: standardization makes features comparable scale; improves conditioning and SGD behavior.</code></pre><h4>Why this works</h4><p id="lab-w2-d3-probability-essentials-p22" data-kind="prose">standardization makes features comparable scale; improves conditioning and SGD behavior.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> Compute log-odds for a toy Naive Bayes <span class="task-sec">Naive Bayes Thinking (Optional Mini)</span></summary><div class="task-body"><h4>Section 4 ,  Naive Bayes Thinking (Optional Mini)</h4>
 <h4>Task 4.1: Compute log-odds for a toy Naive Bayes</h4>
-<p>Given word likelihoods for spam vs ham, compute posterior odds for a message.</p>
+<p id="lab-w2-d3-probability-essentials-p23" data-kind="prose">Given word likelihoods for spam vs ham, compute posterior odds for a message.</p>
 <ul><li>work in log space (sum logs)</li></ul>
-<p><strong>FAANG gotcha:</strong> multiplying small probabilities underflows; use logs.</p><h4>Starter code</h4><pre><code class="lang-python">prior_spam = 0.2
+<p id="lab-w2-d3-probability-essentials-p24" data-kind="prose"><strong>FAANG gotcha:</strong> multiplying small probabilities underflows; use logs.</p><h4>Starter code</h4><pre><code class="lang-python">prior_spam = 0.2
 prior_ham = 0.8
 P_word_given_spam = {'free': 0.08, 'win': 0.05, 'meeting': 0.001}
 P_word_given_ham  = {'free': 0.002, 'win': 0.001, 'meeting': 0.03}
@@ -1048,25 +1048,25 @@ for w in message:
 print('log_ratio', log_ratio)
 check('finite', np.isfinite(log_ratio))
 
-# Rationale: multiply probabilities =&gt; underflow; log turns products into sums.</code></pre><h4>Why this works</h4><p>multiply probabilities =&gt; underflow; log turns products into sums.</p></details></div></details>
+# Rationale: multiply probabilities =&gt; underflow; log turns products into sums.</code></pre><h4>Why this works</h4><p id="lab-w2-d3-probability-essentials-p25" data-kind="prose">multiply probabilities =&gt; underflow; log turns products into sums.</p></details></div></details>
 <h4>Checkpoints</h4><ul><li>Why is expectation linear?</li><li>When do you need covariance?</li><li>Why does simulation converge (law of large numbers)?</li></ul>
 <h4>Interview angles</h4><ul><li>Why can a “99% accurate test” still have low P(D|+)?</li></ul>
 <h4>Gotchas</h4><ul><li>Underflow from multiplying tiny probabilities; use logs.</li></ul>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d3-probability-essentials">https://ai.thes30.com/problems/w2-d3-probability-essentials</a>.</p>
-</section><section class="lab" id="lab-w2-d4-statistics-for-ml">
-<h3>Statistics for ML <span class="diff diff-easy">Easy</span></h3>
-<p class="lab-meta">Week 2, Day 4 · Math for ML · 6 tasks · 6 checks · Free</p>
-<p>This lab is the uncertainty pillar. It implements the unbiased sample variance. It builds a 95% confidence interval and then simulates its coverage. It runs a permutation test for A/B comparison without scipy. It applies the Bonferroni correction. It is the practice ground for Concept 4.</p>
-<p>Watch for the two misreadings the lab flags as gotchas. The CI covers the mean, not individual outcomes. The p-value is not the probability that the null is true. The accidental p-hacking angle (slicing dashboards) is the one that transfers most directly to production work.</p>
-<p>Master ML-relevant statistics: estimators, confidence intervals, hypothesis tests, p-values, multiple comparisons, and common gotchas.</p>
-<div class="callout"><strong>Outcome.</strong> Students can compute and interpret confidence intervals and tests, understand failure modes (p-hacking, confounding), and connect stats to ML evaluation.</div>
-<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Estimators</span><span class="tagchip">Confidence Intervals</span><span class="tagchip">Hypothesis Testing</span><span class="tagchip">Multiple Comparisons</span><span class="tagchip">Week 2</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1kZ88_BPcZ-_Ukr0z5M_76MmBa36K0iWN">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-8-statistics">Notes</a> · <a href="stats_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/dDSiJg4LkVs">Video</a></p>
+<p id="lab-w2-d3-probability-essentials-p26" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d3-probability-essentials">https://ai.thes30.com/problems/w2-d3-probability-essentials</a>.</p>
+<span id="lab-w2-d3-probability-essentials-end" data-end></span></section><section class="lab" id="lab-w2-d4-statistics-for-ml">
+<h3 id="statistics-for-ml-easy">Statistics for ML <span class="diff diff-easy">Easy</span></h3>
+<p id="lab-w2-d4-statistics-for-ml-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 2, Day 4 · Math for ML · 6 tasks · 6 checks · Free</p>
+<p data-term="confidence interval" id="lab-w2-d4-statistics-for-ml-p02" data-kind="prose">This lab is the uncertainty pillar. It implements the unbiased sample variance. It builds a 95% confidence interval and then simulates its coverage. It runs a permutation test for A/B comparison without scipy. It applies the Bonferroni correction. It is the practice ground for Concept 4.</p>
+<p data-term="p-value" id="lab-w2-d4-statistics-for-ml-p03" data-kind="prose">Watch for the two misreadings the lab flags as gotchas. The CI covers the mean, not individual outcomes. The p-value is not the probability that the null is true. The accidental p-hacking angle (slicing dashboards) is the one that transfers most directly to production work.</p>
+<p id="lab-w2-d4-statistics-for-ml-p04" data-kind="prose">Master ML-relevant statistics: estimators, confidence intervals, hypothesis tests, p-values, multiple comparisons, and common gotchas.</p>
+<div id="lab-w2-d4-statistics-for-ml-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can compute and interpret confidence intervals and tests, understand failure modes (p-hacking, confounding), and connect stats to ML evaluation.</div>
+<p id="lab-w2-d4-statistics-for-ml-p05" data-kind="prose" class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Estimators</span><span class="tagchip">Confidence Intervals</span><span class="tagchip">Hypothesis Testing</span><span class="tagchip">Multiple Comparisons</span><span class="tagchip">Week 2</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w2-d4-statistics-for-ml-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1kZ88_BPcZ-_Ukr0z5M_76MmBa36K0iWN">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-8-statistics">Notes</a> · <a href="stats_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/dDSiJg4LkVs">Video</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Statistics for ML ,  FAANG-Level Lab</h3>
-<p><strong>Goal:</strong> Confidence intervals, hypothesis testing, and interpretation for ML engineering.</p>
-<p><strong>Outcome:</strong> You can quantify uncertainty and avoid p-value traps.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="statistics-for-ml-faang-level-lab">Statistics for ML ,  FAANG-Level Lab</h3>
+<p id="lab-w2-d4-statistics-for-ml-p07" data-kind="prose"><strong>Goal:</strong> Confidence intervals, hypothesis testing, and interpretation for ML engineering.</p>
+<p id="lab-w2-d4-statistics-for-ml-p08" data-kind="prose"><strong>Outcome:</strong> You can quantify uncertainty and avoid p-value traps.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 
 def check(name: str, cond: bool):
     if not cond:
@@ -1080,12 +1080,12 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Statistics for ML ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="statistics-for-ml-instructor-solutions-rationale">Statistics for ML ,  Instructor (Solutions + Rationale)</h3></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Unbiased sample variance <span class="task-sec">Estimators (Mean/Variance)</span></summary><div class="task-body"><h4>Section 1 ,  Estimators (Mean/Variance)</h4>
 <h4>Task 1.1: Unbiased sample variance</h4>
-<p>Implement sample mean and unbiased sample variance (ddof=1) without calling np.var(..., ddof=1).</p>
+<p id="lab-w2-d4-statistics-for-ml-p09" data-kind="prose">Implement sample mean and unbiased sample variance (ddof=1) without calling np.var(..., ddof=1).</p>
 <ul><li>mean = sum(x)/n</li><li>unbiased var = sum((x-mean)^2)/(n-1)</li></ul>
-<p><strong>Explain:</strong> Why divide by (n-1) instead of n?</p><h4>Starter code</h4><pre><code class="lang-python">def sample_mean(x):
+<p id="lab-w2-d4-statistics-for-ml-p10" data-kind="prose"><strong>Explain:</strong> Why divide by (n-1) instead of n?</p><h4>Starter code</h4><pre><code class="lang-python">def sample_mean(x):
     # TODO
     ...
 def sample_var_unbiased(x):
@@ -1095,7 +1095,7 @@ x = rng.standard_normal(1000)
 check('mean_close', abs(sample_mean(x) - x.mean()) &lt; 1e-10)
 check('var_close', abs(sample_var_unbiased(x) - x.var(ddof=1)) &lt; 1e-8)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>mean = sum(x)/n
 unbiased var = sum((x-mean)^2)/(n-1)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('mean_close', abs(sample_mean(x) - x.mean()) &lt; 1e-10)
-check('var_close', abs(sample_var_unbiased(x) - x.var(ddof=1)) &lt; 1e-8)</code></pre><h4>Checks</h4><ul><li>check('mean_close', abs(sample_mean(x)</li><li>check('var_close', abs(sample_var_unbiased(x)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why divide by (n-1) instead of n?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def sample_mean(x):
+check('var_close', abs(sample_var_unbiased(x) - x.var(ddof=1)) &lt; 1e-8)</code></pre><h4>Checks</h4><ul><li>check('mean_close', abs(sample_mean(x)</li><li>check('var_close', abs(sample_var_unbiased(x)</li></ul><div id="lab-w2-d4-statistics-for-ml-aside02" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why divide by (n-1) instead of n?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def sample_mean(x):
     x = np.asarray(x, dtype=float)
     return float(np.sum(x) / x.size)
 
@@ -1109,12 +1109,12 @@ x = rng.standard_normal(1000)
 check('mean_close', abs(sample_mean(x) - x.mean()) &lt; 1e-10)
 check('var_close', abs(sample_var_unbiased(x) - x.var(ddof=1)) &lt; 1e-8)
 
-# Rationale: dividing by (n-1) corrects bias because the data estimates the mean (loss of 1 DOF).</code></pre><h4>Why this works</h4><p>dividing by (n-1) corrects bias because the data estimates the mean (loss of 1 DOF).</p></details></div></details>
+# Rationale: dividing by (n-1) corrects bias because the data estimates the mean (loss of 1 DOF).</code></pre><h4>Why this works</h4><p id="lab-w2-d4-statistics-for-ml-p11" data-kind="prose">dividing by (n-1) corrects bias because the data estimates the mean (loss of 1 DOF).</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 95% CI for mean <span class="task-sec">Confidence Interval for Mean (Normal approx)</span></summary><div class="task-body"><h4>Section 2 ,  Confidence Interval for Mean (Normal approx)</h4>
 <h4>Task 2.1: 95% CI for mean</h4>
-<p>Compute a 95% CI for mean using normal approximation: CI = mean ± z * s/sqrt(n), where z≈1.96.</p>
+<p id="lab-w2-d4-statistics-for-ml-p12" data-kind="prose">Compute a 95% CI for mean using normal approximation: CI = mean ± z * s/sqrt(n), where z≈1.96.</p>
 <ul><li>Use unbiased sample std</li></ul>
-<p><strong>FAANG gotcha:</strong> CI is about the mean, not individual outcomes.</p><h4>Starter code</h4><pre><code class="lang-python">def mean_ci_normal(x, alpha=0.05):
+<p id="lab-w2-d4-statistics-for-ml-p13" data-kind="prose"><strong>FAANG gotcha:</strong> CI is about the mean, not individual outcomes.</p><h4>Starter code</h4><pre><code class="lang-python">def mean_ci_normal(x, alpha=0.05):
     # TODO: return (lo, hi)
     ...
 x = rng.normal(2.0, 3.0, size=500)
@@ -1132,18 +1132,18 @@ x = rng.normal(2.0, 3.0, size=500)
 lo, hi = mean_ci_normal(x)
 check('order', lo &lt; x.mean() &lt; hi)
 
-# Rationale: CI estimates plausible range for population mean around sample mean.</code></pre><h4>Why this works</h4><p>CI estimates plausible range for population mean around sample mean.</p></details></div></details>
+# Rationale: CI estimates plausible range for population mean around sample mean.</code></pre><h4>Why this works</h4><p id="lab-w2-d4-statistics-for-ml-p14" data-kind="prose">CI estimates plausible range for population mean around sample mean.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Coverage simulation <span class="task-sec">Confidence Interval for Mean (Normal approx)</span></summary><div class="task-body"><h4>Task 2.2: Coverage simulation</h4>
-<p>Simulate repeated sampling from Normal(mu=0, sigma=1). Estimate how often 95% CI contains true mean.</p>
+<p id="lab-w2-d4-statistics-for-ml-p15" data-kind="prose">Simulate repeated sampling from Normal(mu=0, sigma=1). Estimate how often 95% CI contains true mean.</p>
 <ul><li>Run many trials</li><li>Count coverage</li></ul>
-<p><strong>Explain:</strong> Why isn't coverage exactly 0.95 in finite simulation?</p><h4>Starter code</h4><pre><code class="lang-python">def estimate_ci_coverage(trials=2000, n=50):
+<p id="lab-w2-d4-statistics-for-ml-p16" data-kind="prose"><strong>Explain:</strong> Why isn't coverage exactly 0.95 in finite simulation?</p><h4>Starter code</h4><pre><code class="lang-python">def estimate_ci_coverage(trials=2000, n=50):
     # TODO
     ...
 
 cov = estimate_ci_coverage(trials=2000, n=50)
 print('coverage', cov)
 check('reasonable', 0.92 &lt; cov &lt; 0.98)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Run many trials
-Count coverage</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('reasonable', 0.92 &lt; cov &lt; 0.98)</code></pre><h4>Checks</h4><ul><li>check('reasonable', 0.92 &lt; cov &lt; 0.98)</li></ul><div class="callout"><strong>Explain prompt.</strong> Why isn't coverage exactly 0.95 in finite simulation?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def estimate_ci_coverage(trials=2000, n=50):
+Count coverage</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('reasonable', 0.92 &lt; cov &lt; 0.98)</code></pre><h4>Checks</h4><ul><li>check('reasonable', 0.92 &lt; cov &lt; 0.98)</li></ul><div id="lab-w2-d4-statistics-for-ml-aside03" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why isn't coverage exactly 0.95 in finite simulation?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">def estimate_ci_coverage(trials=2000, n=50):
     mu = 0.0
     covered = 0
     for _ in range(trials):
@@ -1156,12 +1156,12 @@ cov = estimate_ci_coverage(trials=2000, n=50)
 print('coverage', cov)
 check('reasonable', 0.92 &lt; cov &lt; 0.98)
 
-# Rationale: coverage is ~0.95 by construction; simulation error causes small deviation.</code></pre><h4>Why this works</h4><p>coverage is ~0.95 by construction; simulation error causes small deviation.</p></details></div></details>
+# Rationale: coverage is ~0.95 by construction; simulation error causes small deviation.</code></pre><h4>Why this works</h4><p id="lab-w2-d4-statistics-for-ml-p17" data-kind="prose">coverage is ~0.95 by construction; simulation error causes small deviation.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Permutation test for A/B (no scipy) <span class="task-sec">Hypothesis Testing (Two-sample test intuition)</span></summary><div class="task-body"><h4>Section 3 ,  Hypothesis Testing (Two-sample test intuition)</h4>
 <h4>Task 3.1: Permutation test for A/B (no scipy)</h4>
-<p>Given samples A and B, test whether mean(B) - mean(A) is significant via permutation.</p>
+<p id="lab-w2-d4-statistics-for-ml-p18" data-kind="prose">Given samples A and B, test whether mean(B) - mean(A) is significant via permutation.</p>
 <ul><li>Combine samples</li><li>Shuffle and split</li><li>Compute diff distribution</li><li>p-value = fraction of diffs &gt;= observed (two-sided if needed)</li></ul>
-<p><strong>FAANG gotcha:</strong> p-value is not P(H0 true).</p><h4>Starter code</h4><pre><code class="lang-python">def permutation_pvalue(A, B, n_perm=5000, two_sided=True):
+<p id="lab-w2-d4-statistics-for-ml-p19" data-kind="prose"><strong>FAANG gotcha:</strong> p-value is not P(H0 true).</p><h4>Starter code</h4><pre><code class="lang-python">def permutation_pvalue(A, B, n_perm=5000, two_sided=True):
     # TODO
     ...
 A = rng.normal(0.0, 1.0, size=200)
@@ -1193,11 +1193,11 @@ p = permutation_pvalue(A, B, n_perm=2000)
 print('p-value', p)
 check('p_range', 0 &lt;= p &lt;= 1)
 
-# Rationale: permutation test is nonparametric; it uses the null distribution induced by exchangeability.</code></pre><h4>Why this works</h4><p>permutation test is nonparametric; it uses the null distribution induced by exchangeability.</p></details></div></details>
+# Rationale: permutation test is nonparametric; it uses the null distribution induced by exchangeability.</code></pre><h4>Why this works</h4><p id="lab-w2-d4-statistics-for-ml-p20" data-kind="prose">permutation test is nonparametric; it uses the null distribution induced by exchangeability.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> Bonferroni correction <span class="task-sec">Multiple Comparisons (Gotcha)</span></summary><div class="task-body"><h4>Section 4 ,  Multiple Comparisons (Gotcha)</h4>
 <h4>Task 4.1: Bonferroni correction</h4>
-<p>If you run m tests at alpha=0.05, Bonferroni uses alpha/m per test.</p>
-<p>Compute adjusted alpha for m=20 and explain why this matters in feature slicing / metric dashboards.</p><h4>Starter code</h4><pre><code class="lang-python">m = 20
+<p id="lab-w2-d4-statistics-for-ml-p21" data-kind="prose">If you run m tests at alpha=0.05, Bonferroni uses alpha/m per test.</p>
+<p id="lab-w2-d4-statistics-for-ml-p22" data-kind="prose">Compute adjusted alpha for m=20 and explain why this matters in feature slicing / metric dashboards.</p><h4>Starter code</h4><pre><code class="lang-python">m = 20
 alpha = 0.05
 # TODO
 alpha_adj = ...
@@ -1207,24 +1207,24 @@ alpha_adj = alpha / m
 print('alpha_adj', alpha_adj)
 check('alpha_adj', abs(alpha_adj - 0.0025) &lt; 1e-12)
 
-# Rationale: multiple comparisons inflate false positives; dashboards/slicing can create p-hacking unintentionally.</code></pre><h4>Why this works</h4><p>multiple comparisons inflate false positives; dashboards/slicing can create p-hacking unintentionally.</p></details></div></details>
+# Rationale: multiple comparisons inflate false positives; dashboards/slicing can create p-hacking unintentionally.</code></pre><h4>Why this works</h4><p id="lab-w2-d4-statistics-for-ml-p23" data-kind="prose">multiple comparisons inflate false positives; dashboards/slicing can create p-hacking unintentionally.</p></details></div></details>
 <h4>Checkpoints</h4><ul><li>Why does ddof=1 reduce bias?</li></ul>
 <h4>Interview angles</h4><ul><li>Why does CI have ~95% coverage by design?</li><li>Slicing dashboards can create accidental p-hacking.</li></ul>
 <h4>Gotchas</h4><ul><li>CI is for the mean, not individual outcomes.</li><li>p-value is not P(H0 true).</li></ul>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d4-statistics-for-ml">https://ai.thes30.com/problems/w2-d4-statistics-for-ml</a>.</p>
-</section><section class="lab" id="lab-w2-d5-math-lab">
-<h3>Math Lab (Linear Algebra + Probability) <span class="diff diff-easy">Easy</span></h3>
-<p class="lab-meta">Week 2, Day 5 · Math for ML · 6 tasks · 6 checks · Free</p>
-<p>This lab is the capstone problem set for the week: five derivation problems, each paired with a computational verification. The set covers projection matrix properties and the PSD check on X^T X. It covers normal equations versus lstsq. It covers the Bayes base-rate derivation with simulation. It covers the covariance-eigenvector versus SVD-directions link.</p>
-<p>It draws on Concepts 1 through 3 and the coverage intuition of Concept 4. Treat it as a mock interview round: derive on paper first, then verify in code, then explain out loud. The outcome the lab promises (derive key results, verify with small experiments, communicate clearly) is exactly the interview bar.</p>
-<p>Consolidate Week 2 with derivations + short computational checks.</p>
-<div class="callout"><strong>Outcome.</strong> Students can derive key results, verify with small code experiments, and communicate clearly under interview constraints.</div>
-<p class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Projection Matrices</span><span class="tagchip">Positive Semidefinite (PSD) Matrices</span><span class="tagchip">Least Squares</span><span class="tagchip">Bayes + Base Rate</span><span class="tagchip">PCA Link</span><span class="tagchip">Week 2</span><span class="tagchip co">Square</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1c3uvCDuOE_5bBZH8fM878rhGin_70aPO">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-9-math-for">Notes</a> · <a href="math_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/X8UpPH3lYyU">Video</a></p>
+<p id="lab-w2-d4-statistics-for-ml-p24" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d4-statistics-for-ml">https://ai.thes30.com/problems/w2-d4-statistics-for-ml</a>.</p>
+<span id="lab-w2-d4-statistics-for-ml-end" data-end></span></section><section class="lab" id="lab-w2-d5-math-lab">
+<h3 id="math-lab-linear-algebra-probability-easy">Math Lab (Linear Algebra + Probability) <span class="diff diff-easy">Easy</span></h3>
+<p id="lab-w2-d5-math-lab-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 2, Day 5 · Math for ML · 6 tasks · 6 checks · Free</p>
+<p data-term="normal equations" id="lab-w2-d5-math-lab-p02" data-kind="prose">This lab is the capstone problem set for the week: five derivation problems, each paired with a computational verification. The set covers projection matrix properties and the PSD check on X^T X. It covers normal equations versus lstsq. It covers the Bayes base-rate derivation with simulation. It covers the covariance-eigenvector versus SVD-directions link.</p>
+<p id="lab-w2-d5-math-lab-p03" data-kind="prose">It draws on Concepts 1 through 3 and the coverage intuition of Concept 4. Treat it as a mock interview round: derive on paper first, then verify in code, then explain out loud. The outcome the lab promises (derive key results, verify with small experiments, communicate clearly) is exactly the interview bar.</p>
+<p id="lab-w2-d5-math-lab-p04" data-kind="prose">Consolidate Week 2 with derivations + short computational checks.</p>
+<div id="lab-w2-d5-math-lab-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can derive key results, verify with small code experiments, and communicate clearly under interview constraints.</div>
+<p id="lab-w2-d5-math-lab-p05" data-kind="prose" class="tags"><span class="tagchip">Math for ML</span><span class="tagchip">Easy</span><span class="tagchip">Projection Matrices</span><span class="tagchip">Positive Semidefinite (PSD) Matrices</span><span class="tagchip">Least Squares</span><span class="tagchip">Bayes + Base Rate</span><span class="tagchip">PCA Link</span><span class="tagchip">Week 2</span><span class="tagchip co">Square</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w2-d5-math-lab-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1c3uvCDuOE_5bBZH8fM878rhGin_70aPO">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-9-math-for">Notes</a> · <a href="math_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/X8UpPH3lYyU">Video</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Math Lab ,  FAANG-Level Mixed Problems</h3>
-<p>This lab is a <em>problem set + mini-verification</em> notebook covering projection matrices, PSD checks, least squares, Bayes intuition, and PCA links.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="math-lab-faang-level-mixed-problems">Math Lab ,  FAANG-Level Mixed Problems</h3>
+<p id="lab-w2-d5-math-lab-p07" data-kind="prose">This lab is a <em>problem set + mini-verification</em> notebook covering projection matrices, PSD checks, least squares, Bayes intuition, and PCA links.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 
 def check(name: str, cond: bool):
     if not cond:
@@ -1238,26 +1238,26 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Math Lab ,  Instructor (Solutions + Rationale)</h3></details></div></details>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="math-lab-instructor-solutions-rationale">Math Lab ,  Instructor (Solutions + Rationale)</h3></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Construct projection and verify properties <span class="task-sec">Projection Matrix Properties</span></summary><div class="task-body"><h4>Problem 1 ,  Projection Matrix Properties</h4>
-<p>Let P be a projection matrix onto a subspace.</p>
+<p data-term="idempotent" id="lab-w2-d5-math-lab-p08" data-kind="prose">Let P be a projection matrix onto a subspace.</p>
 <ol><li>Show that P^2 = P (idempotent).</li><li>For orthogonal projection, show P = P^T.</li></ol>
 <h4>Task 1.1</h4>
-<p>Construct projection onto span(u) and verify both properties.</p><h4>Starter code</h4><pre><code class="lang-python">u = rng.standard_normal(5)
+<p id="lab-w2-d5-math-lab-p09" data-kind="prose">Construct projection onto span(u) and verify both properties.</p><h4>Starter code</h4><pre><code class="lang-python">u = rng.standard_normal(5)
 # TODO
 P = ...
 check('idempotent', np.allclose(P @ P, P, atol=1e-8))
 check('symmetric', np.allclose(P, P.T, atol=1e-8))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>P = u u^T / (u^T u)</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('idempotent', np.allclose(P @ P, P, atol=1e-8))
-check('symmetric', np.allclose(P, P.T, atol=1e-8))</code></pre><h4>Checks</h4><ul><li>check('idempotent'</li><li>check('symmetric'</li></ul><div class="callout"><strong>Explain prompt.</strong> What does idempotent mean geometrically for projections?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">u = rng.standard_normal(5)
+check('symmetric', np.allclose(P, P.T, atol=1e-8))</code></pre><h4>Checks</h4><ul><li>check('idempotent'</li><li>check('symmetric'</li></ul><div id="lab-w2-d5-math-lab-aside02" data-kind="aside" class="callout"><strong>Explain prompt.</strong> What does idempotent mean geometrically for projections?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">u = rng.standard_normal(5)
 P = np.outer(u, u) / (u @ u)
 check('idempotent', np.allclose(P @ P, P, atol=1e-8))
 check('symmetric', np.allclose(P, P.T, atol=1e-8))
 
-# Rationale: orthogonal projection matrices are exactly symmetric idempotent operators.</code></pre><h4>Why this works</h4><p>orthogonal projection matrices are symmetric and idempotent.</p></details></div></details>
+# Rationale: orthogonal projection matrices are exactly symmetric idempotent operators.</code></pre><h4>Why this works</h4><p id="lab-w2-d5-math-lab-p10" data-kind="prose">orthogonal projection matrices are symmetric and idempotent.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Verify X^T X is PSD <span class="task-sec">PSD Matrix Check</span></summary><div class="task-body"><h4>Problem 2 ,  PSD Matrix Check</h4>
-<p>Show that for any matrix X, A = X^T X is positive semidefinite (PSD).</p>
+<p id="lab-w2-d5-math-lab-p11" data-kind="prose">Show that for any matrix X, A = X^T X is positive semidefinite (PSD).</p>
 <h4>Task 2.1</h4>
-<p>Sample random X, build A, and verify v^T A v &gt;= 0 for many random vectors v.</p><h4>Starter code</h4><pre><code class="lang-python">X = rng.standard_normal((10, 4))
+<p id="lab-w2-d5-math-lab-p12" data-kind="prose">Sample random X, build A, and verify v^T A v &gt;= 0 for many random vectors v.</p><h4>Starter code</h4><pre><code class="lang-python">X = rng.standard_normal((10, 4))
 A = X.T @ X
 # TODO
 min_val = np.inf
@@ -1266,7 +1266,7 @@ for _ in range(100):
     val = float(v.T @ A @ v)
     min_val = min(min_val, val)
 print('min quadratic form', min_val)
-check('psd_nonneg', min_val &gt;= -1e-8)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>v^T X^T X v = ||Xv||^2 &gt;= 0</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('psd_nonneg', min_val &gt;= -1e-8)</code></pre><h4>Checks</h4><ul><li>check('psd_nonneg'</li></ul><div class="callout"><strong>Explain prompt.</strong> Why does v^T X^T X v equal ||Xv||^2?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X = rng.standard_normal((10, 4))
+check('psd_nonneg', min_val &gt;= -1e-8)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>v^T X^T X v = ||Xv||^2 &gt;= 0</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('psd_nonneg', min_val &gt;= -1e-8)</code></pre><h4>Checks</h4><ul><li>check('psd_nonneg'</li></ul><div id="lab-w2-d5-math-lab-aside03" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why does v^T X^T X v equal ||Xv||^2?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X = rng.standard_normal((10, 4))
 A = X.T @ X
 min_val = np.inf
 for _ in range(100):
@@ -1276,11 +1276,11 @@ for _ in range(100):
 print('min quadratic form', min_val)
 check('psd_nonneg', min_val &gt;= -1e-8)
 
-# Rationale: A = X^T X is PSD because every quadratic form is a squared norm.</code></pre><h4>Why this works</h4><p>A = X^T X is PSD since v^TAv = ||Xv||^2.</p></details></div></details>
+# Rationale: A = X^T X is PSD because every quadratic form is a squared norm.</code></pre><h4>Why this works</h4><p id="lab-w2-d5-math-lab-p13" data-kind="prose">A = X^T X is PSD since v^TAv = ||Xv||^2.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Normal equation vs lstsq <span class="task-sec">Least Squares Derivation</span></summary><div class="task-body"><h4>Problem 3 ,  Least Squares Derivation</h4>
-<p>Derive the normal equations for minimizing ||Xw - y||^2.</p>
+<p id="lab-w2-d5-math-lab-p14" data-kind="prose">Derive the normal equations for minimizing ||Xw - y||^2.</p>
 <h4>Task 3.1</h4>
-<p>Compare w_hat from solve vs np.linalg.lstsq.</p><h4>Starter code</h4><pre><code class="lang-python">n, d = 200, 5
+<p id="lab-w2-d5-math-lab-p15" data-kind="prose">Compare w_hat from solve vs np.linalg.lstsq.</p><h4>Starter code</h4><pre><code class="lang-python">n, d = 200, 5
 X = rng.standard_normal((n, d))
 w_true = rng.standard_normal(d)
 y = X @ w_true + 0.1 * rng.standard_normal(n)
@@ -1288,7 +1288,7 @@ y = X @ w_true + 0.1 * rng.standard_normal(n)
 # TODO
 w_hat = ...
 w_lstsq, *_ = np.linalg.lstsq(X, y, rcond=None)
-check('close', np.allclose(w_hat, w_lstsq, atol=1e-6))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>w = (X^T X)^{-1} X^T y</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', np.allclose(w_hat, w_lstsq, atol=1e-6))</code></pre><h4>Checks</h4><ul><li>check('close'</li></ul><div class="callout"><strong>Explain prompt.</strong> Why is solve/lstsq preferred over explicit matrix inverse?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">n, d = 200, 5
+check('close', np.allclose(w_hat, w_lstsq, atol=1e-6))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>w = (X^T X)^{-1} X^T y</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', np.allclose(w_hat, w_lstsq, atol=1e-6))</code></pre><h4>Checks</h4><ul><li>check('close'</li></ul><div id="lab-w2-d5-math-lab-aside04" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why is solve/lstsq preferred over explicit matrix inverse?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">n, d = 200, 5
 X = rng.standard_normal((n, d))
 w_true = rng.standard_normal(d)
 y = X @ w_true + 0.1 * rng.standard_normal(n)
@@ -1297,11 +1297,11 @@ w_hat = np.linalg.solve(X.T @ X, X.T @ y)
 w_lstsq, *_ = np.linalg.lstsq(X, y, rcond=None)
 check('close', np.allclose(w_hat, w_lstsq, atol=1e-6))
 
-# Rationale: direct inverse is numerically less stable; solve/lstsq is preferred.</code></pre><h4>Why this works</h4><p>solve/lstsq are numerically safer than explicit inverse.</p></details></div></details>
+# Rationale: direct inverse is numerically less stable; solve/lstsq is preferred.</code></pre><h4>Why this works</h4><p id="lab-w2-d5-math-lab-p16" data-kind="prose">solve/lstsq are numerically safer than explicit inverse.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Analytic vs simulated P(D|+) <span class="task-sec">Bayes + Base Rate</span></summary><div class="task-body"><h4>Problem 4 ,  Bayes + Base Rate (Derivation)</h4>
-<p>Re-derive P(D|+) for the disease test scenario and explain the base-rate fallacy.</p>
+<p data-term="base-rate fallacy" id="lab-w2-d5-math-lab-p17" data-kind="prose">Re-derive P(D|+) for the disease test scenario and explain the base-rate fallacy.</p>
 <h4>Task 4.1</h4>
-<p>Compute analytic posterior and verify with simulation.</p><h4>Starter code</h4><pre><code class="lang-python">P_D = 0.01
+<p id="lab-w2-d5-math-lab-p18" data-kind="prose">Compute analytic posterior and verify with simulation.</p><h4>Starter code</h4><pre><code class="lang-python">P_D = 0.01
 P_pos_given_D = 0.99
 P_pos_given_notD = 0.05
 # TODO
@@ -1314,7 +1314,7 @@ test_pos[disease] = rng.random(disease.sum()) &lt; P_pos_given_D
 test_pos[~disease] = rng.random((~disease).sum()) &lt; P_pos_given_notD
 est = disease[test_pos].mean()
 print('analytic', P_D_given_pos, 'sim', est)
-check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use Bayes theorem and then Monte Carlo simulation.</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><h4>Checks</h4><ul><li>check('close'</li></ul><div class="callout"><strong>Explain prompt.</strong> Why can P(D|+) still be low when test sensitivity is high?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">P_D = 0.01
+check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Use Bayes theorem and then Monte Carlo simulation.</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('close', abs(est - P_D_given_pos) &lt; 0.01)</code></pre><h4>Checks</h4><ul><li>check('close'</li></ul><div id="lab-w2-d5-math-lab-aside05" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why can P(D|+) still be low when test sensitivity is high?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">P_D = 0.01
 P_pos_given_D = 0.99
 P_pos_given_notD = 0.05
 P_D_given_pos = (P_pos_given_D * P_D) / (P_pos_given_D * P_D + P_pos_given_notD * (1 - P_D))
@@ -1328,11 +1328,11 @@ est = disease[test_pos].mean()
 print('analytic', P_D_given_pos, 'sim', est)
 check('close', abs(est - P_D_given_pos) &lt; 0.01)
 
-# Rationale: low base rate dominates posterior even with good sensitivity/specificity.</code></pre><h4>Why this works</h4><p>base rate strongly affects posterior probability.</p></details></div></details>
+# Rationale: low base rate dominates posterior even with good sensitivity/specificity.</code></pre><h4>Why this works</h4><p id="lab-w2-d5-math-lab-p19" data-kind="prose">base rate strongly affects posterior probability.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> Covariance eigenvectors vs SVD directions <span class="task-sec">PCA Link</span></summary><div class="task-body"><h4>Problem 5 ,  PCA Link</h4>
-<p>Explain why PCA components are eigenvectors of the covariance matrix.</p>
+<p id="lab-w2-d5-math-lab-p20" data-kind="prose">Explain why PCA components are eigenvectors of the covariance matrix.</p>
 <h4>Task 5.1</h4>
-<p>Compute covariance eigenvectors and compare with SVD directions.</p><h4>Starter code</h4><pre><code class="lang-python">X = rng.standard_normal((500, 20))
+<p id="lab-w2-d5-math-lab-p21" data-kind="prose">Compute covariance eigenvectors and compare with SVD directions.</p><h4>Starter code</h4><pre><code class="lang-python">X = rng.standard_normal((500, 20))
 Xc = X - X.mean(axis=0, keepdims=True)
 Cov = (Xc.T @ Xc) / (Xc.shape[0] - 1)
 
@@ -1347,7 +1347,7 @@ V = Vt.T
 k = 5
 C = np.abs(eigvecs[:, :k].T @ V[:, :k])
 print('abs alignment matrix (should be near diagonal)', C)
-check('alignment', np.all(np.max(C, axis=1) &gt; 0.9))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Center X; Cov = X^T X/(n-1); compare eigvecs with V from SVD.</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('alignment', np.all(np.max(C, axis=1) &gt; 0.9))</code></pre><h4>Checks</h4><ul><li>check('alignment'</li></ul><div class="callout"><strong>Explain prompt.</strong> Why do right singular vectors align with covariance eigenvectors?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X = rng.standard_normal((500, 20))
+check('alignment', np.all(np.max(C, axis=1) &gt; 0.9))</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>Center X; Cov = X^T X/(n-1); compare eigvecs with V from SVD.</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('alignment', np.all(np.max(C, axis=1) &gt; 0.9))</code></pre><h4>Checks</h4><ul><li>check('alignment'</li></ul><div id="lab-w2-d5-math-lab-aside06" data-kind="aside" class="callout"><strong>Explain prompt.</strong> Why do right singular vectors align with covariance eigenvectors?</div><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">X = rng.standard_normal((500, 20))
 Xc = X - X.mean(axis=0, keepdims=True)
 Cov = (Xc.T @ Xc) / (Xc.shape[0] - 1)
 
@@ -1363,13 +1363,13 @@ C = np.abs(eigvecs[:, :k].T @ V[:, :k])
 print('abs alignment matrix (should be near diagonal)', C)
 check('alignment', np.all(np.max(C, axis=1) &gt; 0.9))
 
-# Rationale: covariance eigendecomposition and SVD of centered data recover the same principal directions.</code></pre><h4>Why this works</h4><p>PCA directions equal eigenvectors of covariance, same as right singular vectors of centered X.</p></details></div></details>
+# Rationale: covariance eigendecomposition and SVD of centered data recover the same principal directions.</code></pre><h4>Why this works</h4><p id="lab-w2-d5-math-lab-p22" data-kind="prose">PCA directions equal eigenvectors of covariance, same as right singular vectors of centered X.</p></details></div></details>
 <h4>Checkpoints</h4><ul><li>What does idempotent mean?</li><li>Why is orthogonal projection symmetric?</li><li>Why does base rate dominate when prevalence is low?</li></ul>
 <h4>Interview angles</h4><ul><li>Where does PSD show up in ML (covariance, kernels)?</li><li>How does PCA relate to embeddings and compression?</li></ul>
 <h4>Gotchas</h4><ul><li>Avoid matrix inverse; use solve/lstsq.</li></ul>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>linear algebra, gradients, probability, statistics</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>high</td><td>ML fundamentals, probability/statistics, optimization basics</td><td>Amazon MLE interview guide; Amazon data scientist interview guide</td></tr><tr><td>Microsoft</td><td>high</td><td>ML and statistics, model reasoning, analytical coding</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d5-math-lab">https://ai.thes30.com/problems/w2-d5-math-lab</a>.</p>
-</section><h2>Interview clearance</h2><div class="ob-board"><h4>Design prompt</h4><ul><li>Derive the normal equations and explain why solve beats the explicit inverse.</li><li>Write the gradient of binary cross-entropy and describe how you would verify it numerically.</li><li>Prevalence 1%, sensitivity 99%, false positive rate 5%: compute the posterior and explain the intuition.</li><li>State what a 95% confidence interval actually guarantees, and what it does not.</li><li>Where does PSD show up in ML? Name three places and why it matters in each.</li></ul></div><div class="pq"><p class="pq-q"><strong>Q1.</strong> Which statement about the normal equations is correct? A: They require forming the matrix inverse explicitly. B: They state that the residual is orthogonal to the column space of X. C: They only apply when X is square. D: They minimize the L1 error.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The normal equations X^T X w = X^T y state one fact algebraically: the residual y - Xw is orthogonal to every column of X.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> the inverse is one way to solve them, and the numerically worst one. Prefer solve or lstsq.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> orthogonality of the residual is the geometric content; everything else is algebra.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> X is typically tall (n rows, d columns); squareness is not required.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> least squares minimizes squared (L2) error, not L1.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q2.</strong> Your analytic gradient and your central-difference check disagree by 0.5 on one parameter. List the two most likely bug sites, in the order you would check them.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> first, a missing constant (like 2/n or 1/n) in the analytic gradient; second, a broadcasting shape bug where two arrays aligned on the wrong axis. The lab names both as the classic gradient bugs. Check the constant by comparing magnitudes (a clean ratio like exactly n or 2 suggests the missing factor), then print shapes at every step of the chain.</p></div></div><div class="pq"><p class="pq-q"><strong>Q3.</strong> A startup claims its model "detects disease with 99% accuracy" on a condition affecting 1 in 1,000 people. What is wrong with this claim?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> a model that always predicts "healthy" scores 99.9% accuracy on this population while detecting nothing. Accuracy without the base rate is meaningless under imbalance. The right questions: what are the sensitivity and false positive rate, and what is P(disease | positive)? With a 5% false positive rate, the posterior is roughly 2%, so 98 of 100 alarms are false.</p></div></div><div class="pq"><p class="pq-q"><strong>Q4.</strong> You run 20 experiments, one per feature, and the best p-value is 0.03. Your colleague wants to ship that feature. What do you say, with numbers?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> with 20 tests at alpha 0.05, you expect about one false positive by chance alone. The chance of at least one is 1 - 0.95^20, about 64%. Bonferroni requires 0.05/20 = 0.0025 per test, and 0.03 does not clear it. The result is consistent with noise. Ship nothing on this evidence; re-test the feature alone on fresh data if you believe in it.</p></div></div><script>(function(){document.querySelectorAll(".pq-reveal").forEach(function(b){b.addEventListener("click",function(){var a=b.parentElement.querySelector(".pq-a");var opening=a.hasAttribute("hidden");if(opening){a.removeAttribute("hidden");b.setAttribute("aria-expanded","true");b.textContent="Hide answer";}else{a.setAttribute("hidden","");b.setAttribute("aria-expanded","false");b.textContent="Reveal answer";}});});})();</script>
+<p id="lab-w2-d5-math-lab-p23" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w2-d5-math-lab">https://ai.thes30.com/problems/w2-d5-math-lab</a>.</p>
+<span id="lab-w2-d5-math-lab-end" data-end></span></section><h2 id="interview-clearance">Interview clearance</h2><div id="lab-w2-d5-math-lab-aside07" data-kind="aside" class="ob-board"><h4>Design prompt</h4><ul><li>Derive the normal equations and explain why solve beats the explicit inverse.</li><li>Write the gradient of binary cross-entropy and describe how you would verify it numerically.</li><li>Prevalence 1%, sensitivity 99%, false positive rate 5%: compute the posterior and explain the intuition.</li><li>State what a 95% confidence interval actually guarantees, and what it does not.</li><li>Where does PSD show up in ML? Name three places and why it matters in each.</li></ul></div><div id="lab-w2-d5-math-lab-pq01" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q1.</strong> Which statement about the normal equations is correct? A: They require forming the matrix inverse explicitly. B: They state that the residual is orthogonal to the column space of X. C: They only apply when X is square. D: They minimize the L1 error.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> The normal equations X^T X w = X^T y state one fact algebraically: the residual y - Xw is orthogonal to every column of X.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> the inverse is one way to solve them, and the numerically worst one. Prefer solve or lstsq.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> orthogonality of the residual is the geometric content; everything else is algebra.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> X is typically tall (n rows, d columns); squareness is not required.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> least squares minimizes squared (L2) error, not L1.</li></ul></div></div><div id="lab-w2-d5-math-lab-pq02" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q2.</strong> Your analytic gradient and your central-difference check disagree by 0.5 on one parameter. List the two most likely bug sites, in the order you would check them.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> first, a missing constant (like 2/n or 1/n) in the analytic gradient; second, a broadcasting shape bug where two arrays aligned on the wrong axis. The lab names both as the classic gradient bugs. Check the constant by comparing magnitudes (a clean ratio like exactly n or 2 suggests the missing factor), then print shapes at every step of the chain.</p></div></div><div id="lab-w2-d5-math-lab-pq03" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q3.</strong> A startup claims its model "detects disease with 99% accuracy" on a condition affecting 1 in 1,000 people. What is wrong with this claim?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> a model that always predicts "healthy" scores 99.9% accuracy on this population while detecting nothing. Accuracy without the base rate is meaningless under imbalance. The right questions: what are the sensitivity and false positive rate, and what is P(disease | positive)? With a 5% false positive rate, the posterior is roughly 2%, so 98 of 100 alarms are false.</p></div></div><div id="lab-w2-d5-math-lab-pq04" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q4.</strong> You run 20 experiments, one per feature, and the best p-value is 0.03. Your colleague wants to ship that feature. What do you say, with numbers?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer:</strong> with 20 tests at alpha 0.05, you expect about one false positive by chance alone. The chance of at least one is 1 - 0.95^20, about 64%. Bonferroni requires 0.05/20 = 0.0025 per test, and 0.03 does not clear it. The result is consistent with noise. Ship nothing on this evidence; re-test the feature alone on fresh data if you believe in it.</p></div></div><script>(function(){document.querySelectorAll(".pq-reveal").forEach(function(b){b.addEventListener("click",function(){var a=b.parentElement.querySelector(".pq-a");var opening=a.hasAttribute("hidden");if(opening){a.removeAttribute("hidden");b.setAttribute("aria-expanded","true");b.textContent="Hide answer";}else{a.setAttribute("hidden","");b.setAttribute("aria-expanded","false");b.textContent="Reveal answer";}});});})();</script>
 <nav class="ds-volume-nav" aria-label="Volume navigation"><a class="ds-prev" href="17-ai-lab-python-data.html"><span>&uarr; Previous volume</span>Volume 17: Python and Data</a><a class="ds-next" href="19-ai-lab-classical-ml.html"><span>Next volume &darr;</span>Volume 19: Classical ML</a></nav>
 <div class="provenance"><strong>Last verified: October 2026.</strong> Live-verified: AI Lab site scrape (labs, tasks, solutions). <span class="uv">UNVERIFIED:</span> none.</div>
 <footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html">AI Lab Atlas: 15-Week Lab Map</a></li><li><a href="17-ai-lab-python-data.html">Python and Data Tools</a></li><li><a href="18-ai-lab-math-for-ml.html" class="foot-current">Math for ML (AI Lab)</a></li><li><a href="19-ai-lab-classical-ml.html">Classical ML</a></li><li><a href="20-ai-lab-evaluation-debugging.html">Evaluation and Debugging</a></li><li><a href="21-ai-lab-deep-learning.html">Deep Learning (AI Lab)</a></li><li><a href="22-ai-lab-cv-nlp-basics.html">CV and NLP Basics</a></li><li><a href="23-ai-lab-transformers.html">Transformers</a></li><li><a href="24-ai-lab-rag-retrieval.html">RAG and Retrieval</a></li><li><a href="25-ai-lab-mlops-systems.html">MLOps and Systems</a></li><li><a href="26-ai-lab-system-design.html">System Design (AI Lab)</a></li><li><a href="27-ai-lab-llm-agentic.html">LLM and Agentic AI</a></li><li><a href="28-ai-lab-interview-clearance.html">Interview Clearance</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav></footer>

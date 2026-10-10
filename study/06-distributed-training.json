@@ -1,0 +1,757 @@
+{
+ "schemaVersion": 1,
+ "itemId": "06-distributed-training",
+ "itemKind": "lesson",
+ "revision": "367f88a8816b53954c501c9740315339e781ef42400da6b9cc1182270cd1b480",
+ "sections": [
+  {
+   "anchor": "06-distributed-training-intro",
+   "title": "06-distributed-training-intro",
+   "minutes": 2,
+   "endAnchor": "06-distributed-training-intro-end",
+   "blocks": [
+    {
+     "anchor": "06-distributed-training-intro-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "verified",
+     "definition": "Model names, API signatures, hardware specs, paper results checked against live sources.",
+     "anchor": "06-distributed-training-intro-p01"
+    },
+    {
+     "term": "Last verified",
+     "definition": "September 2026; the authors checked this volume against live sources.",
+     "anchor": "06-distributed-training-intro-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "06-distributed-training-intro-r1",
+     "question": "What was verified for this volume?",
+     "answer": "Every model name, API signature, hardware spec, paper result, and price against live sources before publication.",
+     "anchor": "06-distributed-training-intro-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch1-memory-math",
+   "title": "1. The memory math: why one GPU is not enough",
+   "minutes": 7,
+   "endAnchor": "ch1-memory-math-end",
+   "blocks": [
+    {
+     "anchor": "ch1-memory-math-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch1-memory-math-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch1-memory-math-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "four piles",
+     "definition": "Weights, gradients, optimizer states, activations; training needs all four.",
+     "anchor": "ch1-memory-math-takeaway"
+    },
+    {
+     "term": "optimizer states",
+     "definition": "Extra numbers per parameter, like Adam's running averages.",
+     "anchor": "ch1-memory-math-p01"
+    },
+    {
+     "term": "activations",
+     "definition": "Forward-pass intermediates saved for the backward pass.",
+     "anchor": "ch1-memory-math-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch1-memory-math-r1",
+     "question": "What is training memory?",
+     "answer": "Not the model: four piles (weights, gradients, optimizer states, activations) all on GPU at once. Inference needs only weights.",
+     "anchor": "ch1-memory-math-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch2-ddp",
+   "title": "2. Data parallelism and DDP",
+   "minutes": 8,
+   "endAnchor": "ch2-ddp-end",
+   "blocks": [
+    {
+     "anchor": "ch2-ddp-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch2-ddp-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch2-ddp-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "data parallelism",
+     "definition": "Every GPU holds a full model copy; each trains on a different data slice.",
+     "anchor": "ch2-ddp-p02"
+    },
+    {
+     "term": "DDP",
+     "definition": "Distributed Data Parallel: PyTorch's implementation; gradients averaged every step.",
+     "anchor": "ch2-ddp-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch2-ddp-r1",
+     "question": "How do DDP replicas stay identical?",
+     "answer": "After every step, GPUs average their gradients so all copies stay identical.",
+     "anchor": "ch2-ddp-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "ch3-zero",
+   "title": "3. ZeRO: sharding the optimizer, gradients, and weights",
+   "minutes": 7,
+   "endAnchor": "ch3-zero-end",
+   "blocks": [
+    {
+     "anchor": "ch3-zero-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch3-zero-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch3-zero-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "ZeRO",
+     "definition": "Zero Redundancy Optimizer: shards optimizer states, gradients, weights across ranks.",
+     "anchor": "ch3-zero-p01"
+    },
+    {
+     "term": "sharding",
+     "definition": "Split into pieces, one piece per GPU; per-GPU memory shrinks as GPUs grow.",
+     "anchor": "ch3-zero-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch3-zero-r1",
+     "question": "What redundancy does ZeRO remove?",
+     "answer": "DDP's full duplication of optimizer state, gradients, and weights on every GPU.",
+     "anchor": "ch3-zero-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch4-fsdp",
+   "title": "4. FSDP in practice",
+   "minutes": 6,
+   "endAnchor": "ch4-fsdp-end",
+   "blocks": [
+    {
+     "anchor": "ch4-fsdp-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch4-fsdp-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch4-fsdp-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "FSDP",
+     "definition": "Fully Sharded Data Parallel: PyTorch's native ZeRO-3-style training.",
+     "anchor": "ch4-fsdp-p01"
+    },
+    {
+     "term": "FSDP2",
+     "definition": "Rewrite on DTensor: per-parameter sharding instead of flattened.",
+     "anchor": "ch4-fsdp-p02"
+    },
+    {
+     "term": "all-gather",
+     "definition": "Shards all-gathered just before a unit runs, freed right after.",
+     "anchor": "ch4-fsdp-p04"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch4-fsdp-r1",
+     "question": "How does FSDP handle parameters?",
+     "answer": "Flattens each unit's parameters, shards across ranks, all-gathers before the unit runs, frees after.",
+     "anchor": "ch4-fsdp-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "ch5-tensor",
+   "title": "5. Tensor parallelism: splitting individual layers",
+   "minutes": 6,
+   "endAnchor": "ch5-tensor-end",
+   "blocks": [
+    {
+     "anchor": "ch5-tensor-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch5-tensor-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch5-tensor-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "tensor parallelism",
+     "definition": "Splits individual weight matrices across GPUs; Megatron-LM design.",
+     "anchor": "ch5-tensor-p01"
+    },
+    {
+     "term": "all-reduce",
+     "definition": "Combines partial results; paid on every layer.",
+     "anchor": "ch5-tensor-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch5-tensor-r1",
+     "question": "When is sharding data not enough?",
+     "answer": "When a single layer will not fit; then split the layer itself across GPUs.",
+     "anchor": "ch5-tensor-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch6-pipeline",
+   "title": "6. Pipeline parallelism: GPipe vs 1F1B",
+   "minutes": 7,
+   "endAnchor": "ch6-pipeline-end",
+   "blocks": [
+    {
+     "anchor": "ch6-pipeline-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch6-pipeline-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch6-pipeline-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "pipeline parallelism",
+     "definition": "Cuts the model by layers into stages; microbatches flow like an assembly line.",
+     "anchor": "ch6-pipeline-p02"
+    },
+    {
+     "term": "microbatches",
+     "definition": "A batch split so stages stay busy.",
+     "anchor": "ch6-pipeline-p01"
+    },
+    {
+     "term": "GPipe",
+     "definition": "The origin schedule versus 1F1B.",
+     "anchor": "ch6-pipeline-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch6-pipeline-r1",
+     "question": "What are the two schedules?",
+     "answer": "GPipe versus 1F1B for pipelining microbatches through stages.",
+     "anchor": "ch6-pipeline-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch7-sequence",
+   "title": "7. Sequence and context parallelism",
+   "minutes": 6,
+   "endAnchor": "ch7-sequence-end",
+   "blocks": [
+    {
+     "anchor": "ch7-sequence-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch7-sequence-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch7-sequence-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "sequence parallelism",
+     "definition": "Shards the sequence itself: 128k tokens as 16k on each of 8 GPUs.",
+     "anchor": "ch7-sequence-fig01"
+    },
+    {
+     "term": "keys and values",
+     "definition": "Attention needs them across the split; the amber arrow is the problem.",
+     "anchor": "ch7-sequence-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch7-sequence-r1",
+     "question": "Which pile did chapters 2-6 leave untouched?",
+     "answer": "Activations, which explode when contexts get long.",
+     "anchor": "ch7-sequence-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch8-3d",
+   "title": "8. Combining strategies: the 3D parallelism recipe",
+   "minutes": 6,
+   "endAnchor": "ch8-3d-end",
+   "blocks": [
+    {
+     "anchor": "ch8-3d-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch8-3d-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch8-3d-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "3D parallelism",
+     "definition": "Data, tensor, and pipeline at once; degrees d*t*p = N.",
+     "anchor": "ch8-3d-p01"
+    },
+    {
+     "term": "mesh",
+     "definition": "Each GPU's role is a coordinate like 'data rank 2, tensor rank 5, pipeline stage 1'.",
+     "anchor": "ch8-3d-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch8-3d-r1",
+     "question": "What is the 3D recipe?",
+     "answer": "Factor the fleet into a mesh with data, tensor, pipeline degrees multiplying to N.",
+     "anchor": "ch8-3d-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch9-checkpoint",
+   "title": "9. Checkpointing and fault tolerance",
+   "minutes": 6,
+   "endAnchor": "ch9-checkpoint-end",
+   "blocks": [
+    {
+     "anchor": "ch9-checkpoint-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch9-checkpoint-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch9-checkpoint-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "checkpoint",
+     "definition": "Complete training snapshot to durable storage; resume instead of restart.",
+     "anchor": "ch9-checkpoint-p02"
+    },
+    {
+     "term": "asynchronous checkpointing",
+     "definition": "Saves without pausing training; copies to host RAM first.",
+     "anchor": "ch9-checkpoint-p02"
+    },
+    {
+     "term": "fault tolerance",
+     "definition": "How often you save, how fast, failure detection, bit-identical resume.",
+     "anchor": "ch9-checkpoint-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch9-checkpoint-r1",
+     "question": "What does fault tolerance cover?",
+     "answer": "Save frequency, save speed, failure detection, and bit-identical resume.",
+     "anchor": "ch9-checkpoint-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "ch10-profile",
+   "title": "10. Profiling: where time goes in a training step",
+   "minutes": 6,
+   "endAnchor": "ch10-profile-end",
+   "blocks": [
+    {
+     "anchor": "ch10-profile-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch10-profile-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch10-profile-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "profiling",
+     "definition": "Measures where time goes instead of guessing.",
+     "anchor": "ch10-profile-p01"
+    },
+    {
+     "term": "roofline model",
+     "definition": "Tells whether memory bandwidth or compute limits a kernel.",
+     "anchor": "ch10-profile-p02"
+    },
+    {
+     "term": "arithmetic intensity",
+     "definition": "FLOPs divided by bytes moved.",
+     "anchor": "ch10-profile-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch10-profile-r1",
+     "question": "What are the two profiling tools?",
+     "answer": "The roofline model and the profiler timeline (PyTorch profiler, Nsight Systems).",
+     "anchor": "ch10-profile-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "labs",
+   "title": "Labs: make it real",
+   "minutes": 7,
+   "endAnchor": "labs-end",
+   "blocks": [
+    {
+     "anchor": "labs-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "memory calculator",
+     "definition": "Lab 1: reproduce the 7B memory bill from a reusable script.",
+     "anchor": "labs-p01"
+    },
+    {
+     "term": "Lab 1",
+     "definition": "Do it today; the tool you will reach for in every later chapter.",
+     "anchor": "labs-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "labs-r1",
+     "question": "Which lab runs on any CPU?",
+     "answer": "Labs 1 and 2; Lab 3 needs a cloud GPU and was syntax-checked, not executed.",
+     "anchor": "labs-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "capstone",
+   "title": "Capstone: plan the tiny GPT's distributed run",
+   "minutes": 4,
+   "endAnchor": "capstone-end",
+   "blocks": [
+    {
+     "anchor": "capstone-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "capstone-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "one-page plan",
+     "definition": "Budget, strategy, mesh, checkpoint contract, profiling gate.",
+     "anchor": "capstone-fig01"
+    },
+    {
+     "term": "senior move",
+     "definition": "If it fits one GPU, stop: distribution is the wrong answer.",
+     "anchor": "capstone-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "capstone-r1",
+     "question": "What is the strategy pick order?",
+     "answer": "Fits per replica: DDP. One replica too big: FSDP2 first, then tensor inside the node, pipeline across nodes.",
+     "anchor": "capstone-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "interview-qa",
+   "title": "Interview Q&amp;A",
+   "minutes": 3,
+   "endAnchor": "interview-qa-end",
+   "blocks": [
+    {
+     "anchor": "interview-qa-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "ZeRO stage",
+     "definition": "Stage 0 DDP 112GB; stage 1 shards optimizer 38.5GB; stage 2 adds gradients 26.25GB; stage 3 adds params 14GB.",
+     "anchor": "interview-qa-p02"
+    },
+    {
+     "term": "1.5x communication",
+     "definition": "ZeRO-3's cost versus DDP.",
+     "anchor": "interview-qa-p07"
+    }
+   ],
+   "recall": [
+    {
+     "id": "interview-qa-r1",
+     "question": "Why is stage 1 the sweet spot?",
+     "answer": "Shards optimizer states with zero extra communication versus DDP; the follow-up the chapter poses.",
+     "anchor": "interview-qa-p04"
+    }
+   ]
+  },
+  {
+   "anchor": "forward",
+   "title": "Where this goes next",
+   "minutes": 1,
+   "endAnchor": "forward-end",
+   "blocks": [
+    {
+     "anchor": "forward-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Volume 7",
+     "definition": "Takes these distributed setups into fine-tuning: PEFT, preference optimization, long-context.",
+     "anchor": "forward-p03"
+    },
+    {
+     "term": "machinery",
+     "definition": "The sharded, pipelined setup Volume 7 fine-tunes on.",
+     "anchor": "forward-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "forward-r1",
+     "question": "What does Volume 7 cover?",
+     "answer": "Parameter-efficient methods, preference optimization, and long-context fine-tuning on this machinery.",
+     "anchor": "forward-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "a06a-appendix",
+   "title": "Appendix 6A: Training Reliability",
+   "minutes": 43,
+   "endAnchor": "a06a-appendix-end",
+   "blocks": [
+    {
+     "anchor": "a06a-appendix-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a06a-appendix-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "a06a-appendix-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "loss spikes",
+     "definition": "With NaNs and hung collectives; failure modes and recovery.",
+     "anchor": "a06a-appendix-p02"
+    },
+    {
+     "term": "3 a.m.",
+     "definition": "When the loss curve spikes on a large run.",
+     "anchor": "a06a-appendix-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a06a-appendix-r1",
+     "question": "What does this appendix cover?",
+     "answer": "What happens when reality intrudes: hardware fails, nodes slow, loss spikes at 3 a.m.",
+     "anchor": "a06a-appendix-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "a06b-appendix",
+   "title": "Appendix 6B: Parallelism Depth and XLA/TPU",
+   "minutes": 35,
+   "endAnchor": "a06b-appendix-end",
+   "blocks": [
+    {
+     "anchor": "a06b-appendix-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a06b-appendix-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "a06b-appendix-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "expert parallelism",
+     "definition": "The strategy behind large mixture-of-experts models.",
+     "anchor": "a06b-appendix-p02"
+    },
+    {
+     "term": "context parallelism",
+     "definition": "Past the overview: exact communication patterns and byte-level cost math.",
+     "anchor": "a06b-appendix-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a06b-appendix-r1",
+     "question": "What two strategies go deeper here?",
+     "answer": "Context parallelism and expert parallelism, plus a byte-math cookbook.",
+     "anchor": "a06b-appendix-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "06-distributed-training-watch-deeper",
+   "title": "06-distributed-training-watch-deeper",
+   "minutes": 3,
+   "endAnchor": "06-distributed-training-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "06-distributed-training-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "06-distributed-training-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "FSDP",
+     "definition": "Caleb Writes Code trains a real 10B model; matches Chapters 2 and 4.",
+     "anchor": "06-distributed-training-watch-deeper-fig01"
+    },
+    {
+     "term": "16-bytes-per-parameter",
+     "definition": "The math walked through ZeRO stages 1-3 plus offloading.",
+     "anchor": "06-distributed-training-watch-deeper-fig02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "06-distributed-training-watch-deeper-r1",
+     "question": "Which video pairs with Chapter 3?",
+     "answer": "How to Train Models Bigger Than Your GPU (DeepSpeed ZeRO Explained).",
+     "anchor": "06-distributed-training-watch-deeper-fig02"
+    }
+   ]
+  }
+ ]
+}

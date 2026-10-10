@@ -1,0 +1,365 @@
+{
+ "schemaVersion": 1,
+ "itemId": "26-ai-lab-system-design",
+ "itemKind": "lesson",
+ "revision": "d5a2b5d436f13a4b8ac71884b0e2e4b938cd8f1a1ccc509350aa3ca2dc5de167",
+ "sections": [
+  {
+   "anchor": "lab-w13-d1-ml-system-design-fundamentals",
+   "title": "ML System Design Fundamentals Expert",
+   "minutes": 7,
+   "endAnchor": "lab-w13-d1-ml-system-design-fundamentals-end",
+   "blocks": [
+    {
+     "anchor": "lab-w13-d1-ml-system-design-fundamentals-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "seven steps",
+     "definition": "The template: SLOs, metrics, data plan, modeling, serving, monitoring, tradeoffs.",
+     "anchor": "lab-w13-d1-ml-system-design-fundamentals-p02"
+    },
+    {
+     "term": "label-delay trap",
+     "definition": "Watch for it in the data and labeling plan.",
+     "anchor": "lab-w13-d1-ml-system-design-fundamentals-p02"
+    },
+    {
+     "term": "false-decline rate",
+     "definition": "Often decides whether a fraud model ships, not the model metric.",
+     "anchor": "lab-w13-d1-ml-system-design-fundamentals-p03"
+    },
+    {
+     "term": "guardrail metrics",
+     "definition": "Business, model, and guardrail metrics after SLOs.",
+     "anchor": "lab-w13-d1-ml-system-design-fundamentals-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w13-d1-ml-system-design-fundamentals-r1",
+     "question": "What is the deliverable that matters most in interviews?",
+     "answer": "Two tradeoffs you chose on purpose, from the final task.",
+     "anchor": "lab-w13-d1-ml-system-design-fundamentals-p03"
+    },
+    {
+     "id": "lab-w13-d1-ml-system-design-fundamentals-r2",
+     "question": "What is the guardrail lesson?",
+     "answer": "The false-decline rate, not the model metric, often decides whether a fraud model ships.",
+     "anchor": "lab-w13-d1-ml-system-design-fundamentals-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w13-d2-feature-store-patterns",
+   "title": "Feature Store Patterns Expert",
+   "minutes": 4,
+   "endAnchor": "lab-w13-d2-feature-store-patterns-end",
+   "blocks": [
+    {
+     "anchor": "lab-w13-d2-feature-store-patterns-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "point-in-time correct",
+     "definition": "Offline features computed without peeking at the future.",
+     "anchor": "lab-w13-d2-feature-store-patterns-p02"
+    },
+    {
+     "term": "skew check",
+     "definition": "Compares what training saw against what serving would see.",
+     "anchor": "lab-w13-d2-feature-store-patterns-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w13-d2-feature-store-patterns-r1",
+     "question": "What is the lesson of the metric inflation?",
+     "answer": "Without point-in-time correctness, your offline numbers are fiction.",
+     "anchor": "lab-w13-d2-feature-store-patterns-p02"
+    },
+    {
+     "id": "lab-w13-d2-feature-store-patterns-r2",
+     "question": "What habit does this install?",
+     "answer": "Never trust an offline metric until you can prove the pipeline computed features without peeking at the future.",
+     "anchor": "lab-w13-d2-feature-store-patterns-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w13-d3-real-time-vs-batch-inference",
+   "title": "Real-Time vs Batch Inference Expert",
+   "minutes": 5,
+   "endAnchor": "lab-w13-d3-real-time-vs-batch-inference-end",
+   "blocks": [
+    {
+     "anchor": "lab-w13-d3-real-time-vs-batch-inference-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w13-d3-real-time-vs-batch-inference-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "latency-cost-freshness triangle",
+     "definition": "Real-time catches spikes faster but costs more; batch is cheap but stale.",
+     "anchor": "lab-w13-d3-real-time-vs-batch-inference-p03"
+    },
+    {
+     "term": "scoring policies",
+     "definition": "Score immediately on spike events, or score in batches on a schedule.",
+     "anchor": "lab-w13-d3-real-time-vs-batch-inference-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w13-d3-real-time-vs-batch-inference-r1",
+     "question": "What do you measure?",
+     "answer": "Freshness against cost, for immediate scoring versus batched scoring on a simulated world.",
+     "anchor": "lab-w13-d3-real-time-vs-batch-inference-p02"
+    },
+    {
+     "id": "lab-w13-d3-real-time-vs-batch-inference-r2",
+     "question": "What is the shell-3 pattern?",
+     "answer": "A cheap real-time heuristic for spikes plus a full batch rescore.",
+     "anchor": "lab-w13-d3-real-time-vs-batch-inference-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w13-d4-case-studies-recs-search-ads",
+   "title": "Case Studies , Recs, Search, Ads Expert",
+   "minutes": 5,
+   "endAnchor": "lab-w13-d4-case-studies-recs-search-ads-end",
+   "blocks": [
+    {
+     "anchor": "lab-w13-d4-case-studies-recs-search-ads-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "design-doc skeleton",
+     "definition": "Reusable; fill it three times for recs, search, ads.",
+     "anchor": "lab-w13-d4-case-studies-recs-search-ads-p02"
+    },
+    {
+     "term": "retrieval plus ranking",
+     "definition": "For recs; query understanding for search; eligibility plus auction plus ranking for ads.",
+     "anchor": "lab-w13-d4-case-studies-recs-search-ads-p04"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w13-d4-case-studies-recs-search-ads-r1",
+     "question": "What should you be able to do after this lab?",
+     "answer": "Start any of the three designs in under two minutes from the reusable skeleton.",
+     "anchor": "lab-w13-d4-case-studies-recs-search-ads-p04"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w14-d1-design-real-time-recommendation-system",
+   "title": "Design Real-Time Recommendation System Expert",
+   "minutes": 5,
+   "endAnchor": "lab-w14-d1-design-real-time-recommendation-system-end",
+   "blocks": [
+    {
+     "anchor": "lab-w14-d1-design-real-time-recommendation-system-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w14-d1-design-real-time-recommendation-system-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "two-stage",
+     "definition": "Retrieval then ranking; the single most reused pattern in ML system design interviews.",
+     "anchor": "lab-w14-d1-design-real-time-recommendation-system-p04"
+    },
+    {
+     "term": "p95 latency budget",
+     "definition": "Requirements and metrics start here.",
+     "anchor": "lab-w14-d1-design-real-time-recommendation-system-p02"
+    },
+    {
+     "term": "1,000 candidates",
+     "definition": "Retrieval returns about 1,000 in under 50 ms.",
+     "anchor": "lab-w14-d1-design-real-time-recommendation-system-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w14-d1-design-real-time-recommendation-system-r1",
+     "question": "What is the most reused pattern?",
+     "answer": "Retrieval-then-ranking two-stage shape.",
+     "anchor": "lab-w14-d1-design-real-time-recommendation-system-p04"
+    },
+    {
+     "id": "lab-w14-d1-design-real-time-recommendation-system-r2",
+     "question": "What does the retrieval stage return?",
+     "answer": "About 1,000 candidates in under 50 ms.",
+     "anchor": "lab-w14-d1-design-real-time-recommendation-system-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w14-d3-llm-inference-system-design",
+   "title": "LLM Inference System Design Expert",
+   "minutes": 3,
+   "endAnchor": "lab-w14-d3-llm-inference-system-design-end",
+   "blocks": [
+    {
+     "anchor": "lab-w14-d3-llm-inference-system-design-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "dynamic batching",
+     "definition": "Wins because the GPU never idles on finished requests.",
+     "anchor": "lab-w14-d3-llm-inference-system-design-p02"
+    },
+    {
+     "term": "continuous batching",
+     "definition": "Answer 'why' with the measured p95 gap, not adjectives.",
+     "anchor": "lab-w14-d3-llm-inference-system-design-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w14-d3-llm-inference-system-design-r1",
+     "question": "Why does dynamic batching win?",
+     "answer": "Because the GPU never idles on finished requests; measured on p95 latency and throughput.",
+     "anchor": "lab-w14-d3-llm-inference-system-design-p02"
+    },
+    {
+     "id": "lab-w14-d3-llm-inference-system-design-r2",
+     "question": "What is the simulator habit?",
+     "answer": "When asked why continuous batching, answer with the measured p95 gap, not adjectives.",
+     "anchor": "lab-w14-d3-llm-inference-system-design-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w14-d4-feature-stores-data-pipelines-deep-dive",
+   "title": "Feature Stores &amp; Data Pipelines (Deep Dive) Expert",
+   "minutes": 5,
+   "endAnchor": "lab-w14-d4-feature-stores-data-pipelines-deep-dive-end",
+   "blocks": [
+    {
+     "anchor": "lab-w14-d4-feature-stores-data-pipelines-deep-dive-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w14-d4-feature-stores-data-pipelines-deep-dive-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "parity check",
+     "definition": "Offline-versus-online check that shows skew directly.",
+     "anchor": "lab-w14-d4-feature-stores-data-pipelines-deep-dive-p02"
+    },
+    {
+     "term": "lineage metadata",
+     "definition": "Ownership, freshness, quality checks attached to every feature.",
+     "anchor": "lab-w14-d4-feature-stores-data-pipelines-deep-dive-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w14-d4-feature-stores-data-pipelines-deep-dive-r1",
+     "question": "What is the operational lesson?",
+     "answer": "Features are production assets with owners and SLOs, not columns in a dataframe.",
+     "anchor": "lab-w14-d4-feature-stores-data-pipelines-deep-dive-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w14-d5-scaling-training-distributed-ml",
+   "title": "Scaling Training , Distributed ML Expert",
+   "minutes": 4,
+   "endAnchor": "lab-w14-d5-scaling-training-distributed-ml-end",
+   "blocks": [
+    {
+     "anchor": "lab-w14-d5-scaling-training-distributed-ml-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "communication overhead",
+     "definition": "Why speedup lands below 8x; the timing model says exactly why.",
+     "anchor": "lab-w14-d5-scaling-training-distributed-ml-p03"
+    },
+    {
+     "term": "learning-rate scaling",
+     "definition": "Why the LR scales with batch size in synchronous data parallelism.",
+     "anchor": "lab-w14-d5-scaling-training-distributed-ml-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w14-d5-scaling-training-distributed-ml-r1",
+     "question": "What are the two lessons interviewers love?",
+     "answer": "Why the learning rate scales with batch size in sync data parallelism, and why speedup is sublinear.",
+     "anchor": "lab-w14-d5-scaling-training-distributed-ml-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w15-d1-llms-in-production",
+   "title": "LLMs in Production Expert",
+   "minutes": 5,
+   "endAnchor": "lab-w15-d1-llms-in-production-end",
+   "blocks": [
+    {
+     "anchor": "lab-w15-d1-llms-in-production-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "quantization",
+     "definition": "Shrinks the model you have; int8 weights measured for what changes.",
+     "anchor": "lab-w15-d1-llms-in-production-p02"
+    },
+    {
+     "term": "distillation",
+     "definition": "Builds a smaller student matching teacher logits; the two cheapest production levers.",
+     "anchor": "lab-w15-d1-llms-in-production-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w15-d1-llms-in-production-r1",
+     "question": "What is the quality-versus-cost framing?",
+     "answer": "Every optimization is a tradeoff against accuracy; the lab makes you measure both sides.",
+     "anchor": "lab-w15-d1-llms-in-production-p02"
+    }
+   ]
+  }
+ ]
+}

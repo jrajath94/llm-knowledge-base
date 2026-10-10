@@ -745,19 +745,19 @@ html.xp-js figure.xp-px img {
 <div class="takeaway"><h4>Key takeaways</h4><ul><li>IDF downweights ubiquitous terms; TF-IDF vectors reward words that are frequent in the document but rare in the corpus.</li><li>Cosine similarity compares vector direction, which makes it length-invariant for retrieval.</li><li>Naive Bayes: Bayes rule, conditional independence, Laplace smoothing, all computed in log-space.</li><li>Counts do not understand meaning; that limitation motivates embeddings in Volume 23.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Compute TF-IDF vectors for two documents by hand and rank them against a query.</li><li>Why is Naive Bayes trained in log-space? What breaks in probability space?</li><li>Your bigram model beats your unigram model on validation but loses on test. Diagnose it.</li></ul></div>
 <p><strong>Lab pointer.</strong> The w8-d5 Classical NLP Methods lab implements the tokenizer with n-gram ranges. It builds vocabulary and count vectors. It fits TF-IDF and retrieves with cosine. It runs Naive Bayes with Laplace smoothing. Plus the unigram vs bigram comparison with both Naive Bayes and logistic regression.</p>
 <h2>Lab walkthroughs</h2><div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w8-d4-text-preprocessing-tokenization">Text Preprocessing &amp; Tokenization</button><button data-target="lab-w8-d5-classical-nlp-methods">Classical NLP Methods</button></div><section class="lab" id="lab-w8-d4-text-preprocessing-tokenization">
-<h3>Text Preprocessing &amp; Tokenization <span class="diff diff-hard">Hard</span></h3>
-<p class="lab-meta">Week 8, Day 4 · CV &amp; NLP Basics · 5 tasks · 5 checks</p>
-<p>This lab builds the text front end every later volume assumes: normalization, punctuation-aware word tokenization, character round-tripping, and BPE merge learning plus greedy encoding. It is the hands-on companion to Concept 1. The regex tokenizer task is where most students discover how many edge cases "just split on spaces" hides.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">CV &amp; NLP Basics</span><span class="tagchip">Hard</span><span class="tagchip">Week 8</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1v0WqYoauUlhosTNEsTIWwhCLPQpdZg-m">Colab</a> · <a href="/notes/w9-d4-ml-coding-vectorized-softmax.html">Notes</a> · <a href="tok_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/pYqZGsCnxGc">Video</a></p>
+<h3 id="text-preprocessing-amp-tokenization-hard">Text Preprocessing &amp; Tokenization <span class="diff diff-hard">Hard</span></h3>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 8, Day 4 · CV &amp; NLP Basics · 5 tasks · 5 checks</p>
+<p data-term="normalization" id="lab-w8-d4-text-preprocessing-tokenization-p02" data-kind="prose">This lab builds the text front end every later volume assumes: normalization, punctuation-aware word tokenization, character round-tripping, and BPE merge learning plus greedy encoding. It is the hands-on companion to Concept 1. The regex tokenizer task is where most students discover how many edge cases "just split on spaces" hides.</p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p03" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p04" data-kind="prose" class="tags"><span class="tagchip">CV &amp; NLP Basics</span><span class="tagchip">Hard</span><span class="tagchip">Week 8</span></p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1v0WqYoauUlhosTNEsTIWwhCLPQpdZg-m">Colab</a> · <a href="/notes/w9-d4-ml-coding-vectorized-softmax.html">Notes</a> · <a href="tok_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/pYqZGsCnxGc">Video</a></p>
 <h4>Tasks (5)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup <span class="task-sec">Setup</span></summary><div class="task-body"><h3>Text Preprocessing &amp; Tokenization ,  Student Lab</h3>
-<p>We implement robust text normalization and tokenization from scratch (no external datasets).</p>
-<p>Focus areas:</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup <span class="task-sec">Setup</span></summary><div class="task-body"><h3 id="text-preprocessing-amp-tokenization-student-lab">Text Preprocessing &amp; Tokenization ,  Student Lab</h3>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p06" data-kind="prose">We implement robust text normalization and tokenization from scratch (no external datasets).</p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p07" data-kind="prose">Focus areas:</p>
 <ul><li>normalization (unicode, casing, whitespace)</li><li>word tokenization (punctuation as tokens)</li><li>character tokenization</li><li>a toy BPE-style subword tokenizer</li></ul>
 <h4>Corpus (offline)</h4>
-<p>We intentionally include messy text: unicode quotes, dashes, emojis, accents, URLs, weird spacing, and a few strings where NFKC effects are very visible.</p><h4>Starter code</h4><pre><code class="lang-python">import re
+<p data-term="NFKC" id="lab-w8-d4-text-preprocessing-tokenization-p08" data-kind="prose">We intentionally include messy text: unicode quotes, dashes, emojis, accents, URLs, weird spacing, and a few strings where NFKC effects are very visible.</p><h4>Starter code</h4><pre><code class="lang-python">import re
 import unicodedata
 from collections import Counter
 
@@ -811,17 +811,17 @@ corpus = [
 ]
 print('n_docs', len(corpus))
 for i, s in enumerate(corpus):
-    print(i, repr(s))</code></pre><h4>Instructor explanation</h4><h3>Text Preprocessing &amp; Tokenization ,  Instructor Lab</h3>
-<p>Solutions + short rationales. Fully runnable top-to-bottom.</p>
+    print(i, repr(s))</code></pre><h4>Instructor explanation</h4><h3 id="text-preprocessing-amp-tokenization-instructor-lab">Text Preprocessing &amp; Tokenization ,  Instructor Lab</h3>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p09" data-kind="prose">Solutions + short rationales. Fully runnable top-to-bottom.</p>
 <h4>Normalization</h4>
-<p>Rationale: <code>NFKC</code> reduces unicode variants; whitespace collapse makes downstream tokenization deterministic.</p></details></div></details>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p10" data-kind="prose">Rationale: <code>NFKC</code> reduces unicode variants; whitespace collapse makes downstream tokenization deterministic.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Implement `normalize_text(s)` with: <span class="task-sec">Normalization</span></summary><div class="task-body"><h4>Section 0 ,  Normalization</h4>
 <h4>Task 0.1</h4>
-<p>Implement <code>normalize_text(s)</code> with:</p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p11" data-kind="prose">Implement <code>normalize_text(s)</code> with:</p>
 <ul><li>Unicode normalization (NFKC)</li><li>Optional lowercasing</li><li>Whitespace normalization (collapse runs to single spaces)</li></ul>
-<p>Regex note:</p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p12" data-kind="prose">Regex note:</p>
 <ul><li><code>\s</code> means any whitespace character: space <code>' '</code>, newline <code>'\n'</code>, tab <code>'\t'</code>, carriage return <code>'\r'</code></li><li>so <code>r'\s+'</code> means one or more whitespace characters in a row</li></ul>
-<p>FAANG gotcha: normalization decisions are task-dependent; don’t blindly lowercase in all problems.</p><h4>Starter code</h4><pre><code class="lang-python">_WS_RE = re.compile(r'\s+')
+<p id="lab-w8-d4-text-preprocessing-tokenization-p13" data-kind="prose">FAANG gotcha: normalization decisions are task-dependent; don’t blindly lowercase in all problems.</p><h4>Starter code</h4><pre><code class="lang-python">_WS_RE = re.compile(r'\s+')
 
 def normalize_text(s: str, *, lowercase: bool = True) -&gt; str:
     # TODO
@@ -844,14 +844,14 @@ for i, s in enumerate(corpus):
     print(i, repr(s))
 for i in range(len(corpus)):
     print(normalize_text(corpus[i]))</code></pre><h4>Instructor explanation</h4><h4>Normalization</h4>
-<p>Rationale: <code>NFKC</code> reduces unicode variants; whitespace collapse makes downstream tokenization deterministic.</p></details></div></details>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p14" data-kind="prose">Rationale: <code>NFKC</code> reduces unicode variants; whitespace collapse makes downstream tokenization deterministic.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Implement `tokenize_words(s)` using a regex that produces tokens including punctuation. <span class="task-sec">Word tokenization</span></summary><div class="task-body"><h4>Section 1 ,  Word tokenization</h4>
-<p>We want punctuation separated as tokens (e.g., commas, periods, parentheses).</p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p15" data-kind="prose">We want punctuation separated as tokens (e.g., commas, periods, parentheses).</p>
 <h4>Task 1.1</h4>
-<p>Implement <code>tokenize_words(s)</code> using a regex that produces tokens including punctuation.</p>
-<p>Design constraints:</p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p16" data-kind="prose">Implement <code>tokenize_words(s)</code> using a regex that produces tokens including punctuation.</p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p17" data-kind="prose">Design constraints:</p>
 <ul><li>deterministic</li><li>does not drop punctuation</li><li>does not crash on unicode</li></ul>
-<p>Note: This is a <em>toy</em> tokenizer; real-world tokenizers are more nuanced.</p><h4>Starter code</h4><pre><code class="lang-python">_TOK_RE = re.compile(
+<p id="lab-w8-d4-text-preprocessing-tokenization-p18" data-kind="prose">Note: This is a <em>toy</em> tokenizer; real-world tokenizers are more nuanced.</p><h4>Starter code</h4><pre><code class="lang-python">_TOK_RE = re.compile(
     r"""
     (?:[a-zA-Z]+(?:'[a-zA-Z]+)?)
     |(?:\d+(?:,\d{3})*(?:\.\d+)?(?:e[+-]?\d+)?)
@@ -887,10 +887,10 @@ for i, s in enumerate(corpus):
     print(i, repr(s))
     print(tokenize_words(s))
 print(tokenize_words(corpus[1]))</code></pre><h4>Instructor explanation</h4><h4>Word tokenization</h4>
-<p>Rationale: keep punctuation tokens so you can reconstruct structure (e.g., sentence boundaries) and avoid information loss.</p></details></div></details>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p19" data-kind="prose">Rationale: keep punctuation tokens so you can reconstruct structure (e.g., sentence boundaries) and avoid information loss.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Implement `tokenize_chars` and `detokenize_chars`. <span class="task-sec">Character tokenization</span></summary><div class="task-body"><h4>Section 2 ,  Character tokenization</h4>
 <h4>Task 2.1</h4>
-<p>Implement <code>tokenize_chars</code> and <code>detokenize_chars</code>. We will keep spaces as a token to preserve exact reversibility.</p><h4>Starter code</h4><pre><code class="lang-python">def tokenize_chars(s: str) -&gt; list[str]:
+<p id="lab-w8-d4-text-preprocessing-tokenization-p20" data-kind="prose">Implement <code>tokenize_chars</code> and <code>detokenize_chars</code>. We will keep spaces as a token to preserve exact reversibility.</p><h4>Starter code</h4><pre><code class="lang-python">def tokenize_chars(s: str) -&gt; list[str]:
     # TODO
     ...
 def detokenize_chars(tokens: list[str]) -&gt; str:
@@ -909,12 +909,12 @@ s = 'Hið'
 for i, doc in enumerate(corpus):
     print(i, repr(doc))
 check('roundtrip', detokenize_chars(tokenize_chars(s)) == normalize_text(s, lowercase=False))</code></pre><h4>Instructor explanation</h4><h4>Char tokenization</h4>
-<p>Rationale: char tokenization has no OOV but can be long sequences.</p></details></div></details>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p21" data-kind="prose">Rationale: char tokenization has no OOV but can be long sequences.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Implement the helper functions used to learn merges and to encode words. <span class="task-sec">Subword tokenization (BPE-style)</span></summary><div class="task-body"><h4>Section 3 ,  Subword tokenization (BPE-style)</h4>
-<p>We implement a toy BPE algorithm:</p>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p22" data-kind="prose">We implement a toy BPE algorithm:</p>
 <ul><li>represent each word as characters plus an end-of-word marker <code>&lt;/w&gt;</code></li><li>repeatedly merge the most frequent adjacent pair</li></ul>
 <h4>Task 3.1</h4>
-<p>Implement the helper functions used to learn merges and to encode words.</p><h4>Starter code</h4><pre><code class="lang-python">def word_to_symbols(word: str) -&gt; tuple[str, ...]:
+<p id="lab-w8-d4-text-preprocessing-tokenization-p23" data-kind="prose">Implement the helper functions used to learn merges and to encode words.</p><h4>Starter code</h4><pre><code class="lang-python">def word_to_symbols(word: str) -&gt; tuple[str, ...]:
     # TODO
     ...
 def get_pair_counts(vocab: Counter[tuple[str, ...]]) -&gt; Counter[tuple[str, str]]:
@@ -935,29 +935,29 @@ merges = learn_bpe_merges(corpus, n_merges=40)
 print('n_merges', len(merges))
 print('cooperate -&gt;', bpe_encode_word('cooperate', merges))
 check('bpe_nonempty', len(bpe_encode_word('hello', merges)) &gt;= 1)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('bpe_nonempty', len(bpe_encode_word('hello', merges)) &gt;= 1)</code></pre><h4>Checks</h4><ul><li>check('bpe_nonempty', len(bpe_encode_word('hello', merges)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Instructor explanation</h4><h4>BPE-style subword tokenizer</h4>
-<p>Rationale: subwords reduce OOV while keeping sequences shorter than chars.</p></details></div></details>
+<p id="lab-w8-d4-text-preprocessing-tokenization-p24" data-kind="prose">Rationale: subwords reduce OOV while keeping sequences shorter than chars.</p></details></div></details>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>text preprocessing, tokenization, classical NLP</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Meta</td><td>medium</td><td>tokenization, text features, NLP foundations</td><td>Meta MLE interview guide; Meta ML initial interview prep</td></tr><tr><td>Microsoft</td><td>medium</td><td>NLP basics, text pipelines, feature extraction</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w8-d4-text-preprocessing-tokenization">https://ai.thes30.com/problems/w8-d4-text-preprocessing-tokenization</a>.</p>
-</section><section class="lab" id="lab-w8-d5-classical-nlp-methods">
-<h3>Classical NLP Methods <span class="diff diff-hard">Hard</span></h3>
-<p class="lab-meta">Week 8, Day 5 · CV &amp; NLP Basics · 9 tasks · 4 checks</p>
-<p>This lab is the classical NLP toolkit as code: vocabulary and count vectors, TF-IDF with cosine retrieval, Naive Bayes with Laplace smoothing. Plus the honest comparison of unigram vs bigram features under both Naive Bayes and logistic regression. It is Concept 2 with experiments. Run the majority-class baseline first. Measure everything else against it.</p>
-<figure class="lesson-fig">
+<p id="lab-w8-d4-text-preprocessing-tokenization-p25" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w8-d4-text-preprocessing-tokenization">https://ai.thes30.com/problems/w8-d4-text-preprocessing-tokenization</a>.</p>
+<span id="lab-w8-d4-text-preprocessing-tokenization-end" data-end></span></section><section class="lab" id="lab-w8-d5-classical-nlp-methods">
+<h3 id="classical-nlp-methods-hard">Classical NLP Methods <span class="diff diff-hard">Hard</span></h3>
+<p id="lab-w8-d5-classical-nlp-methods-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 8, Day 5 · CV &amp; NLP Basics · 9 tasks · 4 checks</p>
+<p data-term="TF-IDF" id="lab-w8-d5-classical-nlp-methods-p02" data-kind="prose">This lab is the classical NLP toolkit as code: vocabulary and count vectors, TF-IDF with cosine retrieval, Naive Bayes with Laplace smoothing. Plus the honest comparison of unigram vs bigram features under both Naive Bayes and logistic regression. It is Concept 2 with experiments. Run the majority-class baseline first. Measure everything else against it.</p>
+<figure id="lab-w8-d5-classical-nlp-methods-fig01" data-kind="figure" data-reveal="fade" class="lesson-fig">
   <img src="img/22-majority-baseline.svg" alt="Without a baseline, 84% means nothing; against a 70% majority baseline, 84% earns its keep.">
   <figcaption>Shell 3. CV and NLP Basics: run the majority-class baseline first. Source: original.</figcaption>
 </figure>
 
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">CV &amp; NLP Basics</span><span class="tagchip">Hard</span><span class="tagchip">Week 8</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1VrwP1c0McT_OacszLbo1PS_48UWCwCcP">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-40-classical">Notes</a> · <a href="nlpclassic_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/lTeem_PH50c">Video</a></p>
+<p id="lab-w8-d5-classical-nlp-methods-p03" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p04" data-kind="prose" class="tags"><span class="tagchip">CV &amp; NLP Basics</span><span class="tagchip">Hard</span><span class="tagchip">Week 8</span></p>
+<p id="lab-w8-d5-classical-nlp-methods-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1VrwP1c0McT_OacszLbo1PS_48UWCwCcP">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-40-classical">Notes</a> · <a href="nlpclassic_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/lTeem_PH50c">Video</a></p>
 <h4>Tasks (9)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Classical NLP Methods ,  Student Lab</h3>
-<p>You will implement classical NLP features and baselines from scratch:</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="classical-nlp-methods-student-lab">Classical NLP Methods ,  Student Lab</h3>
+<p data-term="n-grams" id="lab-w8-d5-classical-nlp-methods-p06" data-kind="prose">You will implement classical NLP features and baselines from scratch:</p>
 <ul><li>Bag-of-Words (counts)</li><li>TF-IDF (Term Frequency-Inverse Document Frequency)</li><li>cosine similarity retrieval</li><li>Naive Bayes + Logistic Regression</li><li>n-grams</li></ul>
-<p>Constraints: offline, deterministic, no hardcoded outputs.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p07" data-kind="prose">Constraints: offline, deterministic, no hardcoded outputs.</p>
 <h4>Dataset (offline)</h4>
-<p>Small labeled corpus: <code>y=1</code> positive, <code>y=0</code> negative.</p>
-<p>FAANG gotcha: even with toy data, enforce a clean train/val split and never fit vocab/IDF on val.</p><h4>Starter code</h4><pre><code class="lang-python">data = [
+<p id="lab-w8-d5-classical-nlp-methods-p08" data-kind="prose">Small labeled corpus: <code>y=1</code> positive, <code>y=0</code> negative.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p09" data-kind="prose">FAANG gotcha: even with toy data, enforce a clean train/val split and never fit vocab/IDF on val.</p><h4>Starter code</h4><pre><code class="lang-python">data = [
     ('I loved the movie it was fantastic and inspiring', 1),
     ('Amazing acting and great story', 1),
     ('This was an excellent film with wonderful music', 1),
@@ -997,17 +997,17 @@ print('n', len(texts), 'pos_rate', y.mean())</code></pre><details class="solutio
 ]
 texts = [t for t, y in data]
 y = np.array([y for t, y in data], dtype=np.int64)
-print('n', len(texts), 'pos_rate', y.mean())</code></pre><h4>Instructor explanation</h4><h3>Classical NLP Methods ,  Instructor Lab</h3>
-<p>Solutions + short rationales. The goal is correctness, determinism, and interview-ready explanations.</p>
+print('n', len(texts), 'pos_rate', y.mean())</code></pre><h4>Instructor explanation</h4><h3 id="classical-nlp-methods-instructor-lab">Classical NLP Methods ,  Instructor Lab</h3>
+<p id="lab-w8-d5-classical-nlp-methods-p10" data-kind="prose">Solutions + short rationales. The goal is correctness, determinism, and interview-ready explanations.</p>
 <h4>Dataset (offline)</h4>
-<p>Rationale: keep the focus on methods; real datasets add plumbing that hides the core signal.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p11" data-kind="prose">Rationale: keep the focus on methods; real datasets add plumbing that hides the core signal.</p>
 <h4>Tokenization (with n-grams)</h4>
-<p>Rationale: for classical methods, simple deterministic tokenization usually suffices. N-grams can recover some word order.</p></details></div></details>
+<p id="lab-w8-d5-classical-nlp-methods-p12" data-kind="prose">Rationale: for classical methods, simple deterministic tokenization usually suffices. N-grams can recover some word order.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Implement `tokenize(text, ngram=(1,1))` that: <span class="task-sec">Preprocessing</span></summary><div class="task-body"><h4>Section 0 ,  Preprocessing</h4>
 <h4>Task 0.1</h4>
-<p>Implement <code>tokenize(text, ngram=(1,1))</code> that:</p>
+<p id="lab-w8-d5-classical-nlp-methods-p13" data-kind="prose">Implement <code>tokenize(text, ngram=(1,1))</code> that:</p>
 <ul><li>lowercases</li><li>extracts alphabetic tokens</li><li>optionally produces n-grams (unigrams/bigrams)</li></ul>
-<p>Hint: use regex <code>[a-z]+</code> and build bigrams as <code>w_i + '_' + w_{i+1}</code>.</p><h4>Starter code</h4><pre><code class="lang-python">_WORD_RE = re.compile(r'[a-z]+')
+<p id="lab-w8-d5-classical-nlp-methods-p14" data-kind="prose">Hint: use regex <code>[a-z]+</code> and build bigrams as <code>w_i + '_' + w_{i+1}</code>.</p><h4>Starter code</h4><pre><code class="lang-python">_WORD_RE = re.compile(r'[a-z]+')
 
 def tokenize(text: str, ngram=(1, 1)) -&gt; list[str]:
     # TODO
@@ -1031,13 +1031,13 @@ def tokenize(text: str, ngram=(1, 1)) -&gt; list[str]:
 
 check('tokenize_basic', tokenize('Hello, WORLD!!') == ['hello', 'world'])
 check('tokenize_bigrams', tokenize('a b c', ngram=(1,2)) == ['a','b','c','a_b','b_c'])</code></pre><h4>Instructor explanation</h4><h4>Tokenization (with n-grams)</h4>
-<p>Rationale: for classical methods, simple deterministic tokenization usually suffices. N-grams can recover some word order.</p></details></div></details>
+<p id="lab-w8-d5-classical-nlp-methods-p15" data-kind="prose">Rationale: for classical methods, simple deterministic tokenization usually suffices. N-grams can recover some word order.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Create a deterministic train/val split and define evaluation helpers. <span class="task-sec">Split + metrics</span></summary><div class="task-body"><h4>Section 1 ,  Split + metrics</h4>
 <h4>Task 1.1</h4>
-<p>Create a deterministic train/val split.</p>
-<p>Also define:</p>
+<p id="lab-w8-d5-classical-nlp-methods-p16" data-kind="prose">Create a deterministic train/val split.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p17" data-kind="prose">Also define:</p>
 <ul><li><code>accuracy(y_true, y_pred)</code></li><li><code>confusion_2x2(y_true, y_pred)</code> for binary classification</li></ul>
-<p>Hint: permute indices with <code>rng.permutation(n)</code>.</p><h4>Starter code</h4><pre><code class="lang-python">n = len(texts)
+<p id="lab-w8-d5-classical-nlp-methods-p18" data-kind="prose">Hint: permute indices with <code>rng.permutation(n)</code>.</p><h4>Starter code</h4><pre><code class="lang-python">n = len(texts)
 perm = rng.permutation(n)
 n_train = int(0.75 * n)
 train_idx = perm[:n_train]
@@ -1082,20 +1082,20 @@ check('split_disjoint', set(train_idx).isdisjoint(set(val_idx)))
 print('train', len(X_train_text), 'val', len(X_val_text))</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Compute a majority-class baseline. <span class="task-sec">Baselines</span></summary><div class="task-body"><h4>Section 2 ,  Baselines</h4>
 <h4>Task 2.1</h4>
-<p>Compute a baseline that predicts the majority class in train.</p>
-<p>This gives a sanity-check floor before comparing richer text models.</p><h4>Starter code</h4><pre><code class="lang-python">maj = int(np.round(y_train.mean()))
+<p id="lab-w8-d5-classical-nlp-methods-p19" data-kind="prose">Compute a baseline that predicts the majority class in train.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p20" data-kind="prose">This gives a sanity-check floor before comparing richer text models.</p><h4>Starter code</h4><pre><code class="lang-python">maj = int(np.round(y_train.mean()))
 yhat = np.full_like(y_val, maj)
 print('majority', maj, 'val_acc', accuracy(y_val, yhat))
 print(confusion_2x2(y_val, yhat))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">maj = int(np.round(y_train.mean()))
 yhat = np.full_like(y_val, maj)
 print('majority', maj, 'val_acc', accuracy(y_val, yhat))
 print(confusion_2x2(y_val, yhat))</code></pre><h4>Instructor explanation</h4><h4>Majority baseline</h4>
-<p>Rationale: always compare against the trivial class-frequency baseline before trusting any learned model.</p></details></div></details>
+<p id="lab-w8-d5-classical-nlp-methods-p21" data-kind="prose">Rationale: always compare against the trivial class-frequency baseline before trusting any learned model.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Implement `build_vocab(...)` and `vectorize_counts(...)`. <span class="task-sec">Bag-of-Words (counts)</span></summary><div class="task-body"><h4>Section 3 ,  Bag-of-Words (counts)</h4>
 <h4>Task 3.1</h4>
-<p>Implement:</p>
+<p id="lab-w8-d5-classical-nlp-methods-p22" data-kind="prose">Implement:</p>
 <ul><li><code>build_vocab(texts, min_df, ngram)</code> using document frequency</li><li><code>vectorize_counts(texts, vocab, ngram)</code> returning a dense count matrix</li></ul>
-<p>Hint: compute DF from a set of tokens per document.</p><h4>Starter code</h4><pre><code class="lang-python">def build_vocab(texts: list[str], *, min_df: int = 1, ngram=(1,1)) -&gt; dict[str, int]:
+<p id="lab-w8-d5-classical-nlp-methods-p23" data-kind="prose">Hint: compute DF from a set of tokens per document.</p><h4>Starter code</h4><pre><code class="lang-python">def build_vocab(texts: list[str], *, min_df: int = 1, ngram=(1,1)) -&gt; dict[str, int]:
     # TODO
     ...
 def vectorize_counts(texts: list[str], vocab: dict[str, int], *, ngram=(1,1)) -&gt; np.ndarray:
@@ -1124,16 +1124,16 @@ vocab = build_vocab(X_train_text, min_df=1, ngram=(1,1))
 Xtr = vectorize_counts(X_train_text, vocab)
 Xva = vectorize_counts(X_val_text, vocab)
 print('V', len(vocab), 'Xtr', Xtr.shape)</code></pre><h4>Instructor explanation</h4><h4>BoW vectorizer</h4>
-<p>Rationale: build vocabulary from train only; compute counts efficiently.</p></details></div></details>
+<p id="lab-w8-d5-classical-nlp-methods-p24" data-kind="prose">Rationale: build vocabulary from train only; compute counts efficiently.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> Implement `fit_tfidf(...)`, query vectorization, and cosine retrieval helpers. <span class="task-sec">TF-IDF + retrieval</span></summary><div class="task-body"><h4>Section 4 ,  TF-IDF + retrieval</h4>
 <h4>Task 4.1</h4>
-<p>Implement:</p>
+<p id="lab-w8-d5-classical-nlp-methods-p25" data-kind="prose">Implement:</p>
 <ul><li><code>fit_tfidf(X_counts)</code></li><li><code>tfidf_vectorize_query(query, vocab, idf, ngram)</code></li><li><code>top_k_similar(query, X_tfidf, texts, vocab, idf, k, ngram)</code></li></ul>
-<p>Use L2 normalization so cosine similarity reduces to a dot product.</p>
-<p>Why L2 normalization matters:</p>
-<p>Suppose the vocabulary is <code>great, acting, story</code>.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p26" data-kind="prose">Use L2 normalization so cosine similarity reduces to a dot product.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p27" data-kind="prose">Why L2 normalization matters:</p>
+<p id="lab-w8-d5-classical-nlp-methods-p28" data-kind="prose">Suppose the vocabulary is <code>great, acting, story</code>.</p>
 <ul><li>Document A: <code>great acting story</code> -&gt; TF-IDF <code>[1, 1, 1]</code></li><li>Document B: <code>great acting story great acting story great acting story</code> -&gt; TF-IDF <code>[3, 3, 3]</code></li></ul>
-<p>Without normalization, Document B looks artificially larger just because it repeats the same direction more times. L2 normalization removes that length effect so cosine similarity focuses on direction rather than magnitude.</p><h4>Starter code</h4><pre><code class="lang-python">def fit_tfidf(X_counts: np.ndarray) -&gt; tuple[np.ndarray, np.ndarray]:
+<p id="lab-w8-d5-classical-nlp-methods-p29" data-kind="prose">Without normalization, Document B looks artificially larger just because it repeats the same direction more times. L2 normalization removes that length effect so cosine similarity focuses on direction rather than magnitude.</p><h4>Starter code</h4><pre><code class="lang-python">def fit_tfidf(X_counts: np.ndarray) -&gt; tuple[np.ndarray, np.ndarray]:
     # TODO
     ...
 idf, Xtr_tfidf = fit_tfidf(Xtr)
@@ -1149,11 +1149,11 @@ def top_k_similar(query: str, X_tfidf: np.ndarray, texts: list[str], vocab: dict
 for i, s, t in top_k_similar('great acting and story', Xtr_tfidf, X_train_text, vocab, idf, k=3):
     print(i, round(s, 3), '::', t)
 check('row_norm_train', float(np.max(np.abs(np.linalg.norm(Xtr_tfidf, axis=1) - 1.0))) &lt; 1e-6)</code></pre><details class="hints"><summary>Hints (1)</summary><ol><li>compute a set of tokens per document for DF.</li></ol></details><h4>Test code</h4><pre><code class="lang-python">check('row_norm_train', float(np.max(np.abs(np.linalg.norm(Xtr_tfidf, axis=1) - 1.0))) &lt; 1e-6)</code></pre><h4>Checks</h4><ul><li>check('row_norm_train', float(np.max(np.abs(np.linalg.norm(Xtr_tfidf, axis=1)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Instructor explanation</h4><h4>TF-IDF + retrieval</h4>
-<p>Rationale: IDF downweights ubiquitous tokens; L2 normalization makes cosine similarity = dot product.</p></details></div></details>
+<p id="lab-w8-d5-classical-nlp-methods-p30" data-kind="prose">Rationale: IDF downweights ubiquitous tokens; L2 normalization makes cosine similarity = dot product.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 7</span> Implement `fit_nb(...)` and `predict_nb(...)`. <span class="task-sec">Multinomial Naive Bayes (from scratch)</span></summary><div class="task-body"><h4>Section 5 ,  Multinomial Naive Bayes (from scratch)</h4>
 <h4>Task 5.1</h4>
-<p>Implement <code>fit_nb(X_counts, y, alpha)</code> with Laplace smoothing and <code>predict_nb(...)</code>.</p>
-<p>Hints:</p>
+<p id="lab-w8-d5-classical-nlp-methods-p31" data-kind="prose">Implement <code>fit_nb(X_counts, y, alpha)</code> with Laplace smoothing and <code>predict_nb(...)</code>.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p32" data-kind="prose">Hints:</p>
 <ul><li>model token counts per class</li><li>work in log-space for numerical stability</li></ul><h4>Starter code</h4><pre><code class="lang-python">def fit_nb(X_counts: np.ndarray, y: np.ndarray, alpha: float = 1.0):
     # TODO
     ...
@@ -1184,11 +1184,11 @@ lp, ll = fit_nb(Xtr, y_train, alpha=1.0)
 yhat_nb = predict_nb(Xva, lp, ll)
 print('NB val_acc', accuracy(y_val, yhat_nb))
 print(confusion_2x2(y_val, yhat_nb))</code></pre><h4>Instructor explanation</h4><h4>Multinomial Naive Bayes</h4>
-<p>Rationale: conditional independence assumption is wrong but often yields strong decision boundaries with BoW.</p></details></div></details>
+<p id="lab-w8-d5-classical-nlp-methods-p33" data-kind="prose">Rationale: conditional independence assumption is wrong but often yields strong decision boundaries with BoW.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 8</span> Train a logistic regression classifier on TF-IDF features. <span class="task-sec">Logistic Regression (simple batch GD)</span></summary><div class="task-body"><h4>Section 6 ,  Logistic Regression (simple batch GD)</h4>
 <h4>Task 6.1</h4>
-<p>Train a logistic regression classifier on TF-IDF features.</p>
-<p>Hints:</p>
+<p id="lab-w8-d5-classical-nlp-methods-p34" data-kind="prose">Train a logistic regression classifier on TF-IDF features.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p35" data-kind="prose">Hints:</p>
 <ul><li>sigmoid: <code>1/(1+exp(-z))</code></li><li>loss: binary cross-entropy</li><li>gradient: <code>X.T @ (p - y) / n</code></li></ul><h4>Starter code</h4><pre><code class="lang-python">def sigmoid(z: np.ndarray) -&gt; np.ndarray:
     return 1.0 / (1.0 + np.exp(-z))
 
@@ -1223,11 +1223,11 @@ w, b = fit_logreg(Xtr_tfidf, y_train)
 yhat_lr = predict_logreg(Xva_tfidf, w, b)
 print('LR val_acc', accuracy(y_val, yhat_lr))
 print(confusion_2x2(y_val, yhat_lr))</code></pre><h4>Instructor explanation</h4><h4>Logistic Regression on TF-IDF</h4>
-<p>Rationale: TF-IDF + linear classifier is a strong classical NLP baseline; L2 regularization stabilizes high-dimensional training.</p></details></div></details>
+<p id="lab-w8-d5-classical-nlp-methods-p36" data-kind="prose">Rationale: TF-IDF + linear classifier is a strong classical NLP baseline; L2 regularization stabilizes high-dimensional training.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 9</span> Compare unigram vs unigram+bigram features with NB and LR. <span class="task-sec">N-grams</span></summary><div class="task-body"><h4>Section 7 ,  N-grams</h4>
 <h4>Task 7.1</h4>
-<p>Rebuild features using <code>ngram=(1,2)</code> and compare Naive Bayes and Logistic Regression against unigram-only features.</p>
-<p>Track how vocabulary size changes and whether short phrase information helps.</p><h4>Starter code</h4><pre><code class="lang-python">vocab12 = build_vocab(X_train_text, min_df=1, ngram=(1,2))
+<p id="lab-w8-d5-classical-nlp-methods-p37" data-kind="prose">Rebuild features using <code>ngram=(1,2)</code> and compare Naive Bayes and Logistic Regression against unigram-only features.</p>
+<p id="lab-w8-d5-classical-nlp-methods-p38" data-kind="prose">Track how vocabulary size changes and whether short phrase information helps.</p><h4>Starter code</h4><pre><code class="lang-python">vocab12 = build_vocab(X_train_text, min_df=1, ngram=(1,2))
 Xtr12 = vectorize_counts(X_train_text, vocab12, ngram=(1,2))
 Xva12 = vectorize_counts(X_val_text, vocab12, ngram=(1,2))
 
@@ -1258,13 +1258,13 @@ yhat_lr12 = predict_logreg(Xva12_tfidf, w12, b12)
 print('V unigram', len(vocab), 'V (1,2)', len(vocab12))
 print('NB (1,2) val_acc', accuracy(y_val, yhat_nb12))
 print('LR (1,2) val_acc', accuracy(y_val, yhat_lr12))</code></pre><h4>Instructor explanation</h4><h4>N-grams (comparison)</h4>
-<p>Rationale: bigrams add local order information, often improving phrase-sensitive tasks at the cost of a larger vocabulary.</p></details></div></details>
+<p id="lab-w8-d5-classical-nlp-methods-p39" data-kind="prose">Rationale: bigrams add local order information, often improving phrase-sensitive tasks at the cost of a larger vocabulary.</p></details></div></details>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>text preprocessing, tokenization, classical NLP</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Meta</td><td>medium</td><td>tokenization, text features, NLP foundations</td><td>Meta MLE interview guide; Meta ML initial interview prep</td></tr><tr><td>Microsoft</td><td>medium</td><td>NLP basics, text pipelines, feature extraction</td><td>Microsoft MLE interview guide; Microsoft data scientist interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w8-d5-classical-nlp-methods">https://ai.thes30.com/problems/w8-d5-classical-nlp-methods</a>.</p>
-</section>
-<h2>Interview clearance</h2>
-<div class="ob-board"><h4>Design prompt</h4><ul><li>Compare word, character, and BPE tokenization on: vocabulary size, sequence length, and handling of unseen words.</li><li>Derive the Naive Bayes classification rule for text in log-space, including Laplace smoothing.</li><li>Why does IDF use a logarithm? What goes wrong with a linear 1/df weighting?</li><li>When is TF-IDF plus logistic regression the right production choice over a transformer?</li><li>Your retrieval system returns d3 above d1 for the query "cat". Walk through the TF-IDF arithmetic that could cause it.</li></ul></div>
-<div class="pq">
+<p id="lab-w8-d5-classical-nlp-methods-p40" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w8-d5-classical-nlp-methods">https://ai.thes30.com/problems/w8-d5-classical-nlp-methods</a>.</p>
+<span id="lab-w8-d5-classical-nlp-methods-end" data-end></span></section>
+<h2 id="interview-clearance">Interview clearance</h2>
+<div id="lab-w8-d5-classical-nlp-methods-aside01" data-kind="aside" class="ob-board"><h4>Design prompt</h4><ul><li>Compare word, character, and BPE tokenization on: vocabulary size, sequence length, and handling of unseen words.</li><li>Derive the Naive Bayes classification rule for text in log-space, including Laplace smoothing.</li><li>Why does IDF use a logarithm? What goes wrong with a linear 1/df weighting?</li><li>When is TF-IDF plus logistic regression the right production choice over a transformer?</li><li>Your retrieval system returns d3 above d1 for the query "cat". Walk through the TF-IDF arithmetic that could cause it.</li></ul></div>
+<div id="lab-w8-d5-classical-nlp-methods-pq01" data-kind="exercise" class="pq">
   <p class="pq-q"><strong>Q1.</strong> Corpus: "low" x2, "lower" x1. What are the first two BPE merges?</p>
   <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
   <div class="pq-a" hidden>
@@ -1276,11 +1276,11 @@ print('LR (1,2) val_acc', accuracy(y_val, yhat_lr12))</code></pre><h4>Instructor
     </ul>
   </div>
 </div>
-<figure class="lesson-fig">
+<figure id="lab-w8-d5-classical-nlp-methods-fig02" data-kind="figure" class="lesson-fig">
   <img src="img/22-tie-merge.svg" alt="Pairs (l,o) and (o,w) tie at count 3; merge (l,o) first, then (lo,w).">
   <figcaption>Shell 2. CV and NLP Basics: merge the highest pair first, even in a tie. Source: original.</figcaption>
 </figure>
-<figure class="lesson-fig">
+<figure id="lab-w8-d5-classical-nlp-methods-fig03" data-kind="figure" class="lesson-fig">
   <img src="img/22-bpe-greedy-encode.svg" alt="'lower' is not in the vocabulary; greedy encoding produces three tokens: 'low', 'e', 'r'.">
   <figcaption>Shell 3. CV and NLP Basics: "lower" encodes as "low" plus "e" plus "r". Source: original.</figcaption>
 </figure>
@@ -1292,7 +1292,7 @@ print('LR (1,2) val_acc', accuracy(y_val, yhat_lr12))</code></pre><h4>Instructor
 <li>Merges 1, 2, and 3 built the pieces in that order.</li>
 <li>What breaks if it fails: greedy mismatches cost tokens and confuse the model.</li>
 </ol></div>
-<div class="pq">
+<div id="lab-w8-d5-classical-nlp-methods-pq02" data-kind="exercise" class="pq">
   <p class="pq-q"><strong>Q2.</strong> In a 1,000-document corpus, "the" appears in 1,000 docs and "quasar" in 4. Compute both idf values (natural log) and explain what the numbers mean.</p>
   <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
   <div class="pq-a" hidden>
@@ -1304,7 +1304,7 @@ print('LR (1,2) val_acc', accuracy(y_val, yhat_lr12))</code></pre><h4>Instructor
     </ul>
   </div>
 </div>
-<div class="pq">
+<div id="lab-w8-d5-classical-nlp-methods-pq03" data-kind="exercise" class="pq">
   <p class="pq-q"><strong>Q3.</strong> Your Naive Bayes spam filter assigns probability exactly 0 to a test email containing a word never seen in training. Name the bug and the one-line fix.</p>
   <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
   <div class="pq-a" hidden>

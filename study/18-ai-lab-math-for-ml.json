@@ -1,0 +1,287 @@
+{
+ "schemaVersion": 1,
+ "itemId": "18-ai-lab-math-for-ml",
+ "itemKind": "lesson",
+ "revision": "2a6424418b642940ce1810741b1172e515ab9ca3a9644409cbcb858aa5bde799",
+ "sections": [
+  {
+   "anchor": "lab-w2-d1-linear-algebra-for-ml",
+   "title": "Linear Algebra for ML Easy",
+   "minutes": 6,
+   "endAnchor": "lab-w2-d1-linear-algebra-for-ml-end",
+   "blocks": [
+    {
+     "anchor": "lab-w2-d1-linear-algebra-for-ml-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "shape-discipline",
+     "definition": "Asserting shapes; most bugs are silent shape bugs.",
+     "anchor": "lab-w2-d1-linear-algebra-for-ml-p02"
+    },
+    {
+     "term": "projection",
+     "definition": "The geometric heart of least squares; closest point in a subspace.",
+     "anchor": "lab-w2-d1-linear-algebra-for-ml-p15"
+    },
+    {
+     "term": "normal equations",
+     "definition": "The closed-form least squares fit: w = (X^T X)^{-1} X^T y.",
+     "anchor": "lab-w2-d1-linear-algebra-for-ml-p02"
+    },
+    {
+     "term": "SVD",
+     "definition": "Singular value decomposition; PCA implemented through SVD.",
+     "anchor": "lab-w2-d1-linear-algebra-for-ml-p02"
+    },
+    {
+     "term": "PSD",
+     "definition": "Positive semidefinite; X^T X is PSD because v^T X^T X v = ||Xv||^2.",
+     "anchor": "lab-w2-d1-linear-algebra-for-ml-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w2-d1-linear-algebra-for-ml-r1",
+     "question": "What are the two FAANG gotchas this lab names?",
+     "answer": "Most bugs are silent shape bugs, so assert shapes. Never form the explicit inverse when solve or lstsq exists.",
+     "anchor": "lab-w2-d1-linear-algebra-for-ml-p03"
+    },
+    {
+     "id": "lab-w2-d1-linear-algebra-for-ml-r2",
+     "question": "Why is X^T X PSD?",
+     "answer": "Because v^T X^T X v equals ||Xv||^2, which is always non-negative.",
+     "anchor": "lab-w2-d1-linear-algebra-for-ml-p03"
+    },
+    {
+     "id": "lab-w2-d1-linear-algebra-for-ml-r3",
+     "question": "Why do the SVD directions match the covariance eigenvectors?",
+     "answer": "The SVD of the centered data gives the eigendecomposition of the covariance; this is the interview-level picture the lab targets.",
+     "anchor": "lab-w2-d1-linear-algebra-for-ml-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w2-d2-calculus-gradients",
+   "title": "Calculus &amp; Gradients Easy",
+   "minutes": 6,
+   "endAnchor": "lab-w2-d2-calculus-gradients-end",
+   "blocks": [
+    {
+     "anchor": "lab-w2-d2-calculus-gradients-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "finite differences",
+     "definition": "Numerical gradient via central difference; the arbiter for gradient code.",
+     "anchor": "lab-w2-d2-calculus-gradients-p02"
+    },
+    {
+     "term": "chain rule",
+     "definition": "How the MSE gradient composes; grad is X^T times the residual.",
+     "anchor": "lab-w2-d2-calculus-gradients-p02"
+    },
+    {
+     "term": "gradient-check",
+     "definition": "Verify analytic gradients against numerical ones; if you cannot gradient-check it, you do not trust it.",
+     "anchor": "lab-w2-d2-calculus-gradients-p03"
+    },
+    {
+     "term": "Hessian",
+     "definition": "The matrix of second derivatives; the lab closes with a numerical Hessian.",
+     "anchor": "lab-w2-d2-calculus-gradients-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w2-d2-calculus-gradients-r1",
+     "question": "What is the lab's mantra?",
+     "answer": "If you cannot gradient-check it, you do not really trust it. Carry that standard into every later volume where you write a loss.",
+     "anchor": "lab-w2-d2-calculus-gradients-p03"
+    },
+    {
+     "id": "lab-w2-d2-calculus-gradients-r2",
+     "question": "What are the classic gradient bug sites?",
+     "answer": "Missing constants and broadcasting shape mistakes.",
+     "anchor": "lab-w2-d2-calculus-gradients-p03"
+    },
+    {
+     "id": "lab-w2-d2-calculus-gradients-r3",
+     "question": "What is the core interview gradient in this lab?",
+     "answer": "Binary cross-entropy with sigmoid: grad = (1/n) X^T (p - y), with clipped p for numerical stability.",
+     "anchor": "lab-w2-d2-calculus-gradients-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w2-d3-probability-essentials",
+   "title": "Probability Essentials Easy",
+   "minutes": 7,
+   "endAnchor": "lab-w2-d3-probability-essentials-end",
+   "blocks": [
+    {
+     "anchor": "lab-w2-d3-probability-essentials-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Bayes theorem",
+     "definition": "Updates beliefs: P(D|+) from prevalence, sensitivity, and false positive rate.",
+     "anchor": "lab-w2-d3-probability-essentials-p11"
+    },
+    {
+     "term": "base-rate fallacy",
+     "definition": "Ignoring prevalence; even a good test has low PPV when prevalence is low.",
+     "anchor": "lab-w2-d3-probability-essentials-p15"
+    },
+    {
+     "term": "Monte Carlo",
+     "definition": "Verify a closed form with a quick simulation; the law of large numbers converges it.",
+     "anchor": "lab-w2-d3-probability-essentials-p03"
+    },
+    {
+     "term": "log-space",
+     "definition": "The habit that starts here: multiplying many small probabilities underflows to zero.",
+     "anchor": "lab-w2-d3-probability-essentials-p03"
+    },
+    {
+     "term": "expectation",
+     "definition": "E[X] = sum p_i x_i; linear, unlike variance.",
+     "anchor": "lab-w2-d3-probability-essentials-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w2-d3-probability-essentials-r1",
+     "question": "What is the underflow gotcha?",
+     "answer": "Multiplying many small probabilities collapses to zero, which is why the log-space habit starts here.",
+     "anchor": "lab-w2-d3-probability-essentials-p03"
+    },
+    {
+     "id": "lab-w2-d3-probability-essentials-r2",
+     "question": "What is the deeper lesson of the simulation check?",
+     "answer": "Whenever you can, verify a closed form with a quick Monte Carlo simulation.",
+     "anchor": "lab-w2-d3-probability-essentials-p03"
+    },
+    {
+     "id": "lab-w2-d3-probability-essentials-r3",
+     "question": "Why is variance not linear but expectation is?",
+     "answer": "Expectation is linear (E[aX+bY]=aE[X]+bE[Y]); variance depends on the second moment and covariance.",
+     "anchor": "lab-w2-d3-probability-essentials-p10"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w2-d4-statistics-for-ml",
+   "title": "Statistics for ML Easy",
+   "minutes": 6,
+   "endAnchor": "lab-w2-d4-statistics-for-ml-end",
+   "blocks": [
+    {
+     "anchor": "lab-w2-d4-statistics-for-ml-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "confidence interval",
+     "definition": "A plausible range for the population mean; it covers the mean, not individual outcomes.",
+     "anchor": "lab-w2-d4-statistics-for-ml-p02"
+    },
+    {
+     "term": "p-value",
+     "definition": "Not the probability that the null is true; a common misreading.",
+     "anchor": "lab-w2-d4-statistics-for-ml-p03"
+    },
+    {
+     "term": "Bonferroni correction",
+     "definition": "Adjusting for multiple comparisons.",
+     "anchor": "lab-w2-d4-statistics-for-ml-p02"
+    },
+    {
+     "term": "permutation test",
+     "definition": "A/B comparison by shuffling; needs no scipy.",
+     "anchor": "lab-w2-d4-statistics-for-ml-p02"
+    },
+    {
+     "term": "unbiased sample variance",
+     "definition": "Divide by (n-1), not n, because the data estimates the mean.",
+     "anchor": "lab-w2-d4-statistics-for-ml-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w2-d4-statistics-for-ml-r1",
+     "question": "What are the two misreadings this lab flags?",
+     "answer": "The CI covers the mean, not individual outcomes. The p-value is not the probability that the null is true.",
+     "anchor": "lab-w2-d4-statistics-for-ml-p03"
+    },
+    {
+     "id": "lab-w2-d4-statistics-for-ml-r2",
+     "question": "Why divide by (n-1) instead of n?",
+     "answer": "Dividing by (n-1) corrects bias because the data estimates the mean, losing one degree of freedom.",
+     "anchor": "lab-w2-d4-statistics-for-ml-p10"
+    },
+    {
+     "id": "lab-w2-d4-statistics-for-ml-r3",
+     "question": "What transfers most directly to production work?",
+     "answer": "The accidental p-hacking angle: slicing dashboards until something looks significant.",
+     "anchor": "lab-w2-d4-statistics-for-ml-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w2-d5-math-lab",
+   "title": "Math Lab (Linear Algebra + Probability) Easy",
+   "minutes": 6,
+   "endAnchor": "lab-w2-d5-math-lab-end",
+   "blocks": [
+    {
+     "anchor": "lab-w2-d5-math-lab-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "idempotent",
+     "definition": "P^2 = P; what idempotent means geometrically for projections.",
+     "anchor": "lab-w2-d5-math-lab-p08"
+    },
+    {
+     "term": "normal equations",
+     "definition": "Derived for minimizing ||Xw - y||^2; compare solve versus lstsq.",
+     "anchor": "lab-w2-d5-math-lab-p02"
+    },
+    {
+     "term": "base-rate fallacy",
+     "definition": "Why P(D|+) can still be low when test sensitivity is high.",
+     "anchor": "lab-w2-d5-math-lab-p17"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w2-d5-math-lab-r1",
+     "question": "How should you treat this lab?",
+     "answer": "As a mock interview round: derive on paper first, then verify in code, then explain out loud.",
+     "anchor": "lab-w2-d5-math-lab-p03"
+    },
+    {
+     "id": "lab-w2-d5-math-lab-r2",
+     "question": "Why is solve/lstsq preferred over explicit matrix inverse?",
+     "answer": "Direct inverse is numerically less stable and slower; solve and lstsq are safer.",
+     "anchor": "lab-w2-d5-math-lab-aside04"
+    }
+   ]
+  }
+ ]
+}

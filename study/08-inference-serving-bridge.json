@@ -1,0 +1,600 @@
+{
+ "schemaVersion": 1,
+ "itemId": "08-inference-serving-bridge",
+ "itemKind": "lesson",
+ "revision": "077d48bdddc4540011175be22b8db619785677fd5bf330ccba3c77ae4991e2c1",
+ "sections": [
+  {
+   "anchor": "bridge",
+   "title": "How this volume fits",
+   "minutes": 2,
+   "endAnchor": "bridge-end",
+   "blocks": [
+    {
+     "anchor": "bridge-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "bridge-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "bridge-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "bridge",
+     "definition": "Not a beginner's book; fills the gap to 'I can serve a model in production'.",
+     "anchor": "bridge-p01"
+    },
+    {
+     "term": "KV cache",
+     "definition": "From Volume 4: saves keys and values per token so decode does not recompute.",
+     "anchor": "bridge-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "bridge-r1",
+     "question": "What does this volume assume you know?",
+     "answer": "The KV cache, softmax, mixed precision, and profiling by name, with no re-teaching.",
+     "anchor": "bridge-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "decoding",
+   "title": "Decoding from zero: greedy, temperature , top-k , top-p",
+   "minutes": 10,
+   "endAnchor": "decoding-end",
+   "blocks": [
+    {
+     "anchor": "decoding-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "decoding-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "decoding-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "greedy decoding",
+     "definition": "Always take the best token.",
+     "anchor": "decoding-p01"
+    },
+    {
+     "term": "temperature",
+     "definition": "Shapes the odds for random draws, with top-k and top-p.",
+     "anchor": "decoding-p01"
+    },
+    {
+     "term": "prefill",
+     "definition": "Processes the whole prompt before the sampler matters.",
+     "anchor": "decoding-p01"
+    },
+    {
+     "term": "decode",
+     "definition": "Generates tokens one by one.",
+     "anchor": "decoding-p01"
+    },
+    {
+     "term": "logits",
+     "definition": "Raw scores for the next token, not a decision.",
+     "anchor": "decoding-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "decoding-r1",
+     "question": "What is decoding?",
+     "answer": "The decision rule that turns raw scores into a choice.",
+     "anchor": "decoding-p01"
+    },
+    {
+     "id": "decoding-r2",
+     "question": "Why does the sampling rule matter for benchmarks?",
+     "answer": "It changes eval scores and user experience; it decides whether benchmarks allow fair comparison.",
+     "anchor": "decoding-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "batching",
+   "title": "Batching: static vs continuous, and the throughput math",
+   "minutes": 7,
+   "endAnchor": "batching-end",
+   "blocks": [
+    {
+     "anchor": "batching-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "batching-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "batching-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "static batching",
+     "definition": "Groups requests, runs the group to completion, then the next group.",
+     "anchor": "batching-p01"
+    },
+    {
+     "term": "continuous batching",
+     "definition": "In-flight batching: finished requests leave, new ones join at every decode step.",
+     "anchor": "batching-p01"
+    },
+    {
+     "term": "memory-bandwidth bound",
+     "definition": "Decode is; each token streams all weights from memory once.",
+     "anchor": "batching-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "batching-r1",
+     "question": "Why does continuous batching matter?",
+     "answer": "Decode is memory-bandwidth bound; one streaming pass costs nearly the same for 1 or many sequences.",
+     "anchor": "batching-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "kvcache",
+   "title": "The KV cache: where decode's cost lives",
+   "minutes": 8,
+   "endAnchor": "kvcache-end",
+   "blocks": [
+    {
+     "anchor": "kvcache-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "kvcache-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "kvcache-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "KV cache",
+     "definition": "Saved keys and values per token; turns quadratic recompute into flat per-step append.",
+     "anchor": "kvcache-p01"
+    },
+    {
+     "term": "quadratic",
+     "definition": "Naive recompute grows with the square of answer length.",
+     "anchor": "kvcache-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "kvcache-r1",
+     "question": "What does the cache save?",
+     "answer": "Recomputing all previous keys and values on every step; step 1000 re-reads 999 tokens naively.",
+     "anchor": "kvcache-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "paging",
+   "title": "KV cache paging and disaggregated prefill/decode",
+   "minutes": 8,
+   "endAnchor": "paging-end",
+   "blocks": [
+    {
+     "anchor": "paging-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "paging-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "paging-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "PagedAttention",
+     "definition": "Manages the KV cache like an OS manages RAM: fixed blocks, block tables.",
+     "anchor": "paging-p01"
+    },
+    {
+     "term": "fragmentation",
+     "definition": "Dead memory between actual and reserved length; caps batch size.",
+     "anchor": "paging-p01"
+    },
+    {
+     "term": "disaggregated serving",
+     "definition": "Splits prefill and decode phases.",
+     "anchor": "paging-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "paging-r1",
+     "question": "Why does paging exist?",
+     "answer": "Plain contiguous allocation reserves each sequence's max length up front; the gap is dead memory.",
+     "anchor": "paging-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "quantization",
+   "title": "Quantization survey: PTQ, GGUF , QAT , and what breaks",
+   "minutes": 7,
+   "endAnchor": "quantization-end",
+   "blocks": [
+    {
+     "anchor": "quantization-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "quantization-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "quantization-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "quantization",
+     "definition": "Fewer bits per number: fp16 to int8 to int4; the cheapest big lever in serving.",
+     "anchor": "quantization-p01"
+    },
+    {
+     "term": "PTQ",
+     "definition": "Post-training quantization.",
+     "anchor": "quantization-p01"
+    },
+    {
+     "term": "QAT",
+     "definition": "Quantization-aware training.",
+     "anchor": "quantization-p01"
+    },
+    {
+     "term": "GGUF",
+     "definition": "A quantization format.",
+     "anchor": "quantization-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "quantization-r1",
+     "question": "Why is quantization the cheapest lever?",
+     "answer": "Decode is memory-bound; halving bytes nearly halves cost per token and doubles the fitting batch.",
+     "anchor": "quantization-p01"
+    },
+    {
+     "id": "quantization-r2",
+     "question": "How much does a 70B model need?",
+     "answer": "140 GB in fp16 (two A100 80GB); 35 GB in int4 (one card).",
+     "anchor": "quantization-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "specdec",
+   "title": "Speculative decoding, cleanly explained",
+   "minutes": 7,
+   "endAnchor": "specdec-end",
+   "blocks": [
+    {
+     "anchor": "specdec-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "specdec-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "specdec-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "speculative decoding",
+     "definition": "Small draft model guesses ahead; big model verifies in one pass.",
+     "anchor": "specdec-p01"
+    },
+    {
+     "term": "draft model",
+     "definition": "Small and fast; costs a fraction per token.",
+     "anchor": "specdec-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "specdec-r1",
+     "question": "Why does the output match the big model alone?",
+     "answer": "Every kept token passed the target's own verification; the first disagreement gets fixed.",
+     "anchor": "specdec-p01"
+    },
+    {
+     "id": "specdec-r2",
+     "question": "When does it pay?",
+     "answer": "When the draft is right most of the time: several expensive passes become one plus a few cheap ones.",
+     "anchor": "specdec-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "benchmarking",
+   "title": "Benchmarking rigor: latency, tails, honest harnesses",
+   "minutes": 8,
+   "endAnchor": "benchmarking-end",
+   "blocks": [
+    {
+     "anchor": "benchmarking-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "benchmarking-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "benchmarking-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "TTFT",
+     "definition": "Time to first token: prompt in, first token out.",
+     "anchor": "benchmarking-p01"
+    },
+    {
+     "term": "TPOT",
+     "definition": "Time per output token; the streaming cadence.",
+     "anchor": "benchmarking-p01"
+    },
+    {
+     "term": "tail latency",
+     "definition": "p50, p95, p99: the latency most requests beat.",
+     "anchor": "benchmarking-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "benchmarking-r1",
+     "question": "What is benchmarking rigor?",
+     "answer": "Fixed workloads, reported conditions, honest reading, so numbers mean something.",
+     "anchor": "benchmarking-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-cap",
+   "title": "Capstone lab: serve the tiny GPT",
+   "minutes": 6,
+   "endAnchor": "lab-cap-end",
+   "blocks": [
+    {
+     "anchor": "lab-cap-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-cap-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "lab-cap-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "tiny GPT",
+     "definition": "2-layer, 100K-parameter character model served behind a generate loop.",
+     "anchor": "lab-cap-p01"
+    },
+    {
+     "term": "per-channel",
+     "definition": "Int8 quantization done per-channel barely moves the logits.",
+     "anchor": "lab-cap-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-cap-r1",
+     "question": "What two systems facts become tangible?",
+     "answer": "The KV cache turns quadratic recompute into linear append; int8 quantization barely moves logits when per-channel.",
+     "anchor": "lab-cap-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "interview-qa",
+   "title": "Interview Q&amp;A",
+   "minutes": 3,
+   "endAnchor": "interview-qa-end",
+   "blocks": [
+    {
+     "anchor": "interview-qa-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "speculative decoding",
+     "definition": "Explain it: draft guesses, target verifies, distribution matches.",
+     "anchor": "interview-qa-p02"
+    },
+    {
+     "term": "five questions",
+     "definition": "Each builds on the chapters; say the answer from memory first.",
+     "anchor": "interview-qa-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "interview-qa-r1",
+     "question": "How should you answer interview questions here?",
+     "answer": "Say the answer from memory before reading it; each builds on the chapters.",
+     "anchor": "interview-qa-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "a08a-title",
+   "title": "Appendix 8A: Inference Economics",
+   "minutes": 39,
+   "endAnchor": "a08a-title-end",
+   "blocks": [
+    {
+     "anchor": "a08a-title-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "a08a-title-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "a08a-title-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "good answer",
+     "definition": "What each good answer actually costs; the economics question.",
+     "anchor": "a08a-title-p01"
+    },
+    {
+     "term": "cascades",
+     "definition": "Routing and cascades among the four economics chapters.",
+     "anchor": "a08a-title-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "a08a-title-r1",
+     "question": "What question decides if a serving stack survives?",
+     "answer": "What does each good answer actually cost.",
+     "anchor": "a08a-title-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "08-inference-serving-bridge-watch-deeper",
+   "title": "08-inference-serving-bridge-watch-deeper",
+   "minutes": 1,
+   "endAnchor": "08-inference-serving-bridge-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "08-inference-serving-bridge-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "08-inference-serving-bridge-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "vLLM",
+     "definition": "Creator walks through PagedAttention: fragmentation, block tables, sharing.",
+     "anchor": "08-inference-serving-bridge-watch-deeper-fig01"
+    },
+    {
+     "term": "wall of memory",
+     "definition": "Why outliers break naive quantization scaling.",
+     "anchor": "08-inference-serving-bridge-watch-deeper-fig02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "08-inference-serving-bridge-watch-deeper-r1",
+     "question": "How should you watch?",
+     "answer": "At 2x, pause on diagrams, redraw them yourself.",
+     "anchor": "08-inference-serving-bridge-watch-deeper-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "08-inference-serving-bridge-where-next",
+   "title": "Where to go next",
+   "minutes": 2,
+   "endAnchor": "08-inference-serving-bridge-where-next-end",
+   "blocks": [
+    {
+     "anchor": "08-inference-serving-bridge-where-next-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Volume 9",
+     "definition": "Agents and RAG: served models in loops where iterations multiply cost.",
+     "anchor": "08-inference-serving-bridge-where-next-p01"
+    },
+    {
+     "term": "Volume 10",
+     "definition": "Productionizing: benchmark into production contract.",
+     "anchor": "08-inference-serving-bridge-where-next-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "08-inference-serving-bridge-where-next-r1",
+     "question": "What can you now defend?",
+     "answer": "The sampler, batching, KV cache, paging, quantization, speculation, honest measurement.",
+     "anchor": "08-inference-serving-bridge-where-next-p01"
+    }
+   ]
+  }
+ ]
+}

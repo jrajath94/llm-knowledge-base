@@ -1,0 +1,167 @@
+{
+ "schemaVersion": 1,
+ "itemId": "27-ai-lab-llm-agentic",
+ "itemKind": "lesson",
+ "revision": "d024c40241db0b7b2ad6ef706cde35643a303a55b8a56575a1c533204708cd13",
+ "sections": [
+  {
+   "anchor": "lab-w15-d3-agents-intro",
+   "title": "Agents Intro Expert",
+   "minutes": 6,
+   "endAnchor": "lab-w15-d3-agents-intro-end",
+   "blocks": [
+    {
+     "anchor": "lab-w15-d3-agents-intro-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "typed interface",
+     "definition": "Explicit input/output contracts; every tool gets a typed interface.",
+     "anchor": "lab-w15-d3-agents-intro-p03"
+    },
+    {
+     "term": "executor loop",
+     "definition": "Minimal loop with guardrails: allowed tools, budgets, confirmation for writes.",
+     "anchor": "lab-w15-d3-agents-intro-p02"
+    },
+    {
+     "term": "operational metrics",
+     "definition": "Summarize these, not just correctness; the graded habit.",
+     "anchor": "lab-w15-d3-agents-intro-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w15-d3-agents-intro-r1",
+     "question": "What is the contract discipline?",
+     "answer": "Every tool gets a typed interface, because the model can only be as reliable as its tools.",
+     "anchor": "lab-w15-d3-agents-intro-p03"
+    },
+    {
+     "id": "lab-w15-d3-agents-intro-r2",
+     "question": "What is the graded habit?",
+     "answer": "Summarize operational metrics, not just correctness.",
+     "anchor": "lab-w15-d3-agents-intro-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w15-d4-multi-agent-systems-in-production",
+   "title": "Multi-Agent Systems in Production Expert",
+   "minutes": 6,
+   "endAnchor": "lab-w15-d4-multi-agent-systems-in-production-end",
+   "blocks": [
+    {
+     "anchor": "lab-w15-d4-multi-agent-systems-in-production-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "planner",
+     "definition": "Converts tasks into short tool-call sequences.",
+     "anchor": "lab-w15-d4-multi-agent-systems-in-production-p02"
+    },
+    {
+     "term": "critic",
+     "definition": "Verifies outputs and escalates; cannot act.",
+     "anchor": "lab-w15-d4-multi-agent-systems-in-production-p02"
+    },
+    {
+     "term": "narrow",
+     "definition": "Each role is narrow on purpose: checkable and debuggable.",
+     "anchor": "lab-w15-d4-multi-agent-systems-in-production-p04"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w15-d4-multi-agent-systems-in-production-r1",
+     "question": "What is the contract lesson?",
+     "answer": "Each role is narrow on purpose. The critic cannot act, the worker cannot replan; narrowness makes roles checkable.",
+     "anchor": "lab-w15-d4-multi-agent-systems-in-production-p04"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w15-d6-inference-time-scaling-verifiers",
+   "title": "Inference-Time Scaling &amp; Verifiers Expert",
+   "minutes": 7,
+   "endAnchor": "lab-w15-d6-inference-time-scaling-verifiers-end",
+   "blocks": [
+    {
+     "anchor": "lab-w15-d6-inference-time-scaling-verifiers-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "best-of-N",
+     "definition": "Policy measured on the pass@1 versus coverage curve.",
+     "anchor": "lab-w15-d6-inference-time-scaling-verifiers-p02"
+    },
+    {
+     "term": "verifier",
+     "definition": "Not the sample count, decides how far scaling goes; a noisy judge wastes samples.",
+     "anchor": "lab-w15-d6-inference-time-scaling-verifiers-p02"
+    },
+    {
+     "term": "temperature tradeoff",
+     "definition": "Diversity versus per-sample accuracy.",
+     "anchor": "lab-w15-d6-inference-time-scaling-verifiers-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w15-d6-inference-time-scaling-verifiers-r1",
+     "question": "What is the ceiling lesson?",
+     "answer": "The verifier, not the sample count, decides how far scaling goes. A noisy judge wastes samples.",
+     "anchor": "lab-w15-d6-inference-time-scaling-verifiers-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w15-d7-self-improving-agents",
+   "title": "Self-Improving Agents Expert",
+   "minutes": 4,
+   "endAnchor": "lab-w15-d7-self-improving-agents-end",
+   "blocks": [
+    {
+     "anchor": "lab-w15-d7-self-improving-agents-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "distill",
+     "definition": "Successful rollouts distilled into compact memory.",
+     "anchor": "lab-w15-d7-self-improving-agents-p02"
+    },
+    {
+     "term": "verified successes",
+     "definition": "Only these enter memory; everything unverified stays out.",
+     "anchor": "lab-w15-d7-self-improving-agents-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w15-d7-self-improving-agents-r1",
+     "question": "What is the key contest in the final task?",
+     "answer": "Improvement from memory versus spending the same compute on extra sampling.",
+     "anchor": "lab-w15-d7-self-improving-agents-p03"
+    },
+    {
+     "id": "lab-w15-d7-self-improving-agents-r2",
+     "question": "What is the gate that makes it safe?",
+     "answer": "Only verified successes enter memory, or the agent learns its own mistakes.",
+     "anchor": "lab-w15-d7-self-improving-agents-p03"
+    }
+   ]
+  }
+ ]
+}

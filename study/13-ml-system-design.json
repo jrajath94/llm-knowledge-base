@@ -1,0 +1,449 @@
+{
+ "schemaVersion": 1,
+ "itemId": "13-ml-system-design",
+ "itemKind": "lesson",
+ "revision": "c88976e0650baf97d527a320edb640851632ad083f9a48cb5bff6b410c2da3b7",
+ "sections": [
+  {
+   "anchor": "v13-ch0",
+   "title": "0. The framework: say the numbers first",
+   "minutes": 5,
+   "endAnchor": "v13-ch0-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch0-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "four-step loop",
+     "definition": "Requirements to numbers to architecture to bottlenecks.",
+     "anchor": "v13-ch0-p03"
+    },
+    {
+     "term": "arithmetic first",
+     "definition": "The candidate who does it passes, even with ugly boxes.",
+     "anchor": "v13-ch0-p01"
+    },
+    {
+     "term": "estimation",
+     "definition": "A design review is an estimation exercise with boxes.",
+     "anchor": "v13-ch0-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch0-r1",
+     "question": "What fails in a design review?",
+     "answer": "Drawing microservices before doing arithmetic; do the arithmetic first, even with ugly boxes.",
+     "anchor": "v13-ch0-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-ch-data",
+   "title": "1. Data: the foundation every design stands on",
+   "minutes": 5,
+   "endAnchor": "v13-ch-data-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch-data-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v13-ch-data-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "feature store",
+     "definition": "Offline for training, online for serving; same definitions, no skew.",
+     "anchor": "v13-ch-data-fig01"
+    },
+    {
+     "term": "Kafka logs",
+     "definition": "Raw events: the source of truth.",
+     "anchor": "v13-ch-data-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch-data-r1",
+     "question": "What breaks if the offline store fails?",
+     "answer": "Cannot train; each component names what it is, why it exists, what breaks.",
+     "anchor": "v13-ch-data-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-ch-model-choice",
+   "title": "2. Model choice: the smallest model that can do the job",
+   "minutes": 4,
+   "endAnchor": "v13-ch-model-choice-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch-model-choice-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "baseline",
+     "definition": "The simplest thing that could work: a heuristic, a keyword rule, a tiny model.",
+     "anchor": "v13-ch-model-choice-p03"
+    },
+    {
+     "term": "start at the bottom",
+     "definition": "Move up only when eval says the quality gain is worth the cost.",
+     "anchor": "v13-ch-model-choice-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch-model-choice-r1",
+     "question": "What is the most expensive mistake?",
+     "answer": "Starting with the biggest model; training and serving cost grow with size.",
+     "anchor": "v13-ch-model-choice-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-ch2",
+   "title": "3. Training at scale: FLOPs, memory, and time",
+   "minutes": 6,
+   "endAnchor": "v13-ch2-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch2-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v13-ch2-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "data parallel",
+     "definition": "Same model, split data; for throughput.",
+     "anchor": "v13-ch2-fig01"
+    },
+    {
+     "term": "tensor parallel",
+     "definition": "Splits a layer; when the model does not fit on one GPU.",
+     "anchor": "v13-ch2-fig01"
+    },
+    {
+     "term": "pipeline parallel",
+     "definition": "Split layers into stages; scale to many GPUs.",
+     "anchor": "v13-ch2-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch2-r1",
+     "question": "When do you use all three?",
+     "answer": "For 70B+ models.",
+     "anchor": "v13-ch2-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-ch3",
+   "title": "4. Evals: measuring what matters",
+   "minutes": 5,
+   "endAnchor": "v13-ch3-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch3-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v13-ch3-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "eval harness",
+     "definition": "Dataset, model, judge, metrics; calibrate the judge, gate deploys on eval.",
+     "anchor": "v13-ch3-fig01"
+    },
+    {
+     "term": "win rate",
+     "definition": "The metric for decisions.",
+     "anchor": "v13-ch3-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch3-r1",
+     "question": "What is the deploy rule?",
+     "answer": "No green eval, no ship.",
+     "anchor": "v13-ch3-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-ch1",
+   "title": "5. Capacity math: serving a 70B model",
+   "minutes": 8,
+   "endAnchor": "v13-ch1-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch1-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "memory-bandwidth problem",
+     "definition": "Serving an LLM: every token needs one full weight read.",
+     "anchor": "v13-ch1-p02"
+    },
+    {
+     "term": "capacity chain",
+     "definition": "Step time, batching, KV-cache limits, fleet size, bill.",
+     "anchor": "v13-ch1-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch1-r1",
+     "question": "What sets latency and throughput?",
+     "answer": "The fact that decode steps read all weights from memory.",
+     "anchor": "v13-ch1-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-ch5",
+   "title": "6. Serving at scale: batching, latency, and cost",
+   "minutes": 9,
+   "endAnchor": "v13-ch5-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch5-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v13-ch5-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "batcher",
+     "definition": "Groups requests; GPUs need batches for efficiency.",
+     "anchor": "v13-ch5-fig01"
+    },
+    {
+     "term": "KV cache",
+     "definition": "Holds per-request state in the serving stack.",
+     "anchor": "v13-ch5-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch5-r1",
+     "question": "What is the serving stack?",
+     "answer": "Gateway, batcher, GPU workers, KV cache.",
+     "anchor": "v13-ch5-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-ch4",
+   "title": "7. RAG systems: retrieval meets generation",
+   "minutes": 8,
+   "endAnchor": "v13-ch4-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch4-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v13-ch4-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "RAG pipeline",
+     "definition": "Offline builds the index once; online retrieves and generates per query.",
+     "anchor": "v13-ch4-fig02"
+    },
+    {
+     "term": "$0.16",
+     "definition": "Cost per 1k requests in the worked model.",
+     "anchor": "v13-ch4-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch4-r1",
+     "question": "What are the cost levers in order?",
+     "answer": "Batching first (20x), then the rest.",
+     "anchor": "v13-ch4-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-ch-monitoring",
+   "title": "8. Monitoring and failure modes: what breaks, and how you know",
+   "minutes": 5,
+   "endAnchor": "v13-ch-monitoring-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch-monitoring-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v13-ch-monitoring-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "monitoring loop",
+     "definition": "Metrics trigger alerts; alerts trigger actions; eval gates deploys.",
+     "anchor": "v13-ch-monitoring-fig01"
+    },
+    {
+     "term": "p99 over SLO",
+     "definition": "What the alert is.",
+     "anchor": "v13-ch-monitoring-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch-monitoring-r1",
+     "question": "What breaks if eval fails?",
+     "answer": "Bad deploys; quality gates prevent them.",
+     "anchor": "v13-ch-monitoring-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-ch6",
+   "title": "9. Question bank: 9 system designs, worked",
+   "minutes": 8,
+   "endAnchor": "v13-ch6-end",
+   "blocks": [
+    {
+     "anchor": "v13-ch6-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "framework",
+     "definition": "Numbers first, then architecture, then bottlenecks, then cost.",
+     "anchor": "v13-ch6-p01"
+    },
+    {
+     "term": "worked answer skeleton",
+     "definition": "Each of nine questions has one; check yourself against it.",
+     "anchor": "v13-ch6-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-ch6-r1",
+     "question": "How do you drill?",
+     "answer": "Read the question, try the whiteboard, reveal the answer, compare; did you start with numbers.",
+     "anchor": "v13-ch6-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "v13-cap",
+   "title": "10. Capstone: the full whiteboard run",
+   "minutes": 3,
+   "endAnchor": "v13-cap-end",
+   "blocks": [
+    {
+     "anchor": "v13-cap-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "45 minutes",
+     "definition": "One question, the whole volume: numbers, architecture, bottlenecks, cost.",
+     "anchor": "v13-cap-p01"
+    },
+    {
+     "term": "9 GPUs",
+     "definition": "$22.50 per hour for the 70B at 40 req/s.",
+     "anchor": "v13-cap-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v13-cap-r1",
+     "question": "What is the protocol?",
+     "answer": "Minutes 0-10: numbers; defend every box with arithmetic.",
+     "anchor": "v13-cap-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "13-ml-system-design-watch-deeper",
+   "title": "13-ml-system-design-watch-deeper",
+   "minutes": 1,
+   "endAnchor": "13-ml-system-design-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "13-ml-system-design-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "13-ml-system-design-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Chip Huyen",
+     "definition": "Designing ML Systems in 45 minutes; research vs production ML.",
+     "anchor": "13-ml-system-design-watch-deeper-fig01"
+    },
+    {
+     "term": "speed control",
+     "definition": "On each player.",
+     "anchor": "13-ml-system-design-watch-deeper-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "13-ml-system-design-watch-deeper-r1",
+     "question": "What do the videos replay?",
+     "answer": "This volume on a whiteboard.",
+     "anchor": "13-ml-system-design-watch-deeper-p02"
+    }
+   ]
+  }
+ ]
+}

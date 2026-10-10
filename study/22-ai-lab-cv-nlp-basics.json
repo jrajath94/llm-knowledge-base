@@ -1,0 +1,122 @@
+{
+ "schemaVersion": 1,
+ "itemId": "22-ai-lab-cv-nlp-basics",
+ "itemKind": "lesson",
+ "revision": "6a3f0c074d13f2358ba0af9f2198877142d5484fc465742e0765735db61f4554",
+ "sections": [
+  {
+   "anchor": "lab-w8-d4-text-preprocessing-tokenization",
+   "title": "Text Preprocessing &amp; Tokenization Hard",
+   "minutes": 6,
+   "endAnchor": "lab-w8-d4-text-preprocessing-tokenization-end",
+   "blocks": [
+    {
+     "anchor": "lab-w8-d4-text-preprocessing-tokenization-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "normalization",
+     "definition": "Unicode NFKC, casing, and whitespace collapse; decisions are task-dependent.",
+     "anchor": "lab-w8-d4-text-preprocessing-tokenization-p02"
+    },
+    {
+     "term": "word tokenization",
+     "definition": "Regex tokenizer that keeps punctuation as tokens; 'just split on spaces' hides edge cases.",
+     "anchor": "lab-w8-d4-text-preprocessing-tokenization-p02"
+    },
+    {
+     "term": "BPE",
+     "definition": "Byte-pair encoding: merge learning plus greedy encoding from scratch.",
+     "anchor": "lab-w8-d4-text-preprocessing-tokenization-p02"
+    },
+    {
+     "term": "NFKC",
+     "definition": "Unicode normalization that reduces variants; makes tokenization deterministic.",
+     "anchor": "lab-w8-d4-text-preprocessing-tokenization-p08"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w8-d4-text-preprocessing-tokenization-r1",
+     "question": "Where do most students discover the edge cases in tokenization?",
+     "answer": "In the regex tokenizer task: 'just split on spaces' hides how many edge cases real text has.",
+     "anchor": "lab-w8-d4-text-preprocessing-tokenization-p02"
+    },
+    {
+     "id": "lab-w8-d4-text-preprocessing-tokenization-r2",
+     "question": "What is the FAANG gotcha on normalization?",
+     "answer": "Normalization decisions are task-dependent; do not blindly lowercase in all problems.",
+     "anchor": "lab-w8-d4-text-preprocessing-tokenization-p13"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w8-d5-classical-nlp-methods",
+   "title": "Classical NLP Methods Hard",
+   "minutes": 11,
+   "endAnchor": "lab-w8-d5-classical-nlp-methods-end",
+   "blocks": [
+    {
+     "anchor": "lab-w8-d5-classical-nlp-methods-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w8-d5-classical-nlp-methods-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "TF-IDF",
+     "definition": "Term frequency-inverse document frequency; with cosine retrieval.",
+     "anchor": "lab-w8-d5-classical-nlp-methods-p02"
+    },
+    {
+     "term": "Naive Bayes",
+     "definition": "Classical classifier with Laplace smoothing; compared against logistic regression.",
+     "anchor": "lab-w8-d5-classical-nlp-methods-p02"
+    },
+    {
+     "term": "n-grams",
+     "definition": "Unigrams versus bigrams; bigrams recover some word order.",
+     "anchor": "lab-w8-d5-classical-nlp-methods-p06"
+    },
+    {
+     "term": "majority-class baseline",
+     "definition": "Run it first; measure everything else against it.",
+     "anchor": "lab-w8-d5-classical-nlp-methods-p02"
+    },
+    {
+     "term": "cosine similarity",
+     "definition": "Retrieval measure over TF-IDF vectors.",
+     "anchor": "lab-w8-d5-classical-nlp-methods-p06"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w8-d5-classical-nlp-methods-r1",
+     "question": "What is the FAANG gotcha on splits?",
+     "answer": "Even with toy data, enforce a clean train/val split and never fit vocab or IDF on val.",
+     "anchor": "lab-w8-d5-classical-nlp-methods-p09"
+    },
+    {
+     "id": "lab-w8-d5-classical-nlp-methods-r2",
+     "question": "What does the lab compare honestly?",
+     "answer": "Unigram versus bigram features under both Naive Bayes and logistic regression.",
+     "anchor": "lab-w8-d5-classical-nlp-methods-p02"
+    },
+    {
+     "id": "lab-w8-d5-classical-nlp-methods-r3",
+     "question": "What should you run first?",
+     "answer": "The majority-class baseline. Measure everything else against it.",
+     "anchor": "lab-w8-d5-classical-nlp-methods-p02"
+    }
+   ]
+  }
+ ]
+}

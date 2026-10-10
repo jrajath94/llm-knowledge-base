@@ -740,30 +740,30 @@ html.xp-js figure.xp-px img {
 <div class="takeaway"><h4>Key takeaways</h4><ul><li>Aggregate metrics compare; slice metrics debug. Always break errors down by cohort and by FP vs FN.</li><li>Feature ablation measures what each feature group earns; drop what does not pay.</li><li>Leakage is invisible in validation scores; only pipeline discipline (split first, fit inside folds) prevents it.</li><li>A metric that looks too good on validation and collapses on holdout is the signature of a leak.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Walk me through debugging a model whose holdout PR-AUC dropped 15 points versus validation.</li><li>When do interaction features help linear models? (Hint: the w5-d1 interview angle.)</li><li>Your slice analysis shows one cohort at 60 percent accuracy. What are your next three moves?</li></ul></div>
 <p><strong>Lab pointer.</strong> The w5-d4 Model Debugging and Error Analysis lab builds the full workflow: confusion-matrix error types, slice metrics, feature ablation, and cost-based thresholding. The w5-d1 Feature Engineering lab is where the leakage demo lives.</p>
 <h2>Lab walkthroughs</h2><div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w5-d1-feature-engineering">Feature Engineering Strategies</button><button data-target="lab-w5-d2-model-evaluation">Model Evaluation Deep Dive</button><button data-target="lab-w5-d3-bias-variance-regularization">Bias, Variance &amp; Regularization</button><button data-target="lab-w5-d4-model-debugging-error-analysis">Model Debugging &amp; Error Analysis</button><button data-target="lab-w5-d5-feature-evaluation-credit-default">Feature + Evaluation Lab</button><button data-target="lab-w5-d6-pca-lab">PCA Lab</button></div><section class="lab" id="lab-w5-d1-feature-engineering">
-<h3>Feature Engineering Strategies <span class="diff diff-medium">Medium</span></h3>
-<p class="lab-meta">Week 5, Day 1 · Evaluation &amp; Debugging · 7 tasks · 0 checks · Free</p>
-<p>This lab is the feature-engineering playbook for the whole volume. Missingness indicators. Title extraction with one-hot encoding. Log transforms. Interaction features. All inside leakage-safe pipelines.</p>
-<p>It applies the leakage discipline from Concept 4 directly, and the naive target-encoding task is the single most instructive failure in Week 5. Watch for the moment validation looks amazing and the holdout disagrees.</p>
-<p>Practice the feature engineering moves that win interviews and ship in production: missing data handling, categorical encoding, nonlinear transforms, and interaction features, <em>without leaking labels</em>.</p>
-<div class="callout"><strong>Outcome.</strong> Students can:
+<h3 id="feature-engineering-strategies-medium">Feature Engineering Strategies <span class="diff diff-medium">Medium</span></h3>
+<p id="lab-w5-d1-feature-engineering-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 5, Day 1 · Evaluation &amp; Debugging · 7 tasks · 0 checks · Free</p>
+<p data-term="leakage-safe pipelines" id="lab-w5-d1-feature-engineering-p02" data-kind="prose">This lab is the feature-engineering playbook for the whole volume. Missingness indicators. Title extraction with one-hot encoding. Log transforms. Interaction features. All inside leakage-safe pipelines.</p>
+<p id="lab-w5-d1-feature-engineering-p03" data-kind="prose">It applies the leakage discipline from Concept 4 directly, and the naive target-encoding task is the single most instructive failure in Week 5. Watch for the moment validation looks amazing and the holdout disagrees.</p>
+<p id="lab-w5-d1-feature-engineering-p04" data-kind="prose">Practice the feature engineering moves that win interviews and ship in production: missing data handling, categorical encoding, nonlinear transforms, and interaction features, <em>without leaking labels</em>.</p>
+<div id="lab-w5-d1-feature-engineering-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can:
 - build leakage-safe feature pipelines with sklearn,
 - choose appropriate encoding strategies,
 - add meaningful interaction features,
 - validate that features help via disciplined evaluation.</div>
-<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Baseline Pipeline</span><span class="tagchip">Missing Data</span><span class="tagchip">Encoding Categorical Variables</span><span class="tagchip">Nonlinear Transforms + Binning</span><span class="tagchip">Interaction Features</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1S-rsC7n3kD5SGC4hrQiHGKKHN2st3zwn">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-20-feature">Notes</a> · <a href="feature_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/TuksCezJF9Y">Video</a></p>
+<p id="lab-w5-d1-feature-engineering-p05" data-kind="prose" class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Baseline Pipeline</span><span class="tagchip">Missing Data</span><span class="tagchip">Encoding Categorical Variables</span><span class="tagchip">Nonlinear Transforms + Binning</span><span class="tagchip">Interaction Features</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w5-d1-feature-engineering-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1S-rsC7n3kD5SGC4hrQiHGKKHN2st3zwn">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-20-feature">Notes</a> · <a href="feature_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/TuksCezJF9Y">Video</a></p>
 <h4>Tasks (7)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Feature Engineering Strategies ,  Student Lab (Titanic)</h3>
-<p>Focus: missing data, encoding, nonlinear transforms, and interactions , <strong>leakage-safe</strong>.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="feature-engineering-strategies-student-lab-titanic">Feature Engineering Strategies ,  Student Lab (Titanic)</h3>
+<p id="lab-w5-d1-feature-engineering-p07" data-kind="prose">Focus: missing data, encoding, nonlinear transforms, and interactions , <strong>leakage-safe</strong>.</p>
 <h4>Section 0 ,  Load Titanic (Kaggle) with fallback</h4>
-<p>Expected: <code>data/titanic/train.csv</code></p>
-<p>If missing, use a tiny synthetic dataset so the notebook runs.</p><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Feature Engineering Strategies ,  Instructor (Titanic)</h3></details></div></details>
+<p id="lab-w5-d1-feature-engineering-p08" data-kind="prose">Expected: <code>data/titanic/train.csv</code></p>
+<p id="lab-w5-d1-feature-engineering-p09" data-kind="prose">If missing, use a tiny synthetic dataset so the notebook runs.</p><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3 id="feature-engineering-strategies-instructor-titanic">Feature Engineering Strategies ,  Instructor (Titanic)</h3></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Train a baseline with leakage-safe preprocessing <span class="task-sec">Baseline pipeline</span></summary><div class="task-body"><h4>Section 1 ,  Baseline pipeline</h4>
 <h4>Task 1.1: Train a baseline with leakage-safe preprocessing</h4>
-<p>Use:</p>
+<p id="lab-w5-d1-feature-engineering-p10" data-kind="prose">Use:</p>
 <ul><li>Numeric: Age, Fare, SibSp, Parch</li><li>Categorical: Pclass, Sex, Embarked</li></ul>
 <ul><li>Create X/y</li><li>Build ColumnTransformer (impute + scale numeric, impute + one-hot categorical)</li><li>Evaluate LogisticRegression with StratifiedKFold CV</li></ul>
-<p><strong>Checkpoint:</strong> Why is the pipeline necessary to avoid leakage in CV?</p><h4>Starter code</h4><pre><code class="lang-python">y = df['Survived'].astype(int)
+<p id="lab-w5-d1-feature-engineering-p11" data-kind="prose"><strong>Checkpoint:</strong> Why is the pipeline necessary to avoid leakage in CV?</p><h4>Starter code</h4><pre><code class="lang-python">y = df['Survived'].astype(int)
 X = df.drop(columns=['Survived'])
 
 def make_preprocess(numeric_features, categorical_features):
@@ -783,9 +783,9 @@ scores_base = cv_acc(pipe, X, y)
 print('baseline acc mean', np.mean(scores_base['test_acc']), 'std', np.std(scores_base['test_acc']))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Add missingness indicator features <span class="task-sec">Missing data: indicators</span></summary><div class="task-body"><h4>Section 2 ,  Missing data: indicators</h4>
 <h4>Task 2.1: Add missingness indicator features</h4>
-<p>Add: Age_is_missing, Cabin_is_missing</p>
+<p id="lab-w5-d1-feature-engineering-p12" data-kind="prose">Add: Age_is_missing, Cabin_is_missing</p>
 <ul><li>Create these columns</li><li>Add them to numeric pipeline</li><li>Re-run CV and compare</li></ul>
-<p><strong>Checkpoint:</strong> Why can missingness itself be predictive?</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
+<p id="lab-w5-d1-feature-engineering-p13" data-kind="prose"><strong>Checkpoint:</strong> Why can missingness itself be predictive?</p><h4>Starter code</h4><pre><code class="lang-python"># TODO
 X2 = X.copy()
 X2['Age_is_missing'] = ...
 X2['Cabin_is_missing'] = ...
@@ -803,10 +803,10 @@ pipe2 = Pipeline(steps=[('preprocess', preprocess2), ('model', LogisticRegressio
 scores_ind = cv_acc(pipe2, X2, y)
 print('with indicators acc mean', np.mean(scores_ind['test_acc']), 'std', np.std(scores_ind['test_acc']))
 
-# Rationale: missingness can be informative (not missing-at-random).</code></pre><h4>Why this works</h4><p>missingness can be informative (not missing-at-random).</p></details></div></details>
+# Rationale: missingness can be informative (not missing-at-random).</code></pre><h4>Why this works</h4><p data-term="target encoding" id="lab-w5-d1-feature-engineering-p14" data-kind="prose">missingness can be informative (not missing-at-random).</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Extract Title from Name and one-hot encode <span class="task-sec">Encoding: One-hot vs Target encoding</span></summary><div class="task-body"><h4>Section 3 ,  Encoding: One-hot vs Target encoding</h4>
 <h4>Task 3.1: Extract Title from Name and one-hot encode</h4>
-<p>Example titles: Mr, Mrs, Miss, Master.</p>
+<p id="lab-w5-d1-feature-engineering-p15" data-kind="prose">Example titles: Mr, Mrs, Miss, Master.</p>
 <ul><li>Extract Title with regex</li><li>Add it as categorical feature</li><li>Re-run CV</li></ul><h4>Starter code</h4><pre><code class="lang-python">def extract_title(name: str):
     if not isinstance(name, str):
         return 'Unknown'
@@ -839,11 +839,11 @@ pipe3 = Pipeline(steps=[('preprocess', preprocess3), ('model', LogisticRegressio
 scores3 = cv_acc(pipe3, X3, y)
 print('with Title acc mean', np.mean(scores3['test_acc']))
 
-# Rationale: Title captures social status correlated with survival.</code></pre><h4>Why this works</h4><p>Title captures social status correlated with survival.</p></details></div></details>
+# Rationale: Title captures social status correlated with survival.</code></pre><h4>Why this works</h4><p id="lab-w5-d1-feature-engineering-p16" data-kind="prose">Title captures social status correlated with survival.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Naive target encoding (demonstrate leakage) <span class="task-sec">Encoding: One-hot vs Target encoding</span></summary><div class="task-body"><h4>Task 3.2: Naive target encoding (demonstrate leakage)</h4>
-<p>We will <em>intentionally</em> do something wrong: compute mean Survived per Title using the full dataset, then map it back.</p>
+<p id="lab-w5-d1-feature-engineering-p17" data-kind="prose">We will <em>intentionally</em> do something wrong: compute mean Survived per Title using the full dataset, then map it back.</p>
 <ul><li>Create Title_target_mean using full data (this is leakage)</li><li>Compare CV score and explain why it inflates</li></ul>
-<p><strong>Checkpoint:</strong> How do you fix target encoding correctly?</p><h4>Starter code</h4><pre><code class="lang-python">X4 = X3.copy()
+<p id="lab-w5-d1-feature-engineering-p18" data-kind="prose"><strong>Checkpoint:</strong> How do you fix target encoding correctly?</p><h4>Starter code</h4><pre><code class="lang-python">X4 = X3.copy()
 # TODO (leaky)
 title_mean = ...
 X4['Title_target_mean_leaky'] = X4['Title'].map(title_mean).fillna(y.mean())
@@ -865,7 +865,7 @@ pipe4 = Pipeline(steps=[('preprocess', preprocess4), ('model', LogisticRegressio
 scores4 = cv_acc(pipe4, X4, y)
 print('LEAKY target encoding acc mean', np.mean(scores4['test_acc']))
 
-# Rationale: leakage occurs because encoding uses labels from validation folds. Fix with out-of-fold encoding.</code></pre><h4>Why this works</h4><p>leakage occurs because encoding uses labels from validation folds. Fix with out-of-fold encoding.</p></details></div></details>
+# Rationale: leakage occurs because encoding uses labels from validation folds. Fix with out-of-fold encoding.</code></pre><h4>Why this works</h4><p id="lab-w5-d1-feature-engineering-p19" data-kind="prose">leakage occurs because encoding uses labels from validation folds. Fix with out-of-fold encoding.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> Log-transform Fare <span class="task-sec">Nonlinear transforms + binning</span></summary><div class="task-body"><h4>Section 4 ,  Nonlinear transforms + binning</h4>
 <h4>Task 4.1: Log-transform Fare</h4><h4>Starter code</h4><pre><code class="lang-python">X5 = X3.copy()
 X5['Fare_log'] = np.log1p(pd.to_numeric(X5['Fare'], errors='coerce'))
@@ -887,12 +887,12 @@ pipe5 = Pipeline(steps=[('preprocess', preprocess5), ('model', LogisticRegressio
 scores5 = cv_acc(pipe5, X5, y)
 print('with Fare_log acc mean', np.mean(scores5['test_acc']))
 
-# Rationale: Fare has a heavy tail. Log reduces scale sensitivity for linear models.</code></pre><h4>Why this works</h4><p>Fare has a heavy tail. Log reduces scale sensitivity for linear models.</p></details></div></details>
+# Rationale: Fare has a heavy tail. Log reduces scale sensitivity for linear models.</code></pre><h4>Why this works</h4><p id="lab-w5-d1-feature-engineering-p20" data-kind="prose">Fare has a heavy tail. Log reduces scale sensitivity for linear models.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 7</span> FamilySize and IsAlone <span class="task-sec">Interaction features</span></summary><div class="task-body"><h4>Section 5 ,  Interaction features</h4>
 <h4>Task 5.1: FamilySize and IsAlone</h4>
-<p>FamilySize = SibSp + Parch + 1 IsAlone = FamilySize == 1</p>
+<p id="lab-w5-d1-feature-engineering-p21" data-kind="prose">FamilySize = SibSp + Parch + 1 IsAlone = FamilySize == 1</p>
 <h4>Task 5.2: Sex × Pclass cross</h4>
-<p>Create a categorical cross feature like <code>Sex_Pclass</code>.</p><h4>Starter code</h4><pre><code class="lang-python">X6 = X5.copy()
+<p id="lab-w5-d1-feature-engineering-p22" data-kind="prose">Create a categorical cross feature like <code>Sex_Pclass</code>.</p><h4>Starter code</h4><pre><code class="lang-python">X6 = X5.copy()
 X6['FamilySize'] = pd.to_numeric(X6['SibSp'], errors='coerce').fillna(0) + pd.to_numeric(X6['Parch'], errors='coerce').fillna(0) + 1
 X6['IsAlone'] = (X6['FamilySize'] == 1).astype(int)
 X6['Sex_Pclass'] = X6['Sex'].astype(str) + '_P' + X6['Pclass'].astype(str)
@@ -916,31 +916,31 @@ pipe6 = Pipeline(steps=[('preprocess', preprocess6), ('model', LogisticRegressio
 scores6 = cv_acc(pipe6, X6, y)
 print('with interactions acc mean', np.mean(scores6['test_acc']))
 
-# Rationale: interactions let linear models represent conditional effects (e.g., Sex effect varies by Pclass).</code></pre><h4>Why this works</h4><p>interactions let linear models represent conditional effects (for example, Sex effect varies by Pclass).</p></details></div></details>
+# Rationale: interactions let linear models represent conditional effects (e.g., Sex effect varies by Pclass).</code></pre><h4>Why this works</h4><p id="lab-w5-d1-feature-engineering-p23" data-kind="prose">interactions let linear models represent conditional effects (for example, Sex effect varies by Pclass).</p></details></div></details>
 <h4>Checkpoints</h4><ul><li>Why is a baseline necessary before feature engineering?</li><li>Why does naive target encoding leak? How do you fix it?</li></ul>
 <h4>Interview angles</h4><ul><li>When do interaction features help linear models?</li></ul>
 <h4>Gotchas</h4><ul><li>Imputation can hide a strong signal: missingness itself.</li></ul>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d1-feature-engineering">https://ai.thes30.com/problems/w5-d1-feature-engineering</a>.</p>
-</section><section class="lab" id="lab-w5-d2-model-evaluation">
-<h3>Model Evaluation Deep Dive <span class="diff diff-medium">Medium</span></h3>
-<p class="lab-meta">Week 5, Day 2 · Evaluation &amp; Debugging · 8 tasks · 1 checks</p>
-<p>This is the measurement lab. Confusion-matrix metrics. ROC vs PR curves. Cost-based threshold selection. Reliability bins with ECE. Temperature scaling.</p>
-<p>A bootstrap confidence interval for PR-AUC. It is the hands-on companion to Concepts 1 and 2. Every task here answers a question interviewers ask verbatim.</p>
-<p>Master evaluation choices under class imbalance and costs: ROC vs PR, thresholds, calibration, and confidence intervals.</p>
-<div class="callout"><strong>Outcome.</strong> Students can:
+<p id="lab-w5-d1-feature-engineering-p24" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d1-feature-engineering">https://ai.thes30.com/problems/w5-d1-feature-engineering</a>.</p>
+<span id="lab-w5-d1-feature-engineering-end" data-end></span></section><section class="lab" id="lab-w5-d2-model-evaluation">
+<h3 id="model-evaluation-deep-dive-medium">Model Evaluation Deep Dive <span class="diff diff-medium">Medium</span></h3>
+<p id="lab-w5-d2-model-evaluation-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 5, Day 2 · Evaluation &amp; Debugging · 8 tasks · 1 checks</p>
+<p data-term="cost-based threshold" id="lab-w5-d2-model-evaluation-p02" data-kind="prose">This is the measurement lab. Confusion-matrix metrics. ROC vs PR curves. Cost-based threshold selection. Reliability bins with ECE. Temperature scaling.</p>
+<p data-term="PR-AUC" id="lab-w5-d2-model-evaluation-p03" data-kind="prose">A bootstrap confidence interval for PR-AUC. It is the hands-on companion to Concepts 1 and 2. Every task here answers a question interviewers ask verbatim.</p>
+<p id="lab-w5-d2-model-evaluation-p04" data-kind="prose">Master evaluation choices under class imbalance and costs: ROC vs PR, thresholds, calibration, and confidence intervals.</p>
+<div id="lab-w5-d2-model-evaluation-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can:
 - compute core metrics correctly,
 - choose metrics aligned with product goals,
 - tune decision thresholds using costs,
 - diagnose calibration and improve it.</div>
-<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Confusion Matrix Metrics</span><span class="tagchip">ROC vs PR</span><span class="tagchip">Thresholding with Costs</span><span class="tagchip">Calibration</span><span class="tagchip">Uncertainty (Bootstrap CI)</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1PPP4XTI_ACj-FbI5YPgBCUshPopiF_AN">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-21-model">Notes</a> · <a href="eval_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/1z2q1pDoemA">Video</a></p>
+<p id="lab-w5-d2-model-evaluation-p05" data-kind="prose" class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Confusion Matrix Metrics</span><span class="tagchip">ROC vs PR</span><span class="tagchip">Thresholding with Costs</span><span class="tagchip">Calibration</span><span class="tagchip">Uncertainty (Bootstrap CI)</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w5-d2-model-evaluation-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1PPP4XTI_ACj-FbI5YPgBCUshPopiF_AN">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-21-model">Notes</a> · <a href="eval_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/1z2q1pDoemA">Video</a></p>
 <h4>Tasks (8)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Model Evaluation Deep Dive ,  Student Lab</h3>
-<p>You will compute metrics, compare ROC vs PR, do cost-based thresholding, and evaluate calibration.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="model-evaluation-deep-dive-student-lab">Model Evaluation Deep Dive ,  Student Lab</h3>
+<p id="lab-w5-d2-model-evaluation-p07" data-kind="prose">You will compute metrics, compare ROC vs PR, do cost-based thresholding, and evaluate calibration.</p>
 <h4>Section 0 ,  Dataset</h4>
-<p>Default: synthetic imbalanced classification. Optional: Titanic for realism.</p>
-<h3>TODO: set <code>use_titanic = False</code> or True</h3><h4>Starter code</h4><pre><code class="lang-python">import os
+<p id="lab-w5-d2-model-evaluation-p08" data-kind="prose">Default: synthetic imbalanced classification. Optional: Titanic for realism.</p>
+<h3 id="todo-set-use-titanic-false-or-true">TODO: set <code>use_titanic = False</code> or True</h3><h4>Starter code</h4><pre><code class="lang-python">import os
 import numpy as np
 import pandas as pd
 
@@ -965,7 +965,7 @@ from sklearn.metrics import roc_auc_score, average_precision_score
 
 rng = np.random.default_rng(0)</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Section 0 ,  Dataset <span class="task-sec">Dataset</span></summary><div class="task-body"><h4>Section 0 ,  Dataset</h4>
-<p>Default: synthetic imbalanced classification. Optional: Titanic for realism.</p><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><h4>Test code</h4><pre><code class="lang-python">check('train_nonempty', len(ytr) &gt; 0)</code></pre><h4>Checks</h4><ul><li>check('train_nonempty', len(ytr)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">use_titanic = False
+<p id="lab-w5-d2-model-evaluation-p09" data-kind="prose">Default: synthetic imbalanced classification. Optional: Titanic for realism.</p><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><h4>Test code</h4><pre><code class="lang-python">check('train_nonempty', len(ytr) &gt; 0)</code></pre><h4>Checks</h4><ul><li>check('train_nonempty', len(ytr)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">use_titanic = False
 
 def load_titanic_or_none():
     path = os.path.join(os.getcwd(), 'data', 'titanic', 'train.csv')
@@ -992,9 +992,9 @@ else:
 print('base_rate', float(np.mean(ytr)))</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Implement confusion-matrix metrics <span class="task-sec">Metrics from scratch</span></summary><div class="task-body"><h4>Section 1 ,  Metrics from scratch</h4>
 <h4>Task 1.1: Implement confusion-matrix metrics</h4>
-<p>Given <code>y_true</code> and <code>y_pred</code> (0/1), implement:</p>
+<p id="lab-w5-d2-model-evaluation-p10" data-kind="prose">Given <code>y_true</code> and <code>y_pred</code> (0/1), implement:</p>
 <ul><li>TP, FP, TN, FN</li><li>precision, recall, f1</li><li>TPR, FPR</li></ul>
-<p><strong>Checkpoint:</strong> When is accuracy misleading?</p><h4>Starter code</h4><pre><code class="lang-python">def confusion_counts(y_true, y_pred):
+<p id="lab-w5-d2-model-evaluation-p11" data-kind="prose"><strong>Checkpoint:</strong> When is accuracy misleading?</p><h4>Starter code</h4><pre><code class="lang-python">def confusion_counts(y_true, y_pred):
     # TODO
     tp = ...
     fp = ...
@@ -1039,9 +1039,9 @@ print('pr_auc', average_precision_score(yte, p))
 # Rationale: ROC can look good under severe imbalance; PR reflects precision at useful recall.</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Choose threshold to minimize expected cost <span class="task-sec">Thresholding with costs</span></summary><div class="task-body"><h4>Section 3 ,  Thresholding with costs</h4>
 <h4>Task 3.1: Choose threshold to minimize expected cost</h4>
-<p>Let cost(FN)=10, cost(FP)=1.</p>
+<p id="lab-w5-d2-model-evaluation-p12" data-kind="prose">Let cost(FN)=10, cost(FP)=1.</p>
 <ul><li>Sweep thresholds</li><li>Compute expected cost</li><li>Report best threshold</li></ul>
-<p><strong>Interview Angle:</strong> how does the best threshold move when FN cost increases?</p><h4>Starter code</h4><pre><code class="lang-python">cost_fp = 1.0
+<p id="lab-w5-d2-model-evaluation-p13" data-kind="prose"><strong>Interview Angle:</strong> how does the best threshold move when FN cost increases?</p><h4>Starter code</h4><pre><code class="lang-python">cost_fp = 1.0
 cost_fn = 10.0
 
 thresholds = np.linspace(0.01, 0.99, 99)
@@ -1068,7 +1068,7 @@ print('best (cost, thr, fp, fn):', best)
 # Rationale: higher FN cost pushes threshold lower to catch more positives.</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> Implement reliability bins and ECE <span class="task-sec">Calibration: Reliability + ECE</span></summary><div class="task-body"><h4>Section 4 ,  Calibration: Reliability + ECE</h4>
 <h4>Task 4.1: Implement reliability bins and ECE</h4>
-<p>ECE (Expected Calibration Error) is a weighted avg of |avg_confidence - accuracy| per bin.</p><h4>Starter code</h4><pre><code class="lang-python">def reliability_bins(y_true, prob, n_bins=10):
+<p id="lab-w5-d2-model-evaluation-p14" data-kind="prose">ECE (Expected Calibration Error) is a weighted avg of |avg_confidence - accuracy| per bin.</p><h4>Starter code</h4><pre><code class="lang-python">def reliability_bins(y_true, prob, n_bins=10):
     # returns list of (bin_lo, bin_hi, count, avg_conf, acc)
     # TODO
     out = []
@@ -1084,7 +1084,7 @@ bins = reliability_bins(yte, p, n_bins=10)
 print('first 3 bins:', bins[:3])
 print('ECE:', ece(yte, p, n_bins=10))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 7</span> Temperature scaling (binary, post-hoc) <span class="task-sec">Calibration: Reliability + ECE</span></summary><div class="task-body"><h4>Task 4.2: Temperature scaling (binary, post-hoc)</h4>
-<p>We will learn a temperature <code>T&gt;0</code> to calibrate logits: sigmoid(logit / T).</p>
+<p id="lab-w5-d2-model-evaluation-p15" data-kind="prose">We will learn a temperature <code>T&gt;0</code> to calibrate logits: sigmoid(logit / T).</p>
 <ul><li>Convert probabilities to logits</li><li>Search over T grid to minimize NLL on a validation split</li><li>Compare ECE before/after</li></ul><h4>Starter code</h4><pre><code class="lang-python"># Make a val split from train for calibration tuning
 Xtr2, Xva2, ytr2, yva2 = train_test_split(Xtr, ytr, test_size=0.3, random_state=0, stratify=ytr)
 clf2 = LogisticRegression(max_iter=5000)
@@ -1141,18 +1141,18 @@ print('95% CI:', (float(lo), float(hi)))
 <h4>Interview angles</h4><ul><li>How do you pick a threshold if false negatives cost 10x false positives?</li></ul>
 <h4>Gotchas</h4><ul><li>PR curves depend strongly on base rate; always report base rate.</li></ul>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d2-model-evaluation">https://ai.thes30.com/problems/w5-d2-model-evaluation</a>.</p>
-</section><section class="lab" id="lab-w5-d3-bias-variance-regularization">
-<h3>Bias, Variance &amp; Regularization <span class="diff diff-medium">Medium</span></h3>
-<p class="lab-meta">Week 5, Day 3 · Evaluation &amp; Debugging · 6 tasks · 0 checks</p>
-<p>This lab turns the bias-variance diagram into experiments: depth sweeps, C sweeps, L1 vs L2 sparsity, and learning curves by data size. It is Concept 3 with the code attached. Pay attention to the L1 correlated-features gotcha; it breaks naive feature-importance readings in production.</p>
-<p>Build interview-grade intuition for under/overfitting, bias/variance tradeoffs, and regularization (L1/L2, early stopping), grounded in experiments.</p>
-<div class="callout"><strong>Outcome.</strong> Students can diagnose bias vs variance from learning curves. They can choose regularization knobs and justify them. They can explain L1 vs L2 and their effects on weights and features. They can reason about model capacity and data size.</div>
-<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Setup + Baseline</span><span class="tagchip">Capacity Sweep (Under/Overfitting)</span><span class="tagchip">Regularization (L2 vs L1)</span><span class="tagchip">Learning Curves (Data Size)</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1C_uAfyILzHa0ljqW1qgKsxZVWfxAiyty">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-22-bias">Notes</a> · <a href="biasvar_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/q_KNT017xPw">Video</a></p>
+<p id="lab-w5-d2-model-evaluation-p16" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d2-model-evaluation">https://ai.thes30.com/problems/w5-d2-model-evaluation</a>.</p>
+<span id="lab-w5-d2-model-evaluation-end" data-end></span></section><section class="lab" id="lab-w5-d3-bias-variance-regularization">
+<h3 id="bias-variance-amp-regularization-medium">Bias, Variance &amp; Regularization <span class="diff diff-medium">Medium</span></h3>
+<p id="lab-w5-d3-bias-variance-regularization-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 5, Day 3 · Evaluation &amp; Debugging · 6 tasks · 0 checks</p>
+<p data-term="bias-variance" id="lab-w5-d3-bias-variance-regularization-p02" data-kind="prose">This lab turns the bias-variance diagram into experiments: depth sweeps, C sweeps, L1 vs L2 sparsity, and learning curves by data size. It is Concept 3 with the code attached. Pay attention to the L1 correlated-features gotcha; it breaks naive feature-importance readings in production.</p>
+<p id="lab-w5-d3-bias-variance-regularization-p03" data-kind="prose">Build interview-grade intuition for under/overfitting, bias/variance tradeoffs, and regularization (L1/L2, early stopping), grounded in experiments.</p>
+<div id="lab-w5-d3-bias-variance-regularization-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can diagnose bias vs variance from learning curves. They can choose regularization knobs and justify them. They can explain L1 vs L2 and their effects on weights and features. They can reason about model capacity and data size.</div>
+<p id="lab-w5-d3-bias-variance-regularization-p04" data-kind="prose" class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Setup + Baseline</span><span class="tagchip">Capacity Sweep (Under/Overfitting)</span><span class="tagchip">Regularization (L2 vs L1)</span><span class="tagchip">Learning Curves (Data Size)</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w5-d3-bias-variance-regularization-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1C_uAfyILzHa0ljqW1qgKsxZVWfxAiyty">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-22-bias">Notes</a> · <a href="biasvar_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/q_KNT017xPw">Video</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Bias, Variance &amp; Regularization ,  Student Lab (Breast Cancer)</h3>
-<p>You will diagnose under/overfitting using capacity sweeps and learning curves, then connect that to regularization knobs.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="bias-variance-amp-regularization-student-lab-breast-cancer">Bias, Variance &amp; Regularization ,  Student Lab (Breast Cancer)</h3>
+<p id="lab-w5-d3-bias-variance-regularization-p06" data-kind="prose">You will diagnose under/overfitting using capacity sweeps and learning curves, then connect that to regularization knobs.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -1174,11 +1174,11 @@ y = data.target
 
 Xtr, Xva, ytr, yva = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)
 check('shapes', Xtr.shape[0]==ytr.shape[0] and Xva.shape[0]==yva.shape[0])
-print('base_rate', float(y.mean()))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Instructor explanation</h4><h3>Bias, Variance &amp; Regularization ,  Instructor (Breast Cancer)</h3></details></div></details>
+print('base_rate', float(y.mean()))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Instructor explanation</h4><h3 id="bias-variance-amp-regularization-instructor-breast-cancer">Bias, Variance &amp; Regularization ,  Instructor (Breast Cancer)</h3></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Logistic regression baseline <span class="task-sec">Baseline</span></summary><div class="task-body"><h4>Section 1 ,  Baseline</h4>
 <h4>Task 1.1: Logistic regression baseline</h4>
 <ul><li>Fit a logistic regression with standardization</li><li>Report train and val accuracy</li></ul>
-<p><strong>Checkpoint:</strong> Why is logistic regression usually lower-variance than deep trees?</p><h4>Starter code</h4><pre><code class="lang-python"># Baseline logistic regression
+<p id="lab-w5-d3-bias-variance-regularization-p07" data-kind="prose"><strong>Checkpoint:</strong> Why is logistic regression usually lower-variance than deep trees?</p><h4>Starter code</h4><pre><code class="lang-python"># Baseline logistic regression
 # TODO
 lr = ...
 lr.fit(Xtr, ytr)
@@ -1191,11 +1191,11 @@ lr.fit(Xtr, ytr)
 print('train_acc', accuracy_score(ytr, lr.predict(Xtr)))
 print('val_acc', accuracy_score(yva, lr.predict(Xva)))
 
-# Rationale: linear model has constrained capacity. It typically has lower variance than deep trees.</code></pre><h4>Why this works</h4><p>linear model has constrained capacity. It typically has lower variance than deep trees.</p></details></div></details>
+# Rationale: linear model has constrained capacity. It typically has lower variance than deep trees.</code></pre><h4>Why this works</h4><p id="lab-w5-d3-bias-variance-regularization-p08" data-kind="prose">linear model has constrained capacity. It typically has lower variance than deep trees.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Depth sweep <span class="task-sec">Capacity sweep (Decision Tree depth)</span></summary><div class="task-body"><h4>Section 2 ,  Capacity sweep (Decision Tree depth)</h4>
 <h4>Task 2.1: Depth sweep</h4>
 <ul><li>For depths = 1..15, fit a DecisionTreeClassifier(max_depth=d)</li><li>Track train_acc and val_acc</li><li>Print the best depth by val accuracy</li></ul>
-<p><strong>Checkpoint:</strong> Which depths look high-bias? Which look high-variance?</p><h4>Starter code</h4><pre><code class="lang-python">depths = list(range(1, 16))
+<p id="lab-w5-d3-bias-variance-regularization-p09" data-kind="prose"><strong>Checkpoint:</strong> Which depths look high-bias? Which look high-variance?</p><h4>Starter code</h4><pre><code class="lang-python">depths = list(range(1, 16))
 train_acc = []
 val_acc = []
 
@@ -1221,12 +1221,12 @@ for d in depths:
 best_i = int(np.argmax(val_acc))
 print('best_depth', depths[best_i], 'val_acc', val_acc[best_i])
 
-# Rationale: as depth increases, bias decreases but variance increases; look for widening train-val gap.</code></pre><h4>Why this works</h4><p>as depth increases, bias decreases but variance increases; look for widening train-val gap.</p></details></div></details>
+# Rationale: as depth increases, bias decreases but variance increases; look for widening train-val gap.</code></pre><h4>Why this works</h4><p id="lab-w5-d3-bias-variance-regularization-p10" data-kind="prose">as depth increases, bias decreases but variance increases; look for widening train-val gap.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Sweep C for L2 logistic regression <span class="task-sec">Regularization sweep (LogReg C)</span></summary><div class="task-body"><h4>Section 3 ,  Regularization sweep (LogReg C)</h4>
 <h4>Task 3.1: Sweep C for L2 logistic regression</h4>
 <ul><li>Try C in [0.01, 0.1, 1, 10, 100]</li><li>Compare train vs val accuracy</li></ul>
-<p><strong>Checkpoint:</strong> What does decreasing C do to bias/variance? <img src="/images/w5-d3-bias-variance-accuracy-curves.svg" alt="Bias-variance with train/validation accuracy vs C" width="640" /></p>
-<p>Visual intuition:</p>
+<p id="lab-w5-d3-bias-variance-regularization-p11" data-kind="prose"><strong>Checkpoint:</strong> What does decreasing C do to bias/variance? <img src="/images/w5-d3-bias-variance-accuracy-curves.svg" alt="Bias-variance with train/validation accuracy vs C" width="640" /></p>
+<p id="lab-w5-d3-bias-variance-regularization-p12" data-kind="prose">Visual intuition:</p>
 <ul><li>Left (low C = strong regularization): bias dominates (underfitting risk).</li><li>Middle: best tradeoff region (lowest validation/test error).</li><li>Right (high C = weak regularization): variance dominates (overfitting risk).</li></ul>
 <ul><li>C axis uses log scale: <code>[0.01, 0.1, 1, 10, 100]</code>.</li></ul><h4>Starter code</h4><pre><code class="lang-python">Cs = [0.01, 0.1, 1.0, 10.0, 100.0]
 for C in Cs:
@@ -1246,11 +1246,11 @@ for C in Cs:
     va = accuracy_score(yva, lrC.predict(Xva))
     print('C', C, 'train', tr, 'val', va)
 
-# Rationale: smaller C =&gt; stronger regularization =&gt; higher bias, lower variance.</code></pre><h4>Why this works</h4><p>smaller C =&gt; stronger regularization =&gt; higher bias, lower variance.</p><h4>Instructor explanation</h4><h4>Section 3 - Regularization Strength (C)</h4>
+# Rationale: smaller C =&gt; stronger regularization =&gt; higher bias, lower variance.</code></pre><h4>Why this works</h4><p id="lab-w5-d3-bias-variance-regularization-p13" data-kind="prose">smaller C =&gt; stronger regularization =&gt; higher bias, lower variance.</p><h4>Instructor explanation</h4><h4>Section 3 - Regularization Strength (C)</h4>
 <ul><li>High C -&gt; less regularization -&gt; model more complex, lower bias, potentially high variance (overfitting).</li><li>Low C -&gt; more regularization -&gt; model simpler, higher bias, potentially lower variance (underfitting).</li></ul></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> L1 vs L2 sparsity <span class="task-sec">Regularization sweep (LogReg C)</span></summary><div class="task-body"><h4>Task 3.2: L1 vs L2 sparsity</h4>
 <ul><li>Fit L1 logistic regression (solver=liblinear)</li><li>Count how many coefficients are exactly 0</li><li>Compare to L2</li></ul>
-<p><strong>FAANG Gotcha:</strong> correlated features can make L1 unstable (it picks one arbitrarily).</p><h4>Starter code</h4><pre><code class="lang-python"># L2 model
+<p id="lab-w5-d3-bias-variance-regularization-p14" data-kind="prose"><strong>FAANG Gotcha:</strong> correlated features can make L1 unstable (it picks one arbitrarily).</p><h4>Starter code</h4><pre><code class="lang-python"># L2 model
 lr_l2 = Pipeline(steps=[('scaler', StandardScaler()), ('model', LogisticRegression(max_iter=5000, C=1.0, penalty='l2'))])
 lr_l2.fit(Xtr, ytr)
 w_l2 = lr_l2.named_steps['model'].coef_.ravel()
@@ -1273,12 +1273,12 @@ w_l1 = lr_l1.named_steps['model'].coef_.ravel()
 print('l2 zeros', int(np.sum(np.isclose(w_l2, 0.0))))
 print('l1 zeros', int(np.sum(np.isclose(w_l1, 0.0))))
 
-# Rationale: L1 encourages sparsity; correlated features can cause arbitrary selection.</code></pre><h4>Why this works</h4><p>L1 encourages sparsity; correlated features can cause arbitrary selection.</p></details></div></details>
+# Rationale: L1 encourages sparsity; correlated features can cause arbitrary selection.</code></pre><h4>Why this works</h4><p id="lab-w5-d3-bias-variance-regularization-p15" data-kind="prose">L1 encourages sparsity; correlated features can cause arbitrary selection.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> Train with increasing data sizes <span class="task-sec">Learning curve by subsampling</span></summary><div class="task-body"><h4>Section 4 ,  Learning curve by subsampling</h4>
 <h4>Task 4.1: Train with increasing data sizes</h4>
 <ul><li>For fractions in [0.1, 0.2, 0.4, 0.6, 0.8, 1.0], train logistic regression on that fraction</li><li>Track train vs val accuracy</li></ul>
-<p><strong>Interview Angle:</strong> How do you decide whether to get more data vs regularize more?</p>
-<p>Use this with Section 3 curve intuition for bias/variance diagnosis from train-vs-val gaps.</p><h4>Starter code</h4><pre><code class="lang-python">fracs = [0.1, 0.2, 0.4, 0.6, 0.8, 1.0]
+<p id="lab-w5-d3-bias-variance-regularization-p16" data-kind="prose"><strong>Interview Angle:</strong> How do you decide whether to get more data vs regularize more?</p>
+<p id="lab-w5-d3-bias-variance-regularization-p17" data-kind="prose">Use this with Section 3 curve intuition for bias/variance diagnosis from train-vs-val gaps.</p><h4>Starter code</h4><pre><code class="lang-python">fracs = [0.1, 0.2, 0.4, 0.6, 0.8, 1.0]
 idx_all = np.arange(len(Xtr))
 
 for f in fracs:
@@ -1302,27 +1302,27 @@ for f in fracs:
     va = accuracy_score(yva, lr_sub.predict(Xva))
     print('frac', f, 'n', k, 'train', tr, 'val', va)
 
-# Rationale: if both train/val are low -&gt; bias; if train high, val low -&gt; variance; more data helps variance.</code></pre><h4>Why this works</h4><p>if both train/val are low -&gt; bias; if train high, val low -&gt; variance; more data helps variance.</p><h4>Instructor explanation</h4><h4>Section 4 - Learning Curve by Subsampling</h4>
-<blockquote><p>ð¡ If both train/validation are low, suspect <strong>bias</strong>. If train is high and validation is low, suspect <strong>variance</strong>. More data usually helps variance. If validation accuracy flattens or worsens despite more data, increase regularization.</p></blockquote></details></div></details>
+# Rationale: if both train/val are low -&gt; bias; if train high, val low -&gt; variance; more data helps variance.</code></pre><h4>Why this works</h4><p id="lab-w5-d3-bias-variance-regularization-p18" data-kind="prose">if both train/val are low -&gt; bias; if train high, val low -&gt; variance; more data helps variance.</p><h4>Instructor explanation</h4><h4>Section 4 - Learning Curve by Subsampling</h4>
+<blockquote id="lab-w5-d3-bias-variance-regularization-quote01" data-kind="quote"><p>ð¡ If both train/validation are low, suspect <strong>bias</strong>. If train is high and validation is low, suspect <strong>variance</strong>. More data usually helps variance. If validation accuracy flattens or worsens despite more data, increase regularization.</p></blockquote></details></div></details>
 <h4>Checkpoints</h4><ul><li>Why is logistic regression a “high bias / low variance” baseline?</li><li>What pattern indicates high variance?</li><li>What pattern indicates high bias?</li></ul>
 <h4>Interview angles</h4><ul><li>How do you know whether to get more data vs regularize more?</li></ul>
 <h4>Gotchas</h4><ul><li>L1 can zero out correlated features arbitrarily.</li></ul>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d3-bias-variance-regularization">https://ai.thes30.com/problems/w5-d3-bias-variance-regularization</a>.</p>
-</section><section class="lab" id="lab-w5-d4-model-debugging-error-analysis">
-<h3>Model Debugging &amp; Error Analysis <span class="diff diff-medium">Medium</span></h3>
-<p class="lab-meta">Week 5, Day 4 · Evaluation &amp; Debugging · 7 tasks · 0 checks</p>
-<p>This lab is the debugging workflow FAANG expects after the first model exists: slice metrics, FP vs FN inspection, feature ablation, and threshold by cost. It operationalizes Concept 4. The standing checkpoint, "why is a pipeline required for trustworthy debugging," is worth answering in your own words before you look at any hint.</p>
-<p>Learn the workflow FAANG expects after you have a model: diagnose errors, find slices that fail, run feature ablations, and iterate safely.</p>
-<div class="callout"><strong>Outcome.</strong> Students can build a baseline churn classifier. They can compute slice metrics and identify failure cohorts. They can perform error analysis (FP vs FN). They can run feature ablation and interpret results. They can tune the threshold for business cost.</div>
-<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Baseline + Holdout</span><span class="tagchip">Error Breakdown</span><span class="tagchip">Slice Analysis</span><span class="tagchip">Feature Ablation</span><span class="tagchip">Thresholding with Cost</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1jyKQRS8RHt4k4Low_fVY0umDbzKbPJ0L">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-23-model">Notes</a> · <a href="debug_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/m5_p6uHGLiA">Video</a></p>
+<p id="lab-w5-d3-bias-variance-regularization-p19" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d3-bias-variance-regularization">https://ai.thes30.com/problems/w5-d3-bias-variance-regularization</a>.</p>
+<span id="lab-w5-d3-bias-variance-regularization-end" data-end></span></section><section class="lab" id="lab-w5-d4-model-debugging-error-analysis">
+<h3 id="model-debugging-amp-error-analysis-medium">Model Debugging &amp; Error Analysis <span class="diff diff-medium">Medium</span></h3>
+<p id="lab-w5-d4-model-debugging-error-analysis-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 5, Day 4 · Evaluation &amp; Debugging · 7 tasks · 0 checks</p>
+<p data-term="slice metrics" id="lab-w5-d4-model-debugging-error-analysis-p02" data-kind="prose">This lab is the debugging workflow FAANG expects after the first model exists: slice metrics, FP vs FN inspection, feature ablation, and threshold by cost. It operationalizes Concept 4. The standing checkpoint, "why is a pipeline required for trustworthy debugging," is worth answering in your own words before you look at any hint.</p>
+<p id="lab-w5-d4-model-debugging-error-analysis-p03" data-kind="prose">Learn the workflow FAANG expects after you have a model: diagnose errors, find slices that fail, run feature ablations, and iterate safely.</p>
+<div id="lab-w5-d4-model-debugging-error-analysis-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can build a baseline churn classifier. They can compute slice metrics and identify failure cohorts. They can perform error analysis (FP vs FN). They can run feature ablation and interpret results. They can tune the threshold for business cost.</div>
+<p id="lab-w5-d4-model-debugging-error-analysis-p04" data-kind="prose" class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Baseline + Holdout</span><span class="tagchip">Error Breakdown</span><span class="tagchip">Slice Analysis</span><span class="tagchip">Feature Ablation</span><span class="tagchip">Thresholding with Cost</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w5-d4-model-debugging-error-analysis-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1jyKQRS8RHt4k4Low_fVY0umDbzKbPJ0L">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-23-model">Notes</a> · <a href="debug_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/m5_p6uHGLiA">Video</a></p>
 <h4>Tasks (7)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Model Debugging &amp; Error Analysis ,  Student Lab (Customer Churn)</h3>
-<p>You will build a baseline churn model, then debug it via slice analysis and feature ablation.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="model-debugging-amp-error-analysis-student-lab-customer-chur">Model Debugging &amp; Error Analysis ,  Student Lab (Customer Churn)</h3>
+<p id="lab-w5-d4-model-debugging-error-analysis-p06" data-kind="prose">You will build a baseline churn model, then debug it via slice analysis and feature ablation.</p>
 <h4>Section 0 ,  Load churn dataset (with fallback)</h4>
-<p>Expected path: <code>data/churn/churn.csv</code></p>
-<p>The target column is commonly <code>Churn</code> (Yes/No) or <code>churn</code> (0/1).</p><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Model Debugging &amp; Error Analysis ,  Instructor (Customer Churn)</h3></details></div></details>
+<p id="lab-w5-d4-model-debugging-error-analysis-p07" data-kind="prose">Expected path: <code>data/churn/churn.csv</code></p>
+<p id="lab-w5-d4-model-debugging-error-analysis-p08" data-kind="prose">The target column is commonly <code>Churn</code> (Yes/No) or <code>churn</code> (0/1).</p><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3 id="model-debugging-amp-error-analysis-instructor-customer-churn">Model Debugging &amp; Error Analysis ,  Instructor (Customer Churn)</h3></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Build `y` robustly <span class="task-sec">Target normalization + holdout split</span></summary><div class="task-body"><h4>Section 1 ,  Target normalization + holdout split</h4>
 <h4>Task 1.1: Build <code>y</code> robustly</h4>
 <ul><li>Support both Yes/No and 0/1 churn targets</li><li>Create X/y</li><li>Train/holdout split (stratify)</li></ul><h4>Starter code</h4><pre><code class="lang-python">target_col = 'Churn' if 'Churn' in df.columns else ('churn' if 'churn' in df.columns else None)
@@ -1387,7 +1387,7 @@ proba = pipe.predict_proba(Xho)[:, 1]
 print('holdout_acc', accuracy_score(yho, pred))
 print('holdout_auc', roc_auc_score(yho, proba))
 
-# Rationale: use pipeline so preprocessing is fit only on training data; avoids leakage and makes debugging trustworthy.</code></pre><h4>Why this works</h4><p>use pipeline so preprocessing is fit only on training data; avoids leakage and makes debugging trustworthy.</p></details></div></details>
+# Rationale: use pipeline so preprocessing is fit only on training data; avoids leakage and makes debugging trustworthy.</code></pre><h4>Why this works</h4><p id="lab-w5-d4-model-debugging-error-analysis-p09" data-kind="prose">use pipeline so preprocessing is fit only on training data; avoids leakage and makes debugging trustworthy.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> Confusion matrix and error types <span class="task-sec">Error breakdown (FP vs FN)</span></summary><div class="task-body"><h4>Section 3 ,  Error breakdown (FP vs FN)</h4>
 <h4>Task 3.1: Confusion matrix and error types</h4>
 <ul><li>Compute confusion matrix</li><li>Count FP/FN</li><li>Identify 5 examples of FP and FN rows from holdout</li></ul><h4>Starter code</h4><pre><code class="lang-python">cm = confusion_matrix(yho, pred)
@@ -1417,16 +1417,16 @@ fp = ho[(ho['y_true'] == 0) &amp; (ho['y_pred'] == 1)]
 fn = ho[(ho['y_true'] == 1) &amp; (ho['y_pred'] == 0)]
 print('fp', len(fp), 'fn', len(fn))
 
-# Rationale: separate FP vs FN; fixes differ (thresholding, features, cohort-specific modeling).</code></pre><h4>Why this works</h4><p>separate FP vs FN; fixes differ (thresholding, features, cohort-specific modeling).</p><h4>Instructor explanation</h4><h4>Figure: ROC Curve (Baseline)</h4>
-<p>![ROC Curve](/images/w5-d4-roc-curve.png)</p>
+# Rationale: separate FP vs FN; fixes differ (thresholding, features, cohort-specific modeling).</code></pre><h4>Why this works</h4><p id="lab-w5-d4-model-debugging-error-analysis-p10" data-kind="prose">separate FP vs FN; fixes differ (thresholding, features, cohort-specific modeling).</p><h4>Instructor explanation</h4><h4>Figure: ROC Curve (Baseline)</h4>
+<p id="lab-w5-d4-model-debugging-error-analysis-p11" data-kind="prose">![ROC Curve](/images/w5-d4-roc-curve.png)</p>
 <h4>Figure: Confusion Matrix</h4>
-<p>![Confusion Matrix](/images/w5-d4-confusion-matrix.png)</p>
+<p id="lab-w5-d4-model-debugging-error-analysis-p12" data-kind="prose">![Confusion Matrix](/images/w5-d4-confusion-matrix.png)</p>
 <h4>Figure: Predicted Probability by Class</h4>
-<p>![Probability Histogram](/images/w5-d4-proba-hist.png)</p></details></div></details>
+<p id="lab-w5-d4-model-debugging-error-analysis-p13" data-kind="prose">![Probability Histogram](/images/w5-d4-proba-hist.png)</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Slice metrics by key categorical columns <span class="task-sec">Slice analysis</span></summary><div class="task-body"><h4>Section 4 ,  Slice analysis</h4>
 <h4>Task 4.1: Slice metrics by key categorical columns</h4>
 <ul><li>For each of these (if present): Contract, InternetService, PaymentMethod</li><li>Report: count, churn_rate, accuracy</li></ul>
-<p><strong>Checkpoint:</strong> Why can slice failures happen even if overall metrics are good?</p><h4>Starter code</h4><pre><code class="lang-python">def slice_table(df_holdout, col):
+<p id="lab-w5-d4-model-debugging-error-analysis-p14" data-kind="prose"><strong>Checkpoint:</strong> Why can slice failures happen even if overall metrics are good?</p><h4>Starter code</h4><pre><code class="lang-python">def slice_table(df_holdout, col):
     def _slice_metrics(d):
         y_true = d['y_true'].values
         y_pred = d['y_pred'].values
@@ -1470,15 +1470,15 @@ for col in ['Contract','InternetService','PaymentMethod']:
         print('---', col)
         print(slice_table(ho, col))
 
-# Rationale: slice analysis reveals systematic errors in cohorts; overall metrics can mask them.</code></pre><h4>Why this works</h4><p>slice analysis reveals systematic errors in cohorts; overall metrics can mask them.</p><h4>Instructor explanation</h4><h4>Figure: Slice Performance</h4>
-<p>![Slice Performance](/images/w5-d4-slice-performance.png)</p></details></div></details>
+# Rationale: slice analysis reveals systematic errors in cohorts; overall metrics can mask them.</code></pre><h4>Why this works</h4><p id="lab-w5-d4-model-debugging-error-analysis-p15" data-kind="prose">slice analysis reveals systematic errors in cohorts; overall metrics can mask them.</p><h4>Instructor explanation</h4><h4>Figure: Slice Performance</h4>
+<p id="lab-w5-d4-model-debugging-error-analysis-p16" data-kind="prose">![Slice Performance](/images/w5-d4-slice-performance.png)</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> Drop feature groups and re-evaluate <span class="task-sec">Feature ablation</span></summary><div class="task-body"><h4>Section 5 ,  Feature ablation</h4>
 <h4>Task 5.1: Drop feature groups and re-evaluate</h4>
-<ul><li>Define groups by prefix or by a manual list</li><li>Fit the same pipeline after dropping each group</li><li>Report the delta in AUC</li></ul><h4>Starter code</h4><pre><code class="lang-python">$11</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Why this works</h4><p>ablation estimates marginal utility and helps you prioritize feature work.</p><h4>Instructor explanation</h4><h4>Figure: Feature Ablation Impact</h4>
-<p>![Ablation Delta](/images/w5-d4-ablation-delta.png)</p></details></div></details>
+<ul><li>Define groups by prefix or by a manual list</li><li>Fit the same pipeline after dropping each group</li><li>Report the delta in AUC</li></ul><h4>Starter code</h4><pre><code class="lang-python">$11</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Why this works</h4><p id="lab-w5-d4-model-debugging-error-analysis-p17" data-kind="prose">ablation estimates marginal utility and helps you prioritize feature work.</p><h4>Instructor explanation</h4><h4>Figure: Feature Ablation Impact</h4>
+<p id="lab-w5-d4-model-debugging-error-analysis-p18" data-kind="prose">![Ablation Delta](/images/w5-d4-ablation-delta.png)</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 7</span> Pick threshold for cost ratio <span class="task-sec">Thresholding with costs</span></summary><div class="task-body"><h4>Section 6 ,  Thresholding with costs</h4>
 <h4>Task 6.1: Pick threshold for cost ratio</h4>
-<p>Let cost(FN)=5 and cost(FP)=1.</p>
+<p id="lab-w5-d4-model-debugging-error-analysis-p19" data-kind="prose">Let cost(FN)=5 and cost(FP)=1.</p>
 <ul><li>Sweep thresholds</li><li>Compute cost on holdout</li><li>Report best threshold</li></ul><h4>Starter code</h4><pre><code class="lang-python">cost_fp = 1.0
 cost_fn = 5.0
 ths = np.linspace(0.05, 0.95, 91)
@@ -1504,33 +1504,33 @@ for t in ths:
         best = (float(cost), float(t), int(fp), int(fn))
 print('best (cost, thr, fp, fn):', best)
 
-# Rationale: threshold should align with business costs; not necessarily 0.5.</code></pre><h4>Why this works</h4><p>threshold should align with business costs; not necessarily 0.5.</p><h4>Instructor explanation</h4><h4>Figure: Threshold vs Business Cost</h4>
-<p>![Threshold Cost](/images/w5-d4-threshold-cost-v2.png)</p></details></div></details>
+# Rationale: threshold should align with business costs; not necessarily 0.5.</code></pre><h4>Why this works</h4><p id="lab-w5-d4-model-debugging-error-analysis-p20" data-kind="prose">threshold should align with business costs; not necessarily 0.5.</p><h4>Instructor explanation</h4><h4>Figure: Threshold vs Business Cost</h4>
+<p id="lab-w5-d4-model-debugging-error-analysis-p21" data-kind="prose">![Threshold Cost](/images/w5-d4-threshold-cost-v2.png)</p></details></div></details>
 <h4>Checkpoints</h4><ul><li>Why is a pipeline required for trustworthy debugging?</li></ul>
 <h4>Interview angles</h4><ul><li>Which is worse: FP or FN? (Depends on business cost.)</li></ul>
 <h4>Gotchas</h4><ul><li>“Overall accuracy looks fine” can hide severe cohort failures.</li></ul>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d4-model-debugging-error-analysis">https://ai.thes30.com/problems/w5-d4-model-debugging-error-analysis</a>.</p>
-</section><section class="lab" id="lab-w5-d5-feature-evaluation-credit-default">
-<h3>Feature + Evaluation Lab <span class="diff diff-medium">Medium</span></h3>
-<p class="lab-meta">Week 5, Day 5 · Evaluation &amp; Debugging · 8 tasks · 1 checks</p>
-<p>This is the capstone: feature engineering plus evaluation discipline on an imbalanced, cost-sensitive credit-default problem. It combines Concepts 1, 2, and 4 in one pipeline with model comparison under cross-validation. Treat it as a mock take-home: baselines first, then features, then threshold by cost.</p>
-<p>Combine feature engineering + evaluation discipline on an imbalanced, cost-sensitive classification problem.</p>
-<div class="callout"><strong>Outcome.</strong> Students can build a leakage-safe sklearn pipeline. They can compare baselines vs stronger models under CV. They can use PR-AUC / ROC-AUC appropriately. They can choose a decision threshold using business costs. They can run slice analysis and error analysis.</div>
-<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Baselines</span><span class="tagchip">Model Comparison (CV)</span><span class="tagchip">Feature Engineering</span><span class="tagchip">Thresholding with Costs</span><span class="tagchip">Error Analysis + Slices</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1J8JHL8NG0auzl6n9biTdWDG0OlxVpLpU">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-24-credit">Notes</a> · <a href="credit_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/-7KVz4OeM_I">Video</a></p>
+<p id="lab-w5-d4-model-debugging-error-analysis-p22" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d4-model-debugging-error-analysis">https://ai.thes30.com/problems/w5-d4-model-debugging-error-analysis</a>.</p>
+<span id="lab-w5-d4-model-debugging-error-analysis-end" data-end></span></section><section class="lab" id="lab-w5-d5-feature-evaluation-credit-default">
+<h3 id="feature-evaluation-lab-medium">Feature + Evaluation Lab <span class="diff diff-medium">Medium</span></h3>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 5, Day 5 · Evaluation &amp; Debugging · 8 tasks · 1 checks</p>
+<p data-term="mock take-home" id="lab-w5-d5-feature-evaluation-credit-default-p02" data-kind="prose">This is the capstone: feature engineering plus evaluation discipline on an imbalanced, cost-sensitive credit-default problem. It combines Concepts 1, 2, and 4 in one pipeline with model comparison under cross-validation. Treat it as a mock take-home: baselines first, then features, then threshold by cost.</p>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p03" data-kind="prose">Combine feature engineering + evaluation discipline on an imbalanced, cost-sensitive classification problem.</p>
+<div id="lab-w5-d5-feature-evaluation-credit-default-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can build a leakage-safe sklearn pipeline. They can compare baselines vs stronger models under CV. They can use PR-AUC / ROC-AUC appropriately. They can choose a decision threshold using business costs. They can run slice analysis and error analysis.</div>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p04" data-kind="prose" class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Baselines</span><span class="tagchip">Model Comparison (CV)</span><span class="tagchip">Feature Engineering</span><span class="tagchip">Thresholding with Costs</span><span class="tagchip">Error Analysis + Slices</span><span class="tagchip">Week 5</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1J8JHL8NG0auzl6n9biTdWDG0OlxVpLpU">Colab</a> · <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-24-credit">Notes</a> · <a href="credit_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/-7KVz4OeM_I">Video</a></p>
 <h4>Tasks (8)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Feature + Evaluation Lab ,  Credit Default (Student)</h3>
-<p>This is a capstone-style classical ML lab: baselines -&gt; CV -&gt; thresholding -&gt; slices.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="feature-evaluation-lab-credit-default-student">Feature + Evaluation Lab ,  Credit Default (Student)</h3>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p06" data-kind="prose">This is a capstone-style classical ML lab: baselines -&gt; CV -&gt; thresholding -&gt; slices.</p>
 <h4>Section 0 ,  Load dataset (with fallback)</h4>
-<p>Expected path: <code>data/credit_default/credit.csv</code></p>
-<p>Supported target column names (0/1):</p>
-<ul><li>default / Default</li><li>default.payment.next.month</li><li>DEFAULT_PAY</li><li>default_payment_next_month</li></ul><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Feature + Evaluation Lab ,  Credit Default (Instructor)</h3>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p07" data-kind="prose">Expected path: <code>data/credit_default/credit.csv</code></p>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p08" data-kind="prose">Supported target column names (0/1):</p>
+<ul><li>default / Default</li><li>default.payment.next.month</li><li>DEFAULT_PAY</li><li>default_payment_next_month</li></ul><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3 id="feature-evaluation-lab-credit-default-instructor">Feature + Evaluation Lab ,  Credit Default (Instructor)</h3>
 <h4>Setup ,  Load dataset (with fallback)</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Identify target column robustly <span class="task-sec">Define X/y + holdout split</span></summary><div class="task-body"><h4>Section 1 ,  Define X/y + holdout split</h4>
 <h4>Task 1.1: Identify target column robustly</h4>
 <ul><li>Find the target col from the supported names</li><li>Create X/y</li><li>Split into train/holdout (stratified)</li></ul>
-<p><strong>Checkpoint:</strong> Why do we keep a final holdout set untouched during model selection?</p><h4>Starter code</h4><pre><code class="lang-python">target_candidates = ['default', 'Default', 'default.payment.next.month', 'DEFAULT_PAY', 'default_payment_next_month']
+<p id="lab-w5-d5-feature-evaluation-credit-default-p09" data-kind="prose"><strong>Checkpoint:</strong> Why do we keep a final holdout set untouched during model selection?</p><h4>Starter code</h4><pre><code class="lang-python">target_candidates = ['default', 'Default', 'default.payment.next.month', 'DEFAULT_PAY', 'default_payment_next_month']
 target_col = next((c for c in target_candidates if c in df.columns), None)
 check('target_found', target_col is not None)
 
@@ -1574,11 +1574,11 @@ scores_lr = cross_validate(pipe_lr, Xtr, ytr, cv=cv, scoring=scoring, return_tra
 cv_summary = [('lr', float(np.mean(scores_lr['test_roc_auc'])), float(np.mean(scores_lr['test_pr_auc'])))]
 print('CV summary (name, roc_auc_mean, pr_auc_mean)')
 for row in cv_summary:
-    print(row)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Why this works</h4><p>under imbalance, PR-AUC often matches product utility better than ROC-AUC.</p></details></div></details>
+    print(row)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Why this works</h4><p id="lab-w5-d5-feature-evaluation-credit-default-p10" data-kind="prose">under imbalance, PR-AUC often matches product utility better than ROC-AUC.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> Compare LR vs RF vs GB <span class="task-sec">Model comparison (CV)</span></summary><div class="task-body"><h4>Section 3 ,  Model comparison (CV)</h4>
 <h4>Task 3.1: Compare LR vs RF vs GB</h4>
 <ul><li>Compare under the same CV splits</li><li>Report ROC-AUC and PR-AUC</li></ul>
-<p><strong>FAANG Gotcha:</strong> ROC-AUC can look good even when precision is poor under imbalance.</p><h4>Starter code</h4><pre><code class="lang-python">models = {
+<p id="lab-w5-d5-feature-evaluation-credit-default-p11" data-kind="prose"><strong>FAANG Gotcha:</strong> ROC-AUC can look good even when precision is poor under imbalance.</p><h4>Starter code</h4><pre><code class="lang-python">models = {
     'lr': LogisticRegression(max_iter=2000),
     'rf': RandomForestClassifier(n_estimators=100, random_state=0),
     'gb': GradientBoostingClassifier(n_estimators=120, random_state=0),
@@ -1604,13 +1604,13 @@ for row in cv_summary:
     print(row)
 
 # Rationale: compare models under identical CV to avoid unfair selection.
-</code></pre><h4>Why this works</h4><p>compare models under identical CV to avoid unfair selection.</p><h4>Instructor explanation</h4><h4>Section 3 ,  Model comparison (CV)</h4>
+</code></pre><h4>Why this works</h4><p id="lab-w5-d5-feature-evaluation-credit-default-p12" data-kind="prose">compare models under identical CV to avoid unfair selection.</p><h4>Instructor explanation</h4><h4>Section 3 ,  Model comparison (CV)</h4>
 <h4>Task 3.1: Compare LR vs RF vs GB</h4>
 <h4>Figure: CV Model Comparison</h4>
-<p>![CV Model Comparison](/images/w5-d5-model-comparison.png)</p></details></div></details>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p13" data-kind="prose">![CV Model Comparison](/images/w5-d5-model-comparison.png)</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> Add at least one engineered feature <span class="task-sec">Feature engineering (lightweight)</span></summary><div class="task-body"><h4>Section 4 ,  Feature engineering (lightweight)</h4>
 <h4>Task 4.1: Add at least one engineered feature</h4>
-<p>Examples (only if columns exist):</p>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p14" data-kind="prose">Examples (only if columns exist):</p>
 <ul><li>ratios like PAY_AMT1 / BILL_AMT1 (utilization proxy)</li><li>log1p on skewed amount columns</li></ul><h4>Starter code</h4><pre><code class="lang-python"># TODO: create lightweight engineered features and re-evaluate best model.
 Xtr_fe = Xtr.copy()
 Xho_fe = Xho.copy()
@@ -1630,16 +1630,16 @@ best_model = ...
 
 pipe_fe = Pipeline(steps=[('preprocess', preprocess_fe), ('model', best_model)])
 scores_fe = cross_validate(pipe_fe, Xtr_fe, ytr, cv=cv, scoring=scoring, return_train_score=False)
-print('FE roc_auc', float(np.mean(scores_fe['test_roc_auc'])), 'pr_auc', float(np.mean(scores_fe['test_pr_auc'])))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Why this works</h4><p>engineered ratios can capture behavioral signals; always validate under CV.</p><h4>Instructor explanation</h4><h4>Section 4 ,  Feature engineering (lightweight)</h4>
+print('FE roc_auc', float(np.mean(scores_fe['test_roc_auc'])), 'pr_auc', float(np.mean(scores_fe['test_pr_auc'])))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Why this works</h4><p id="lab-w5-d5-feature-evaluation-credit-default-p15" data-kind="prose">engineered ratios can capture behavioral signals; always validate under CV.</p><h4>Instructor explanation</h4><h4>Section 4 ,  Feature engineering (lightweight)</h4>
 <h4>Task 4.1: Add at least one engineered feature</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 7</span> Fit best pipeline on Xtr_fe and evaluate on holdout <span class="task-sec">Final fit + cost-based threshold</span></summary><div class="task-body"><h4>Section 5 ,  Final fit + cost-based threshold</h4>
 <h4>Task 5.1: Fit best pipeline on Xtr_fe and evaluate on holdout</h4>
-<p>Then pick a threshold using costs (FN cost 5x FP).</p><h4>Starter code</h4><pre><code class="lang-python">$13</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$14</code></pre><h4>Why this works</h4><p>thresholding is a product decision; costs drive the operating point.</p><h4>Instructor explanation</h4><h4>Section 5 ,  Final fit + cost-based threshold</h4>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p16" data-kind="prose">Then pick a threshold using costs (FN cost 5x FP).</p><h4>Starter code</h4><pre><code class="lang-python">$13</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$14</code></pre><h4>Why this works</h4><p id="lab-w5-d5-feature-evaluation-credit-default-p17" data-kind="prose">thresholding is a product decision; costs drive the operating point.</p><h4>Instructor explanation</h4><h4>Section 5 ,  Final fit + cost-based threshold</h4>
 <h4>Task 5.1: Fit best pipeline on Xtr_fe and evaluate on holdout</h4>
 <h4>Figure: Threshold vs Cost</h4>
-<p>![Threshold Cost Curve](/images/w5-d5-threshold-cost.png)</p>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p18" data-kind="prose">![Threshold Cost Curve](/images/w5-d5-threshold-cost.png)</p>
 <h4>Figure: Holdout Confusion Matrix</h4>
-<p>![Holdout Confusion Matrix](/images/w5-d5-confusion-matrix.png)</p></details></div></details>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p19" data-kind="prose">![Holdout Confusion Matrix](/images/w5-d5-confusion-matrix.png)</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 8</span> FP/FN examples <span class="task-sec">Error analysis + slices</span></summary><div class="task-body"><h4>Section 6 ,  Error analysis + slices</h4>
 <h4>Task 6.1: FP/FN examples</h4>
 <h4>Task 6.2: Slice analysis (choose a column)</h4>
@@ -1692,32 +1692,32 @@ for col in ['AGE', 'LIMIT_BAL', 'age', 'limit_bal']:
         break
 
 # Rationale: slice analysis reveals where the model fails and guides targeted feature work.
-</code></pre><h4>Why this works</h4><p>slice analysis reveals where the model fails and guides targeted feature work.</p><h4>Instructor explanation</h4><h4>Section 6 ,  Error analysis + slices</h4>
+</code></pre><h4>Why this works</h4><p id="lab-w5-d5-feature-evaluation-credit-default-p20" data-kind="prose">slice analysis reveals where the model fails and guides targeted feature work.</p><h4>Instructor explanation</h4><h4>Section 6 ,  Error analysis + slices</h4>
 <h4>Task 6.1: FP/FN examples</h4>
 <h4>Figure: FP vs FN Counts</h4>
-<p>![FP vs FN Counts](/images/w5-d5-fp-fn-counts.png)</p></details></div></details>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p21" data-kind="prose">![FP vs FN Counts](/images/w5-d5-fp-fn-counts.png)</p></details></div></details>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>feature engineering, error analysis, model debugging</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Netflix</td><td>high</td><td>metrics, A/B testing, causal inference</td><td>Netflix data scientist interview guide; SQL interview questions guide</td></tr><tr><td>Airbnb</td><td>high</td><td>experimentation, evaluation, feature iteration</td><td>Airbnb data scientist interview guide; Airbnb MLE interview guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d5-feature-evaluation-credit-default">https://ai.thes30.com/problems/w5-d5-feature-evaluation-credit-default</a>.</p>
-</section><section class="lab" id="lab-w5-d6-pca-lab">
-<h3>PCA Lab <span class="diff diff-medium">Medium</span></h3>
-<p class="lab-meta">Week 5, Day 6 · Evaluation &amp; Debugging · 6 tasks · 14 checks</p>
-<p>This lab adds the compression move: centering, covariance, eigendecomposition, reconstruction, and choosing the smallest k that keeps enough explained variance. It connects to the linear algebra of Volume 18 (eigendecomposition) and gives you a dimensionality-reduction baseline for every future volume. Compare PCA plus logistic regression against the raw baseline and note what the components cost you in interpretability.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Week 5</span></p>
-<p class="lab-meta">Resources: <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-25-principal">Notes</a> · <a href="pca_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/m8miVc9urvA">Video</a></p>
+<p id="lab-w5-d5-feature-evaluation-credit-default-p22" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d5-feature-evaluation-credit-default">https://ai.thes30.com/problems/w5-d5-feature-evaluation-credit-default</a>.</p>
+<span id="lab-w5-d5-feature-evaluation-credit-default-end" data-end></span></section><section class="lab" id="lab-w5-d6-pca-lab">
+<h3 id="pca-lab-medium">PCA Lab <span class="diff diff-medium">Medium</span></h3>
+<p id="lab-w5-d6-pca-lab-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 5, Day 6 · Evaluation &amp; Debugging · 6 tasks · 14 checks</p>
+<p data-term="explained variance" id="lab-w5-d6-pca-lab-p02" data-kind="prose">This lab adds the compression move: centering, covariance, eigendecomposition, reconstruction, and choosing the smallest k that keeps enough explained variance. It connects to the linear algebra of Volume 18 (eigendecomposition) and gives you a dimensionality-reduction baseline for every future volume. Compare PCA plus logistic regression against the raw baseline and note what the components cost you in interpretability.</p>
+<p id="lab-w5-d6-pca-lab-p03" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w5-d6-pca-lab-p04" data-kind="prose" class="tags"><span class="tagchip">Evaluation &amp; Debugging</span><span class="tagchip">Medium</span><span class="tagchip">Week 5</span></p>
+<p id="lab-w5-d6-pca-lab-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://jaspinders30.substack.com/p/ai-ml-learning-notes-day-25-principal">Notes</a> · <a href="pca_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/m8miVc9urvA">Video</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>PCA Lab -- Student Notebook</h3>
-<p>Complete each <code># TODO</code> section and run checks.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="pca-lab-student-notebook">PCA Lab -- Student Notebook</h3>
+<p id="lab-w5-d6-pca-lab-p06" data-kind="prose">Complete each <code># TODO</code> section and run checks.</p>
 <h4>Visual Intuition for PCA</h4>
 <h4>1) Principal axes</h4>
-<p>![PCA principal axes](/images/w5-d6-pca-principal-axes.png)</p>
+<p id="lab-w5-d6-pca-lab-p07" data-kind="prose">![PCA principal axes](/images/w5-d6-pca-principal-axes.png)</p>
 <ul><li><code>PC1</code> is the direction of maximum variance.</li><li><code>PC2</code> is orthogonal and captures the next largest remaining variance.</li></ul>
 <h4>2) Projection and reconstruction</h4>
-<p>![PCA projection and reconstruction](/images/w5-d6-pca-projection-reconstruction.png)</p>
+<p id="lab-w5-d6-pca-lab-p08" data-kind="prose">![PCA projection and reconstruction](/images/w5-d6-pca-projection-reconstruction.png)</p>
 <ul><li>Blue points are original data. Orange points show the projection onto a 1D PCA subspace.</li><li>Gray segments represent reconstruction error.</li></ul>
 <h4>3) Choosing <code>k</code> with explained variance</h4>
-<p>![Explained variance](/images/w5-d6-pca-explained-variance.png)</p>
-<ul><li>Bars show per-component explained variance ratio.</li><li>Red line is cumulative explained variance (commonly choose the smallest <code>k</code> crossing a target like 95%).</li></ul><figure class="diagram"><img src="img/20-pca-projection.svg" alt="Lesson plate: two-dimensional data becomes one-dimensional after projecting onto PC1."><figcaption>Shell 3. Evaluation and Debugging: project onto the top direction. Source: original.</figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The left panel is the before state: the data in two dimensions.</li><li>The arrow names the one rule: project onto PC1, the direction of maximum variance.</li><li>The right panel is the after state: the data in one dimension.</li><li>Choose the smallest k whose cumulative explained variance crosses the target.</li></ol></div><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+<p id="lab-w5-d6-pca-lab-p09" data-kind="prose">![Explained variance](/images/w5-d6-pca-explained-variance.png)</p>
+<ul><li>Bars show per-component explained variance ratio.</li><li>Red line is cumulative explained variance (commonly choose the smallest <code>k</code> crossing a target like 95%).</li></ul><figure id="lab-w5-d6-pca-lab-fig01" data-kind="figure" data-reveal="fade" class="diagram"><img src="img/20-pca-projection.svg" alt="Lesson plate: two-dimensional data becomes one-dimensional after projecting onto PC1."><figcaption>Shell 3. Evaluation and Debugging: project onto the top direction. Source: original.</figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The left panel is the before state: the data in two dimensions.</li><li>The arrow names the one rule: project onto PC1, the direction of maximum variance.</li><li>The right panel is the after state: the data in one dimension.</li><li>Choose the smallest k whose cumulative explained variance crosses the target.</li></ol></div><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -1741,21 +1741,21 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>PCA Lab -- Instructor Notebook (Solutions)</h3>
-<p>Complete reference implementation with checks.</p>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="pca-lab-instructor-notebook-solutions">PCA Lab -- Instructor Notebook (Solutions)</h3>
+<p id="lab-w5-d6-pca-lab-p10" data-kind="prose">Complete reference implementation with checks.</p>
 <h4>Visual Intuition for PCA</h4>
 <h4>1) Principal axes</h4>
-<p>![PCA principal axes](/images/w5-d6-pca-principal-axes.png)</p>
+<p id="lab-w5-d6-pca-lab-p11" data-kind="prose">![PCA principal axes](/images/w5-d6-pca-principal-axes.png)</p>
 <ul><li><code>PC1</code> is the direction of maximum variance.</li><li><code>PC2</code> is orthogonal and captures the next largest remaining variance.</li></ul>
 <h4>2) Projection and reconstruction</h4>
-<p>![PCA projection and reconstruction](/images/w5-d6-pca-projection-reconstruction.png)</p>
+<p id="lab-w5-d6-pca-lab-p12" data-kind="prose">![PCA projection and reconstruction](/images/w5-d6-pca-projection-reconstruction.png)</p>
 <ul><li>Blue points are original data. Orange points show the projection onto a 1D PCA subspace.</li><li>Gray segments represent reconstruction error.</li></ul>
 <h4>3) Choosing <code>k</code> with explained variance</h4>
-<p>![Explained variance](/images/w5-d6-pca-explained-variance.png)</p>
+<p id="lab-w5-d6-pca-lab-p13" data-kind="prose">![Explained variance](/images/w5-d6-pca-explained-variance.png)</p>
 <ul><li>Bars show per-component explained variance ratio.</li><li>Red line is cumulative explained variance (commonly choose the smallest <code>k</code> crossing a target like 95%).</li></ul></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> Implement centering and covariance matrix. <span class="task-sec">- Centering and Covariance</span></summary><div class="task-body"><h4>Section 1 -- Centering and Covariance</h4>
 <h4>Task 1.1: Implement centering and covariance matrix.</h4>
-<p>![Eigen Decomposition Overview](/images/eigen-decomposition-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python">def center(X):
+<p id="lab-w5-d6-pca-lab-p14" data-kind="prose">![Eigen Decomposition Overview](/images/eigen-decomposition-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python">def center(X):
     # TODO
     # return X_centered, mean
     ...
@@ -1793,8 +1793,8 @@ check('cov_shape', C.shape == (20, 20))
 check('cov_symmetric', np.allclose(C, C.T, atol=1e-10))</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> Implement `pca_fit(X, k)` using `np.linalg.eigh`. <span class="task-sec">- PCA Fit</span></summary><div class="task-body"><h4>Section 2 -- PCA Fit</h4>
 <h4>Task 2.1: Implement <code>pca_fit(X, k)</code> using <code>np.linalg.eigh</code>.</h4>
-<p>Return components, explained variance, explained variance ratio, and mean.</p>
-<p>![Singular Value Decomposition (SVD)](/images/svd-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python">def pca_fit(X, k):
+<p id="lab-w5-d6-pca-lab-p15" data-kind="prose">Return components, explained variance, explained variance ratio, and mean.</p>
+<p id="lab-w5-d6-pca-lab-p16" data-kind="prose">![Singular Value Decomposition (SVD)](/images/svd-overview.png)</p><h4>Starter code</h4><pre><code class="lang-python">def pca_fit(X, k):
     # TODO
     # 1) center X
     # 2) covariance
@@ -1968,11 +1968,11 @@ print('pca acc     :', round(pca_acc, 4))
 check('baseline_good', base_acc &gt; 0.9)
 check('pca_good', pca_acc &gt; 0.85)</code></pre></details></div></details>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>Google</td><td>high</td><td>PCA, SVD intuition, dimensionality reduction</td><td>Google MLE interview guide; Top machine learning interview questions</td></tr><tr><td>Amazon</td><td>medium</td><td>dimensionality reduction, feature compression, modeling tradeoffs</td><td>Amazon MLE interview guide; Amazon central ML applied scientist role</td></tr><tr><td>Microsoft</td><td>medium</td><td>linear algebra for ML, projection geometry, variance retention</td><td>Microsoft MLE interview guide; Microsoft technical interviewing tips</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d6-pca-lab">https://ai.thes30.com/problems/w5-d6-pca-lab</a>.</p>
-</section>
-<h2>Interview clearance</h2>
-<div class="ob-board"><h4>Design prompt</h4><ul><li>Your model reports 97 percent accuracy on a 2 percent positive-rate problem. Is it good? What do you compute next?</li><li>False negatives cost 10x false positives. Derive the optimal threshold rule from expected cost.</li><li>Sketch a reliability diagram for a well-calibrated model, an overconfident one, and an underconfident one.</li><li>Training error 4 percent, validation error 26 percent, and the gap does not shrink with more data. Diagnose and propose two fixes.</li><li>Explain how target encoding can leak, and how you would implement it safely.</li><li>When would you choose PR-AUC over ROC-AUC? When would ROC-AUC be the right call?</li></ul></div>
-<div class="pq">
+<p id="lab-w5-d6-pca-lab-p17" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w5-d6-pca-lab">https://ai.thes30.com/problems/w5-d6-pca-lab</a>.</p>
+<span id="lab-w5-d6-pca-lab-end" data-end></span></section>
+<h2 id="interview-clearance">Interview clearance</h2>
+<div id="lab-w5-d6-pca-lab-aside01" data-kind="aside" class="ob-board"><h4>Design prompt</h4><ul><li>Your model reports 97 percent accuracy on a 2 percent positive-rate problem. Is it good? What do you compute next?</li><li>False negatives cost 10x false positives. Derive the optimal threshold rule from expected cost.</li><li>Sketch a reliability diagram for a well-calibrated model, an overconfident one, and an underconfident one.</li><li>Training error 4 percent, validation error 26 percent, and the gap does not shrink with more data. Diagnose and propose two fixes.</li><li>Explain how target encoding can leak, and how you would implement it safely.</li><li>When would you choose PR-AUC over ROC-AUC? When would ROC-AUC be the right call?</li></ul></div>
+<div id="lab-w5-d6-pca-lab-pq01" data-kind="exercise" class="pq">
   <p class="pq-q"><strong>Q1.</strong> A fraud model flags 200 of 10,000 transactions. 60 are real fraud. The dataset has 100 real frauds total. What are precision and recall?</p>
   <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
   <div class="pq-a" hidden>
@@ -1984,7 +1984,7 @@ check('pca_good', pca_acc &gt; 0.85)</code></pre></details></div></details>
     </ul>
   </div>
 </div>
-<div class="pq">
+<div id="lab-w5-d6-pca-lab-pq02" data-kind="exercise" class="pq">
   <p class="pq-q"><strong>Q2.</strong> Your reliability curve sits entirely below the diagonal. What does this mean, and what is the cheapest fix?</p>
   <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
   <div class="pq-a" hidden>
@@ -1996,7 +1996,7 @@ check('pca_good', pca_acc &gt; 0.85)</code></pre></details></div></details>
     </ul>
   </div>
 </div>
-<div class="pq">
+<div id="lab-w5-d6-pca-lab-pq03" data-kind="exercise" class="pq">
   <p class="pq-q"><strong>Q3.</strong> Validation PR-AUC is 0.90 but holdout is 0.63. Name the two most likely causes and the test that distinguishes them.</p>
   <button class="pq-reveal" aria-expanded="false">Reveal answer</button>
   <div class="pq-a" hidden>

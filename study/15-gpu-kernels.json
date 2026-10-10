@@ -1,0 +1,471 @@
+{
+ "schemaVersion": 1,
+ "itemId": "15-gpu-kernels",
+ "itemKind": "lesson",
+ "revision": "8a38cc59c6b47e7b13ba07490dfc0840c2bc1e2e62963496ce9ea77d9ac7845a",
+ "sections": [
+  {
+   "anchor": "15-gpu-kernels-intro",
+   "title": "15-gpu-kernels-intro",
+   "minutes": 2,
+   "endAnchor": "15-gpu-kernels-intro-end",
+   "blocks": [
+    {
+     "anchor": "15-gpu-kernels-intro-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "matmul",
+     "definition": "Matrix multiplication, the core operation of every neural network layer.",
+     "anchor": "15-gpu-kernels-intro-p01"
+    },
+    {
+     "term": "roofline model",
+     "definition": "The diagnosis method: given a slow kernel, you will know where it lives.",
+     "anchor": "15-gpu-kernels-intro-p01"
+    },
+    {
+     "term": "occupancy",
+     "definition": "The share of the GPU's warp slots that your kernel keeps busy.",
+     "anchor": "15-gpu-kernels-intro-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "15-gpu-kernels-intro-r1",
+     "question": "What differs between a matmul at 40% and 90% of peak?",
+     "answer": "Only how well the kernel fits the hardware.",
+     "anchor": "15-gpu-kernels-intro-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "why-ml-lives-on-gpus",
+   "title": "Why machine learning lives on GPUs",
+   "minutes": 2,
+   "endAnchor": "why-ml-lives-on-gpus-end",
+   "blocks": [
+    {
+     "anchor": "why-ml-lives-on-gpus-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "why-ml-lives-on-gpus-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "multiply-add",
+     "definition": "Trillions per training step; matrix multiplications forward and backward.",
+     "anchor": "why-ml-lives-on-gpus-p01"
+    },
+    {
+     "term": "floating-point operations",
+     "definition": "A frontier training run's total operations.",
+     "anchor": "why-ml-lives-on-gpus-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "why-ml-lives-on-gpus-r1",
+     "question": "Why not CPUs?",
+     "answer": "A top server CPU does 1-2 trillion ops/sec; against 10^25 ops that is thousands of years.",
+     "anchor": "why-ml-lives-on-gpus-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms",
+   "title": "Chapter 1. The GPU execution model: threads, warps, blocks, SMs",
+   "minutes": 8,
+   "endAnchor": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms-end",
+   "blocks": [
+    {
+     "anchor": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "SM",
+     "definition": "Streaming multiprocessor; an H100 has 132.",
+     "anchor": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms-p02"
+    },
+    {
+     "term": "kernel",
+     "definition": "One program launched as millions of copies, one per thread.",
+     "anchor": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms-p02"
+    },
+    {
+     "term": "warp",
+     "definition": "Threads organized in warps and blocks under SMs.",
+     "anchor": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms-r1",
+     "question": "What is the GPU execution hierarchy?",
+     "answer": "Threads in warps in blocks, run by SMs; you write one kernel, the GPU launches millions of copies.",
+     "anchor": "chapter-1-the-gpu-execution-model-threads-warps-blocks-sms-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm",
+   "title": "Chapter 2. The memory hierarchy: registers, shared, L1, L2, HBM",
+   "minutes": 10,
+   "endAnchor": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm-end",
+   "blocks": [
+    {
+     "anchor": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "SRAM",
+     "definition": "On-chip fast small memory: registers, shared, L1, L2.",
+     "anchor": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm-p02"
+    },
+    {
+     "term": "HBM",
+     "definition": "Off-chip vast but slow memory.",
+     "anchor": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm-p02"
+    },
+    {
+     "term": "registers",
+     "definition": "256 KB per SM, private per thread, ~1 cycle.",
+     "anchor": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm-r1",
+     "question": "What decides whether a thread computes or waits?",
+     "answer": "The memory hierarchy: where the numbers come from.",
+     "anchor": "chapter-2-the-memory-hierarchy-registers-shared-l1-l2-hbm-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "chapter-3-occupancy-and-latency-hiding",
+   "title": "Chapter 3. Occupancy and latency hiding",
+   "minutes": 8,
+   "endAnchor": "chapter-3-occupancy-and-latency-hiding-end",
+   "blocks": [
+    {
+     "anchor": "chapter-3-occupancy-and-latency-hiding-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "chapter-3-occupancy-and-latency-hiding-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "chapter-3-occupancy-and-latency-hiding-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "occupancy",
+     "definition": "Fraction of an SM's warp slots holding live warps; 32 of 64 is 50%.",
+     "anchor": "chapter-3-occupancy-and-latency-hiding-p01"
+    },
+    {
+     "term": "latency hiding",
+     "definition": "While one warp waits on a load, others compute.",
+     "anchor": "chapter-3-occupancy-and-latency-hiding-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "chapter-3-occupancy-and-latency-hiding-r1",
+     "question": "Why does occupancy matter?",
+     "answer": "The GPU hides memory latency by swapping warps; an HBM read takes ~500 cycles.",
+     "anchor": "chapter-3-occupancy-and-latency-hiding-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "chapter-4-performance-diagnosis-the-roofline-and-the-suspect-list",
+   "title": "Chapter 4. Performance diagnosis: the roofline and the suspect list",
+   "minutes": 10,
+   "endAnchor": "chapter-4-performance-diagnosis-the-roofline-and-the-suspect-list-end",
+   "blocks": [
+    {
+     "anchor": "chapter-4-performance-diagnosis-the-roofline-and-the-suspect-list-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "chapter-4-performance-diagnosis-the-roofline-and-the-suspect-list-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "chapter-4-performance-diagnosis-the-roofline-and-the-suspect-list-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "roofline model",
+     "definition": "Two-line chart: arithmetic intensity vs achieved FLOPS, capped by memory and compute roofs.",
+     "anchor": "chapter-4-performance-diagnosis-the-roofline-and-the-suspect-list-p02"
+    },
+    {
+     "term": "arithmetic intensity",
+     "definition": "FLOPs done per byte moved.",
+     "anchor": "chapter-4-performance-diagnosis-the-roofline-and-the-suspect-list-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "chapter-4-performance-diagnosis-the-roofline-and-the-suspect-list-r1",
+     "question": "What do you do with a slow kernel?",
+     "answer": "Work the ordered suspect list instead of guessing; the roofline classifies the slowness.",
+     "anchor": "chapter-4-performance-diagnosis-the-roofline-and-the-suspect-list-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "chapter-5-writing-a-triton-kernel-from-scratch-fused-softmax",
+   "title": "Chapter 5. Writing a Triton kernel from scratch: fused softmax",
+   "minutes": 12,
+   "endAnchor": "chapter-5-writing-a-triton-kernel-from-scratch-fused-softmax-end",
+   "blocks": [
+    {
+     "anchor": "chapter-5-writing-a-triton-kernel-from-scratch-fused-softmax-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "chapter-5-writing-a-triton-kernel-from-scratch-fused-softmax-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "chapter-5-writing-a-triton-kernel-from-scratch-fused-softmax-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Triton",
+     "definition": "Python-embedded language for GPU kernels; @triton.jit at tile level.",
+     "anchor": "chapter-5-writing-a-triton-kernel-from-scratch-fused-softmax-p01"
+    },
+    {
+     "term": "fused softmax",
+     "definition": "One HBM round trip per row instead of five.",
+     "anchor": "chapter-5-writing-a-triton-kernel-from-scratch-fused-softmax-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "chapter-5-writing-a-triton-kernel-from-scratch-fused-softmax-r1",
+     "question": "What does Triton let you express?",
+     "answer": "The performance-critical decisions in about thirty lines of Python.",
+     "anchor": "chapter-5-writing-a-triton-kernel-from-scratch-fused-softmax-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "chapter-6-fp8-and-block-wise-microscaling",
+   "title": "Chapter 6. FP8 and block-wise microscaling",
+   "minutes": 9,
+   "endAnchor": "chapter-6-fp8-and-block-wise-microscaling-end",
+   "blocks": [
+    {
+     "anchor": "chapter-6-fp8-and-block-wise-microscaling-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "chapter-6-fp8-and-block-wise-microscaling-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "chapter-6-fp8-and-block-wise-microscaling-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "FP8",
+     "definition": "8-bit float; half the HBM traffic, twice the tensor-core throughput of FP16.",
+     "anchor": "chapter-6-fp8-and-block-wise-microscaling-p02"
+    },
+    {
+     "term": "microscaling",
+     "definition": "Pairs each small group of values with its own scale factor.",
+     "anchor": "chapter-6-fp8-and-block-wise-microscaling-p02"
+    },
+    {
+     "term": "E4M3",
+     "definition": "1 sign, 4 exponent bits, 3 mantissa bits.",
+     "anchor": "chapter-6-fp8-and-block-wise-microscaling-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "chapter-6-fp8-and-block-wise-microscaling-r1",
+     "question": "What makes FP8 usable?",
+     "answer": "Microscaling: x ≈ x_fp8 × s_block stretches the 8-bit range to each group's magnitudes.",
+     "anchor": "chapter-6-fp8-and-block-wise-microscaling-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "chapter-7-torchcompile-and-24-sparsity",
+   "title": "Chapter 7. torch.compile and 2:4 sparsity",
+   "minutes": 11,
+   "endAnchor": "chapter-7-torchcompile-and-24-sparsity-end",
+   "blocks": [
+    {
+     "anchor": "chapter-7-torchcompile-and-24-sparsity-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "chapter-7-torchcompile-and-24-sparsity-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "chapter-7-torchcompile-and-24-sparsity-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "torch.compile",
+     "definition": "Fuses eager code into kernels: Dynamo, AOTAutograd, Inductor, Triton.",
+     "anchor": "chapter-7-torchcompile-and-24-sparsity-p01"
+    },
+    {
+     "term": "2:4 sparsity",
+     "definition": "Cuts matmul work in half where hardware allows.",
+     "anchor": "chapter-7-torchcompile-and-24-sparsity-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "chapter-7-torchcompile-and-24-sparsity-r1",
+     "question": "What is the four-stage pipeline?",
+     "answer": "Dynamo captures the graph, AOTAutograd prepares backward, Inductor fuses, Triton generates kernels.",
+     "anchor": "chapter-7-torchcompile-and-24-sparsity-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "practice-questions",
+   "title": "Practice questions",
+   "minutes": 5,
+   "endAnchor": "practice-questions-end",
+   "blocks": [
+    {
+     "anchor": "practice-questions-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "waves",
+     "definition": "8,192 blocks of 128 threads on 132 SMs: about 4 waves; the queue keeps SMs busy.",
+     "anchor": "practice-questions-pq01"
+    },
+    {
+     "term": "stay resident",
+     "definition": "2,112 blocks stay resident at once: 16 per SM times 132 SMs.",
+     "anchor": "practice-questions-pq01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "practice-questions-r1",
+     "question": "Why launch far more blocks than SMs?",
+     "answer": "Blocks queue with no cost; the queue is the load balance when blocks finish early.",
+     "anchor": "practice-questions-pq01"
+    }
+   ]
+  },
+  {
+   "anchor": "15-gpu-kernels-watch-deeper",
+   "title": "15-gpu-kernels-watch-deeper",
+   "minutes": 3,
+   "endAnchor": "15-gpu-kernels-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "15-gpu-kernels-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "15-gpu-kernels-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Triton",
+     "definition": "GPU MODE's hands-on lecture goes with Chapter 5.",
+     "anchor": "15-gpu-kernels-watch-deeper-fig01"
+    },
+    {
+     "term": "speed controls",
+     "definition": "0.5x to 2x on every player.",
+     "anchor": "15-gpu-kernels-watch-deeper-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "15-gpu-kernels-watch-deeper-r1",
+     "question": "Which video covers Chapters 1-4?",
+     "answer": "How CUDA Actually Works, in about thirteen minutes.",
+     "anchor": "15-gpu-kernels-watch-deeper-fig02"
+    }
+   ]
+  }
+ ]
+}

@@ -907,24 +907,24 @@ and inference rounds of Volume 28 stand on.</p>
 <p>All nine labs in week and day order. Each lab below renders its full task list with starter code, hints, tests, and solutions from the AI Lab source. Use the tab bar to jump between labs.</p>
 <div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w13-d1-ml-system-design-fundamentals">ML System Design Fundamentals</button><button data-target="lab-w13-d2-feature-store-patterns">Feature Store Patterns</button><button data-target="lab-w13-d3-real-time-vs-batch-inference">Real-Time vs Batch Inference</button><button data-target="lab-w13-d4-case-studies-recs-search-ads">Case Studies ,  Recs, Search, Ads</button><button data-target="lab-w14-d1-design-real-time-recommendation-system">Design Real-Time Recommendation System</button><button data-target="lab-w14-d3-llm-inference-system-design">LLM Inference System Design</button><button data-target="lab-w14-d4-feature-stores-data-pipelines-deep-dive">Feature Stores &amp; Data Pipelines (Deep Dive)</button><button data-target="lab-w14-d5-scaling-training-distributed-ml">Scaling Training ,  Distributed ML</button><button data-target="lab-w15-d1-llms-in-production">LLMs in Production</button></div>
 <section class="lab" id="lab-w13-d1-ml-system-design-fundamentals">
-<h3>ML System Design Fundamentals <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 13, Day 1 · System Design · 8 tasks · 1 checks · Free</p>
+<h3 id="ml-system-design-fundamentals-expert">ML System Design Fundamentals <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 13, Day 1 · System Design · 8 tasks · 1 checks · Free</p>
 
-<p>This is the lab that installs the template. You work a card-not-present fraud detection case study through all seven steps. SLOs and constraints first. Then business, model, and guardrail metrics. Then the data and labeling plan (watch for the label-delay trap).</p>
-<p>A baselines-to-iterations modeling plan. An online-plus-batch serving architecture. A monitoring and iteration loop. The final task forces the
+<p data-term="seven steps" id="lab-w13-d1-ml-system-design-fundamentals-p02" data-kind="prose">This is the lab that installs the template. You work a card-not-present fraud detection case study through all seven steps. SLOs and constraints first. Then business, model, and guardrail metrics. Then the data and labeling plan (watch for the label-delay trap).</p>
+<p data-term="false-decline rate" id="lab-w13-d1-ml-system-design-fundamentals-p03" data-kind="prose">A baselines-to-iterations modeling plan. An online-plus-batch serving architecture. A monitoring and iteration loop. The final task forces the
 deliverable that matters most in interviews: two tradeoffs you chose on purpose.
 Watch for the guardrail lesson: the false-decline rate, not the model metric, often
 decides whether a fraud model ships.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 13</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1RQAeeUhkzpL-hRPQ52X6DhPdwHfAAQo6">Colab</a> · <a href="/notes/w13-d1-ml-system-design-fundamentals.html">Notes</a> · <a href="sysdesign_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/LMK3tWwS8p0">Video</a></p>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p04" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p05" data-kind="prose" class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 13</span></p>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1RQAeeUhkzpL-hRPQ52X6DhPdwHfAAQo6">Colab</a> · <a href="/notes/w13-d1-ml-system-design-fundamentals.html">Notes</a> · <a href="sysdesign_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/LMK3tWwS8p0">Video</a></p>
 <h4>Tasks (8)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>ML System Design Fundamentals ,  Student Lab</h3>
-<p>Case study: Fraud detection for card-not-present transactions.</p>
-<p>This notebook is a structured design doc exercise. Fill in the templates with concise bullets.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="ml-system-design-fundamentals-student-lab">ML System Design Fundamentals ,  Student Lab</h3>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p07" data-kind="prose">Case study: Fraud detection for card-not-present transactions.</p>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p08" data-kind="prose">This notebook is a structured design doc exercise. Fill in the templates with concise bullets.</p>
 <h4>Prompt (the interview question)</h4>
-<p><strong>Design an ML system to detect fraudulent card-not-present transactions in real time.</strong></p>
-<p>You must address: requirements, data, modeling, serving, monitoring, and iteration.</p>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p09" data-kind="prose"><strong>Design an ML system to detect fraudulent card-not-present transactions in real time.</strong></p>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p10" data-kind="prose">You must address: requirements, data, modeling, serving, monitoring, and iteration.</p>
 <h4>0 ,  Problem framing</h4>
 <h4>1 ,  Requirements (SLOs + constraints)</h4><h4>Starter code</h4><pre><code class="lang-python">def section(title: str):
     print("\n" + "="*80)
@@ -952,12 +952,12 @@ problem = {
   'label_delay_days': 30,
 }
 print(problem)
-check('has_users', len(problem['users']) &gt; 0)</code></pre><h4>Instructor explanation</h4><h3>ML System Design Fundamentals ,  Instructor Lab</h3>
-<p>Case study: Fraud detection for card-not-present transactions.</p>
-<p>This notebook is a structured design doc exercise. Fill in the templates with concise bullets.</p>
+check('has_users', len(problem['users']) &gt; 0)</code></pre><h4>Instructor explanation</h4><h3 id="ml-system-design-fundamentals-instructor-lab">ML System Design Fundamentals ,  Instructor Lab</h3>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p11" data-kind="prose">Case study: Fraud detection for card-not-present transactions.</p>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p12" data-kind="prose">This notebook is a structured design doc exercise. Fill in the templates with concise bullets.</p>
 <h4>Prompt (the interview question)</h4>
-<p><strong>Design an ML system to detect fraudulent card-not-present transactions in real time.</strong></p>
-<p>You must address: requirements, data, modeling, serving, monitoring, and iteration.</p>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p13" data-kind="prose"><strong>Design an ML system to detect fraudulent card-not-present transactions in real time.</strong></p>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p14" data-kind="prose">You must address: requirements, data, modeling, serving, monitoring, and iteration.</p>
 <h4>0 ,  Problem framing</h4>
 <h4>1 ,  Requirements (SLOs + constraints)</h4>
 <h4>2 ,  Metrics (business + model + guardrails)</h4>
@@ -1143,24 +1143,24 @@ tradeoffs = [
 ]
 print(tradeoffs)
 check('two_tradeoffs', len(tradeoffs) &gt;= 2)</code></pre></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w13-d1-ml-system-design-fundamentals">https://ai.thes30.com/problems/w13-d1-ml-system-design-fundamentals</a>.</p>
-</section>
+<p id="lab-w13-d1-ml-system-design-fundamentals-p15" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w13-d1-ml-system-design-fundamentals">https://ai.thes30.com/problems/w13-d1-ml-system-design-fundamentals</a>.</p>
+<span id="lab-w13-d1-ml-system-design-fundamentals-end" data-end></span></section>
 <section class="lab" id="lab-w13-d2-feature-store-patterns">
-<h3>Feature Store Patterns <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 13, Day 2 · System Design · 6 tasks · 2 checks</p>
+<h3 id="feature-store-patterns-expert">Feature Store Patterns <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w13-d2-feature-store-patterns-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 13, Day 2 · System Design · 6 tasks · 2 checks</p>
 
-<p>The consistency lab. You build a synthetic event log, compute point-in-time
+<p data-term="point-in-time correct" id="lab-w13-d2-feature-store-patterns-p02" data-kind="prose">The consistency lab. You build a synthetic event log, compute point-in-time
 correct offline features, then deliberately build leaky features to watch the
 evaluation metric inflate. The inflation is the lesson: without point-in-time
 correctness, your offline numbers are fiction. Then you simulate the online store
 and run the skew check that compares what training saw against what serving would
 see. Watch for the habit this installs: never trust an offline metric until you can prove the pipeline computed the features without peeking at the future.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 13</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1onUlAn4ftTE-4oOe2YZoBWjC-k-di0Dj">Colab</a> · <a href="/notes/w13-d2-feature-store-patterns.html">Notes</a> · <a href="featstore_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/xsanNcHxUQI">Video</a></p>
+<p id="lab-w13-d2-feature-store-patterns-p03" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w13-d2-feature-store-patterns-p04" data-kind="prose" class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 13</span></p>
+<p id="lab-w13-d2-feature-store-patterns-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1onUlAn4ftTE-4oOe2YZoBWjC-k-di0Dj">Colab</a> · <a href="/notes/w13-d2-feature-store-patterns.html">Notes</a> · <a href="featstore_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/xsanNcHxUQI">Video</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Feature Store Patterns ,  Student Lab</h3>
-<p>Offline lab: point-in-time features (offline) vs online materialization; detect leakage + skew.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="feature-store-patterns-student-lab">Feature Store Patterns ,  Student Lab</h3>
+<p id="lab-w13-d2-feature-store-patterns-p06" data-kind="prose">Offline lab: point-in-time features (offline) vs online materialization; detect leakage + skew.</p>
 <h4>0 ,  Synthetic event log + labels</h4><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 import pandas as pd
 
@@ -1177,8 +1177,8 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Feature Store Patterns ,  Instructor Lab</h3>
-<p>Offline lab: point-in-time features (offline) vs online materialization; detect leakage + skew.</p>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="feature-store-patterns-instructor-lab">Feature Store Patterns ,  Instructor Lab</h3>
+<p id="lab-w13-d2-feature-store-patterns-p07" data-kind="prose">Offline lab: point-in-time features (offline) vs online materialization; detect leakage + skew.</p>
 <h4>0 ,  Synthetic event log + labels</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Synthetic event log + labels</summary><div class="task-body"><h4>0 ,  Synthetic event log + labels</h4><h4>Starter code</h4><pre><code class="lang-python">def make_events(n_users: int = 200, days: int = 60, seed: int = 0):
     # TODO
@@ -1288,17 +1288,17 @@ X_online = materialize_daily(events, asof_online)
 cmp = X_off.merge(X_online, on="user_id", suffixes=("_off", "_on"))
 cmp["login_diff"] = cmp["login_7d_off"] - cmp["login_7d_on"]
 print('max_abs_login_diff', int(cmp['login_diff'].abs().max()))
-print('explanation', 'offline features were computed at the cutoff, but the online snapshot was materialized one day earlier, so the two pipelines refer to different as-of times and can disagree even without a code bug.')</code></pre><h4>Why this works</h4><p>offline and online features can differ even without explicit bugs if the pipeline computes them at different as-of times.</p></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w13-d2-feature-store-patterns">https://ai.thes30.com/problems/w13-d2-feature-store-patterns</a>.</p>
-</section>
+print('explanation', 'offline features were computed at the cutoff, but the online snapshot was materialized one day earlier, so the two pipelines refer to different as-of times and can disagree even without a code bug.')</code></pre><h4>Why this works</h4><p id="lab-w13-d2-feature-store-patterns-p08" data-kind="prose">offline and online features can differ even without explicit bugs if the pipeline computes them at different as-of times.</p></details></div></details>
+<p id="lab-w13-d2-feature-store-patterns-p09" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w13-d2-feature-store-patterns">https://ai.thes30.com/problems/w13-d2-feature-store-patterns</a>.</p>
+<span id="lab-w13-d2-feature-store-patterns-end" data-end></span></section>
 <section class="lab" id="lab-w13-d3-real-time-vs-batch-inference">
-<h3>Real-Time vs Batch Inference <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 13, Day 3 · System Design · 5 tasks · 8 checks</p>
+<h3 id="real-time-vs-batch-inference-expert">Real-Time vs Batch Inference <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 13, Day 3 · System Design · 5 tasks · 8 checks</p>
 
-<p>The economics lab. On a simulated world where risk changes over time, you implement two scoring policies. Score immediately when a spike event happens, or score in batches on a schedule. Then you measure freshness against cost.</p>
-<p>This is the latency-cost-freshness triangle made concrete: real-time scoring catches spikes
+<p data-term="scoring policies" id="lab-w13-d3-real-time-vs-batch-inference-p02" data-kind="prose">The economics lab. On a simulated world where risk changes over time, you implement two scoring policies. Score immediately when a spike event happens, or score in batches on a schedule. Then you measure freshness against cost.</p>
+<p data-term="latency-cost-freshness triangle" id="lab-w13-d3-real-time-vs-batch-inference-p03" data-kind="prose">This is the latency-cost-freshness triangle made concrete: real-time scoring catches spikes
 faster but costs more per decision, batch scoring is cheap but stale.</p>
-<figure class="lesson-fig">
+<figure id="lab-w13-d3-real-time-vs-batch-inference-fig01" data-kind="figure" data-reveal="fade" class="lesson-fig">
   <img src="img/26-realtime-vs-batch.svg" alt="Real-time always costs 10x; batch always is stale on spikes; the hybrid uses a cheap live heuristic plus batch rescore.">
   <figcaption>Shell 3. ML System Design: a cheap real-time heuristic for spikes plus a full batch rescore. Source: original.</figcaption>
 </figure>
@@ -1309,15 +1309,15 @@ faster but costs more per decision, batch scoring is cheap but stale.</p>
 <li>Decide from the value of freshness, not from habit.</li>
 <li>What breaks if it fails: you pay 10x for freshness the product does not need.</li>
 </ol></div>
-<p> Watch for the
+<p id="lab-w13-d3-real-time-vs-batch-inference-p04" data-kind="prose"> Watch for the
 policy-comparison discipline: same workload, same metrics, then decide. That
 discipline is exactly how you answer "real-time or batch" in an interview.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 13</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1TWBiTKvltc6TJ25rQbKW13XbgSSs_Azu">Colab</a> · <a href="/notes/w13-d3-real-time-vs-batch-inference.html">Notes</a> · <a href="infer_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/3iWRlngB-84">Video</a></p>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p05" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p06" data-kind="prose" class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 13</span></p>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p07" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1TWBiTKvltc6TJ25rQbKW13XbgSSs_Azu">Colab</a> · <a href="/notes/w13-d3-real-time-vs-batch-inference.html">Notes</a> · <a href="infer_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/3iWRlngB-84">Video</a></p>
 <h4>Tasks (5)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Real-Time vs Batch Inference ,  Student Lab</h3>
-<p>Offline lab: compare scoring policies and measure freshness/cost tradeoffs.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="real-time-vs-batch-inference-student-lab">Real-Time vs Batch Inference ,  Student Lab</h3>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p08" data-kind="prose">Offline lab: compare scoring policies and measure freshness/cost tradeoffs.</p>
 <h4>0 ,  Simulated world (risk changes over time)</h4><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 
 def check(name: str, cond: bool):
@@ -1334,8 +1334,8 @@ def check(name: str, cond: bool):
     print(f'OK: {name}')
 
 rng = np.random.default_rng(0)
-</code></pre><h4>Instructor explanation</h4><h3>Real-Time vs Batch Inference ,  Instructor Lab</h3>
-<p>Offline lab: compare scoring policies and measure freshness/cost tradeoffs.</p>
+</code></pre><h4>Instructor explanation</h4><h3 id="real-time-vs-batch-inference-instructor-lab">Real-Time vs Batch Inference ,  Instructor Lab</h3>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p09" data-kind="prose">Offline lab: compare scoring policies and measure freshness/cost tradeoffs.</p>
 <h4>0 ,  Simulated world (risk changes over time)</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Simulated world (risk changes over time)</summary><div class="task-body"><h4>0 ,  Simulated world (risk changes over time)</h4><h4>Starter code</h4><pre><code class="lang-python">N_USERS = 500
 HOURS = 72
@@ -1389,13 +1389,13 @@ check('spikes_is_list', isinstance(spikes, list))</code></pre><h4>Test code</h4>
 
 spikes = find_spike_times_vectorized(risk, THRESH)
 print('n_spikes', len(spikes))
-check('spikes_is_list', isinstance(spikes, list))</code></pre><h4>Why this works</h4><p>Vectorized threshold-crossing detection avoids Python loops and identifies all False-&gt;True transitions efficiently.</p></details></div></details>
+check('spikes_is_list', isinstance(spikes, list))</code></pre><h4>Why this works</h4><p id="lab-w13-d3-real-time-vs-batch-inference-p10" data-kind="prose">Vectorized threshold-crossing detection avoids Python loops and identifies all False-&gt;True transitions efficiently.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Policies: realtime vs batch</summary><div class="task-body"><h4>2 ,  Policies: realtime vs batch</h4>
-<p>Implement two policies:</p>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p11" data-kind="prose">Implement two policies:</p>
 <ul><li><code>realtime</code>: score immediately when a spike event happens</li><li><code>batch</code>: score all users every <code>batch_every_h</code> hours</li></ul>
-<p>Return a summary dict with at least:</p>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p12" data-kind="prose">Return a summary dict with at least:</p>
 <ul><li><code>policy</code></li><li><code>batch_every_h</code></li><li><code>n_spikes</code></li><li><code>caught</code></li><li><code>catch_rate</code></li><li><code>avg_delay_h</code></li><li><code>score_calls</code></li></ul>
-<p>Interpretation:</p>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p13" data-kind="prose">Interpretation:</p>
 <ul><li>lower <code>avg_delay_h</code> = fresher reaction</li><li>lower <code>score_calls</code> = cheaper policy</li><li>higher <code>catch_rate</code> = more useful detections within the effective window</li></ul><h4>Starter code</h4><pre><code class="lang-python">def score_at_time(risk: np.ndarray, u: int, t: int) -&gt; float:
     # TODO
     ...
@@ -1438,24 +1438,24 @@ check('batch24_not_better_catch_than_rt', results[3]['catch_rate'] &lt;= results
 check('batch24_cheaper_than_hourly', results[3]['score_calls'] &lt;= results[1]['score_calls'])
 
 print('interpretation', 'realtime is freshest and catches all spikes immediately; less frequent batch scoring is cheaper but staler and misses more short-lived spikes.')</code></pre></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w13-d3-real-time-vs-batch-inference">https://ai.thes30.com/problems/w13-d3-real-time-vs-batch-inference</a>.</p>
-</section>
+<p id="lab-w13-d3-real-time-vs-batch-inference-p14" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w13-d3-real-time-vs-batch-inference">https://ai.thes30.com/problems/w13-d3-real-time-vs-batch-inference</a>.</p>
+<span id="lab-w13-d3-real-time-vs-batch-inference-end" data-end></span></section>
 <section class="lab" id="lab-w13-d4-case-studies-recs-search-ads">
-<h3>Case Studies ,  Recs, Search, Ads <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 13, Day 4 · System Design · 5 tasks · 12 checks</p>
+<h3 id="case-studies-recs-search-ads-expert">Case Studies ,  Recs, Search, Ads <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 13, Day 4 · System Design · 5 tasks · 12 checks</p>
 
-<p>The pattern-matching lab. You first build a reusable design-doc skeleton. Then you fill it three times.</p>
-<p>A feed recommender for a short-video app. A search ranking stack for an e-commerce marketplace. An ads stack for sponsored search. The three share the template but diverge in the domain machinery.</p>
-<p>Retrieval plus ranking for recs. Query understanding for search. Eligibility plus auction plus ranking for ads. Watch for the reusable skeleton: after this lab you should be
+<p data-term="design-doc skeleton" id="lab-w13-d4-case-studies-recs-search-ads-p02" data-kind="prose">The pattern-matching lab. You first build a reusable design-doc skeleton. Then you fill it three times.</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p03" data-kind="prose">A feed recommender for a short-video app. A search ranking stack for an e-commerce marketplace. An ads stack for sponsored search. The three share the template but diverge in the domain machinery.</p>
+<p data-term="retrieval plus ranking" id="lab-w13-d4-case-studies-recs-search-ads-p04" data-kind="prose">Retrieval plus ranking for recs. Query understanding for search. Eligibility plus auction plus ranking for ads. Watch for the reusable skeleton: after this lab you should be
 able to start any of the three designs in under two minutes.</p>
-<p>Practice ML system design across recommendation, search, and ads ranking with reusable templates and domain-specific metrics.</p>
-<div class="callout"><strong>Outcome.</strong> Students can structure a design answer for recs, search, and ads systems. They choose domain-appropriate metrics and ranking stages. They explain retrieval/candidate generation versus ranking. They discuss auctions, feedback loops, and production tradeoffs.</div>
-<p class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 13</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1ZRpFlVxskb0aDrwtGD8LjY3-mQIf8oId">Colab</a> · <a href="/notes/w13-d4-case-studies-recs-search-ads.html">Notes</a> · <a href="cases_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/c5S1omdRBMA">Video</a></p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p05" data-kind="prose">Practice ML system design across recommendation, search, and ads ranking with reusable templates and domain-specific metrics.</p>
+<div id="lab-w13-d4-case-studies-recs-search-ads-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can structure a design answer for recs, search, and ads systems. They choose domain-appropriate metrics and ranking stages. They explain retrieval/candidate generation versus ranking. They discuss auctions, feedback loops, and production tradeoffs.</div>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p06" data-kind="prose" class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 13</span></p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p07" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1ZRpFlVxskb0aDrwtGD8LjY3-mQIf8oId">Colab</a> · <a href="/notes/w13-d4-case-studies-recs-search-ads.html">Notes</a> · <a href="cases_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/c5S1omdRBMA">Video</a></p>
 <h4>Tasks (5)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Case Studies ,  Recs, Search, Ads ,  Student Lab</h3>
-<p>Offline lab: practice production ML system design patterns across three domains.</p>
-<p>Fill the templates with concise, interview-style bullets.</p><h4>Starter code</h4><pre><code class="lang-python">import json
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="case-studies-recs-search-ads-student-lab">Case Studies ,  Recs, Search, Ads ,  Student Lab</h3>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p08" data-kind="prose">Offline lab: practice production ML system design patterns across three domains.</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p09" data-kind="prose">Fill the templates with concise, interview-style bullets.</p><h4>Starter code</h4><pre><code class="lang-python">import json
 
 def check(name: str, cond: bool):
     if not cond:
@@ -1483,12 +1483,12 @@ def section(title: str):
 
 def pretty(d):
     print(json.dumps(d, indent=2))
-</code></pre><h4>Instructor explanation</h4><h3>Case Studies ,  Recs, Search, Ads ,  Instructor Lab</h3>
-<p>Offline lab: practice production ML system design patterns across three domains.</p>
+</code></pre><h4>Instructor explanation</h4><h3 id="case-studies-recs-search-ads-instructor-lab">Case Studies ,  Recs, Search, Ads ,  Instructor Lab</h3>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p10" data-kind="prose">Offline lab: practice production ML system design patterns across three domains.</p>
 <h4>0 ,  Reusable System Design Template</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Reusable System Design Template</summary><div class="task-body"><h4>0 ,  Reusable System Design Template</h4>
-<p>Create a reusable design-doc skeleton that you can fill for recs, search, and ads.</p>
-<p>Include fields for:</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p11" data-kind="prose">Create a reusable design-doc skeleton that you can fill for recs, search, and ads.</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p12" data-kind="prose">Include fields for:</p>
 <ul><li>objective</li><li>inputs / outputs</li><li>primary online metric</li><li>offline metrics</li><li>candidate generation or retrieval</li><li>ranking stage</li><li>serving path</li><li>feedback loop</li><li>failure modes</li><li>tradeoffs</li></ul><h4>Starter code</h4><pre><code class="lang-python">def empty_design_doc(system_name: str):
     return {
         'system': system_name,
@@ -1510,10 +1510,10 @@ template = empty_design_doc('generic ranking system')
 
 pretty(template)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('has_objective', template['objective'] is not None)
 check('has_offline_metrics', len(template['offline_metrics']) &gt;= 2)
-check('has_tradeoffs', len(template['tradeoffs']) &gt;= 2)</code></pre><h4>Checks</h4><ul><li>check('has_objective', template['objective'] is not None)</li><li>check('has_offline_metrics', len(template['offline_metrics']) &gt;= 2)</li><li>check('has_tradeoffs', len(template['tradeoffs']) &gt;= 2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Why this works</h4><p>most ranking systems share a reusable structure: fast retrieval, richer ranking, business metrics, and a feedback loop.</p></details></div></details>
+check('has_tradeoffs', len(template['tradeoffs']) &gt;= 2)</code></pre><h4>Checks</h4><ul><li>check('has_objective', template['objective'] is not None)</li><li>check('has_offline_metrics', len(template['offline_metrics']) &gt;= 2)</li><li>check('has_tradeoffs', len(template['tradeoffs']) &gt;= 2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Why this works</h4><p id="lab-w13-d4-case-studies-recs-search-ads-p13" data-kind="prose">most ranking systems share a reusable structure: fast retrieval, richer ranking, business metrics, and a feedback loop.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Recs Case Study (Feed Recommender)</summary><div class="task-body"><h4>1 ,  Recs Case Study (Feed Recommender)</h4>
-<p>Design a feed recommender for a short-video app.</p>
-<p>Your answer should mention:</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p14" data-kind="prose">Design a feed recommender for a short-video app.</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p15" data-kind="prose">Your answer should mention:</p>
 <ul><li>candidate generation</li><li>ranking features</li><li>online metric</li><li>offline metrics</li><li>at least 2 failure modes</li></ul><h4>Starter code</h4><pre><code class="lang-python">section('1 - Recs Case Study')
 recs = empty_design_doc('short-video feed recommender')
 
@@ -1525,10 +1525,10 @@ recs = empty_design_doc('short-video feed recommender')
 
 pretty(recs)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('recs_has_candidates', recs['candidate_generation_or_retrieval'] is not None)
 check('recs_has_metrics', len(recs['offline_metrics']) &gt;= 2)
-check('recs_has_failures', len(recs['failure_modes']) &gt;= 2)</code></pre><h4>Checks</h4><ul><li>check('recs_has_candidates', recs['candidate_generation_or_retrieval'] is not None)</li><li>check('recs_has_metrics', len(recs['offline_metrics']) &gt;= 2)</li><li>check('recs_has_failures', len(recs['failure_modes']) &gt;= 2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Why this works</h4><p>recommenders are usually multi-stage systems where the team optimizes retrieval and ranking separately and evaluates with both offline and online metrics.</p><h4>Instructor explanation</h4><p>A strong recommender answer separates retrieval from ranking. The core system first pulls a manageable candidate set quickly, then applies a richer ranker for engagement, diversity, and freshness. The main interview signal is whether you understand multi-stage serving and the feedback-loop risks such as cold start and popularity bias.</p></details></div></details>
+check('recs_has_failures', len(recs['failure_modes']) &gt;= 2)</code></pre><h4>Checks</h4><ul><li>check('recs_has_candidates', recs['candidate_generation_or_retrieval'] is not None)</li><li>check('recs_has_metrics', len(recs['offline_metrics']) &gt;= 2)</li><li>check('recs_has_failures', len(recs['failure_modes']) &gt;= 2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Why this works</h4><p id="lab-w13-d4-case-studies-recs-search-ads-p16" data-kind="prose">recommenders are usually multi-stage systems where the team optimizes retrieval and ranking separately and evaluates with both offline and online metrics.</p><h4>Instructor explanation</h4><p id="lab-w13-d4-case-studies-recs-search-ads-p17" data-kind="prose">A strong recommender answer separates retrieval from ranking. The core system first pulls a manageable candidate set quickly, then applies a richer ranker for engagement, diversity, and freshness. The main interview signal is whether you understand multi-stage serving and the feedback-loop risks such as cold start and popularity bias.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Search Case Study (Query → Results)</summary><div class="task-body"><h4>2 ,  Search Case Study (Query → Results)</h4>
-<p>Design a search ranking stack for an e-commerce marketplace.</p>
-<p>Your answer should mention:</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p18" data-kind="prose">Design a search ranking stack for an e-commerce marketplace.</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p19" data-kind="prose">Your answer should mention:</p>
 <ul><li>query understanding</li><li>retrieval</li><li>ranking</li><li>offline metrics</li><li>latency-sensitive serving path</li></ul><h4>Starter code</h4><pre><code class="lang-python">section('2 - Search Case Study')
 search = empty_design_doc('e-commerce search ranking')
 
@@ -1540,10 +1540,10 @@ search = empty_design_doc('e-commerce search ranking')
 
 pretty(search)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('search_has_retrieval', search['candidate_generation_or_retrieval'] is not None)
 check('search_has_serving_path', len(search['serving_path']) &gt;= 4)
-check('search_has_tradeoffs', len(search['tradeoffs']) &gt;= 2)</code></pre><h4>Checks</h4><ul><li>check('search_has_retrieval', search['candidate_generation_or_retrieval'] is not None)</li><li>check('search_has_serving_path', len(search['serving_path']) &gt;= 4)</li><li>check('search_has_tradeoffs', len(search['tradeoffs']) &gt;= 2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Why this works</h4><p>search is fundamentally a retrieval plus ranking system; query understanding and latency constraints matter much more than in offline classification problems.</p><h4>Instructor explanation</h4><p>A strong search answer emphasizes query understanding, high-recall retrieval, and latency-aware ranking. Search is different from feed ranking because the user query anchors relevance, not just user preference. The main interview signal is whether you can explain retrieval versus ranking and choose the right metrics such as MRR or NDCG.</p></details></div></details>
+check('search_has_tradeoffs', len(search['tradeoffs']) &gt;= 2)</code></pre><h4>Checks</h4><ul><li>check('search_has_retrieval', search['candidate_generation_or_retrieval'] is not None)</li><li>check('search_has_serving_path', len(search['serving_path']) &gt;= 4)</li><li>check('search_has_tradeoffs', len(search['tradeoffs']) &gt;= 2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Why this works</h4><p id="lab-w13-d4-case-studies-recs-search-ads-p20" data-kind="prose">search is fundamentally a retrieval plus ranking system; query understanding and latency constraints matter much more than in offline classification problems.</p><h4>Instructor explanation</h4><p id="lab-w13-d4-case-studies-recs-search-ads-p21" data-kind="prose">A strong search answer emphasizes query understanding, high-recall retrieval, and latency-aware ranking. Search is different from feed ranking because the user query anchors relevance, not just user preference. The main interview signal is whether you can explain retrieval versus ranking and choose the right metrics such as MRR or NDCG.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Ads Case Study (Ranking + Auction)</summary><div class="task-body"><h4>3 ,  Ads Case Study (Ranking + Auction)</h4>
-<p>Design an ads stack for sponsored search.</p>
-<p>Your answer should mention:</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p22" data-kind="prose">Design an ads stack for sponsored search.</p>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p23" data-kind="prose">Your answer should mention:</p>
 <ul><li>eligibility / retrieval of ads</li><li>CTR/CVR style prediction</li><li>auction or pricing mechanism</li><li>revenue + user-experience guardrails</li><li>at least 2 tradeoffs</li></ul><h4>Starter code</h4><pre><code class="lang-python">section('3 - Ads Case Study')
 ads = empty_design_doc('sponsored search ads')
 
@@ -1555,18 +1555,18 @@ ads = empty_design_doc('sponsored search ads')
 
 pretty(ads)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('ads_has_auction', 'auction' in ads['ranking'].lower() or 'auction' in ads['candidate_generation_or_retrieval'].lower())
 check('ads_has_metrics', len(ads['offline_metrics']) &gt;= 2)
-check('ads_has_tradeoffs', len(ads['tradeoffs']) &gt;= 2)</code></pre><h4>Checks</h4><ul><li>check('ads_has_auction', 'auction' in ads['ranking'].lower() or 'auction' in ads['candidate_generation_or_retrieval'].lower())</li><li>check('ads_has_metrics', len(ads['offline_metrics']) &gt;= 2)</li><li>check('ads_has_tradeoffs', len(ads['tradeoffs']) &gt;= 2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Why this works</h4><p>ads systems are ranking systems with auctions, calibration, and stronger marketplace constraints than ordinary feed ranking.</p><h4>Instructor explanation</h4><p>A strong ads answer treats the system as both a ranking problem and a marketplace mechanism. Predicted CTR or conversion value is not enough by itself; you also need calibration, auction logic, pricing, and guardrails for user experience. The main interview signal is whether you understand the tradeoff between short-term revenue and long-term trust and advertiser value.</p></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w13-d4-case-studies-recs-search-ads">https://ai.thes30.com/problems/w13-d4-case-studies-recs-search-ads</a>.</p>
-</section>
+check('ads_has_tradeoffs', len(ads['tradeoffs']) &gt;= 2)</code></pre><h4>Checks</h4><ul><li>check('ads_has_auction', 'auction' in ads['ranking'].lower() or 'auction' in ads['candidate_generation_or_retrieval'].lower())</li><li>check('ads_has_metrics', len(ads['offline_metrics']) &gt;= 2)</li><li>check('ads_has_tradeoffs', len(ads['tradeoffs']) &gt;= 2)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Why this works</h4><p id="lab-w13-d4-case-studies-recs-search-ads-p24" data-kind="prose">ads systems are ranking systems with auctions, calibration, and stronger marketplace constraints than ordinary feed ranking.</p><h4>Instructor explanation</h4><p id="lab-w13-d4-case-studies-recs-search-ads-p25" data-kind="prose">A strong ads answer treats the system as both a ranking problem and a marketplace mechanism. Predicted CTR or conversion value is not enough by itself; you also need calibration, auction logic, pricing, and guardrails for user experience. The main interview signal is whether you understand the tradeoff between short-term revenue and long-term trust and advertiser value.</p></details></div></details>
+<p id="lab-w13-d4-case-studies-recs-search-ads-p26" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w13-d4-case-studies-recs-search-ads">https://ai.thes30.com/problems/w13-d4-case-studies-recs-search-ads</a>.</p>
+<span id="lab-w13-d4-case-studies-recs-search-ads-end" data-end></span></section>
 <section class="lab" id="lab-w14-d1-design-real-time-recommendation-system">
-<h3>Design Real-Time Recommendation System <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 14, Day 1 · System Design · 6 tasks · 26 checks · Free</p>
+<h3 id="design-real-time-recommendation-system-expert">Design Real-Time Recommendation System <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w14-d1-design-real-time-recommendation-system-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 14, Day 1 · System Design · 6 tasks · 26 checks · Free</p>
 
-<p>The flagship design lab. You structure a full real-time home feed recommender. Requirements and metrics with a p95 latency budget. The events to log and the labels to train on, with feature tiers by freshness.</p>
-<p>A retrieval stage that returns about 1,000 candidates in under 50 ms. The main ranking stage with online feature fetching and caching. An experimentation, monitoring, and rollback plan.</p>
-<p>The retrieval-then-ranking two-stage shape is the single most reused pattern in ML
+<p data-term="p95 latency budget" id="lab-w14-d1-design-real-time-recommendation-system-p02" data-kind="prose">The flagship design lab. You structure a full real-time home feed recommender. Requirements and metrics with a p95 latency budget. The events to log and the labels to train on, with feature tiers by freshness.</p>
+<p data-term="1,000 candidates" id="lab-w14-d1-design-real-time-recommendation-system-p03" data-kind="prose">A retrieval stage that returns about 1,000 candidates in under 50 ms. The main ranking stage with online feature fetching and caching. An experimentation, monitoring, and rollback plan.</p>
+<p data-term="two-stage" id="lab-w14-d1-design-real-time-recommendation-system-p04" data-kind="prose">The retrieval-then-ranking two-stage shape is the single most reused pattern in ML
 system design interviews.</p>
-<figure class="lesson-fig">
+<figure id="lab-w14-d1-design-real-time-recommendation-system-fig01" data-kind="figure" data-reveal="fade" class="lesson-fig">
   <img src="img/26-recommender.svg" alt="Ranking everything blows the p95 budget; retrieval returns 1,000 candidates, ranking picks the top.">
   <figcaption>Shell 3. ML System Design: retrieval returns about 1,000 candidates in under 50 ms, ranking picks. Source: original.</figcaption>
 </figure>
@@ -1577,25 +1577,25 @@ system design interviews.</p>
 <li>Each stage gets a slice of the p95, and the slices must add up.</li>
 <li>What breaks if it fails: the latency budget dies in the first stage.</li>
 </ol></div>
-<p> Watch for the latency budget math: every stage gets a
+<p id="lab-w14-d1-design-real-time-recommendation-system-p05" data-kind="prose"> Watch for the latency budget math: every stage gets a
 slice of the p95, and the slices must add up.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 14</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1aFTIsFKEKoG-oEVlWH91dyqaQflxmHTB">Colab</a> · <a href="/notes/w14-d1-design-real-time-recommendation-system.html">Notes</a> · <a href="recsysrt_instructor_lab.ipynb">Instructor notebook</a></p>
+<p id="lab-w14-d1-design-real-time-recommendation-system-p06" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w14-d1-design-real-time-recommendation-system-p07" data-kind="prose" class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 14</span></p>
+<p id="lab-w14-d1-design-real-time-recommendation-system-p08" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1aFTIsFKEKoG-oEVlWH91dyqaQflxmHTB">Colab</a> · <a href="/notes/w14-d1-design-real-time-recommendation-system.html">Notes</a> · <a href="recsysrt_instructor_lab.ipynb">Instructor notebook</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Design Real-Time Recommendation System ,  Student Lab</h3>
-<p>Offline system design lab: structure a real-time home feed recommender under strict latency, freshness, and safety constraints.</p>
-<p>Run the tasks in order. Each section adds one part of the final design doc.</p><h4>Starter code</h4><pre><code class="lang-python">section('Dataset &amp; Setup')
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="design-real-time-recommendation-system-student-lab">Design Real-Time Recommendation System ,  Student Lab</h3>
+<p id="lab-w14-d1-design-real-time-recommendation-system-p09" data-kind="prose">Offline system design lab: structure a real-time home feed recommender under strict latency, freshness, and safety constraints.</p>
+<p id="lab-w14-d1-design-real-time-recommendation-system-p10" data-kind="prose">Run the tasks in order. Each section adds one part of the final design doc.</p><h4>Starter code</h4><pre><code class="lang-python">section('Dataset &amp; Setup')
 design = empty_recs_design()
 pretty(design)
 check('has_top_level_sections', set(['data', 'retrieval', 'ranking', 'monitoring', 'summary']).issubset(set(design.keys())))</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">section('Dataset &amp; Setup')
 design = empty_recs_design()
 pretty(design)
-check('has_top_level_sections', set(['data', 'retrieval', 'ranking', 'monitoring', 'summary']).issubset(set(design.keys())))</code></pre><h4>Instructor explanation</h4><p>Start with a reusable design-doc skeleton. In system-design labs, the main goal is not a numeric answer but a structured decomposition of the serving stack.</p></details></div></details>
+check('has_top_level_sections', set(['data', 'retrieval', 'ranking', 'monitoring', 'summary']).issubset(set(design.keys())))</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d1-design-real-time-recommendation-system-p11" data-kind="prose">Start with a reusable design-doc skeleton. In system-design labs, the main goal is not a numeric answer but a structured decomposition of the serving stack.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Requirements and Metrics</summary><div class="task-body"><h4>0 ,  Requirements and Metrics</h4>
-<p>Fill the system objective, the main online metric, 4-8 guardrails, a p95 latency budget, and offline/online evaluation plans.</p><h4>Starter code</h4><pre><code class="lang-python">$10</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Instructor explanation</h4><p>A strong answer separates the primary metric from guardrails and allocates the latency budget explicitly. That turns the vague prompt into engineering constraints.</p></details></div></details>
+<p id="lab-w14-d1-design-real-time-recommendation-system-p12" data-kind="prose">Fill the system objective, the main online metric, 4-8 guardrails, a p95 latency budget, and offline/online evaluation plans.</p><h4>Starter code</h4><pre><code class="lang-python">$10</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d1-design-real-time-recommendation-system-p13" data-kind="prose">A strong answer separates the primary metric from guardrails and allocates the latency budget explicitly. That turns the vague prompt into engineering constraints.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Data, Labels, and Feature Freshness</summary><div class="task-body"><h4>1 ,  Data, Labels, and Feature Freshness</h4>
-<p>Specify the events to log, the labels to train on, feature tiers by freshness, and how you avoid point-in-time leakage.</p><h4>Starter code</h4><pre><code class="lang-python">section('1 - Data, Labels, and Feature Freshness')
+<p id="lab-w14-d1-design-real-time-recommendation-system-p14" data-kind="prose">Specify the events to log, the labels to train on, feature tiers by freshness, and how you avoid point-in-time leakage.</p><h4>Starter code</h4><pre><code class="lang-python">section('1 - Data, Labels, and Feature Freshness')
 try:
     design
 except NameError:
@@ -1619,9 +1619,9 @@ check('events_5plus', len(design['data']['events']) &gt;= 5)
 check('short_term_labels_present', len(design['data']['labels']['short_term']) &gt;= 1)
 check('delayed_labels_present', len(design['data']['labels']['delayed']) &gt;= 1)
 check('all_feature_tiers_present', all(len(v) &gt;= 1 for v in design['data']['feature_tiers'].values()))
-check('pit_nonempty', len(design['data']['point_in_time_correctness']) &gt; 0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Instructor explanation</h4><p>This section tests whether you understand that recommendations depend on event quality, delayed labels, and point-in-time correctness. Without those, offline metrics are not trustworthy.</p></details></div></details>
+check('pit_nonempty', len(design['data']['point_in_time_correctness']) &gt; 0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d1-design-real-time-recommendation-system-p15" data-kind="prose">This section tests whether you understand that recommendations depend on event quality, delayed labels, and point-in-time correctness. Without those, offline metrics are not trustworthy.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Candidate Generation (Retrieval)</summary><div class="task-body"><h4>2 ,  Candidate Generation (Retrieval)</h4>
-<p>Design a retrieval stage that can return about 1k candidates in under 50 ms. Include multiple sources, freshness injection, early safety filtering, and fallbacks.</p><h4>Starter code</h4><pre><code class="lang-python">section('2 - Candidate Generation (Retrieval)')
+<p id="lab-w14-d1-design-real-time-recommendation-system-p16" data-kind="prose">Design a retrieval stage that can return about 1k candidates in under 50 ms. Include multiple sources, freshness injection, early safety filtering, and fallbacks.</p><h4>Starter code</h4><pre><code class="lang-python">section('2 - Candidate Generation (Retrieval)')
 try:
     design
 except NameError:
@@ -1642,9 +1642,9 @@ check('target_candidates_sane', design['retrieval']['target_candidates'] &gt;= 5
 check('retrieval_budget_le_50', design['retrieval']['latency_budget_ms'] &lt;= 50)
 check('sources_3plus', len(design['retrieval']['sources']) &gt;= 3)
 check('freshness_injection_present', len(design['retrieval']['freshness_injection']) &gt;= 2)
-check('safety_stage_present', len(design['retrieval']['safety_policy_stage']) &gt; 0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$13</code></pre><h4>Instructor explanation</h4><p>Strong answers use more than one retrieval source. ANN gives scalable recall, while freshness and graph-based sources prevent stale or overly popularity-driven feeds.</p></details></div></details>
+check('safety_stage_present', len(design['retrieval']['safety_policy_stage']) &gt; 0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$13</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d1-design-real-time-recommendation-system-p17" data-kind="prose">Strong answers use more than one retrieval source. ANN gives scalable recall, while freshness and graph-based sources prevent stale or overly popularity-driven feeds.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Ranking and Serving Architecture</summary><div class="task-body"><h4>3 ,  Ranking and Serving Architecture</h4>
-<p>Design the main ranking stage. Decide how to fetch features online. Decide which caches are useful. Decide which re-ranking rules to apply. Define the fallbacks if serving fails.</p><h4>Starter code</h4><pre><code class="lang-python">section('3 - Ranking and Serving Architecture')
+<p id="lab-w14-d1-design-real-time-recommendation-system-p18" data-kind="prose">Design the main ranking stage. Decide how to fetch features online. Decide which caches are useful. Decide which re-ranking rules to apply. Define the fallbacks if serving fails.</p><h4>Starter code</h4><pre><code class="lang-python">section('3 - Ranking and Serving Architecture')
 try:
     design
 except NameError:
@@ -1666,9 +1666,9 @@ check('model_family_nonempty', len(design['ranking']['model_family']) &gt; 0)
 check('ranking_objectives_present', len(design['ranking']['objectives']) &gt;= 2)
 check('feature_fetch_nonempty', len(design['ranking']['feature_fetch_strategy']) &gt; 0)
 check('reranking_rules_present', len(design['ranking']['reranking_rules']) &gt;= 2)
-check('ranking_budget_sane', 0 &lt; design['ranking']['latency_budget_ms'] &lt;= 120)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$14</code></pre><h4>Instructor explanation</h4><p>A strong answer explicitly separates retrieval, main ranking, and final re-ranking. It also explains how to use online features and caches without breaking freshness.</p></details></div></details>
+check('ranking_budget_sane', 0 &lt; design['ranking']['latency_budget_ms'] &lt;= 120)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$14</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d1-design-real-time-recommendation-system-p19" data-kind="prose">A strong answer explicitly separates retrieval, main ranking, and final re-ranking. It also explains how to use online features and caches without breaking freshness.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> 4 ,  Experimentation, Monitoring, Rollback</summary><div class="task-body"><h4>4 ,  Experimentation, Monitoring, Rollback</h4>
-<p>Add an experiment plan, the core dashboards and alerts, concrete rollback actions, and then write a 5-minute summary of the entire design.</p><h4>Starter code</h4><pre><code class="lang-python">section('4 - Experimentation, Monitoring, Rollback')
+<p id="lab-w14-d1-design-real-time-recommendation-system-p20" data-kind="prose">Add an experiment plan, the core dashboards and alerts, concrete rollback actions, and then write a 5-minute summary of the entire design.</p><h4>Starter code</h4><pre><code class="lang-python">section('4 - Experimentation, Monitoring, Rollback')
 try:
     design
 except NameError:
@@ -1692,25 +1692,25 @@ check('ab_test_present', len(design['monitoring']['ab_test']) &gt;= 2)
 check('dashboards_present', len(design['monitoring']['dashboards']) &gt;= 3)
 check('alerts_present', len(design['monitoring']['alerts']) &gt;= 3)
 check('rollback_present', len(design['monitoring']['rollback_plan']) &gt;= 2)
-check('summary_present', len(design['summary']) &gt;= 4)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$15</code></pre><h4>Instructor explanation</h4><p>The final section distinguishes a design interview answer from a modeling answer. Production systems need experimentation, monitoring, alerts, and a rollback path.</p></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w14-d1-design-real-time-recommendation-system">https://ai.thes30.com/problems/w14-d1-design-real-time-recommendation-system</a>.</p>
-</section>
+check('summary_present', len(design['summary']) &gt;= 4)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$15</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d1-design-real-time-recommendation-system-p21" data-kind="prose">The final section distinguishes a design interview answer from a modeling answer. Production systems need experimentation, monitoring, alerts, and a rollback path.</p></details></div></details>
+<p id="lab-w14-d1-design-real-time-recommendation-system-p22" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w14-d1-design-real-time-recommendation-system">https://ai.thes30.com/problems/w14-d1-design-real-time-recommendation-system</a>.</p>
+<span id="lab-w14-d1-design-real-time-recommendation-system-end" data-end></span></section>
 <section class="lab" id="lab-w14-d3-llm-inference-system-design">
-<h3>LLM Inference System Design <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 14, Day 3 · System Design · 4 tasks · 14 checks</p>
+<h3 id="llm-inference-system-design-expert">LLM Inference System Design <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w14-d3-llm-inference-system-design-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 14, Day 3 · System Design · 4 tasks · 14 checks</p>
 
-<p>The serving-economics lab. You implement an inference server simulator with per-request cost and a queue. Then you compare three batching policies (none, fixed, dynamic) on the same workload by p95 latency and throughput. Dynamic batching wins
+<p data-term="dynamic batching" id="lab-w14-d3-llm-inference-system-design-p02" data-kind="prose">The serving-economics lab. You implement an inference server simulator with per-request cost and a queue. Then you compare three batching policies (none, fixed, dynamic) on the same workload by p95 latency and throughput. Dynamic batching wins
 because the GPU never idles on finished requests. Then you write the production
 serving design doc you would actually deploy. Watch for the simulator habit: when
 an interviewer asks "why continuous batching", you answer with the measured p95
 gap, not with adjectives.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 14</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1ww0k5JLJlJEBWwmcBI8OkMSB3vFCGgtc">Colab</a> · <a href="/notes/w14-d3-llm-inference-system-design.html">Notes</a> · <a href="llminfer_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/lyRt8rNV3Zk">Video</a></p>
+<p id="lab-w14-d3-llm-inference-system-design-p03" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w14-d3-llm-inference-system-design-p04" data-kind="prose" class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 14</span></p>
+<p id="lab-w14-d3-llm-inference-system-design-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1ww0k5JLJlJEBWwmcBI8OkMSB3vFCGgtc">Colab</a> · <a href="/notes/w14-d3-llm-inference-system-design.html">Notes</a> · <a href="llminfer_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/lyRt8rNV3Zk">Video</a></p>
 <h4>Tasks (4)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>LLM Inference System Design ,  Student Lab</h3>
-<p>Offline lab: simulate LLM inference serving with batching and caching, then summarize the production design choices.</p>
-<p>Run the tasks in order. The first task defines the synthetic workload used by the rest of the notebook.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="llm-inference-system-design-student-lab">LLM Inference System Design ,  Student Lab</h3>
+<p id="lab-w14-d3-llm-inference-system-design-p06" data-kind="prose">Offline lab: simulate LLM inference serving with batching and caching, then summarize the production design choices.</p>
+<p id="lab-w14-d3-llm-inference-system-design-p07" data-kind="prose">Run the tasks in order. The first task defines the synthetic workload used by the rest of the notebook.</p>
 <h4>0 ,  Workload model</h4><h4>Starter code</h4><pre><code class="lang-python">def generate_workload(n: int = 800, horizon_ms: int = 60_000, seed: int = 0, cache_hit_rate: float = 0.25):
     # TODO
     ...
@@ -1721,13 +1721,13 @@ print('first_three', reqs[:3])
 cache_hit_frac = float(np.mean([r.cache_hit for r in reqs]))
 check('nonempty', len(reqs) == 800)
 check('sorted_arrivals', all(reqs[i].arrival_ms &lt;= reqs[i + 1].arrival_ms for i in range(len(reqs) - 1)))
-check('cache_hit_mix', 0.05 &lt; cache_hit_frac &lt; 0.5)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Instructor explanation</h4><p>The workload model creates bursty arrivals plus heterogeneous prompt and generation lengths. That is what makes batching and queueing meaningful in the later tasks.</p></details></div></details>
+check('cache_hit_mix', 0.05 &lt; cache_hit_frac &lt; 0.5)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d3-llm-inference-system-design-p08" data-kind="prose">The workload model creates bursty arrivals plus heterogeneous prompt and generation lengths. That is what makes batching and queueing meaningful in the later tasks.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 1 ,  Inference server simulator</summary><div class="task-body"><h4>1 ,  Inference server simulator</h4>
-<p>Implement per-request cost, batch cost, and a queue-based simulator for three policies: <code>none</code>, <code>fixed</code>, and <code>dynamic</code>. Return per-request latency, completion times, and batch sizes.</p><h4>Starter code</h4><pre><code class="lang-python">$10</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Instructor explanation</h4><p>The simulator is intentionally simple. It captures the correct direction of the tradeoffs. Longer prompts cost more prefill time. Longer generations cost more decode time. Cache hits reduce cost. Batching improves utilization.</p></details></div></details>
+<p id="lab-w14-d3-llm-inference-system-design-p09" data-kind="prose">Implement per-request cost, batch cost, and a queue-based simulator for three policies: <code>none</code>, <code>fixed</code>, and <code>dynamic</code>. Return per-request latency, completion times, and batch sizes.</p><h4>Starter code</h4><pre><code class="lang-python">$10</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d3-llm-inference-system-design-p10" data-kind="prose">The simulator is intentionally simple. It captures the correct direction of the tradeoffs. Longer prompts cost more prefill time. Longer generations cost more decode time. Cache hits reduce cost. Batching improves utilization.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 2 ,  Compare strategies</summary><div class="task-body"><h4>2 ,  Compare strategies</h4>
-<p>Summarize <code>none</code>, <code>fixed</code>, and <code>dynamic</code> batching on the full workload. Compare p95 latency, throughput, makespan, and average batch size. Then pick the policy you would ship under a p95 latency budget of 1.5 seconds.</p><h4>Starter code</h4><pre><code class="lang-python">$12</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$13</code></pre><h4>Instructor explanation</h4><p>This section is the actual systems tradeoff. One-by-one serving minimizes intentional waiting but wastes hardware. Dynamic batching generally forms larger batches and can raise throughput, but it only makes sense if p95 latency remains acceptable.</p></details></div></details>
+<p id="lab-w14-d3-llm-inference-system-design-p11" data-kind="prose">Summarize <code>none</code>, <code>fixed</code>, and <code>dynamic</code> batching on the full workload. Compare p95 latency, throughput, makespan, and average batch size. Then pick the policy you would ship under a p95 latency budget of 1.5 seconds.</p><h4>Starter code</h4><pre><code class="lang-python">$12</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$13</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d3-llm-inference-system-design-p12" data-kind="prose">This section is the actual systems tradeoff. One-by-one serving minimizes intentional waiting but wastes hardware. Dynamic batching generally forms larger batches and can raise throughput, but it only makes sense if p95 latency remains acceptable.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 3 ,  Production serving design</summary><div class="task-body"><h4>3 ,  Production serving design</h4>
-<p>Fill a compact serving design doc for the system you would actually deploy. Include the hot path, where KV cache helps, how to choose batching, how to control traffic, and what gets monitored or used as fallback.</p><h4>Starter code</h4><pre><code class="lang-python">design = {
+<p id="lab-w14-d3-llm-inference-system-design-p13" data-kind="prose">Fill a compact serving design doc for the system you would actually deploy. Include the hot path, where KV cache helps, how to choose batching, how to control traffic, and what gets monitored or used as fallback.</p><h4>Starter code</h4><pre><code class="lang-python">design = {
     'primary_slo': '',
     'hot_path': [],
     'kv_cache_role': '',
@@ -1743,19 +1743,19 @@ check('slo_nonempty', len(design['primary_slo']) &gt; 0)
 check('hot_path_present', len(design['hot_path']) &gt;= 4)
 check('kv_cache_present', len(design['kv_cache_role']) &gt; 0)
 check('fallbacks_present', len(design['fallbacks']) &gt;= 2)
-check('monitoring_present', len(design['monitoring']) &gt;= 4)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$14</code></pre><h4>Instructor explanation</h4><p>This final section forces the simulation insights back into a production answer. The correct interview move is to connect batching and cache behavior to routing, autoscaling, fallbacks, and monitoring.</p></details></div></details>
+check('monitoring_present', len(design['monitoring']) &gt;= 4)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$14</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d3-llm-inference-system-design-p14" data-kind="prose">This final section forces the simulation insights back into a production answer. The correct interview move is to connect batching and cache behavior to routing, autoscaling, fallbacks, and monitoring.</p></details></div></details>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>OpenAI</td><td>high</td><td>LLM serving, latency/cost tradeoffs, production inference</td><td>OpenAI interview guide; Generative AI system design interview</td></tr><tr><td>Anthropic</td><td>high</td><td>inference infrastructure, reliability, production systems</td><td>Anthropic infrastructure SWE guide</td></tr><tr><td>Google DeepMind</td><td>high</td><td>system design, LLM infra, scaling tradeoffs</td><td>Google DeepMind research engineer guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w14-d3-llm-inference-system-design">https://ai.thes30.com/problems/w14-d3-llm-inference-system-design</a>.</p>
-</section>
+<p id="lab-w14-d3-llm-inference-system-design-p15" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w14-d3-llm-inference-system-design">https://ai.thes30.com/problems/w14-d3-llm-inference-system-design</a>.</p>
+<span id="lab-w14-d3-llm-inference-system-design-end" data-end></span></section>
 <section class="lab" id="lab-w14-d4-feature-stores-data-pipelines-deep-dive">
-<h3>Feature Stores &amp; Data Pipelines (Deep Dive) <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 14, Day 4 · System Design · 6 tasks · 13 checks</p>
+<h3 id="feature-stores-amp-data-pipelines-deep-dive-expert">Feature Stores &amp; Data Pipelines (Deep Dive) <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 14, Day 4 · System Design · 6 tasks · 13 checks</p>
 
-<p>The deep version of the week 13 day 2 lab, with production machinery added. You generate a synthetic event stream. You build point-in-time correct offline features. You materialize the latest-value online feature table. You run the offline-versus-online parity check that shows skew directly.</p>
-<p>The new material is data quality and lineage metadata: ownership, freshness, and basic quality checks attached to every
+<p data-term="parity check" id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p02" data-kind="prose">The deep version of the week 13 day 2 lab, with production machinery added. You generate a synthetic event stream. You build point-in-time correct offline features. You materialize the latest-value online feature table. You run the offline-versus-online parity check that shows skew directly.</p>
+<p data-term="lineage metadata" id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p03" data-kind="prose">The new material is data quality and lineage metadata: ownership, freshness, and basic quality checks attached to every
 feature. Watch for the operational lesson: features are production assets with
 owners and SLOs, not columns in a dataframe.</p>
-<figure class="lesson-fig">
+<figure id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-fig01" data-kind="figure" data-reveal="fade" class="lesson-fig">
   <img src="img/26-freshness-tiers.svg" alt="Daily features for everything go stale where it hurts; tiers give real-time, hourly, daily each an SLO and alert.">
   <figcaption>Shell 3. ML System Design: real-time, hourly, daily: each tier gets a freshness SLO and an alert. Source: original.</figcaption>
 </figure>
@@ -1767,15 +1767,15 @@ owners and SLOs, not columns in a dataframe.</p>
 <li>What breaks if it fails: features are columns in a dataframe, not production assets.</li>
 </ol></div>
 
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 14</span><span class="tagchip co">Meta</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1zQoQPjOrmANlogGAFVPdgHtujA9C9OVI">Colab</a> · <a href="/notes/w14-d4-feature-stores-data-pipelines-deep-dive.html">Notes</a> · <a href="featpipelines_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/LsqDgg-XjKU">Video</a></p>
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p04" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p05" data-kind="prose" class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 14</span><span class="tagchip co">Meta</span></p>
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1zQoQPjOrmANlogGAFVPdgHtujA9C9OVI">Colab</a> · <a href="/notes/w14-d4-feature-stores-data-pipelines-deep-dive.html">Notes</a> · <a href="featpipelines_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/LsqDgg-XjKU">Video</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Feature Stores &amp; Data Pipelines (Deep Dive) ,  Student Lab</h3>
-<p>Offline lab: build point-in-time correct offline features, contrast them with online materialized features, and show how training-serving skew appears.</p>
-<p>Run the tasks in order. Later sections depend on the event stream and feature tables defined earlier.</p><h4>Starter code</h4><pre><code class="lang-python">pretty({'lab': 'feature stores deep dive', 'focus': ['PIT correctness', 'online materialization', 'parity / skew', 'metadata']})</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">pretty({'lab': 'feature stores deep dive', 'focus': ['PIT correctness', 'online materialization', 'parity / skew', 'metadata']})</code></pre><h4>Instructor explanation</h4><p>This lab is about the contract between historical training features and low-latency online features. Keep that distinction in mind for every section.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="feature-stores-amp-data-pipelines-deep-dive-student-lab">Feature Stores &amp; Data Pipelines (Deep Dive) ,  Student Lab</h3>
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p07" data-kind="prose">Offline lab: build point-in-time correct offline features, contrast them with online materialized features, and show how training-serving skew appears.</p>
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p08" data-kind="prose">Run the tasks in order. Later sections depend on the event stream and feature tables defined earlier.</p><h4>Starter code</h4><pre><code class="lang-python">pretty({'lab': 'feature stores deep dive', 'focus': ['PIT correctness', 'online materialization', 'parity / skew', 'metadata']})</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">pretty({'lab': 'feature stores deep dive', 'focus': ['PIT correctness', 'online materialization', 'parity / skew', 'metadata']})</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p09" data-kind="prose">This lab is about the contract between historical training features and low-latency online features. Keep that distinction in mind for every section.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Generate synthetic event stream</summary><div class="task-body"><h4>0 ,  Generate synthetic event stream</h4>
-<p>Create a timestamped event stream with page views, add-to-carts, and purchases. Sort the events by time because later feature logic assumes temporal order.</p><h4>Starter code</h4><pre><code class="lang-python">EVENT_TYPES = np.array(['page_view', 'add_to_cart', 'purchase'], dtype=object)
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p10" data-kind="prose">Create a timestamped event stream with page views, add-to-carts, and purchases. Sort the events by time because later feature logic assumes temporal order.</p><h4>Starter code</h4><pre><code class="lang-python">EVENT_TYPES = np.array(['page_view', 'add_to_cart', 'purchase'], dtype=object)
 
 
 def generate_events(n_users: int = 2000, n_events: int = 100_000, horizon_hours: int = 72, seed: int = 0):
@@ -1786,9 +1786,9 @@ events = generate_events(seed=0)
 print('n_events', len(events['user_id']))
 print('event_types', {e: int((events['event_type'] == e).sum()) for e in EVENT_TYPES})
 check('sorted_time', np.all(events['t_min'][:-1] &lt;= events['t_min'][1:]))
-check('has_purchases', int((events['event_type'] == 'purchase').sum()) &gt; 0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Instructor explanation</h4><p>The event stream is the source of truth. Sorting by time is essential because point-in-time features depend on temporal ordering.</p></details></div></details>
+check('has_purchases', int((events['event_type'] == 'purchase').sum()) &gt; 0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p11" data-kind="prose">The event stream is the source of truth. Sorting by time is essential because point-in-time features depend on temporal ordering.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Offline features (point-in-time correct)</summary><div class="task-body"><h4>1 ,  Offline features (point-in-time correct)</h4>
-<p>For each historical training row, compute user features from only the prior 24 hours of activity. Do not use events at or after the prediction timestamp.</p><h4>Starter code</h4><pre><code class="lang-python">def offline_features_pit(events, prediction_times_min: np.ndarray, user_ids: np.ndarray, window_min: int = 24*60):
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p12" data-kind="prose">For each historical training row, compute user features from only the prior 24 hours of activity. Do not use events at or after the prediction timestamp.</p><h4>Starter code</h4><pre><code class="lang-python">def offline_features_pit(events, prediction_times_min: np.ndarray, user_ids: np.ndarray, window_min: int = 24*60):
     # TODO
     ...
 
@@ -1801,18 +1801,18 @@ feat_off = offline_features_pit(events, pred_t, user_ids)
 print('means', {k: float(v.mean()) for k, v in feat_off.items()})
 check('len_match', len(feat_off['pv_24h']) == len(user_ids))
 check('nonnegative_counts', int(feat_off['pv_24h'].min()) &gt;= 0 and int(feat_off['purch_24h'].min()) &gt;= 0)
-check('nonnegative_spend', float(feat_off['spend_24h'].min()) &gt;= 0.0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><p>This section is the core of the lab. The same user gets different feature values at different prediction times, so the join must be relative to each row, not just the latest state.</p></details></div></details>
+check('nonnegative_spend', float(feat_off['spend_24h'].min()) &gt;= 0.0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p13" data-kind="prose">This section is the core of the lab. The same user gets different feature values at different prediction times, so the join must be relative to each row, not just the latest state.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Online feature store (materialization)</summary><div class="task-body"><h4>2 ,  Online feature store (materialization)</h4>
-<p>Build the latest-value online feature table as of end-of-stream. This is the right shape for serving, but not automatically safe for offline training.</p><h4>Starter code</h4><pre><code class="lang-python">def online_materialize_latest(events):
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p14" data-kind="prose">Build the latest-value online feature table as of end-of-stream. This is the right shape for serving, but not automatically safe for offline training.</p><h4>Starter code</h4><pre><code class="lang-python">def online_materialize_latest(events):
     # TODO
     ...
 
 feat_on = online_materialize_latest(events)
 print('online means', {k: float(v.mean()) for k, v in feat_on.items()})
 check('n_users', len(feat_on['pv_total']) == 2000)
-check('nonnegative', int(feat_on['pv_total'].min()) &gt;= 0 and float(feat_on['spend_total'].min()) &gt;= 0.0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Instructor explanation</h4><p>The online store materializes the latest keyed values for low-latency lookup. It is intentionally not point-in-time and can leak future information if reused carelessly.</p></details></div></details>
+check('nonnegative', int(feat_on['pv_total'].min()) &gt;= 0 and float(feat_on['spend_total'].min()) &gt;= 0.0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p15" data-kind="prose">The online store materializes the latest keyed values for low-latency lookup. It is intentionally not point-in-time and can leak future information if reused carelessly.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Offline/online parity check (skew demo)</summary><div class="task-body"><h4>3 ,  Offline/online parity check (skew demo)</h4>
-<p>Compare the online latest totals against the PIT-correct historical features for the same users. This shows why naive offline joins often overestimate feature values.</p><h4>Starter code</h4><pre><code class="lang-python">naive_pv = feat_on['pv_total'][user_ids]
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p16" data-kind="prose">Compare the online latest totals against the PIT-correct historical features for the same users. This shows why naive offline joins often overestimate feature values.</p><h4>Starter code</h4><pre><code class="lang-python">naive_pv = feat_on['pv_total'][user_ids]
 pit_pv = feat_off['pv_24h']
 naive_spend = feat_on['spend_total'][user_ids]
 pit_spend = feat_off['spend_24h']
@@ -1828,9 +1828,9 @@ pit_spend = feat_off['spend_24h']
 print('naive_pv_mean', float(naive_pv.mean()), 'pit_pv_mean', float(pit_pv.mean()))
 print('naive_spend_mean', float(naive_spend.mean()), 'pit_spend_mean', float(pit_spend.mean()))
 check('naive_ge_pit_often', float((naive_pv &gt;= pit_pv).mean()) &gt; 0.70)
-check('spend_skew_visible', float((naive_spend &gt;= pit_spend).mean()) &gt; 0.70)</code></pre><h4>Instructor explanation</h4><p>This skew demo is the practical warning sign: the online latest-value table usually dominates the historical PIT values because it contains future events.</p></details></div></details>
+check('spend_skew_visible', float((naive_spend &gt;= pit_spend).mean()) &gt; 0.70)</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p17" data-kind="prose">This skew demo is the practical warning sign: the online latest-value table usually dominates the historical PIT values because it contains future events.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> 4 ,  Data quality + lineage metadata</summary><div class="task-body"><h4>4 ,  Data quality + lineage metadata</h4>
-<p>Attach ownership and freshness metadata to the offline features and run a few basic validation checks. The goal is to treat feature tables as production artifacts, not just arrays.</p><h4>Starter code</h4><pre><code class="lang-python">FEATURE_META = {
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p18" data-kind="prose">Attach ownership and freshness metadata to the offline features and run a few basic validation checks. The goal is to treat feature tables as production artifacts, not just arrays.</p><h4>Starter code</h4><pre><code class="lang-python">FEATURE_META = {
     'pv_24h': {'owner': '', 'freshness': '', 'source': '', 'dtype': '', 'pit_safe': False},
     'atc_24h': {'owner': '', 'freshness': '', 'source': '', 'dtype': '', 'pit_safe': False},
     'purch_24h': {'owner': '', 'freshness': '', 'source': '', 'dtype': '', 'pit_safe': False},
@@ -1846,25 +1846,25 @@ report = validate_feature_bundle(feat_off, FEATURE_META)
 pretty(report)
 check('all_features_covered', report['all_features_covered'])
 check('pit_flags_true', report['pit_flags_true'])
-check('nonnegative_values', report['nonnegative_values'])</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Instructor explanation</h4><p>Production features need metadata and validation. Ownership, freshness tier, and PIT-safety are part of the feature contract, not optional documentation.</p></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w14-d4-feature-stores-data-pipelines-deep-dive">https://ai.thes30.com/problems/w14-d4-feature-stores-data-pipelines-deep-dive</a>.</p>
-</section>
+check('nonnegative_values', report['nonnegative_values'])</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p19" data-kind="prose">Production features need metadata and validation. Ownership, freshness tier, and PIT-safety are part of the feature contract, not optional documentation.</p></details></div></details>
+<p id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-p20" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w14-d4-feature-stores-data-pipelines-deep-dive">https://ai.thes30.com/problems/w14-d4-feature-stores-data-pipelines-deep-dive</a>.</p>
+<span id="lab-w14-d4-feature-stores-data-pipelines-deep-dive-end" data-end></span></section>
 <section class="lab" id="lab-w14-d5-scaling-training-distributed-ml">
-<h3>Scaling Training ,  Distributed ML <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 14, Day 5 · System Design · 4 tasks · 11 checks</p>
+<h3 id="scaling-training-distributed-ml-expert">Scaling Training ,  Distributed ML <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w14-d5-scaling-training-distributed-ml-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 14, Day 5 · System Design · 4 tasks · 11 checks</p>
 
-<p>The distributed-training lab. You implement a toy SGD with a data-parallel timing model. Each step is compute plus communication. Then you run scale-out experiments: a 1-worker baseline, an 8-worker synchronized run with learning-rate scaling, and an 8-worker asynchronous run.</p>
-<p>The speedup lands below 8x, and the
+<p data-term="learning-rate scaling" id="lab-w14-d5-scaling-training-distributed-ml-p02" data-kind="prose">The distributed-training lab. You implement a toy SGD with a data-parallel timing model. Each step is compute plus communication. Then you run scale-out experiments: a 1-worker baseline, an 8-worker synchronized run with learning-rate scaling, and an 8-worker asynchronous run.</p>
+<p data-term="communication overhead" id="lab-w14-d5-scaling-training-distributed-ml-p03" data-kind="prose">The speedup lands below 8x, and the
 timing model tells you exactly why: communication overhead. Watch for the two lessons interviewers love. Why the learning rate scales with the batch size in synchronous data parallelism. Why the speedup is sublinear.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 14</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1ozA9ob9rrVQ4ihRu9zqlhKUkouIA0VUT">Colab</a> · <a href="/notes/w14-d5-scaling-training-distributed-ml.html">Notes</a> · <a href="disttrain_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/Y1OkQiusgL8">Video</a></p>
+<p id="lab-w14-d5-scaling-training-distributed-ml-p04" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w14-d5-scaling-training-distributed-ml-p05" data-kind="prose" class="tags"><span class="tagchip">System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 14</span></p>
+<p id="lab-w14-d5-scaling-training-distributed-ml-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1ozA9ob9rrVQ4ihRu9zqlhKUkouIA0VUT">Colab</a> · <a href="/notes/w14-d5-scaling-training-distributed-ml.html">Notes</a> · <a href="disttrain_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/Y1OkQiusgL8">Video</a></p>
 <h4>Tasks (4)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Scaling Training ,  Distributed ML ,  Student Lab</h3>
-<p>Offline lab: simulate data-parallel SGD with communication overhead and compare wall-clock time to target across scaling strategies.</p>
-<p>Run the tasks in order. Later sections depend on the regression dataset and simulator defined earlier.</p><h4>Starter code</h4><pre><code class="lang-python">pretty({'lab': 'distributed ml', 'focus': ['data parallelism', 'all-reduce overhead', 'LR scaling', 'gradient accumulation']})</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">pretty({'lab': 'distributed ml', 'focus': ['data parallelism', 'all-reduce overhead', 'LR scaling', 'gradient accumulation']})</code></pre><h4>Instructor explanation</h4><p>This lab is about the systems side of training: how wall time changes when you add workers, synchronize gradients, and change effective batch size.</p></details></div></details>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="scaling-training-distributed-ml-student-lab">Scaling Training ,  Distributed ML ,  Student Lab</h3>
+<p id="lab-w14-d5-scaling-training-distributed-ml-p07" data-kind="prose">Offline lab: simulate data-parallel SGD with communication overhead and compare wall-clock time to target across scaling strategies.</p>
+<p id="lab-w14-d5-scaling-training-distributed-ml-p08" data-kind="prose">Run the tasks in order. Later sections depend on the regression dataset and simulator defined earlier.</p><h4>Starter code</h4><pre><code class="lang-python">pretty({'lab': 'distributed ml', 'focus': ['data parallelism', 'all-reduce overhead', 'LR scaling', 'gradient accumulation']})</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">pretty({'lab': 'distributed ml', 'focus': ['data parallelism', 'all-reduce overhead', 'LR scaling', 'gradient accumulation']})</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d5-scaling-training-distributed-ml-p09" data-kind="prose">This lab is about the systems side of training: how wall time changes when you add workers, synchronize gradients, and change effective batch size.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Synthetic regression dataset</summary><div class="task-body"><h4>0 ,  Synthetic regression dataset</h4>
-<p>Create a simple regression problem so we can study optimization and timing without framework complexity.</p><h4>Starter code</h4><pre><code class="lang-python">def make_regression(n: int = 20_000, d: int = 50, noise: float = 0.2, seed: int = 0):
+<p id="lab-w14-d5-scaling-training-distributed-ml-p10" data-kind="prose">Create a simple regression problem so we can study optimization and timing without framework complexity.</p><h4>Starter code</h4><pre><code class="lang-python">def make_regression(n: int = 20_000, d: int = 50, noise: float = 0.2, seed: int = 0):
     # TODO
     ...
 
@@ -1879,9 +1879,9 @@ check('shapes', X.shape[0] == y.shape[0] and X.shape[1] == w_true.shape[0])</cod
 
 X, y, w_true = make_regression(seed=0)
 print('X', X.shape, 'y', y.shape)
-check('shapes', X.shape[0] == y.shape[0] and X.shape[1] == w_true.shape[0])</code></pre><h4>Instructor explanation</h4><p>A convex regression problem is enough to show the distributed-training timing tradeoffs without needing a deep network.</p></details></div></details>
+check('shapes', X.shape[0] == y.shape[0] and X.shape[1] == w_true.shape[0])</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d5-scaling-training-distributed-ml-p11" data-kind="prose">A convex regression problem is enough to show the distributed-training timing tradeoffs without needing a deep network.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Toy SGD + timing model</summary><div class="task-body"><h4>1 ,  Toy SGD + timing model</h4>
-<p>Implement MSE loss/gradient plus a data-parallel timing model. Treat each step as compute time plus optional all-reduce cost.</p><h4>Starter code</h4><pre><code class="lang-python">def mse_loss_grad(Xb: np.ndarray, yb: np.ndarray, w: np.ndarray):
+<p id="lab-w14-d5-scaling-training-distributed-ml-p12" data-kind="prose">Implement MSE loss/gradient plus a data-parallel timing model. Treat each step as compute time plus optional all-reduce cost.</p><h4>Starter code</h4><pre><code class="lang-python">def mse_loss_grad(Xb: np.ndarray, yb: np.ndarray, w: np.ndarray):
     # TODO
     ...
 
@@ -1896,9 +1896,9 @@ print('first_loss', float(out['loss_samples'][0, 1]), 'last_loss', float(out['lo
 print('final_wall_ms', float(out['wall_ms'][-1]), 'comm_share', float(out['comm_ms'] / out['wall_ms'][-1]))
 check('loss_down', float(out['loss_samples'][-1, 1]) &lt; float(out['loss_samples'][0, 1]))
 check('wall_monotone', np.all(out['wall_ms'][1:] &gt;= out['wall_ms'][:-1]))
-check('comm_nonzero', float(out['comm_ms']) &gt; 0.0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Instructor explanation</h4><p>The simulator uses a simple but correct abstraction: per-step wall time is compute plus communication. That is the main systems idea behind distributed SGD.</p></details></div></details>
+check('comm_nonzero', float(out['comm_ms']) &gt; 0.0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d5-scaling-training-distributed-ml-p13" data-kind="prose">The simulator uses a simple but correct abstraction: per-step wall time is compute plus communication. That is the main systems idea behind distributed SGD.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Scale-out experiments</summary><div class="task-body"><h4>2 ,  Scale-out experiments</h4>
-<p>Compare a 1-worker baseline, an 8-worker synchronized run with LR scaling, and an 8-worker run with gradient accumulation. Measure time-to-target, final loss, effective batch size, and communication share.</p><h4>Starter code</h4><pre><code class="lang-python">def time_to_target(loss_samples: np.ndarray, target: float):
+<p id="lab-w14-d5-scaling-training-distributed-ml-p14" data-kind="prose">Compare a 1-worker baseline, an 8-worker synchronized run with LR scaling, and an 8-worker run with gradient accumulation. Measure time-to-target, final loss, effective batch size, and communication share.</p><h4>Starter code</h4><pre><code class="lang-python">def time_to_target(loss_samples: np.ndarray, target: float):
     # TODO
     ...
 
@@ -1924,30 +1924,30 @@ pretty(results)
 check('have_three', len(results) == 3)
 check('sync_beats_1w_to_target', results['8w_sync']['time_to_target_ms'] &lt; results['1w']['time_to_target_ms'])
 check('accum_batch_larger', results['8w_accum4']['effective_batch'] &gt; results['8w_sync']['effective_batch'])
-check('accum_not_free', results['8w_accum4']['final_wall_ms'] &gt; results['8w_sync']['final_wall_ms'])</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><p>The interesting comparison is not just final loss. The real systems question is how fast each configuration reaches a target loss, and what communication / batch-size tradeoffs it uses to get there.</p></details></div></details>
+check('accum_not_free', results['8w_accum4']['final_wall_ms'] &gt; results['8w_sync']['final_wall_ms'])</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><p id="lab-w14-d5-scaling-training-distributed-ml-p15" data-kind="prose">The interesting comparison is not just final loss. The real systems question is how fast each configuration reaches a target loss, and what communication / batch-size tradeoffs it uses to get there.</p></details></div></details>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>OpenAI</td><td>high</td><td>distributed training, parallelism, stability at scale</td><td>OpenAI interview guide; Distributed training interview questions</td></tr><tr><td>Anthropic</td><td>high</td><td>training clusters, throughput bottlenecks, infra tradeoffs</td><td>Anthropic infrastructure SWE guide</td></tr><tr><td>Google DeepMind</td><td>high</td><td>large-scale training, distributed systems, training efficiency</td><td>Google DeepMind research engineer guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w14-d5-scaling-training-distributed-ml">https://ai.thes30.com/problems/w14-d5-scaling-training-distributed-ml</a>.</p>
-</section>
+<p id="lab-w14-d5-scaling-training-distributed-ml-p16" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w14-d5-scaling-training-distributed-ml">https://ai.thes30.com/problems/w14-d5-scaling-training-distributed-ml</a>.</p>
+<span id="lab-w14-d5-scaling-training-distributed-ml-end" data-end></span></section>
 <section class="lab" id="lab-w15-d1-llms-in-production">
-<h3>LLMs in Production <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 15, Day 1 · ML System Design · 4 tasks · 7 checks · Free</p>
+<h3 id="llms-in-production-expert">LLMs in Production <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w15-d1-llms-in-production-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 15, Day 1 · ML System Design · 4 tasks · 7 checks · Free</p>
 
-<p>The cost-cutting lab. You use a toy classifier and a stronger teacher model. You quantize the teacher weights to int8 and measure what changes. Then you distill a smaller student to match the teacher logits. These are the two cheapest production
+<p data-term="quantization" id="lab-w15-d1-llms-in-production-p02" data-kind="prose">The cost-cutting lab. You use a toy classifier and a stronger teacher model. You quantize the teacher weights to int8 and measure what changes. Then you distill a smaller student to match the teacher logits. These are the two cheapest production
 levers in LLM serving: quantization shrinks the model you have, distillation builds
 a smaller model that behaves like it. Watch for the quality-versus-cost framing:
 every optimization is a tradeoff against accuracy, and the lab makes you measure
 both sides.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">ML System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1FKW7UqKDpU--j4SXerEtiT8Qm3jnypmN">Colab</a> · <a href="/notes/w15-d1-llms-in-production.html">Notes</a> · <a href="llmprod_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/RCf1CdvKhBE">Video</a></p>
+<p id="lab-w15-d1-llms-in-production-p03" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w15-d1-llms-in-production-p04" data-kind="prose" class="tags"><span class="tagchip">ML System Design</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
+<p id="lab-w15-d1-llms-in-production-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1FKW7UqKDpU--j4SXerEtiT8Qm3jnypmN">Colab</a> · <a href="/notes/w15-d1-llms-in-production.html">Notes</a> · <a href="llmprod_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/RCf1CdvKhBE">Video</a></p>
 <h4>Tasks (4)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>LLMs in Production ,  Student Lab</h3>
-<p>Offline lab: study two common production optimization ideas using a toy classifier that stands in for an LLM head.</p>
-<p>In this lab you will:</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="llms-in-production-student-lab">LLMs in Production ,  Student Lab</h3>
+<p id="lab-w15-d1-llms-in-production-p06" data-kind="prose">Offline lab: study two common production optimization ideas using a toy classifier that stands in for an LLM head.</p>
+<p id="lab-w15-d1-llms-in-production-p07" data-kind="prose">In this lab you will:</p>
 <ul><li>build a synthetic teacher model</li><li>quantize the teacher weights with fake int8</li><li>distill the teacher into a smaller student model</li><li>compare quality, memory, and tradeoffs</li></ul>
-<p>Run the tasks in order. Later sections depend on the teacher logits created earlier.</p><h4>Starter code</h4><pre><code class="lang-python">pretty({'lab': 'llms in production', 'focus': ['latency / memory tradeoffs', 'quantization', 'distillation', 'quality vs cost']})</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">pretty({'lab': 'llms in production', 'focus': ['latency / memory tradeoffs', 'quantization', 'distillation', 'quality vs cost']})</code></pre><h4>Instructor explanation</h4><p>This lab is about production tradeoffs, not model invention. The main question is how to make a strong model cheaper or faster without losing too much quality.</p></details></div></details>
+<p id="lab-w15-d1-llms-in-production-p08" data-kind="prose">Run the tasks in order. Later sections depend on the teacher logits created earlier.</p><h4>Starter code</h4><pre><code class="lang-python">pretty({'lab': 'llms in production', 'focus': ['latency / memory tradeoffs', 'quantization', 'distillation', 'quality vs cost']})</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">pretty({'lab': 'llms in production', 'focus': ['latency / memory tradeoffs', 'quantization', 'distillation', 'quality vs cost']})</code></pre><h4>Instructor explanation</h4><p id="lab-w15-d1-llms-in-production-p09" data-kind="prose">This lab is about production tradeoffs, not model invention. The main question is how to make a strong model cheaper or faster without losing too much quality.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Synthetic dataset + teacher model</summary><div class="task-body"><h4>0 ,  Synthetic dataset + teacher model</h4>
-<p>Create a sparse synthetic dataset and a stronger teacher model. The teacher logits act as the high-quality baseline that later sections will compress.</p><h4>Starter code</h4><pre><code class="lang-python">def make_data(n: int = 6000, d: int = 256, n_classes: int = 12, rank: int = 6, seed: int = 0):
+<p id="lab-w15-d1-llms-in-production-p10" data-kind="prose">Create a sparse synthetic dataset and a stronger teacher model. The teacher logits act as the high-quality baseline that later sections will compress.</p><h4>Starter code</h4><pre><code class="lang-python">def make_data(n: int = 6000, d: int = 256, n_classes: int = 12, rank: int = 6, seed: int = 0):
     # TODO
     ...
 
@@ -1960,9 +1960,9 @@ X, y, (Wt, bt), teacher_logits = make_data(seed=0)
 print('X', X.shape, 'y', y.shape)
 print('teacher_acc', accuracy_from_logits(teacher_logits, y))
 check('shapes', X.shape[0] == y.shape[0] and X.shape[1] == Wt.shape[0])
-check('teacher_reasonable', accuracy_from_logits(teacher_logits, y) &gt; 0.65)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Instructor explanation</h4><p>The teacher is the expensive reference model. Measure everything later relative to it, so the first step is to create a strong baseline and keep its logits available.</p></details></div></details>
+check('teacher_reasonable', accuracy_from_logits(teacher_logits, y) &gt; 0.65)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre><h4>Instructor explanation</h4><p id="lab-w15-d1-llms-in-production-p11" data-kind="prose">The teacher is the expensive reference model. Measure everything later relative to it, so the first step is to create a strong baseline and keep its logits available.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Quantization (fake int8)</summary><div class="task-body"><h4>1 ,  Quantization (fake int8)</h4>
-<p>Quantize the teacher weights to int8, dequantize them back for inference, and compare memory versus quality. This is a toy stand-in for production post-training quantization.</p><h4>Starter code</h4><pre><code class="lang-python">def quantize_int8(W: np.ndarray):
+<p id="lab-w15-d1-llms-in-production-p12" data-kind="prose">Quantize the teacher weights to int8, dequantize them back for inference, and compare memory versus quality. This is a toy stand-in for production post-training quantization.</p><h4>Starter code</h4><pre><code class="lang-python">def quantize_int8(W: np.ndarray):
     # TODO
     ...
 
@@ -2021,9 +2021,9 @@ print('acc_q', acc_q)
 print('bytes_fp64', model_bytes_float64(Wt, bt))
 print('bytes_int8', model_bytes_int8(Wq, bt))
 check('size_reduced', model_bytes_int8(Wq, bt) &lt; model_bytes_float64(Wt, bt))
-check('quant_acc_close', acc_teacher - acc_q &lt; 0.02)</code></pre><h4>Instructor explanation</h4><p>Quantization keeps the model architecture the same but stores weights in a cheaper format. In production, the appeal is usually lower memory footprint and better throughput with only a small quality drop.</p></details></div></details>
+check('quant_acc_close', acc_teacher - acc_q &lt; 0.02)</code></pre><h4>Instructor explanation</h4><p id="lab-w15-d1-llms-in-production-p13" data-kind="prose">Quantization keeps the model architecture the same but stores weights in a cheaper format. In production, the appeal is usually lower memory footprint and better throughput with only a small quality drop.</p></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Distillation (smaller student matches teacher logits)</summary><div class="task-body"><h4>2 ,  Distillation (smaller student matches teacher logits)</h4>
-<p>Fit a smaller student model to the teacher logits. In this toy lab, the student only uses the first <code>d_student</code> input dimensions, which stands in for a smaller hidden width or a narrower network.</p><h4>Starter code</h4><pre><code class="lang-python">def fit_student_distill(X: np.ndarray, teacher_logits: np.ndarray, d_student: int = 160, ridge: float = 1e-2):
+<p id="lab-w15-d1-llms-in-production-p14" data-kind="prose">Fit a smaller student model to the teacher logits. In this toy lab, the student only uses the first <code>d_student</code> input dimensions, which stands in for a smaller hidden width or a narrower network.</p><h4>Starter code</h4><pre><code class="lang-python">def fit_student_distill(X: np.ndarray, teacher_logits: np.ndarray, d_student: int = 160, ridge: float = 1e-2):
     # TODO
     ...
 
@@ -2044,17 +2044,17 @@ print('student_bytes', student_bytes(W_s, b_s))
 print('mse_to_teacher', mse)
 check('student_smaller', student_bytes(W_s, b_s) &lt; model_bytes_float64(Wt, bt))
 check('student_reasonable', student_acc &gt; 0.50)
-check('student_tracks_teacher', mse &lt; 8.0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><p>Distillation changes the model itself, not just the number format. A smaller student learns to imitate the teacher, and the engineering question becomes whether the quality loss is worth the savings.</p></details></div></details>
+check('student_tracks_teacher', mse &lt; 8.0)</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><p id="lab-w15-d1-llms-in-production-p15" data-kind="prose">Distillation changes the model itself, not just the number format. A smaller student learns to imitate the teacher, and the engineering question becomes whether the quality loss is worth the savings.</p></details></div></details>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>OpenAI</td><td>high</td><td>LLMs in production, evaluation, latency/cost/reliability</td><td>OpenAI interview guide; AI engineer interview prep</td></tr><tr><td>Anthropic</td><td>high</td><td>production AI systems, safety/reliability, deployment tradeoffs</td><td>Anthropic infrastructure SWE guide</td></tr><tr><td>Google DeepMind</td><td>medium</td><td>production ML systems, serving tradeoffs, evaluation</td><td>Google DeepMind research engineer guide</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d1-llms-in-production">https://ai.thes30.com/problems/w15-d1-llms-in-production</a>.</p>
-</section>
-<div class="takeaway"><h4>Key takeaways</h4><ul><li>The template lab (week 13, day 1) and the case-studies lab (week 13, day 4) are your interview answer skeleton and your pattern library.</li><li>The feature store labs (week 13, day 2 and week 14, day 4) teach the two silent killers: leakage and skew.</li><li>The inference lab (week 14, day 3) and the distributed training lab (week 14, day 5) teach the economics: measure the policy, price the communication.</li><li>The recommender lab (week 14, day 1) is the single most representative system design interview exercise.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Sketch the retrieval-then-ranking shape for a feed recommender with a p95 budget of 200 ms. Where does each millisecond go?</li><li>You have 8 GPUs and a training run that scales 5x, not 8x. What do you measure first? (The communication share of each step.)</li></ul></div><p class="lab-meta">Apply this chapter in: <a href="#lab-w14-d1-design-real-time-recommendation-system">Design Real-Time Recommendation System</a>; <a href="#lab-w14-d3-llm-inference-system-design">LLM Inference System Design</a>.</p>
-<h2>Interview clearance</h2>
-<p>Interviewers grade system design rounds on tradeoff reasoning three levels deep. The
+<p id="lab-w15-d1-llms-in-production-p16" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d1-llms-in-production">https://ai.thes30.com/problems/w15-d1-llms-in-production</a>.</p>
+<span id="lab-w15-d1-llms-in-production-end" data-end></span></section>
+<div id="lab-w15-d1-llms-in-production-takeaway" data-kind="summary" data-reveal="fade" class="takeaway"><h4>Key takeaways</h4><ul><li>The template lab (week 13, day 1) and the case-studies lab (week 13, day 4) are your interview answer skeleton and your pattern library.</li><li>The feature store labs (week 13, day 2 and week 14, day 4) teach the two silent killers: leakage and skew.</li><li>The inference lab (week 14, day 3) and the distributed training lab (week 14, day 5) teach the economics: measure the policy, price the communication.</li><li>The recommender lab (week 14, day 1) is the single most representative system design interview exercise.</li></ul></div><div id="lab-w15-d1-llms-in-production-aside01" data-kind="aside" class="ob-board"><h4>Design prompt</h4><ul><li>Sketch the retrieval-then-ranking shape for a feed recommender with a p95 budget of 200 ms. Where does each millisecond go?</li><li>You have 8 GPUs and a training run that scales 5x, not 8x. What do you measure first? (The communication share of each step.)</li></ul></div><p id="lab-w15-d1-llms-in-production-p17" data-kind="prose" class="lab-meta">Apply this chapter in: <a href="#lab-w14-d1-design-real-time-recommendation-system">Design Real-Time Recommendation System</a>; <a href="#lab-w14-d3-llm-inference-system-design">LLM Inference System Design</a>.</p>
+<h2 id="interview-clearance">Interview clearance</h2>
+<p id="lab-w15-d1-llms-in-production-p18" data-kind="prose">Interviewers grade system design rounds on tradeoff reasoning three levels deep. The
 questions below rehearse the exact shape: a scenario, a decision, and the trap that
 catches candidates who memorized architectures instead of reasoning.</p>
-<div class="ob-board"><h4>Design prompt: the design warm-ups</h4><ul><li>Design a fraud detector for card-not-present transactions. Start with SLOs and metrics, not the model.</li><li>Your recommender retrieval must return 1,000 candidates in under 50 ms. What is your first architectural decision, and what does it cost you?</li><li>Offline AUC is 0.95, online revenue is flat. Three checks, in order.</li><li>Real-time scoring or batch scoring for a risk model where the world drifts hourly? Defend with the freshness-versus-cost tradeoff.</li></ul></div><div class="pq"><p class="pq-q"><strong>Q1.</strong> A feed recommender must return about 1,000 candidates in under 50 ms before ranking. Which retrieval choice fits?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Two-tower embeddings with an ANN index give sub-50 ms retrieval over hundreds of millions of items; the heavy ranker only sees the 1,000 survivors.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Running the full ranking model over the whole catalog: the latency budget dies here. Ranking is expensive per item; that is why retrieval exists.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> Two-tower retrieval plus ANN search is the standard first stage: cheap per-item scoring, millisecond lookup, and the ranker only touches the top slice.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Batch precomputation alone: fine for static catalogs, but it cannot react to fresh user behavior inside the 50 ms window.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> A larger ranking model: improves quality per item but makes the latency problem worse, not better.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q2.</strong> Your team trained on features from the offline store and serves from the online store. Offline metrics look great; production degrades over two weeks. Walk through the diagnosis.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> First, run the parity check: recompute the offline features for recent entities at their label timestamps and compare against what the online store served. A mismatch is train-serve skew: same feature names, different computation. Second, audit for leakage: check that no offline feature aggregated events after the label timestamp. Third, check feature freshness SLOs: a stale online feature (for example, a daily aggregate that stopped updating) degrades the model silently. Fix the definitions or the pipeline, backfill, and add the parity check as a recurring monitor.</p><p><strong>Trap.</strong> Blaming the model or retraining on more data. Retraining on skewed or leaky features reproduces the problem with fresh timestamps.</p></div></div><div class="pq"><p class="pq-q"><strong>Q3.</strong> Your LLM serving cost is too high and quality must not regress. Which lever do you pull first?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> Continuous batching plus a paged KV cache raises GPU utilization without touching model quality at all, so it is pure win before any quality tradeoff.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Jumping straight to aggressive quantization: it cuts cost but risks quality regression, and you have not measured whether utilization is the real problem.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Buying more GPUs: scales cost linearly and leaves the utilization problem unsolved.</li><li><span class="pq-opt-right"><strong>C, right:</strong></span> Continuous batching and paged KV cache are quality-neutral: they fix idle-GPU waste first. Only then do you price quantization and distillation against measured quality.</li><li><span class="pq-opt-wrong"><strong>D, wrong: distill to a smaller model first. A good lever, but a quality tradeoff that needs evals. It comes after the free wins.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q4.</strong> Should this risk model score in real time or in batch? The world drifts hourly and each real-time score costs 10x a batch score.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> Decide from the value of freshness, not from habit. Measure how fast the risk signal decays. If the cost of acting on stale scores (missed fraud in the drift window) exceeds the 10x scoring cost, go real time. Otherwise batch.</p>
-<p>The strong answer proposes the hybrid the labs teach. A cheap real-time heuristic for spike events plus a full batch rescore on a schedule. Name the freshness SLO each path must meet. State the tradeoff explicitly: dollars per decision against expected loss from staleness.</p><p><strong>Trap.</strong> Picking one side without pricing freshness. "Real-time is better" without the cost math is the most common failure in this question.</p></div></div><div class="takeaway"><h4>Key takeaways</h4><ul><li>Lead every design answer with requirements, metrics, and the latency budget; the model comes later.</li><li>Skew, leakage, and freshness are the three production diagnoses to reach for first.</li><li>Fix quality-neutral serving waste (batching, KV cache) before quality-trading optimizations (quantization, distillation).</li><li>Close every answer with two explicit tradeoffs; that is the graded deliverable.</li></ul></div><div class="ob-board"><h4>Design prompt: final checks</h4><ul><li>Explain the 70B memory math from memory: 16 bytes per param, about 1.1 TB, therefore sharding.</li><li>What is the parity check, and which lab measures it? (Offline versus online feature equality; week 14, day 4.)</li></ul></div><p class="lab-meta">Apply this chapter in: <a href="#lab-w13-d1-ml-system-design-fundamentals">ML System Design Fundamentals</a>; <a href="#lab-w14-d1-design-real-time-recommendation-system">Design Real-Time Recommendation System</a>.</p>
+<div id="lab-w15-d1-llms-in-production-aside02" data-kind="aside" class="ob-board"><h4>Design prompt: the design warm-ups</h4><ul><li>Design a fraud detector for card-not-present transactions. Start with SLOs and metrics, not the model.</li><li>Your recommender retrieval must return 1,000 candidates in under 50 ms. What is your first architectural decision, and what does it cost you?</li><li>Offline AUC is 0.95, online revenue is flat. Three checks, in order.</li><li>Real-time scoring or batch scoring for a risk model where the world drifts hourly? Defend with the freshness-versus-cost tradeoff.</li></ul></div><div id="lab-w15-d1-llms-in-production-pq01" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q1.</strong> A feed recommender must return about 1,000 candidates in under 50 ms before ranking. Which retrieval choice fits?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Two-tower embeddings with an ANN index give sub-50 ms retrieval over hundreds of millions of items; the heavy ranker only sees the 1,000 survivors.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Running the full ranking model over the whole catalog: the latency budget dies here. Ranking is expensive per item; that is why retrieval exists.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> Two-tower retrieval plus ANN search is the standard first stage: cheap per-item scoring, millisecond lookup, and the ranker only touches the top slice.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Batch precomputation alone: fine for static catalogs, but it cannot react to fresh user behavior inside the 50 ms window.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> A larger ranking model: improves quality per item but makes the latency problem worse, not better.</li></ul></div></div><div id="lab-w15-d1-llms-in-production-pq02" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q2.</strong> Your team trained on features from the offline store and serves from the online store. Offline metrics look great; production degrades over two weeks. Walk through the diagnosis.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> First, run the parity check: recompute the offline features for recent entities at their label timestamps and compare against what the online store served. A mismatch is train-serve skew: same feature names, different computation. Second, audit for leakage: check that no offline feature aggregated events after the label timestamp. Third, check feature freshness SLOs: a stale online feature (for example, a daily aggregate that stopped updating) degrades the model silently. Fix the definitions or the pipeline, backfill, and add the parity check as a recurring monitor.</p><p><strong>Trap.</strong> Blaming the model or retraining on more data. Retraining on skewed or leaky features reproduces the problem with fresh timestamps.</p></div></div><div id="lab-w15-d1-llms-in-production-pq03" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q3.</strong> Your LLM serving cost is too high and quality must not regress. Which lever do you pull first?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> Continuous batching plus a paged KV cache raises GPU utilization without touching model quality at all, so it is pure win before any quality tradeoff.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Jumping straight to aggressive quantization: it cuts cost but risks quality regression, and you have not measured whether utilization is the real problem.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Buying more GPUs: scales cost linearly and leaves the utilization problem unsolved.</li><li><span class="pq-opt-right"><strong>C, right:</strong></span> Continuous batching and paged KV cache are quality-neutral: they fix idle-GPU waste first. Only then do you price quantization and distillation against measured quality.</li><li><span class="pq-opt-wrong"><strong>D, wrong: distill to a smaller model first. A good lever, but a quality tradeoff that needs evals. It comes after the free wins.</li></ul></div></div><div id="lab-w15-d1-llms-in-production-pq04" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q4.</strong> Should this risk model score in real time or in batch? The world drifts hourly and each real-time score costs 10x a batch score.</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> Decide from the value of freshness, not from habit. Measure how fast the risk signal decays. If the cost of acting on stale scores (missed fraud in the drift window) exceeds the 10x scoring cost, go real time. Otherwise batch.</p>
+<p>The strong answer proposes the hybrid the labs teach. A cheap real-time heuristic for spike events plus a full batch rescore on a schedule. Name the freshness SLO each path must meet. State the tradeoff explicitly: dollars per decision against expected loss from staleness.</p><p><strong>Trap.</strong> Picking one side without pricing freshness. "Real-time is better" without the cost math is the most common failure in this question.</p></div></div><div id="lab-w15-d1-llms-in-production-takeaway-2" data-kind="summary" class="takeaway"><h4>Key takeaways</h4><ul><li>Lead every design answer with requirements, metrics, and the latency budget; the model comes later.</li><li>Skew, leakage, and freshness are the three production diagnoses to reach for first.</li><li>Fix quality-neutral serving waste (batching, KV cache) before quality-trading optimizations (quantization, distillation).</li><li>Close every answer with two explicit tradeoffs; that is the graded deliverable.</li></ul></div><div id="lab-w15-d1-llms-in-production-aside03" data-kind="aside" class="ob-board"><h4>Design prompt: final checks</h4><ul><li>Explain the 70B memory math from memory: 16 bytes per param, about 1.1 TB, therefore sharding.</li><li>What is the parity check, and which lab measures it? (Offline versus online feature equality; week 14, day 4.)</li></ul></div><p id="lab-w15-d1-llms-in-production-p19" data-kind="prose" class="lab-meta">Apply this chapter in: <a href="#lab-w13-d1-ml-system-design-fundamentals">ML System Design Fundamentals</a>; <a href="#lab-w14-d1-design-real-time-recommendation-system">Design Real-Time Recommendation System</a>.</p>
 <nav class="ds-volume-nav" aria-label="Volume navigation"><a class="ds-prev" href="25-ai-lab-mlops-systems.html"><span>&uarr; Previous volume</span>Volume 25: MLOps and Systems</a><a class="ds-next" href="27-ai-lab-llm-agentic.html"><span>Next volume &darr;</span>Volume 27: LLM and Agentic AI</a></nav>
 <div class="provenance"><strong>Last verified: October 2026.</strong> Live-verified: AI Lab site scrape (labs, tasks, solutions). <span class="uv">UNVERIFIED:</span> none.</div>
 <footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html">AI Lab Atlas: 15-Week Lab Map</a></li><li><a href="17-ai-lab-python-data.html">Python and Data Tools</a></li><li><a href="18-ai-lab-math-for-ml.html">Math for ML (AI Lab)</a></li><li><a href="19-ai-lab-classical-ml.html">Classical ML</a></li><li><a href="20-ai-lab-evaluation-debugging.html">Evaluation and Debugging</a></li><li><a href="21-ai-lab-deep-learning.html">Deep Learning (AI Lab)</a></li><li><a href="22-ai-lab-cv-nlp-basics.html">CV and NLP Basics</a></li><li><a href="23-ai-lab-transformers.html">Transformers</a></li><li><a href="24-ai-lab-rag-retrieval.html">RAG and Retrieval</a></li><li><a href="25-ai-lab-mlops-systems.html">MLOps and Systems</a></li><li><a href="26-ai-lab-system-design.html" class="foot-current">System Design (AI Lab)</a></li><li><a href="27-ai-lab-llm-agentic.html">LLM and Agentic AI</a></li><li><a href="28-ai-lab-interview-clearance.html">Interview Clearance</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav></footer>

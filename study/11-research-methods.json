@@ -1,0 +1,526 @@
+{
+ "schemaVersion": 1,
+ "itemId": "11-research-methods",
+ "itemKind": "lesson",
+ "revision": "70c6616d56ca567a870bbc44e8d008c7de72b0881f0aeeb3a1ab0f28f17d9991",
+ "sections": [
+  {
+   "anchor": "v11-ch1",
+   "title": "1. What a research question is",
+   "minutes": 5,
+   "endAnchor": "v11-ch1-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch1-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch1-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "research question",
+     "definition": "A precise statement of what you want to find out; an experiment can answer it.",
+     "anchor": "v11-ch1-p01"
+    },
+    {
+     "term": "phenomenon",
+     "definition": "What you are studying; one of four parts with comparison, measure, scope.",
+     "anchor": "v11-ch1-p03"
+    },
+    {
+     "term": "measure",
+     "definition": "The part most questions skip: how will you tell the difference.",
+     "anchor": "v11-ch1-p03"
+    },
+    {
+     "term": "scope",
+     "definition": "The boundary of your claim; state it now.",
+     "anchor": "v11-ch1-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch1-r1",
+     "question": "What are the four parts of a good research question?",
+     "answer": "Phenomenon, comparison, measure, scope.",
+     "anchor": "v11-ch1-p03"
+    },
+    {
+     "id": "v11-ch1-r2",
+     "question": "Why does 'Make transformers better' fail?",
+     "answer": "It has none of the four parts.",
+     "anchor": "v11-ch1-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch2",
+   "title": "2. How to read a paper: the 3-pass method",
+   "minutes": 6,
+   "endAnchor": "v11-ch2-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch2-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v11-ch2-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch2-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "3-pass method",
+     "definition": "How to read a paper before running a single experiment.",
+     "anchor": "v11-ch2-fig01"
+    },
+    {
+     "term": "practical",
+     "definition": "The next problem after the question: absorb what others found.",
+     "anchor": "v11-ch2-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch2-r1",
+     "question": "Why read before experimenting?",
+     "answer": "To absorb what others found; skipping means repeating work.",
+     "anchor": "v11-ch2-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch3",
+   "title": "3. Literature review: mapping the field before you contribute",
+   "minutes": 5,
+   "endAnchor": "v11-ch3-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch3-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch3-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "literature review",
+     "definition": "A systematic map of prior work; find the blank space your question fills.",
+     "anchor": "v11-ch3-p03"
+    },
+    {
+     "term": "gap",
+     "definition": "The one-paragraph gap your work will fill.",
+     "anchor": "v11-ch3-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch3-r1",
+     "question": "What are the two scale questions?",
+     "answer": "How to turn fifty papers into a map, and how to find the blank space.",
+     "anchor": "v11-ch3-p07"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch4",
+   "title": "4. Hypotheses and the experiment loop",
+   "minutes": 5,
+   "endAnchor": "v11-ch4-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch4-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch4-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "hypothesis",
+     "definition": "A falsifiable prediction: 'If X, then Y, because Z.'",
+     "anchor": "v11-ch4-p01"
+    },
+    {
+     "term": "null hypothesis",
+     "definition": "The rival: the boring alternative that the change does nothing.",
+     "anchor": "v11-ch4-p04"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch4-r1",
+     "question": "Why state the hypothesis before touching data?",
+     "answer": "So the experiment can surprise you instead of confirming what you hoped.",
+     "anchor": "v11-ch4-p01"
+    },
+    {
+     "id": "v11-ch4-r2",
+     "question": "Why design to disprove the null?",
+     "answer": "Not to confirm your belief; without the mechanism a correct prediction is luck.",
+     "anchor": "v11-ch4-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch5",
+   "title": "5. Designing experiments: ablations that prove something",
+   "minutes": 5,
+   "endAnchor": "v11-ch5-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch5-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v11-ch5-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch5-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "ablation",
+     "definition": "One row per component, one edit per row; change two things and you prove nothing.",
+     "anchor": "v11-ch5-p02"
+    },
+    {
+     "term": "dumb baseline",
+     "definition": "Asks whether the sophistication was needed at all.",
+     "anchor": "v11-ch5-p04"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch5-r1",
+     "question": "What makes a good ablation table?",
+     "answer": "One row per component, one edit per row; the full method is the reference row to beat.",
+     "anchor": "v11-ch5-p04"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch6",
+   "title": "6. Negative results and confounders",
+   "minutes": 5,
+   "endAnchor": "v11-ch6-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch6-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v11-ch6-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch6-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "confounders",
+     "definition": "Compute, tuning, data, seeds; interrogate every win with the boring explanation first.",
+     "anchor": "v11-ch6-fig01"
+    },
+    {
+     "term": "negative results",
+     "definition": "What to do with ideas that fail.",
+     "anchor": "v11-ch6-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch6-r1",
+     "question": "What is the confounder pattern?",
+     "answer": "Hold the confounder fixed and re-run; a result surviving all four is worth believing.",
+     "anchor": "v11-ch6-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch7",
+   "title": "7. Statistics lab: what \"significant\" really means",
+   "minutes": 7,
+   "endAnchor": "v11-ch7-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch7-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v11-ch7-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch7-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "p-value",
+     "definition": "Probability of seeing this difference if nothing were really there.",
+     "anchor": "v11-ch7-p01"
+    },
+    {
+     "term": "confidence interval",
+     "definition": "The honest range around your measurement.",
+     "anchor": "v11-ch7-p01"
+    },
+    {
+     "term": "paired bootstrap",
+     "definition": "Makes small-sample ML comparisons honest.",
+     "anchor": "v11-ch7-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch7-r1",
+     "question": "What does 'significant' mean?",
+     "answer": "Unlikely to have arisen by chance alone; nothing more.",
+     "anchor": "v11-ch7-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch8",
+   "title": "8. Writing results people trust",
+   "minutes": 5,
+   "endAnchor": "v11-ch8-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch8-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v11-ch8-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch8-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "four parts",
+     "definition": "Exact claim, method, full evidence, interpretation labeled as yours.",
+     "anchor": "v11-ch8-takeaway"
+    },
+    {
+     "term": "exact claim",
+     "definition": "Carries numbers and conditions.",
+     "anchor": "v11-ch8-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch8-r1",
+     "question": "What makes a results writeup trusted?",
+     "answer": "Four load-bearing parts including the negative results found along the way.",
+     "anchor": "v11-ch8-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch9",
+   "title": "9. Reproducibility and preregistration",
+   "minutes": 5,
+   "endAnchor": "v11-ch9-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch9-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v11-ch9-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch9-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "preregistration",
+     "definition": "Fixes the story before the data: hypothesis, metric, seeds, analysis plan.",
+     "anchor": "v11-ch9-fig01"
+    },
+    {
+     "term": "reproducibility",
+     "definition": "Layers: re-runnable, replicable, robust, preregistered.",
+     "anchor": "v11-ch9-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch9-r1",
+     "question": "What are the two remaining problems?",
+     "answer": "Will it hold in six months, and was the story fixed before the data arrived.",
+     "anchor": "v11-ch9-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch10",
+   "title": "10. Research taste: choosing what to work on",
+   "minutes": 5,
+   "endAnchor": "v11-ch10-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch10-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v11-ch10-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v11-ch10-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "research taste",
+     "definition": "Three filters: importance, tractability, neglect.",
+     "anchor": "v11-ch10-fig01"
+    },
+    {
+     "term": "neglect",
+     "definition": "Is nobody doing this from a real barrier or just inattention.",
+     "anchor": "v11-ch10-p04"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch10-r1",
+     "question": "What are the three filters?",
+     "answer": "Importance, tractability, neglect; fail ideas fast, in days not months.",
+     "anchor": "v11-ch10-p10"
+    }
+   ]
+  },
+  {
+   "anchor": "v11-ch11",
+   "title": "11. Capstone: replicate a result on your own compute",
+   "minutes": 5,
+   "endAnchor": "v11-ch11-end",
+   "blocks": [
+    {
+     "anchor": "v11-ch11-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v11-ch11-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "replicate",
+     "definition": "A published result on your own compute, end to end.",
+     "anchor": "v11-ch11-fig01"
+    },
+    {
+     "term": "toolkit",
+     "definition": "Questions, reading, hypotheses, ablations, statistics, writeups, reproducibility.",
+     "anchor": "v11-ch11-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v11-ch11-r1",
+     "question": "What does the capstone answer?",
+     "answer": "Whether you can use the toolkit: replicate a result on your own compute.",
+     "anchor": "v11-ch11-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "11-research-methods-watch-deeper",
+   "title": "11-research-methods-watch-deeper",
+   "minutes": 1,
+   "endAnchor": "11-research-methods-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "11-research-methods-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "11-research-methods-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Hamming",
+     "definition": "'You and Your Research': choosing problems worth solving; companion to chapter 10.",
+     "anchor": "11-research-methods-watch-deeper-fig01"
+    },
+    {
+     "term": "Heilmeier Catechism",
+     "definition": "Eight questions every research proposal should answer.",
+     "anchor": "11-research-methods-watch-deeper-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "11-research-methods-watch-deeper-r1",
+     "question": "Which talk companions chapter 8?",
+     "answer": "Simon Peyton Jones on structuring a paper so readers trust it.",
+     "anchor": "11-research-methods-watch-deeper-fig02"
+    }
+   ]
+  }
+ ]
+}

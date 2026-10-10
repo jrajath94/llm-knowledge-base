@@ -1,0 +1,228 @@
+{
+ "schemaVersion": 1,
+ "itemId": "24-ai-lab-rag-retrieval",
+ "itemKind": "lesson",
+ "revision": "4af532c178d43c0261a2b97dd2459a3450e85e8a09cd2d8855fd19e7a9be81c8",
+ "sections": [
+  {
+   "anchor": "lab-w11-d1-embeddings-for-retrieval",
+   "title": "Embeddings for Retrieval Hard",
+   "minutes": 4,
+   "endAnchor": "lab-w11-d1-embeddings-for-retrieval-end",
+   "blocks": [
+    {
+     "anchor": "lab-w11-d1-embeddings-for-retrieval-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Recall@k",
+     "definition": "Retrieval metric; with MRR, the two numbers every later lab judges itself by.",
+     "anchor": "lab-w11-d1-embeddings-for-retrieval-p02"
+    },
+    {
+     "term": "MRR",
+     "definition": "Mean reciprocal rank; the second evaluation number.",
+     "anchor": "lab-w11-d1-embeddings-for-retrieval-p02"
+    },
+    {
+     "term": "TF-IDF retrieval",
+     "definition": "A sparse baseline built on the same data as the dense baseline.",
+     "anchor": "lab-w11-d1-embeddings-for-retrieval-p02"
+    },
+    {
+     "term": "dense baseline",
+     "definition": "Co-occurrence plus SVD word vectors.",
+     "anchor": "lab-w11-d1-embeddings-for-retrieval-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w11-d1-embeddings-for-retrieval-r1",
+     "question": "What does retrieval start with in this lab?",
+     "answer": "Measurement. You build a corpus with labeled queries, then two baselines: TF-IDF and dense from co-occurrence plus SVD.",
+     "anchor": "lab-w11-d1-embeddings-for-retrieval-p02"
+    },
+    {
+     "id": "lab-w11-d1-embeddings-for-retrieval-r2",
+     "question": "What is the deliverable of this lab?",
+     "answer": "The harness: every later lab in the week judges itself with Recall@k and MRR.",
+     "anchor": "lab-w11-d1-embeddings-for-retrieval-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w11-d2-vector-databases-faiss",
+   "title": "Vector Databases &amp; FAISS (ANN Indexing) Hard",
+   "minutes": 5,
+   "endAnchor": "lab-w11-d2-vector-databases-faiss-end",
+   "blocks": [
+    {
+     "anchor": "lab-w11-d2-vector-databases-faiss-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "brute-force cosine top-k",
+     "definition": "The exact baseline kept as ground truth.",
+     "anchor": "lab-w11-d2-vector-databases-faiss-p02"
+    },
+    {
+     "term": "IVF index",
+     "definition": "Inverted file index from a k-means coarse quantizer; queried with n_probe.",
+     "anchor": "lab-w11-d2-vector-databases-faiss-p02"
+    },
+    {
+     "term": "n_probe",
+     "definition": "How many coarse clusters the IVF query visits.",
+     "anchor": "lab-w11-d2-vector-databases-faiss-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w11-d2-vector-databases-faiss-r1",
+     "question": "What is the real lesson of this lab?",
+     "answer": "Experimental discipline: approximation is only respectable when you can quote the recall you traded for the speed.",
+     "anchor": "lab-w11-d2-vector-databases-faiss-p02"
+    },
+    {
+     "id": "lab-w11-d2-vector-databases-faiss-r2",
+     "question": "What do you build before the IVF index?",
+     "answer": "Brute-force cosine top-k, kept as ground truth for honest measurement.",
+     "anchor": "lab-w11-d2-vector-databases-faiss-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w11-d3-rag-architecture-tradeoffs",
+   "title": "RAG Architecture Lab Hard",
+   "minutes": 4,
+   "endAnchor": "lab-w11-d3-rag-architecture-tradeoffs-end",
+   "blocks": [
+    {
+     "anchor": "lab-w11-d3-rag-architecture-tradeoffs-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "chunking",
+     "definition": "Documents split with overlap; embedded with TF-IDF.",
+     "anchor": "lab-w11-d3-rag-architecture-tradeoffs-p06"
+    },
+    {
+     "term": "groundedness",
+     "definition": "Whether generation stays cited to retrieved context; scored after mock generation.",
+     "anchor": "lab-w11-d3-rag-architecture-tradeoffs-p02"
+    },
+    {
+     "term": "token budget",
+     "definition": "Context assembled under a budget while keeping citations.",
+     "anchor": "lab-w11-d3-rag-architecture-tradeoffs-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w11-d3-rag-architecture-tradeoffs-r1",
+     "question": "Where do most real RAG systems silently fail?",
+     "answer": "In the assembly step: the budget triage, dropping lowest-ranked chunks first.",
+     "anchor": "lab-w11-d3-rag-architecture-tradeoffs-p02"
+    },
+    {
+     "id": "lab-w11-d3-rag-architecture-tradeoffs-r2",
+     "question": "What is the full loop in this lab?",
+     "answer": "Chunk with overlap, embed, retrieve with relevance plus freshness, assemble under token budget with citations, mock-generate, score groundedness.",
+     "anchor": "lab-w11-d3-rag-architecture-tradeoffs-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w11-d4-rag-lab",
+   "title": "RAG Tradeoff Lab Hard",
+   "minutes": 6,
+   "endAnchor": "lab-w11-d4-rag-lab-end",
+   "blocks": [
+    {
+     "anchor": "lab-w11-d4-rag-lab-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "tradeoff harness",
+     "definition": "Every stage becomes a knob with a measurement: chunking, retrieval, budgets, groundedness.",
+     "anchor": "lab-w11-d4-rag-lab-p07"
+    },
+    {
+     "term": "freshness",
+     "definition": "Retrieval scored on relevance versus freshness versus trust.",
+     "anchor": "lab-w11-d4-rag-lab-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w11-d4-rag-lab-r1",
+     "question": "What should you be able to answer after this lab?",
+     "answer": "'What happens if we double the chunk size' with a curve, not an opinion.",
+     "anchor": "lab-w11-d4-rag-lab-p02"
+    },
+    {
+     "id": "lab-w11-d4-rag-lab-r2",
+     "question": "What can you diagnose after this lab?",
+     "answer": "RAG failures, by separating chunking, retrieval, freshness, context packing, and grounded generation effects.",
+     "anchor": "lab-w11-d4-rag-lab-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w11-d5-prompt-engineering-essentials",
+   "title": "Prompt Engineering Essentials Hard",
+   "minutes": 4,
+   "endAnchor": "lab-w11-d5-prompt-engineering-essentials-end",
+   "blocks": [
+    {
+     "anchor": "lab-w11-d5-prompt-engineering-essentials-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "structured output",
+     "definition": "Added to the baseline prompt with validation.",
+     "anchor": "lab-w11-d5-prompt-engineering-essentials-p02"
+    },
+    {
+     "term": "anti-injection rules",
+     "definition": "Hardening alongside schema and allowed labels.",
+     "anchor": "lab-w11-d5-prompt-engineering-essentials-p02"
+    },
+    {
+     "term": "evaluation harness",
+     "definition": "Built for accuracy and format compliance.",
+     "anchor": "lab-w11-d5-prompt-engineering-essentials-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w11-d5-prompt-engineering-essentials-r1",
+     "question": "What is the habit to keep from this lab?",
+     "answer": "No prompt change ships without the two numbers (accuracy and format compliance) moving the right way.",
+     "anchor": "lab-w11-d5-prompt-engineering-essentials-p03"
+    },
+    {
+     "id": "lab-w11-d5-prompt-engineering-essentials-r2",
+     "question": "What is the engineering sequence?",
+     "answer": "Baseline prompt, record failures, structured output with validation, harden with schema and anti-injection, evaluation harness, hidden-reasoning variant.",
+     "anchor": "lab-w11-d5-prompt-engineering-essentials-p02"
+    }
+   ]
+  }
+ ]
+}

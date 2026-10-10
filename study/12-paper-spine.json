@@ -1,0 +1,741 @@
+{
+ "schemaVersion": 1,
+ "itemId": "12-paper-spine",
+ "itemKind": "lesson",
+ "revision": "8882a2d9867ece622b26b99e6340ec5f542630d23d72b7a47d838da144d6596c",
+ "sections": [
+  {
+   "anchor": "how-to-use",
+   "title": "How to use this volume",
+   "minutes": 3,
+   "endAnchor": "how-to-use-end",
+   "blocks": [
+    {
+     "anchor": "how-to-use-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "how-to-use-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "3-pass reading method",
+     "definition": "Shape, then method and results, then a virtual reimplementation.",
+     "anchor": "how-to-use-p01"
+    },
+    {
+     "term": "fourteen papers",
+     "definition": "Read in the order listed; each one builds on the last.",
+     "anchor": "how-to-use-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "how-to-use-r1",
+     "question": "What does each chapter cover?",
+     "answer": "The problem, the key idea from zero, the core math with real numbers, why it mattered, what came next.",
+     "anchor": "how-to-use-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "attention-2017",
+   "title": "Paper 1: Attention Is All You Need (2017)",
+   "minutes": 11,
+   "endAnchor": "attention-2017-end",
+   "blocks": [
+    {
+     "anchor": "attention-2017-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "attention-2017-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Attention Is All You Need",
+     "definition": "Vaswani et al., NeurIPS 2017; the root of the spine.",
+     "anchor": "attention-2017-fig03"
+    },
+    {
+     "term": "Vaswani et al.",
+     "definition": "NeurIPS 2017; Google Brain, Toronto.",
+     "anchor": "attention-2017-fig02"
+    },
+    {
+     "term": "recurrent",
+     "definition": "What sequence models were before 2017: sequential, hard to parallelize.",
+     "anchor": "attention-2017-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "attention-2017-r1",
+     "question": "Why is this the root?",
+     "answer": "It builds on nothing earlier in the volume; Volume 4 taught the transformer mechanically.",
+     "anchor": "attention-2017-aside01"
+    },
+    {
+     "id": "attention-2017-r2",
+     "question": "What to read on pass 2?",
+     "answer": "Section 3 (model architecture) and Section 5 (experiments, Table 2).",
+     "anchor": "attention-2017-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "rope-2021",
+   "title": "Paper 2: RoFormer, Rotary Position Embedding (2021)",
+   "minutes": 8,
+   "endAnchor": "rope-2021-end",
+   "blocks": [
+    {
+     "anchor": "rope-2021-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "rope-2021-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "RoFormer",
+     "definition": "Su et al., 2021; rotary position embedding.",
+     "anchor": "rope-2021-fig01"
+    },
+    {
+     "term": "long-context",
+     "definition": "The literature RoPE tuning created.",
+     "anchor": "rope-2021-p12"
+    }
+   ],
+   "recall": [
+    {
+     "id": "rope-2021-r1",
+     "question": "What came after RoPE?",
+     "answer": "ALiBi, position interpolation, NTK-aware scaling, YaRN, 128k-context models.",
+     "anchor": "rope-2021-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "flash-2022",
+   "title": "Paper 3: FlashAttention, Fast and Memory-Efficient Exact Attention with IO-Awareness (2022)",
+   "minutes": 9,
+   "endAnchor": "flash-2022-end",
+   "blocks": [
+    {
+     "anchor": "flash-2022-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "flash-2022-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "FlashAttention",
+     "definition": "Dao et al., 2022; fast, memory-efficient, exact attention with IO-awareness.",
+     "anchor": "flash-2022-fig01"
+    },
+    {
+     "term": "IO-aware",
+     "definition": "Attention as a design discipline.",
+     "anchor": "flash-2022-p12"
+    }
+   ],
+   "recall": [
+    {
+     "id": "flash-2022-r1",
+     "question": "What followed FlashAttention?",
+     "answer": "FA-2 and 3, FlashDecoding, FlexAttention, RingAttention for million-token context.",
+     "anchor": "flash-2022-aside05"
+    }
+   ]
+  },
+  {
+   "anchor": "gpt2-2019",
+   "title": "Paper 4: GPT-2, Language Models are Unsupervised Multitask Learners (2019)",
+   "minutes": 7,
+   "endAnchor": "gpt2-2019-end",
+   "blocks": [
+    {
+     "anchor": "gpt2-2019-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "gpt2-2019-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "GPT-2",
+     "definition": "Radford et al., OpenAI, 2019; language models are unsupervised multitask learners.",
+     "anchor": "gpt2-2019-fig01"
+    },
+    {
+     "term": "never published",
+     "definition": "The paper; the era it ended.",
+     "anchor": "gpt2-2019-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "gpt2-2019-r1",
+     "question": "What era ended after GPT-2?",
+     "answer": "The 'spicy autocomplete' era; T5, GPT-3, scaling laws, Chinchilla, LLaMA followed.",
+     "anchor": "gpt2-2019-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "gpt3-2020",
+   "title": "Paper 5: GPT-3, Language Models are Few-Shot Learners (2020)",
+   "minutes": 8,
+   "endAnchor": "gpt3-2020-end",
+   "blocks": [
+    {
+     "anchor": "gpt3-2020-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "gpt3-2020-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "GPT-3",
+     "definition": "Brown et al., NeurIPS 2020; language models are few-shot learners.",
+     "anchor": "gpt3-2020-fig01"
+    },
+    {
+     "term": "31 authors",
+     "definition": "OpenAI; the three settings in Section 2.",
+     "anchor": "gpt3-2020-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "gpt3-2020-r1",
+     "question": "What did GPT-3 make real?",
+     "answer": "Few-shot learning; prompting works, then chain-of-thought, InstructGPT, RLHF.",
+     "anchor": "gpt3-2020-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "kaplan-2020",
+   "title": "Paper 6: Scaling Laws for Neural Language Models, Kaplan et al. (2020)",
+   "minutes": 9,
+   "endAnchor": "kaplan-2020-end",
+   "blocks": [
+    {
+     "anchor": "kaplan-2020-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "kaplan-2020-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Scaling Laws",
+     "definition": "Kaplan et al., OpenAI, 2020; how loss scales with compute, data, size.",
+     "anchor": "kaplan-2020-fig01"
+    },
+    {
+     "term": "arXiv:2001.08361",
+     "definition": "The paper’s identifier.",
+     "anchor": "kaplan-2020-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "kaplan-2020-r1",
+     "question": "Who corrected Kaplan's prescription?",
+     "answer": "Chinchilla; the 0.73/0.27 split.",
+     "anchor": "kaplan-2020-p05"
+    }
+   ]
+  },
+  {
+   "anchor": "chinchilla-2022",
+   "title": "Paper 7: Chinchilla, Training Compute-Optimal Large Language Models (2022)",
+   "minutes": 8,
+   "endAnchor": "chinchilla-2022-end",
+   "blocks": [
+    {
+     "anchor": "chinchilla-2022-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "chinchilla-2022-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Chinchilla",
+     "definition": "Hoffmann et al., DeepMind, 2022; training compute-optimal LLMs; the 70B model.",
+     "anchor": "chinchilla-2022-fig01"
+    },
+    {
+     "term": "0.73/0.27",
+     "definition": "The split Chinchilla corrected.",
+     "anchor": "chinchilla-2022-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "chinchilla-2022-r1",
+     "question": "What did LLaMA 13B prove?",
+     "answer": "On 1T tokens it beats 175B GPT-3; small models trained long.",
+     "anchor": "chinchilla-2022-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "instructgpt-2022",
+   "title": "Paper 8: InstructGPT, Training Language Models to Follow Instructions with Human Feedback (2022)",
+   "minutes": 8,
+   "endAnchor": "instructgpt-2022-end",
+   "blocks": [
+    {
+     "anchor": "instructgpt-2022-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "instructgpt-2022-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "InstructGPT",
+     "definition": "Ouyang et al., NeurIPS 2022; training models to follow instructions with human feedback.",
+     "anchor": "instructgpt-2022-fig01"
+    },
+    {
+     "term": "RLHF",
+     "definition": "Reinforcement learning from human feedback.",
+     "anchor": "instructgpt-2022-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "instructgpt-2022-r1",
+     "question": "What came after InstructGPT?",
+     "answer": "ChatGPT, Constitutional AI, DPO, RLAIF, DeepSeek-R1, reasoning models.",
+     "anchor": "instructgpt-2022-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "cai-2022",
+   "title": "Paper 9: Constitutional AI, Harmlessness from AI Feedback (2022)",
+   "minutes": 8,
+   "endAnchor": "cai-2022-end",
+   "blocks": [
+    {
+     "anchor": "cai-2022-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "cai-2022-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Constitutional AI",
+     "definition": "Bai et al., Anthropic, 2022; harmlessness from AI feedback.",
+     "anchor": "cai-2022-fig01"
+    },
+    {
+     "term": "principles",
+     "definition": "Instead of labels.",
+     "anchor": "cai-2022-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "cai-2022-r1",
+     "question": "What lineage followed?",
+     "answer": "Claude ships it; collective CAI, deliberative alignment, interpretability.",
+     "anchor": "cai-2022-p13"
+    }
+   ]
+  },
+  {
+   "anchor": "dpo-2023",
+   "title": "Paper 10: Direct Preference Optimization (2023)",
+   "minutes": 8,
+   "endAnchor": "dpo-2023-end",
+   "blocks": [
+    {
+     "anchor": "dpo-2023-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "dpo-2023-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Direct Preference Optimization",
+     "definition": "Rafailov et al., NeurIPS 2023; the model is secretly a reward model.",
+     "anchor": "dpo-2023-fig01"
+    },
+    {
+     "term": "arXiv:2305.18290",
+     "definition": "The paper’s identifier.",
+     "anchor": "dpo-2023-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "dpo-2023-r1",
+     "question": "What variants followed DPO?",
+     "answer": "IPO, KTO, ORPO, online DPO, RLVR, reward-hacking studies.",
+     "anchor": "dpo-2023-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "llama-2023",
+   "title": "Paper 11: LLaMA, Open and Efficient Foundation Language Models (2023)",
+   "minutes": 8,
+   "endAnchor": "llama-2023-end",
+   "blocks": [
+    {
+     "anchor": "llama-2023-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "llama-2023-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "LLaMA",
+     "definition": "Touvron et al., Meta AI, 2023; open and efficient; 7B to 65B.",
+     "anchor": "llama-2023-fig01"
+    },
+    {
+     "term": "arXiv:2302.13971",
+     "definition": "The paper’s identifier.",
+     "anchor": "llama-2023-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "llama-2023-r1",
+     "question": "What did the open ecosystem do?",
+     "answer": "Alpaca, Vicuna, LoRA/QLoRA, LLaMA 2, Mistral and Mixtral, LLaMA 3, open DeepSeek.",
+     "anchor": "llama-2023-p12"
+    }
+   ]
+  },
+  {
+   "anchor": "moe-mixtral",
+   "title": "Paper 12: Mixtral of Experts, Sparse Mixture of Experts (2024)",
+   "minutes": 8,
+   "endAnchor": "moe-mixtral-end",
+   "blocks": [
+    {
+     "anchor": "moe-mixtral-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "moe-mixtral-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Mixtral of Experts",
+     "definition": "Jiang et al., Mistral AI, 2024; sparse mixture of experts.",
+     "anchor": "moe-mixtral-fig01"
+    },
+    {
+     "term": "Shazeer et al.",
+     "definition": "The SMoE idea goes back to 2017's 'Outrageously Large Neural Networks'.",
+     "anchor": "moe-mixtral-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "moe-mixtral-r1",
+     "question": "What followed Mixtral?",
+     "answer": "Switch Transformer, DeepSeekMoE, DeepSeek-V3, Qwen MoE, sparse hardware.",
+     "anchor": "moe-mixtral-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "rag-react",
+   "title": "Paper 13: RAG (2020) and ReAct (2022), Grounding and Agency",
+   "minutes": 9,
+   "endAnchor": "rag-react-end",
+   "blocks": [
+    {
+     "anchor": "rag-react-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "rag-react-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "RAG",
+     "definition": "Lewis et al., 2020; retrieval-augmented generation for knowledge-intensive tasks.",
+     "anchor": "rag-react-fig01"
+    },
+    {
+     "term": "ReAct",
+     "definition": "Yao et al., 2022; synergizing reasoning and acting.",
+     "anchor": "rag-react-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "rag-react-r1",
+     "question": "What is the debate?",
+     "answer": "RAG versus long context; million-token windows compete with retrieval.",
+     "anchor": "rag-react-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "r1-grpo",
+   "title": "Paper 14: DeepSeek-R1 (2025), Reasoning from Verifiable Rewards",
+   "minutes": 8,
+   "endAnchor": "r1-grpo-end",
+   "blocks": [
+    {
+     "anchor": "r1-grpo-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "r1-grpo-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "DeepSeek-R1",
+     "definition": "DeepSeek-AI, 2025; incentivizing reasoning via RL; arXiv:2501.12948.",
+     "anchor": "r1-grpo-fig01"
+    },
+    {
+     "term": "R1-Zero",
+     "definition": "Pure RL in Section 2.",
+     "anchor": "r1-grpo-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "r1-grpo-r1",
+     "question": "What is the new paradigm?",
+     "answer": "Verifiable rewards; the default for math and code.",
+     "anchor": "r1-grpo-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "synthesis",
+   "title": "Synthesis: How the Fourteen Papers Connect",
+   "minutes": 6,
+   "endAnchor": "synthesis-end",
+   "blocks": [
+    {
+     "anchor": "synthesis-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "synthesis-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "four acts",
+     "definition": "Foundation, science of scale, alignment, modern open.",
+     "anchor": "synthesis-p02"
+    },
+    {
+     "term": "single page",
+     "definition": "Redraw the spine from memory.",
+     "anchor": "synthesis-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "synthesis-r1",
+     "question": "What are the four acts?",
+     "answer": "Act 1: papers 1-5 (foundation). Act 2: 6-7 (scale). Act 3: 8-10 (alignment). Act 4: modern open.",
+     "anchor": "synthesis-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "read-next",
+   "title": "What to Read Next",
+   "minutes": 3,
+   "endAnchor": "read-next-end",
+   "blocks": [
+    {
+     "anchor": "read-next-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "read-next-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "follow-on papers",
+     "definition": "Grouped by which spine paper they extend; read with the spine paper in hand.",
+     "anchor": "read-next-fig01"
+    },
+    {
+     "term": "six groups",
+     "definition": "Attention, scaling, alignment, reasoning, agents, efficiency.",
+     "anchor": "read-next-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "read-next-r1",
+     "question": "When were the links checked?",
+     "answer": "2026-09-28.",
+     "anchor": "read-next-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "capstone-lab",
+   "title": "Capstone Lab: Replicate a Scaling Law at Tiny Scale",
+   "minutes": 3,
+   "endAnchor": "capstone-lab-end",
+   "blocks": [
+    {
+     "anchor": "capstone-lab-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "capstone-lab-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "tiny scale",
+     "definition": "Repeat the measurement on a laptop; feel the exponents.",
+     "anchor": "capstone-lab-p01"
+    },
+    {
+     "term": "honesty marker",
+     "definition": "A reconstruction sketched for this volume, not a paper reproduction.",
+     "anchor": "capstone-lab-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "capstone-lab-r1",
+     "question": "Where did Act 2 come from?",
+     "answer": "Measurement, not theory; the power law stops being a slogan.",
+     "anchor": "capstone-lab-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "12-paper-spine-watch-deeper",
+   "title": "12-paper-spine-watch-deeper",
+   "minutes": 2,
+   "endAnchor": "12-paper-spine-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "12-paper-spine-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "12-paper-spine-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "3Blue1Brown",
+     "definition": "Transformers and attention step-by-step; the visual foundation.",
+     "anchor": "12-paper-spine-watch-deeper-fig01"
+    },
+    {
+     "term": "Let's build GPT",
+     "definition": "Building GPT by hand.",
+     "anchor": "12-paper-spine-watch-deeper-fig03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "12-paper-spine-watch-deeper-r1",
+     "question": "Which papers get videos?",
+     "answer": "Papers 1, 4, 5, and 8.",
+     "anchor": "12-paper-spine-watch-deeper-p02"
+    }
+   ]
+  }
+ ]
+}

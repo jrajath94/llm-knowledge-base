@@ -1,0 +1,463 @@
+{
+ "schemaVersion": 1,
+ "itemId": "28-ai-lab-interview-clearance",
+ "itemKind": "lesson",
+ "revision": "2ddbe0f98d3aa82c9de01cd578c0e05e257e26482f8fbe9536ac664a969ec588",
+ "sections": [
+  {
+   "anchor": "how-to-use-this-page",
+   "title": "How to use this page",
+   "minutes": 1,
+   "endAnchor": "how-to-use-this-page-end",
+   "blocks": [
+    {
+     "anchor": "how-to-use-this-page-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "how-to-use-this-page-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "clearance round",
+     "definition": "This page: question classes with worked answers, traps, and preparing labs.",
+     "anchor": "how-to-use-this-page-p01"
+    },
+    {
+     "term": "worked answer",
+     "definition": "Deliverable on a whiteboard for each question.",
+     "anchor": "how-to-use-this-page-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "how-to-use-this-page-r1",
+     "question": "What does each question carry?",
+     "answer": "A worked answer you can deliver on a whiteboard, the trap that catches candidates, and the exact labs and volumes that prepare you.",
+     "anchor": "how-to-use-this-page-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "loop-structures-what-each-company-actually-runs",
+   "title": "Loop structures: what each company actually runs",
+   "minutes": 5,
+   "endAnchor": "loop-structures-what-each-company-actually-runs-end",
+   "blocks": [
+    {
+     "anchor": "loop-structures-what-each-company-actually-runs-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "loop-structures-what-each-company-actually-runs-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "loop-structures-what-each-company-actually-runs-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "eight rounds",
+     "definition": "Coding from scratch, theory and math, systems, paper, behavioral as a pipeline.",
+     "anchor": "loop-structures-what-each-company-actually-runs-fig01"
+    },
+    {
+     "term": "pipeline",
+     "definition": "Read left to right in order; color groups what each round grades.",
+     "anchor": "loop-structures-what-each-company-actually-runs-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "loop-structures-what-each-company-actually-runs-r1",
+     "question": "Why learn the loop structure first?",
+     "answer": "Knowing which round you are in tells you what the interviewer grades; prep follows the same order.",
+     "anchor": "loop-structures-what-each-company-actually-runs-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "round-a-python-ml-coding-from-scratch",
+   "title": "Round (a): Python ML coding from scratch",
+   "minutes": 12,
+   "endAnchor": "round-a-python-ml-coding-from-scratch-end",
+   "blocks": [
+    {
+     "anchor": "round-a-python-ml-coding-from-scratch-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "round-a-python-ml-coding-from-scratch-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "no libraries",
+     "definition": "Implement ML primitives with no libraries and no AI assistance; the code must run.",
+     "anchor": "round-a-python-ml-coding-from-scratch-p01"
+    },
+    {
+     "term": "narration",
+     "definition": "State shapes, state complexity, verify with a quick check.",
+     "anchor": "round-a-python-ml-coding-from-scratch-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "round-a-python-ml-coding-from-scratch-r1",
+     "question": "What do interviewers watch besides the code?",
+     "answer": "The narration: state shapes, state complexity, and verify behavior with a quick check.",
+     "anchor": "round-a-python-ml-coding-from-scratch-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "round-b-ml-theory-and-math",
+   "title": "Round (b): ML theory and math",
+   "minutes": 8,
+   "endAnchor": "round-b-ml-theory-and-math-end",
+   "blocks": [
+    {
+     "anchor": "round-b-ml-theory-and-math-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "round-b-ml-theory-and-math-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "derive on the board",
+     "definition": "State assumptions and say where the proof breaks.",
+     "anchor": "round-b-ml-theory-and-math-p01"
+    },
+    {
+     "term": "Gaussian posterior",
+     "definition": "Gaussian prior times Gaussian likelihood; complete the square.",
+     "anchor": "round-b-ml-theory-and-math-pq01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "round-b-ml-theory-and-math-r1",
+     "question": "What do interviewers probe?",
+     "answer": "Whether you can reason from definitions under time pressure.",
+     "anchor": "round-b-ml-theory-and-math-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "round-c-post-training-deep-dive",
+   "title": "Round (c): post-training deep dive",
+   "minutes": 12,
+   "endAnchor": "round-c-post-training-deep-dive-end",
+   "blocks": [
+    {
+     "anchor": "round-c-post-training-deep-dive-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "post-training-pipeline",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "round-c-post-training-deep-dive-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "KL constraint",
+     "definition": "What the KL leash to the SFT model protects: stops drift.",
+     "anchor": "round-c-post-training-deep-dive-p01"
+    },
+    {
+     "term": "reward hacking",
+     "definition": "How you would catch it; the through-line of every answer.",
+     "anchor": "round-c-post-training-deep-dive-p01"
+    },
+    {
+     "term": "DPO",
+     "definition": "Direct preference optimization alongside PPO, GRPO, RLVR.",
+     "anchor": "round-c-post-training-deep-dive-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "round-c-post-training-deep-dive-r1",
+     "question": "What separates research-engineer candidates here?",
+     "answer": "The through-line: what the objective optimizes, what the KL constraint protects, how you catch reward hacking.",
+     "anchor": "round-c-post-training-deep-dive-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "round-d-distributed-training-and-systems",
+   "title": "Round (d): distributed training and systems",
+   "minutes": 9,
+   "endAnchor": "round-d-distributed-training-and-systems-end",
+   "blocks": [
+    {
+     "anchor": "round-d-distributed-training-and-systems-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "parallelism-composition",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "round-d-distributed-training-and-systems-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "memory math",
+     "definition": "Run it before proposing anything: Adam in mixed precision is about 16 bytes per parameter.",
+     "anchor": "round-d-distributed-training-and-systems-p01"
+    },
+    {
+     "term": "ZeRO",
+     "definition": "Shard the optimizer across nodes; with FSDP, tensor, and pipeline parallelism.",
+     "anchor": "parallelism-composition"
+    }
+   ],
+   "recall": [
+    {
+     "id": "round-d-distributed-training-and-systems-r1",
+     "question": "What do interviewers expect on demand?",
+     "answer": "Numbers: run the memory math first, compose parallelism to fit the hardware.",
+     "anchor": "round-d-distributed-training-and-systems-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "round-e-inference-and-serving",
+   "title": "Round (e): inference and serving",
+   "minutes": 9,
+   "endAnchor": "round-e-inference-and-serving-end",
+   "blocks": [
+    {
+     "anchor": "round-e-inference-and-serving-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "round-e-inference-and-serving-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "prefill",
+     "definition": "Processing the prompt; compute-bound.",
+     "anchor": "round-e-inference-and-serving-p01"
+    },
+    {
+     "term": "decode",
+     "definition": "Generating tokens one by one; memory-bandwidth-bound.",
+     "anchor": "round-e-inference-and-serving-p01"
+    },
+    {
+     "term": "KV cache",
+     "definition": "The real resource in the serving round.",
+     "anchor": "round-e-inference-and-serving-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "round-e-inference-and-serving-r1",
+     "question": "What decides every choice in the serving round?",
+     "answer": "The latency SLOs.",
+     "anchor": "round-e-inference-and-serving-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "round-f-ml-system-design",
+   "title": "Round (f): ML system design",
+   "minutes": 11,
+   "endAnchor": "round-f-ml-system-design-end",
+   "blocks": [
+    {
+     "anchor": "round-f-ml-system-design-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "round-f-ml-system-design-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "tradeoffs three levels deep",
+     "definition": "How interviewers grade every applied design answer.",
+     "anchor": "round-f-ml-system-design-p01"
+    },
+    {
+     "term": "training data pipeline",
+     "definition": "For a 100B-parameter model: crawler, dedup, quality filtering.",
+     "anchor": "round-f-ml-system-design-pq01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "round-f-ml-system-design-r1",
+     "question": "What is a documented failure mode?",
+     "answer": "Name-dropping a technology you cannot defend.",
+     "anchor": "round-f-ml-system-design-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "round-g-paper-discussion",
+   "title": "Round (g): paper discussion",
+   "minutes": 4,
+   "endAnchor": "round-g-paper-discussion-end",
+   "blocks": [
+    {
+     "anchor": "round-g-paper-discussion-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "round-g-paper-discussion-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "research taste",
+     "definition": "Read results skeptically, defend methodology, say what you would do next.",
+     "anchor": "round-g-paper-discussion-p01"
+    },
+    {
+     "term": "defend a paper",
+     "definition": "Present and defend a paper of your choice for a full hour.",
+     "anchor": "round-g-paper-discussion-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "round-g-paper-discussion-r1",
+     "question": "What is a documented rejection cause?",
+     "answer": "Inability to discuss a paper critically.",
+     "anchor": "round-g-paper-discussion-p01"
+    },
+    {
+     "id": "round-g-paper-discussion-r2",
+     "question": "How should you structure the defense?",
+     "answer": "The problem and why it matters, the method in your own words, never the abstract's words.",
+     "anchor": "round-g-paper-discussion-pq01"
+    }
+   ]
+  },
+  {
+   "anchor": "round-h-behavioral",
+   "title": "Round (h): behavioral",
+   "minutes": 9,
+   "endAnchor": "round-h-behavioral-end",
+   "blocks": [
+    {
+     "anchor": "round-h-behavioral-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "round-h-behavioral-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "hard gate",
+     "definition": "The values round is a hard gate at Anthropic.",
+     "anchor": "round-h-behavioral-p01"
+    },
+    {
+     "term": "STAR",
+     "definition": "Memorized STAR is a documented failure at Anthropic; keep answers specific and personal.",
+     "anchor": "round-h-behavioral-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "round-h-behavioral-r1",
+     "question": "How should you prepare behavioral?",
+     "answer": "Like a technical round: stories with technical stakes, what happened, what you chose, what it cost, what you would do differently.",
+     "anchor": "round-h-behavioral-p01"
+    },
+    {
+     "id": "round-h-behavioral-r2",
+     "question": "What covers this round?",
+     "answer": "No AI Lab lab directly; preparation links to Volume 14 and your own history.",
+     "anchor": "round-h-behavioral-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "cross-cutting-signals",
+   "title": "Cross-cutting signals",
+   "minutes": 3,
+   "endAnchor": "cross-cutting-signals-end",
+   "blocks": [
+    {
+     "anchor": "cross-cutting-signals-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "cross-cutting-signals-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "train unaided",
+     "definition": "DeepMind and Anthropic prohibit AI tools in technical rounds.",
+     "anchor": "cross-cutting-signals-p01"
+    },
+    {
+     "term": "progressive-spec",
+     "definition": "Problems that dominate Anthropic and OpenAI coding: requirements added as you go.",
+     "anchor": "cross-cutting-signals-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "cross-cutting-signals-r1",
+     "question": "What beats pre-optimized code?",
+     "answer": "Clean modular code that absorbs change, for progressive-spec problems.",
+     "anchor": "cross-cutting-signals-p01"
+    }
+   ]
+  }
+ ]
+}

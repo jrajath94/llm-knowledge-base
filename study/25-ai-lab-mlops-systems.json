@@ -1,0 +1,218 @@
+{
+ "schemaVersion": 1,
+ "itemId": "25-ai-lab-mlops-systems",
+ "itemKind": "lesson",
+ "revision": "554c286a3738c84af44f40a1a064c29217048cfdd911a778f5bd35e704ffbe74",
+ "sections": [
+  {
+   "anchor": "lab-w12-d1-mlops-pipelines-cicd",
+   "title": "MLOps , Pipelines &amp; CI/CD Expert",
+   "minutes": 5,
+   "endAnchor": "lab-w12-d1-mlops-pipelines-cicd-end",
+   "blocks": [
+    {
+     "anchor": "lab-w12-d1-mlops-pipelines-cicd-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "determinism check",
+     "definition": "The lab's soul: a pipeline that cannot reproduce itself earns no trust.",
+     "anchor": "lab-w12-d1-mlops-pipelines-cicd-p04"
+    },
+    {
+     "term": "quality gate",
+     "definition": "Evaluation sits behind one; artifacts save with lineage.",
+     "anchor": "lab-w12-d1-mlops-pipelines-cicd-p02"
+    },
+    {
+     "term": "regression gate",
+     "definition": "Simulated CI alongside determinism checks.",
+     "anchor": "lab-w12-d1-mlops-pipelines-cicd-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w12-d1-mlops-pipelines-cicd-r1",
+     "question": "What is the soul of this lab?",
+     "answer": "The determinism check: a pipeline that cannot reproduce itself earns no trust downstream.",
+     "anchor": "lab-w12-d1-mlops-pipelines-cicd-p04"
+    },
+    {
+     "id": "lab-w12-d1-mlops-pipelines-cicd-r2",
+     "question": "What do you build in this foundation lab?",
+     "answer": "A config-driven pipeline entrypoint, data generation with schema checks, NumPy logistic regression, evaluation behind a quality gate, artifacts with lineage, then simulated CI.",
+     "anchor": "lab-w12-d1-mlops-pipelines-cicd-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w12-d2-model-registry-versioning",
+   "title": "Model Registry &amp; Versioning Expert",
+   "minutes": 5,
+   "endAnchor": "lab-w12-d2-model-registry-versioning-end",
+   "blocks": [
+    {
+     "anchor": "lab-w12-d2-model-registry-versioning-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "version id",
+     "definition": "Deterministic id for each model artifact.",
+     "anchor": "lab-w12-d2-model-registry-versioning-p02"
+    },
+    {
+     "term": "stage pointers",
+     "definition": "Pointers like staging and production that resolve to versions.",
+     "anchor": "lab-w12-d2-model-registry-versioning-p02"
+    },
+    {
+     "term": "versions are immutable",
+     "definition": "Versions never change; pointers move, which makes rollback boring.",
+     "anchor": "lab-w12-d2-model-registry-versioning-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w12-d2-model-registry-versioning-r1",
+     "question": "What is the invariant to internalize?",
+     "answer": "Versions are immutable, pointers move, and that is what makes rollback boring instead of terrifying.",
+     "anchor": "lab-w12-d2-model-registry-versioning-p03"
+    },
+    {
+     "id": "lab-w12-d2-model-registry-versioning-r2",
+     "question": "What does promotion look like?",
+     "answer": "Promote from staging to production through gates, then audit by loading production artifacts and comparing versions.",
+     "anchor": "lab-w12-d2-model-registry-versioning-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w12-d3-monitoring-drift-detection",
+   "title": "Monitoring &amp; Drift Detection Expert",
+   "minutes": 6,
+   "endAnchor": "lab-w12-d3-monitoring-drift-detection-end",
+   "blocks": [
+    {
+     "anchor": "lab-w12-d3-monitoring-drift-detection-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "PSI",
+     "definition": "Population stability index; a label-free drift metric.",
+     "anchor": "lab-w12-d3-monitoring-drift-detection-p02"
+    },
+    {
+     "term": "KS statistic",
+     "definition": "Kolmogorov-Smirnov statistic for drift detection.",
+     "anchor": "lab-w12-d3-monitoring-drift-detection-p02"
+    },
+    {
+     "term": "label-free drift",
+     "definition": "Comes first because labels are late; the alert closes the loop to retraining.",
+     "anchor": "lab-w12-d3-monitoring-drift-detection-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w12-d3-monitoring-drift-detection-r1",
+     "question": "Why do label-free drift metrics come first?",
+     "answer": "Because labels are late. The alert is what closes the loop back to retraining.",
+     "anchor": "lab-w12-d3-monitoring-drift-detection-p02"
+    },
+    {
+     "id": "lab-w12-d3-monitoring-drift-detection-r2",
+     "question": "What do you implement in this lab?",
+     "answer": "PSI, the KS statistic, mean/variance shift, model and performance monitoring, and alerting rules.",
+     "anchor": "lab-w12-d3-monitoring-drift-detection-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w12-d4-scaling-ml-systems",
+   "title": "Scaling ML Systems Expert",
+   "minutes": 3,
+   "endAnchor": "lab-w12-d4-scaling-ml-systems-end",
+   "blocks": [
+    {
+     "anchor": "lab-w12-d4-scaling-ml-systems-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "p95/p99 latency",
+     "definition": "Tail latency to reason about in serving systems.",
+     "anchor": "lab-w12-d4-scaling-ml-systems-aside01"
+    },
+    {
+     "term": "micro-batching",
+     "definition": "Separated from caching: the lab measures what each buys.",
+     "anchor": "lab-w12-d4-scaling-ml-systems-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w12-d4-scaling-ml-systems-r1",
+     "question": "What is the lasting lesson of this short lab?",
+     "answer": "Measure the bottleneck before scaling anything, and never confuse throughput wins with latency wins.",
+     "anchor": "lab-w12-d4-scaling-ml-systems-p02"
+    },
+    {
+     "id": "lab-w12-d4-scaling-ml-systems-r2",
+     "question": "What can you reason about after this lab?",
+     "answer": "p95/p99 latency, throughput, batching windows, cache hit rates, and scaling tradeoffs in ML serving.",
+     "anchor": "lab-w12-d4-scaling-ml-systems-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w12-d5-deployment-lab",
+   "title": "Deployment Lab Expert",
+   "minutes": 5,
+   "endAnchor": "lab-w12-d5-deployment-lab-end",
+   "blocks": [
+    {
+     "anchor": "lab-w12-d5-deployment-lab-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "service contract",
+     "definition": "Health and prediction endpoints; the contract discipline is the point.",
+     "anchor": "lab-w12-d5-deployment-lab-p02"
+    },
+    {
+     "term": "contract tests",
+     "definition": "CI-style tests that verify deployment behavior from a client.",
+     "anchor": "lab-w12-d5-deployment-lab-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w12-d5-deployment-lab-r1",
+     "question": "Why is this lab deliberately small?",
+     "answer": "The contract discipline is the point, and it transfers unchanged to any model at any scale.",
+     "anchor": "lab-w12-d5-deployment-lab-p02"
+    },
+    {
+     "id": "lab-w12-d5-deployment-lab-r2",
+     "question": "What do you serve and how?",
+     "answer": "A tiny deterministic model over HTTP using only the standard library, as a minimal JSON API.",
+     "anchor": "lab-w12-d5-deployment-lab-p02"
+    }
+   ]
+  }
+ ]
+}

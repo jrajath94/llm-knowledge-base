@@ -1,0 +1,203 @@
+{
+ "schemaVersion": 1,
+ "itemId": "17-ai-lab-python-data",
+ "itemKind": "lesson",
+ "revision": "476b17d4f1ff528b433e598f913670e94584b7f9b4f0a17d19cce624ba50f3d9",
+ "sections": [
+  {
+   "anchor": "lab-w1-d2-numpy-deep-dive",
+   "title": "NumPy Lab Easy",
+   "minutes": 13,
+   "endAnchor": "lab-w1-d2-numpy-deep-dive-end",
+   "blocks": [
+    {
+     "anchor": "lab-w1-d2-numpy-deep-dive-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w1-d2-numpy-deep-dive-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "ndarray",
+     "definition": "NumPy's n-dimensional array; this lab teaches it from the inside out.",
+     "anchor": "lab-w1-d2-numpy-deep-dive-p02"
+    },
+    {
+     "term": "broadcasting",
+     "definition": "NumPy's rules for aligning shapes; traps include silent shape bugs.",
+     "anchor": "lab-w1-d2-numpy-deep-dive-p03"
+    },
+    {
+     "term": "vectorization",
+     "definition": "Replacing Python loops with one C loop; push the loop into C.",
+     "anchor": "lab-w1-d2-numpy-deep-dive-p03"
+    },
+    {
+     "term": "views versus copies",
+     "definition": "Slicing shares memory with the parent; fancy indexing copies.",
+     "anchor": "lab-w1-d2-numpy-deep-dive-p02"
+    },
+    {
+     "term": "stable softmax",
+     "definition": "Subtract the max before exponentiating to avoid overflow.",
+     "anchor": "lab-w1-d2-numpy-deep-dive-fig02"
+    },
+    {
+     "term": "strides",
+     "definition": "How NumPy maps indices to memory offsets; key to in-place ops.",
+     "anchor": "lab-w1-d2-numpy-deep-dive-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w1-d2-numpy-deep-dive-r1",
+     "question": "What are the two traps this NumPy lab warns about?",
+     "answer": "Silent shape bugs, where broadcasting aligns the wrong axis and never warns you, and the overflow trap in naive softmax.",
+     "anchor": "lab-w1-d2-numpy-deep-dive-p04"
+    },
+    {
+     "id": "lab-w1-d2-numpy-deep-dive-r2",
+     "question": "Why is the vectorized pairwise distance fast?",
+     "answer": "Because of memory layout, not just 'C is fast'. Explain the memory-layout reason for interview-level understanding.",
+     "anchor": "lab-w1-d2-numpy-deep-dive-p04"
+    },
+    {
+     "id": "lab-w1-d2-numpy-deep-dive-r3",
+     "question": "What does the lab's outcome promise?",
+     "answer": "You can write fast, memory-efficient, interview-ready NumPy code and explain why it is efficient.",
+     "anchor": "lab-w1-d2-numpy-deep-dive-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w1-d3-pandas-for-ai-ml",
+   "title": "Pandas Lab Easy",
+   "minutes": 8,
+   "endAnchor": "lab-w1-d3-pandas-for-ai-ml-end",
+   "blocks": [
+    {
+     "anchor": "lab-w1-d3-pandas-for-ai-ml-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "groupby",
+     "definition": "Split-apply-combine; both collapsing agg and row-preserving transform forms.",
+     "anchor": "lab-w1-d3-pandas-for-ai-ml-p02"
+    },
+    {
+     "term": "merge",
+     "definition": "Joining tables; always validate row counts after a merge.",
+     "anchor": "lab-w1-d3-pandas-for-ai-ml-p02"
+    },
+    {
+     "term": "leakage",
+     "definition": "Future information leaking into features; the lab builds leakage-safe time features.",
+     "anchor": "lab-w1-d3-pandas-for-ai-ml-p02"
+    },
+    {
+     "term": "cumsum",
+     "definition": "Cumulative sum; never trust one you did not shift.",
+     "anchor": "lab-w1-d3-pandas-for-ai-ml-p03"
+    },
+    {
+     "term": "transform",
+     "definition": "The row-preserving groupby form, unlike the collapsing agg form.",
+     "anchor": "lab-w1-d3-pandas-for-ai-ml-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w1-d3-pandas-for-ai-ml-r1",
+     "question": "What is the leakage-safe time feature recipe?",
+     "answer": "Sort, cumulative count, shift by one. Never trust a cumsum that you did not shift.",
+     "anchor": "lab-w1-d3-pandas-for-ai-ml-p02"
+    },
+    {
+     "id": "lab-w1-d3-pandas-for-ai-ml-r2",
+     "question": "What are the FAANG gotchas this lab names?",
+     "answer": "Always validate row counts after a merge, and never trust a cumsum that you did not shift.",
+     "anchor": "lab-w1-d3-pandas-for-ai-ml-p03"
+    },
+    {
+     "id": "lab-w1-d3-pandas-for-ai-ml-r3",
+     "question": "What does the apply-versus-vectorized timing comparison show?",
+     "answer": "It makes the performance argument physical rather than theoretical.",
+     "anchor": "lab-w1-d3-pandas-for-ai-ml-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w1-d4-eda-lab-homework",
+   "title": "EDA Lab + Homework Easy",
+   "minutes": 6,
+   "endAnchor": "lab-w1-d4-eda-lab-homework-end",
+   "blocks": [
+    {
+     "anchor": "lab-w1-d4-eda-lab-homework-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w1-d4-eda-lab-homework-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "EDA",
+     "definition": "Exploratory data analysis; the honesty layer that catches issues before modeling.",
+     "anchor": "lab-w1-d4-eda-lab-homework-p02"
+    },
+    {
+     "term": "encoded missingness",
+     "definition": "Missing values disguised as -1 or 'unknown' that null checks miss.",
+     "anchor": "lab-w1-d4-eda-lab-homework-p02"
+    },
+    {
+     "term": "Simpson's paradox",
+     "definition": "Slice trends flip when aggregated; each slice rises but the aggregate falls.",
+     "anchor": "lab-w1-d4-eda-lab-homework-p04"
+    },
+    {
+     "term": "leakage hunt",
+     "definition": "Finding features that carry future information, like refund_after_churn_flag.",
+     "anchor": "lab-w1-d4-eda-lab-homework-p03"
+    },
+    {
+     "term": "grain",
+     "definition": "What one row represents; here, one row per user snapshot.",
+     "anchor": "lab-w1-d4-eda-lab-homework-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w1-d4-eda-lab-homework-r1",
+     "question": "What are the two traps this EDA lab flags?",
+     "answer": "Missing values disguised as -1 or 'unknown', and Simpson's paradox where slice trends flip when aggregated.",
+     "anchor": "lab-w1-d4-eda-lab-homework-p04"
+    },
+    {
+     "id": "lab-w1-d4-eda-lab-homework-r2",
+     "question": "What is the EDA sequence this lab runs?",
+     "answer": "Grain and schema, missingness and duplicates, numeric summaries and high-signal plots, target and slice analysis, then the leakage hunt.",
+     "anchor": "lab-w1-d4-eda-lab-homework-p02"
+    },
+    {
+     "id": "lab-w1-d4-eda-lab-homework-r3",
+     "question": "What habit does this lab install for interviews?",
+     "answer": "The 'how would you start with this dataset' habit: validate assumptions, find leakage, discover slices, make high-signal plots.",
+     "anchor": "lab-w1-d4-eda-lab-homework-fig01"
+    }
+   ]
+  }
+ ]
+}

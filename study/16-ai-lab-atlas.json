@@ -1,0 +1,629 @@
+{
+ "schemaVersion": 1,
+ "itemId": "16-ai-lab-atlas",
+ "itemKind": "lesson",
+ "revision": "a6ce9a9b96d612a45f57daf803df638c90f03b421c855067d8baac4c29eb77fb",
+ "sections": [
+  {
+   "anchor": "how-to-read-this-atlas",
+   "title": "How to read this atlas",
+   "minutes": 5,
+   "endAnchor": "how-to-read-this-atlas-end",
+   "blocks": [
+    {
+     "anchor": "how-to-read-this-atlas-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "how-to-read-this-atlas-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "atlas",
+     "definition": "The map of the 15-week, 73-lab sequence.",
+     "anchor": "how-to-read-this-atlas-p01"
+    },
+    {
+     "term": "category volumes",
+     "definition": "Volumes 17 through 27; each category owns one volume.",
+     "anchor": "how-to-read-this-atlas-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "how-to-read-this-atlas-r1",
+     "question": "What does each week chapter list?",
+     "answer": "Every lab day, linked to the full walkthrough on its category page, with difficulty and task count at a glance.",
+     "anchor": "how-to-read-this-atlas-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "difficulty-progression",
+   "title": "Difficulty progression",
+   "minutes": 2,
+   "endAnchor": "difficulty-progression-end",
+   "blocks": [
+    {
+     "anchor": "diff-progression",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "difficulty-progression-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "difficulty",
+     "definition": "Labs rated Easy, Medium, Hard, or Expert per week.",
+     "anchor": "diff-progression"
+    },
+    {
+     "term": "lab count",
+     "definition": "The number above each bar; the x-axis is the week number.",
+     "anchor": "diff-progression"
+    }
+   ],
+   "recall": [
+    {
+     "id": "difficulty-progression-r1",
+     "question": "What does each bar show?",
+     "answer": "One week of the 15-week sequence; the number above is the lab count, the color is the difficulty mix.",
+     "anchor": "diff-progression"
+    }
+   ]
+  },
+  {
+   "anchor": "week-1-python-data-tools",
+   "title": "Week 1: Python data tools",
+   "minutes": 1,
+   "endAnchor": "week-1-python-data-tools-end",
+   "blocks": [
+    {
+     "anchor": "week-1-python-data-tools-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "EDA",
+     "definition": "Exploratory data analysis: probe a dataset with plots and summaries before modeling.",
+     "anchor": "week-1-python-data-tools-p01"
+    },
+    {
+     "term": "working surface",
+     "definition": "NumPy, pandas, EDA; tools never become the bottleneck.",
+     "anchor": "week-1-python-data-tools-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-1-python-data-tools-r1",
+     "question": "Why does this week exist?",
+     "answer": "So tools never become the bottleneck; every later lab assumes you can load, slice, and check shapes without thinking.",
+     "anchor": "week-1-python-data-tools-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-2-the-math-you-will-actually-use",
+   "title": "Week 2: The math you will actually use",
+   "minutes": 1,
+   "endAnchor": "week-2-the-math-you-will-actually-use-end",
+   "blocks": [
+    {
+     "anchor": "week-2-the-math-you-will-actually-use-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "gradient",
+     "definition": "The direction of steepest change; training uses gradients to improve the model.",
+     "anchor": "week-2-the-math-you-will-actually-use-p01"
+    },
+    {
+     "term": "probability",
+     "definition": "For uncertainty; with statistics for reading results.",
+     "anchor": "week-2-the-math-you-will-actually-use-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-2-the-math-you-will-actually-use-r1",
+     "question": "Why does math sit in week 2?",
+     "answer": "Because weeks 3 through 5 spend this math every day.",
+     "anchor": "week-2-the-math-you-will-actually-use-p01"
+    },
+    {
+     "id": "week-2-the-math-you-will-actually-use-r2",
+     "question": "Which pairing do interview questions combine most?",
+     "answer": "Linear algebra with probability, in the final math lab.",
+     "anchor": "week-2-the-math-you-will-actually-use-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-3-classical-models-i",
+   "title": "Week 3: Classical models I",
+   "minutes": 1,
+   "endAnchor": "week-3-classical-models-i-end",
+   "blocks": [
+    {
+     "anchor": "week-3-classical-models-i-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "convexity",
+     "definition": "Logistic regression teaches gradient-based fitting and convexity.",
+     "anchor": "week-3-classical-models-i-p01"
+    },
+    {
+     "term": "GLMs",
+     "definition": "Generalized linear models, introduced via linear regression.",
+     "anchor": "week-3-classical-models-i-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-3-classical-models-i-r1",
+     "question": "Why do classical models come before neural networks?",
+     "answer": "Problems are small enough that every step is inspectable.",
+     "anchor": "week-3-classical-models-i-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-4-classical-models-ii",
+   "title": "Week 4: Classical models II",
+   "minutes": 1,
+   "endAnchor": "week-4-classical-models-ii-end",
+   "blocks": [
+    {
+     "anchor": "week-4-classical-models-ii-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "failure modes",
+     "definition": "The ways models break in practice; day 4 is the most interview-relevant day.",
+     "anchor": "week-4-classical-models-ii-p01"
+    },
+    {
+     "term": "capstone lab",
+     "definition": "Day 5 combines the two weeks of models.",
+     "anchor": "week-4-classical-models-ii-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-4-classical-models-ii-r1",
+     "question": "Which day is the most interview-relevant?",
+     "answer": "Day 4, the classical ML failure modes lab.",
+     "anchor": "week-4-classical-models-ii-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-5-evaluation-and-debugging",
+   "title": "Week 5: Evaluation and debugging",
+   "minutes": 1,
+   "endAnchor": "week-5-evaluation-and-debugging-end",
+   "blocks": [
+    {
+     "anchor": "week-5-evaluation-and-debugging-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "evaluation",
+     "definition": "The week that separates people who train models from people who can tell whether a model is good.",
+     "anchor": "week-5-evaluation-and-debugging-p01"
+    },
+    {
+     "term": "debugging",
+     "definition": "Systematic debugging and error analysis after evaluation.",
+     "anchor": "week-5-evaluation-and-debugging-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-5-evaluation-and-debugging-r1",
+     "question": "Where do interviewers live?",
+     "answer": "In this week: evaluation and debugging questions appear in almost every ML loop.",
+     "anchor": "week-5-evaluation-and-debugging-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-6-neural-networks-i",
+   "title": "Week 6: Neural networks I",
+   "minutes": 1,
+   "endAnchor": "week-6-neural-networks-i-end",
+   "blocks": [
+    {
+     "anchor": "week-6-neural-networks-i-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "backpropagation",
+     "definition": "Computes gradients through a network's layers so training is possible.",
+     "anchor": "week-6-neural-networks-i-p01"
+    },
+    {
+     "term": "on-ramp",
+     "definition": "The last Medium week; the on-ramp to the Hard block.",
+     "anchor": "week-6-neural-networks-i-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-6-neural-networks-i-r1",
+     "question": "What opens the bridge week?",
+     "answer": "Data preprocessing pipelines and data engineering, the unglamorous half of deep learning.",
+     "anchor": "week-6-neural-networks-i-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-7-neural-networks-ii",
+   "title": "Week 7: Neural networks II",
+   "minutes": 1,
+   "endAnchor": "week-7-neural-networks-ii-end",
+   "blocks": [
+    {
+     "anchor": "week-7-neural-networks-ii-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "residual networks",
+     "definition": "The architecture family that made deep vision practical.",
+     "anchor": "week-7-neural-networks-ii-p01"
+    },
+    {
+     "term": "optimization",
+     "definition": "Methods that explain how training actually converges.",
+     "anchor": "week-7-neural-networks-ii-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-7-neural-networks-ii-r1",
+     "question": "What do activations and initialization explain?",
+     "answer": "How signals survive through layers; optimization explains how training converges.",
+     "anchor": "week-7-neural-networks-ii-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-8-cnns-in-practice-then-text",
+   "title": "Week 8: CNNs in practice, then text",
+   "minutes": 1,
+   "endAnchor": "week-8-cnns-in-practice-then-text-end",
+   "blocks": [
+    {
+     "anchor": "week-8-cnns-in-practice-then-text-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "frozen backbone",
+     "definition": "Full image-classification lab using a frozen backbone.",
+     "anchor": "week-8-cnns-in-practice-then-text-p01"
+    },
+    {
+     "term": "pivot",
+     "definition": "To text: you cannot model sequences without first turning text into numbers.",
+     "anchor": "week-8-cnns-in-practice-then-text-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-8-cnns-in-practice-then-text-r1",
+     "question": "Why does the week pivot to text?",
+     "answer": "Week 9 starts sequence modeling, and you cannot model sequences without turning text into numbers first.",
+     "anchor": "week-8-cnns-in-practice-then-text-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-9-from-sequences-to-attention",
+   "title": "Week 9: From sequences to attention",
+   "minutes": 1,
+   "endAnchor": "week-9-from-sequences-to-attention-end",
+   "blocks": [
+    {
+     "anchor": "week-9-from-sequences-to-attention-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "self-attention",
+     "definition": "Lets a model weigh which other positions matter for each position.",
+     "anchor": "week-9-from-sequences-to-attention-p01"
+    },
+    {
+     "term": "embeddings",
+     "definition": "Learnable vector representations for words and items.",
+     "anchor": "week-9-from-sequences-to-attention-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-9-from-sequences-to-attention-r1",
+     "question": "What is day 5?",
+     "answer": "Self-attention, introduced after the RNN/LSTM history and the vectorized softmax craft.",
+     "anchor": "week-9-from-sequences-to-attention-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-10-transformers",
+   "title": "Week 10: Transformers",
+   "minutes": 1,
+   "endAnchor": "week-10-transformers-end",
+   "blocks": [
+    {
+     "anchor": "week-10-transformers-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "autoregressive",
+     "definition": "Generates text one token at a time, each conditioned on the ones before.",
+     "anchor": "week-10-transformers-p01"
+    },
+    {
+     "term": "peak week",
+     "definition": "Six labs, 47 tasks, all Hard.",
+     "anchor": "week-10-transformers-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-10-transformers-r1",
+     "question": "What do you have by Friday?",
+     "answer": "A tiny autoregressive language model you built and trained.",
+     "anchor": "week-10-transformers-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "week-11-retrieval-and-rag",
+   "title": "Week 11: Retrieval and RAG",
+   "minutes": 1,
+   "endAnchor": "week-11-retrieval-and-rag-end",
+   "blocks": [
+    {
+     "anchor": "week-11-retrieval-and-rag-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "RAG",
+     "definition": "Retrieval-augmented generation: external documents at query time instead of only weights.",
+     "anchor": "week-11-retrieval-and-rag-p01"
+    },
+    {
+     "term": "FAISS",
+     "definition": "Library for fast approximate nearest-neighbor search over vectors.",
+     "anchor": "week-11-retrieval-and-rag-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-11-retrieval-and-rag-r1",
+     "question": "What is the shift this week?",
+     "answer": "From training models to building systems that use them.",
+     "anchor": "week-11-retrieval-and-rag-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-12-mlops-and-production-systems",
+   "title": "Week 12: MLOps and production systems",
+   "minutes": 1,
+   "endAnchor": "week-12-mlops-and-production-systems-end",
+   "blocks": [
+    {
+     "anchor": "week-12-mlops-and-production-systems-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "MLOps",
+     "definition": "Pipelines, CI/CD, registries, monitoring, scaling, deployment.",
+     "anchor": "week-12-mlops-and-production-systems-p01"
+    },
+    {
+     "term": "CI/CD",
+     "definition": "Continuous integration and delivery: automated testing and deployment.",
+     "anchor": "week-12-mlops-and-production-systems-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-12-mlops-and-production-systems-r1",
+     "question": "What do interviewers test in this week?",
+     "answer": "Whether you think like an engineer who ships.",
+     "anchor": "week-12-mlops-and-production-systems-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-13-system-design-i",
+   "title": "Week 13: System design I",
+   "minutes": 1,
+   "endAnchor": "week-13-system-design-i-end",
+   "blocks": [
+    {
+     "anchor": "week-13-system-design-i-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "tradeoffs",
+     "definition": "Reason about tradeoffs at scale and defend choices; no single right answer.",
+     "anchor": "week-13-system-design-i-p01"
+    },
+    {
+     "term": "feature store",
+     "definition": "Patterns for serving features; canonical design topic.",
+     "anchor": "week-13-system-design-i-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-13-system-design-i-r1",
+     "question": "When do design interviews begin?",
+     "answer": "Week 13: fundamentals, feature stores, real-time vs batch, recs/search/ads cases.",
+     "anchor": "week-13-system-design-i-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-14-system-design-ii",
+   "title": "Week 14: System design II",
+   "minutes": 1,
+   "endAnchor": "week-14-system-design-ii-end",
+   "blocks": [
+    {
+     "anchor": "week-14-system-design-ii-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "distributed training",
+     "definition": "The scaling-training lab bridges to the GPU and systems volumes.",
+     "anchor": "week-14-system-design-ii-p01"
+    },
+    {
+     "term": "recommendation system",
+     "definition": "Full real-time home feed recommender design.",
+     "anchor": "week-14-system-design-ii-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-14-system-design-ii-r1",
+     "question": "What does this week pair with?",
+     "answer": "Distributed training and inference-serving interview rounds.",
+     "anchor": "week-14-system-design-ii-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "week-15-llm-and-agentic-ai",
+   "title": "Week 15: LLM and agentic AI",
+   "minutes": 1,
+   "endAnchor": "week-15-llm-and-agentic-ai-end",
+   "blocks": [
+    {
+     "anchor": "week-15-llm-and-agentic-ai-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "agent",
+     "definition": "A system that uses a language model to plan and take actions, not just generate text.",
+     "anchor": "week-15-llm-and-agentic-ai-p01"
+    },
+    {
+     "term": "capstone",
+     "definition": "Everything from fourteen weeks converges here.",
+     "anchor": "week-15-llm-and-agentic-ai-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "week-15-llm-and-agentic-ai-r1",
+     "question": "What converges in the capstone week?",
+     "answer": "Transformers from week 10, RAG from 11, serving from 12, design from 13-14.",
+     "anchor": "week-15-llm-and-agentic-ai-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "interview-clearance",
+   "title": "Interview clearance",
+   "minutes": 3,
+   "endAnchor": "interview-clearance-end",
+   "blocks": [
+    {
+     "anchor": "interview-clearance-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "interview-clearance-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "clearance",
+     "definition": "Each week block clears specific interview rounds; study matching weeks per round.",
+     "anchor": "interview-clearance-p02"
+    },
+    {
+     "term": "week blocks",
+     "definition": "Mapped to rounds (a) through (h) with arrows.",
+     "anchor": "interview-clearance-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "interview-clearance-r1",
+     "question": "Which weeks clear the post-training deep dive and paper discussion?",
+     "answer": "Weeks 7 through 11.",
+     "anchor": "interview-clearance-fig01"
+    },
+    {
+     "id": "interview-clearance-r2",
+     "question": "What clears the behavioral round?",
+     "answer": "All 15 weeks; every lab gives you a story about what broke.",
+     "anchor": "interview-clearance-fig01"
+    }
+   ]
+  }
+ ]
+}

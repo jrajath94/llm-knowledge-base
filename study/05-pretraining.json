@@ -1,0 +1,524 @@
+{
+ "schemaVersion": 1,
+ "itemId": "05-pretraining",
+ "itemKind": "lesson",
+ "revision": "912c34abaac72fa2e43661a6552d7c6913ebc31a098e05471a11011177e0e6c2",
+ "sections": [
+  {
+   "anchor": "ch1-objective",
+   "title": "1. The pre-training objective: next-token prediction",
+   "minutes": 6,
+   "endAnchor": "ch1-objective-end",
+   "blocks": [
+    {
+     "anchor": "ch1-objective-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch1-objective-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch1-objective-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "next-token prediction",
+     "definition": "The one task, repeated trillions of times.",
+     "anchor": "ch1-objective-fig01"
+    },
+    {
+     "term": "token",
+     "definition": "A chunk of text the model reads as one unit, like 'cat' or 'ing'.",
+     "anchor": "ch1-objective-p01"
+    },
+    {
+     "term": "tokenizer",
+     "definition": "Cuts raw text into tokens; Volume 4, Chapter 1.",
+     "anchor": "ch1-objective-aside02"
+    },
+    {
+     "term": "32k vocabulary",
+     "definition": "A model guessing uniformly at random has a computable loss.",
+     "anchor": "ch1-objective-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch1-objective-r1",
+     "question": "What exactly does the model learn to predict?",
+     "answer": "The next token, given all previous tokens.",
+     "anchor": "ch1-objective-p01"
+    },
+    {
+     "id": "ch1-objective-r2",
+     "question": "How does one forward pass predict for every position?",
+     "answer": "The shift: each position predicts the next token.",
+     "anchor": "ch1-objective-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch2-data",
+   "title": "2. Where training data comes from",
+   "minutes": 7,
+   "endAnchor": "ch2-data-end",
+   "blocks": [
+    {
+     "anchor": "ch2-data-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch2-data-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch2-data-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "web crawl",
+     "definition": "Petabytes in, filtered tokens out; the only viable source at trillion-token scale.",
+     "anchor": "ch2-data-p01"
+    },
+    {
+     "term": "deduplication",
+     "definition": "Pipeline stage between raw crawl and tokenizer.",
+     "anchor": "ch2-data-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch2-data-r1",
+     "question": "Why is the web the only viable source?",
+     "answer": "Trillion-token scale needs petabytes; only the web crawl has it.",
+     "anchor": "ch2-data-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch3-scale-tokenize",
+   "title": "3. Tokenization at scale, packing, and batching",
+   "minutes": 5,
+   "endAnchor": "ch3-scale-tokenize-end",
+   "blocks": [
+    {
+     "anchor": "ch3-scale-tokenize-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch3-scale-tokenize-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch3-scale-tokenize-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "packing",
+     "definition": "Documents packed together; what it does to attention across boundaries.",
+     "anchor": "ch3-scale-tokenize-p02"
+    },
+    {
+     "term": "batching",
+     "definition": "Rectangular inputs from wildly different document lengths.",
+     "anchor": "ch3-scale-tokenize-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch3-scale-tokenize-r1",
+     "question": "How do you batch different-length documents?",
+     "answer": "Tokenize at scale, pack documents, batch into fixed-size tensors.",
+     "anchor": "ch3-scale-tokenize-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch4-loop",
+   "title": "4. The training loop: anatomy of one step",
+   "minutes": 7,
+   "endAnchor": "ch4-loop-end",
+   "blocks": [
+    {
+     "anchor": "ch4-loop-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch4-loop-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch4-loop-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "gradient accumulation",
+     "definition": "8 micro-batches of 128 rows summed into 4M tokens per step.",
+     "anchor": "ch4-loop-fig01"
+    },
+    {
+     "term": "4M tokens",
+     "definition": "1024 rows times 4096 tokens per optimizer step.",
+     "anchor": "ch4-loop-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch4-loop-r1",
+     "question": "Why is the batch enormous?",
+     "answer": "Gradient noise falls with tokens per step; hardware sees it in micro-batch pieces.",
+     "anchor": "ch4-loop-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch5-lr",
+   "title": "5. Learning-rate schedules: warmup and cosine decay",
+   "minutes": 5,
+   "endAnchor": "ch5-lr-end",
+   "blocks": [
+    {
+     "anchor": "ch5-lr-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch5-lr-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch5-lr-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "warmup",
+     "definition": "Why the schedule starts small on large runs.",
+     "anchor": "ch5-lr-p02"
+    },
+    {
+     "term": "cosine decay",
+     "definition": "Decays to 10% of peak, planned to end when the token budget runs out.",
+     "anchor": "ch5-lr-p02"
+    },
+    {
+     "term": "learning rate",
+     "definition": "The step size; the wrong schedule kills runs.",
+     "anchor": "ch5-lr-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch5-lr-r1",
+     "question": "Why decay to 10% instead of zero?",
+     "answer": "The chapter's design prompt; planned endpoint matching the run length.",
+     "anchor": "ch5-lr-aside01"
+    },
+    {
+     "id": "ch5-lr-r2",
+     "question": "What happens if you skip warmup on a large run?",
+     "answer": "The run dies; the schedule keeps thousand-GPU runs alive.",
+     "anchor": "ch5-lr-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "ch6-loss-curves",
+   "title": "6. Reading loss curves: healthy vs sick training",
+   "minutes": 7,
+   "endAnchor": "ch6-loss-curves-end",
+   "blocks": [
+    {
+     "anchor": "ch6-loss-curves-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch6-loss-curves-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch6-loss-curves-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "loss curve",
+     "definition": "Healthy versus sick training, read from the curve.",
+     "anchor": "ch6-loss-curves-p01"
+    },
+    {
+     "term": "explore phase",
+     "definition": "Large steps early escape bad regions.",
+     "anchor": "ch6-loss-curves-fig01"
+    },
+    {
+     "term": "settle phase",
+     "definition": "Small steps late stay in the minimum.",
+     "anchor": "ch6-loss-curves-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch6-loss-curves-r1",
+     "question": "Why does cosine decay work?",
+     "answer": "Large steps early explore and escape; small steps late settle without bouncing out.",
+     "anchor": "ch6-loss-curves-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch7-scaling",
+   "title": "7. Scaling laws: Kaplan, Chinchilla, and the 6ND rule",
+   "minutes": 9,
+   "endAnchor": "ch7-scaling-end",
+   "blocks": [
+    {
+     "anchor": "ch7-scaling-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch7-scaling-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch7-scaling-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Chinchilla",
+     "definition": "Compute-optimal: about 20 tokens per parameter.",
+     "anchor": "ch7-scaling-aside01"
+    },
+    {
+     "term": "6ND rule",
+     "definition": "Training FLOPs = 6 times params times tokens.",
+     "anchor": "ch7-scaling-aside01"
+    },
+    {
+     "term": "Kaplan",
+     "definition": "Scaling laws predecessor to Chinchilla.",
+     "anchor": "ch7-scaling-fig02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch7-scaling-r1",
+     "question": "State the Chinchilla finding in one sentence.",
+     "answer": "Compute-optimal training uses about 20 tokens per parameter.",
+     "anchor": "ch7-scaling-aside01"
+    },
+    {
+     "id": "ch7-scaling-r2",
+     "question": "How do you plan a 1e24 FLOP run?",
+     "answer": "Combine C=6ND with D=20N: about 91B params on 1.8T tokens.",
+     "anchor": "ch7-scaling-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch8-run",
+   "title": "8. Anatomy of a real pre-training run, week by week",
+   "minutes": 6,
+   "endAnchor": "ch8-run-end",
+   "blocks": [
+    {
+     "anchor": "ch8-run-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch8-run-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch8-run-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "MFU",
+     "definition": "Model FLOPs utilization; 45% in the worked budget.",
+     "anchor": "ch8-run-fig01"
+    },
+    {
+     "term": "80 days",
+     "definition": "1,024 A100s at 45% MFU for the 1e24 budget.",
+     "anchor": "ch8-run-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch8-run-r1",
+     "question": "What is frontier planning?",
+     "answer": "One equation for the split, one division for the calendar.",
+     "anchor": "ch8-run-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch9-boundary",
+   "title": "9. The honest boundary: what pre-training is and is not",
+   "minutes": 6,
+   "endAnchor": "ch9-boundary-end",
+   "blocks": [
+    {
+     "anchor": "ch9-boundary-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch9-boundary-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch9-boundary-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "loss spikes",
+     "definition": "Watch them, or roll them back.",
+     "anchor": "ch9-boundary-fig01"
+    },
+    {
+     "term": "divergence",
+     "definition": "Stops the run.",
+     "anchor": "ch9-boundary-fig01"
+    },
+    {
+     "term": "operations",
+     "definition": "Training at scale is operations: checkpoint discipline, rollback criteria, escalation.",
+     "anchor": "ch9-boundary-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch9-boundary-r1",
+     "question": "What is the honest boundary?",
+     "answer": "What pre-training is and is not; the operator's playbook for failures.",
+     "anchor": "ch9-boundary-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "capstone",
+   "title": "Capstone: train a tiny GPT and watch the loss fall",
+   "minutes": 4,
+   "endAnchor": "capstone-end",
+   "blocks": [
+    {
+     "anchor": "capstone-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "capstone-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "capstone-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "tiny GPT",
+     "definition": "818,176 parameters, 2000 steps on Tiny Shakespeare; real CPU run.",
+     "anchor": "capstone-p01"
+    },
+    {
+     "term": "Tiny Shakespeare",
+     "definition": "1,115,394 chars; the shape of the curve will not differ.",
+     "anchor": "capstone-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "capstone-r1",
+     "question": "What did the executed lab show?",
+     "answer": "A real loss curve from a Karpathy-style tiny GPT on this machine's CPU.",
+     "anchor": "capstone-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "05-pretraining-watch-deeper",
+   "title": "Interview Q&amp;A",
+   "minutes": 4,
+   "endAnchor": "05-pretraining-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "05-pretraining-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "05-pretraining-watch-deeper-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "annealing",
+     "definition": "Short second phase on curated data; LR decays to zero.",
+     "anchor": "05-pretraining-watch-deeper-fig01"
+    },
+    {
+     "term": "Interview Q&A",
+     "definition": "Five questions, the way interviewers ask them.",
+     "anchor": "05-pretraining-watch-deeper-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "05-pretraining-watch-deeper-r1",
+     "question": "What are the two phases?",
+     "answer": "Pre-training on the full web mixture, then annealing on curated high-quality data.",
+     "anchor": "05-pretraining-watch-deeper-fig01"
+    }
+   ]
+  }
+ ]
+}

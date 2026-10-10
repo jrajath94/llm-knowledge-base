@@ -1,0 +1,170 @@
+{
+ "schemaVersion": 1,
+ "itemId": "01-math-for-ml",
+ "itemKind": "lesson",
+ "revision": "b3f85038445c840e21c660adcc85eea7caeab2b1012b06dfcfd311676485eaaa",
+ "sections": [
+  {
+   "anchor": "ch1",
+   "title": "Chapter 1 - Why math first: the map",
+   "minutes": 5,
+   "endAnchor": "ch1-end",
+   "blocks": [
+    {
+     "anchor": "ch1-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "fig-map",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "four pillars",
+     "definition": "Linear algebra, probability and statistics, calculus, optimization; information theory on top.",
+     "anchor": "ch1-p01"
+    },
+    {
+     "term": "linear algebra",
+     "definition": "The language where data lives: vectors, matrices, transformations.",
+     "anchor": "ch1-p01"
+    },
+    {
+     "term": "probability",
+     "definition": "The language of uncertainty; every model output is a bet.",
+     "anchor": "ch1-p02"
+    },
+    {
+     "term": "calculus",
+     "definition": "The language of change; how fast a loss moves when a weight moves.",
+     "anchor": "ch1-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch1-r1",
+     "question": "What are the four pillars?",
+     "answer": "Linear algebra, probability and statistics, calculus, optimization; information theory gives meaning to the loss.",
+     "anchor": "ch1-p01"
+    },
+    {
+     "id": "ch1-r2",
+     "question": "Why math first?",
+     "answer": "Machine learning wears a software costume; remove the frameworks and four pillars remain.",
+     "anchor": "ch1-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch2",
+   "title": "Chapter 2 - Linear algebra from zero",
+   "minutes": 115,
+   "endAnchor": "ch2-end",
+   "blocks": [
+    {
+     "anchor": "fig-studyloop",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch2-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "gradient descent",
+     "definition": "Walk downhill, one step at a time, until the model works.",
+     "anchor": "ch2-p103"
+    },
+    {
+     "term": "chain rule",
+     "definition": "The most important rule in deep learning.",
+     "anchor": "ch2-pq15"
+    },
+    {
+     "term": "Bayes theorem",
+     "definition": "Update beliefs with evidence.",
+     "anchor": "ch2-pq09"
+    },
+    {
+     "term": "cross-entropy",
+     "definition": "Pay for wrong beliefs; the loss function of language models.",
+     "anchor": "ch2-p81"
+    },
+    {
+     "term": "SVD",
+     "definition": "The master decomposition.",
+     "anchor": "fig-eigen"
+    },
+    {
+     "term": "Adam",
+     "definition": "Derived step by step; versus SGD on a toy landscape.",
+     "anchor": "ch2-p175"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch2-r1",
+     "question": "What does each chapter cover?",
+     "answer": "Linear algebra from zero, probability from zero, calculus, statistics, optimization, information theory, capstone labs.",
+     "anchor": "ch2-fig02"
+    },
+    {
+     "id": "ch2-r2",
+     "question": "What is the capstone?",
+     "answer": "Autograd from scratch, and Adam versus SGD on a toy landscape; build once, extend forever.",
+     "anchor": "ch2-aside40"
+    },
+    {
+     "id": "ch2-r3",
+     "question": "Why does training pay bits?",
+     "answer": "Information theory: training a language model pays bits to remove surprise.",
+     "anchor": "ch2-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "01-math-for-ml-watch-deeper",
+   "title": "Watch and go deeper",
+   "minutes": 2,
+   "endAnchor": "01-math-for-ml-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "01-math-for-ml-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "01-math-for-ml-watch-deeper-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "3Blue1Brown",
+     "definition": "Essence of linear algebra and calculus; visual intuition.",
+     "anchor": "01-math-for-ml-watch-deeper-fig02"
+    },
+    {
+     "term": "Thread A",
+     "definition": "Grows one autograd engine to a tiny GPT.",
+     "anchor": "01-math-for-ml-watch-deeper-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "01-math-for-ml-watch-deeper-r1",
+     "question": "What are the two threads?",
+     "answer": "Thread A builds to a tiny GPT; Thread B shows optimizer dynamics on a toy landscape.",
+     "anchor": "01-math-for-ml-watch-deeper-fig01"
+    }
+   ]
+  }
+ ]
+}

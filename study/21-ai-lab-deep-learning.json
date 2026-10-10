@@ -1,0 +1,465 @@
+{
+ "schemaVersion": 1,
+ "itemId": "21-ai-lab-deep-learning",
+ "itemKind": "lesson",
+ "revision": "171edcc517db99d1aa176cb5789f01c6c63343215b2b312c2940bf506ba1d1d0",
+ "sections": [
+  {
+   "anchor": "lab-w6-d1-data-preprocessing-pipelines",
+   "title": "Data Preprocessing Pipelines Medium",
+   "minutes": 6,
+   "endAnchor": "lab-w6-d1-data-preprocessing-pipelines-end",
+   "blocks": [
+    {
+     "anchor": "lab-w6-d1-data-preprocessing-pipelines-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "ColumnTransformer",
+     "definition": "Mixed-type preprocessing with sklearn pipelines; CV runs without leakage.",
+     "anchor": "lab-w6-d1-data-preprocessing-pipelines-p02"
+    },
+    {
+     "term": "handle_unknown",
+     "definition": "The gotcha; a production crash waiting to happen.",
+     "anchor": "lab-w6-d1-data-preprocessing-pipelines-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w6-d1-data-preprocessing-pipelines-r1",
+     "question": "What decides whether any network trains on honest data?",
+     "answer": "Preprocessing: sklearn pipelines and ColumnTransformer for mixed-type data, with CV run without leakage.",
+     "anchor": "lab-w6-d1-data-preprocessing-pipelines-p02"
+    },
+    {
+     "id": "lab-w6-d1-data-preprocessing-pipelines-r2",
+     "question": "What is the handle_unknown gotcha?",
+     "answer": "A production crash waiting to happen when unseen categories appear.",
+     "anchor": "lab-w6-d1-data-preprocessing-pipelines-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w6-d2-multitable-log-joins",
+   "title": "ML Coding Medium",
+   "minutes": 5,
+   "endAnchor": "lab-w6-d2-multitable-log-joins-end",
+   "blocks": [
+    {
+     "anchor": "lab-w6-d2-multitable-log-joins-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "join cardinalities",
+     "definition": "Correct join keys and windows for multi-table event logs.",
+     "anchor": "lab-w6-d2-multitable-log-joins-p02"
+    },
+    {
+     "term": "temporal",
+     "definition": "The core discipline: aggregates must use only information available as of the label time.",
+     "anchor": "lab-w6-d2-multitable-log-joins-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w6-d2-multitable-log-joins-r1",
+     "question": "What is the core discipline?",
+     "answer": "Temporal: aggregates must use only information available as of the label time, or you leak the future.",
+     "anchor": "lab-w6-d2-multitable-log-joins-p02"
+    },
+    {
+     "id": "lab-w6-d2-multitable-log-joins-r2",
+     "question": "Why does this lab belong in the deep learning volume?",
+     "answer": "Because deep learning is fed by data plumbing; features come from multi-table logs.",
+     "anchor": "lab-w6-d2-multitable-log-joins-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w6-d3-data-engineering-for-ml",
+   "title": "Data Engineering for ML Medium",
+   "minutes": 5,
+   "endAnchor": "lab-w6-d3-data-engineering-for-ml-end",
+   "blocks": [
+    {
+     "anchor": "lab-w6-d3-data-engineering-for-ml-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w6-d3-data-engineering-for-ml-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "silver tables",
+     "definition": "The data contract: uniqueness and null checks, one row per event.",
+     "anchor": "lab-w6-d3-data-engineering-for-ml-p02"
+    },
+    {
+     "term": "rolling windows",
+     "definition": "7-day rolling windows on daily user aggregates.",
+     "anchor": "lab-w6-d3-data-engineering-for-ml-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w6-d3-data-engineering-for-ml-r1",
+     "question": "What is the one rule?",
+     "answer": "Check and roll up: raw events become one row per event, daily aggregates, 7-day windows.",
+     "anchor": "lab-w6-d3-data-engineering-for-ml-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w6-d4-neural-networks-i",
+   "title": "Neural Networks I Medium",
+   "minutes": 6,
+   "endAnchor": "lab-w6-d4-neural-networks-i-end",
+   "blocks": [
+    {
+     "anchor": "lab-w6-d4-neural-networks-i-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "perceptron",
+     "definition": "First contact with networks, alongside ReLU.",
+     "anchor": "lab-w6-d4-neural-networks-i-p02"
+    },
+    {
+     "term": "nonlinearity",
+     "definition": "What the MLP buys: it beats logistic regression on XOR and two-moons.",
+     "anchor": "lab-w6-d4-neural-networks-i-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w6-d4-neural-networks-i-r1",
+     "question": "What experiment justifies the whole volume?",
+     "answer": "An MLP beating logistic regression on XOR and two-moons; the linear model from Volume 19 cannot solve XOR.",
+     "anchor": "lab-w6-d4-neural-networks-i-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w6-d5-backprop-computation-graphs",
+   "title": "Backpropagation &amp; Computation Graphs Medium",
+   "minutes": 5,
+   "endAnchor": "lab-w6-d5-backprop-computation-graphs-end",
+   "blocks": [
+    {
+     "anchor": "lab-w6-d5-backprop-computation-graphs-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "finite differences",
+     "definition": "Do the check religiously; it saves every future debugging session.",
+     "anchor": "lab-w6-d5-backprop-computation-graphs-p02"
+    },
+    {
+     "term": "backward closures",
+     "definition": "The Value object with backward closures; softplus from Value ops.",
+     "anchor": "lab-w6-d5-backprop-computation-graphs-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w6-d5-backprop-computation-graphs-r1",
+     "question": "What is the habit that saves debugging sessions?",
+     "answer": "The finite-difference check, done religiously.",
+     "anchor": "lab-w6-d5-backprop-computation-graphs-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w7-d1-activation-functions-initialization",
+   "title": "Activation Functions &amp; Initialization Hard",
+   "minutes": 6,
+   "endAnchor": "lab-w7-d1-activation-functions-initialization-end",
+   "blocks": [
+    {
+     "anchor": "lab-w7-d1-activation-functions-initialization-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "bad-init simulation",
+     "definition": "Run first and watch the signal die; the formulas feel obvious afterward.",
+     "anchor": "lab-w7-d1-activation-functions-initialization-p02"
+    },
+    {
+     "term": "GELU",
+     "definition": "Approximate GELU alongside ReLU and tanh.",
+     "anchor": "lab-w7-d1-activation-functions-initialization-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w7-d1-activation-functions-initialization-r1",
+     "question": "What should you run first?",
+     "answer": "The bad-init simulation; watch the signal die before learning the formulas.",
+     "anchor": "lab-w7-d1-activation-functions-initialization-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w7-d2-optimization-methods",
+   "title": "Optimization Methods Hard",
+   "minutes": 8,
+   "endAnchor": "lab-w7-d2-optimization-methods-end",
+   "blocks": [
+    {
+     "anchor": "lab-w7-d2-optimization-methods-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "AdamW",
+     "definition": "Compare Adam vs AdamW weight norms yourself; the difference is the interview answer.",
+     "anchor": "lab-w7-d2-optimization-methods-p02"
+    },
+    {
+     "term": "gradient clipping",
+     "definition": "With the stabilization demo.",
+     "anchor": "lab-w7-d2-optimization-methods-p02"
+    },
+    {
+     "term": "condition number",
+     "definition": "The quadratic testbed uses a controlled condition number.",
+     "anchor": "lab-w7-d2-optimization-methods-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w7-d2-optimization-methods-r1",
+     "question": "What is the interview answer in this lab?",
+     "answer": "The Adam vs AdamW weight-norm difference, compared yourself.",
+     "anchor": "lab-w7-d2-optimization-methods-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w7-d3-dl-lab-i-train-small-nn",
+   "title": "DL Lab I , Train a Small NN Hard",
+   "minutes": 6,
+   "endAnchor": "lab-w7-d3-dl-lab-i-train-small-nn-end",
+   "blocks": [
+    {
+     "anchor": "lab-w7-d3-dl-lab-i-train-small-nn-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "capacity sanity check",
+     "definition": "Tiny-batch overfit to near 100%: if the model cannot memorize 32 samples, something structural is wrong.",
+     "anchor": "lab-w7-d3-dl-lab-i-train-small-nn-p02"
+    },
+    {
+     "term": "training loop",
+     "definition": "Parameter init, forward with cache, stable softmax, backward, loop with schedules and clipping.",
+     "anchor": "lab-w7-d3-dl-lab-i-train-small-nn-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w7-d3-dl-lab-i-train-small-nn-r1",
+     "question": "What does the full NumPy training loop assemble?",
+     "answer": "Parameter init, forward with cache, stable softmax, backward, and the loop with schedules and clipping.",
+     "anchor": "lab-w7-d3-dl-lab-i-train-small-nn-p02"
+    },
+    {
+     "id": "lab-w7-d3-dl-lab-i-train-small-nn-r2",
+     "question": "What is the canonical capacity sanity check?",
+     "answer": "Overfit a tiny batch to near 100 percent; failure means something structural is wrong.",
+     "anchor": "lab-w7-d3-dl-lab-i-train-small-nn-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w7-d4-cnn-basics",
+   "title": "CNN Basics Hard",
+   "minutes": 4,
+   "endAnchor": "lab-w7-d4-cnn-basics-end",
+   "blocks": [
+    {
+     "anchor": "lab-w7-d4-cnn-basics-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "output-shape arithmetic",
+     "definition": "Get the shape formula into muscle memory.",
+     "anchor": "lab-w7-d4-cnn-basics-p02"
+    },
+    {
+     "term": "NCHW",
+     "definition": "Tensors in NCHW format for 2x2 max-pooling.",
+     "anchor": "lab-w7-d4-cnn-basics-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w7-d4-cnn-basics-r1",
+     "question": "Why get the shape formula into muscle memory?",
+     "answer": "Every architecture discussion for the rest of the volume assumes it.",
+     "anchor": "lab-w7-d4-cnn-basics-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w7-d5-modern-cnn-architectures",
+   "title": "Modern CNN Architectures (Residual Networks) Hard",
+   "minutes": 5,
+   "endAnchor": "lab-w7-d5-modern-cnn-architectures-end",
+   "blocks": [
+    {
+     "anchor": "lab-w7-d5-modern-cnn-architectures-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "residual connections",
+     "definition": "Improve gradient flow, enabling very deep stacks.",
+     "anchor": "lab-w7-d5-modern-cnn-architectures-p06"
+    },
+    {
+     "term": "gradient norms",
+     "definition": "Simulated with depth for plain vs residual stacks.",
+     "anchor": "lab-w7-d5-modern-cnn-architectures-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w7-d5-modern-cnn-architectures-r1",
+     "question": "What is the single most quotable fact in vision interviews?",
+     "answer": "The simulation result: residual stacks preserve gradient norms with depth while plain stacks do not.",
+     "anchor": "lab-w7-d5-modern-cnn-architectures-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w8-d1-transfer-learning-fine-tuning",
+   "title": "Transfer Learning &amp; Fine-Tuning Hard",
+   "minutes": 5,
+   "endAnchor": "lab-w8-d1-transfer-learning-fine-tuning-end",
+   "blocks": [
+    {
+     "anchor": "lab-w8-d1-transfer-learning-fine-tuning-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "frozen random features",
+     "definition": "The control most people skip.",
+     "anchor": "lab-w8-d1-transfer-learning-fine-tuning-p02"
+    },
+    {
+     "term": "fine-tuning",
+     "definition": "Compared against from-scratch and frozen transferred features.",
+     "anchor": "lab-w8-d1-transfer-learning-fine-tuning-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w8-d1-transfer-learning-fine-tuning-r1",
+     "question": "What is the quantitative lesson?",
+     "answer": "Transfer helps, but only the representation, not the ritual.",
+     "anchor": "lab-w8-d1-transfer-learning-fine-tuning-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w8-d2-augmentation-strategies",
+   "title": "Augmentation Strategies Hard",
+   "minutes": 7,
+   "endAnchor": "lab-w8-d2-augmentation-strategies-end",
+   "blocks": [
+    {
+     "anchor": "lab-w8-d2-augmentation-strategies-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "mixup",
+     "definition": "With cutmix and soft labels, compared against the baseline.",
+     "anchor": "lab-w8-d2-augmentation-strategies-p02"
+    },
+    {
+     "term": "label semantics",
+     "definition": "Watch on every transform; reward transforms that preserve meaning.",
+     "anchor": "lab-w8-d2-augmentation-strategies-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w8-d2-augmentation-strategies-r1",
+     "question": "What should you watch on every transform?",
+     "answer": "The label semantics; the lab rewards transforms that preserve meaning and punishes those that do not.",
+     "anchor": "lab-w8-d2-augmentation-strategies-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w8-d3-cnn-lab-image-classification",
+   "title": "CNN Lab , Image Classification (Frozen Backbone Workflow) Hard",
+   "minutes": 6,
+   "endAnchor": "lab-w8-d3-cnn-lab-image-classification-end",
+   "blocks": [
+    {
+     "anchor": "lab-w8-d3-cnn-lab-image-classification-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "frozen backbone",
+     "definition": "The end-to-end workflow: conv and pool forward, random-filter baseline, patch extraction.",
+     "anchor": "lab-w8-d3-cnn-lab-image-classification-p05"
+    },
+    {
+     "term": "k-means centroids",
+     "definition": "Used as learned filters.",
+     "anchor": "lab-w8-d3-cnn-lab-image-classification-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w8-d3-cnn-lab-image-classification-r1",
+     "question": "What does this capstone tie together?",
+     "answer": "Convolutions, transfer, and evaluation in the frozen-backbone workflow.",
+     "anchor": "lab-w8-d3-cnn-lab-image-classification-p02"
+    }
+   ]
+  }
+ ]
+}

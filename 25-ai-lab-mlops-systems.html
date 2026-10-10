@@ -934,17 +934,17 @@ needs latency. A batch of 64 looks heroic on requests per second. It looks terri
 <text x="350" y="386" font-size="11" fill="#a8a8a8">single worker: 20 ms fixed cost + 5 ms per request. 1 request: 25 ms. Batch of 8: 20 + 40 = 60 ms total. That is 7.5 ms amortized per request. Throughput rises 3.3x at 2.4x the latency of one request. A cache with 80 percent hit rate at 1 ms per hit lets most requests skip the 25 ms path entirely.</text>
 </g>
 </svg><figcaption>Serving: client and service bound by a contract; batching, caching, and workers move throughput and latency. <span class="fig-src">Source: AI Lab curriculum integration (reconstructed from first principles).</span></figcaption></figure><div class="diagram-walkthrough"><h4>How to read this diagram</h4><ol><li>The client (blue) and the HTTP service (green) are bound by the contract (amber): endpoint names, JSON shapes, status codes, latency budget. Contract tests verify it from the client side.</li><li>The scaling panel names the three levers: micro-batching amortizes fixed cost, caching skips recomputation, workers parallelize until the bottleneck moves.</li><li>The worked numbers show the batching trade. Eight requests in 60 ms give 3.3x the throughput at 2.4x the latency of one request. Caching at 80 percent hit rate beats both.</li></ol></div><p><strong>Interview relevance.</strong> "Design model serving for 10k requests per second at p99 under 100ms" is a systems interview in ML clothing. The answer that names the contract first and then does the batching arithmetic beats the answer that reaches for Kubernetes.</p><div class="takeaway"><h4>Key takeaways</h4><ul><li>Client-side contract tests verify the service contract (/health, /predict, JSON shapes, latency budget).</li><li>Batching trades latency for throughput; caching is the only lever that improves both; workers help until the bottleneck moves.</li><li>Name the metric the product pays for (throughput or p99 latency) before choosing the operating point.</li></ul></div><p class="lab-meta">Lab pointer: <strong>Deployment Lab</strong> (Week 12, Day 5) serves a model over HTTP with contract tests; <strong>Scaling ML Systems</strong> (Week 12, Day 4) measures the batching-versus-caching trade.</p><h2>Lab walkthroughs</h2><div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w12-d1-mlops-pipelines-cicd">MLOps ,  Pipelines &amp; CI/CD</button><button data-target="lab-w12-d2-model-registry-versioning">Model Registry &amp; Versioning</button><button data-target="lab-w12-d3-monitoring-drift-detection">Monitoring &amp; Drift Detection</button><button data-target="lab-w12-d4-scaling-ml-systems">Scaling ML Systems</button><button data-target="lab-w12-d5-deployment-lab">Deployment Lab</button></div><section class="lab" id="lab-w12-d1-mlops-pipelines-cicd">
-<h3>MLOps ,  Pipelines &amp; CI/CD <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 12, Day 1 · MLOps &amp; Systems · 8 tasks · 3 checks · Free</p>
-<p>The foundation lab for the whole week. You build a config-driven pipeline entrypoint. You add data generation with schema checks. You train logistic regression in NumPy. You evaluate behind a quality gate.</p>
-<p>You save artifacts with lineage. Then you simulate CI: determinism checks plus a regression gate.</p>
-<p>Treat the determinism check as the lab's soul: a pipeline that cannot reproduce itself earns no trust downstream.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">GitHub</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1MVpasWA3pKKteUMMlwza1Fg41XPFsd1N">Colab</a> · <a href="mlopsci_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/x32zd3-gMPw">Video</a></p>
+<h3 id="mlops-pipelines-amp-ci-cd-expert">MLOps ,  Pipelines &amp; CI/CD <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w12-d1-mlops-pipelines-cicd-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 12, Day 1 · MLOps &amp; Systems · 8 tasks · 3 checks · Free</p>
+<p data-term="quality gate" id="lab-w12-d1-mlops-pipelines-cicd-p02" data-kind="prose">The foundation lab for the whole week. You build a config-driven pipeline entrypoint. You add data generation with schema checks. You train logistic regression in NumPy. You evaluate behind a quality gate.</p>
+<p data-term="regression gate" id="lab-w12-d1-mlops-pipelines-cicd-p03" data-kind="prose">You save artifacts with lineage. Then you simulate CI: determinism checks plus a regression gate.</p>
+<p data-term="determinism check" id="lab-w12-d1-mlops-pipelines-cicd-p04" data-kind="prose">Treat the determinism check as the lab's soul: a pipeline that cannot reproduce itself earns no trust downstream.</p>
+<p id="lab-w12-d1-mlops-pipelines-cicd-p05" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w12-d1-mlops-pipelines-cicd-p06" data-kind="prose" class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">GitHub</span></p>
+<p id="lab-w12-d1-mlops-pipelines-cicd-p07" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1MVpasWA3pKKteUMMlwza1Fg41XPFsd1N">Colab</a> · <a href="mlopsci_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/x32zd3-gMPw">Video</a></p>
 <h4>Tasks (8)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>MLOps ,  Pipelines &amp; CI/CD ,  Student Lab</h3>
-<p>Offline lab: build a tiny reproducible ML pipeline and add CI-style checks.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="mlops-pipelines-amp-ci-cd-student-lab">MLOps ,  Pipelines &amp; CI/CD ,  Student Lab</h3>
+<p id="lab-w12-d1-mlops-pipelines-cicd-p08" data-kind="prose">Offline lab: build a tiny reproducible ML pipeline and add CI-style checks.</p>
 <h4>0 ,  Config + pipeline entrypoint</h4><h4>Starter code</h4><pre><code class="lang-python">import json
 from pathlib import Path
 import numpy as np
@@ -963,8 +963,8 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>MLOps ,  Pipelines &amp; CI/CD ,  Instructor Lab</h3>
-<p>Offline lab: build a tiny reproducible ML pipeline and add CI-style checks.</p>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="mlops-pipelines-amp-ci-cd-instructor-lab">MLOps ,  Pipelines &amp; CI/CD ,  Instructor Lab</h3>
+<p id="lab-w12-d1-mlops-pipelines-cicd-p09" data-kind="prose">Offline lab: build a tiny reproducible ML pipeline and add CI-style checks.</p>
 <h4>0 ,  Config + pipeline entrypoint</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Config + pipeline entrypoint</summary><div class="task-body"><h4>0 ,  Config + pipeline entrypoint</h4><h4>Starter code</h4><pre><code class="lang-python">CONFIG = {
     "seed": 0,
@@ -1162,18 +1162,18 @@ except AssertionError as e:
     check('regression_gate_blocks_bad_run', 'acc_gate' in str(e))
     print('Expected regression gate block triggered on acc_gate')
 </code></pre></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d1-mlops-pipelines-cicd">https://ai.thes30.com/problems/w12-d1-mlops-pipelines-cicd</a>.</p>
-</section><section class="lab" id="lab-w12-d2-model-registry-versioning">
-<h3>Model Registry &amp; Versioning <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 12, Day 2 · MLOps &amp; Systems · 7 tasks · 6 checks</p>
-<p>Identity for models. You define a tiny model artifact with a deterministic version id. You register versions with metadata. You resolve stage pointers. You promote from staging to production through gates.</p>
-<p>You audit by loading production artifacts and comparing versions. The invariant to internalize: versions are immutable, pointers move, and that is what makes rollback boring instead of terrifying.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">Meta</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1krNUGCA05XExdQN5snRea-p_7tKOGIvh">Colab</a> · <a href="registry_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/D7fUMC2IVlc">Video</a></p>
+<p id="lab-w12-d1-mlops-pipelines-cicd-p10" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d1-mlops-pipelines-cicd">https://ai.thes30.com/problems/w12-d1-mlops-pipelines-cicd</a>.</p>
+<span id="lab-w12-d1-mlops-pipelines-cicd-end" data-end></span></section><section class="lab" id="lab-w12-d2-model-registry-versioning">
+<h3 id="model-registry-amp-versioning-expert">Model Registry &amp; Versioning <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w12-d2-model-registry-versioning-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 12, Day 2 · MLOps &amp; Systems · 7 tasks · 6 checks</p>
+<p data-term="version id" id="lab-w12-d2-model-registry-versioning-p02" data-kind="prose">Identity for models. You define a tiny model artifact with a deterministic version id. You register versions with metadata. You resolve stage pointers. You promote from staging to production through gates.</p>
+<p data-term="versions are immutable" id="lab-w12-d2-model-registry-versioning-p03" data-kind="prose">You audit by loading production artifacts and comparing versions. The invariant to internalize: versions are immutable, pointers move, and that is what makes rollback boring instead of terrifying.</p>
+<p id="lab-w12-d2-model-registry-versioning-p04" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w12-d2-model-registry-versioning-p05" data-kind="prose" class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">Meta</span></p>
+<p id="lab-w12-d2-model-registry-versioning-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1krNUGCA05XExdQN5snRea-p_7tKOGIvh">Colab</a> · <a href="registry_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/D7fUMC2IVlc">Video</a></p>
 <h4>Tasks (7)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Model Registry &amp; Versioning ,  Student Lab</h3>
-<p>Offline lab: implement a filesystem-backed model registry with versioning and stage promotion.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="model-registry-amp-versioning-student-lab">Model Registry &amp; Versioning ,  Student Lab</h3>
+<p id="lab-w12-d2-model-registry-versioning-p07" data-kind="prose">Offline lab: implement a filesystem-backed model registry with versioning and stage promotion.</p>
 <h4>0 ,  Registry layout + helpers</h4><h4>Starter code</h4><pre><code class="lang-python">import json
 import hashlib
 from pathlib import Path
@@ -1196,8 +1196,8 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Model Registry &amp; Versioning ,  Instructor Lab</h3>
-<p>Offline lab: implement a filesystem-backed model registry with versioning and stage promotion.</p>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="model-registry-amp-versioning-instructor-lab">Model Registry &amp; Versioning ,  Instructor Lab</h3>
+<p id="lab-w12-d2-model-registry-versioning-p08" data-kind="prose">Offline lab: implement a filesystem-backed model registry with versioning and stage promotion.</p>
 <h4>0 ,  Registry layout + helpers</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Registry layout + helpers</summary><div class="task-body"><h4>0 ,  Registry layout + helpers</h4><h4>Starter code</h4><pre><code class="lang-python">REGISTRY_ROOT = Path("registry")
 MODEL_NAME = "toy_logreg"
@@ -1350,18 +1350,18 @@ m1 = load_metadata(MODEL_NAME, vid1)
 m2 = load_metadata(MODEL_NAME, vid2)
 print('acc diff', float(m1['metrics']['acc']) - float(m2['metrics']['acc']))
 </code></pre></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d2-model-registry-versioning">https://ai.thes30.com/problems/w12-d2-model-registry-versioning</a>.</p>
-</section><section class="lab" id="lab-w12-d3-monitoring-drift-detection">
-<h3>Monitoring &amp; Drift Detection <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 12, Day 3 · MLOps &amp; Systems · 5 tasks · 6 checks</p>
-<p>The watchtower lab. You generate a baseline batch and drifting production batches. You implement PSI, the KS statistic, and mean/variance shift. You add model and performance monitoring. You write alerting rules. Notice the ordering: label-free drift metrics come first because labels are late; the alert is what closes the loop back to retraining.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/14bbAkUgEcYFqVQ22NXpw3-PLXiOTb-mx">Colab</a> · <a href="drift_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/G4ccWJ2RyRM">Video</a></p>
+<p id="lab-w12-d2-model-registry-versioning-p09" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d2-model-registry-versioning">https://ai.thes30.com/problems/w12-d2-model-registry-versioning</a>.</p>
+<span id="lab-w12-d2-model-registry-versioning-end" data-end></span></section><section class="lab" id="lab-w12-d3-monitoring-drift-detection">
+<h3 id="monitoring-amp-drift-detection-expert">Monitoring &amp; Drift Detection <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w12-d3-monitoring-drift-detection-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 12, Day 3 · MLOps &amp; Systems · 5 tasks · 6 checks</p>
+<p data-term="PSI" id="lab-w12-d3-monitoring-drift-detection-p02" data-kind="prose">The watchtower lab. You generate a baseline batch and drifting production batches. You implement PSI, the KS statistic, and mean/variance shift. You add model and performance monitoring. You write alerting rules. Notice the ordering: label-free drift metrics come first because labels are late; the alert is what closes the loop back to retraining.</p>
+<p id="lab-w12-d3-monitoring-drift-detection-p03" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w12-d3-monitoring-drift-detection-p04" data-kind="prose" class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span></p>
+<p id="lab-w12-d3-monitoring-drift-detection-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/14bbAkUgEcYFqVQ22NXpw3-PLXiOTb-mx">Colab</a> · <a href="drift_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/G4ccWJ2RyRM">Video</a></p>
 <h4>Tasks (5)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Monitoring &amp; Drift Detection ,  Student Lab</h3>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="monitoring-amp-drift-detection-student-lab">Monitoring &amp; Drift Detection ,  Student Lab</h3>
 <h4>Task 0.0 ,  Setup</h4>
-<p>Load NumPy and the small <code>check(...)</code> helper used across the notebook. All later sections build on this setup.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
+<p id="lab-w12-d3-monitoring-drift-detection-p06" data-kind="prose">Load NumPy and the small <code>check(...)</code> helper used across the notebook. All later sections build on this setup.</p><h4>Starter code</h4><pre><code class="lang-python">import numpy as np
 
 def check(name: str, cond: bool):
     if not cond:
@@ -1377,14 +1377,14 @@ def check(name: str, cond: bool):
     print(f'OK: {name}')
 
 rng = np.random.default_rng(0)
-</code></pre><h4>Instructor explanation</h4><h3>Monitoring &amp; Drift Detection ,  Instructor Lab</h3>
-<p>Offline lab: detect feature drift and performance drift across simulated production batches.</p>
+</code></pre><h4>Instructor explanation</h4><h3 id="monitoring-amp-drift-detection-instructor-lab">Monitoring &amp; Drift Detection ,  Instructor Lab</h3>
+<p id="lab-w12-d3-monitoring-drift-detection-p07" data-kind="prose">Offline lab: detect feature drift and performance drift across simulated production batches.</p>
 <h4>0 ,  Generate baseline + drifting production batches</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Generate baseline + drifting production batches</summary><div class="task-body"><h4>Section 0 ,  Generate baseline + drifting production batches</h4>
 <h4>Task 0.1</h4>
-<p>Implement the synthetic batch generator used throughout the lab.</p>
+<p id="lab-w12-d3-monitoring-drift-detection-p08" data-kind="prose">Implement the synthetic batch generator used throughout the lab.</p>
 <ul><li><code>sigmoid(z)</code>: logistic link</li><li><code>make_batch(...)</code>: create one batch of features and labels</li><li>inject drift into the first <code>k = d//4</code> features using <code>mean_shift</code> and <code>scale_shift</code></li><li>return <code>X</code> with shape <code>(n, d)</code> and binary labels <code>y</code> with shape <code>(n,)</code></li></ul>
-<p>Then create one reference batch <code>X0, y0</code> and six production batches in <code>BATCHES</code>.</p><h4>Starter code</h4><pre><code class="lang-python">def sigmoid(z):
+<p id="lab-w12-d3-monitoring-drift-detection-p09" data-kind="prose">Then create one reference batch <code>X0, y0</code> and six production batches in <code>BATCHES</code>.</p><h4>Starter code</h4><pre><code class="lang-python">def sigmoid(z):
     # TODO
     ...
 def make_batch(n: int, d: int, seed: int, mean_shift: float = 0.0, scale_shift: float = 0.0, label_shift: float = 0.0):
@@ -1423,9 +1423,9 @@ check('shapes', X0.shape == (N, D) and y0.shape == (N,))
 </code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Drift metrics (PSI + KS + mean/variance shift)</summary><div class="task-body"><h4>Section 1 ,  Drift metrics (PSI + KS + mean/variance shift)</h4>
 <h4>Task 1.1</h4>
-<p>Implement feature-level drift metrics between a reference batch and a production batch.</p>
+<p id="lab-w12-d3-monitoring-drift-detection-p10" data-kind="prose">Implement feature-level drift metrics between a reference batch and a production batch.</p>
 <ul><li><code>psi_1d(base, prod)</code>: quantile-binned PSI for one feature</li><li><code>ks_statistic(base, prod)</code>: two-sample KS statistic without SciPy</li><li><code>mean_var_shift(base, prod)</code>: return mean shift, absolute mean shift, and variance ratio</li><li><code>drift_report(X_base, X_prod)</code>: compute one record per feature and sort by strongest drift</li></ul>
-<p>Print the top three most drifted features for the first production batch.</p><h4>Starter code</h4><pre><code class="lang-python">def psi_1d(base: np.ndarray, prod: np.ndarray, bins: int = 10, eps: float = 1e-12):
+<p id="lab-w12-d3-monitoring-drift-detection-p11" data-kind="prose">Print the top three most drifted features for the first production batch.</p><h4>Starter code</h4><pre><code class="lang-python">def psi_1d(base: np.ndarray, prod: np.ndarray, bins: int = 10, eps: float = 1e-12):
     # TODO
     ...
 def ks_statistic(base: np.ndarray, prod: np.ndarray):
@@ -1442,9 +1442,9 @@ print('top3', rep0[:3])
 check('rep_len', len(rep0) == D)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('rep_len', len(rep0) == D)</code></pre><h4>Checks</h4><ul><li>check('rep_len', len(rep0) == D)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Model + performance monitoring</summary><div class="task-body"><h4>Section 2 ,  Model + performance monitoring</h4>
 <h4>Task 2.1</h4>
-<p>Build a deterministic batch-level monitoring loop for model performance.</p>
+<p id="lab-w12-d3-monitoring-drift-detection-p12" data-kind="prose">Build a deterministic batch-level monitoring loop for model performance.</p>
 <ul><li><code>fit_fixed_model(d)</code>: create one fixed linear model</li><li><code>predict_proba(model, X)</code>: convert logits to probabilities</li><li><code>accuracy(y, yhat)</code>: classification accuracy</li><li><code>log_loss(y, p)</code>: binary cross-entropy</li><li><code>eval_batch(model, X, y)</code>: return a metrics dictionary with <code>acc</code> and <code>log_loss</code></li></ul>
-<p>Then evaluate the reference batch and every production batch and store the metrics in <code>series</code>.</p><h4>Starter code</h4><pre><code class="lang-python">def fit_fixed_model(d: int):
+<p id="lab-w12-d3-monitoring-drift-detection-p13" data-kind="prose">Then evaluate the reference batch and every production batch and store the metrics in <code>series</code>.</p><h4>Starter code</h4><pre><code class="lang-python">def fit_fixed_model(d: int):
     # TODO
     ...
 def predict_proba(model, X):
@@ -1502,9 +1502,9 @@ print('series', series)
 </code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Alerting rules (drift + performance)</summary><div class="task-body"><h4>Section 3 ,  Alerting rules (drift + performance)</h4>
 <h4>Task 3.1</h4>
-<p>Combine input-drift monitoring and outcome monitoring into one alert object.</p>
+<p id="lab-w12-d3-monitoring-drift-detection-p14" data-kind="prose">Combine input-drift monitoring and outcome monitoring into one alert object.</p>
 <ul><li>compute the ranked drift report for the current batch</li><li>use the top feature to decide whether drift exceeds <code>psi_thresh</code> or <code>ks_thresh</code></li><li>trigger <code>perf_alert</code> when accuracy drops enough relative to baseline</li><li>return a compact alert dictionary for logging or paging</li></ul>
-<p>Finally compare an early batch with a late batch and confirm that the later batch shows stronger PSI drift.</p><h4>Starter code</h4><pre><code class="lang-python">def alerts_for_batch(X_base, X_prod, base_metrics, prod_metrics, psi_thresh=0.2, ks_thresh=0.15, acc_drop=0.05):
+<p id="lab-w12-d3-monitoring-drift-detection-p15" data-kind="prose">Finally compare an early batch with a late batch and confirm that the later batch shows stronger PSI drift.</p><h4>Starter code</h4><pre><code class="lang-python">def alerts_for_batch(X_base, X_prod, base_metrics, prod_metrics, psi_thresh=0.2, ks_thresh=0.15, acc_drop=0.05):
     # TODO
     ...
 for t, (Xb, yb) in enumerate(BATCHES):
@@ -1517,21 +1517,21 @@ a0 = alerts_for_batch(X0, BATCHES[0][0], base_metrics, eval_batch(model, BATCHES
 a5 = alerts_for_batch(X0, BATCHES[5][0], base_metrics, eval_batch(model, BATCHES[5][0], BATCHES[5][1]))
 print('early_vs_late_top_psi', a0['top_psi'], a5['top_psi'])
 check('psi_increases', a5['top_psi'] &gt;= a0['top_psi'])</code></pre><h4>Test code</h4><pre><code class="lang-python">check('psi_increases', a5['top_psi'] &gt;= a0['top_psi'])</code></pre><h4>Checks</h4><ul><li>check('psi_increases', a5['top_psi'] &gt;= a0['top_psi'])</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d3-monitoring-drift-detection">https://ai.thes30.com/problems/w12-d3-monitoring-drift-detection</a>.</p>
-</section><section class="lab" id="lab-w12-d4-scaling-ml-systems">
-<h3>Scaling ML Systems <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 12, Day 4 · MLOps &amp; Systems · 3 tasks · 7 checks</p>
-<p>The math before the money. You build a simulator with a single worker, micro-batching, and caching, then run experiments that separate what batching buys from what caching buys. Short lab, lasting lesson: measure the bottleneck before scaling anything, and never confuse throughput wins with latency wins.</p>
-<p>Simulate serving load and study how queueing, micro-batching, and caching change latency and throughput.</p>
-<div class="callout"><strong>Outcome.</strong> Students can reason about p95/p99 latency, throughput, batching windows, cache hit rates, and scaling tradeoffs in ML serving systems.</div>
-<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">Uber</span><span class="tagchip co">Kubernetes</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1rTO0tYaH9AXaw_7HxLOpPBz3kF7qIB2L">Colab</a> · <a href="scaling_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/WL1FIXGhHyk">Video</a></p>
+<p id="lab-w12-d3-monitoring-drift-detection-p16" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d3-monitoring-drift-detection">https://ai.thes30.com/problems/w12-d3-monitoring-drift-detection</a>.</p>
+<span id="lab-w12-d3-monitoring-drift-detection-end" data-end></span></section><section class="lab" id="lab-w12-d4-scaling-ml-systems">
+<h3 id="scaling-ml-systems-expert">Scaling ML Systems <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w12-d4-scaling-ml-systems-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 12, Day 4 · MLOps &amp; Systems · 3 tasks · 7 checks</p>
+<p data-term="micro-batching" id="lab-w12-d4-scaling-ml-systems-p02" data-kind="prose">The math before the money. You build a simulator with a single worker, micro-batching, and caching, then run experiments that separate what batching buys from what caching buys. Short lab, lasting lesson: measure the bottleneck before scaling anything, and never confuse throughput wins with latency wins.</p>
+<p id="lab-w12-d4-scaling-ml-systems-p03" data-kind="prose">Simulate serving load and study how queueing, micro-batching, and caching change latency and throughput.</p>
+<div data-term="p95/p99 latency" id="lab-w12-d4-scaling-ml-systems-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can reason about p95/p99 latency, throughput, batching windows, cache hit rates, and scaling tradeoffs in ML serving systems.</div>
+<p id="lab-w12-d4-scaling-ml-systems-p04" data-kind="prose" class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">Uber</span><span class="tagchip co">Kubernetes</span></p>
+<p id="lab-w12-d4-scaling-ml-systems-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1rTO0tYaH9AXaw_7HxLOpPBz3kF7qIB2L">Colab</a> · <a href="scaling_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/WL1FIXGhHyk">Video</a></p>
 <h4>Tasks (3)</h4>
 <details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h4>Section 0 ,  Workload (Poisson arrivals)</h4>
 <h4>Task 0.1</h4>
-<p>Generate an arrival stream for a loaded serving system.</p>
+<p id="lab-w12-d4-scaling-ml-systems-p06" data-kind="prose">Generate an arrival stream for a loaded serving system.</p>
 <ul><li>use exponential inter-arrival times drawn from an exponential distribution to simulate Poisson arrivals</li><li>do not confuse this with exponential growth over time; these are random gaps between requests</li><li>accumulate them into monotonic arrival timestamps in seconds</li><li>create random query vectors so later sections have a synthetic request payload</li></ul>
-<p>This section defines the workload that the serving simulator will process.</p><h4>Starter code</h4><pre><code class="lang-python">N_REQ = 2000
+<p id="lab-w12-d4-scaling-ml-systems-p07" data-kind="prose">This section defines the workload that the serving simulator will process.</p><h4>Starter code</h4><pre><code class="lang-python">N_REQ = 2000
 ARRIVAL_RATE = 220.0  # req/s
 D = 128
 
@@ -1555,15 +1555,15 @@ def poisson_arrivals(n: int, rate: float, seed: int = 0):
 arrivals_s = poisson_arrivals(N_REQ, ARRIVAL_RATE, seed=0)
 queries = rng.standard_normal((N_REQ, D)).astype(np.float64)
 check('monotonic_arrivals', np.all(np.diff(arrivals_s) &gt;= 0.0))
-</code></pre><h4>Instructor explanation</h4><h3>Scaling ML Systems ,  Instructor Lab</h3>
-<p>Offline lab: simulate serving load to study latency/throughput tradeoffs (queueing, batching, caching).</p>
+</code></pre><h4>Instructor explanation</h4><h3 id="scaling-ml-systems-instructor-lab">Scaling ML Systems ,  Instructor Lab</h3>
+<p id="lab-w12-d4-scaling-ml-systems-p08" data-kind="prose">Offline lab: simulate serving load to study latency/throughput tradeoffs (queueing, batching, caching).</p>
 <h4>0 ,  Workload (Poisson arrivals)</h4>
 <h4>1 ,  Simulator (single worker, micro-batching, caching)</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 1 ,  Simulator (single worker, micro-batching, caching)</summary><div class="task-body"><h4>Section 1 ,  Simulator (single worker, micro-batching, caching)</h4>
 <h4>Task 1.1</h4>
-<p>Implement a simple single-worker serving simulator.</p>
+<p id="lab-w12-d4-scaling-ml-systems-p09" data-kind="prose">Implement a simple single-worker serving simulator.</p>
 <ul><li><code>service_time_ms(batch_size)</code>: batch service-time model</li><li><code>simulate(...)</code>: process requests in arrival order</li><li>support <code>max_batch</code> and <code>max_wait_ms</code> for micro-batching</li><li>support <code>cache_hit_rate</code> so some requests bypass expensive inference</li><li>return latency percentiles, throughput, cache-hit count, and mean batch size</li></ul>
-<p>Then run a no-batching, no-cache baseline and inspect its latency profile.</p><h4>Starter code</h4><pre><code class="lang-python">def service_time_ms(batch_size: int, base_ms: float = 6.0, per_item_ms: float = 0.10):
+<p id="lab-w12-d4-scaling-ml-systems-p10" data-kind="prose">Then run a no-batching, no-cache baseline and inspect its latency profile.</p><h4>Starter code</h4><pre><code class="lang-python">def service_time_ms(batch_size: int, base_ms: float = 6.0, per_item_ms: float = 0.10):
     # TODO
     ...
 
@@ -1581,9 +1581,9 @@ check('cache_count_nonneg', baseline['n_cache_hits'] &gt;= 0)
 </code></pre><h4>Checks</h4><ul><li>check('p95_ge_p50', baseline['p95_ms'] &gt;= baseline['p50_ms'])</li><li>check('thr_positive', baseline['throughput_rps'] &gt; 0.0)</li><li>check('cache_count_nonneg', baseline['n_cache_hits'] &gt;= 0)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 2 ,  Experiments: batching vs caching</summary><div class="task-body"><h4>Section 2 ,  Experiments: batching vs caching</h4>
 <h4>Task 2.1</h4>
-<p>Compare several serving configurations on the same arrival stream.</p>
+<p id="lab-w12-d4-scaling-ml-systems-p11" data-kind="prose">Compare several serving configurations on the same arrival stream.</p>
 <ul><li>no batching / no cache baseline</li><li>batching only</li><li>caching only</li><li>batching plus caching</li></ul>
-<p>Report p95 latency, p99 latency, and throughput for each setting, then check that scaling knobs actually change the system behavior.</p><h4>Starter code</h4><pre><code class="lang-python">def run_settings():
+<p id="lab-w12-d4-scaling-ml-systems-p12" data-kind="prose">Report p95 latency, p99 latency, and throughput for each setting, then check that scaling knobs actually change the system behavior.</p><h4>Starter code</h4><pre><code class="lang-python">def run_settings():
     # TODO
     ...
 results = run_settings()
@@ -1593,20 +1593,20 @@ check('got_results', len(results) &gt;= 3)</code></pre><h4>Test code</h4><pre><c
 check('batching_or_cache_helps_thr', max(r['throughput_rps'] for r in results) &gt;= results[0]['throughput_rps'])
 check('cache_not_worse_than_baseline', results_by_name['no_batch_cache30']['p95_ms'] &lt;= results_by_name['no_batch_no_cache']['p95_ms'])
 </code></pre><h4>Checks</h4><ul><li>check('got_results', len(results) &gt;= 3)</li><li>check('batching_or_cache_helps_thr', max(r['throughput_rps'] for r in results) &gt;= results[0]['throughput_rps'])</li><li>check('cache_not_worse_than_baseline', results_by_name['no_batch_cache30']['p95_ms'] &lt;= results_by_name['no_batch_no_cache']['p95_ms'])</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d4-scaling-ml-systems">https://ai.thes30.com/problems/w12-d4-scaling-ml-systems</a>.</p>
-</section><section class="lab" id="lab-w12-d5-deployment-lab">
-<h3>Deployment Lab <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 12, Day 5 · MLOps &amp; Systems · 5 tasks · 9 checks</p>
-<p>Shipping day. You serve a tiny deterministic model over HTTP using only the standard library. You implement the health and prediction endpoints that form the service contract. You write client helpers. You verify everything with CI-style contract tests. The lab is deliberately small: the contract discipline is the point, and it transfers unchanged to any model at any scale.</p>
-<p>Serve a tiny deterministic model over HTTP, then validate the service contract from a client.</p>
-<div class="callout"><strong>Outcome.</strong> Students can expose a model as a minimal JSON API, implement health and prediction endpoints, and verify deployment behavior with contract tests.</div>
-<p class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">Meta</span><span class="tagchip co">Docker</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1fB8gOecWuoVAkYQE3m8mnzfPfZUtMUQZ">Colab</a> · <a href="deploy_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/S_E6LCFttyA">Video</a></p>
+<p id="lab-w12-d4-scaling-ml-systems-p13" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d4-scaling-ml-systems">https://ai.thes30.com/problems/w12-d4-scaling-ml-systems</a>.</p>
+<span id="lab-w12-d4-scaling-ml-systems-end" data-end></span></section><section class="lab" id="lab-w12-d5-deployment-lab">
+<h3 id="deployment-lab-expert">Deployment Lab <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w12-d5-deployment-lab-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 12, Day 5 · MLOps &amp; Systems · 5 tasks · 9 checks</p>
+<p data-term="service contract" id="lab-w12-d5-deployment-lab-p02" data-kind="prose">Shipping day. You serve a tiny deterministic model over HTTP using only the standard library. You implement the health and prediction endpoints that form the service contract. You write client helpers. You verify everything with CI-style contract tests. The lab is deliberately small: the contract discipline is the point, and it transfers unchanged to any model at any scale.</p>
+<p id="lab-w12-d5-deployment-lab-p03" data-kind="prose">Serve a tiny deterministic model over HTTP, then validate the service contract from a client.</p>
+<div id="lab-w12-d5-deployment-lab-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> Students can expose a model as a minimal JSON API, implement health and prediction endpoints, and verify deployment behavior with contract tests.</div>
+<p id="lab-w12-d5-deployment-lab-p04" data-kind="prose" class="tags"><span class="tagchip">MLOps &amp; Systems</span><span class="tagchip">Expert</span><span class="tagchip">Week 12</span><span class="tagchip co">Meta</span><span class="tagchip co">Docker</span></p>
+<p id="lab-w12-d5-deployment-lab-p05" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1fB8gOecWuoVAkYQE3m8mnzfPfZUtMUQZ">Colab</a> · <a href="deploy_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/S_E6LCFttyA">Video</a></p>
 <h4>Tasks (5)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Deployment Lab ,  Student</h3>
-<p>Offline lab: serve a tiny model via HTTP and write contract tests.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="deployment-lab-student">Deployment Lab ,  Student</h3>
+<p id="lab-w12-d5-deployment-lab-p06" data-kind="prose">Offline lab: serve a tiny model via HTTP and write contract tests.</p>
 <h4>Task 0.0 ,  Setup</h4>
-<p>Import the stdlib HTTP tools, NumPy, and the shared <code>check(...)</code> helper. Later sections use this setup to run both the server and the client in one notebook.</p><h4>Starter code</h4><pre><code class="lang-python">import json
+<p id="lab-w12-d5-deployment-lab-p07" data-kind="prose">Import the stdlib HTTP tools, NumPy, and the shared <code>check(...)</code> helper. Later sections use this setup to run both the server and the client in one notebook.</p><h4>Starter code</h4><pre><code class="lang-python">import json
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 import numpy as np
@@ -1626,13 +1626,13 @@ def check(name: str, cond: bool):
         raise AssertionError(f'Failed: {name}')
     print(f'OK: {name}')
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Deployment Lab ,  Instructor</h3>
-<p>Offline lab: serve a tiny model via HTTP and write contract tests.</p>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="deployment-lab-instructor">Deployment Lab ,  Instructor</h3>
+<p id="lab-w12-d5-deployment-lab-p08" data-kind="prose">Offline lab: serve a tiny model via HTTP and write contract tests.</p>
 <h4>0 ,  Deterministic model stub</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Deterministic model stub</summary><div class="task-body"><h4>0 ,  Deterministic model stub</h4>
-<p>Implement a tiny offline model with a stable contract.</p>
+<p id="lab-w12-d5-deployment-lab-p09" data-kind="prose">Implement a tiny offline model with a stable contract.</p>
 <ul><li><code>sigmoid(z)</code>: convert logits to probabilities</li><li><code>predict_one(x)</code>: validate input shape, compute probability, and threshold to a label</li></ul>
-<p>This model stub becomes the logic behind the HTTP service in the next section.</p><h4>Starter code</h4><pre><code class="lang-python">D = 8
+<p id="lab-w12-d5-deployment-lab-p10" data-kind="prose">This model stub becomes the logic behind the HTTP service in the next section.</p><h4>Starter code</h4><pre><code class="lang-python">D = 8
 W = np.linspace(-1.0, 1.0, D).astype(np.float64)
 B = 0.1
 
@@ -1666,9 +1666,9 @@ print('demo', p_demo, y_demo)
 check('p_range', 0.0 &lt;= p_demo &lt;= 1.0)
 </code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  HTTP service contract (browser-safe stdlib)</summary><div class="task-body"><h4>1 ,  HTTP service contract (browser-safe stdlib)</h4>
-<p>Expose the deterministic model through a minimal JSON API using only the Python standard library.</p>
+<p id="lab-w12-d5-deployment-lab-p11" data-kind="prose">Expose the deterministic model through a minimal JSON API using only the Python standard library.</p>
 <ul><li>implement a browser-safe local service with <code>GET /health</code> and <code>POST /predict</code></li><li>return JSON for both success and error cases</li><li>in the platform runtime, simulate the HTTP contract locally instead of opening a listening socket</li></ul>
-<p>At the end of the cell, print the base URL and verify that the health endpoint responds.</p><h4>Starter code</h4><pre><code class="lang-python">HOST = 'local.service'
+<p id="lab-w12-d5-deployment-lab-p12" data-kind="prose">At the end of the cell, print the base URL and verify that the health endpoint responds.</p><h4>Starter code</h4><pre><code class="lang-python">HOST = 'local.service'
 
 class LocalService:
     def __init__(self, handler, host: str = HOST):
@@ -1705,9 +1705,9 @@ check('server_health_200', health_code == 200)
 check('server_health_ok', health_obj.get('status') == 'ok')
 </code></pre><h4>Checks</h4><ul><li>check('base_url_http', BASE_URL.startswith('http://'))</li><li>check('server_health_200', health_code == 200)</li><li>check('server_health_ok', health_obj.get('status') == 'ok')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Client helpers</summary><div class="task-body"><h4>2 ,  Client helpers</h4>
-<p>Implement thin client helpers for JSON GET and POST requests.</p>
+<p id="lab-w12-d5-deployment-lab-p13" data-kind="prose">Implement thin client helpers for JSON GET and POST requests.</p>
 <ul><li><code>http_get_json(url)</code>: return <code>(status_code, parsed_json)</code></li><li><code>http_post_json(url, obj)</code>: send JSON and return <code>(status_code, parsed_json)</code></li><li>support the notebook's local service contract first, then fall back to real URL requests when available</li><li>on HTTP errors, return the status code together with the parsed error payload</li></ul>
-<p>These helpers are then reused by the contract tests.</p><h4>Starter code</h4><pre><code class="lang-python">def _split_local_url(url: str):
+<p id="lab-w12-d5-deployment-lab-p14" data-kind="prose">These helpers are then reused by the contract tests.</p><h4>Starter code</h4><pre><code class="lang-python">def _split_local_url(url: str):
     # TODO
     ...
 
@@ -1721,9 +1721,9 @@ def http_post_json(url: str, obj: dict):
 check('helper_bad_request', http_post_json(BASE_URL + '/predict', {'x': [1,2,3]})[0] == 400)
 </code></pre><h4>Checks</h4><ul><li>check('helper_health', http_get_json(BASE_URL + '/health')[0] == 200)</li><li>check('helper_bad_request', http_post_json(BASE_URL + '/predict', {'x': [1,2,3]})[0] == 400)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Contract tests (CI-style)</summary><div class="task-body"><h4>3 ,  Contract tests (CI-style)</h4>
-<p>Write the deployment-facing tests that validate the service contract.</p>
+<p id="lab-w12-d5-deployment-lab-p15" data-kind="prose">Write the deployment-facing tests that validate the service contract.</p>
 <ul><li>health endpoint returns 200 with the expected schema</li><li>valid prediction requests return probability and binary label</li><li>malformed requests return a controlled 400 error</li></ul>
-<p>Run all three tests as if they were CI checks against a deployed service.</p><h4>Starter code</h4><pre><code class="lang-python">def test_health():
+<p id="lab-w12-d5-deployment-lab-p16" data-kind="prose">Run all three tests as if they were CI checks against a deployed service.</p><h4>Starter code</h4><pre><code class="lang-python">def test_health():
     # TODO
     ...
 def test_predict_ok():
@@ -1761,8 +1761,8 @@ print('all tests passed')
 
 check('contract_tests_ran', True)
 </code></pre></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d5-deployment-lab">https://ai.thes30.com/problems/w12-d5-deployment-lab</a>.</p>
-</section><h2>Interview clearance</h2><div class="ob-board"><h4>Design prompt</h4><ul><li>Your nightly retrain shipped a worse model. Walk the postmortem: which of the five labs' mechanisms would have caught it, in order?</li><li>Design model versioning for a team of twenty: version ids, stages, promotion gates, rollback. No product names until the mechanics are done.</li><li>A key feature's PSI crossed 0.25 but accuracy has not moved. Page or ticket? Defend your alerting rule.</li><li>Size a serving tier: 10k requests per second, p99 under 100ms, 20ms fixed cost plus 5ms per request. Show the batching arithmetic.</li><li>Draw the full production loop on one whiteboard and mark every handoff where this week's labs add a check.</li></ul></div><div class="pq"><p class="pq-q"><strong>Q1.</strong> Two runs of your pipeline with the same seed produce different metrics. What is the most likely class of cause?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Nondeterminism in the pipeline: an unseeded random source, unordered file reads, or a race in parallel aggregation.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong: someone miscalibrated the quality gate. The gate judges metrics; it does not change them between identical runs.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> An unseeded RNG, nondeterministic ordering, or a parallel race: the determinism CI check exists for exactly this.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> The model architecture is wrong. Architecture affects metric values, not run-to-run reproducibility.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> The registry version id collided. Content-derived ids do not collide; and the metrics differ before any registry enters the picture.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q2.</strong> Version v4 is in staging with better metrics than production v3. What must happen before the production pointer moves?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> The promotion gates must pass: metric thresholds, contract checks, and whatever approval the policy requires.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Nothing; better metrics mean it should go live immediately. Metrics are necessary but not sufficient; gates exist for the rest.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Delete v3 to save space. Versions are immutable; deleting the rollback target is exactly the failure mode.</li><li><span class="pq-opt-right"><strong>C, right:</strong></span> Gated promotion: metrics, checks, and approval. Only then does the pointer move.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> Retrain v4 with a new seed for safety. That creates a new version with new lineage, not a safer v4.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q3.</strong> Production labels arrive six weeks late. How do you watch model health this week?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: A.</strong> Label-free input drift metrics (PSI, KS, mean/variance shift) plus serving metrics like latency and error rate.</p><ul><li><span class="pq-opt-right"><strong>A, right:</strong></span> Input drift metrics need no labels; serving metrics catch system failures. Accuracy joins when labels arrive.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Wait for labels; accuracy is the only real signal. Six weeks of blindness is the failure the lab prevents.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Retrain weekly regardless of signals. Scheduled retrains without monitoring waste compute and can ship regressions.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> Watch the loss on the training set. Training loss says nothing about production data.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q4.</strong> Your service handles 8 requests per batch in 60ms total (20ms fixed + 5ms each). The product needs p99 latency under 40ms. What do you do?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: D.</strong> The latency budget forbids batching here; reach for caching or more workers, and verify by measurement.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Increase the batch to 16 for more throughput. That raises latency further past the budget.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Keep the batch of 8; 60ms amortized is fine. 60ms exceeds the 40ms budget; amortized math does not pay the user's latency.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Remove the fixed cost by deleting health checks. The fixed cost is in the serving path, not the health endpoint.</li><li><span class="pq-opt-right"><strong>D, right:</strong></span> The latency budget rules out this batch size; use caching or parallelism and measure the p99.</li></ul></div></div><div class="takeaway"><h4>Key takeaways</h4><ul><li>MLOps interviews test the loop: determinism, versioning, gates, drift, contracts, scaling math.</li><li>Answer in mechanics before product names: content-derived ids, stage pointers, PSI thresholds, batching arithmetic.</li><li>Every production decision is a measured tradeoff with a named metric and an owner.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Connect Volumes 23, 24, and 25 in one architecture sketch. Where does the transformer train? Where does the index live? What watches both in production?</li></ul></div><p class="lab-meta">Lab pointer: <strong>MLOps: Pipelines &amp; CI/CD</strong> (Week 12, Day 1) plus <strong>Deployment Lab</strong> (Week 12, Day 5) make the strongest interview artifact. A reproducible pipeline that ends in a tested service.</p>
+<p id="lab-w12-d5-deployment-lab-p17" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w12-d5-deployment-lab">https://ai.thes30.com/problems/w12-d5-deployment-lab</a>.</p>
+<span id="lab-w12-d5-deployment-lab-end" data-end></span></section><h2 id="interview-clearance">Interview clearance</h2><div id="lab-w12-d5-deployment-lab-aside02" data-kind="aside" class="ob-board"><h4>Design prompt</h4><ul><li>Your nightly retrain shipped a worse model. Walk the postmortem: which of the five labs' mechanisms would have caught it, in order?</li><li>Design model versioning for a team of twenty: version ids, stages, promotion gates, rollback. No product names until the mechanics are done.</li><li>A key feature's PSI crossed 0.25 but accuracy has not moved. Page or ticket? Defend your alerting rule.</li><li>Size a serving tier: 10k requests per second, p99 under 100ms, 20ms fixed cost plus 5ms per request. Show the batching arithmetic.</li><li>Draw the full production loop on one whiteboard and mark every handoff where this week's labs add a check.</li></ul></div><div id="lab-w12-d5-deployment-lab-pq01" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q1.</strong> Two runs of your pipeline with the same seed produce different metrics. What is the most likely class of cause?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Nondeterminism in the pipeline: an unseeded random source, unordered file reads, or a race in parallel aggregation.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong: someone miscalibrated the quality gate. The gate judges metrics; it does not change them between identical runs.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> An unseeded RNG, nondeterministic ordering, or a parallel race: the determinism CI check exists for exactly this.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> The model architecture is wrong. Architecture affects metric values, not run-to-run reproducibility.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> The registry version id collided. Content-derived ids do not collide; and the metrics differ before any registry enters the picture.</li></ul></div></div><div id="lab-w12-d5-deployment-lab-pq02" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q2.</strong> Version v4 is in staging with better metrics than production v3. What must happen before the production pointer moves?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> The promotion gates must pass: metric thresholds, contract checks, and whatever approval the policy requires.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Nothing; better metrics mean it should go live immediately. Metrics are necessary but not sufficient; gates exist for the rest.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Delete v3 to save space. Versions are immutable; deleting the rollback target is exactly the failure mode.</li><li><span class="pq-opt-right"><strong>C, right:</strong></span> Gated promotion: metrics, checks, and approval. Only then does the pointer move.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> Retrain v4 with a new seed for safety. That creates a new version with new lineage, not a safer v4.</li></ul></div></div><div id="lab-w12-d5-deployment-lab-pq03" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q3.</strong> Production labels arrive six weeks late. How do you watch model health this week?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: A.</strong> Label-free input drift metrics (PSI, KS, mean/variance shift) plus serving metrics like latency and error rate.</p><ul><li><span class="pq-opt-right"><strong>A, right:</strong></span> Input drift metrics need no labels; serving metrics catch system failures. Accuracy joins when labels arrive.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Wait for labels; accuracy is the only real signal. Six weeks of blindness is the failure the lab prevents.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Retrain weekly regardless of signals. Scheduled retrains without monitoring waste compute and can ship regressions.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> Watch the loss on the training set. Training loss says nothing about production data.</li></ul></div></div><div id="lab-w12-d5-deployment-lab-pq04" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q4.</strong> Your service handles 8 requests per batch in 60ms total (20ms fixed + 5ms each). The product needs p99 latency under 40ms. What do you do?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: D.</strong> The latency budget forbids batching here; reach for caching or more workers, and verify by measurement.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Increase the batch to 16 for more throughput. That raises latency further past the budget.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> Keep the batch of 8; 60ms amortized is fine. 60ms exceeds the 40ms budget; amortized math does not pay the user's latency.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Remove the fixed cost by deleting health checks. The fixed cost is in the serving path, not the health endpoint.</li><li><span class="pq-opt-right"><strong>D, right:</strong></span> The latency budget rules out this batch size; use caching or parallelism and measure the p99.</li></ul></div></div><div id="lab-w12-d5-deployment-lab-takeaway" data-kind="summary" data-reveal="fade" class="takeaway"><h4>Key takeaways</h4><ul><li>MLOps interviews test the loop: determinism, versioning, gates, drift, contracts, scaling math.</li><li>Answer in mechanics before product names: content-derived ids, stage pointers, PSI thresholds, batching arithmetic.</li><li>Every production decision is a measured tradeoff with a named metric and an owner.</li></ul></div><div id="lab-w12-d5-deployment-lab-aside03" data-kind="aside" class="ob-board"><h4>Design prompt</h4><ul><li>Connect Volumes 23, 24, and 25 in one architecture sketch. Where does the transformer train? Where does the index live? What watches both in production?</li></ul></div><p id="lab-w12-d5-deployment-lab-p18" data-kind="prose" class="lab-meta">Lab pointer: <strong>MLOps: Pipelines &amp; CI/CD</strong> (Week 12, Day 1) plus <strong>Deployment Lab</strong> (Week 12, Day 5) make the strongest interview artifact. A reproducible pipeline that ends in a tested service.</p>
 <nav class="ds-volume-nav" aria-label="Volume navigation"><a class="ds-prev" href="24-ai-lab-rag-retrieval.html"><span>&uarr; Previous volume</span>Volume 24: RAG and Retrieval</a><a class="ds-next" href="26-ai-lab-system-design.html"><span>Next volume &darr;</span>Volume 26: System Design</a></nav>
 <div class="provenance"><strong>Last verified: October 2026.</strong> Live-verified: AI Lab site scrape (labs, tasks, solutions). <span class="uv">UNVERIFIED:</span> none.</div>
 <footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html">AI Lab Atlas: 15-Week Lab Map</a></li><li><a href="17-ai-lab-python-data.html">Python and Data Tools</a></li><li><a href="18-ai-lab-math-for-ml.html">Math for ML (AI Lab)</a></li><li><a href="19-ai-lab-classical-ml.html">Classical ML</a></li><li><a href="20-ai-lab-evaluation-debugging.html">Evaluation and Debugging</a></li><li><a href="21-ai-lab-deep-learning.html">Deep Learning (AI Lab)</a></li><li><a href="22-ai-lab-cv-nlp-basics.html">CV and NLP Basics</a></li><li><a href="23-ai-lab-transformers.html">Transformers</a></li><li><a href="24-ai-lab-rag-retrieval.html">RAG and Retrieval</a></li><li><a href="25-ai-lab-mlops-systems.html" class="foot-current">MLOps and Systems</a></li><li><a href="26-ai-lab-system-design.html">System Design (AI Lab)</a></li><li><a href="27-ai-lab-llm-agentic.html">LLM and Agentic AI</a></li><li><a href="28-ai-lab-interview-clearance.html">Interview Clearance</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav></footer>

@@ -1,0 +1,560 @@
+{
+ "schemaVersion": 1,
+ "itemId": "07-post-training-rl",
+ "itemKind": "lesson",
+ "revision": "799d775bbb3f461400394d3b7baad3b3b640a0e91c7d529066094eef23eecf33",
+ "sections": [
+  {
+   "anchor": "ch1",
+   "title": "1. The alignment problem: what pre-training gives you, and why it is not enough",
+   "minutes": 6,
+   "endAnchor": "ch1-end",
+   "blocks": [
+    {
+     "anchor": "ch1-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch1-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch1-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "alignment problem",
+     "definition": "What pre-training gives versus being helpful, harmless, honest.",
+     "anchor": "ch1-p04"
+    },
+    {
+     "term": "base model",
+     "definition": "A text simulator, not an assistant; three concrete failure ways.",
+     "anchor": "ch1-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch1-r1",
+     "question": "What does pre-training actually optimize?",
+     "answer": "Next-token prediction: the probability distribution of what comes next in internet text.",
+     "anchor": "ch1-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch2",
+   "title": "2. SFT: supervised fine-tuning, mechanically",
+   "minutes": 7,
+   "endAnchor": "ch2-end",
+   "blocks": [
+    {
+     "anchor": "ch2-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch2-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch2-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "SFT",
+     "definition": "Supervised fine-tuning: show the shape of the job by example.",
+     "anchor": "ch2-aside01"
+    },
+    {
+     "term": "behavioral cloning",
+     "definition": "What SFT is; works where demos cover the behavior.",
+     "anchor": "ch2-p09"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch2-r1",
+     "question": "What is SFT, mechanically?",
+     "answer": "The simplest post-training step; which tokens get loss and why.",
+     "anchor": "ch2-aside01"
+    },
+    {
+     "id": "ch2-r2",
+     "question": "Why is quality more important than quantity in SFT data?",
+     "answer": "The chapter's design prompt; demos teach the shape.",
+     "anchor": "ch2-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch3",
+   "title": "3. Preference data: the fuel everything runs on",
+   "minutes": 7,
+   "endAnchor": "ch3-end",
+   "blocks": [
+    {
+     "anchor": "ch3-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch3-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch3-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "preference data",
+     "definition": "Rankings, not absolute scores; the fuel for chapters 4-6.",
+     "anchor": "ch3-p02"
+    },
+    {
+     "term": "data beats algorithm",
+     "definition": "Why practitioners say it in RLHF.",
+     "anchor": "ch3-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch3-r1",
+     "question": "Why rankings instead of absolute scores?",
+     "answer": "Comparisons are the human signal SFT cannot give: which of two good answers is better.",
+     "anchor": "ch3-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch4",
+   "title": "4. The RLHF pipeline end to end: reward model, then PPO",
+   "minutes": 16,
+   "endAnchor": "ch4-end",
+   "blocks": [
+    {
+     "anchor": "ch4-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch4-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch4-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "reward model",
+     "definition": "Turns comparisons into scores; Bradley-Terry scalar head.",
+     "anchor": "ch4-aside01"
+    },
+    {
+     "term": "PPO",
+     "definition": "Proximal policy optimization; the clipped objective with KL penalty.",
+     "anchor": "ch4-aside01"
+    },
+    {
+     "term": "KL leash",
+     "definition": "Keeps the policy near the SFT model; stops drift.",
+     "anchor": "ch4-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch4-r1",
+     "question": "What are the three RLHF stages?",
+     "answer": "Train a reward model from comparisons, optimize the policy with PPO, KL leash to the SFT model.",
+     "anchor": "ch4-aside01"
+    },
+    {
+     "id": "ch4-r2",
+     "question": "Why the clip and the KL penalty?",
+     "answer": "The clip bounds the update; the KL penalty stops drift from the reference.",
+     "anchor": "ch4-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch5",
+   "title": "5. DPO (Direct Preference Optimization), derived from first principles",
+   "minutes": 12,
+   "endAnchor": "ch5-end",
+   "blocks": [
+    {
+     "anchor": "ch5-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch5-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch5-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "DPO",
+     "definition": "Direct Preference Optimization: the RLHF closed-form optimum as a classification loss.",
+     "anchor": "ch5-aside01"
+    },
+    {
+     "term": "reparameterization",
+     "definition": "Do not skip it in the derivation.",
+     "anchor": "ch5-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch5-r1",
+     "question": "Where did the reward model go?",
+     "answer": "Pure algebra absorbs it; the chapter asks what assumptions you smuggled in.",
+     "anchor": "ch5-aside01"
+    },
+    {
+     "id": "ch5-r2",
+     "question": "When does DPO beat PPO, and when does it fail?",
+     "answer": "The chapter's design prompt; no rollouts versus online exploration.",
+     "anchor": "ch5-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch6",
+   "title": "6. GRPO and RLVR: RL with checkable answers",
+   "minutes": 10,
+   "endAnchor": "ch6-end",
+   "blocks": [
+    {
+     "anchor": "ch6-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch6-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch6-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "RLVR",
+     "definition": "RL with verifiable rewards; no human preference data needed.",
+     "anchor": "ch6-aside01"
+    },
+    {
+     "term": "GRPO",
+     "definition": "Group-relative policy optimization; advantages from a group, no critic.",
+     "anchor": "ch6-aside01"
+    },
+    {
+     "term": "verifier",
+     "definition": "Replaces the learned reward model where answers are checkable.",
+     "anchor": "ch6-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch6-r1",
+     "question": "Why does RLVR not need human preference data?",
+     "answer": "Math and code are checkable: right-or-wrong beats preferred.",
+     "anchor": "ch6-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch7",
+   "title": "7. Constitutional AI: oversight that scales",
+   "minutes": 8,
+   "endAnchor": "ch7-end",
+   "blocks": [
+    {
+     "anchor": "ch7-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch7-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch7-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Constitutional AI",
+     "definition": "The model labels itself guided by a written constitution; two phases.",
+     "anchor": "ch7-aside01"
+    },
+    {
+     "term": "constitution",
+     "definition": "Written principles guiding the model’s self-labeling.",
+     "anchor": "ch7-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch7-r1",
+     "question": "Is the constitution a system prompt?",
+     "answer": "The chapter's design prompt; why or why not.",
+     "anchor": "ch7-aside01"
+    },
+    {
+     "id": "ch7-r2",
+     "question": "What do humans still have to do?",
+     "answer": "Write the constitution; the model does the labeling.",
+     "anchor": "ch7-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch8",
+   "title": "8. Reward hacking: when the proxy eats the goal",
+   "minutes": 7,
+   "endAnchor": "ch8-end",
+   "blocks": [
+    {
+     "anchor": "ch8-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch8-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch8-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "reward hacking",
+     "definition": "The policy learns to score well instead of be good.",
+     "anchor": "ch8-aside01"
+    },
+    {
+     "term": "proxy",
+     "definition": "Demos, preferences, reward models, constitutions; all proxies.",
+     "anchor": "ch8-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch8-r1",
+     "question": "Your reward climbs but human evals are flat. What do you do?",
+     "answer": "Suspect reward hacking; the proxy ate the goal.",
+     "anchor": "ch8-aside01"
+    },
+    {
+     "id": "ch8-r2",
+     "question": "What failure do chapters 2-7 share?",
+     "answer": "Each optimizes a proxy: demos, preferences, reward models, constitutions.",
+     "anchor": "ch8-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch9",
+   "title": "9. Eval-driven iteration: how post-training actually runs",
+   "minutes": 5,
+   "endAnchor": "ch9-end",
+   "blocks": [
+    {
+     "anchor": "ch9-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch9-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch9-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "train, evaluate, analyze",
+     "definition": "The loop; the operating system of real post-training.",
+     "anchor": "ch9-p01"
+    },
+    {
+     "term": "win-rate delta",
+     "definition": "Read it without fooling yourself.",
+     "anchor": "ch9-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch9-r1",
+     "question": "Where do evals sit?",
+     "answer": "In the loop: they decide which method, which data, when to stop.",
+     "anchor": "ch9-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch10",
+   "title": "10. Decision guide: SFT or RL?",
+   "minutes": 7,
+   "endAnchor": "ch10-end",
+   "blocks": [
+    {
+     "anchor": "ch10-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch10-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch10-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "decision procedure",
+     "definition": "What you can show versus what you can only judge.",
+     "anchor": "ch10-p01"
+    },
+    {
+     "term": "win-rate",
+     "definition": "52 versus 48: how practitioners read results.",
+     "anchor": "ch10-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch10-r1",
+     "question": "You have 500 great demos and no preference data. What first?",
+     "answer": "SFT; the chapter's decision guide.",
+     "anchor": "ch10-aside01"
+    },
+    {
+     "id": "ch10-r2",
+     "question": "When is SFT enough, and when do you need RL?",
+     "answer": "The key question: demonstration versus judgment.",
+     "anchor": "ch10-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "capstone",
+   "title": "Capstone lab: SFT then DPO on the tiny GPT",
+   "minutes": 5,
+   "endAnchor": "capstone-end",
+   "blocks": [
+    {
+     "anchor": "capstone-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "capstone-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "playbook",
+     "definition": "SFT first, DPO when it plateaus, PPO or verifiable rewards as needed.",
+     "anchor": "capstone-fig01"
+    },
+    {
+     "term": "reference policy",
+     "definition": "SFT gives the reference for every later stage.",
+     "anchor": "capstone-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "capstone-r1",
+     "question": "What governs every step?",
+     "answer": "The eval loop.",
+     "anchor": "capstone-fig01"
+    }
+   ]
+  },
+  {
+   "anchor": "07-post-training-rl-watch-deeper",
+   "title": "07-post-training-rl-watch-deeper",
+   "minutes": 1,
+   "endAnchor": "07-post-training-rl-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "07-post-training-rl-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "07-post-training-rl-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Nathan Lambert",
+     "definition": "Post-Training Book course: SFT, reward modeling, RLHF in one video.",
+     "anchor": "07-post-training-rl-watch-deeper-fig01"
+    },
+    {
+     "term": "speed control",
+     "definition": "On each player.",
+     "anchor": "07-post-training-rl-watch-deeper-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "07-post-training-rl-watch-deeper-r1",
+     "question": "Where to start for one video on the whole volume?",
+     "answer": "Lambert's Post-Training and RLHF Overview, Lecture 1.",
+     "anchor": "07-post-training-rl-watch-deeper-fig01"
+    }
+   ]
+  }
+ ]
+}

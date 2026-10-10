@@ -1,0 +1,579 @@
+{
+ "schemaVersion": 1,
+ "itemId": "10-productionizing-mlops",
+ "itemKind": "lesson",
+ "revision": "7f2834cd0b4e16f8cadfb31a017a923dc51bde68b5a6af85f8f636c0d4eb49a3",
+ "sections": [
+  {
+   "anchor": "10-productionizing-mlops-intro",
+   "title": "10-productionizing-mlops-intro",
+   "minutes": 1,
+   "endAnchor": "10-productionizing-mlops-intro-end",
+   "blocks": [],
+   "keyTerms": [
+    {
+     "term": "real world",
+     "definition": "Solutions that work in the real world: notebook to service.",
+     "anchor": "10-productionizing-mlops-intro-p02"
+    },
+    {
+     "term": "reliability contracts",
+     "definition": "Pipelines, monitoring, drift, versioning, CI/CD, incidents, cost, and these.",
+     "anchor": "10-productionizing-mlops-intro-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "10-productionizing-mlops-intro-r1",
+     "question": "What is responsible serving?",
+     "answer": "Tested, monitored, costed, and recoverable; Volume 8 taught fast serving, this teaches responsible serving.",
+     "anchor": "10-productionizing-mlops-intro-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "bridge",
+   "title": "How this volume fits",
+   "minutes": 2,
+   "endAnchor": "bridge-end",
+   "blocks": [
+    {
+     "anchor": "bridge-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "bridge-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "bridge-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "productionizing",
+     "definition": "Volume 9's FDE playbook sketched it; this volume gives the full treatment.",
+     "anchor": "bridge-p01"
+    },
+    {
+     "term": "responsible serving",
+     "definition": "Tested, monitored, costed, recoverable.",
+     "anchor": "bridge-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "bridge-r1",
+     "question": "What does this volume assume from Volume 8?",
+     "answer": "Fast serving and honest measurement; batching and benchmarking by name.",
+     "anchor": "bridge-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "notebook-to-service",
+   "title": "From notebook to service: the real steps",
+   "minutes": 5,
+   "endAnchor": "notebook-to-service-end",
+   "blocks": [
+    {
+     "anchor": "notebook-to-service-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "notebook-to-service-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "notebook-to-service-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "four stages",
+     "definition": "Each adds one production property: order, reproducibility, versioning, operability.",
+     "anchor": "notebook-to-service-fig01"
+    },
+    {
+     "term": "3am",
+     "definition": "The service that works at 3am.",
+     "anchor": "notebook-to-service-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "notebook-to-service-r1",
+     "question": "What is the fixed sequence?",
+     "answer": "Exploratory notebook to a service that works at 3am, in four stages.",
+     "anchor": "notebook-to-service-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "data-pipelines",
+   "title": "Data pipelines and feature freshness",
+   "minutes": 6,
+   "endAnchor": "data-pipelines-end",
+   "blocks": [
+    {
+     "anchor": "data-pipelines-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "data-pipelines-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "data-pipelines-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "freshness",
+     "definition": "How old the data is when the model reads it; late pipelines make confident wrongness.",
+     "anchor": "data-pipelines-p01"
+    },
+    {
+     "term": "pipeline",
+     "definition": "Ingest, validate, transform, store, serve.",
+     "anchor": "data-pipelines-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "data-pipelines-r1",
+     "question": "What is the first way production goes wrong silently?",
+     "answer": "Freshness bugs: the pipeline is late, wrong, or different from training time.",
+     "anchor": "data-pipelines-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "monitoring",
+   "title": "Monitoring: metrics and alerting",
+   "minutes": 5,
+   "endAnchor": "monitoring-end",
+   "blocks": [
+    {
+     "anchor": "monitoring-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "monitoring-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "monitoring-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "monitoring",
+     "definition": "Continuous measurement: metrics, data quality checks, alerting.",
+     "anchor": "monitoring-p01"
+    },
+    {
+     "term": "alerting",
+     "definition": "Who gets woken up, and only for what.",
+     "anchor": "monitoring-p01"
+    },
+    {
+     "term": "drift detection",
+     "definition": "Has the data or the world changed.",
+     "anchor": "monitoring-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "monitoring-r1",
+     "question": "Why monitor?",
+     "answer": "Silent quality decay is invisible without measurement; the team notices before users do.",
+     "anchor": "monitoring-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "drift",
+   "title": "Drift: the world changes under you",
+   "minutes": 5,
+   "endAnchor": "drift-end",
+   "blocks": [
+    {
+     "anchor": "drift-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "drift-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "drift-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "drift",
+     "definition": "Change over time in the data or in what the right answer is.",
+     "anchor": "drift-p01"
+    },
+    {
+     "term": "PSI",
+     "definition": "Population stability index; the number for drift.",
+     "anchor": "drift-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "drift-r1",
+     "question": "What is the felt problem?",
+     "answer": "No deploy, no errors, but quality slid downhill all week; the world changed, not the model.",
+     "anchor": "drift-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "versioning",
+   "title": "Model versioning and the registry",
+   "minutes": 4,
+   "endAnchor": "versioning-end",
+   "blocks": [
+    {
+     "anchor": "versioning-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "versioning-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "versioning-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "registry",
+     "definition": "Tracks every model: which weights serve, what trained them, eval scores.",
+     "anchor": "versioning-p04"
+    },
+    {
+     "term": "rollback",
+     "definition": "If the new one misbehaves at 2am, can the team roll back.",
+     "anchor": "versioning-p04"
+    }
+   ],
+   "recall": [
+    {
+     "id": "versioning-r1",
+     "question": "Why is an untracked model a liability?",
+     "answer": "Every model the team cannot identify and roll back is a liability.",
+     "anchor": "versioning-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "cicd",
+   "title": "CI/CD for ML: testing models and safe rollout",
+   "minutes": 6,
+   "endAnchor": "cicd-end",
+   "blocks": [
+    {
+     "anchor": "cicd-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "cicd-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "cicd-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "CI/CD",
+     "definition": "Tested, reviewed, staged releases for weights, prompts, configs, data.",
+     "anchor": "cicd-p02"
+    },
+    {
+     "term": "staged releases",
+     "definition": "The software discipline wired to ML artifacts.",
+     "anchor": "cicd-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "cicd-r1",
+     "question": "What is the unit of change in ML?",
+     "answer": "Weights, prompts, configs, data pipelines; not just code.",
+     "anchor": "cicd-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "incidents",
+   "title": "Incident response: a worked narrative",
+   "minutes": 6,
+   "endAnchor": "incidents-end",
+   "blocks": [
+    {
+     "anchor": "incidents-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "incidents-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "incidents-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "incident response",
+     "definition": "Detect, triage, mitigate, fix, verify, review.",
+     "anchor": "incidents-p02"
+    },
+    {
+     "term": "worked incident",
+     "definition": "One incident from detection to review.",
+     "anchor": "incidents-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "incidents-r1",
+     "question": "How are ML incidents weirder?",
+     "answer": "Nothing crashes, no error spikes; the system just gets quietly worse or confidently wrong.",
+     "anchor": "incidents-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "cost",
+   "title": "Cost engineering: unit economics of inference",
+   "minutes": 6,
+   "endAnchor": "cost-end",
+   "blocks": [
+    {
+     "anchor": "cost-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "cost-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "cost-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "unit economics",
+     "definition": "Cost per unit of value: per token, per request, per completed task.",
+     "anchor": "cost-p02"
+    },
+    {
+     "term": "cost engineering",
+     "definition": "Know where every dollar goes; move it with architecture, not hope.",
+     "anchor": "cost-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "cost-r1",
+     "question": "What is the order of operations?",
+     "answer": "Volume 8 made tokens cheap; this chapter makes the system cheap.",
+     "anchor": "cost-fig02"
+    }
+   ]
+  },
+  {
+   "anchor": "reliability",
+   "title": "Reliability contracts for AI systems",
+   "minutes": 6,
+   "endAnchor": "reliability-end",
+   "blocks": [
+    {
+     "anchor": "reliability-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "reliability-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "reliability-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "reliability contract",
+     "definition": "Written measurable promises on quality, latency, cost; with budget, verification, traces, replay.",
+     "anchor": "reliability-p02"
+    },
+    {
+     "term": "replay",
+     "definition": "Reproduce any past decision.",
+     "anchor": "reliability-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "reliability-r1",
+     "question": "What is not a contract?",
+     "answer": "'The model is good' is not a contract.",
+     "anchor": "reliability-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "labs",
+   "title": "Labs: monitored endpoint, load test, cost math",
+   "minutes": 3,
+   "endAnchor": "labs-end",
+   "blocks": [
+    {
+     "anchor": "labs-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "labs-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "monitored endpoint",
+     "definition": "Lab 1: /predict with /metrics on a laptop CPU.",
+     "anchor": "labs-p01"
+    },
+    {
+     "term": "/metrics",
+     "definition": "p50/p99/mean and counts.",
+     "anchor": "labs-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "labs-r1",
+     "question": "What do the three labs need?",
+     "answer": "Only a laptop CPU and the standard library; no GPU.",
+     "anchor": "labs-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "labs-23",
+   "title": "Labs 2 and 3: load test and cost math",
+   "minutes": 3,
+   "endAnchor": "labs-23-end",
+   "blocks": [
+    {
+     "anchor": "labs-23-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "tail latency",
+     "definition": "Lab 2 hammers the endpoint and reads p50/p99.",
+     "anchor": "labs-23-p01"
+    },
+    {
+     "term": "cost math",
+     "definition": "Lab 3 prices what Lab 2 measured; measure first, price second.",
+     "anchor": "labs-23-p06"
+    }
+   ],
+   "recall": [
+    {
+     "id": "labs-23-r1",
+     "question": "What is the Chapter 8 order?",
+     "answer": "Measure first, price second.",
+     "anchor": "labs-23-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "10-productionizing-mlops-watch-deeper",
+   "title": "10-productionizing-mlops-watch-deeper",
+   "minutes": 2,
+   "endAnchor": "10-productionizing-mlops-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "10-productionizing-mlops-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "10-productionizing-mlops-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "guardrails",
+     "definition": "Layered guardrails among LLM-specific pillars.",
+     "anchor": "10-productionizing-mlops-watch-deeper-fig01"
+    },
+    {
+     "term": "CML",
+     "definition": "GitHub Actions workflow that retrains on every push.",
+     "anchor": "10-productionizing-mlops-watch-deeper-fig02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "10-productionizing-mlops-watch-deeper-r1",
+     "question": "What should you take back to your team?",
+     "answer": "One practice from the three talks, watched at 2x.",
+     "anchor": "10-productionizing-mlops-watch-deeper-p02"
+    }
+   ]
+  }
+ ]
+}

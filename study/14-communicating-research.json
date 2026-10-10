@@ -1,0 +1,484 @@
+{
+ "schemaVersion": 1,
+ "itemId": "14-communicating-research",
+ "itemKind": "lesson",
+ "revision": "e450126c85a9a92662989149fbdd7b7225e34b453e828f91fdc13a51d138dabe",
+ "sections": [
+  {
+   "anchor": "v14-ch1",
+   "title": "1. Who is the audience and what do they need",
+   "minutes": 4,
+   "endAnchor": "v14-ch1-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch1-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v14-ch1-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v14-ch1-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "audience",
+     "definition": "The people who will read or hear your work; each needs a different answer.",
+     "anchor": "v14-ch1-p01"
+    },
+    {
+     "term": "reader-centric",
+     "definition": "Write for the reader's expectations, not your own.",
+     "anchor": "v14-ch1-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch1-r1",
+     "question": "What is the first move?",
+     "answer": "Name the audience and what they need; communication starts with the reader, not you.",
+     "anchor": "v14-ch1-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch2",
+   "title": "2. Structure of a paper",
+   "minutes": 4,
+   "endAnchor": "v14-ch2-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch2-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v14-ch2-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v14-ch2-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "IMRaD",
+     "definition": "Introduction, Methods, Results, Discussion; each answers one question.",
+     "anchor": "v14-ch2-p02"
+    },
+    {
+     "term": "argument",
+     "definition": "A paper is an argument your claim is true and new, dressed as a report.",
+     "anchor": "v14-ch2-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch2-r1",
+     "question": "How do readers actually read?",
+     "answer": "Abstract, skim figures, decide whether to trust you; not front to back.",
+     "anchor": "v14-ch2-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch3",
+   "title": "3. Structure of a talk",
+   "minutes": 4,
+   "endAnchor": "v14-ch3-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch3-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v14-ch3-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v14-ch3-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "one-message rule",
+     "definition": "A 20-minute talk can land one idea.",
+     "anchor": "v14-ch3-p02"
+    },
+    {
+     "term": "arc",
+     "definition": "Hook, journey through tries including failures, result, takeaway.",
+     "anchor": "v14-ch3-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch3-r1",
+     "question": "Why is a talk not a paper read aloud?",
+     "answer": "The audience cannot rewind or skip ahead, and remembers one thing the next day.",
+     "anchor": "v14-ch3-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch4",
+   "title": "4. Figures that explain",
+   "minutes": 4,
+   "endAnchor": "v14-ch4-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch4-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v14-ch4-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v14-ch4-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "30-second test",
+     "definition": "A stranger gets the point in 30 seconds without reading the paper.",
+     "anchor": "v14-ch4-p02"
+    },
+    {
+     "term": "annotate the point",
+     "definition": "One of five figure rules; with axes, one message, uncertainty.",
+     "anchor": "v14-ch4-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch4-r1",
+     "question": "What are the five figure rules?",
+     "answer": "Title states the message, axes carry meaning and units, one message per figure, annotate the point, show uncertainty.",
+     "anchor": "v14-ch4-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch5",
+   "title": "5. Writing clearly",
+   "minutes": 4,
+   "endAnchor": "v14-ch5-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch5-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v14-ch5-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "v14-ch5-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "STAR",
+     "definition": "For ownership stories.",
+     "anchor": "v14-ch5-fig02"
+    },
+    {
+     "term": "SCAR",
+     "definition": "For research stories.",
+     "anchor": "v14-ch5-fig02"
+    },
+    {
+     "term": "topic sentence",
+     "definition": "First; six mechanical rules for clear writing.",
+     "anchor": "v14-ch5-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch5-r1",
+     "question": "What are the six writing rules?",
+     "answer": "Topic sentence first, short sentences, active voice, verbs carry action, define terms at first use, revise in passes.",
+     "anchor": "v14-ch5-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch6",
+   "title": "6. The research communication: what it actually measures",
+   "minutes": 5,
+   "endAnchor": "v14-ch6-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch6-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v14-ch6-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "rubric",
+     "definition": "What the research-communication interview actually measures.",
+     "anchor": "v14-ch6-p03"
+    },
+    {
+     "term": "collaboration",
+     "definition": "Projects, failures, conflicts, decisions; the right side.",
+     "anchor": "v14-ch6-aside02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch6-r1",
+     "question": "What do your papers prove versus your talk?",
+     "answer": "Papers prove you can do the work; talking proves you can do it with other people.",
+     "anchor": "v14-ch6-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch7",
+   "title": "7. Your research narrative: the two-minute pitch",
+   "minutes": 4,
+   "endAnchor": "v14-ch7-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch7-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v14-ch7-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "research narrative",
+     "definition": "Your work compressed into two minutes.",
+     "anchor": "v14-ch7-fig01"
+    },
+    {
+     "term": "two-minute pitch",
+     "definition": "Draft, review, revise, repeat.",
+     "anchor": "v14-ch7-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch7-r1",
+     "question": "What is the unsolved problem here?",
+     "answer": "Compressing your work into two minutes.",
+     "anchor": "v14-ch7-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch8",
+   "title": "8. Failure stories: honesty as a signal",
+   "minutes": 4,
+   "endAnchor": "v14-ch8-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch8-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "v14-ch8-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "failure story",
+     "definition": "Real mistake, real consequences, real changed behavior; the highest-signal 3 minutes.",
+     "anchor": "v14-ch8-p02"
+    },
+    {
+     "term": "postmortem",
+     "definition": "Where the 3 minutes pay off.",
+     "anchor": "v14-ch8-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch8-r1",
+     "question": "Why are failure stories credible?",
+     "answer": "Honesty about failure is hard; those who tell them well are instantly credible.",
+     "anchor": "v14-ch8-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch9",
+   "title": "9. Conflict stories: disagreement without damage",
+   "minutes": 4,
+   "endAnchor": "v14-ch9-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch9-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "disagreement",
+     "definition": "Hold a technical position, listen, converge without burning the relationship.",
+     "anchor": "v14-ch9-p01"
+    },
+    {
+     "term": "converge",
+     "definition": "Without burning the relationship.",
+     "anchor": "v14-ch9-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch9-r1",
+     "question": "What are reviewers looking for?",
+     "answer": "Evidence you can fight well, not drama.",
+     "anchor": "v14-ch9-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch10",
+   "title": "10. Reps: how practice actually works",
+   "minutes": 4,
+   "endAnchor": "v14-ch10-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch10-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "reps",
+     "definition": "About twenty separate knowing the framework from performing under pressure.",
+     "anchor": "v14-ch10-p02"
+    },
+    {
+     "term": "WRITTEN",
+     "definition": "Anatomy check on paper fixes structural failure.",
+     "anchor": "v14-ch10-p02"
+    },
+    {
+     "term": "DRILLED",
+     "definition": "Partner follow-ups fix what breaks under questioning.",
+     "anchor": "v14-ch10-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch10-r1",
+     "question": "What is the training plan?",
+     "answer": "Written, timed, recorded, drilled; each fixes a different failure.",
+     "anchor": "v14-ch10-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "v14-ch11",
+   "title": "11. Calibration: contrast and the senior bar",
+   "minutes": 4,
+   "endAnchor": "v14-ch11-end",
+   "blocks": [
+    {
+     "anchor": "v14-ch11-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "calibration",
+     "definition": "Knowing where the bar is and where you stand relative to it.",
+     "anchor": "v14-ch11-p02"
+    },
+    {
+     "term": "contrast",
+     "definition": "Strong versus weak answers side by side.",
+     "anchor": "v14-ch11-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "v14-ch11-r1",
+     "question": "How does miscalibration run both ways?",
+     "answer": "Weak communicators think they did well (no contrast); strong ones think badly (impostor contrast).",
+     "anchor": "v14-ch11-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "14-communicating-research-watch-deeper",
+   "title": "14-communicating-research-watch-deeper",
+   "minutes": 2,
+   "endAnchor": "14-communicating-research-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "14-communicating-research-watch-deeper-p02",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "14-communicating-research-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "Simon Peyton Jones",
+     "definition": "On writing and talks; state the problem up front.",
+     "anchor": "14-communicating-research-watch-deeper-fig01"
+    },
+    {
+     "term": "clarity",
+     "definition": "Four talks from teachers famous for it.",
+     "anchor": "14-communicating-research-watch-deeper-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "14-communicating-research-watch-deeper-r1",
+     "question": "What is the SPJ talk advice?",
+     "answer": "Mountains versus molehills; seven concrete suggestions for writing, specific-to-general for talks.",
+     "anchor": "14-communicating-research-watch-deeper-fig02"
+    }
+   ]
+  }
+ ]
+}

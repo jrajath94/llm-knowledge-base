@@ -905,20 +905,20 @@ verifier gates what enters memory.</p>
 <p>All four labs in week and day order. Each lab below renders its full task list with starter code, hints, tests, and solutions from the AI Lab source. Use the tab bar to jump between labs.</p>
 <div class="lab-tabs" id="labTabs" aria-label="Jump to a lab"><button data-target="lab-w15-d3-agents-intro">Agents Intro</button><button data-target="lab-w15-d4-multi-agent-systems-in-production">Multi-Agent Systems in Production</button><button data-target="lab-w15-d6-inference-time-scaling-verifiers">Inference-Time Scaling &amp; Verifiers</button><button data-target="lab-w15-d7-self-improving-agents">Self-Improving Agents</button></div>
 <section class="lab" id="lab-w15-d3-agents-intro">
-<h3>Agents Intro <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 15, Day 3 · LLM &amp; Agentic AI · 5 tasks · 5 checks</p>
+<h3 id="agents-intro-expert">Agents Intro <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w15-d3-agents-intro-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 15, Day 3 · LLM &amp; Agentic AI · 5 tasks · 5 checks</p>
 
-<p>The foundation lab for the whole category. You define three deterministic tools with explicit input and output contracts. You write a tiny heuristic policy that maps a prompt to a tool action (standing in for the language model so the machinery stays visible). You build the minimal executor loop with product-grade guardrails: allowed tools, budgets, confirmation for writes. You evaluate the agent over a small benchmark.</p>
-<p>The graded habit is the last task: summarize operational
+<p data-term="executor loop" id="lab-w15-d3-agents-intro-p02" data-kind="prose">The foundation lab for the whole category. You define three deterministic tools with explicit input and output contracts. You write a tiny heuristic policy that maps a prompt to a tool action (standing in for the language model so the machinery stays visible). You build the minimal executor loop with product-grade guardrails: allowed tools, budgets, confirmation for writes. You evaluate the agent over a small benchmark.</p>
+<p data-term="typed interface" id="lab-w15-d3-agents-intro-p03" data-kind="prose">The graded habit is the last task: summarize operational
 metrics, not just correctness. Watch for the contract discipline: every tool gets
 a typed interface, because the model can only be as reliable as the tools it
 calls.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1evz9DQM-jWpv-jODrKn2tKrMDuaRLFjU">Colab</a> · <a href="/notes/w15-d3-agents-intro.html">Notes</a> · <a href="agents_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/VsX1rtSBruc">Video</a></p>
+<p id="lab-w15-d3-agents-intro-p04" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w15-d3-agents-intro-p05" data-kind="prose" class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
+<p id="lab-w15-d3-agents-intro-p06" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1evz9DQM-jWpv-jODrKn2tKrMDuaRLFjU">Colab</a> · <a href="/notes/w15-d3-agents-intro.html">Notes</a> · <a href="agents_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/VsX1rtSBruc">Video</a></p>
 <h4>Tasks (5)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Agents Intro ,  Student Lab</h3>
-<p>Offline lab: build a minimal agent loop with tool calling + guardrails.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="agents-intro-student-lab">Agents Intro ,  Student Lab</h3>
+<p id="lab-w15-d3-agents-intro-p07" data-kind="prose">Offline lab: build a minimal agent loop with tool calling + guardrails.</p>
 <h4>0 ,  Define tools</h4><h4>Starter code</h4><pre><code class="lang-python">from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Tuple
 import re
@@ -941,12 +941,12 @@ def check(name: str, cond: bool):
         raise AssertionError(f"Failed: {name}")
     print(f"OK: {name}")
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Agents Intro ,  Instructor Lab</h3>
-<p>Offline lab: build a minimal agent loop with tool calling + guardrails.</p>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="agents-intro-instructor-lab">Agents Intro ,  Instructor Lab</h3>
+<p id="lab-w15-d3-agents-intro-p08" data-kind="prose">Offline lab: build a minimal agent loop with tool calling + guardrails.</p>
 <h4>0 ,  Define tools</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Define tools</summary><div class="task-body"><h4>0 ,  Define tools</h4>
-<p>Create three deterministic tools with explicit input/output contracts. The point of this section is to make tool calling concrete before you build any agent loop on top of it.</p>
-<p>Each tool should:</p>
+<p id="lab-w15-d3-agents-intro-p09" data-kind="prose">Create three deterministic tools with explicit input/output contracts. The point of this section is to make tool calling concrete before you build any agent loop on top of it.</p>
+<p id="lab-w15-d3-agents-intro-p10" data-kind="prose">Each tool should:</p>
 <ul><li>read a small structured argument dictionary</li><li>return a structured dictionary result</li><li>fail deterministically for bad lookups instead of hallucinating an answer</li></ul><h4>Starter code</h4><pre><code class="lang-python">@dataclass
 class Tool:
     name: str
@@ -1009,10 +1009,10 @@ TOOLBOX: Dict[str, Tool] = {
 check('toolbox_has_3', len(TOOLBOX) &gt;= 3)
 </code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  A simple policy (mock LLM)</summary><div class="task-body"><h4>1 ,  A simple policy (mock LLM)</h4>
-<p>Implement a tiny heuristic policy that maps a user prompt to a tool action. This stands in for the LLM decision step in a real agent system.</p>
-<p>The policy should recognize:</p>
+<p id="lab-w15-d3-agents-intro-p11" data-kind="prose">Implement a tiny heuristic policy that maps a user prompt to a tool action. This stands in for the LLM decision step in a real agent system.</p>
+<p id="lab-w15-d3-agents-intro-p12" data-kind="prose">The policy should recognize:</p>
 <ul><li>arithmetic requests like <code>add 2 and 3</code></li><li>text normalization requests like <code>lower: HeLLo</code></li><li>lookup requests like <code>country of Tokyo</code></li></ul>
-<p>If no tool call is valid, return <code>None</code>.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
+<p id="lab-w15-d3-agents-intro-p13" data-kind="prose">If no tool call is valid, return <code>None</code>.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
 class Action:
     tool_name: str
     args: Dict[str, Any]
@@ -1057,10 +1057,10 @@ check('policy_add', policy('add 2 and 3').tool_name == 'add')
 check('policy_lower', policy('lower: HeLLo').tool_name == 'lower')
 </code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Agent loop with guardrails</summary><div class="task-body"><h4>2 ,  Agent loop with guardrails</h4>
-<p>Build the minimal agent executor around the policy and tools.</p>
-<p>Your loop should enforce production-style controls:</p>
+<p id="lab-w15-d3-agents-intro-p14" data-kind="prose">Build the minimal agent executor around the policy and tools.</p>
+<p id="lab-w15-d3-agents-intro-p15" data-kind="prose">Your loop should enforce production-style controls:</p>
 <ul><li>a tool allowlist</li><li>a total cost budget</li><li>a max-step limit</li><li>deterministic failure when the policy chooses no valid action or a tool returns an error</li></ul>
-<p>Return a structured result containing whether the run succeeded, the final answer, the number of steps, total cost, and a short trace.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
+<p id="lab-w15-d3-agents-intro-p16" data-kind="prose">Return a structured result containing whether the run succeeded, the final answer, the number of steps, total cost, and a short trace.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
 class AgentResult:
     ok: bool
     answer: str
@@ -1083,10 +1083,10 @@ r = run_agent(
 print(r)
 check('agent_add', r.ok and r.answer == '15')</code></pre><h4>Test code</h4><pre><code class="lang-python">check('agent_add', r.ok and r.answer == '15')</code></pre><h4>Checks</h4><ul><li>check('agent_add', r.ok and r.answer == '15')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$f</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Evaluation harness</summary><div class="task-body"><h4>3 ,  Evaluation harness</h4>
-<p>Evaluate the agent over a small benchmark and summarize the operational metrics, not just correctness.</p>
-<p>Track at least:</p>
+<p id="lab-w15-d3-agents-intro-p17" data-kind="prose">Evaluate the agent over a small benchmark and summarize the operational metrics, not just correctness.</p>
+<p id="lab-w15-d3-agents-intro-p18" data-kind="prose">Track at least:</p>
 <ul><li>success rate</li><li>average number of steps</li><li>average tool cost</li></ul>
-<p>This mirrors how production judges real agent systems: quality alone is not enough if the workflow is too slow or too expensive.</p><h4>Starter code</h4><pre><code class="lang-python">TASKS = [
+<p id="lab-w15-d3-agents-intro-p19" data-kind="prose">This mirrors how production judges real agent systems: quality alone is not enough if the workflow is too slow or too expensive.</p><h4>Starter code</h4><pre><code class="lang-python">TASKS = [
     ('add 2 and 3', '5'),
     ('lower: HeLLo', 'hello'),
     ('country of Tokyo', 'japan'),
@@ -1129,24 +1129,24 @@ print(metrics)
 check('good_success', metrics['success_rate'] &gt;= 0.75)
 </code></pre></details></div></details>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>OpenAI</td><td>high</td><td>tool use, agent loops, handoffs, agent orchestration</td><td>OpenAI Agents SDK; AI agents interview questions</td></tr><tr><td>Anthropic</td><td>high</td><td>agent workflows, context engineering, managed agents</td><td>Anthropic building effective agents; Anthropic managed agents</td></tr><tr><td>Google DeepMind</td><td>medium</td><td>multi-agent design, agent scaling, coordination tradeoffs</td><td>Google research on scaling agent systems</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d3-agents-intro">https://ai.thes30.com/problems/w15-d3-agents-intro</a>.</p>
-</section>
+<p id="lab-w15-d3-agents-intro-p20" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d3-agents-intro">https://ai.thes30.com/problems/w15-d3-agents-intro</a>.</p>
+<span id="lab-w15-d3-agents-intro-end" data-end></span></section>
 <section class="lab" id="lab-w15-d4-multi-agent-systems-in-production">
-<h3>Multi-Agent Systems in Production <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 15, Day 4 · LLM &amp; Agentic AI · 6 tasks · 5 checks</p>
+<h3 id="multi-agent-systems-in-production-expert">Multi-Agent Systems in Production <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 15, Day 4 · LLM &amp; Agentic AI · 6 tasks · 5 checks</p>
 
-<p>The decomposition lab. You build a planner, worker, and critic system over shared state. The tool layer and state object come first.</p>
-<p>Then a deterministic planner that converts tasks into short tool-call sequences. A worker that executes under guardrails. A critic that verifies outputs and escalates. An orchestrator that drives the whole cycle with evaluation.</p>
-<p>Watch for the contract lesson: each
+<p data-term="planner" id="lab-w15-d4-multi-agent-systems-in-production-p02" data-kind="prose">The decomposition lab. You build a planner, worker, and critic system over shared state. The tool layer and state object come first.</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p03" data-kind="prose">Then a deterministic planner that converts tasks into short tool-call sequences. A worker that executes under guardrails. A critic that verifies outputs and escalates. An orchestrator that drives the whole cycle with evaluation.</p>
+<p data-term="narrow" id="lab-w15-d4-multi-agent-systems-in-production-p04" data-kind="prose">Watch for the contract lesson: each
 role is narrow on purpose. The critic cannot act, the worker cannot replan, and
 that narrowness is what makes each role checkable and the system debuggable.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<p class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
-<p class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1RvfO4XljOhFXIdr0ZcyDSsfLmq6z2q8H">Colab</a> · <a href="/notes/w15-d4-multi-agent-systems-in-production.html">Notes</a> · <a href="multiagents_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/-5v0-rAfxmw">Video</a></p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p05" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p06" data-kind="prose" class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p07" data-kind="prose" class="lab-meta">Resources: <a href="https://colab.research.google.com/drive/1RvfO4XljOhFXIdr0ZcyDSsfLmq6z2q8H">Colab</a> · <a href="/notes/w15-d4-multi-agent-systems-in-production.html">Notes</a> · <a href="multiagents_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/-5v0-rAfxmw">Video</a></p>
 <h4>Tasks (6)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Multi-Agent Systems in Production ,  Student Lab</h3>
-<p>Offline lab: build a small planner / worker / critic system with shared state, guardrails, and evaluation.</p>
-<p>You will implement:</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="multi-agent-systems-in-production-student-lab">Multi-Agent Systems in Production ,  Student Lab</h3>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p08" data-kind="prose">Offline lab: build a small planner / worker / critic system with shared state, guardrails, and evaluation.</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p09" data-kind="prose">You will implement:</p>
 <ul><li>a small tool interface</li><li>a planner that turns tasks into tool calls</li><li>a worker that executes the plan under budget + allowlist guardrails</li><li>a critic that verifies the output</li><li>an orchestrator that ties the roles together</li></ul>
 <h4>0 ,  Tools + shared state</h4><h4>Starter code</h4><pre><code class="lang-python">from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Tuple
@@ -1170,21 +1170,21 @@ def check(name: str, cond: bool):
         raise AssertionError(f"Failed: {name}")
     print(f"OK: {name}")
 
-rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3>Multi-Agent Systems in Production ,  Instructor Lab</h3>
-<p>Offline lab: build a small planner / worker / critic system with shared state, guardrails, and evaluation.</p>
+rng = np.random.default_rng(0)</code></pre><h4>Instructor explanation</h4><h3 id="multi-agent-systems-in-production-instructor-lab">Multi-Agent Systems in Production ,  Instructor Lab</h3>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p10" data-kind="prose">Offline lab: build a small planner / worker / critic system with shared state, guardrails, and evaluation.</p>
 <h4>0 ,  Tools + shared state</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Tools + shared state</summary><div class="task-body"><h4>0 ,  Tools + shared state</h4>
-<p>Implement the basic tool layer and a shared state object.</p>
-<p>Requirements:</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p11" data-kind="prose">Implement the basic tool layer and a shared state object.</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p12" data-kind="prose">Requirements:</p>
 <ul><li>each tool returns a dictionary like <code>{"result": ...}</code></li><li>the shared state tracks <code>budget</code>, <code>cost</code>, <code>memory</code>, and a <code>trace</code></li><li>every significant event should be logged into the trace</li></ul><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><h4>Test code</h4><pre><code class="lang-python">state = SharedState(budget=2.0, cost=0.0, memory={}, trace=[])
 log(state, 'system', 'boot', ok=True)
 check('toolbox_n', len(TOOLBOX) &gt;= 4)
 check('trace_logs', len(state.trace) == 1)</code></pre><h4>Checks</h4><ul><li>check('toolbox_n', len(TOOLBOX) &gt;= 4)</li><li>check('trace_logs', len(state.trace) == 1)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Planner agent</summary><div class="task-body"><h4>1 ,  Planner agent</h4>
-<p>Implement a deterministic planner that converts the user task into a short sequence of tool calls.</p>
-<p>Handle these patterns:</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p13" data-kind="prose">Implement a deterministic planner that converts the user task into a short sequence of tool calls.</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p14" data-kind="prose">Handle these patterns:</p>
 <ul><li><code>(a + b) * c</code></li><li><code>country of CITY</code></li><li><code>lower then country of CITY</code></li></ul>
-<p>The planner should output structured <code>ToolCall</code> objects, not the final answer.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
+<p id="lab-w15-d4-multi-agent-systems-in-production-p15" data-kind="prose">The planner should output structured <code>ToolCall</code> objects, not the final answer.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
 class ToolCall:
     tool: str
     args: Dict[str, Any]
@@ -1202,8 +1202,8 @@ check('plan_last_ref', plan_math[1].args['a'] == '$last')</code></pre><h4>Test c
 check('plan_len', len(plan_math) == 2)
 check('plan_last_ref', plan_math[1].args['a'] == '$last')</code></pre><h4>Checks</h4><ul><li>check('plan_len', len(plan_math) == 2)</li><li>check('plan_last_ref', plan_math[1].args['a'] == '$last')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Worker agent (exec + guardrails)</summary><div class="task-body"><h4>2 ,  Worker agent (exec + guardrails)</h4>
-<p>Implement the worker that executes a plan.</p>
-<p>Guardrails to enforce:</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p16" data-kind="prose">Implement the worker that executes a plan.</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p17" data-kind="prose">Guardrails to enforce:</p>
 <ul><li>only allowed tools may run</li><li>tool cost must stay within the remaining budget</li><li><code>$last</code> should resolve to the previous tool result</li><li>each execution step should be logged into shared state</li></ul><h4>Starter code</h4><pre><code class="lang-python">def resolve_arg(value: Any, state: SharedState) -&gt; Any:
     # TODO
     ...
@@ -1235,8 +1235,8 @@ state_tight = SharedState(budget=1.0, cost=0.0, memory={}, trace=[])
 blocked = worker(planner('(2 + 3) * 4'), state_tight)
 check('worker_budget_blocked', 'error' in blocked and blocked['error'] == 'budget_exceeded')</code></pre><h4>Checks</h4><ul><li>check('worker_math', out.get('result') == 20)</li><li>check('worker_budget_blocked', 'error' in blocked and blocked['error'] == 'budget_exceeded')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Critic agent (verification / escalation)</summary><div class="task-body"><h4>3 ,  Critic agent (verification / escalation)</h4>
-<p>Implement a deterministic critic.</p>
-<p>The critic should:</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p18" data-kind="prose">Implement a deterministic critic.</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p19" data-kind="prose">The critic should:</p>
 <ul><li>reject outputs that contain an error</li><li>verify arithmetic tasks exactly</li><li>verify <code>country of ...</code> tasks against the known mapping</li><li>return a verdict dictionary such as <code>{'verdict': 'pass'}</code> or <code>{'verdict': 'fail', 'reason': ...}</code></li></ul><h4>Starter code</h4><pre><code class="lang-python">def expected_answer(task: str) -&gt; str:
     # TODO
     ...
@@ -1251,10 +1251,10 @@ check('critic_pass', critic('(2 + 3) * 4', {'result': 20})['verdict'] == 'pass')
 check('critic_fail', critic('country of Tokyo', {'result': 'tokyo'})['verdict'] == 'fail')</code></pre><h4>Test code</h4><pre><code class="lang-python">check('critic_pass', critic('(2 + 3) * 4', {'result': 20})['verdict'] == 'pass')
 check('critic_fail', critic('country of Tokyo', {'result': 'tokyo'})['verdict'] == 'fail')</code></pre><h4>Checks</h4><ul><li>check('critic_pass', critic('(2 + 3) * 4', {'result': 20})['verdict'] == 'pass')</li><li>check('critic_fail', critic('country of Tokyo', {'result': 'tokyo'})['verdict'] == 'fail')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$13</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> 4 ,  Orchestrator + evaluation</summary><div class="task-body"><h4>4 ,  Orchestrator + evaluation</h4>
-<p>Implement the top-level orchestrator.</p>
-<p>It should:</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p20" data-kind="prose">Implement the top-level orchestrator.</p>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p21" data-kind="prose">It should:</p>
 <ul><li>create fresh shared state</li><li>ask the planner for a plan</li><li>run the worker</li><li>ask the critic to verify the result</li><li>return a compact <code>RunResult</code></li></ul>
-<p>Then evaluate the system on a few tasks and confirm the budget guardrail still works.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
+<p id="lab-w15-d4-multi-agent-systems-in-production-p22" data-kind="prose">Then evaluate the system on a few tasks and confirm the budget guardrail still works.</p><h4>Starter code</h4><pre><code class="lang-python">@dataclass
 class RunResult:
     ok: bool
     answer: str
@@ -1299,35 +1299,35 @@ check('good_success', success == 1.0)
 r_budget = orchestrate('(2 + 3) * 4', budget=1.0)
 check('budget_fail', not r_budget.ok and r_budget.reason == 'budget_exceeded')</code></pre><h4>Checks</h4><ul><li>check('good_success', success == 1.0)</li><li>check('budget_fail', not r_budget.ok and r_budget.reason == 'budget_exceeded')</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$14</code></pre></details></div></details>
 <h4>Interview signals</h4><table><thead><tr><th>Company</th><th>Confidence</th><th>Topics</th><th>Sources</th></tr></thead><tbody><tr><td>OpenAI</td><td>high</td><td>tool use, agent loops, handoffs, agent orchestration</td><td>OpenAI Agents SDK; AI agents interview questions</td></tr><tr><td>Anthropic</td><td>high</td><td>agent workflows, context engineering, managed agents</td><td>Anthropic building effective agents; Anthropic managed agents</td></tr><tr><td>Google DeepMind</td><td>medium</td><td>multi-agent design, agent scaling, coordination tradeoffs</td><td>Google research on scaling agent systems</td></tr></tbody></table>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d4-multi-agent-systems-in-production">https://ai.thes30.com/problems/w15-d4-multi-agent-systems-in-production</a>.</p>
-</section>
+<p id="lab-w15-d4-multi-agent-systems-in-production-p23" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d4-multi-agent-systems-in-production">https://ai.thes30.com/problems/w15-d4-multi-agent-systems-in-production</a>.</p>
+<span id="lab-w15-d4-multi-agent-systems-in-production-end" data-end></span></section>
 <section class="lab" id="lab-w15-d6-inference-time-scaling-verifiers">
-<h3>Inference-Time Scaling &amp; Verifiers <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 15, Day 6 · LLM &amp; Agentic AI · 7 tasks · 9 checks</p>
+<h3 id="inference-time-scaling-amp-verifiers-expert">Inference-Time Scaling &amp; Verifiers <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 15, Day 6 · LLM &amp; Agentic AI · 7 tasks · 9 checks</p>
 
-<p>The compute-versus-accuracy lab. You sample from a stochastic reasoner, build
+<p data-term="best-of-N" id="lab-w15-d6-inference-time-scaling-verifiers-p02" data-kind="prose">The compute-versus-accuracy lab. You sample from a stochastic reasoner, build
 an exact verifier and a best-of-N policy, and measure the pass@1 versus best-of-N
 coverage curve directly. Then you study the temperature tradeoff between diversity and per-sample accuracy. You compare a noisy judge against the exact verifier. You implement adaptive sampling budgets that spend more on hard problems.</p>
-<p>Watch for the ceiling lesson: the verifier, not the sample count, decides how far scaling
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p03" data-kind="prose">Watch for the ceiling lesson: the verifier, not the sample count, decides how far scaling
 goes. A noisy judge wastes samples.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<div class="callout"><strong>Outcome.</strong> You can simulate repeated sampling, compare pass@1 vs best-of-N, and measure how verifiers change final accuracy.</div>
-<p class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
-<p class="lab-meta">Resources: <a href="/notes/w15-d6-inference-time-scaling-verifiers.html">Notes</a> · <a href="inference_scaling_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/oX_PeFL9RRE">Video</a></p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p04" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<div id="lab-w15-d6-inference-time-scaling-verifiers-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> You can simulate repeated sampling, compare pass@1 vs best-of-N, and measure how verifiers change final accuracy.</div>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p05" data-kind="prose" class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p06" data-kind="prose" class="lab-meta">Resources: <a href="/notes/w15-d6-inference-time-scaling-verifiers.html">Notes</a> · <a href="inference_scaling_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/oX_PeFL9RRE">Video</a></p>
 <h4>Tasks (7)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Inference-Time Scaling &amp; Verifiers ,  Student Lab</h3>
-<p>Offline lab: simulate repeated sampling, exact verification, and noisy judges with a fixed stochastic model.</p>
-<p>This lab studies a core idea in modern reasoning systems. Even with model weights fixed, we can spend more inference-time compute. We sample multiple candidates and select among them.</p>
-<p>You will implement:</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="inference-time-scaling-amp-verifiers-student-lab">Inference-Time Scaling &amp; Verifiers ,  Student Lab</h3>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p07" data-kind="prose">Offline lab: simulate repeated sampling, exact verification, and noisy judges with a fixed stochastic model.</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p08" data-kind="prose">This lab studies a core idea in modern reasoning systems. Even with model weights fixed, we can spend more inference-time compute. We sample multiple candidates and select among them.</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p09" data-kind="prose">You will implement:</p>
 <ul><li>temperature-based sampling from a stochastic candidate bank</li><li>exact verification and best-of-N selection</li><li>pass@1 vs coverage comparisons</li><li>diversity / accuracy tradeoffs from temperature</li><li>judge vs verifier selection quality</li><li>adaptive test-time compute allocation by difficulty</li></ul>
-<h4>0 ,  Toy stochastic problem bank</h4><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Inference-Time Scaling &amp; Verifiers ,  Instructor Lab</h3>
-<p>Offline lab: simulate repeated sampling, exact verification, and noisy judges with a fixed stochastic model.</p>
+<h4>0 ,  Toy stochastic problem bank</h4><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3 id="inference-time-scaling-amp-verifiers-instructor-lab">Inference-Time Scaling &amp; Verifiers ,  Instructor Lab</h3>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p10" data-kind="prose">Offline lab: simulate repeated sampling, exact verification, and noisy judges with a fixed stochastic model.</p>
 <h4>0 ,  Toy stochastic problem bank</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Sample from the stochastic reasoner</summary><div class="task-body"><h4>0 ,  Sample from the stochastic reasoner</h4>
-<p>Implement sampling from the toy candidate bank.</p>
-<p>Requirements:</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p11" data-kind="prose">Implement sampling from the toy candidate bank.</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p12" data-kind="prose">Requirements:</p>
 <ul><li>convert candidate logits into probabilities using temperature</li><li>subtract the maximum logit before exponentiating for numerical stability</li><li>sample one candidate using the provided random generator</li></ul>
-<p>The goal of this section: show that inference-time scaling depends on stochasticity. If the model can produce different candidates, extra samples can improve coverage.</p><h4>Starter code</h4><pre><code class="lang-python">def sample_candidate(problem: dict, temperature: float, rng: np.random.Generator):
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p13" data-kind="prose">The goal of this section: show that inference-time scaling depends on stochasticity. If the model can produce different candidates, extra samples can improve coverage.</p><h4>Starter code</h4><pre><code class="lang-python">def sample_candidate(problem: dict, temperature: float, rng: np.random.Generator):
     # TODO
     ...
 
@@ -1346,10 +1346,10 @@ cand = sample_candidate(PROBLEMS[0], temperature=1.0, rng=np.random.default_rng(
 print('sample', cand['text'])
 check('cand_has_text', isinstance(cand['text'], str) and len(cand['text']) &gt; 0)</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 3</span> 1 ,  Exact verifier + best-of-N</summary><div class="task-body"><h4>1 ,  Exact verifier + best-of-N</h4>
-<p>Implement an exact verifier and a simple best-of-N policy.</p>
-<p>Requirements:</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p14" data-kind="prose">Implement an exact verifier and a simple best-of-N policy.</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p15" data-kind="prose">Requirements:</p>
 <ul><li><code>verify</code> should check whether a sampled candidate exactly matches the gold answer</li><li><code>best_of_n</code> should sample <code>n_samples</code> candidates</li><li>return the first verified-correct candidate if one exists</li><li>otherwise fall back to the first sampled candidate</li></ul>
-<p>This section shows the core best-of-N idea: the model may fail on one sample but succeed across multiple attempts if a strong verifier is available.</p><h4>Starter code</h4><pre><code class="lang-python">def verify(problem: dict, cand: dict) -&gt; bool:
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p16" data-kind="prose">This section shows the core best-of-N idea: the model may fail on one sample but succeed across multiple attempts if a strong verifier is available.</p><h4>Starter code</h4><pre><code class="lang-python">def verify(problem: dict, cand: dict) -&gt; bool:
     # TODO
     ...
 
@@ -1377,10 +1377,10 @@ chosen, solved, sampled = best_of_n(PROBLEMS[3], n_samples=8, temperature=1.1, r
 print('chosen', chosen['text'], 'solved', solved)
 check('sample_count', len(sampled) == 8)</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 4</span> 2 ,  Pass@1 vs best-of-N coverage</summary><div class="task-body"><h4>2 ,  Pass@1 vs best-of-N coverage</h4>
-<p>Measure how success changes as we increase the number of samples.</p>
-<p>Requirements:</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p17" data-kind="prose">Measure how success changes as we increase the number of samples.</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p18" data-kind="prose">Requirements:</p>
 <ul><li>compute a success rate over the whole problem bank</li><li>use repeated random trials for a stable estimate</li><li>compare <code>n_samples</code> in <code>[1, 2, 4, 8]</code></li></ul>
-<p>This section is about <strong>coverage</strong>: as the sample budget grows, the chance that at least one candidate is correct should increase.</p><h4>Starter code</h4><pre><code class="lang-python">def success_rate(problem_bank, n_samples: int, temperature: float, trials: int = 200):
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p19" data-kind="prose">This section is about <strong>coverage</strong>: as the sample budget grows, the chance that at least one candidate is correct should increase.</p><h4>Starter code</h4><pre><code class="lang-python">def success_rate(problem_bank, n_samples: int, temperature: float, trials: int = 200):
     # TODO
     ...
 
@@ -1401,10 +1401,10 @@ rates = {n: success_rate(PROBLEMS, n_samples=n, temperature=1.1, trials=200) for
 print(rates)
 check('mono', rates[1] &lt;= rates[2] &lt;= rates[4] &lt;= rates[8])</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 5</span> 3 ,  Temperature tradeoff</summary><div class="task-body"><h4>3 ,  Temperature tradeoff</h4>
-<p>Measure the tradeoff between diversity and accuracy.</p>
-<p>Requirements:</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p20" data-kind="prose">Measure the tradeoff between diversity and accuracy.</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p21" data-kind="prose">Requirements:</p>
 <ul><li>estimate how many unique candidates appear under repeated sampling</li><li>compare low, medium, and high temperatures</li><li>measure both diversity and downstream success</li></ul>
-<p>This section shows why “sample more” is incomplete advice: extra samples help only if temperature creates useful diversity without making outputs too noisy.</p><h4>Starter code</h4><pre><code class="lang-python">def mean_unique_candidates(problem_bank, temperature: float, n_samples: int = 8, trials: int = 100):
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p22" data-kind="prose">This section shows why “sample more” is incomplete advice: extra samples help only if temperature creates useful diversity without making outputs too noisy.</p><h4>Starter code</h4><pre><code class="lang-python">def mean_unique_candidates(problem_bank, temperature: float, n_samples: int = 8, trials: int = 100):
     # TODO
     ...
 
@@ -1422,10 +1422,10 @@ check('mid_beats_high_pass1', acc_mid1 &gt; acc_high1)</code></pre><h4>Test code
 check('mid_beats_low_for_bestofn', acc_mid &gt; acc_low)
 check('mid_beats_high_pass1', acc_mid1 &gt; acc_high1)</code></pre><h4>Checks</h4><ul><li>check('high_more_diverse', div_high &gt; div_low)</li><li>check('mid_beats_low_for_bestofn', acc_mid &gt; acc_low)</li><li>check('mid_beats_high_pass1', acc_mid1 &gt; acc_high1)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$11</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 6</span> 4 ,  Judge vs verifier</summary><div class="task-body"><h4>4 ,  Judge vs verifier</h4>
-<p>Compare two selection mechanisms.</p>
-<p>Requirements:</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p23" data-kind="prose">Compare two selection mechanisms.</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p24" data-kind="prose">Requirements:</p>
 <ul><li><code>judge_select</code> should pick the sample with the highest judge score</li><li><code>compare_selectors</code> should measure final accuracy using both the judge and the exact verifier</li><li>evaluate across many trials on the same problem bank</li></ul>
-<p>This section highlights a key production distinction: an exact verifier is usually much stronger than a plausibility-based judge when exact checking is possible.</p><h4>Starter code</h4><pre><code class="lang-python">def judge_select(samples):
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p25" data-kind="prose">This section highlights a key production distinction: an exact verifier is usually much stronger than a plausibility-based judge when exact checking is possible.</p><h4>Starter code</h4><pre><code class="lang-python">def judge_select(samples):
     # TODO
     ...
 
@@ -1437,10 +1437,10 @@ judge_acc, verifier_acc = compare_selectors(PROBLEMS, n_samples=8, temperature=1
 print('judge_acc', judge_acc, 'verifier_acc', verifier_acc)
 check('verifier_ge_judge', verifier_acc &gt; judge_acc)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('verifier_ge_judge', verifier_acc &gt; judge_acc)</code></pre><h4>Checks</h4><ul><li>check('verifier_ge_judge', verifier_acc &gt; judge_acc)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$12</code></pre></details></div></details>
 <details class="task"><summary><span class="task-n">Task 7</span> 5 ,  Adaptive sampling budget</summary><div class="task-body"><h4>5 ,  Adaptive sampling budget</h4>
-<p>Allocate different inference-time compute budgets to easy, medium, and hard problems.</p>
-<p>Requirements:</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p26" data-kind="prose">Allocate different inference-time compute budgets to easy, medium, and hard problems.</p>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p27" data-kind="prose">Requirements:</p>
 <ul><li>implement a policy that uses smaller budgets for easier problems</li><li>compare adaptive allocation against a fixed budget policy</li><li>report both accuracy and average budget used</li></ul>
-<p>This section shows the engineering tradeoff behind reasoning systems: extra compute should be spent where it helps most, not uniformly on every query.</p><h4>Starter code</h4><pre><code class="lang-python">BUDGET_BY_DIFFICULTY = {'easy': 2, 'medium': 4, 'hard': 12}
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p28" data-kind="prose">This section shows the engineering tradeoff behind reasoning systems: extra compute should be spent where it helps most, not uniformly on every query.</p><h4>Starter code</h4><pre><code class="lang-python">BUDGET_BY_DIFFICULTY = {'easy': 2, 'medium': 4, 'hard': 12}
 
 def allocated_budget(problem: dict, adaptive: bool, fixed_budget: int = 12):
     # TODO
@@ -1457,27 +1457,27 @@ print('fixed', acc_fixed, budget_fixed)
 check('adaptive_uses_less_budget', budget_adapt &lt; budget_fixed)
 check('adaptive_not_too_much_worse', acc_adapt &gt;= acc_fixed - 0.08)</code></pre><h4>Test code</h4><pre><code class="lang-python">check('adaptive_uses_less_budget', budget_adapt &lt; budget_fixed)
 check('adaptive_not_too_much_worse', acc_adapt &gt;= acc_fixed - 0.08)</code></pre><h4>Checks</h4><ul><li>check('adaptive_uses_less_budget', budget_adapt &lt; budget_fixed)</li><li>check('adaptive_not_too_much_worse', acc_adapt &gt;= acc_fixed - 0.08)</li></ul><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$13</code></pre></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d6-inference-time-scaling-verifiers">https://ai.thes30.com/problems/w15-d6-inference-time-scaling-verifiers</a>.</p>
-</section>
+<p id="lab-w15-d6-inference-time-scaling-verifiers-p29" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d6-inference-time-scaling-verifiers">https://ai.thes30.com/problems/w15-d6-inference-time-scaling-verifiers</a>.</p>
+<span id="lab-w15-d6-inference-time-scaling-verifiers-end" data-end></span></section>
 <section class="lab" id="lab-w15-d7-self-improving-agents">
-<h3>Self-Improving Agents <span class="diff diff-expert">Expert</span></h3>
-<p class="lab-meta">Week 15, Day 7 · LLM &amp; Agentic AI · 7 tasks · 8 checks</p>
+<h3 id="self-improving-agents-expert">Self-Improving Agents <span class="diff diff-expert">Expert</span></h3>
+<p id="lab-w15-d7-self-improving-agents-p01" data-kind="keyIdea" data-reveal="rise" class="lab-meta">Week 15, Day 7 · LLM &amp; Agentic AI · 7 tasks · 8 checks</p>
 
-<p>The closing loop of the category. You run a stochastic planner. You execute plans and verify outcomes. You collect the successful rollouts. You distill them into compact memory.</p>
-<p>You evaluate the agent before versus after installing the memory. The
+<p data-term="distill" id="lab-w15-d7-self-improving-agents-p02" data-kind="prose">The closing loop of the category. You run a stochastic planner. You execute plans and verify outcomes. You collect the successful rollouts. You distill them into compact memory.</p>
+<p data-term="verified successes" id="lab-w15-d7-self-improving-agents-p03" data-kind="prose">You evaluate the agent before versus after installing the memory. The
 final task stages the key contest: improvement from memory versus simply spending
 the same compute on extra sampling. Watch for the gate that makes it safe: only
 verified successes enter memory. Everything unverified stays out, or the agent
 learns its own mistakes.</p>
-<p class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
-<div class="callout"><strong>Outcome.</strong> You can simulate a bootstrap loop where verified successful plans become memory that improves future agent behavior.</div>
-<p class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
-<p class="lab-meta">Resources: <a href="self_improving_agents_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/tEaQQtn6E2Q">Video</a></p>
+<p id="lab-w15-d7-self-improving-agents-p04" data-kind="prose" class="lab-meta">No prose description on the source page for this lab; the tasks below carry the full content.</p>
+<div id="lab-w15-d7-self-improving-agents-aside01" data-kind="aside" class="callout"><strong>Outcome.</strong> You can simulate a bootstrap loop where verified successful plans become memory that improves future agent behavior.</div>
+<p id="lab-w15-d7-self-improving-agents-p05" data-kind="prose" class="tags"><span class="tagchip">LLM &amp; Agentic AI</span><span class="tagchip">Expert</span><span class="tagchip">Week 15</span></p>
+<p id="lab-w15-d7-self-improving-agents-p06" data-kind="prose" class="lab-meta">Resources: <a href="self_improving_agents_instructor_lab.ipynb">Instructor notebook</a> · <a href="https://youtu.be/tEaQQtn6E2Q">Video</a></p>
 <h4>Tasks (7)</h4>
-<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3>Self-Improving Agents ,  Student Lab</h3>
-<p>Offline lab: collect verified successful plans, compress them into a simple memory, and compare the agent before and after the update.</p>
-<h4>0 ,  Task families, tools, and templates</h4><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3>Self-Improving Agents ,  Instructor Lab</h3>
-<p>Offline lab: collect verified successful plans, compress them into a simple memory, and compare the agent before and after the update.</p>
+<details class="task"><summary><span class="task-n">Task 1</span> Dataset &amp; Setup</summary><div class="task-body"><h3 id="self-improving-agents-student-lab">Self-Improving Agents ,  Student Lab</h3>
+<p id="lab-w15-d7-self-improving-agents-p07" data-kind="prose">Offline lab: collect verified successful plans, compress them into a simple memory, and compare the agent before and after the update.</p>
+<h4>0 ,  Task families, tools, and templates</h4><h4>Starter code</h4><pre><code class="lang-python">$f</code></pre><details class="solution"><summary>Solution and rationale</summary><h4>Solution</h4><pre><code class="lang-python">$10</code></pre><h4>Instructor explanation</h4><h3 id="self-improving-agents-instructor-lab">Self-Improving Agents ,  Instructor Lab</h3>
+<p id="lab-w15-d7-self-improving-agents-p08" data-kind="prose">Offline lab: collect verified successful plans, compress them into a simple memory, and compare the agent before and after the update.</p>
 <h4>0 ,  Task families, tools, and templates</h4></details></div></details>
 <details class="task"><summary><span class="task-n">Task 2</span> 0 ,  Stochastic planner</summary><div class="task-body"><h4>0 ,  Stochastic planner</h4><h4>Starter code</h4><pre><code class="lang-python">def propose_template(task: dict, memory: dict, rng: np.random.Generator) -&gt; str:
     # TODO
@@ -1589,28 +1589,28 @@ check('after1_ge_before3', after1 &gt;= before3)</code></pre><h4>Test code</h4><
 after1 = np.mean([evaluate_agent(TASKS, memory=learned_memory, tries_per_task=1, seed=s)['success_rate'] for s in range(200)])
 print('before3', before3, 'after1', after1)
 check('after1_ge_before3', after1 &gt;= before3)</code></pre></details></div></details>
-<p class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d7-self-improving-agents">https://ai.thes30.com/problems/w15-d7-self-improving-agents</a>.</p>
-</section>
-<div class="takeaway"><h4>Key takeaways</h4><ul><li>The intro lab installs the loop, the guardrails, and the operational-metrics habit; everything else builds on it.</li><li>The multi-agent lab teaches decomposition by verifiable contracts, not by adding agents for their own sake.</li><li>The inference-time scaling lab teaches the ceiling lesson: verifier quality dominates sample count.</li><li>The self-improvement lab teaches the gate lesson: only verified rollouts become memory.</li></ul></div><div class="ob-board"><h4>Design prompt</h4><ul><li>Sketch the executor loop with its guardrail gates and stop conditions from memory.</li><li>Your critic keeps rejecting good worker outputs. Is the fix a better worker or a better critic? (Measure first: log which rejections were wrong.)</li></ul></div><p class="lab-meta">Apply this chapter in: <a href="#lab-w15-d3-agents-intro">Agents Intro</a>; <a href="#lab-w15-d7-self-improving-agents">Self-Improving Agents</a>.</p>
-<h2>Interview clearance</h2>
-<p>Agent interviews grade the harness, not the model: guardrails, verification,
+<p id="lab-w15-d7-self-improving-agents-p09" data-kind="prose" class="provenance-inline">Source: AI Lab, <a href="https://ai.thes30.com/problems/w15-d7-self-improving-agents">https://ai.thes30.com/problems/w15-d7-self-improving-agents</a>.</p>
+<span id="lab-w15-d7-self-improving-agents-end" data-end></span></section>
+<div id="lab-w15-d7-self-improving-agents-takeaway" data-kind="summary" data-reveal="fade" class="takeaway"><h4>Key takeaways</h4><ul><li>The intro lab installs the loop, the guardrails, and the operational-metrics habit; everything else builds on it.</li><li>The multi-agent lab teaches decomposition by verifiable contracts, not by adding agents for their own sake.</li><li>The inference-time scaling lab teaches the ceiling lesson: verifier quality dominates sample count.</li><li>The self-improvement lab teaches the gate lesson: only verified rollouts become memory.</li></ul></div><div id="lab-w15-d7-self-improving-agents-aside02" data-kind="aside" class="ob-board"><h4>Design prompt</h4><ul><li>Sketch the executor loop with its guardrail gates and stop conditions from memory.</li><li>Your critic keeps rejecting good worker outputs. Is the fix a better worker or a better critic? (Measure first: log which rejections were wrong.)</li></ul></div><p id="lab-w15-d7-self-improving-agents-p10" data-kind="prose" class="lab-meta">Apply this chapter in: <a href="#lab-w15-d3-agents-intro">Agents Intro</a>; <a href="#lab-w15-d7-self-improving-agents">Self-Improving Agents</a>.</p>
+<h2 id="interview-clearance">Interview clearance</h2>
+<p id="lab-w15-d7-self-improving-agents-p11" data-kind="prose">Agent interviews grade the harness, not the model: guardrails, verification,
 evaluation, and the tradeoffs between them. The questions below rehearse the
 reported shapes.</p>
-<div class="ob-board"><h4>Design prompt: the agent warm-ups</h4><ul><li>Design a tool-calling agent loop for a coding assistant. Name the guardrails before the tools.</li><li>When is best-of-N worth the cost, and what sets its ceiling? (Cheap reliable verifier; the verifier sets the ceiling.)</li><li>Why three agents (planner, worker, critic) instead of one good prompt? (Verifiable role contracts.)</li><li>What may enter the agent memory store, and what must never enter? (Only verified successes; never unverified traces.)</li></ul></div><div class="pq"><p class="pq-q"><strong>Q1.</strong> Your production agent calls tools that can write to customer systems. Which guardrail matters most?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> Irreversible writes are the catastrophic failure mode, so human confirmation on writes dominates every other guardrail in production.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> A larger iteration budget: this makes runaway loops more expensive, not safer.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> A faster policy model: latency is nice but irrelevant to the safety question.</li><li><span class="pq-opt-right"><strong>C, right:</strong></span> Human confirmation for irreversible writes, plus idempotency keys and read-versus-write tool classification, is the production answer.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> More tools: a larger tool surface increases the wrong-tool risk; the reported guidance is fewer, more capable tools.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q2.</strong> You have a fixed inference budget per problem. Do you spend it on best-of-16 with a noisy judge, or on fewer samples with an exact verifier?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> Prefer fewer samples with the exact verifier. The coverage math 1 - (1-p)^N assumes the selector picks the true best. A noisy judge breaks that assumption and wastes samples on confidently wrong picks. </p>
+<div id="lab-w15-d7-self-improving-agents-aside03" data-kind="aside" class="ob-board"><h4>Design prompt: the agent warm-ups</h4><ul><li>Design a tool-calling agent loop for a coding assistant. Name the guardrails before the tools.</li><li>When is best-of-N worth the cost, and what sets its ceiling? (Cheap reliable verifier; the verifier sets the ceiling.)</li><li>Why three agents (planner, worker, critic) instead of one good prompt? (Verifiable role contracts.)</li><li>What may enter the agent memory store, and what must never enter? (Only verified successes; never unverified traces.)</li></ul></div><div id="lab-w15-d7-self-improving-agents-pq01" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q1.</strong> Your production agent calls tools that can write to customer systems. Which guardrail matters most?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: C.</strong> Irreversible writes are the catastrophic failure mode, so human confirmation on writes dominates every other guardrail in production.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> A larger iteration budget: this makes runaway loops more expensive, not safer.</li><li><span class="pq-opt-wrong"><strong>B, wrong:</strong></span> A faster policy model: latency is nice but irrelevant to the safety question.</li><li><span class="pq-opt-right"><strong>C, right:</strong></span> Human confirmation for irreversible writes, plus idempotency keys and read-versus-write tool classification, is the production answer.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> More tools: a larger tool surface increases the wrong-tool risk; the reported guidance is fewer, more capable tools.</li></ul></div></div><div id="lab-w15-d7-self-improving-agents-pq02" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q2.</strong> You have a fixed inference budget per problem. Do you spend it on best-of-16 with a noisy judge, or on fewer samples with an exact verifier?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> Prefer fewer samples with the exact verifier. The coverage math 1 - (1-p)^N assumes the selector picks the true best. A noisy judge breaks that assumption and wastes samples on confidently wrong picks. </p>
 <figure class="shell-figure">
 <img src="img/27-noisy-judge.svg" alt="Lesson 7: The noisy judge" loading="lazy">
 <figcaption><strong>Lesson 7. The noisy judge.</strong> With a noisy judge, extra samples add more chances to pick confidently wrong answers: the curve flattens and the ceiling drops. <span class="fig-source">Source: original</span></figcaption>
 </figure>
 
 <p>The lab comparison shows the judge curve climbing less and ceilinging lower.</p>
-<p>Spend the budget where the selector is trustworthy: exact verification first, and only scale samples while the selector keeps up. If no exact verifier exists, say so and price the judge error explicitly.</p><p><strong>Trap.</strong> Answering "more samples" without asking about the selector. Sample count is the wrong knob when the judge is the bottleneck.</p></div></div><div class="pq"><p class="pq-q"><strong>Q3.</strong> Your agent solved 40 tasks and you want it to improve on the next 40 similar tasks. What do you do?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Distilling verified successes into memory is the self-improvement loop, but the verifier gate is what keeps it safe.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Feed all 40 raw transcripts into the prompt: unverified traces teach the agent its own mistakes, and raw transcripts waste context.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> Keep only verifier-accepted rollouts, distill them into compact reusable memory, and evaluate before versus after against extra sampling.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Fine-tune the policy on all 40 outcomes: without the verifier gate you bake in the failures too.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> Add a fourth agent: more roles add coordination overhead without addressing the learning question.</li></ul></div></div><div class="pq"><p class="pq-q"><strong>Q4.</strong> A customer says your RAG-based assistant hallucinates. You have 48 hours. What do you do first?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> Diagnose before tuning. Collect 10 to 20 concrete failing examples with expected answers. Then trace each to one of four diseases.</p>
+<p>Spend the budget where the selector is trustworthy: exact verification first, and only scale samples while the selector keeps up. If no exact verifier exists, say so and price the judge error explicitly.</p><p><strong>Trap.</strong> Answering "more samples" without asking about the selector. Sample count is the wrong knob when the judge is the bottleneck.</p></div></div><div id="lab-w15-d7-self-improving-agents-pq03" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q3.</strong> Your agent solved 40 tasks and you want it to improve on the next 40 similar tasks. What do you do?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Answer: B.</strong> Distilling verified successes into memory is the self-improvement loop, but the verifier gate is what keeps it safe.</p><ul><li><span class="pq-opt-wrong"><strong>A, wrong:</strong></span> Feed all 40 raw transcripts into the prompt: unverified traces teach the agent its own mistakes, and raw transcripts waste context.</li><li><span class="pq-opt-right"><strong>B, right:</strong></span> Keep only verifier-accepted rollouts, distill them into compact reusable memory, and evaluate before versus after against extra sampling.</li><li><span class="pq-opt-wrong"><strong>C, wrong:</strong></span> Fine-tune the policy on all 40 outcomes: without the verifier gate you bake in the failures too.</li><li><span class="pq-opt-wrong"><strong>D, wrong:</strong></span> Add a fourth agent: more roles add coordination overhead without addressing the learning question.</li></ul></div></div><div id="lab-w15-d7-self-improving-agents-pq04" data-kind="exercise" class="pq"><p class="pq-q"><strong>Q4.</strong> A customer says your RAG-based assistant hallucinates. You have 48 hours. What do you do first?</p><button class="pq-reveal" aria-expanded="false">Reveal answer</button><div class="pq-a" hidden><p><strong>Worked answer.</strong> Diagnose before tuning. Collect 10 to 20 concrete failing examples with expected answers. Then trace each to one of four diseases.</p>
 <p>Retrieval miss (search problem). Retrieval hit with wrong synthesis (grounding problem). Question outside the corpus (missing abstention path). Expectation mismatch (data problem).</p>
 <p>Build a tiny harness scoring retrieval recall separately from answer faithfulness. Quantify the split. Only then pick the fix: re-ranking, citation-required prompting with an abstention instruction, or a corpus gap to fill. Report the split to the customer; most "hallucination" complaints are retrieval problems wearing a generation costume.</p>
 <figure class="shell-figure">
 <img src="img/27-four-diseases.svg" alt="Lesson 12: The four diseases" loading="lazy">
 <figcaption><strong>Lesson 12. The four diseases.</strong> Diagnose before tuning: retrieval miss, wrong synthesis, outside corpus, or expectation mismatch. <span class="fig-source">Source: original</span></figcaption>
 </figure>
-<p><strong>Trap.</strong> Tuning the prompt or the model first. Without the diagnosis you cannot know whether the disease is retrieval, grounding, abstention, or data.</p></div></div><div class="takeaway"><h4>Key takeaways</h4><ul><li>Name guardrails before tools in every agent design answer; writes need human confirmation.</li><li>Verifier quality sets the inference-time scaling ceiling; price the selector before the sample count.</li><li>Only verified rollouts enter memory; evaluate memory against extra sampling.</li><li>Diagnose agent failures into retrieval, grounding, abstention, or data before tuning anything.</li></ul></div><div class="ob-board"><h4>Design prompt: final checks</h4><ul><li>State the 1 - (1-p)^N coverage math and when it breaks. (Breaks when the selector is noisy.)</li><li>What are the three roles in the multi-agent lab, and what can each one not do? (Planner cannot act; worker cannot replan; critic cannot act.)</li></ul></div><p class="lab-meta">Apply this chapter in: <a href="#lab-w15-d3-agents-intro">Agents Intro</a>; <a href="#lab-w15-d6-inference-time-scaling-verifiers">Inference-Time Scaling &amp; Verifiers</a>.</p>
+<p><strong>Trap.</strong> Tuning the prompt or the model first. Without the diagnosis you cannot know whether the disease is retrieval, grounding, abstention, or data.</p></div></div><div id="lab-w15-d7-self-improving-agents-takeaway-2" data-kind="summary" class="takeaway"><h4>Key takeaways</h4><ul><li>Name guardrails before tools in every agent design answer; writes need human confirmation.</li><li>Verifier quality sets the inference-time scaling ceiling; price the selector before the sample count.</li><li>Only verified rollouts enter memory; evaluate memory against extra sampling.</li><li>Diagnose agent failures into retrieval, grounding, abstention, or data before tuning anything.</li></ul></div><div id="lab-w15-d7-self-improving-agents-aside04" data-kind="aside" class="ob-board"><h4>Design prompt: final checks</h4><ul><li>State the 1 - (1-p)^N coverage math and when it breaks. (Breaks when the selector is noisy.)</li><li>What are the three roles in the multi-agent lab, and what can each one not do? (Planner cannot act; worker cannot replan; critic cannot act.)</li></ul></div><p id="lab-w15-d7-self-improving-agents-p12" data-kind="prose" class="lab-meta">Apply this chapter in: <a href="#lab-w15-d3-agents-intro">Agents Intro</a>; <a href="#lab-w15-d6-inference-time-scaling-verifiers">Inference-Time Scaling &amp; Verifiers</a>.</p>
 <nav class="ds-volume-nav" aria-label="Volume navigation"><a class="ds-prev" href="26-ai-lab-system-design.html"><span>&uarr; Previous volume</span>Volume 26: System Design</a><a class="ds-next" href="28-ai-lab-interview-clearance.html"><span>Next volume &darr;</span>Volume 28: Interview Clearance</a></nav>
 <div class="provenance"><strong>Last verified: October 2026.</strong> Live-verified: AI Lab site scrape (labs, tasks, solutions). <span class="uv">UNVERIFIED:</span> none.</div>
 <footer class="site-footer"><div class="foot-mast"><a class="foot-name" href="index.html">LLM Knowledge Base</a><p class="foot-tag">A research-engineer curriculum in 39 self-contained volumes. Every page works offline from file:// and links back here. No personal information.</p></div><nav class="foot-index" aria-label="Site index"><div class="foot-group"><h4>Start here</h4><ul><li><a href="index.html">Home</a></li><li><a href="00-how-to-use.html">How to Use This Curriculum</a></li></ul></div><div class="foot-group"><h4>Base volumes</h4><ul><li><a href="01-math-for-ml.html">Math for ML</a></li><li><a href="02-ml-foundations-bridge.html">ML Foundations</a></li><li><a href="03-deep-learning-for-researchers.html">Deep Learning for Researchers</a></li><li><a href="04-llm-internals.html">LLM Internals</a></li><li><a href="05-pretraining.html">Pre-training</a></li><li><a href="06-distributed-training.html">Distributed Training</a></li><li><a href="07-post-training-rl.html">Post-training and RL</a></li><li><a href="08-inference-serving-bridge.html">Inference and Serving</a></li><li><a href="09-agents-rag-guide.html">Agents and RAG</a></li><li><a href="10-productionizing-mlops.html">Productionizing and MLOps</a></li><li><a href="11-research-methods.html">Research Methods</a></li><li><a href="12-paper-spine.html">Guided Paper Spine</a></li><li><a href="13-ml-system-design.html">ML System Design</a></li><li><a href="14-communicating-research.html">Communicating Research</a></li><li><a href="15-gpu-kernels.html">GPU Kernels</a></li></ul></div><div class="foot-group"><h4>AI Lab</h4><ul><li><a href="16-ai-lab-atlas.html">AI Lab Atlas: 15-Week Lab Map</a></li><li><a href="17-ai-lab-python-data.html">Python and Data Tools</a></li><li><a href="18-ai-lab-math-for-ml.html">Math for ML (AI Lab)</a></li><li><a href="19-ai-lab-classical-ml.html">Classical ML</a></li><li><a href="20-ai-lab-evaluation-debugging.html">Evaluation and Debugging</a></li><li><a href="21-ai-lab-deep-learning.html">Deep Learning (AI Lab)</a></li><li><a href="22-ai-lab-cv-nlp-basics.html">CV and NLP Basics</a></li><li><a href="23-ai-lab-transformers.html">Transformers</a></li><li><a href="24-ai-lab-rag-retrieval.html">RAG and Retrieval</a></li><li><a href="25-ai-lab-mlops-systems.html">MLOps and Systems</a></li><li><a href="26-ai-lab-system-design.html">System Design (AI Lab)</a></li><li><a href="27-ai-lab-llm-agentic.html" class="foot-current">LLM and Agentic AI</a></li><li><a href="28-ai-lab-interview-clearance.html">Interview Clearance</a></li></ul></div><div class="foot-group"><h4>Role tracks</h4><ul><li><a href="track-01-llm-research-engineer.html">LLM Research Engineer</a></li><li><a href="track-02-post-training-alignment.html">Post-training / Alignment</a></li><li><a href="track-03-inference-serving.html">Inference and Serving</a></li><li><a href="track-04-distributed-training-systems.html">Distributed Training Systems</a></li><li><a href="track-05-evals-safety.html">Evals and Safety</a></li><li><a href="track-06-agent-systems.html">Agent Systems</a></li><li><a href="track-07-forward-deployed-engineer.html">Forward Deployed Engineer</a></li><li><a href="track-08-ai-engineer.html">AI Engineer</a></li><li><a href="track-09-ml-engineer.html">ML Engineer</a></li><li><a href="track-10-software-engineer.html">SWE / Backend Systems</a></li></ul></div><div class="foot-group"><h4>DSA track</h4><ul><li><a href="dsa-track-300.html">DSA Track: Top-300</a></li></ul></div><div class="foot-group"><h4>Crash packs</h4><ul><li><a href="crash-base.html">Crash Pack: Base Curriculum</a></li><li><a href="crash-track-01.html">Crash: LLM Research Engineer</a></li><li><a href="crash-track-02.html">Crash: Post-training / Alignment</a></li><li><a href="crash-track-03.html">Crash: Inference and Serving</a></li><li><a href="crash-track-04.html">Crash: Distributed Training</a></li><li><a href="crash-track-05.html">Crash: Evals and Safety</a></li><li><a href="crash-track-06.html">Crash: Agent Systems</a></li><li><a href="crash-track-07.html">Crash: Forward Deployed Eng.</a></li><li><a href="crash-track-08.html">Crash: AI Engineer</a></li><li><a href="crash-track-09.html">Crash: ML Engineer</a></li><li><a href="crash-track-10.html">Crash: SWE / Backend</a></li></ul></div></nav></footer>

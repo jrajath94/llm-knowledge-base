@@ -1,0 +1,620 @@
+{
+ "schemaVersion": 1,
+ "itemId": "03-deep-learning-for-researchers",
+ "itemKind": "lesson",
+ "revision": "d73d3badd144007cd00ccf5425194924c35f18a93952264192b0170d9f9980e4",
+ "sections": [
+  {
+   "anchor": "03-deep-learning-for-researchers-intro",
+   "title": "03-deep-learning-for-researchers-intro",
+   "minutes": 2,
+   "endAnchor": "03-deep-learning-for-researchers-intro-end",
+   "blocks": [
+    {
+     "anchor": "03-deep-learning-for-researchers-intro-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "forward pass",
+     "definition": "Layers run input to prediction; then loss, backprop, activations.",
+     "anchor": "03-deep-learning-for-researchers-intro-p01"
+    },
+    {
+     "term": "16-bit arithmetic",
+     "definition": "Survives training; with checkpointing trading compute for memory.",
+     "anchor": "03-deep-learning-for-researchers-intro-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "03-deep-learning-for-researchers-intro-r1",
+     "question": "What is the climb order?",
+     "answer": "One neuron, then a layer, then the forward pass, loss, backprop, activations, then optimizers, normalization, initialization.",
+     "anchor": "03-deep-learning-for-researchers-intro-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch-neuron",
+   "title": "Chapter 1: The Neuron",
+   "minutes": 5,
+   "endAnchor": "ch-neuron-end",
+   "blocks": [
+    {
+     "anchor": "ch-neuron-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch-neuron-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch-neuron-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "neuron",
+     "definition": "The smallest learnable unit: weights times inputs, plus bias.",
+     "anchor": "ch-neuron-aside01"
+    },
+    {
+     "term": "weight",
+     "definition": "A number the network learns; sets how much an input matters.",
+     "anchor": "ch-neuron-p01"
+    },
+    {
+     "term": "bias",
+     "definition": "A learned offset added to the weighted sum.",
+     "anchor": "ch-neuron-p02"
+    },
+    {
+     "term": "nonlinearity",
+     "definition": "Why a neuron needs one; what breaks without it.",
+     "anchor": "ch-neuron-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch-neuron-r1",
+     "question": "What does a neuron compute, exactly?",
+     "answer": "It multiplies each input by its own weight, adds the results plus one learned bias.",
+     "anchor": "ch-neuron-p01"
+    },
+    {
+     "id": "ch-neuron-r2",
+     "question": "Where does everything a trained network 'knows' live?",
+     "answer": "In the weights and biases.",
+     "anchor": "ch-neuron-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch-forward",
+   "title": "Chapter 2: Layers and the Forward Pass",
+   "minutes": 4,
+   "endAnchor": "ch-forward-end",
+   "blocks": [
+    {
+     "anchor": "ch-forward-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch-forward-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch-forward-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "layer",
+     "definition": "Many neurons side by side, all reading the same inputs.",
+     "anchor": "ch-forward-aside01"
+    },
+    {
+     "term": "forward pass",
+     "definition": "Running input through layers to prediction.",
+     "anchor": "ch-forward-p01"
+    },
+    {
+     "term": "matrix multiplication",
+     "definition": "What a neural network computationally is.",
+     "anchor": "ch-forward-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch-forward-r1",
+     "question": "What does a layer add that a single neuron cannot?",
+     "answer": "Multiple boundaries: many neurons side by side with their own weights.",
+     "anchor": "ch-forward-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch-loss",
+   "title": "Chapter 3: Loss: How the Network Knows It Is Wrong",
+   "minutes": 5,
+   "endAnchor": "ch-loss-end",
+   "blocks": [
+    {
+     "anchor": "ch-loss-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch-loss-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch-loss-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "loss function",
+     "definition": "Turns a prediction and its answer into one number: how wrong.",
+     "anchor": "ch-loss-p01"
+    },
+    {
+     "term": "loss landscape",
+     "definition": "What the number lives on; training walks it.",
+     "anchor": "ch-loss-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch-loss-r1",
+     "question": "Why do regression and classification use different losses?",
+     "answer": "Different output types need different wrongness measures.",
+     "anchor": "ch-loss-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch-backprop",
+   "title": "Chapter 4: Backpropagation",
+   "minutes": 7,
+   "endAnchor": "ch-backprop-end",
+   "blocks": [
+    {
+     "anchor": "ch-backprop-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch-backprop-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch-backprop-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "chain rule",
+     "definition": "What assigns blame to individual weights.",
+     "anchor": "ch-backprop-p01"
+    },
+    {
+     "term": "backward pass",
+     "definition": "Why gradient computation runs backward.",
+     "anchor": "ch-backprop-p01"
+    },
+    {
+     "term": "gradient descent",
+     "definition": "The training loop: which knob to turn, and which way.",
+     "anchor": "ch-backprop-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch-backprop-r1",
+     "question": "How does the network know which weight to blame?",
+     "answer": "The chain rule: gradients flow backward assigning blame to each weight.",
+     "anchor": "ch-backprop-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch-activations",
+   "title": "Chapter 5: Activation Functions",
+   "minutes": 5,
+   "endAnchor": "ch-activations-end",
+   "blocks": [
+    {
+     "anchor": "ch-activations-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch-activations-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch-activations-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "ReLU",
+     "definition": "The default hidden activation.",
+     "anchor": "ch-activations-p01"
+    },
+    {
+     "term": "sigmoid",
+     "definition": "Squashes into (0,1).",
+     "anchor": "ch-activations-p01"
+    },
+    {
+     "term": "tanh",
+     "definition": "Squashes into (-1,1); zero-centered.",
+     "anchor": "ch-activations-p01"
+    },
+    {
+     "term": "softmax",
+     "definition": "Turns raw scores into probabilities.",
+     "anchor": "ch-activations-p01"
+    },
+    {
+     "term": "dead ReLU",
+     "definition": "What it is and saturation.",
+     "anchor": "ch-activations-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch-activations-r1",
+     "question": "Why is ReLU the default hidden activation?",
+     "answer": "The bend matters; the chapter explains why against sigmoid/tanh saturation.",
+     "anchor": "ch-activations-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch3",
+   "title": "Chapter 6: Optimizers",
+   "minutes": 9,
+   "endAnchor": "ch3-end",
+   "blocks": [
+    {
+     "anchor": "ch3-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch3-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch3-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "momentum",
+     "definition": "What Adam does that SGD does not, part one.",
+     "anchor": "ch3-p01"
+    },
+    {
+     "term": "adaptivity",
+     "definition": "Per-parameter step sizes; part two.",
+     "anchor": "ch3-p01"
+    },
+    {
+     "term": "AdamW",
+     "definition": "Decoupled weight decay; different from Adam with weight decay on.",
+     "anchor": "ch3-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch3-r1",
+     "question": "When would you still pick SGD with momentum over Adam?",
+     "answer": "The chapter's design prompt; weigh generalization against adaptivity.",
+     "anchor": "ch3-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch1",
+   "title": "Chapter 7: Normalization",
+   "minutes": 8,
+   "endAnchor": "ch1-end",
+   "blocks": [
+    {
+     "anchor": "ch1-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch1-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch1-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "normalization",
+     "definition": "Re-centers and re-scales activations at every layer.",
+     "anchor": "ch1-p01"
+    },
+    {
+     "term": "batch normalization",
+     "definition": "Versus layer norm; the design prompt compares.",
+     "anchor": "ch1-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch1-r1",
+     "question": "Why do deep stacks need normalization?",
+     "answer": "Signal scale drifts through dozens of layers; activations grow or shrink, gradients follow, training stalls or explodes.",
+     "anchor": "ch1-p01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch2",
+   "title": "Chapter 8: Initialization",
+   "minutes": 8,
+   "endAnchor": "ch2-end",
+   "blocks": [
+    {
+     "anchor": "ch2-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch2-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch2-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "initialization",
+     "definition": "Weight scale before the first step decides if any signal survives.",
+     "anchor": "ch2-aside01"
+    },
+    {
+     "term": "variance problem",
+     "definition": "N(0,1) weights in a 30-layer network; ReLU needs different scale than tanh.",
+     "anchor": "ch2-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch2-r1",
+     "question": "Why can you not initialize all weights to zero?",
+     "answer": "Symmetry never breaks; no signal differentiation.",
+     "anchor": "ch2-aside01"
+    },
+    {
+     "id": "ch2-r2",
+     "question": "How do you diagnose a dead network at initialization?",
+     "answer": "Check forward signal stats; the chapter's design prompt.",
+     "anchor": "ch2-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch4",
+   "title": "Chapter 9: Mixed Precision",
+   "minutes": 8,
+   "endAnchor": "ch4-end",
+   "blocks": [
+    {
+     "anchor": "ch4-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch4-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch4-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "FP16",
+     "definition": "16-bit float; range versus precision tradeoff against BF16.",
+     "anchor": "ch4-aside01"
+    },
+    {
+     "term": "BF16",
+     "definition": "Brain float 16; different range-precision tradeoff.",
+     "anchor": "ch4-aside01"
+    },
+    {
+     "term": "loss scaling",
+     "definition": "Fixes what breaks in FP16.",
+     "anchor": "ch4-aside01"
+    },
+    {
+     "term": "master weights",
+     "definition": "Why they live in FP32.",
+     "anchor": "ch4-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch4-r1",
+     "question": "Why train in 16 bits at all?",
+     "answer": "Faster compute and half the bytes moved; spend bits where they matter.",
+     "anchor": "ch4-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch5",
+   "title": "Chapter 10: Gradient Checkpointing",
+   "minutes": 6,
+   "endAnchor": "ch5-end",
+   "blocks": [
+    {
+     "anchor": "ch5-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch5-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch5-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "gradient checkpointing",
+     "definition": "Forget most activations, recompute on backward; trades compute for memory.",
+     "anchor": "ch5-aside01"
+    },
+    {
+     "term": "activations",
+     "definition": "At long sequences they dwarf the weights.",
+     "anchor": "ch5-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch5-r1",
+     "question": "What eats more memory: weights or activations?",
+     "answer": "At long sequences, the activations saved for backward dwarf the weights.",
+     "anchor": "ch5-aside01"
+    },
+    {
+     "id": "ch5-r2",
+     "question": "What does checkpointing not save?",
+     "answer": "The chapter's design prompt; know the limits.",
+     "anchor": "ch5-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch6",
+   "title": "Chapter 11: Bridge to Volume 4",
+   "minutes": 4,
+   "endAnchor": "ch6-end",
+   "blocks": [
+    {
+     "anchor": "ch6-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch6-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch6-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "fixed-window wall",
+     "definition": "An information wall: the model never received what is outside the window.",
+     "anchor": "ch6-aside01"
+    },
+    {
+     "term": "Volume 4",
+     "definition": "Builds the architecture that crosses this wall.",
+     "anchor": "ch6-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch6-r1",
+     "question": "What breaks first when sequences get long?",
+     "answer": "Information: a fixed window cannot read a long document no matter the tuning.",
+     "anchor": "ch6-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "03-deep-learning-for-researchers-watch-deeper",
+   "title": "Watch and go deeper",
+   "minutes": 3,
+   "endAnchor": "03-deep-learning-for-researchers-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "03-deep-learning-for-researchers-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "03-deep-learning-for-researchers-watch-deeper-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "transformer",
+     "definition": "Volume 4: this diagram built at scale, on sequences.",
+     "anchor": "03-deep-learning-for-researchers-watch-deeper-fig01"
+    },
+    {
+     "term": "MLP blocks",
+     "definition": "Neurons and layers become these inside the transformer.",
+     "anchor": "03-deep-learning-for-researchers-watch-deeper-fig01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "03-deep-learning-for-researchers-watch-deeper-r1",
+     "question": "How does every piece slot into the transformer?",
+     "answer": "Neurons become MLP blocks, loss-to-optimizers the training loop, norm plus init signal control, precision and checkpointing the scale budget.",
+     "anchor": "03-deep-learning-for-researchers-watch-deeper-fig01"
+    }
+   ]
+  }
+ ]
+}

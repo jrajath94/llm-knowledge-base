@@ -1,0 +1,408 @@
+{
+ "schemaVersion": 1,
+ "itemId": "02-ml-foundations-bridge",
+ "itemKind": "lesson",
+ "revision": "e659d57c2d30432b3980b12e431217b03bc6d0853c70be2f20618564e2a9566f",
+ "sections": [
+  {
+   "anchor": "02-ml-foundations-bridge-intro",
+   "title": "02-ml-foundations-bridge-intro",
+   "minutes": 2,
+   "endAnchor": "02-ml-foundations-bridge-intro-end",
+   "blocks": [
+    {
+     "anchor": "02-ml-foundations-bridge-intro-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "experiment loop",
+     "definition": "How researchers decide what is true: hypothesis, baseline, intervention, measure, decide.",
+     "anchor": "02-ml-foundations-bridge-intro-p02"
+    },
+    {
+     "term": "honest splits",
+     "definition": "Data the decisions never touched, so measurement stays honest.",
+     "anchor": "02-ml-foundations-bridge-intro-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "02-ml-foundations-bridge-intro-r1",
+     "question": "What is the one question behind this volume's statistics?",
+     "answer": "Did we actually win: the statistics that tell signal from luck.",
+     "anchor": "02-ml-foundations-bridge-intro-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "ch1",
+   "title": "Chapter 1: The Three Objects",
+   "minutes": 5,
+   "endAnchor": "ch1-end",
+   "blocks": [
+    {
+     "anchor": "ch1-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch1-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch1-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "three objects",
+     "definition": "Data, model, and fitting; every experiment is built from these.",
+     "anchor": "ch1-aside01"
+    },
+    {
+     "term": "generalization",
+     "definition": "Performance on unseen data; the whole point of fitting.",
+     "anchor": "ch1-aside01"
+    },
+    {
+     "term": "features",
+     "definition": "The inputs the model sees, like a house's size and location.",
+     "anchor": "ch1-p01"
+    },
+    {
+     "term": "label",
+     "definition": "The answer you want the model to predict, like the sale price.",
+     "anchor": "ch1-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch1-r1",
+     "question": "What are the three objects every ML experiment is made of?",
+     "answer": "Data, model, and fitting.",
+     "anchor": "ch1-aside01"
+    },
+    {
+     "id": "ch1-r2",
+     "question": "What does it mean to 'fit' a model, in one sentence?",
+     "answer": "Adjust the recipe so its error is small on the examples it has seen; generalization is the whole point.",
+     "anchor": "ch1-aside01"
+    },
+    {
+     "id": "ch1-r3",
+     "question": "What are the two ways fitting can go wrong?",
+     "answer": "Underfitting and overfitting; the design prompt names them as the two failure modes.",
+     "anchor": "ch1-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch2",
+   "title": "Chapter 2: The Experiment Loop",
+   "minutes": 7,
+   "endAnchor": "ch2-end",
+   "blocks": [
+    {
+     "anchor": "ch2-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch2-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch2-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "controlled comparison",
+     "definition": "A research result is not a number; change one thing, hold everything else.",
+     "anchor": "ch2-p02"
+    },
+    {
+     "term": "ablation",
+     "definition": "Removing one piece at a time; beats 'I tried everything at once'.",
+     "anchor": "ch2-aside01"
+    },
+    {
+     "term": "baseline",
+     "definition": "The simple method you must beat before claiming a win.",
+     "anchor": "ch2-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch2-r1",
+     "question": "What is the experiment loop?",
+     "answer": "Hypothesis, baseline, intervention, measure, decide.",
+     "anchor": "ch2-p01"
+    },
+    {
+     "id": "ch2-r2",
+     "question": "Why does a single training run mean nothing?",
+     "answer": "A result is a controlled comparison, not a number; one run has no comparison.",
+     "anchor": "ch2-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch3",
+   "title": "Chapter 3: Splits Done Right",
+   "minutes": 7,
+   "endAnchor": "ch3-end",
+   "blocks": [
+    {
+     "anchor": "ch3-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch3-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch3-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "validation set",
+     "definition": "For decisions: hyperparameters and model selection.",
+     "anchor": "ch3-p02"
+    },
+    {
+     "term": "test set",
+     "definition": "For final measurement only; decisions never touch it.",
+     "anchor": "ch3-p02"
+    },
+    {
+     "term": "k-fold cross-validation",
+     "definition": "What it buys and what it costs versus a single split.",
+     "anchor": "ch3-aside01"
+    },
+    {
+     "term": "nested cross-validation",
+     "definition": "Needed when you tune and evaluate with the same data.",
+     "anchor": "ch3-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch3-r1",
+     "question": "Why three splits instead of two?",
+     "answer": "You make two different kinds of decisions, so you need three splits: train, validation for decisions, test for honest measurement.",
+     "anchor": "ch3-aside01"
+    },
+    {
+     "id": "ch3-r2",
+     "question": "When is a random split a lie?",
+     "answer": "When the data has structure the random split ignores, like time or groups.",
+     "anchor": "ch3-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch4",
+   "title": "Chapter 4: Metrics Beyond Accuracy",
+   "minutes": 10,
+   "endAnchor": "ch4-end",
+   "blocks": [
+    {
+     "anchor": "ch4-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch4-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch4-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "accuracy",
+     "definition": "Lies under class imbalance; the lazy fraud detector hits 99.9% by predicting 'not fraud'.",
+     "anchor": "ch4-p01"
+    },
+    {
+     "term": "confusion matrix",
+     "definition": "Read it: which cell hurts most depends on your costs.",
+     "anchor": "ch4-aside01"
+    },
+    {
+     "term": "perplexity",
+     "definition": "What it actually measures, in one sentence.",
+     "anchor": "ch4-aside01"
+    },
+    {
+     "term": "calibration",
+     "definition": "Why you should care before shipping a classifier.",
+     "anchor": "ch4-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch4-r1",
+     "question": "When does accuracy lie to you?",
+     "answer": "Under imbalance: 10 frauds in 10,000 transactions, and predicting 'not fraud' scores 99.9%.",
+     "anchor": "ch4-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch5",
+   "title": "Chapter 5: Leakage: The Silent Killer",
+   "minutes": 7,
+   "endAnchor": "ch5-end",
+   "blocks": [
+    {
+     "anchor": "ch5-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch5-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch5-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "leakage",
+     "definition": "Any path by which test-target information reaches the model before evaluation.",
+     "anchor": "ch5-aside01"
+    },
+    {
+     "term": "benchmark contamination",
+     "definition": "Leakage at LLM scale: test data in the training set.",
+     "anchor": "ch5-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch5-r1",
+     "question": "Define leakage in one sentence.",
+     "answer": "Leakage is any path by which information about the test target reaches the model before evaluation.",
+     "anchor": "ch5-p02"
+    },
+    {
+     "id": "ch5-r2",
+     "question": "Your model hits 99% on a hard problem. What is your first move?",
+     "answer": "Suspect leakage: map how test information could have reached the model.",
+     "anchor": "ch5-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "ch6",
+   "title": "Chapter 6: Is the Win Real?",
+   "minutes": 8,
+   "endAnchor": "ch6-end",
+   "blocks": [
+    {
+     "anchor": "ch6-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "ch6-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "ch6-takeaway",
+     "kind": "summary",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "confidence interval",
+     "definition": "Turns a single delta into a plausible range, like -0.3 to +2.7 points.",
+     "anchor": "ch6-aside01"
+    },
+    {
+     "term": "not significant",
+     "definition": "Means cannot tell, never no difference.",
+     "anchor": "ch6-aside01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "ch6-r1",
+     "question": "Your model beats the old one by 1.2 points. Do you ship it?",
+     "answer": "Not on the delta alone: if the 95% interval on the difference covers zero, the data cannot tell.",
+     "anchor": "ch6-aside01"
+    },
+    {
+     "id": "ch6-r2",
+     "question": "Why pair the comparisons?",
+     "answer": "Pairing shrinks the noise so the interval can clear zero.",
+     "anchor": "ch6-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "02-ml-foundations-bridge-watch-deeper",
+   "title": "Watch and go deeper",
+   "minutes": 3,
+   "endAnchor": "02-ml-foundations-bridge-watch-deeper-end",
+   "blocks": [
+    {
+     "anchor": "02-ml-foundations-bridge-watch-deeper-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    },
+    {
+     "anchor": "02-ml-foundations-bridge-watch-deeper-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "StatQuest",
+     "definition": "Rebuilds bias-variance, cross-validation, confusion matrices, and p-values from examples.",
+     "anchor": "02-ml-foundations-bridge-watch-deeper-p01"
+    },
+    {
+     "term": "p-values",
+     "definition": "Rebuilt from concrete examples in the videos.",
+     "anchor": "02-ml-foundations-bridge-watch-deeper-p01"
+    }
+   ],
+   "recall": [
+    {
+     "id": "02-ml-foundations-bridge-watch-deeper-r1",
+     "question": "What do the videos replay?",
+     "answer": "The volume's core ideas with pictures: bias-variance, cross-validation, confusion matrices, p-values.",
+     "anchor": "02-ml-foundations-bridge-watch-deeper-p01"
+    }
+   ]
+  }
+ ]
+}

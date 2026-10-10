@@ -1,0 +1,408 @@
+{
+ "schemaVersion": 1,
+ "itemId": "23-ai-lab-transformers",
+ "itemKind": "lesson",
+ "revision": "978e5aa0531f2f730d3b9e9a864b0b07a4f73edfdbdeccce3c901943914cc87f",
+ "sections": [
+  {
+   "anchor": "lab-w9-d1-embeddings-representation",
+   "title": "Embeddings &amp; Representation Hard",
+   "minutes": 11,
+   "endAnchor": "lab-w9-d1-embeddings-representation-end",
+   "blocks": [
+    {
+     "anchor": "lab-w9-d1-embeddings-representation-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "PPMI",
+     "definition": "Positive pointwise mutual information; embeddings derived via SVD.",
+     "anchor": "lab-w9-d1-embeddings-representation-p02"
+    },
+    {
+     "term": "SGNS",
+     "definition": "Skip-gram with negative sampling.",
+     "anchor": "lab-w9-d1-embeddings-representation-p02"
+    },
+    {
+     "term": "UNK",
+     "definition": "Unknown token at id 0 in vocabulary construction.",
+     "anchor": "lab-w9-d1-embeddings-representation-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w9-d1-embeddings-representation-r1",
+     "question": "What is the point of the comparison task?",
+     "answer": "No method wins everywhere; see the difference on real numbers rather than take it on faith.",
+     "anchor": "lab-w9-d1-embeddings-representation-p03"
+    },
+    {
+     "id": "lab-w9-d1-embeddings-representation-r2",
+     "question": "What two classical ways do you build embeddings?",
+     "answer": "Co-occurrence matrices with PPMI via SVD, and SGNS with negative sampling.",
+     "anchor": "lab-w9-d1-embeddings-representation-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w9-d2-rnns-lstms-brief",
+   "title": "RNNs &amp; LSTMs (Brief) Hard",
+   "minutes": 6,
+   "endAnchor": "lab-w9-d2-rnns-lstms-brief-end",
+   "blocks": [
+    {
+     "anchor": "lab-w9-d2-rnns-lstms-brief-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "BPTT",
+     "definition": "Backpropagation through time, implemented by hand for a vanilla RNN.",
+     "anchor": "lab-w9-d2-rnns-lstms-brief-p02"
+    },
+    {
+     "term": "gradient clipping",
+     "definition": "Watch it engage during RNN training.",
+     "anchor": "lab-w9-d2-rnns-lstms-brief-p02"
+    },
+    {
+     "term": "contrast",
+     "definition": "The framing concept: feel how hard long-range learning is for recurrence.",
+     "anchor": "lab-w9-d2-rnns-lstms-brief-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w9-d2-rnns-lstms-brief-r1",
+     "question": "Why is this a deliberate baseline lab?",
+     "answer": "So attention reads as a solution to a problem you have personally touched: hard long-range learning in recurrence.",
+     "anchor": "lab-w9-d2-rnns-lstms-brief-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w9-d3-nlp-lab-text-classification",
+   "title": "NLP Lab , Text Classification Hard",
+   "minutes": 7,
+   "endAnchor": "lab-w9-d3-nlp-lab-text-classification-end",
+   "blocks": [
+    {
+     "anchor": "lab-w9-d3-nlp-lab-text-classification-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "TF-IDF features",
+     "definition": "Built with tokenization for softmax logistic regression.",
+     "anchor": "lab-w9-d3-nlp-lab-text-classification-p02"
+    },
+    {
+     "term": "dense document vectors",
+     "definition": "The upgrade from TF-IDF via PPMI+SVD word embeddings.",
+     "anchor": "lab-w9-d3-nlp-lab-text-classification-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w9-d3-nlp-lab-text-classification-r1",
+     "question": "What does the transformer later replace?",
+     "answer": "This pipeline, piece by piece; notice how many engineering decisions it needs and how embedding quality drives the classifier.",
+     "anchor": "lab-w9-d3-nlp-lab-text-classification-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w9-d4-ml-coding-vectorized-softmax",
+   "title": "ML Coding , Vectorized Softmax Hard",
+   "minutes": 6,
+   "endAnchor": "lab-w9-d4-ml-coding-vectorized-softmax-end",
+   "blocks": [
+    {
+     "anchor": "lab-w9-d4-ml-coding-vectorized-softmax-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "stable softmax",
+     "definition": "The numerical machinery every later lab depends on.",
+     "anchor": "lab-w9-d4-ml-coding-vectorized-softmax-p02"
+    },
+    {
+     "term": "gradient checking",
+     "definition": "The lab's real lesson; lets you trust hand-written backprop.",
+     "anchor": "lab-w9-d4-ml-coding-vectorized-softmax-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w9-d4-ml-coding-vectorized-softmax-r1",
+     "question": "What is the lab's real lesson?",
+     "answer": "Gradient checking: the habit that lets you trust hand-written backprop in the attention and transformer labs.",
+     "anchor": "lab-w9-d4-ml-coding-vectorized-softmax-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w9-d5-self-attention-scaled-dot-product",
+   "title": "Self-Attention &amp; Scaled Dot-Product Hard",
+   "minutes": 8,
+   "endAnchor": "lab-w9-d5-self-attention-scaled-dot-product-end",
+   "blocks": [
+    {
+     "anchor": "lab-w9-d5-self-attention-scaled-dot-product-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "scaled dot-product attention",
+     "definition": "softmax(Q K^T / sqrt(d_k)) V; every implementation line maps to a term.",
+     "anchor": "lab-w9-d5-self-attention-scaled-dot-product-p02"
+    },
+    {
+     "term": "masks",
+     "definition": "And their effects, before single-head and multi-head forward.",
+     "anchor": "lab-w9-d5-self-attention-scaled-dot-product-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w9-d5-self-attention-scaled-dot-product-r1",
+     "question": "What should every line of your implementation map to?",
+     "answer": "A term in softmax(Q K^T / sqrt(d_k)) V.",
+     "anchor": "lab-w9-d5-self-attention-scaled-dot-product-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w10-d1-transformer-architecture",
+   "title": "Transformer Architecture Hard",
+   "minutes": 9,
+   "endAnchor": "lab-w10-d1-transformer-architecture-end",
+   "blocks": [
+    {
+     "anchor": "lab-w10-d1-transformer-architecture-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "LayerNorm",
+     "definition": "Utility alongside softmax and GELU in the full block.",
+     "anchor": "lab-w10-d1-transformer-architecture-p02"
+    },
+    {
+     "term": "positional encoding",
+     "definition": "Sinusoidal; with token embedding lookup and masks.",
+     "anchor": "lab-w10-d1-transformer-architecture-p02"
+    },
+    {
+     "term": "transposed dimension",
+     "definition": "One silently produces plausible-looking garbage; the 15 checks exist for this.",
+     "anchor": "lab-w10-d1-transformer-architecture-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w10-d1-transformer-architecture-r1",
+     "question": "Why keep shapes straight at every step?",
+     "answer": "One transposed dimension silently produces plausible-looking garbage.",
+     "anchor": "lab-w10-d1-transformer-architecture-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w10-d2-llm-training-dynamics",
+   "title": "LLM Training Dynamics Hard",
+   "minutes": 11,
+   "endAnchor": "lab-w10-d2-llm-training-dynamics-end",
+   "blocks": [
+    {
+     "anchor": "lab-w10-d2-llm-training-dynamics-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "warmup",
+     "definition": "Learning-rate warmup with cosine decay.",
+     "anchor": "lab-w10-d2-llm-training-dynamics-p02"
+    },
+    {
+     "term": "global-norm clipping",
+     "definition": "Implemented alongside SGD, Adam, and AdamW steps.",
+     "anchor": "lab-w10-d2-llm-training-dynamics-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w10-d2-llm-training-dynamics-r1",
+     "question": "What is the point of the controlled comparisons?",
+     "answer": "The comparisons are the point, not any single implementation: clipping on/off, schedules, Adam vs AdamW, batch sizes.",
+     "anchor": "lab-w10-d2-llm-training-dynamics-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w10-d3-tokenization-deep-dive",
+   "title": "Tokenization Deep Dive Hard",
+   "minutes": 5,
+   "endAnchor": "lab-w10-d3-tokenization-deep-dive-end",
+   "blocks": [
+    {
+     "anchor": "lab-w10-d3-tokenization-deep-dive-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "fertility",
+     "definition": "Token counts per text; what inference pricing actually charges for.",
+     "anchor": "lab-w10-d3-tokenization-deep-dive-p02"
+    },
+    {
+     "term": "WordPiece",
+     "definition": "A WordPiece-style tokenizer alongside BPE and unigram.",
+     "anchor": "lab-w10-d3-tokenization-deep-dive-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w10-d3-tokenization-deep-dive-r1",
+     "question": "What changes token counts across tokenizers?",
+     "answer": "Each algorithm's segmentation choices; that is fertility.",
+     "anchor": "lab-w10-d3-tokenization-deep-dive-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w10-d3-transformer-lab-tiny-autoregressive-lm",
+   "title": "Transformer Lab , Tiny Autoregressive LM (Offline) Hard",
+   "minutes": 11,
+   "endAnchor": "lab-w10-d3-transformer-lab-tiny-autoregressive-lm-end",
+   "blocks": [
+    {
+     "anchor": "lab-w10-d3-transformer-lab-tiny-autoregressive-lm-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "causal masking",
+     "definition": "Mask future positions before the softmax, not after; the week's hardest-won rule.",
+     "anchor": "lab-w10-d3-transformer-lab-tiny-autoregressive-lm-p02"
+    },
+    {
+     "term": "autoregressive sampling",
+     "definition": "Generate new text; read your model's samples as the payoff.",
+     "anchor": "lab-w10-d3-transformer-lab-tiny-autoregressive-lm-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w10-d3-transformer-lab-tiny-autoregressive-lm-r1",
+     "question": "What is the week's hardest-won rule?",
+     "answer": "Mask future positions before the softmax, not after.",
+     "anchor": "lab-w10-d3-transformer-lab-tiny-autoregressive-lm-p02"
+    },
+    {
+     "id": "lab-w10-d3-transformer-lab-tiny-autoregressive-lm-r2",
+     "question": "What is the payoff?",
+     "answer": "Reading your model's samples after nine days of machinery.",
+     "anchor": "lab-w10-d3-transformer-lab-tiny-autoregressive-lm-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w10-d4-llm-lab-fine-tuning",
+   "title": "LLM Lab , Fine-Tuning Hard",
+   "minutes": 8,
+   "endAnchor": "lab-w10-d4-llm-lab-fine-tuning-end",
+   "blocks": [
+    {
+     "anchor": "lab-w10-d4-llm-lab-fine-tuning-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w10-d4-llm-lab-fine-tuning-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "honest-comparison discipline",
+     "definition": "Keep evaluation identical across strategies or the ranking is meaningless.",
+     "anchor": "lab-w10-d4-llm-lab-fine-tuning-p02"
+    },
+    {
+     "term": "fine-tuning",
+     "definition": "Strategies compared: full, head-only, frozen extractor, against scratch.",
+     "anchor": "lab-w10-d4-llm-lab-fine-tuning-p03"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w10-d4-llm-lab-fine-tuning-r1",
+     "question": "What is the transferable skill?",
+     "answer": "The honest-comparison discipline: identical evaluation across fine-tuning strategies.",
+     "anchor": "lab-w10-d4-llm-lab-fine-tuning-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w10-d5-attention-complexity-optimizations",
+   "title": "Attention Complexity Optimizations Hard",
+   "minutes": 6,
+   "endAnchor": "lab-w10-d5-attention-complexity-optimizations-end",
+   "blocks": [
+    {
+     "anchor": "lab-w10-d5-attention-complexity-optimizations-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "KV cache",
+     "definition": "For incremental decoding; implemented and timed.",
+     "anchor": "lab-w10-d5-attention-complexity-optimizations-p02"
+    },
+    {
+     "term": "FlashAttention",
+     "definition": "The tiled-attention intuition behind it.",
+     "anchor": "lab-w10-d5-attention-complexity-optimizations-p02"
+    },
+    {
+     "term": "prefill versus decode",
+     "definition": "Estimate the work split, then measure speedups.",
+     "anchor": "lab-w10-d5-attention-complexity-optimizations-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w10-d5-attention-complexity-optimizations-r1",
+     "question": "What survives interviews from this lab?",
+     "answer": "Measured speedups on your own machine: the arithmetic turned into numbers.",
+     "anchor": "lab-w10-d5-attention-complexity-optimizations-p02"
+    }
+   ]
+  }
+ ]
+}

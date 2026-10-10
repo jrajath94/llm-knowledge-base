@@ -1,0 +1,267 @@
+{
+ "schemaVersion": 1,
+ "itemId": "20-ai-lab-evaluation-debugging",
+ "itemKind": "lesson",
+ "revision": "539657412bb3acc5be83cac0f5dfb6539dc748a5952cada8711149632378a6b5",
+ "sections": [
+  {
+   "anchor": "lab-w5-d1-feature-engineering",
+   "title": "Feature Engineering Strategies Medium",
+   "minutes": 6,
+   "endAnchor": "lab-w5-d1-feature-engineering-end",
+   "blocks": [
+    {
+     "anchor": "lab-w5-d1-feature-engineering-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "leakage-safe pipelines",
+     "definition": "All transforms inside pipelines; the naive target-encoding failure is the instructive case.",
+     "anchor": "lab-w5-d1-feature-engineering-p02"
+    },
+    {
+     "term": "target encoding",
+     "definition": "Naive target encoding leaks; the single most instructive failure in Week 5.",
+     "anchor": "lab-w5-d1-feature-engineering-p14"
+    },
+    {
+     "term": "missingness indicators",
+     "definition": "Feature-engineering move alongside title extraction and log transforms.",
+     "anchor": "lab-w5-d1-feature-engineering-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w5-d1-feature-engineering-r1",
+     "question": "What is the moment to watch for?",
+     "answer": "When validation looks amazing and the holdout disagrees: the signature of leakage.",
+     "anchor": "lab-w5-d1-feature-engineering-p03"
+    },
+    {
+     "id": "lab-w5-d1-feature-engineering-r2",
+     "question": "What is the most instructive failure in Week 5?",
+     "answer": "The naive target-encoding task.",
+     "anchor": "lab-w5-d1-feature-engineering-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w5-d2-model-evaluation",
+   "title": "Model Evaluation Deep Dive Medium",
+   "minutes": 6,
+   "endAnchor": "lab-w5-d2-model-evaluation-end",
+   "blocks": [
+    {
+     "anchor": "lab-w5-d2-model-evaluation-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "PR-AUC",
+     "definition": "With bootstrap confidence interval; preferred under class imbalance.",
+     "anchor": "lab-w5-d2-model-evaluation-p03"
+    },
+    {
+     "term": "cost-based threshold",
+     "definition": "Threshold selection by explicit business cost.",
+     "anchor": "lab-w5-d2-model-evaluation-p02"
+    },
+    {
+     "term": "temperature scaling",
+     "definition": "Calibration fix alongside reliability bins and ECE.",
+     "anchor": "lab-w5-d2-model-evaluation-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w5-d2-model-evaluation-r1",
+     "question": "What can you do after this lab?",
+     "answer": "Compute core metrics, choose metrics aligned with product goals, tune thresholds using costs, diagnose and improve calibration.",
+     "anchor": "lab-w5-d2-model-evaluation-aside01"
+    },
+    {
+     "id": "lab-w5-d2-model-evaluation-r2",
+     "question": "What does every task answer?",
+     "answer": "A question interviewers ask verbatim.",
+     "anchor": "lab-w5-d2-model-evaluation-p03"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w5-d3-bias-variance-regularization",
+   "title": "Bias, Variance &amp; Regularization Medium",
+   "minutes": 6,
+   "endAnchor": "lab-w5-d3-bias-variance-regularization-end",
+   "blocks": [
+    {
+     "anchor": "lab-w5-d3-bias-variance-regularization-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "bias-variance",
+     "definition": "Turned into experiments: depth sweeps, C sweeps, L1 vs L2, learning curves.",
+     "anchor": "lab-w5-d3-bias-variance-regularization-p02"
+    },
+    {
+     "term": "L1",
+     "definition": "Correlated-features gotcha: breaks naive feature-importance readings.",
+     "anchor": "lab-w5-d3-bias-variance-regularization-p02"
+    },
+    {
+     "term": "learning curves",
+     "definition": "Diagnose bias vs variance from curves by data size.",
+     "anchor": "lab-w5-d3-bias-variance-regularization-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w5-d3-bias-variance-regularization-r1",
+     "question": "What breaks naive feature-importance readings in production?",
+     "answer": "The L1 correlated-features gotcha.",
+     "anchor": "lab-w5-d3-bias-variance-regularization-p02"
+    },
+    {
+     "id": "lab-w5-d3-bias-variance-regularization-r2",
+     "question": "What can you justify after this lab?",
+     "answer": "Regularization knob choices, L1 vs L2 effects on weights and features.",
+     "anchor": "lab-w5-d3-bias-variance-regularization-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w5-d4-model-debugging-error-analysis",
+   "title": "Model Debugging &amp; Error Analysis Medium",
+   "minutes": 7,
+   "endAnchor": "lab-w5-d4-model-debugging-error-analysis-end",
+   "blocks": [
+    {
+     "anchor": "lab-w5-d4-model-debugging-error-analysis-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "slice metrics",
+     "definition": "Find cohorts that fail; FP vs FN inspection.",
+     "anchor": "lab-w5-d4-model-debugging-error-analysis-p02"
+    },
+    {
+     "term": "feature ablation",
+     "definition": "Part of the debugging workflow with threshold by cost.",
+     "anchor": "lab-w5-d4-model-debugging-error-analysis-p02"
+    },
+    {
+     "term": "pipeline",
+     "definition": "Why a pipeline is required for trustworthy debugging: the standing checkpoint.",
+     "anchor": "lab-w5-d4-model-debugging-error-analysis-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w5-d4-model-debugging-error-analysis-r1",
+     "question": "What is the debugging workflow FAANG expects?",
+     "answer": "Slice metrics, FP vs FN inspection, feature ablation, and threshold by cost.",
+     "anchor": "lab-w5-d4-model-debugging-error-analysis-p02"
+    },
+    {
+     "id": "lab-w5-d4-model-debugging-error-analysis-r2",
+     "question": "What is the standing checkpoint?",
+     "answer": "'Why is a pipeline required for trustworthy debugging' — answer in your own words before any hint.",
+     "anchor": "lab-w5-d4-model-debugging-error-analysis-p02"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w5-d5-feature-evaluation-credit-default",
+   "title": "Feature + Evaluation Lab Medium",
+   "minutes": 7,
+   "endAnchor": "lab-w5-d5-feature-evaluation-credit-default-end",
+   "blocks": [
+    {
+     "anchor": "lab-w5-d5-feature-evaluation-credit-default-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "mock take-home",
+     "definition": "Treat the capstone this way: baselines first, then features, then threshold by cost.",
+     "anchor": "lab-w5-d5-feature-evaluation-credit-default-p02"
+    },
+    {
+     "term": "cost-sensitive",
+     "definition": "Imbalanced credit-default problem combining features, evaluation, and debugging.",
+     "anchor": "lab-w5-d5-feature-evaluation-credit-default-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w5-d5-feature-evaluation-credit-default-r1",
+     "question": "What is the capstone order of operations?",
+     "answer": "Baselines first, then features, then threshold by cost.",
+     "anchor": "lab-w5-d5-feature-evaluation-credit-default-p02"
+    },
+    {
+     "id": "lab-w5-d5-feature-evaluation-credit-default-r2",
+     "question": "What can you run after this lab?",
+     "answer": "A leakage-safe sklearn pipeline with model comparison under CV and cost-based thresholds.",
+     "anchor": "lab-w5-d5-feature-evaluation-credit-default-aside01"
+    }
+   ]
+  },
+  {
+   "anchor": "lab-w5-d6-pca-lab",
+   "title": "PCA Lab Medium",
+   "minutes": 7,
+   "endAnchor": "lab-w5-d6-pca-lab-end",
+   "blocks": [
+    {
+     "anchor": "lab-w5-d6-pca-lab-p01",
+     "kind": "keyIdea",
+     "reveal": "rise"
+    },
+    {
+     "anchor": "lab-w5-d6-pca-lab-fig01",
+     "kind": "figure",
+     "reveal": "fade"
+    }
+   ],
+   "keyTerms": [
+    {
+     "term": "explained variance",
+     "definition": "Choose the smallest k that keeps enough of it.",
+     "anchor": "lab-w5-d6-pca-lab-p02"
+    },
+    {
+     "term": "reconstruction",
+     "definition": "Centering, covariance, eigendecomposition, reconstruction.",
+     "anchor": "lab-w5-d6-pca-lab-p02"
+    }
+   ],
+   "recall": [
+    {
+     "id": "lab-w5-d6-pca-lab-r1",
+     "question": "What does PCA connect to?",
+     "answer": "The linear algebra of Volume 18 (eigendecomposition); a dimensionality-reduction baseline for every future volume.",
+     "anchor": "lab-w5-d6-pca-lab-p02"
+    },
+    {
+     "id": "lab-w5-d6-pca-lab-r2",
+     "question": "What do you compare and note?",
+     "answer": "PCA plus logistic regression against the raw baseline; note what components cost in interpretability.",
+     "anchor": "lab-w5-d6-pca-lab-p02"
+    }
+   ]
+  }
+ ]
+}
