@@ -1,0 +1,608 @@
+{
+  "schemaVersion": 1,
+  "itemId": "04-llm-internals",
+  "itemKind": "lesson",
+  "revision": "1d198698bc49eeb51bb91259a4a52176db23a3ac05bcd043da2d8be943a19c9e",
+  "sections": [
+    {
+      "anchor": "ch1-tokenization",
+      "title": "Tokenization from zero",
+      "minutes": 9,
+      "endAnchor": "ch1-tokenization-end",
+      "blocks": [
+        {
+          "anchor": "ch1-tokenization-fig01",
+          "kind": "figure",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "ch1-tokenization-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "tokenization",
+          "definition": "The step that converts text to integer token IDs.",
+          "anchor": "ch1-tokenization-p02"
+        },
+        {
+          "term": "vocabulary",
+          "definition": "The fixed dictionary that maps text pieces to integers.",
+          "anchor": "ch1-tokenization-p02"
+        },
+        {
+          "term": "BPE",
+          "definition": "Byte pair encoding. It learns merge rules from a corpus.",
+          "anchor": "ch1-tokenization-p02"
+        },
+        {
+          "term": "fertility",
+          "definition": "The average number of tokens per word.",
+          "anchor": "ch1-tokenization-p02"
+        },
+        {
+          "term": "OOV",
+          "definition": "Out-of-vocabulary. A word missing from the vocabulary.",
+          "anchor": "ch1-tokenization-p06"
+        }
+      ],
+      "recall": [
+        {
+          "id": "ch1-tokenization-r1",
+          "question": "Why do modern LLMs use subword tokenization instead of words?",
+          "answer": "Word vocabularies explode and leave unknown words. Subwords split rare words into reusable pieces, so every string decomposes into known pieces.",
+          "anchor": "ch1-tokenization-p02"
+        },
+        {
+          "id": "ch1-tokenization-r2",
+          "question": "What are the two phases of BPE?",
+          "answer": "Training learns merge rules from a corpus. Encoding applies the rules greedily in learned order.",
+          "anchor": "ch1-tokenization-p09"
+        },
+        {
+          "id": "ch1-tokenization-r3",
+          "question": "Why does fertility matter in practice?",
+          "answer": "Providers count context windows and prices in tokens. High fertility means fewer words fit and costs rise.",
+          "anchor": "ch1-tokenization-p16"
+        }
+      ]
+    },
+    {
+      "anchor": "ch2-embeddings",
+      "title": "Embeddings: points in a learned space",
+      "minutes": 7,
+      "endAnchor": "ch2-embeddings-end",
+      "blocks": [
+        {
+          "anchor": "ch2-embeddings-fig01",
+          "kind": "figure",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "ch2-embeddings-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "embedding",
+          "definition": "A learned vector of floats that stands for one token.",
+          "anchor": "ch2-embeddings-p03"
+        },
+        {
+          "term": "embedding matrix",
+          "definition": "The lookup table with one row per vocabulary entry.",
+          "anchor": "ch2-embeddings-p03"
+        },
+        {
+          "term": "one-hot",
+          "definition": "A vector with 1 at one position and 0 elsewhere.",
+          "anchor": "ch2-embeddings-p08"
+        },
+        {
+          "term": "tying",
+          "definition": "Reusing one matrix for input and output embeddings.",
+          "anchor": "ch2-embeddings-p11"
+        }
+      ],
+      "recall": [
+        {
+          "id": "ch2-embeddings-r1",
+          "question": "What does distance between embeddings mean?",
+          "answer": "Similarity. Tokens with nearby points get similar treatment from the network.",
+          "anchor": "ch2-embeddings-p04"
+        },
+        {
+          "id": "ch2-embeddings-r2",
+          "question": "Why are learned embeddings better than one-hot?",
+          "answer": "One-hot makes every token equally far from every other token. Learned vectors turn similarity into geometry.",
+          "anchor": "ch2-embeddings-p03"
+        },
+        {
+          "id": "ch2-embeddings-r3",
+          "question": "What is the context-free limitation of embeddings?",
+          "answer": "The token bank gets the same vector in river bank and bank loan. Attention builds meaning in context later.",
+          "anchor": "ch2-embeddings-p03"
+        }
+      ]
+    },
+    {
+      "anchor": "ch3-attention",
+      "title": "Attention, fully worked",
+      "minutes": 13,
+      "endAnchor": "ch3-attention-end",
+      "blocks": [
+        {
+          "anchor": "ch3-attention-fig01",
+          "kind": "figure",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "ch3-attention-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "attention",
+          "definition": "Differentiable retrieval over a sequence.",
+          "anchor": "ch3-attention-p03"
+        },
+        {
+          "term": "softmax",
+          "definition": "The function that turns scores into weights that sum to one.",
+          "anchor": "ch3-attention-p03"
+        },
+        {
+          "term": "causal mask",
+          "definition": "The rule that stops a token from peeking at the future.",
+          "anchor": "ch3-attention-p08"
+        },
+        {
+          "term": "scaling",
+          "definition": "Dividing by sqrt(d_k) to keep softmax out of saturation.",
+          "anchor": "ch3-attention-p09"
+        }
+      ],
+      "recall": [
+        {
+          "id": "ch3-attention-r1",
+          "question": "What are the five steps of one attention head?",
+          "answer": "Project to Q, K, V. Score with QK^T over sqrt(d_k). Apply the causal mask. Apply softmax. Mix the values.",
+          "anchor": "ch3-attention-p12"
+        },
+        {
+          "id": "ch3-attention-r2",
+          "question": "Why does attention scale by sqrt(d_k)?",
+          "answer": "It keeps softmax out of saturation so gradients flow.",
+          "anchor": "ch3-attention-p24"
+        },
+        {
+          "id": "ch3-attention-r3",
+          "question": "What is the cost of attention?",
+          "answer": "O(n^2 d) time and O(n^2) memory. At 4k context, one head's score matrix is 67 MB.",
+          "anchor": "ch3-attention-p29"
+        }
+      ]
+    },
+    {
+      "anchor": "ch5-positions",
+      "title": "Positional encodings: sinusoids, then RoPE",
+      "minutes": 10,
+      "endAnchor": "ch5-positions-end",
+      "blocks": [
+        {
+          "anchor": "ch5-positions-fig01",
+          "kind": "figure",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "ch5-positions-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "positional encoding",
+          "definition": "The signal that gives attention a sense of order.",
+          "anchor": "ch5-positions-p04"
+        },
+        {
+          "term": "sinusoids",
+          "definition": "Fixed multi-frequency waves used as position codes.",
+          "anchor": "ch5-positions-p06"
+        },
+        {
+          "term": "RoPE",
+          "definition": "Rotary position embedding. It rotates Q and K by position.",
+          "anchor": "ch5-positions-p03"
+        },
+        {
+          "term": "relative distance",
+          "definition": "The gap n minus m, which RoPE makes scores depend on.",
+          "anchor": "ch5-positions-p10"
+        }
+      ],
+      "recall": [
+        {
+          "id": "ch5-positions-r1",
+          "question": "Why does attention need positional encodings?",
+          "answer": "Attention is permutation-invariant. Without them it cannot see order.",
+          "anchor": "ch5-positions-p03"
+        },
+        {
+          "id": "ch5-positions-r2",
+          "question": "What does RoPE do to Q and K?",
+          "answer": "It rotates them by position-proportional angles. Scores then depend only on relative distance.",
+          "anchor": "ch5-positions-p10"
+        },
+        {
+          "id": "ch5-positions-r3",
+          "question": "Where must you never apply RoPE?",
+          "answer": "To V. Apply it to Q and K only.",
+          "anchor": "ch5-positions-p20"
+        }
+      ]
+    },
+    {
+      "anchor": "ch7-activations-norm",
+      "title": "Activations and where normalization lives",
+      "minutes": 8,
+      "endAnchor": "ch7-activations-norm-end",
+      "blocks": [
+        {
+          "anchor": "ch7-activations-norm-fig01",
+          "kind": "figure",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "ch7-activations-norm-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "GELU",
+          "definition": "A smooth ReLU-like gate that uses the Gaussian CDF.",
+          "anchor": "ch7-activations-norm-p03"
+        },
+        {
+          "term": "SwiGLU",
+          "definition": "A learned gate. It multiplies Swish(xW) by xV.",
+          "anchor": "ch7-activations-norm-p03"
+        },
+        {
+          "term": "RMSNorm",
+          "definition": "LayerNorm without mean centering.",
+          "anchor": "ch7-activations-norm-p12"
+        },
+        {
+          "term": "pre-norm",
+          "definition": "Placing normalization before the sublayer in the block.",
+          "anchor": "ch7-activations-norm-p03"
+        }
+      ],
+      "recall": [
+        {
+          "id": "ch7-activations-norm-r1",
+          "question": "Why did pre-norm win?",
+          "answer": "The residual path stays unnormalized, so gradients flow through deep stacks.",
+          "anchor": "ch7-activations-norm-p03"
+        },
+        {
+          "id": "ch7-activations-norm-r2",
+          "question": "What is SwiGLU?",
+          "answer": "A learned gate. It multiplies Swish(xW) by xV and uses three MLP matrices. It is the modern default.",
+          "anchor": "ch7-activations-norm-p09"
+        },
+        {
+          "id": "ch7-activations-norm-r3",
+          "question": "How does RMSNorm differ from LayerNorm?",
+          "answer": "It skips mean centering. It is cheaper and equally stabilizing.",
+          "anchor": "ch7-activations-norm-p12"
+        }
+      ]
+    },
+    {
+      "anchor": "ch4-transformer-block",
+      "title": "Multi-head attention and the transformer block",
+      "minutes": 6,
+      "endAnchor": "ch4-transformer-block-end",
+      "blocks": [
+        {
+          "anchor": "ch4-transformer-block-fig01",
+          "kind": "figure",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "ch4-transformer-block-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "multi-head attention",
+          "definition": "Several independent attention distributions in parallel subspaces.",
+          "anchor": "ch4-transformer-block-p03"
+        },
+        {
+          "term": "residual stream",
+          "definition": "The shared workspace that sublayers add deltas to.",
+          "anchor": "ch4-transformer-block-p13"
+        },
+        {
+          "term": "MLP",
+          "definition": "The per-position feedforward network in each block.",
+          "anchor": "ch4-transformer-block-p08"
+        }
+      ],
+      "recall": [
+        {
+          "id": "ch4-transformer-block-r1",
+          "question": "What does one transformer block do, in order?",
+          "answer": "Pre-norm, attention, residual add, pre-norm, MLP, residual add.",
+          "anchor": "ch4-transformer-block-p08"
+        },
+        {
+          "id": "ch4-transformer-block-r2",
+          "question": "What mixes across positions, and what computes per position?",
+          "answer": "Attention mixes across positions. The MLP computes per position.",
+          "anchor": "ch4-transformer-block-p03"
+        },
+        {
+          "id": "ch4-transformer-block-r3",
+          "question": "Where do most block parameters live?",
+          "answer": "In the MLP, about three times the parameters of attention.",
+          "anchor": "ch4-transformer-block-p11"
+        }
+      ]
+    },
+    {
+      "anchor": "ch6-attention-variants",
+      "title": "MHA vs MQA vs GQA",
+      "minutes": 6,
+      "endAnchor": "ch6-attention-variants-end",
+      "blocks": [
+        {
+          "anchor": "ch6-attention-variants-fig01",
+          "kind": "figure",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "ch6-attention-variants-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "MHA",
+          "definition": "Multi-head attention. It uses h key-value heads.",
+          "anchor": "ch6-attention-variants-p03"
+        },
+        {
+          "term": "MQA",
+          "definition": "Multi-query attention. It uses one shared key-value head.",
+          "anchor": "ch6-attention-variants-p03"
+        },
+        {
+          "term": "GQA",
+          "definition": "Grouped-query attention. It uses g groups of key-value heads.",
+          "anchor": "ch6-attention-variants-p03"
+        },
+        {
+          "term": "KV cache",
+          "definition": "Stored keys and values reused across decode steps.",
+          "anchor": "ch6-attention-variants-p03"
+        }
+      ],
+      "recall": [
+        {
+          "id": "ch6-attention-variants-r1",
+          "question": "What shrinks from MHA to MQA to GQA?",
+          "answer": "Only the K and V heads shrink. Query heads never shrink.",
+          "anchor": "ch6-attention-variants-p03"
+        },
+        {
+          "id": "ch6-attention-variants-r2",
+          "question": "What is the KV cache formula per token?",
+          "answer": "2 times layers times KV-heads times head-dim times bytes.",
+          "anchor": "ch6-attention-variants-p03"
+        },
+        {
+          "id": "ch6-attention-variants-r3",
+          "question": "Why does GQA-8 speed up generation?",
+          "answer": "Fewer KV heads mean less memory bandwidth per decode step.",
+          "anchor": "ch6-attention-variants-p07"
+        }
+      ]
+    },
+    {
+      "anchor": "ch8-kv-cache",
+      "title": "KV cache mechanics",
+      "minutes": 7,
+      "endAnchor": "ch8-kv-cache-end",
+      "blocks": [
+        {
+          "anchor": "ch8-kv-cache-fig01",
+          "kind": "figure",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "ch8-kv-cache-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "prefill",
+          "definition": "The compute-bound first pass over the prompt.",
+          "anchor": "ch8-kv-cache-p07"
+        },
+        {
+          "term": "decode",
+          "definition": "The memory-bandwidth-bound token-by-token phase.",
+          "anchor": "ch8-kv-cache-p07"
+        },
+        {
+          "term": "KV cache",
+          "definition": "Stored keys and values reused across decode steps.",
+          "anchor": "ch8-kv-cache-p03"
+        },
+        {
+          "term": "time to first token",
+          "definition": "The latency metric for prefill.",
+          "anchor": "ch8-kv-cache-p13"
+        }
+      ],
+      "recall": [
+        {
+          "id": "ch8-kv-cache-r1",
+          "question": "What does the KV cache store, and what is never cached?",
+          "answer": "It stores past K and V per layer. Q is never cached.",
+          "anchor": "ch8-kv-cache-p03"
+        },
+        {
+          "id": "ch8-kv-cache-r2",
+          "question": "Why is decode memory-bandwidth bound?",
+          "answer": "Each step appends one token's K and V and reuses the rest. Bandwidth limits speed, not compute.",
+          "anchor": "ch8-kv-cache-p03"
+        },
+        {
+          "id": "ch8-kv-cache-r3",
+          "question": "What does the cache cap in serving?",
+          "answer": "Batch size. Context length becomes a serving cost.",
+          "anchor": "ch8-kv-cache-p09"
+        }
+      ]
+    },
+    {
+      "anchor": "capstone",
+      "title": "Capstone lab",
+      "minutes": 12,
+      "endAnchor": "capstone-end",
+      "blocks": [
+        {
+          "anchor": "capstone-fig01",
+          "kind": "figure",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "capstone-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "reproduce",
+          "definition": "Rebuilding a result exactly to prove understanding.",
+          "anchor": "capstone-p06"
+        },
+        {
+          "term": "OOV handling",
+          "definition": "Dealing with words never seen in training.",
+          "anchor": "capstone-p08"
+        },
+        {
+          "term": "NumPy",
+          "definition": "The numerical library used for the attention lab.",
+          "anchor": "capstone-p04"
+        }
+      ],
+      "recall": [
+        {
+          "id": "capstone-r1",
+          "question": "What does Lab A prove?",
+          "answer": "Your attention implementation matches the hand-computed numbers from Chapter 3.",
+          "anchor": "capstone-p04"
+        },
+        {
+          "id": "capstone-r2",
+          "question": "What does Lab B prove?",
+          "answer": "Your BPE trainer reproduces the merge sequence, then handles unseen words.",
+          "anchor": "capstone-p06"
+        },
+        {
+          "id": "capstone-r3",
+          "question": "Your numbers disagree with the chapter. What does it mean?",
+          "answer": "Your implementation has a bug. It is not a rounding choice.",
+          "anchor": "capstone-p04"
+        }
+      ]
+    },
+    {
+      "anchor": "a04a-appendix",
+      "title": "Appendix 4A: Long-Context Engineering",
+      "minutes": 12,
+      "endAnchor": "a04a-appendix-end",
+      "blocks": [
+        {
+          "anchor": "a04a-appendix-p01",
+          "kind": "keyIdea",
+          "reveal": "rise"
+        },
+        {
+          "anchor": "a04a-appendix-takeaway",
+          "kind": "summary",
+          "reveal": "fade"
+        },
+        {
+          "anchor": "a04a-appendix-takeaway-2",
+          "kind": "summary",
+          "reveal": "fade"
+        }
+      ],
+      "keyTerms": [
+        {
+          "term": "position interpolation",
+          "definition": "Dividing positions by s to fit a longer context.",
+          "anchor": "a04a-appendix-p06"
+        },
+        {
+          "term": "NTK-aware scaling",
+          "definition": "Raising the RoPE base to protect high frequencies.",
+          "anchor": "a04a-appendix-p09"
+        },
+        {
+          "term": "YaRN",
+          "definition": "Per-dimension ramps plus a temperature fix for long context.",
+          "anchor": "a04a-appendix-p14"
+        },
+        {
+          "term": "attention sink",
+          "definition": "Early tokens that keep attracting attention mass.",
+          "anchor": "a04a-appendix-p29"
+        }
+      ],
+      "recall": [
+        {
+          "id": "a04a-appendix-r1",
+          "question": "Why does RoPE break past its training length?",
+          "answer": "The angles are unfamiliar. Extension methods make long positions look familiar again.",
+          "anchor": "a04a-appendix-p03"
+        },
+        {
+          "id": "a04a-appendix-r2",
+          "question": "What does NTK-aware scaling do?",
+          "answer": "It raises the base to b times s^(D/(D-2)) and protects high frequencies. It often works with no fine-tuning at 2x to 4x.",
+          "anchor": "a04a-appendix-p14"
+        },
+        {
+          "id": "a04a-appendix-r3",
+          "question": "When is YaRN the right recipe?",
+          "answer": "When you plan to fine-tune for long context.",
+          "anchor": "a04a-appendix-p01"
+        }
+      ]
+    }
+  ]
+}
