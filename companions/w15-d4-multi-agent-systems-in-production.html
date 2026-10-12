@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Multi-Agent Systems in Production - Companion</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Barlow+Semi+Condensed:ital,wght@0,400;0,500;0,600;1,400&amp;family=Libre+Caslon+Display&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet"/><style id="template-theme">
+/* =====================================================================
+   Companion template theme — extracted verbatim from the reference artifact
+   (~/workspace/companions/reference/index.html), with two additions:
+     (a) provenance components the reference lacks: .src-legend, provenance
+         tag pills, .quote-count, and the colophon block styles;
+     (b) a clearly-marked LEGACY section carrying forward old pilot content
+         classes (pull quotes, stat cards, toys) so build.py can swap the
+         <style> block without orphaning existing content.
+   Per-course accent override is NOT in this file: build.py injects a second
+   <style id="course-accent"> after this one, setting only --apron,
+   --apron-wash, --apron-text (+ dark variants). Later rules win.
+   ===================================================================== */
+
+/* ---------- design tokens (reference §a, verbatim) ---------- */
+:root {
+  --paper: #F7F2E8;        /* page = the watercolor paper */
+  --print: #F7F2E8;        /* paintings always sit on paper, in both themes */
+  --surface: #FFFCF5;      /* shelf tags, cards */
+  --ink: #2A231E;          /* sepia-black, same as the pen in the paintings */
+  --ink-2: #5C534A;
+  --muted: #7E7469;
+  --rule: #DDD3C3;
+  --rule-2: #ECE4D6;
+  --apron: #D9581A;        /* the accent: marks, never body text */
+  --apron-wash: rgba(217, 88, 26, .12);
+  --apron-text: #A6400B;   /* accent that clears contrast as text on paper */
+  --on-apron: #FFFFFF;
+  --blue: #2462A6;         /* blueprint blue: the second series */
+  --blue-wash: rgba(36, 98, 166, .12);
+  --grey: #7E786F;         /* neutral benchmark series */
+  --tape: #F0C537;
+  --tape-ink: #2A231E;
+  --frame-pad: 0px;
+  --frame-shadow: none;
+  --frame-radius: 0px;
+  --stage-bg: #EEE6D6;      /* full-screen chart panels on phones */
+  --f-display: "Libre Caslon Display", "Libre Caslon Text", Georgia, "Times New Roman", serif;
+  --f-body: "Newsreader", Georgia, "Times New Roman", serif;
+  --f-ui: "Barlow Semi Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-sign: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --col: 37rem;
+  --wide: 68rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #181512; --surface: #221D19; --ink: #EEE6DA; --ink-2: #C3B9AC; --muted: #978D81;
+    --rule: #3B342D; --rule-2: #2A2520; --apron: #D8612A; --apron-wash: rgba(216, 97, 42, .2);
+    --apron-text: #F2925A; --on-apron: #FFFFFF; --blue: #4F8DD6; --blue-wash: rgba(79, 141, 214, .2);
+    --grey: #938D84; --tape: #D9B12E; --tape-ink: #1A1611;
+    --frame-pad: 14px; --frame-shadow: 0 18px 44px rgba(0, 0, 0, .5); --frame-radius: 3px; --stage-bg: #211D19;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #181512; --surface: #221D19; --ink: #EEE6DA; --ink-2: #C3B9AC; --muted: #978D81;
+  --rule: #3B342D; --rule-2: #2A2520; --apron: #D8612A; --apron-wash: rgba(216, 97, 42, .2);
+  --apron-text: #F2925A; --on-apron: #FFFFFF; --blue: #4F8DD6; --blue-wash: rgba(79, 141, 214, .2);
+  --grey: #938D84; --tape: #D9B12E; --tape-ink: #1A1611;
+  --frame-pad: 14px; --frame-shadow: 0 18px 44px rgba(0, 0, 0, .5); --frame-radius: 3px; --stage-bg: #211D19;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-padding-top: 6rem; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.125rem/1.62 var(--f-body);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; text-decoration-color: var(--apron); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+a:hover { color: var(--apron-text); }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 2px; }
+.wrap { padding-inline: 20px; padding-block: 0 4rem; }
+.col { max-width: var(--col); margin-inline: auto; }
+.wide { max-width: var(--wide); margin-inline: auto; }
+.col > p { margin: 0 0 1.05em; }
+.col > p + p { text-indent: 0; }
+em { font-style: italic; }
+.ui { font-family: var(--f-ui); }
+
+/* ---------- tape measure bar ---------- */
+.tapebar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  display: grid; grid-template-columns: minmax(11rem, 15rem) 1fr; align-items: center; gap: 14px;
+  padding: 8px 20px 6px;
+}
+.tape-read { font-family: var(--f-ui); line-height: 1.15; min-width: 0; }
+.tape-time { font: 600 1.15rem var(--f-sign); letter-spacing: .02em; font-variant-numeric: tabular-nums; white-space: nowrap; flex: none; }
+.tape-time small { font: 500 .78rem var(--f-ui); color: var(--muted); letter-spacing: .04em; margin-left: .35rem; }
+.tape-ch { font-size: .86rem; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#tape { display: block; width: 100%; height: 42px; cursor: pointer; touch-action: pan-y; }
+#tape:focus-visible { outline-offset: 1px; }
+.tape-hint { position: absolute; right: 22px; bottom: -1.35rem; font: 500 .72rem var(--f-ui); color: var(--muted); }
+@media (max-width: 640px) {
+  .tapebar { grid-template-columns: 1fr; gap: 2px; padding: 6px 16px 4px; }
+  .tape-read { display: flex; gap: .6rem; align-items: baseline; }
+  #tape { height: 36px; }
+}
+
+/* ---------- hero ---------- */
+.hero { padding-block: 3.2rem 1rem; }
+.kicker { font: 600 .8rem var(--f-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--apron-text); margin: 0 0 1.2rem; }
+h1 {
+  font: 400 clamp(2.8rem, 7.6vw, 5.6rem)/0.98 var(--f-display);
+  letter-spacing: -.012em; margin: 0 0 1.4rem; text-wrap: balance;
+}
+.dek { font: italic 400 clamp(1.2rem, 2.4vw, 1.5rem)/1.42 var(--f-body); color: var(--ink-2); margin: 0 0 1.6rem; text-wrap: pretty; max-width: 34rem; }
+.byline { font: 500 .88rem/1.5 var(--f-ui); color: var(--muted); letter-spacing: .02em; display: flex; flex-wrap: wrap; gap: .25rem 1.1rem; }
+.byline b { color: var(--ink-2); font-weight: 600; }
+
+/* ---------- paintings ---------- */
+figure { margin: 0; }
+.paint { margin-block: 2.2rem 2.6rem; }
+.paint .frame {
+  background: var(--print); padding: var(--frame-pad); box-shadow: var(--frame-shadow);
+  border-radius: var(--frame-radius); isolation: isolate;
+}
+/* each painting: a static base on paper, plus separately painted layers that move */
+.stage { position: relative; background: var(--print); isolation: isolate; overflow: hidden; }
+.stage img.base { display: block; width: 100%; height: auto; max-width: 100%; mix-blend-mode: multiply; }
+.stage .ly { position: absolute; display: block; max-width: none; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+.stage .ly.mul { mix-blend-mode: multiply; }
+.stage .ly[hidden] { display: none; }
+.stage .ov { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.stage .spark { fill: #FFF8E2; transform-box: fill-box; transform-origin: center; }
+.stage .ripple { fill: none; stroke: #5F7F96; stroke-width: 2.5; }
+.stage .ov.glow-screen { mix-blend-mode: screen; }
+.stage .ring path { fill: none; stroke: #2A231E; stroke-width: 4; stroke-linecap: round; }
+/* first arrival, second kind: the picture develops from a pencil sketch into colour */
+.paint .stage.sketch { filter: grayscale(1) sepia(.3) contrast(1.12); }
+.paint .stage.sketch.develop { filter: grayscale(0) sepia(0) contrast(1); transition: filter 2.4s cubic-bezier(.45, .05, .35, 1) .15s; }
+/* first arrival: the picture blooms onto the paper like a wet wash.
+   The reference used an external bleed.png; the template embeds an organic
+   turbulence-edged mask as a data URI so the effect works on ANY image with
+   zero external files (single-file, file://-clean). */
+.paint .bleed {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='b' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.016' numOctaves='3' seed='7' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.85 0.85 0.85 0 -0.72'/%3E%3CfeComposite operator='in' in2='SourceGraphic'/%3E%3C/filter%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='52%25' stop-color='black'/%3E%3Cstop offset='80%25' stop-color='black' stop-opacity='0'/%3E%3C/radialGradient%3E%3Crect width='400' height='400' fill='url(%23g)' filter='url(%23b)'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat; -webkit-mask-position: 50% 50%; -webkit-mask-size: 1% auto;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='b' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.016' numOctaves='3' seed='7' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.85 0.85 0.85 0 -0.72'/%3E%3CfeComposite operator='in' in2='SourceGraphic'/%3E%3C/filter%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='52%25' stop-color='black'/%3E%3Cstop offset='80%25' stop-color='black' stop-opacity='0'/%3E%3C/radialGradient%3E%3Crect width='400' height='400' fill='url(%23g)' filter='url(%23b)'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat; mask-position: 50% 50%; mask-size: 1% auto;
+}
+.paint .bleed.bloom {
+  -webkit-mask-size: 270% auto; mask-size: 270% auto;
+  transition: -webkit-mask-size 1.9s cubic-bezier(.5, .05, .4, 1), mask-size 1.9s cubic-bezier(.5, .05, .4, 1);
+}
+.pinbox { position: relative; }
+/* phones: each painting takes the screen and the view travels across it as you scroll */
+@media (max-width: 700px) {
+  figure.paint.pin, figure.paint.drift { margin: 1.6rem -20px 1.8rem; max-width: none; }
+  figure.paint.pin { height: 200vh; height: 200svh; }
+  figure.paint.drift { scroll-snap-align: start; }
+  figure.paint.pin .pinbox { position: sticky; top: var(--barH, 60px); }
+  figure.paint.pin .pinbox, figure.paint.drift .pinbox { height: calc(100vh - var(--barH, 60px)); height: calc(100svh - var(--barH, 60px)); display: flex; flex-direction: column; }
+  figure.paint.pin .frame, figure.paint.drift .frame { flex: 1 1 auto; min-height: 0; position: relative; overflow: hidden; padding: 0; box-shadow: none; border-radius: 0; background: var(--print); }
+  figure.paint.pin .stage, figure.paint.drift .stage { position: absolute; left: 0; top: 0; height: 100%; width: auto; max-width: none; aspect-ratio: var(--ar); transform-origin: 0 0; }
+  figure.paint.pin .stage img.base, figure.paint.drift .stage img.base { width: 100%; height: 100%; max-width: none; }
+  figure.paint.pin figcaption, figure.paint.drift figcaption { margin: 0; padding: .6rem 20px .75rem; max-width: none; background: var(--paper); border-top: 1px solid var(--rule); }
+}
+.paint figcaption, .fig-note {
+  font: italic 400 .92rem/1.45 var(--f-body); color: var(--muted); margin-top: .7rem; max-width: var(--col);
+}
+.paint.wide figcaption { margin-inline: auto; }
+.paint.inset { max-width: 46rem; margin-inline: auto; }
+/* breakout: figures that stay in-flow inside the 37rem column can still
+   open up to inset/wide widths on large screens (Phase 1 may hoist them
+   to true siblings instead; visually identical). */
+@media (min-width: 50rem) {
+  .col > figure.paint.inset, .col > figure.photo.inset { width: 46rem; max-width: none; margin-inline: calc((var(--col) - 46rem) / 2); }
+}
+@media (min-width: 74rem) {
+  .col > figure.paint.wide, .col > figure.photo.wide, .col > section.fig.wide { width: var(--wide); max-width: none; margin-inline: calc((var(--col) - var(--wide)) / 2); }
+}
+/* real photographs: no watercolor entrance, honest framing */
+.photo { margin-block: 2.2rem 2.6rem; }
+.photo img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 3px; }
+.photo.inset { max-width: 46rem; margin-inline: auto; }
+.photo figcaption { font: italic 400 .92rem/1.45 var(--f-body); color: var(--muted); margin-top: .7rem; }
+.photo figcaption .credit { font-style: normal; font-family: var(--f-ui); font-size: .8rem; color: var(--ink-2); }
+
+/* ---------- chapter heads: hanging aisle signs ---------- */
+.chapter { padding-top: 3.4rem; }
+.ch-head { display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 1.5rem; }
+.aisle {
+  flex: none; position: relative; margin-top: 1.5rem;
+  width: 4.4rem; padding: .35rem 0 .45rem; text-align: center;
+  background: var(--apron); color: var(--on-apron); border-radius: 2px;
+  font-family: var(--f-sign); line-height: 1;
+}
+.aisle::before, .aisle::after {
+  content: ""; position: absolute; bottom: 100%; width: 1px; height: 1.5rem; background: var(--muted);
+}
+.aisle::before { left: 22%; } .aisle::after { right: 22%; }
+.aisle .l { display: block; font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+.aisle .n { display: block; font-size: 2.35rem; font-weight: 700; margin-top: .12rem; }
+.aisle.analysis { background: var(--ink); }
+.ch-meta { font: 600 .8rem var(--f-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: .2rem 0 .4rem; }
+.ch-meta .ts { color: var(--apron-text); font-variant-numeric: tabular-nums; }
+.ch-meta .dec { text-transform: none; }
+h2 { font: 400 clamp(2rem, 4.8vw, 3.15rem)/1.02 var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -.005em; }
+h3.sub { font: 400 1.7rem/1.1 var(--f-display); margin: 2.4rem 0 .8rem; text-wrap: balance; }
+.part-break { text-align: center; margin: 5rem 0 0; font: 600 .82rem var(--f-ui); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.part-break span { display: inline-block; padding: 0 1rem; background: var(--paper); position: relative; }
+.part-break::before { content: ""; display: block; height: 1px; background: var(--rule); position: relative; top: .62rem; }
+
+/* ---------- lesson tags: shelf labels ---------- */
+aside.tag {
+  display: grid; grid-template-columns: minmax(8.4rem, 10.5rem) 1fr;
+  background: var(--surface); border: 1px solid var(--rule); border-top: 6px solid var(--apron);
+  border-radius: 3px; margin: 2.1rem 0 2.3rem; box-shadow: 0 1px 0 var(--rule);
+}
+.tag-price { padding: 1rem .9rem 1rem 1rem; border-right: 1px dashed var(--rule); display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.tag-big { font: 700 2.3rem/1 var(--f-sign); color: var(--ink); letter-spacing: -.01em; white-space: nowrap; }
+.tag-big.tight { font-size: 1.55rem; }
+.tag-unit { font: 500 .82rem/1.25 var(--f-ui); color: var(--ink-2); margin-top: .35rem; }
+.tag-body { padding: .95rem 1.15rem 1rem; min-width: 0; }
+.tag-eye { font: 600 .74rem var(--f-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--apron-text); }
+.tag-body p { margin: .3rem 0 .6rem; font: 500 1.08rem/1.45 var(--f-body); text-wrap: pretty; }
+.tag-sku { display: flex; align-items: center; gap: .7rem; font: 500 .74rem var(--f-ui); color: var(--muted); letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.bars { display: inline-block; height: 15px; width: 78px; }
+@media (max-width: 520px) {
+  aside.tag { grid-template-columns: 1fr; }
+  .tag-price { border-right: 0; border-bottom: 1px dashed var(--rule); flex-direction: row; align-items: baseline; gap: .7rem; padding-bottom: .8rem; }
+  .tag-unit { margin-top: 0; }
+}
+
+/* ---------- figures / charts ---------- */
+.fig { margin-block: 2.4rem 2.8rem; }
+.fig-head { margin-bottom: .9rem; }
+.fig-title { font: 600 1.12rem/1.3 var(--f-ui); margin: 0; letter-spacing: .005em; }
+.fig-sub { font: 400 .95rem/1.4 var(--f-ui); color: var(--ink-2); margin: .2rem 0 0; }
+.fig-note { font-style: normal; font-family: var(--f-ui); font-size: .82rem; }
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--f-ui); fill: var(--ink-2); font-size: 12px; }
+.chart .tick text { fill: var(--muted); font-variant-numeric: tabular-nums; }
+.chart .grid { stroke: var(--rule); stroke-width: 1; shape-rendering: crispEdges; }
+.chart .axis { stroke: var(--muted); stroke-width: 1; shape-rendering: crispEdges; }
+.chart .lbl-strong { fill: var(--ink); font-weight: 600; }
+.legend { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; font: 500 .85rem var(--f-ui); color: var(--ink-2); margin: .3rem 0 .6rem; }
+.legend i { display: inline-block; width: 16px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: .4rem; }
+.legend i.sq { height: 10px; width: 10px; border-radius: 2px; }
+.ctrl { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.2rem; margin: .4rem 0 1rem; font: 500 .9rem var(--f-ui); color: var(--ink-2); }
+.ctrl label { display: flex; align-items: center; gap: .55rem; }
+.ctrl output { font: 600 1rem var(--f-sign); color: var(--ink); min-width: 3.2rem; font-variant-numeric: tabular-nums; }
+input[type="range"] { accent-color: var(--apron); width: 11rem; max-width: 100%; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; padding: 2px; background: var(--surface); }
+.seg button, .btn {
+  font: 600 .86rem var(--f-ui); color: var(--ink-2); background: transparent; border: 0; border-radius: 999px;
+  padding: .32rem .85rem; cursor: pointer; letter-spacing: .02em;
+}
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.btn { border: 1px solid var(--rule); background: var(--surface); color: var(--ink); }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--apron); border-color: var(--apron); color: var(--on-apron); }
+details.table { margin-top: .8rem; font: 400 .88rem var(--f-ui); color: var(--ink-2); }
+details.table summary { cursor: pointer; color: var(--muted); font-weight: 600; letter-spacing: .03em; }
+.tbl-wrap { overflow-x: auto; max-height: 22rem; margin-top: .5rem; border: 1px solid var(--rule); border-radius: 3px; }
+.tbl-wrap table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.tbl-wrap th, .tbl-wrap td { padding: .3rem .7rem; text-align: right; border-bottom: 1px solid var(--rule-2); white-space: nowrap; }
+.tbl-wrap th:first-child, .tbl-wrap td:first-child { text-align: left; }
+.tbl-wrap th { position: sticky; top: 0; background: var(--surface); color: var(--ink); font-weight: 600; }
+
+#tip {
+  position: fixed; z-index: 50; pointer-events: none; max-width: 17rem;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 4px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .14); padding: .5rem .7rem; font: 400 .85rem/1.35 var(--f-ui);
+}
+#tip b { display: block; font: 600 1.05rem/1.2 var(--f-sign); font-variant-numeric: tabular-nums; }
+#tip .k { display: inline-block; width: 12px; height: 2px; vertical-align: middle; margin-right: .35rem; border-radius: 1px; }
+#tip .row { display: flex; justify-content: space-between; gap: 1rem; }
+#tip .row span:last-child { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* hero number */
+.hero-num { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem 2.5rem; margin: 1.6rem 0 .6rem; }
+.hero-num .lab { font: 600 .78rem var(--f-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.hero-num .val { font: 600 clamp(2.2rem, 4.4vw, 3rem)/1 var(--f-ui); letter-spacing: -.01em; margin-top: .35rem; white-space: nowrap; }
+.hero-num .val.hd { color: var(--ink); }
+.hero-num .val.sp { color: var(--ink-2); }
+.hero-num .val.tick { animation: valtick .45s cubic-bezier(.2, 1.6, .4, 1); transform-origin: left center; }
+@keyframes valtick { from { transform: scale(1.08); color: var(--apron-text); } }
+.hero-num .mark { display: inline-block; width: 22px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: .5rem; }
+.hero-num .note { font: 400 .9rem var(--f-ui); color: var(--ink-2); margin-top: .35rem; }
+
+/* cast badges */
+.cast { display: grid; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); gap: 1rem; margin: 1.6rem 0 1rem; }
+.badge { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; }
+.badge-top { background: var(--apron); color: var(--on-apron); font: 600 .72rem var(--f-ui); letter-spacing: .16em; text-transform: uppercase; padding: .35rem .8rem; }
+.badge-body { padding: .7rem .9rem .9rem; display: flex; flex-direction: column; gap: .15rem; flex: 1; }
+.badge-name { font: 400 1.5rem/1.1 var(--f-display); }
+.badge-role { font: 600 .78rem var(--f-ui); letter-spacing: .1em; text-transform: uppercase; color: var(--apron-text); }
+.badge-body p { margin: .35rem 0 0; font: 400 .95rem/1.4 var(--f-ui); color: var(--ink-2); }
+.cameos { font: 400 .92rem/1.5 var(--f-ui); color: var(--ink-2); }
+.cameos b { color: var(--ink); font-weight: 600; }
+
+/* playbook */
+.playbook { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: .9rem; margin-top: 1.4rem; }
+.pb { display: block; text-decoration: none; background: var(--surface); border: 1px solid var(--rule); border-top: 4px solid var(--apron); border-radius: 3px; padding: .75rem .9rem .8rem; color: var(--ink); }
+.pb:hover { border-color: var(--muted); border-top-color: var(--apron); color: var(--ink); }
+.pb .a { font: 600 .72rem var(--f-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--apron-text); }
+.pb .big { font: 700 1.5rem/1.05 var(--f-sign); margin: .25rem 0 .15rem; }
+.pb p { margin: 0; font: 400 .95rem/1.4 var(--f-body); color: var(--ink-2); }
+
+.sources { font: 400 .9rem/1.5 var(--f-ui); color: var(--ink-2); }
+.sources h3 { font: 600 .82rem var(--f-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 2rem 0 .5rem; }
+.sources ul { padding-left: 1.1rem; margin: 0; }
+.sources li { margin: .2rem 0; }
+footer.colophon { border-top: 1px solid var(--rule); margin-top: 4rem; padding-top: 1.5rem; }
+
+/* ---------- chart motion ---------- */
+.chart g.pop { transition: opacity .35s ease, transform .5s cubic-bezier(.2, 1.5, .4, 1); transform-box: fill-box; transform-origin: center; }
+.chart g.pop.off { opacity: 0; transform: scale(.2); }
+.era-lab { transition: opacity .45s ease; }
+.score .sl { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.1s cubic-bezier(.4, 0, .2, 1) .25s; }
+.score .sl-end { transition: opacity .35s ease 1.2s; }
+.score .score-card { transition: opacity .5s ease, transform .5s ease; }
+.score.pre .score-card { opacity: 0; transform: translateY(12px); transition: none; }
+.score.pre .sl { stroke-dashoffset: 1; transition: none; }
+.score.pre .sl-end { opacity: 0; transition: none; }
+.cap-seg { transition: transform .9s cubic-bezier(.2, .8, .2, 1); transform-origin: left center; }
+.cap-bar.pre .cap-seg { transform: scaleX(0); transition: none; }
+.eq > * { transition: opacity .45s ease, transform .45s ease; }
+.eq.pre > * { opacity: 0; transform: translateY(10px); transition: none; }
+.eq-result { transition: opacity .7s ease; }
+.eq-result.pre { opacity: 0; transition: none; }
+/* phones: charts take the whole screen, and the page settles onto them */
+@media (max-width: 700px) {
+  html { scroll-snap-type: y proximity; scroll-padding-top: var(--barH, 60px); }
+  .fig.fs {
+    min-height: calc(100vh - var(--barH, 60px)); min-height: calc(100svh - var(--barH, 60px));
+    margin: 2rem -20px; padding: 1.4rem 20px 1.5rem; background: var(--stage-bg);
+    display: flex; flex-direction: column; justify-content: center; scroll-snap-align: start;
+  }
+  .fig.fs > * { margin-left: 0 !important; margin-right: 0 !important; width: 100%; max-width: none !important; }
+  .fig.fs .chart { max-width: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; scroll-snap-type: none !important; }
+  .pyr-g { transition: none; }
+  .paint .bleed { -webkit-mask: none; mask: none; }
+  .paint .stage.sketch { filter: none; }
+}
+
+/* =====================================================================
+   PROVENANCE COMPONENTS — the reference lacks these; the template carries
+   them for every artifact (COMPANION_PROMPT.md honesty laws).
+   ===================================================================== */
+/* SOURCE / INTERPRETATION legend */
+.src-legend {
+  border: 1px solid var(--rule); background: var(--surface); border-radius: 6px;
+  padding: 1rem 1.2rem; margin: 1.8rem 0; font: 400 .95rem/1.5 var(--f-ui); color: var(--ink-2);
+}
+.src-legend p { margin: .35rem 0; }
+.src-legend .lede { font: 600 .78rem var(--f-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+/* provenance tag pills (inline, element-qualified so they never clash with aside.tag) */
+span.ptag, .ptag {
+  display: inline-block; font: 700 .68rem var(--f-ui); letter-spacing: .1em; text-transform: uppercase;
+  padding: .18rem .6rem; border-radius: 999px; margin-right: .5rem; vertical-align: .12em; white-space: nowrap;
+}
+.ptag-src { background: var(--ink); color: var(--paper); }
+.ptag-illustration { background: transparent; color: var(--apron-text); border: 1.5px solid var(--apron); }
+.ptag-companion { background: transparent; color: var(--muted); border: 1.5px solid var(--muted); }
+.ptag-ref { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .72rem; font-weight: 500; color: var(--muted); margin-left: .4rem; letter-spacing: 0; text-transform: none; }
+/* mechanical quote-count footer block */
+.quote-count {
+  border: 1px dashed var(--rule); border-radius: 6px; padding: .9rem 1.1rem; margin: 2rem 0;
+  font: 400 .9rem/1.5 var(--f-ui); color: var(--ink-2); background: transparent;
+}
+.quote-count b { color: var(--ink); }
+.quote-count .n { font: 700 1.3rem var(--f-sign); color: var(--apron-text); font-variant-numeric: tabular-nums; }
+/* colophon: "About this page" + sources + provenance wording */
+.colophon .about p { font: 400 .95rem/1.55 var(--f-ui); color: var(--ink-2); }
+.colophon .about .prov-line { border-left: 3px solid var(--apron); padding-left: .9rem; }
+
+/* =====================================================================
+   LEGACY pilot content classes — carried forward so the build.py <style>
+   swap never orphans existing content. New artifacts should use the
+   reference components above instead.
+   ===================================================================== */
+.pull { margin: 2rem 0; padding: 1.2rem 1.4rem; border-left: 4px solid var(--apron); background: var(--surface); border-radius: 0 6px 6px 0; }
+.pull blockquote { margin: 0; font: italic 400 1.35rem/1.4 var(--f-display); color: var(--ink); text-wrap: pretty; }
+.pull .who { margin: .6rem 0 0; font: 500 .85rem var(--f-ui); color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 1rem; margin: 1.6rem 0; }
+.stat { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .8rem 1rem; }
+.stat .n { font: 700 1.9rem/1.1 var(--f-sign); color: var(--ink); font-variant-numeric: tabular-nums; }
+.stat .l { font: 500 .9rem/1.35 var(--f-ui); color: var(--ink-2); margin-top: .25rem; }
+.stat .s { font: 500 .75rem var(--f-ui); color: var(--muted); margin-top: .3rem; letter-spacing: .04em; }
+.caption { font: italic 400 .92rem/1.45 var(--f-body); color: var(--muted); margin-top: .6rem; }
+.eyebrow { font: 600 .78rem var(--f-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--apron-text); margin: 0 0 .4rem; }
+.video { position: relative; width: 100%; aspect-ratio: 16 / 9; margin: 2rem 0; background: var(--stage-bg); border-radius: 6px; overflow: hidden; }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.takeaways { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 1.1rem 1.3rem; margin: 2rem 0; }
+.takeaways h3 { font: 400 1.4rem/1.2 var(--f-display); margin: 0 0 .6rem; }
+.takeaways ol { margin: 0; padding-left: 1.2rem; font-size: 1rem; }
+.takeaways li { margin: .35rem 0; }
+.prose-narrow { max-width: var(--col); }
+.secnum { font: 600 .8rem var(--f-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 .5rem; }
+.chips, .stepdots { display: flex; flex-wrap: wrap; gap: .45rem; }
+.toy { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.2rem; margin: 1.6rem 0; }
+.toy .data { font-variant-numeric: tabular-nums; }
+.wisdom ol { font-size: 1rem; }
+.nugget-legacy { border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.2rem; margin: 1.6rem 0; background: var(--surface); }
+
+</style><style id="course-accent">
+/* course accent: Deep spruce #20503F (llm-kb) */
+:root{--apron:#20503F;--apron-wash:rgba(32,80,63,.12);--apron-text:#1D4A3A;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--apron:#3FA37C;--apron-wash:rgba(63,163,124,.2);--apron-text:#35A878;}}
+:root[data-theme="dark"]{--apron:#3FA37C;--apron-wash:rgba(63,163,124,.2);--apron-text:#35A878;}
+</style></head>
+<body><div class="tapebar" data-mode="progress" data-sign-label="Unit" id="tapebar"><div aria-live="off" class="tape-read"><div class="tape-time" id="tapeTime"></div><div class="tape-ch" id="tapeCh"></div></div><svg aria-label="Position in the companion. Use arrow keys to move between sections." aria-valuemax="9" aria-valuemin="1" aria-valuenow="1" id="tape" role="slider" tabindex="0"></svg></div><div hidden="" id="tip"></div><div class="wrap">
+<header class="hero"><p class="kicker">LLM Knowledge Base · Companion</p><h1>Multi-Agent Systems in Production</h1><p class="dek">The decomposition lab: a planner, a worker, and a critic over shared state, with narrow roles that keep each part checkable.</p><div class="byline"><span>Independent companion · Source: w15-d4-multi-agent-systems-in-production.html</span></div></header><div class="legend src-legend">
+<p class="lede">SOURCE / INTERPRETATION: HOW TO READ THE TAGS</p>
+<p><span class="ptag ptag-src">From the lesson</span> SOURCE: the idea, and every number beside it, comes from the cited section of the source. The phrasing is the companion's.</p>
+<p><span class="ptag ptag-illustration">Illustration</span> INTERPRETATION: invented by the companion: an analogy, a toy with made-up values, or a what-if. Never source content.</p>
+<p><span class="ptag ptag-companion">companion</span> INTERPRETATION: companion voice: the idea above the tag is from the source. The generalization below it is the companion's.</p>
+</div>
+<figure class="paint inset" data-entrance="bloom"><div class="frame"><div class="stage"><img alt="Three desks linked by paper trails" class="base" loading="lazy" src="assets/w15-d4-multi-agent-systems-in-production-hero.webp"/></div></div><figcaption>Watercolor: Three desks linked by paper trails. Original AI watercolor illustration made for this page.</figcaption></figure><section class="block col" data-chapter="1" data-title="Key ideas" id="s1"><div class="ch-head"><div class="aisle"><span class="l">Unit</span><span class="n">1</span></div><div><p class="ch-meta"><span class="ts">Unit 1</span> · The map</p><h2>Key ideas</h2></div></div><div class="prose-narrow"><p><span class="ptag ptag-src">From the lesson</span> <span class="tag-ref">w15-d4 notes page, lead and Key ideas</span></p><p>This page is the decomposition lab of Week 15, in the LLM and Agentic AI category at Expert level. A planner, a worker, and a critic run over shared state, in that order.</p><p>The contract lesson runs through the page. Each role is narrow on purpose: the critic cannot act, and the worker cannot replan. That narrowness makes each role checkable and the system fit for debug work.</p><p>The chart and the step list below map the five stages. The chapters then build the tool layer, the three agents, and the orchestrator in source order.</p></div><figure class="fig"><div class="fig-head"><p class="fig-title">Lab stage numbers in the source task list</p><p class="fig-sub">The five build stages carry numbers 0 to 4 in the source task list</p></div><div class="legend src-legend"><span>Bars show stage number in the source lab.</span></div><svg aria-label="Bar chart. stage number in the source lab" role="img" style="width:100%;height:auto" viewbox="0 0 760 166"><text fill="#2A231E" font-size="13" x="0" y="25">Tools + shared state</text><rect fill="#20503F" height="16" width="2" x="300" y="11"></rect><text fill="#2A231E" font-size="13" x="310" y="25">0</text><text fill="#2A231E" font-size="13" x="0" y="55">Planner agent</text><rect fill="#7E786F" height="16" width="107" x="300" y="41"></rect><text fill="#2A231E" font-size="13" x="415" y="55">1</text><text fill="#2A231E" font-size="13" x="0" y="85">Worker agent</text><rect fill="#20503F" height="16" width="215" x="300" y="71"></rect><text fill="#2A231E" font-size="13" x="523" y="85">2</text><text fill="#2A231E" font-size="13" x="0" y="115">Critic agent</text><rect fill="#7E786F" height="16" width="322" x="300" y="101"></rect><text fill="#2A231E" font-size="13" x="630" y="115">3</text><text fill="#2A231E" font-size="13" x="0" y="145">Orchestrator + evaluation</text><rect fill="#20503F" height="16" width="430" x="300" y="131"></rect><text fill="#2A231E" font-size="13" x="738" y="145">4</text></svg><details class="table"><summary>Data table</summary><table class="data"><tr><th>Item</th><th>Stage</th></tr><tr><td>Tools + shared state</td><td class="num">0</td></tr><tr><td>Planner agent</td><td class="num">1</td></tr><tr><td>Worker agent</td><td class="num">2</td></tr><tr><td>Critic agent</td><td class="num">3</td></tr><tr><td>Orchestrator + evaluation</td><td class="num">4</td></tr></table></details><p class="fig-note">Source: notes/w15-d4-multi-agent-systems-in-production.html. Each value is the stage number in the task heading on the source page. The setup task stands before stage 0 and carries no stage number. Stage labels shorten the source headings, which chapters 3 to 7 carry in full.</p></figure><details class="table"><summary>Lab sequence in source order</summary><ol><li>Dataset and setup for a planner, worker, and critic system.</li><li>Stage 0. Tools plus shared state, with budget, cost, memory, and trace.</li><li>Stage 1. Planner agent, tasks become short tool-call sequences.</li><li>Stage 2. Worker agent, plan execution under guardrails.</li><li>Stage 3. Critic agent, verification and escalation.</li><li>Stage 4. Orchestrator plus evaluation of the full cycle.</li></ol></details></section><section class="block col" data-chapter="1" data-title="Task 1: Dataset &amp; Setup" id="s2"><div class="ch-head"><div class="aisle"><span class="l">Unit</span><span class="n">2</span></div><div><p class="ch-meta"><span class="ts">Unit 2</span> · The setup</p><h2>Task 1: Dataset &amp; Setup</h2></div></div><div class="prose-narrow"><p><span class="ptag ptag-src">From the lesson</span> <span class="tag-ref">w15-d4 notes page, Task 1</span></p><p>This student lab runs offline. You build a small planner, worker, and critic system with shared state, guardrails, and evaluation.</p><p>The implement list on the lab page names the parts in build order: a small tool interface, a planner that turns tasks into tool calls, a worker under budget and allowlist guardrails, a critic, and an orchestrator.</p></div></section><section class="block col" data-chapter="1" data-title="Task 2: 0 — Tools + shared state" id="s3"><div class="ch-head"><div class="aisle"><span class="l">Unit</span><span class="n">3</span></div><div><p class="ch-meta"><span class="ts">Unit 3</span> · Stage 0</p><h2>Task 2: 0 — Tools + shared state</h2></div></div><div class="prose-narrow"><p><span class="ptag ptag-src">From the lesson</span> <span class="tag-ref">w15-d4 notes page, Task 2</span></p><p>Build the basic tool layer and a shared state object first. Each tool returns a dictionary with a result field, in one fixed shape.</p><p>The shared state tracks budget, cost, memory, and a trace. Every significant event goes into the trace as a log entry, so the full run stays readable after it ends.</p></div><aside class="tag" data-chapter="s3" data-sign-label="Unit" data-sign-num="3" id="w15-d4-multi-agent-systems-in-production-n1"><div class="tag-price"><span class="tag-big">4</span><span class="tag-unit">fields tracked in shared state</span></div><div class="tag-body"><div class="tag-title">Nugget 1 · Four state fields From the lesson Task 2 of the lab</div><div class="tag-eye">The lesson</div><p class="">Shared state tracks four fields: budget, cost, memory, and a trace.</p><p><b>Why it matters. </b>One shared record makes the whole run auditable. Any step can answer what it cost, what it used, and what came before it.</p><p><b>Transfer. </b>Give every multi-agent run one state object with a trace. Three agents with three private logs cannot reconstruct a failure.</p><div class="tag-sku"><svg aria-hidden="true" class="bars"></svg><span>UNIT 03 · LLM-KB</span></div></div></aside></section><section class="block col" data-chapter="1" data-title="Task 3: 1 — Planner agent" id="s4"><div class="ch-head"><div class="aisle"><span class="l">Unit</span><span class="n">4</span></div><div><p class="ch-meta"><span class="ts">Unit 4</span> · Stage 1</p><h2>Task 3: 1 — Planner agent</h2></div></div><div class="prose-narrow"><p><span class="ptag ptag-src">From the lesson</span> <span class="tag-ref">w15-d4 notes page, Task 3</span></p><p>The planner is deterministic. It converts the user task into a short sequence of tool calls, in structured ToolCall objects.</p><p>The planner handles three patterns: a sum then a product, the country of a city, and a lower-case step then the country of a city. The planner output is a plan, not the final answer.</p></div><figure class="paint inset" data-entrance="sketch"><div class="frame"><div class="stage"><img alt="Open ledger on a central table" class="base" loading="lazy" src="assets/w15-d4-multi-agent-systems-in-production-p1.webp"/></div></div><figcaption>Watercolor: Open ledger on a central table. Original AI watercolor illustration made for this page.</figcaption></figure><aside class="tag" data-chapter="s4" data-sign-label="Unit" data-sign-num="4" id="w15-d4-multi-agent-systems-in-production-n2"><div class="tag-price"><span class="tag-big">3</span><span class="tag-unit">task patterns the planner handles</span></div><div class="tag-body"><div class="tag-title">Nugget 2 · Three planner patterns From the lesson Task 3 of the lab</div><div class="tag-eye">The lesson</div><p class="">The planner handles three task patterns: a sum then a product, the country of a city, and lower-case then country of a city.</p><p><b>Why it matters. </b>Named patterns keep the planner honest. Each pattern maps to a known tool sequence, so a plan error is visible at a glance.</p><p><b>Transfer. </b>List the patterns your planner accepts. A planner with no stated pattern set accepts tasks it cannot plan.</p><div class="tag-sku"><svg aria-hidden="true" class="bars"></svg><span>UNIT 04 · LLM-KB</span></div></div></aside></section><section class="block col" data-chapter="1" data-title="Task 4: 2 — Worker agent (exec + guardrails)" id="s5"><div class="ch-head"><div class="aisle"><span class="l">Unit</span><span class="n">5</span></div><div><p class="ch-meta"><span class="ts">Unit 5</span> · Stage 2</p><h2>Task 4: 2 — Worker agent (exec + guardrails)</h2></div></div><div class="prose-narrow"><p><span class="ptag ptag-src">From the lesson</span> <span class="tag-ref">w15-d4 notes page, Task 4</span></p><p>The worker executes a plan under guardrails. Only allowed tools may run, and tool cost must stay within the budget that remains.</p><p>The token $last resolves to the previous tool result, so steps chain in order. Each execution step goes into shared state as a log entry.</p></div><aside class="tag" data-chapter="s5" data-sign-label="Unit" data-sign-num="5" id="w15-d4-multi-agent-systems-in-production-n3"><div class="tag-price"><span class="tag-big">$last</span><span class="tag-unit">token for the previous tool result</span></div><div class="tag-body"><div class="tag-title">Nugget 3 · The last-result token From the lesson Task 4 of the lab</div><div class="tag-eye">The lesson</div><p class="">The worker resolves the token $last to the previous tool result.</p><p><b>Why it matters. </b>One token chains steps without a new data store. The plan stays a short list, and each step reads the output of the step before it.</p><p><b>Transfer. </b>Chain steps with an explicit token. Hidden state between steps makes plans hard to read and harder to test.</p><div class="tag-sku"><svg aria-hidden="true" class="bars"></svg><span>UNIT 05 · LLM-KB</span></div></div></aside></section><section class="block col" data-chapter="1" data-title="Task 5: 3 — Critic agent (verification / escalation)" id="s6"><div class="ch-head"><div class="aisle"><span class="l">Unit</span><span class="n">6</span></div><div><p class="ch-meta"><span class="ts">Unit 6</span> · Stage 3</p><h2>Task 5: 3 — Critic agent (verification / escalation)</h2></div></div><div class="prose-narrow"><p><span class="ptag ptag-src">From the lesson</span> <span class="tag-ref">w15-d4 notes page, Task 5</span></p><p>The critic is deterministic. It rejects outputs that contain an error, and it verifies arithmetic tasks exactly, with a full recompute.</p><p>For country tasks, the critic checks the output against the known mapping. The critic returns a verdict dictionary: pass, or fail with a reason. Escalation is the path for a fail the system cannot repair.</p></div><aside class="tag" data-chapter="s6" data-sign-label="Unit" data-sign-num="6" id="w15-d4-multi-agent-systems-in-production-n4"><div class="tag-price"><span class="tag-big">2</span><span class="tag-unit">verdicts the critic can return</span></div><div class="tag-body"><div class="tag-title">Nugget 4 · Two verdicts From the lesson Task 5 of the lab</div><div class="tag-eye">The lesson</div><p class="">The critic returns one of two verdicts: pass, or fail with a reason.</p><p><b>Why it matters. </b>A verdict with a reason turns a rejection into a repair order. The orchestrator can act on the reason, route the task again, or escalate.</p><p><b>Transfer. </b>Require a reason on every fail verdict. A bare fail stops the line and teaches the system zero.</p><div class="tag-sku"><svg aria-hidden="true" class="bars"></svg><span>UNIT 06 · LLM-KB</span></div></div></aside></section><section class="block col" data-chapter="1" data-title="Task 6: 4 — Orchestrator + evaluation" id="s7"><div class="ch-head"><div class="aisle"><span class="l">Unit</span><span class="n">7</span></div><div><p class="ch-meta"><span class="ts">Unit 7</span> · Stage 4</p><h2>Task 6: 4 — Orchestrator + evaluation</h2></div></div><div class="prose-narrow"><p><span class="ptag ptag-src">From the lesson</span> <span class="tag-ref">w15-d4 notes page, Task 6</span></p><p>The orchestrator drives the full cycle. It creates fresh shared state, asks the planner for a plan, runs the worker, and asks the critic to verify the result.</p><p>The orchestrator returns a compact RunResult for each task. Evaluation then runs the system on a few tasks and confirms that the budget guardrail still holds under the full cycle.</p></div><figure class="paint inset" data-entrance="bloom"><div class="frame"><div class="stage"><img alt="Magnifier over a paper answer" class="base" loading="lazy" src="assets/w15-d4-multi-agent-systems-in-production-p2.webp"/></div></div><figcaption>Watercolor: Magnifier over a paper answer. Original AI watercolor illustration made for this page.</figcaption></figure><aside class="tag" data-chapter="s7" data-sign-label="Unit" data-sign-num="7" id="w15-d4-multi-agent-systems-in-production-n5"><div class="tag-price"><span class="tag-big">4</span><span class="tag-unit">steps in one orchestrator cycle</span></div><div class="tag-body"><div class="tag-title">Nugget 5 · Four cycle steps From the lesson Task 6 of the lab</div><div class="tag-eye">The lesson</div><p class="">One orchestrator cycle runs four steps: fresh state, planner plan, worker run, critic verdict.</p><p><b>Why it matters. </b>A fixed cycle makes runs comparable. Evaluation across tasks means a fact only when each run walks the same four steps.</p><p><b>Transfer. </b>Freeze the cycle order before you evaluate. A system that changes its own cycle hides its weak step.</p><div class="tag-sku"><svg aria-hidden="true" class="bars"></svg><span>UNIT 07 · LLM-KB</span></div></div></aside></section><section class="block col" data-chapter="1" data-title="Figure" id="s8"><div class="ch-head"><div class="aisle"><span class="l">Unit</span><span class="n">8</span></div><div><p class="ch-meta"><span class="ts">Unit 8</span> · The picture</p><h2>Figure</h2></div></div><div class="prose-narrow"><p><span class="ptag ptag-src">From the lesson</span> <span class="tag-ref">w15-d4 notes page, Figure</span></p><p>The source page holds a Figure section after the task list. This companion places its data figure in chapter 1 and its paintings at the two part breaks of the page.</p><p>Read the chart as the build order. Tools and state stand at stage 0, the three agents at stages 1 to 3, and the orchestrator at stage 4.</p></div></section><section class="block col" data-chapter="1" data-title="Go deeper" id="s9"><div class="ch-head"><div class="aisle"><span class="l">Unit</span><span class="n">9</span></div><div><p class="ch-meta"><span class="ts">Unit 9</span> · More doors</p><h2>Go deeper</h2></div></div><div class="prose-narrow"><p><span class="ptag ptag-src">From the lesson</span> <span class="tag-ref">w15-d4 notes page, Go deeper</span></p><p>The instructor notebook holds solutions for every task and runs top to bottom. The lab page holds the full task list with starter code, and the source page names one video for this lab.</p><p>Keep the roles narrow as you extend the system. A new ability belongs in a new role or a new tool, not in a wider mandate for an old role.</p></div></section>
+<section class="col" id="playbook-sec">
+<h3 class="sub">The playbook</h3>
+<p>Every lesson on this page, in order. Tap one to return to its chapter.</p>
+</section><div class="wide"><div class="playbook" id="playbook"></div></div><footer class="colophon col"><div class="sources"><h3>About this page</h3><p class="prov-line">This is an independent companion to the course source, written in original words. It is not affiliated with the source's creators. Original AI watercolor illustrations made for this page. Historical photographs are real and attributed in their captions.</p><div class="quote-count"><b>On quotes. </b>Mechanical recount of every quoted phrase on this page: <span class="n">0</span> words (blockquote elements and straight or curly quoted strings, footer excluded). This counts the page's own quoted technical terms and toy inputs too, not only source quotes. Everything else is original paraphrase and analysis.</div></div></footer></div><script>
+/* =====================================================================
+   Companion template engine — runtime behavior shared by every artifact.
+   Ported from the reference artifact (~/workspace/companions/reference/index.html),
+   generalized: no per-page data, everything driven by DOM + data attributes.
+   Plain script, no modules, no dependencies. Works from file://.
+
+   DOM contract (see README.md):
+     #tapebar[data-mode="timestamp"|"progress"][data-total][data-sign-label]
+       > .tape-read > #tapeTime + #tapeCh ; svg#tape (built by this engine)
+     section[data-chapter][data-time][data-title]   (timestamp mode)
+     section[data-chapter][data-title]              (progress mode)
+     figure.paint[data-entrance="bloom"|"sketch"|"none"][data-scroll="pin"]
+       > .frame > .stage > img.base (+ optional img.ly layers)
+     aside.tag[data-sign-label][data-sign-num][data-chapter]
+       > .tag-price > .tag-big + .tag-unit ; .tag-body > .tag-eye + p + .tag-sku > svg.bars
+     #playbook (populated from aside.tag), #tip (created if absent)
+   ===================================================================== */
+(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mqMobile = window.matchMedia('(max-width: 700px)');
+  var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ---------------- helpers ---------------- */
+  function S(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    if (attrs) for (var k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function T(parent, x, y, str, attrs) {
+    var t = S('text', { x: x, y: y }, parent);
+    for (var k in (attrs || {})) t.setAttribute(k, attrs[k]);
+    t.textContent = str;
+    return t;
+  }
+  function H(tag, cls, text, parent) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined && text !== null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function lin(d0, d1, r0, r1) { return function (v) { return r0 + (v - d0) / (d1 - d0) * (r1 - r0); }; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function fmt(n, d) { return n.toLocaleString('en-US', { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }); }
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function smoothstep(a, b, v) { var t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+  /* Run fn(k) for k 0..1 over dur ms. Reduced motion jumps straight to the end. */
+  function tween(dur, fn, done) {
+    var stopped = false, id = 0, t0 = null;
+    if (reduce || !dur) { fn(1); if (done) done(); return { stop: function () {} }; }
+    function step(now) {
+      if (stopped) return;
+      if (t0 === null) t0 = now;
+      var k = Math.min(1, (now - t0) / dur);
+      fn(k);
+      if (k < 1) id = requestAnimationFrame(step); else if (done) done();
+    }
+    id = requestAnimationFrame(step);
+    return { stop: function () { stopped = true; cancelAnimationFrame(id); } };
+  }
+
+  /* ---------------- reveal choreography ----------------
+     An element is only reset to its "before" state (prep) when it is about
+     to scroll in from below, and plays once it is meaningfully on screen.
+     Anything already on screen, or reached from above, is left as is.
+     beforeprint finishes everything instantly. */
+  var revealers = [];
+  function reveal(el, prep, play, ratio) {
+    if (!el) return;
+    if (reduce || !('IntersectionObserver' in window)) { return; }
+    var state = 0;
+    var R = { el: el, finish: function () { if (state === 1) { state = 2; play(true); } } };
+    revealers.push(R);
+    var near = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (state === 0 && en.isIntersecting && en.boundingClientRect.top > window.innerHeight) { state = 1; prep(); }
+      });
+    }, { rootMargin: '0px 0px 140% 0px' });
+    var vis = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var need = Math.min(en.boundingClientRect.height * (ratio || 0.3), window.innerHeight * 0.35);
+        if (en.intersectionRect.height < need) return;
+        if (state === 1) { state = 2; play(false); }
+        else if (state === 0) state = 2;
+        if (state === 2) { near.disconnect(); vis.disconnect(); }
+      });
+    }, { threshold: [0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.75, 1] });
+    near.observe(el);
+    vis.observe(el);
+  }
+
+  /* ---------------- tooltip ---------------- */
+  var tip = document.getElementById('tip');
+  if (!tip) { tip = H('div', null, null, document.body); tip.id = 'tip'; tip.hidden = true; }
+  function placeTip(x, y) {
+    var pad = 14, r = tip.getBoundingClientRect();
+    var tx = x + pad, ty = y + pad;
+    if (tx + r.width > window.innerWidth - 8) tx = x - r.width - pad;
+    if (ty + r.height > window.innerHeight - 8) ty = y - r.height - pad;
+    tip.style.left = Math.max(8, tx) + 'px';
+    tip.style.top = Math.max(8, ty) + 'px';
+  }
+  function showTip(x, y, build) {
+    tip.replaceChildren();
+    build(tip);
+    tip.hidden = false;
+    tip.style.opacity = '1';   /* pilot tooltip code may have left it at 0 */
+    placeTip(x, y);
+  }
+  function showTipAt(el, build) {
+    var r = el.getBoundingClientRect();
+    showTip(r.left + r.width / 2, r.top + r.height / 2, build);
+  }
+  function hideTip() { tip.hidden = true; tip.style.opacity = ''; }
+  function tipRow(parent, key, label, value) {
+    var row = H('div', 'row', null, parent);
+    var a = H('span', null, null, row);
+    if (key) { var k = H('i', 'k', null, a); k.style.background = key; }
+    a.appendChild(document.createTextNode(label));
+    H('span', null, value, row);
+  }
+  window.addEventListener('scroll', hideTip, { passive: true });
+
+  /* ---------------- barcodes on shelf tags (seeded RNG, stable per page) ---------------- */
+  document.querySelectorAll('svg.bars').forEach(function (svg, i) {
+    var seed = 17 + i * 101;
+    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    svg.setAttribute('viewBox', '0 0 78 15');
+    var x = 0;
+    while (x < 76) {
+      var w = rnd() < 0.3 ? 2 : 1;
+      S('rect', { x: x, y: 0, width: w, height: 15, fill: 'var(--ink)' }, svg);
+      x += w + (rnd() < 0.5 ? 1 : 2);
+    }
+  });
+
+  /* ---------------- tape measure ---------------- */
+  function parseTime(v) {
+    if (v === undefined || v === null || v === '') return null;
+    // leading "~" is the page-stated approximate-time marker; strip it
+    var s0 = String(v).trim().replace(/^~\s*/, '');
+    if (s0 === '') return null;
+    if (/^\d+(\.\d+)?$/.test(s0)) return +s0;
+    var p = s0.split(':').map(Number);
+    if (p.some(isNaN)) return null;
+    var s = 0;
+    for (var i = 0; i < p.length; i++) s = s * 60 + p[i];
+    return s;
+  }
+  function hms(t) {
+    t = Math.round(t);
+    var h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60;
+    return h + ':' + (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  }
+  (function tape() {
+    var bar = document.getElementById('tapebar');
+    var tapeEl = document.getElementById('tape');
+    if (!bar || !tapeEl) return;
+    var timeEl = document.getElementById('tapeTime');
+    var chEl = document.getElementById('tapeCh');
+    var mode = bar.dataset.mode === 'progress' ? 'progress' : 'timestamp';
+    var label0 = bar.dataset.signLabel || (mode === 'progress' ? 'Unit' : 'Aisle');
+    var TOTAL, secs;
+    var raw = Array.prototype.slice.call(document.querySelectorAll('section[data-chapter]'));
+    if (mode === 'timestamp') {
+      TOTAL = parseTime(bar.dataset.total);
+      secs = raw.map(function (el) {
+        return { el: el, t: parseTime(el.dataset.time) || 0, label: el.dataset.title || '' };
+      }).sort(function (a, b) { return a.t - b.t; });
+      if (!TOTAL) TOTAL = (secs.length ? secs[secs.length - 1].t : 0) + 480;
+    } else {
+      secs = raw.map(function (el, i) {
+        return { el: el, t: i * 100, label: el.dataset.title || (label0 + ' ' + (i + 1)) };
+      });
+      TOTAL = secs.length * 100;
+    }
+    if (!secs.length) { bar.style.display = 'none'; return; }
+    secs.forEach(function (s, i) { s.t1 = i < secs.length - 1 ? secs[i + 1].t : TOTAL; s.i = i; });
+    var X = null, ph = null, hl = null, current = 0, curT = 0;
+    function draw() {
+      var W = tapeEl.clientWidth, Hh = tapeEl.clientHeight;
+      if (!W) return;
+      tapeEl.setAttribute('viewBox', '0 0 ' + W + ' ' + Hh);
+      tapeEl.replaceChildren();
+      var x0 = 6, x1 = W - 6, top = 6, bot = Hh - 4;
+      X = lin(0, TOTAL, x0, x1);
+      S('rect', { x: x0 - 3, y: top, width: x1 - x0 + 6, height: bot - top, rx: 3, fill: 'var(--tape)' }, tapeEl);
+      secs.forEach(function (s, i) {
+        if (i % 2) S('rect', { x: X(s.t), y: top, width: Math.max(0, X(s.t1) - X(s.t)), height: bot - top, fill: 'var(--tape-ink)', 'fill-opacity': 0.07 }, tapeEl);
+      });
+      hl = S('rect', { x: 0, y: top, width: 0, height: bot - top, fill: 'var(--apron)', 'fill-opacity': 0.32 }, tapeEl);
+      if (mode === 'timestamp') {
+        var ppm = (x1 - x0) / (TOTAL / 60);
+        for (var m = 0; m * 60 <= TOTAL; m++) {
+          var hgt = 0, x = X(m * 60);
+          if (m % 30 === 0) hgt = (bot - top) * 0.5;
+          else if (m % 5 === 0) hgt = (bot - top) * 0.28;
+          else if (ppm >= 3) hgt = (bot - top) * 0.15;
+          if (!hgt) continue;
+          S('line', { x1: x, x2: x, y1: top, y2: top + hgt, stroke: 'var(--tape-ink)', 'stroke-width': m % 30 === 0 ? 1.4 : 1, 'stroke-opacity': m % 30 === 0 ? 0.95 : 0.6 }, tapeEl);
+          if (m % 30 === 0 && m > 0) {
+            var lab = m % 60 === 0 ? (m / 60) + 'h' : (ppm > 2.2 ? (Math.floor(m / 60) ? Math.floor(m / 60) + 'h30' : '30m') : '');
+            if (lab) T(tapeEl, x + 3, bot - 4, lab, { 'font-family': 'Barlow Condensed, Arial Narrow, sans-serif', 'font-weight': 600, 'font-size': 11, fill: 'var(--tape-ink)' });
+          }
+        }
+      } else {
+        secs.forEach(function (s) {
+          var x = X(s.t);
+          S('line', { x1: x, x2: x, y1: top, y2: bot, stroke: 'var(--tape-ink)', 'stroke-width': s.i === 0 ? 1.6 : 1, 'stroke-opacity': 0.75 }, tapeEl);
+          if (W > 560) T(tapeEl, x + 4, bot - 4, String(s.i + 1), { 'font-family': 'Barlow Condensed, Arial Narrow, sans-serif', 'font-weight': 600, 'font-size': 11, fill: 'var(--tape-ink)' });
+        });
+      }
+      /* chapter-start teeth */
+      secs.forEach(function (s) {
+        var x = X(s.t);
+        S('path', { d: 'M' + (x - 3.5) + ',' + bot + ' L' + (x + 3.5) + ',' + bot + ' L' + x + ',' + (bot - 6) + ' Z', fill: 'var(--tape-ink)', 'fill-opacity': 0.6 }, tapeEl);
+      });
+      ph = S('g', null, tapeEl);
+      S('line', { x1: 0, x2: 0, y1: 1, y2: Hh - 1, stroke: 'var(--apron)', 'stroke-width': 2.5 }, ph);
+      S('rect', { x: -6, y: 0, width: 12, height: 6, rx: 1.5, fill: 'var(--apron)' }, ph);
+      update(curT);
+    }
+    function update(t) {
+      curT = t;
+      var i = 0;
+      for (var k = 0; k < secs.length; k++) if (t >= secs[k].t) i = k;
+      current = i;
+      if (X && ph) {
+        ph.setAttribute('transform', 'translate(' + X(t).toFixed(1) + ',0)');
+        hl.setAttribute('x', X(secs[i].t));
+        hl.setAttribute('width', Math.max(0, X(secs[i].t1) - X(secs[i].t)));
+      }
+      if (mode === 'timestamp') {
+        if (timeEl) timeEl.innerHTML = '';
+        if (timeEl) { timeEl.appendChild(document.createTextNode(hms(t))); var sm = H('small', null, 'of ' + hms(TOTAL), timeEl); }
+        if (chEl) chEl.textContent = secs[i].label;
+        tapeEl.setAttribute('aria-valuenow', Math.round(t));
+        tapeEl.setAttribute('aria-valuetext', hms(t) + ', ' + secs[i].label);
+      } else {
+        if (timeEl) { timeEl.innerHTML = ''; timeEl.appendChild(document.createTextNode((i + 1) + ' of ' + secs.length)); H('small', null, label0.toLowerCase(), timeEl); }
+        if (chEl) chEl.textContent = secs[i].label;
+        tapeEl.setAttribute('aria-valuenow', i + 1);
+        tapeEl.setAttribute('aria-valuetext', label0 + ' ' + (i + 1) + ' of ' + secs.length + ', ' + secs[i].label);
+      }
+    }
+    function anchorY() { return window.scrollY + bar.offsetHeight + window.innerHeight * 0.3; }
+    function tops() {
+      var arr = secs.map(function (s) { return s.el.getBoundingClientRect().top + window.scrollY; });
+      var foot = document.querySelector('footer.colophon');
+      arr.push(foot ? foot.getBoundingClientRect().top + window.scrollY : document.body.scrollHeight);
+      return arr;
+    }
+    function fromScroll() {
+      var a = anchorY(), tp = tops();
+      if (a < tp[0]) { update(0); return; }
+      for (var i = 0; i < secs.length; i++) {
+        if (a >= tp[i] && a < tp[i + 1]) {
+          var p = (a - tp[i]) / (tp[i + 1] - tp[i]);
+          update(secs[i].t + p * (secs[i].t1 - secs[i].t));
+          return;
+        }
+      }
+      update(TOTAL);
+    }
+    function jump(t) {
+      t = clamp(t, 0, TOTAL);
+      var i = 0;
+      for (var k = 0; k < secs.length; k++) if (t >= secs[k].t) i = k;
+      var tp = tops();
+      var p = (t - secs[i].t) / (secs[i].t1 - secs[i].t || 1);
+      var y = tp[i] + p * (tp[i + 1] - tp[i]) - bar.offsetHeight - window.innerHeight * 0.3 + 2;
+      window.scrollTo({ top: Math.max(0, y), behavior: reduce ? 'auto' : 'smooth' });
+    }
+    var ticking = false, pending = null, pendTimer = null;
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; if (pending === null) fromScroll(); }); }
+    }, { passive: true });
+    function tAt(ev) {
+      var r = tapeEl.getBoundingClientRect();
+      return clamp((ev.clientX - r.left - 6) / (r.width - 12), 0, 1) * TOTAL;
+    }
+    function labelAt(t) { var i = 0; for (var k = 0; k < secs.length; k++) if (t >= secs[k].t) i = k; return i; }
+    // click or drag jumps: pointerdown starts a potential drag and jumps to
+    // the press point, pointermove while down jumps live, pointerup ends it.
+    // A press without movement behaves exactly like the old click handler.
+    var dragging = false;
+    tapeEl.addEventListener('pointerdown', function (ev) {
+      if (ev.pointerType === 'mouse' && ev.button !== 0) return;
+      dragging = true;
+      try { tapeEl.setPointerCapture(ev.pointerId); } catch (e) {}
+      hideTip();
+      jump(tAt(ev));
+    });
+    tapeEl.addEventListener('pointermove', function (ev) {
+      if (dragging) { jump(tAt(ev)); return; }
+      if (ev.pointerType !== 'mouse') return;
+      var t = tAt(ev), i = labelAt(t);
+      showTip(ev.clientX, ev.clientY, function (el) {
+        H('b', null, mode === 'timestamp' ? hms(t) : (label0 + ' ' + (i + 1) + ' of ' + secs.length), el);
+        H('div', null, secs[i].label, el);
+      });
+    });
+    tapeEl.addEventListener('pointerup', function (ev) { dragging = false; hideTip(); });
+    tapeEl.addEventListener('pointercancel', function () { dragging = false; });
+    tapeEl.addEventListener('pointerleave', function () { if (!dragging) hideTip(); });
+    function kbJump(i) {
+      pending = clamp(i, 0, secs.length - 1);
+      clearTimeout(pendTimer);
+      pendTimer = setTimeout(function () { pending = null; }, 1400);
+      update(secs[pending].t);
+      jump(secs[pending].t);
+    }
+    tapeEl.addEventListener('keydown', function (ev) {
+      var base = pending !== null ? pending : current;
+      if (ev.key === 'ArrowRight' || ev.key === 'ArrowDown') { ev.preventDefault(); kbJump(base + 1); }
+      else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp') {
+        ev.preventDefault();
+        kbJump(pending === null && curT - secs[current].t > (mode === 'timestamp' ? 20 : 1) ? current : base - 1);
+      } else if (ev.key === 'Home') { ev.preventDefault(); kbJump(0); }
+      else if (ev.key === 'End') { ev.preventDefault(); kbJump(secs.length - 1); }
+    });
+    if (window.ResizeObserver) new ResizeObserver(draw).observe(tapeEl); else window.addEventListener('resize', draw);
+    draw();
+    fromScroll();
+    window.addEventListener('load', fromScroll);
+  })();
+
+  /* ---------------- paintings ----------------
+     figure.paint > .frame > .stage > img.base (+ optional img.ly layers).
+     Entrances: data-entrance="bloom" (wet-wash mask, pure CSS, works on ANY
+     image) or "sketch" (grayscale+sepia develop). Layers: img.ly with
+     data-box="x,y,w,h" (pixel rect in the base image) + data-img-w/h on the
+     figure, or plain inline % positioning; class "mul" = multiply blend
+     (Tier 2 two-layer heroes, see README). data-depth enables pointer
+     parallax on fine pointers. Mobile: data-scroll="pin" pins and pans the
+     camera across the painting; everything else drifts gently. */
+  var barH = 0;
+  (function paintings() {
+    var root = document.documentElement, bar = document.getElementById('tapebar');
+    function setBar() { barH = bar ? bar.offsetHeight : 0; root.style.setProperty('--barH', barH + 'px'); }
+    setBar();
+    window.addEventListener('resize', setBar);
+
+    /* caption rides along inside the full-screen box on phones */
+    document.querySelectorAll('figure.paint').forEach(function (fig) {
+      var frame = fig.querySelector('.frame'), stage = fig.querySelector('.stage');
+      if (!frame || !stage) return;
+      var box = H('div', 'pinbox', null, null), cap = fig.querySelector('figcaption');
+      fig.insertBefore(box, frame); box.appendChild(frame); if (cap) box.appendChild(cap);
+    });
+
+    /* Tier-2 layer registration: data-box px rect -> % positioning */
+    var layers = [];
+    document.querySelectorAll('figure.paint .stage img.ly').forEach(function (img) {
+      var fig = img.closest('figure.paint');
+      var base = fig && fig.querySelector('img.base');
+      var W = +(fig.dataset.imgW || (base && base.getAttribute('width')) || 0);
+      var Hh = +(fig.dataset.imgH || (base && base.getAttribute('height')) || 0);
+      var b = (img.dataset.box || '').split(',').map(Number);
+      if (W && Hh && b.length === 4 && b.every(isFinite)) {
+        img.style.left = (b[0] / W * 100).toFixed(3) + '%';
+        img.style.top = (b[1] / Hh * 100).toFixed(3) + '%';
+        img.style.width = (b[2] / W * 100).toFixed(3) + '%';
+        img.style.height = (b[3] / Hh * 100).toFixed(3) + '%';
+      }
+      img.setAttribute('aria-hidden', 'true');
+      if (!img.hasAttribute('alt')) img.setAttribute('alt', '');
+      layers.push({ el: img, depth: +(img.dataset.depth || 0), fig: fig });
+    });
+
+    /* pointer parallax on fine pointers */
+    if (fine && !reduce) {
+      var px = 0, py = 0, raf = 0;
+      function applyPar() {
+        layers.forEach(function (L) {
+          if (!L.depth) return;
+          L.el.style.translate = (L.depth * px).toFixed(1) + 'px ' + (L.depth * py).toFixed(1) + 'px';
+        });
+      }
+      document.querySelectorAll('figure.paint .stage').forEach(function (st) {
+        st.addEventListener('pointermove', function (ev) {
+          var r = st.getBoundingClientRect();
+          px = clamp(((ev.clientX - r.left) / r.width - 0.5) * 2, -1, 1);
+          py = clamp(((ev.clientY - r.top) / r.height - 0.5) * 2, -1, 1);
+          if (!raf) raf = requestAnimationFrame(function () { raf = 0; applyPar(); });
+        });
+        st.addEventListener('pointerleave', function () {
+          px = 0; py = 0;
+          if (!raf) raf = requestAnimationFrame(function () { raf = 0; applyPar(); });
+        });
+      });
+    }
+
+    /* entrances */
+    var entrances = [];
+    var figs = Array.prototype.slice.call(document.querySelectorAll('figure.paint'));
+    figs.forEach(function (fig, fi) {
+      var stage = fig.querySelector('.stage');
+      if (!stage) return;
+      var kind = fig.dataset.entrance || (fi % 2 ? 'sketch' : 'bloom');
+      if (fig.dataset.entrance === 'none') kind = 'none';
+      var isHero = fig.hasAttribute('data-hero');
+      function arm() {
+        if (kind === 'bloom') (mqMobile.matches ? fig.querySelector('.frame') : stage).classList.add('bleed');
+        if (kind === 'sketch') stage.classList.add('sketch');
+      }
+      function play(instant) {
+        if (kind === 'bloom') (mqMobile.matches ? fig.querySelector('.frame') : stage).classList.add('bloom');
+        if (kind === 'sketch') stage.classList.add('develop');
+        if (!instant && kind !== 'none') setTimeout(clear, 3000);
+        else clear();
+      }
+      function clear() {
+        [fig.querySelector('.frame'), stage].forEach(function (e) {
+          if (e) e.classList.remove('bleed', 'bloom', 'sketch', 'develop');
+        });
+      }
+      entrances.push({ clear: clear });
+      if (reduce || kind === 'none') return;   /* still pictures */
+      if (isHero) { arm(); play(false); return; }
+      reveal(fig.querySelector('.frame') || fig,
+        function () { arm(); },
+        function (instant) { play(instant); },
+        0.3);
+    });
+    window.addEventListener('beforeprint', function () { entrances.forEach(function (e) { e.clear(); }); });
+
+    /* mobile camera: pin scenes pan across, the rest drift */
+    if (reduce) return;
+    var cams = figs.map(function (fig) {
+      return { fig: fig, stage: fig.querySelector('.stage'), pin: fig.dataset.scroll === 'pin', q: 0, t0: null };
+    }).filter(function (c) { return c.stage; });
+    if (!cams.length) return;
+    function setModes() {
+      var on = mqMobile.matches;
+      cams.forEach(function (c) {
+        c.fig.classList.toggle('pin', on && c.pin);
+        c.fig.classList.toggle('drift', on && !c.pin);
+        if (!on) c.stage.style.transform = '';
+      });
+    }
+    setModes();
+    if (mqMobile.addEventListener) mqMobile.addEventListener('change', setModes);
+    else if (mqMobile.addListener) mqMobile.addListener(setModes);
+    var running = false;
+    function view(c, q, now) {
+      var st = c.stage, fw = st.parentElement.clientWidth, fh = st.parentElement.clientHeight;
+      var base = st.querySelector('img.base');
+      var W = +(base && base.getAttribute('width')) || 1600, Hh = +(base && base.getAttribute('height')) || 900;
+      var k = st.offsetWidth / W || 1;
+      var z = c.pin ? 1 + 0.12 * q : 1 + 0.05 * (0.5 - 0.5 * Math.cos((now / 1000 / 26) * 2 * Math.PI));
+      var fx = c.pin ? W * (0.28 + 0.44 * q) : W / 2;
+      var sw = W * k * z, sh = Hh * k * z;
+      var tx = sw <= fw ? (fw - sw) / 2 : clamp(fw / 2 - fx * k * z, fw - sw, 0);
+      var ty = sh <= fh ? (fh - sh) / 2 : clamp(fh / 2 - (Hh / 2) * k * z, fh - sh, 0);
+      st.style.transform = 'translate3d(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0) scale(' + z.toFixed(4) + ')';
+    }
+    function tick(now) {
+      var vh = window.innerHeight, live = false;
+      cams.forEach(function (c) {
+        if (!mqMobile.matches) return;
+        var r = c.fig.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        live = true;
+        if (c.pin) {
+          var travel = Math.max(1, r.height - (vh - barH));
+          c.q = clamp((barH - r.top) / travel, 0, 1);
+        }
+        view(c, c.q, now);
+      });
+      if (live) requestAnimationFrame(tick); else running = false;
+    }
+    function wake() { if (!running && mqMobile.matches) { running = true; requestAnimationFrame(tick); } }
+    window.addEventListener('scroll', wake, { passive: true });
+    window.addEventListener('resize', wake);
+    wake();
+  })();
+
+  /* ---------------- SVG overlay helpers ----------------
+     Runtime life for paintings: steam curls, lamp glows, ripples, sparkles,
+     dust motes, ring marks. Pure code, zero image cost. Exposed as
+     window.CompanionFX for Phase 2 scene code; CompanionFX.registerScene
+     wires per-scene init/pose functions into a shared rAF driver. */
+  var FX = (function () {
+    function overlay(stage, cls, W, Hh) {
+      var o = document.createElementNS(NS, 'svg');
+      o.setAttribute('class', 'ov ' + cls);
+      o.setAttribute('viewBox', '0 0 ' + W + ' ' + Hh);
+      o.setAttribute('aria-hidden', 'true');
+      stage.appendChild(o);
+      return o;
+    }
+    function steam(stage, W, Hh, x, y, rise, period) {
+      var ov = overlay(stage, 'fx', W, Hh);
+      var paths = [0, 1].map(function (i) {
+        return S('path', { stroke: '#B9C4C9', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round', opacity: 0.55 }, ov);
+      });
+      return {
+        tick: function (t) {
+          paths.forEach(function (p, i) {
+            var u = ((t / period) + i / 2) % 1;
+            var yy = y - rise * u, xx = x + 9 * Math.sin(t * 1.3 + i * 2.1);
+            p.setAttribute('d', 'M' + xx.toFixed(1) + ',' + yy.toFixed(1) + ' q 10,-22 0,-44 q -10,-22 0,-44');
+            p.setAttribute('opacity', (0.55 * Math.pow(Math.sin(Math.PI * u), 1.2)).toFixed(2));
+          });
+        }
+      };
+    }
+    function glows(stage, W, Hh, pts, mode, color) {
+      var ov = overlay(stage, 'glow-' + mode, W, Hh);
+      var id = 'gl-' + Math.random().toString(36).slice(2, 8) + '-' + mode;
+      var gr = S('radialGradient', { id: id }, S('defs', null, ov));
+      S('stop', { offset: '0', 'stop-color': color, 'stop-opacity': mode === 'screen' ? 0.85 : 0.55 }, gr);
+      S('stop', { offset: '0.45', 'stop-color': color, 'stop-opacity': mode === 'screen' ? 0.35 : 0.22 }, gr);
+      S('stop', { offset: '1', 'stop-color': color, 'stop-opacity': 0 }, gr);
+      return pts.map(function (p) {
+        var c = S('circle', { cx: p[0], cy: p[1], r: p[2], fill: 'url(#' + id + ')' }, ov);
+        c.style.opacity = 0;
+        return c;
+      });
+    }
+    function ripple(stage, W, Hh, x, y) {
+      var ov = overlay(stage, 'fx', W, Hh);
+      return [0, 1].map(function () {
+        var e = S('ellipse', { class: 'ripple', cx: x, cy: y, rx: 0, ry: 0 }, ov);
+        e.style.opacity = 0;
+        return e;
+      });
+    }
+    function sparkles(stage, W, Hh, pts) {
+      var ov = overlay(stage, 'fx', W, Hh);
+      return pts.map(function (p) {
+        var g = S('g', { transform: 'translate(' + p[0] + ',' + p[1] + ')' }, ov);
+        var R = p[2], r = R * 0.16;
+        var star = S('path', { class: 'spark', d: 'M0,' + (-R) + 'L' + r + ',' + (-r) + 'L' + R + ',0L' + r + ',' + r + 'L0,' + R + 'L' + (-r) + ',' + r + 'L' + (-r) + ',' + (-r) + 'Z' }, g);
+        star.style.transform = 'scale(0)';
+        return star;
+      });
+    }
+    function motes(stage, W, Hh, n, seed) {
+      var ov = overlay(stage, 'glow-screen', W, Hh);
+      var out = [];
+      for (var i = 0; i < n; i++) {
+        seed = (seed * 9301 + 49297) % 233280; var u = seed / 233280;
+        seed = (seed * 9301 + 49297) % 233280; var ph = seed / 233280;
+        seed = (seed * 9301 + 49297) % 233280; var rr = seed / 233280;
+        var c = S('circle', { r: (3 + rr * 4).toFixed(1), fill: '#FFFDF4', cx: u * W, cy: ph * Hh }, ov);
+        c.style.opacity = 0;
+        out.push({ el: c, u: u, ph: ph, sp: 7 + rr * 9 });
+      }
+      return {
+        tick: function (t) {
+          out.forEach(function (m) {
+            var y = Hh - ((t * m.sp + m.ph * Hh) % Hh);
+            var x = m.u * W + 10 * Math.sin(t * 0.4 + m.ph * 9);
+            m.el.setAttribute('cx', x.toFixed(1)); m.el.setAttribute('cy', y.toFixed(1));
+            m.el.style.opacity = (0.35 + 0.4 * Math.pow(Math.sin(t * (0.7 + m.u) + m.ph * 6), 2)).toFixed(3);
+          });
+        }
+      };
+    }
+    function ringMarks(stage, W, Hh, sides) {
+      var ov = overlay(stage, 'fx', W, Hh);
+      return sides.map(function (sd) {
+        var g = S('g', { class: 'ring' }, ov), cx = sd[0], cy = sd[1];
+        var a0 = sd[2] * Math.PI / 180, a1 = sd[3] * Math.PI / 180;
+        [34, 54].forEach(function (r) {
+          S('path', { d: 'M' + (cx + Math.cos(a0) * r).toFixed(1) + ',' + (cy + Math.sin(a0) * r).toFixed(1) + ' A' + r + ',' + r + ' 0 0 1 ' + (cx + Math.cos(a1) * r).toFixed(1) + ',' + (cy + Math.sin(a1) * r).toFixed(1) }, g);
+        });
+        g.style.opacity = 0;
+        return g;
+      });
+    }
+    function flicker(t, k) { return 0.5 * Math.sin(t * 7.3 + k) + 0.3 * Math.sin(t * 13.1 + k * 2.1) + 0.2 * Math.sin(t * 23.7 + k * 3.7); }
+
+    /* per-scene registry (Phase 2): name -> { init(F), pose(S) -> {obj: {x,y,r,s,o}} } */
+    var scenes = {};
+    var live = [];
+    function registerScene(name, spec) {
+      scenes[name] = spec;
+      if (reduce) return;
+      document.querySelectorAll('figure.paint[data-scene="' + name + '"]').forEach(function (fig) {
+        var stage = fig.querySelector('.stage'), base = fig.querySelector('img.base');
+        if (!stage || !base) return;
+        var F = { fig: fig, stage: stage, name: name,
+          W: +(base.getAttribute('width')) || 1600, H: +(base.getAttribute('height')) || 900,
+          enterAt: null };
+        if (spec.init) spec.init(F, FX);
+        live.push({ F: F, spec: spec });
+        wakeFx();
+      });
+    }
+    var fxRunning = false;
+    function applyPose(F, pose) {
+      Object.keys(pose || {}).forEach(function (nm) {
+        var q = pose[nm] || {};
+        F.stage.querySelectorAll('img.ly[data-obj="' + nm + '"]').forEach(function (img) {
+          var tr = 'translate3d(' + (q.x || 0).toFixed(2) + 'px,' + (q.y || 0).toFixed(2) + 'px,0)';
+          if (q.r) tr += ' rotate(' + q.r.toFixed(3) + 'deg)';
+          if (q.s !== undefined && q.s !== 1) tr += ' scale(' + q.s.toFixed(4) + ')';
+          img.style.transform = tr;
+          if (q.o !== undefined) img.style.opacity = clamp(q.o, 0, 1).toFixed(3);
+        });
+      });
+    }
+    function fxTick(now) {
+      var t = now / 1000, any = false;
+      live.forEach(function (L) {
+        var r = L.F.fig.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+        any = true;
+        if (L.F.enterAt === null && r.top < window.innerHeight * 0.8) L.F.enterAt = now;
+        var S_ = { t: t, et: L.F.enterAt === null ? 999 : (now - L.F.enterAt) / 1000, F: L.F };
+        applyPose(L.F, L.spec.pose ? L.spec.pose(S_, FX) : {});
+      });
+      if (any) requestAnimationFrame(fxTick); else fxRunning = false;
+    }
+    function wakeFx() { if (!fxRunning && live.length) { fxRunning = true; requestAnimationFrame(fxTick); } }
+    window.addEventListener('scroll', wakeFx, { passive: true });
+
+    return { overlay: overlay, steam: steam, glows: glows, ripple: ripple,
+      sparkles: sparkles, motes: motes, ringMarks: ringMarks, flicker: flicker,
+      registerScene: registerScene, smoothstep: smoothstep, clamp: clamp };
+  })();
+  window.CompanionFX = FX;
+
+  /* ---------------- playbook: auto-index of every shelf tag ---------------- */
+  (function playbook() {
+    var grid = document.getElementById('playbook');
+    if (!grid) return;
+    var bar = document.getElementById('tapebar');
+    var signLabel = (bar && bar.dataset.signLabel) || 'Aisle';
+    document.querySelectorAll('aside.tag').forEach(function (tag, i) {
+      var a = H('a', 'pb', null, grid);
+      a.href = '#' + (tag.id || tag.dataset.chapter || '');
+      var num = tag.dataset.signNum, lab = tag.dataset.signLabel || signLabel;
+      H('div', 'a', num ? (lab + ' ' + num) : ('Lesson ' + (i + 1)), a);
+      var big = tag.querySelector('.tag-big');
+      H('div', 'big', big ? big.textContent : '', a);
+      var p = tag.querySelector('.tag-body p');
+      H('p', null, p ? p.textContent : '', a);
+    });
+  })();
+
+  /* ---------------- beforeprint: finish everything instantly ---------------- */
+  window.addEventListener('beforeprint', function () {
+    revealers.forEach(function (r) { r.finish(); });
+    document.querySelectorAll('.paint .bleed, .paint .bloom, .paint .stage.sketch, .paint .stage.develop')
+      .forEach(function (e) { e.classList.remove('bleed', 'bloom', 'sketch', 'develop'); });
+  });
+})();
+
+</script></body>
+</html>
